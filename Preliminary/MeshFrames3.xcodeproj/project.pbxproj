@@ -1,0 +1,633 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1004A69F1167467F00F19B63 /* JBAT_Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1004A69E1167467F00F19B63 /* JBAT_Camera.cpp */; };
+		1004A6A811675BE900F19B63 /* JBAT_MathTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1004A6A711675BE900F19B63 /* JBAT_MathTools.cpp */; };
+		1004A6AB1167AC2B00F19B63 /* JBAT_Floor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1004A6AA1167AC2B00F19B63 /* JBAT_Floor.cpp */; };
+		100CB76E115EBE7300C82B15 /* MeshWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 100CB76D115EBE7300C82B15 /* MeshWindowController.mm */; };
+		100CB77B115EBF3100C82B15 /* MeshWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 100CB77A115EBF3100C82B15 /* MeshWindow.xib */; };
+		100CB793115EE0BB00C82B15 /* MeshDisplayViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 100CB792115EE0BB00C82B15 /* MeshDisplayViewController.mm */; };
+		100CB79F115F7CB100C82B15 /* ViewComponentsControlViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 100CB79E115F7CB100C82B15 /* ViewComponentsControlViewController.mm */; };
+		100CB7C3115FA0BD00C82B15 /* MainWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 100CB7C2115FA0BD00C82B15 /* MainWindowController.mm */; };
+		105FDA2011B11D25005421E3 /* JBAT_VSoundProject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105FDA1F11B11D25005421E3 /* JBAT_VSoundProject.cpp */; };
+		107350EC119DE46E000F97C5 /* JBAT_Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107350EB119DE46E000F97C5 /* JBAT_Object.cpp */; };
+		108139E51163DE650074D3AD /* JBAT_LightSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108139E41163DE650074D3AD /* JBAT_LightSet.cpp */; };
+		108139F51163E55F0074D3AD /* JBAT_Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108139F41163E55F0074D3AD /* JBAT_Light.cpp */; };
+		109AD3EA114C3CEF00723265 /* Math3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109AD3E3114C3CEF00723265 /* Math3d.cpp */; };
+		109AD3EC114C3CEF00723265 /* JBAT_BaseMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109AD3E7114C3CEF00723265 /* JBAT_BaseMesh.cpp */; };
+		109AD41C114C6A5200723265 /* JBAT_BufferedMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109AD41B114C6A5200723265 /* JBAT_BufferedMesh.cpp */; };
+		109AD430114D02EF00723265 /* MeshDataViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109AD42F114D02EF00723265 /* MeshDataViewController.mm */; };
+		109AD451114D264F00723265 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 109AD450114D264F00723265 /* GLUT.framework */; };
+		109AD453114D264F00723265 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 109AD452114D264F00723265 /* OpenGL.framework */; };
+		109AD4C6114D985D00723265 /* GLee.c in Sources */ = {isa = PBXBuildFile; fileRef = 109AD4C4114D985D00723265 /* GLee.c */; };
+		109C0B0D119C185F00366977 /* FloorControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 109C0B0C119C185F00366977 /* FloorControlViewController.m */; };
+		109C0B0F119C19EA00366977 /* FloorControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109C0B0E119C19EA00366977 /* FloorControlView.xib */; };
+		10C2E4EF116FBC530008A8F7 /* ViewComponentsControlWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10C2E4EE116FBC530008A8F7 /* ViewComponentsControlWindow.xib */; };
+		10C2E5981171DF360008A8F7 /* CameraControlWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10C2E5971171DF360008A8F7 /* CameraControlWindowController.mm */; };
+		10C2E59A1171E08C0008A8F7 /* CameraControlWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10C2E5991171E08C0008A8F7 /* CameraControlWindowController.xib */; };
+		10C2EA6911AAE0D20033EC49 /* BaseGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */; };
+		10C2EA6E11AB24190033EC49 /* JBAT_Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10C2EA6D11AB24190033EC49 /* JBAT_Scene.cpp */; };
+		10C40A86116A0AA60041F17D /* LightControlViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10C40A85116A0AA60041F17D /* LightControlViewController.mm */; };
+		10C40A8B116A0BEA0041F17D /* ViewComponentsControlWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10C40A8A116A0BEA0041F17D /* ViewComponentsControlWindowController.mm */; };
+		10C40A91116A106F0041F17D /* LightsControlViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10C40A90116A106F0041F17D /* LightsControlViewController.mm */; };
+		10C40A93116A10930041F17D /* LightsControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10C40A92116A10930041F17D /* LightsControlView.xib */; };
+		10C40A95116A10AE0041F17D /* LightControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10C40A94116A10AE0041F17D /* LightControlView.xib */; };
+		10C40A99116A10E00041F17D /* ViewComponentsControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10C40A98116A10E00041F17D /* ViewComponentsControlView.xib */; };
+		10C40A9E116A11A80041F17D /* MeshDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10C40A9D116A11A80041F17D /* MeshDataView.xib */; };
+		10C40AA2116A11D90041F17D /* MeshDisplayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10C40AA1116A11D90041F17D /* MeshDisplayView.xib */; };
+		10F1F76F11AC5F7900D49CCF /* JBAT_ObjectSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F1F76E11AC5F7900D49CCF /* JBAT_ObjectSet.cpp */; };
+		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		256AC3DA0F4B6AC300CF3369 /* MeshFrames3AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* MeshFrames3AppDelegate.m */; };
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1004A69D1167467F00F19B63 /* JBAT_Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBAT_Camera.h; sourceTree = "<group>"; };
+		1004A69E1167467F00F19B63 /* JBAT_Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JBAT_Camera.cpp; sourceTree = "<group>"; };
+		1004A6A611675BE900F19B63 /* JBAT_MathTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBAT_MathTools.h; sourceTree = "<group>"; };
+		1004A6A711675BE900F19B63 /* JBAT_MathTools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JBAT_MathTools.cpp; sourceTree = "<group>"; };
+		1004A6A91167AC2B00F19B63 /* JBAT_Floor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBAT_Floor.h; sourceTree = "<group>"; };
+		1004A6AA1167AC2B00F19B63 /* JBAT_Floor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JBAT_Floor.cpp; sourceTree = "<group>"; };
+		100CB76C115EBE7300C82B15 /* MeshWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeshWindowController.h; sourceTree = "<group>"; };
+		100CB76D115EBE7300C82B15 /* MeshWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MeshWindowController.mm; sourceTree = "<group>"; };
+		100CB77A115EBF3100C82B15 /* MeshWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeshWindow.xib; sourceTree = "<group>"; };
+		100CB791115EE0BB00C82B15 /* MeshDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeshDisplayViewController.h; sourceTree = "<group>"; };
+		100CB792115EE0BB00C82B15 /* MeshDisplayViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MeshDisplayViewController.mm; sourceTree = "<group>"; };
+		100CB79D115F7CB100C82B15 /* ViewComponentsControlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewComponentsControlViewController.h; sourceTree = "<group>"; };
+		100CB79E115F7CB100C82B15 /* ViewComponentsControlViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewComponentsControlViewController.mm; sourceTree = "<group>"; };
+		100CB7C1115FA0BD00C82B15 /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
+		100CB7C2115FA0BD00C82B15 /* MainWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MainWindowController.mm; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		105FDA1E11B11D25005421E3 /* JBAT_VSoundProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBAT_VSoundProject.h; sourceTree = "<group>"; };
+		105FDA1F11B11D25005421E3 /* JBAT_VSoundProject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JBAT_VSoundProject.cpp; sourceTree = "<group>"; };
+		107350EA119DE46E000F97C5 /* JBAT_Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBAT_Object.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		107350EB119DE46E000F97C5 /* JBAT_Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JBAT_Object.cpp; sourceTree = "<group>"; };
+		108139E31163DE650074D3AD /* JBAT_LightSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBAT_LightSet.h; sourceTree = "<group>"; };
+		108139E41163DE650074D3AD /* JBAT_LightSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JBAT_LightSet.cpp; sourceTree = "<group>"; };
+		108139F31163E55F0074D3AD /* JBAT_Light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBAT_Light.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		108139F41163E55F0074D3AD /* JBAT_Light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JBAT_Light.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		109AD3E0114C3CEF00723265 /* GLFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLFrame.h; sourceTree = "<group>"; };
+		109AD3E3114C3CEF00723265 /* Math3d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Math3d.cpp; sourceTree = "<group>"; };
+		109AD3E4114C3CEF00723265 /* Math3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Math3d.h; sourceTree = "<group>"; };
+		109AD3E7114C3CEF00723265 /* JBAT_BaseMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JBAT_BaseMesh.cpp; sourceTree = "<group>"; };
+		109AD3E8114C3CEF00723265 /* JBAT_BaseMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBAT_BaseMesh.h; sourceTree = "<group>"; };
+		109AD41A114C6A5200723265 /* JBAT_BufferedMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBAT_BufferedMesh.h; sourceTree = "<group>"; };
+		109AD41B114C6A5200723265 /* JBAT_BufferedMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JBAT_BufferedMesh.cpp; sourceTree = "<group>"; };
+		109AD42E114D02EF00723265 /* MeshDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeshDataViewController.h; sourceTree = "<group>"; };
+		109AD42F114D02EF00723265 /* MeshDataViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MeshDataViewController.mm; sourceTree = "<group>"; };
+		109AD450114D264F00723265 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		109AD452114D264F00723265 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		109AD4C4114D985D00723265 /* GLee.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GLee.c; sourceTree = "<group>"; };
+		109AD4C5114D985D00723265 /* GLee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLee.h; sourceTree = "<group>"; };
+		109C0B0B119C185F00366977 /* FloorControlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloorControlViewController.h; sourceTree = "<group>"; };
+		109C0B0C119C185F00366977 /* FloorControlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloorControlViewController.m; sourceTree = "<group>"; };
+		109C0B0E119C19EA00366977 /* FloorControlView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FloorControlView.xib; sourceTree = "<group>"; };
+		10C2E4EE116FBC530008A8F7 /* ViewComponentsControlWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewComponentsControlWindow.xib; sourceTree = "<group>"; };
+		10C2E5961171DF360008A8F7 /* CameraControlWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraControlWindowController.h; sourceTree = "<group>"; };
+		10C2E5971171DF360008A8F7 /* CameraControlWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CameraControlWindowController.mm; sourceTree = "<group>"; };
+		10C2E5991171E08C0008A8F7 /* CameraControlWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CameraControlWindowController.xib; sourceTree = "<group>"; };
+		10C2EA6711AAE0D20033EC49 /* BaseGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseGLView.h; sourceTree = "<group>"; };
+		10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BaseGLView.mm; sourceTree = "<group>"; };
+		10C2EA6C11AB24190033EC49 /* JBAT_Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBAT_Scene.h; sourceTree = "<group>"; };
+		10C2EA6D11AB24190033EC49 /* JBAT_Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JBAT_Scene.cpp; sourceTree = "<group>"; };
+		10C40A84116A0AA60041F17D /* LightControlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightControlViewController.h; sourceTree = "<group>"; };
+		10C40A85116A0AA60041F17D /* LightControlViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LightControlViewController.mm; sourceTree = "<group>"; };
+		10C40A89116A0BEA0041F17D /* ViewComponentsControlWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewComponentsControlWindowController.h; sourceTree = "<group>"; };
+		10C40A8A116A0BEA0041F17D /* ViewComponentsControlWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewComponentsControlWindowController.mm; sourceTree = "<group>"; };
+		10C40A8F116A106F0041F17D /* LightsControlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightsControlViewController.h; sourceTree = "<group>"; };
+		10C40A90116A106F0041F17D /* LightsControlViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LightsControlViewController.mm; sourceTree = "<group>"; };
+		10C40A92116A10930041F17D /* LightsControlView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LightsControlView.xib; sourceTree = "<group>"; };
+		10C40A94116A10AE0041F17D /* LightControlView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LightControlView.xib; sourceTree = "<group>"; };
+		10C40A98116A10E00041F17D /* ViewComponentsControlView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewComponentsControlView.xib; sourceTree = "<group>"; };
+		10C40A9D116A11A80041F17D /* MeshDataView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeshDataView.xib; sourceTree = "<group>"; };
+		10C40AA1116A11D90041F17D /* MeshDisplayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeshDisplayView.xib; sourceTree = "<group>"; };
+		10F1F76D11AC5F7900D49CCF /* JBAT_ObjectSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBAT_ObjectSet.h; sourceTree = "<group>"; };
+		10F1F76E11AC5F7900D49CCF /* JBAT_ObjectSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JBAT_ObjectSet.cpp; sourceTree = "<group>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		256AC3D80F4B6AC300CF3369 /* MeshFrames3AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeshFrames3AppDelegate.h; sourceTree = "<group>"; };
+		256AC3D90F4B6AC300CF3369 /* MeshFrames3AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeshFrames3AppDelegate.m; sourceTree = "<group>"; };
+		256AC3F00F4B6AF500CF3369 /* MeshFrames3_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeshFrames3_Prefix.pch; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		8D1107310486CEB800E47090 /* MeshFrames3-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MeshFrames3-Info.plist"; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* MeshFrames3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeshFrames3.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				109AD451114D264F00723265 /* GLUT.framework in Frameworks */,
+				109AD453114D264F00723265 /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				109AD41D114D005200723265 /* Delegate and Managers */,
+				109AD3ED114C3CF300723265 /* VSounds Lib */,
+				100CB7A3115F803300C82B15 /* View Controllers */,
+				100CB76F115EBEB100C82B15 /* Window Controllers */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		100CB76F115EBEB100C82B15 /* Window Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				100CB7C0115FA08F00C82B15 /* Main Window */,
+				100CB7A0115F7FFB00C82B15 /* Mesh Window */,
+				10C40A88116A0B8B0041F17D /* View Components Control Window  */,
+				10C2E5911171CF2D0008A8F7 /* Camera Window */,
+			);
+			name = "Window Controllers";
+			sourceTree = "<group>";
+		};
+		100CB7A0115F7FFB00C82B15 /* Mesh Window */ = {
+			isa = PBXGroup;
+			children = (
+				100CB76C115EBE7300C82B15 /* MeshWindowController.h */,
+				100CB76D115EBE7300C82B15 /* MeshWindowController.mm */,
+				100CB77A115EBF3100C82B15 /* MeshWindow.xib */,
+			);
+			name = "Mesh Window";
+			sourceTree = "<group>";
+		};
+		100CB7A3115F803300C82B15 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				100CB7A5115F805F00C82B15 /* Control View Controllers */,
+				100CB7A4115F805000C82B15 /* Mesh View */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		100CB7A4115F805000C82B15 /* Mesh View */ = {
+			isa = PBXGroup;
+			children = (
+				10C40A9F116A11B20041F17D /* Mesh Data */,
+				10C40AA0116A11BC0041F17D /* Mesh Display */,
+			);
+			name = "Mesh View";
+			sourceTree = "<group>";
+		};
+		100CB7A5115F805F00C82B15 /* Control View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				10C40A97116A10C70041F17D /* View Components */,
+				10C40A96116A10B60041F17D /* Lights */,
+				109C0B0A119C182A00366977 /* Floor */,
+			);
+			name = "Control View Controllers";
+			sourceTree = "<group>";
+		};
+		100CB7C0115FA08F00C82B15 /* Main Window */ = {
+			isa = PBXGroup;
+			children = (
+				100CB7C1115FA0BD00C82B15 /* MainWindowController.h */,
+				100CB7C2115FA0BD00C82B15 /* MainWindowController.mm */,
+			);
+			name = "Main Window";
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+				109AD450114D264F00723265 /* GLUT.framework */,
+				109AD452114D264F00723265 /* OpenGL.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		105FDA1C11B11CF5005421E3 /* Project */ = {
+			isa = PBXGroup;
+			children = (
+				105FDA1E11B11D25005421E3 /* JBAT_VSoundProject.h */,
+				105FDA1F11B11D25005421E3 /* JBAT_VSoundProject.cpp */,
+			);
+			name = Project;
+			sourceTree = "<group>";
+		};
+		107350ED119EB337000F97C5 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				109AD3E8114C3CEF00723265 /* JBAT_BaseMesh.h */,
+				109AD3E7114C3CEF00723265 /* JBAT_BaseMesh.cpp */,
+				109AD41A114C6A5200723265 /* JBAT_BufferedMesh.h */,
+				109AD41B114C6A5200723265 /* JBAT_BufferedMesh.cpp */,
+				107350EA119DE46E000F97C5 /* JBAT_Object.h */,
+				107350EB119DE46E000F97C5 /* JBAT_Object.cpp */,
+				10F1F76D11AC5F7900D49CCF /* JBAT_ObjectSet.h */,
+				10F1F76E11AC5F7900D49CCF /* JBAT_ObjectSet.cpp */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
+		107350EE119EB34D000F97C5 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				109AD4C4114D985D00723265 /* GLee.c */,
+				109AD4C5114D985D00723265 /* GLee.h */,
+				109AD3E0114C3CEF00723265 /* GLFrame.h */,
+				109AD3E4114C3CEF00723265 /* Math3d.h */,
+				109AD3E3114C3CEF00723265 /* Math3d.cpp */,
+				1004A6A611675BE900F19B63 /* JBAT_MathTools.h */,
+				1004A6A711675BE900F19B63 /* JBAT_MathTools.cpp */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		107350EF119EB360000F97C5 /* View Components */ = {
+			isa = PBXGroup;
+			children = (
+				108139E31163DE650074D3AD /* JBAT_LightSet.h */,
+				108139E41163DE650074D3AD /* JBAT_LightSet.cpp */,
+				108139F31163E55F0074D3AD /* JBAT_Light.h */,
+				108139F41163E55F0074D3AD /* JBAT_Light.cpp */,
+				1004A69D1167467F00F19B63 /* JBAT_Camera.h */,
+				1004A69E1167467F00F19B63 /* JBAT_Camera.cpp */,
+				1004A6A91167AC2B00F19B63 /* JBAT_Floor.h */,
+				1004A6AA1167AC2B00F19B63 /* JBAT_Floor.cpp */,
+			);
+			name = "View Components";
+			sourceTree = "<group>";
+		};
+		109AD3ED114C3CF300723265 /* VSounds Lib */ = {
+			isa = PBXGroup;
+			children = (
+				105FDA1C11B11CF5005421E3 /* Project */,
+				10C2EA6F11AB24220033EC49 /* Scene */,
+				107350EF119EB360000F97C5 /* View Components */,
+				107350EE119EB34D000F97C5 /* Utilities */,
+				107350ED119EB337000F97C5 /* Objects */,
+			);
+			name = "VSounds Lib";
+			sourceTree = "<group>";
+		};
+		109AD41D114D005200723265 /* Delegate and Managers */ = {
+			isa = PBXGroup;
+			children = (
+				256AC3D80F4B6AC300CF3369 /* MeshFrames3AppDelegate.h */,
+				256AC3D90F4B6AC300CF3369 /* MeshFrames3AppDelegate.m */,
+			);
+			name = "Delegate and Managers";
+			sourceTree = "<group>";
+		};
+		109C0B0A119C182A00366977 /* Floor */ = {
+			isa = PBXGroup;
+			children = (
+				109C0B0B119C185F00366977 /* FloorControlViewController.h */,
+				109C0B0C119C185F00366977 /* FloorControlViewController.m */,
+				109C0B0E119C19EA00366977 /* FloorControlView.xib */,
+			);
+			name = Floor;
+			sourceTree = "<group>";
+		};
+		10C2E5911171CF2D0008A8F7 /* Camera Window */ = {
+			isa = PBXGroup;
+			children = (
+				10C2E5961171DF360008A8F7 /* CameraControlWindowController.h */,
+				10C2E5971171DF360008A8F7 /* CameraControlWindowController.mm */,
+				10C2E5991171E08C0008A8F7 /* CameraControlWindowController.xib */,
+			);
+			name = "Camera Window";
+			sourceTree = "<group>";
+		};
+		10C2EA6F11AB24220033EC49 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				10C2EA6C11AB24190033EC49 /* JBAT_Scene.h */,
+				10C2EA6D11AB24190033EC49 /* JBAT_Scene.cpp */,
+			);
+			name = Scene;
+			sourceTree = "<group>";
+		};
+		10C40A88116A0B8B0041F17D /* View Components Control Window  */ = {
+			isa = PBXGroup;
+			children = (
+				10C40A89116A0BEA0041F17D /* ViewComponentsControlWindowController.h */,
+				10C40A8A116A0BEA0041F17D /* ViewComponentsControlWindowController.mm */,
+				10C2E4EE116FBC530008A8F7 /* ViewComponentsControlWindow.xib */,
+			);
+			name = "View Components Control Window ";
+			sourceTree = "<group>";
+		};
+		10C40A96116A10B60041F17D /* Lights */ = {
+			isa = PBXGroup;
+			children = (
+				10C40A8F116A106F0041F17D /* LightsControlViewController.h */,
+				10C40A90116A106F0041F17D /* LightsControlViewController.mm */,
+				10C40A92116A10930041F17D /* LightsControlView.xib */,
+				10C40A84116A0AA60041F17D /* LightControlViewController.h */,
+				10C40A85116A0AA60041F17D /* LightControlViewController.mm */,
+				10C40A94116A10AE0041F17D /* LightControlView.xib */,
+			);
+			name = Lights;
+			sourceTree = "<group>";
+		};
+		10C40A97116A10C70041F17D /* View Components */ = {
+			isa = PBXGroup;
+			children = (
+				100CB79D115F7CB100C82B15 /* ViewComponentsControlViewController.h */,
+				100CB79E115F7CB100C82B15 /* ViewComponentsControlViewController.mm */,
+				10C40A98116A10E00041F17D /* ViewComponentsControlView.xib */,
+			);
+			name = "View Components";
+			sourceTree = "<group>";
+		};
+		10C40A9F116A11B20041F17D /* Mesh Data */ = {
+			isa = PBXGroup;
+			children = (
+				109AD42E114D02EF00723265 /* MeshDataViewController.h */,
+				109AD42F114D02EF00723265 /* MeshDataViewController.mm */,
+				10C40A9D116A11A80041F17D /* MeshDataView.xib */,
+			);
+			name = "Mesh Data";
+			sourceTree = "<group>";
+		};
+		10C40AA0116A11BC0041F17D /* Mesh Display */ = {
+			isa = PBXGroup;
+			children = (
+				100CB791115EE0BB00C82B15 /* MeshDisplayViewController.h */,
+				100CB792115EE0BB00C82B15 /* MeshDisplayViewController.mm */,
+				10C40AA1116A11D90041F17D /* MeshDisplayView.xib */,
+				10C2EA6711AAE0D20033EC49 /* BaseGLView.h */,
+				10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */,
+			);
+			name = "Mesh Display";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* MeshFrames3.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* MeshFrames3 */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = MeshFrames3;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				256AC3F00F4B6AF500CF3369 /* MeshFrames3_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107310486CEB800E47090 /* MeshFrames3-Info.plist */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* MeshFrames3 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "MeshFrames3" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MeshFrames3;
+			productInstallPath = "$(HOME)/Applications";
+			productName = MeshFrames3;
+			productReference = 8D1107320486CEB800E47090 /* MeshFrames3.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MeshFrames3" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* MeshFrames3 */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* MeshFrames3 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
+				100CB77B115EBF3100C82B15 /* MeshWindow.xib in Resources */,
+				10C40A93116A10930041F17D /* LightsControlView.xib in Resources */,
+				10C40A95116A10AE0041F17D /* LightControlView.xib in Resources */,
+				10C40A99116A10E00041F17D /* ViewComponentsControlView.xib in Resources */,
+				10C40A9E116A11A80041F17D /* MeshDataView.xib in Resources */,
+				10C40AA2116A11D90041F17D /* MeshDisplayView.xib in Resources */,
+				10C2E4EF116FBC530008A8F7 /* ViewComponentsControlWindow.xib in Resources */,
+				10C2E59A1171E08C0008A8F7 /* CameraControlWindowController.xib in Resources */,
+				109C0B0F119C19EA00366977 /* FloorControlView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				256AC3DA0F4B6AC300CF3369 /* MeshFrames3AppDelegate.m in Sources */,
+				109AD3EA114C3CEF00723265 /* Math3d.cpp in Sources */,
+				109AD3EC114C3CEF00723265 /* JBAT_BaseMesh.cpp in Sources */,
+				109AD41C114C6A5200723265 /* JBAT_BufferedMesh.cpp in Sources */,
+				109AD430114D02EF00723265 /* MeshDataViewController.mm in Sources */,
+				109AD4C6114D985D00723265 /* GLee.c in Sources */,
+				100CB76E115EBE7300C82B15 /* MeshWindowController.mm in Sources */,
+				100CB793115EE0BB00C82B15 /* MeshDisplayViewController.mm in Sources */,
+				100CB79F115F7CB100C82B15 /* ViewComponentsControlViewController.mm in Sources */,
+				100CB7C3115FA0BD00C82B15 /* MainWindowController.mm in Sources */,
+				108139E51163DE650074D3AD /* JBAT_LightSet.cpp in Sources */,
+				108139F51163E55F0074D3AD /* JBAT_Light.cpp in Sources */,
+				1004A69F1167467F00F19B63 /* JBAT_Camera.cpp in Sources */,
+				1004A6A811675BE900F19B63 /* JBAT_MathTools.cpp in Sources */,
+				1004A6AB1167AC2B00F19B63 /* JBAT_Floor.cpp in Sources */,
+				10C40A86116A0AA60041F17D /* LightControlViewController.mm in Sources */,
+				10C40A8B116A0BEA0041F17D /* ViewComponentsControlWindowController.mm in Sources */,
+				10C40A91116A106F0041F17D /* LightsControlViewController.mm in Sources */,
+				10C2E5981171DF360008A8F7 /* CameraControlWindowController.mm in Sources */,
+				109C0B0D119C185F00366977 /* FloorControlViewController.m in Sources */,
+				107350EC119DE46E000F97C5 /* JBAT_Object.cpp in Sources */,
+				10C2EA6911AAE0D20033EC49 /* BaseGLView.mm in Sources */,
+				10C2EA6E11AB24190033EC49 /* JBAT_Scene.cpp in Sources */,
+				10F1F76F11AC5F7900D49CCF /* JBAT_ObjectSet.cpp in Sources */,
+				105FDA2011B11D25005421E3 /* JBAT_VSoundProject.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1DDD58140DA1D0A300B32029 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DDD58150DA1D0A300B32029 /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MeshFrames3_Prefix.pch;
+				INFOPLIST_FILE = "MeshFrames3-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = MeshFrames3;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MeshFrames3_Prefix.pch;
+				INFOPLIST_FILE = "MeshFrames3-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = MeshFrames3;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = 4.2;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "MeshFrames3" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MeshFrames3" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
