@@ -15,7 +15,7 @@
 #include <list>
 #include "Math3d.h"
 
-#define DEFAULT_LIGHT_POSITION {-20.0, 0.0, 20.0}
+#define DEFAULT_LIGHT_POSITION {-20.0, 0.0, 20.0} 
 
 class JBAT_LightSet {
 	
