@@ -47,11 +47,11 @@
 	
 	[lightsTable reloadData];
 	
-	if ([dataSource numberOfLights] < 1) {
+	if ([self numberOfLights] < 1) {
 		[addLightButton setEnabled:YES];
 		[removeLightButton setEnabled:NO];
 	}
-	else if ([dataSource numberOfLights] > 7) {
+	else if ([self numberOfLights] > 7) {
 		[addLightButton setEnabled:NO];
 		[removeLightButton setEnabled:YES];
 	}

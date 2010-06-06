@@ -91,12 +91,13 @@
 			delete modelMesh;
 		}
 		
-		modelMesh = new JBAT_Object(filename); 
+		modelMesh = new JBAT_Object(); 
+		modelMesh->readVTKFile(filename);
 		
 		
 		NSLog(@"Mesh has %d points and %d cells", modelMesh->getVertexCount(), modelMesh->getCellCount());
 		
-		[meshDataViewController updateTables];
+		[meshDataViewController updateTable];
 		
     }
 	

@@ -19,11 +19,12 @@
 
 @interface MeshDataViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource> {
 	
+	IBOutlet NSPopUpButton *tableInputPopUpButton;
 	IBOutlet NSButton *updateTablesButton;
 	
-	IBOutlet NSTableView *meshVerticesTableView;
-	IBOutlet NSTableView *meshNormalsTableView;
-	IBOutlet NSTableView *meshPolysTableView;
+	IBOutlet NSTableView *mainTableView;
+	
+	NSMutableDictionary *tableColumns;
 	
 	id<MeshDataViewControllerDataSource> dataSource;
 
@@ -32,9 +33,8 @@
 
 @property (assign) id<MeshDataViewControllerDataSource> dataSource;
 
--(IBAction)	updateTablesClicked:(id)sender;
--(void) updateTables;
-
+-(IBAction) updateTableClicked:(id)sender;
+-(void) updateTable;
 -(void) setup;
 
 @end
