@@ -14,6 +14,7 @@
 
 @synthesize mouseSensitivity, mouseInteractionEnabled, keyIntereactionEnabled;
 @synthesize upIsPressed, downIsPressed, leftIsPressed, rightIsPressed, forwardIsPressed, backwardIsPressed;
+@synthesize delegate;
 
 
 - (id)initWithFrame:(NSRect)frame {
@@ -40,6 +41,11 @@
 - (void)drawRect:(NSRect)dirtyRect {
     // Drawing code here.
 }
+
+
+#pragma mark -
+#pragma mark Camera Interaction Methods
+
 
 - (void)mouseDragged:(NSEvent *)theEvent {
 	
@@ -214,18 +220,19 @@
 		return;
 	}
 	
-	
-	
     [super keyUp:theEvent];
 	
 }
 
 -(void) rotateCameraThetaBy:(float)angle {
-	
+	[delegate camera]->addTheta(angle);
 }
 
 -(void) rotateCameraPhiBy:(float)angle {
-	
+	[delegate camera]->addPhi(angle);
 }
+
+#pragma mark -
+#pragma mark GL Methods
 
 @end

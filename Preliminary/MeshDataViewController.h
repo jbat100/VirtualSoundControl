@@ -24,7 +24,7 @@
 	
 	IBOutlet NSTableView *mainTableView;
 	
-	NSMutableDictionary *tableColumns;
+	NSView *waitingView;
 	
 	id<MeshDataViewControllerDataSource> dataSource;
 
@@ -36,5 +36,9 @@
 -(IBAction) updateTableClicked:(id)sender;
 -(void) updateTable;
 -(void) setup;
+-(void) setNumberOfColumnsTo:(NSInteger)n;
+
+-(void) showTableWaitingView;
+-(void) hideTableWaitingView;
 
 @end

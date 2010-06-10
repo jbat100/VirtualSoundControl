@@ -20,8 +20,6 @@
 
 @interface MeshDataViewController () // private methods
 
--(void) emptyTableColums;
-
 @end
 
 
@@ -49,9 +47,10 @@
 	
 	[mainTableView setDelegate:self];
 	[mainTableView setDataSource:self];
+	[mainTableView setUsesAlternatingRowBackgroundColors:YES];
 	
 	[tableInputPopUpButton setPullsDown:NO];
-	
+	[tableInputPopUpButton removeAllItems];
 	[tableInputPopUpButton addItemsWithTitles:[NSArray arrayWithObjects:
 											   COORDINATES_KEY,
 											   NORMALS_KEY,
@@ -63,103 +62,7 @@
 	[tableInputPopUpButton setTarget:self];
 	[tableInputPopUpButton setAction:@selector(updateTable)];
 	
-	tableColumns = [[NSMutableDictionary alloc] initWithCapacity:12];
-	
-	NSTableColumn *column;
-	NSMutableArray *columns;
-	NSUInteger resizingMask = NSTableColumnAutoresizingMask;
-	NSTextAlignment alignment = NSCenterTextAlignment;
-	
-	
-	columns = [[[NSMutableArray alloc] initWithCapacity:3] autorelease];
-	column = [[[NSTableColumn alloc] initWithIdentifier:@"X"] autorelease];
-	[[column headerCell] setStringValue:@"X"];
-	//[[column headerCell] setTextAlignment:alignment];
-	[column setResizingMask:resizingMask];
-	[columns addObject:column];
-	column = [[[NSTableColumn alloc] initWithIdentifier:@"Y"] autorelease];
-	[[column headerCell] setStringValue:@"Y"];
-	//[[column headerCell] setTextAlignment:alignment];
-	[column setResizingMask:resizingMask];
-	[columns addObject:column];
-	column = [[[NSTableColumn alloc] initWithIdentifier:@"Z"] autorelease];
-	[[column headerCell] setStringValue:@"Z"];
-	//[[column headerCell] setTextAlignment:alignment];
-	[column setResizingMask:resizingMask];
-	[columns addObject:column];
-	[tableColumns setObject:[NSArray arrayWithArray:columns] forKey:COORDINATES_KEY];
-	
-	columns = [[[NSMutableArray alloc] initWithCapacity:3] autorelease];
-	column = [[[NSTableColumn alloc] initWithIdentifier:@"X"] autorelease];
-	[[column headerCell] setStringValue:@"X"];
-	//[[column headerCell] setTextAlignment:alignment];
-	[column setResizingMask:resizingMask];
-	[columns addObject:column];
-	column = [[[NSTableColumn alloc] initWithIdentifier:@"Y"] autorelease];
-	[[column headerCell] setStringValue:@"Y"];
-	//[[column headerCell] setTextAlignment:alignment];
-	[column setResizingMask:resizingMask];
-	[columns addObject:column];
-	column = [[[NSTableColumn alloc] initWithIdentifier:@"Z"] autorelease];
-	[[column headerCell] setStringValue:@"Z"];
-	//[[column headerCell] setTextAlignment:alignment];
-	[column setResizingMask:resizingMask];
-	[columns addObject:column];
-	[tableColumns setObject:[NSArray arrayWithArray:columns] forKey:NORMALS_KEY];
-	
-	columns = [[[NSMutableArray alloc] initWithCapacity:2] autorelease];
-	column = [[[NSTableColumn alloc] initWithIdentifier:@"X"] autorelease];
-	[[column headerCell] setStringValue:@"X"];
-	//[[column headerCell] setTextAlignment:alignment];
-	[column setResizingMask:resizingMask];
-	[columns addObject:column];
-	column = [[[NSTableColumn alloc] initWithIdentifier:@"Y"] autorelease];
-	[[column headerCell] setStringValue:@"Y"];
-	//[[column headerCell] setTextAlignment:alignment];
-	[column setResizingMask:resizingMask];
-	[columns addObject:column];
-	[tableColumns setObject:[NSArray arrayWithArray:columns] forKey:TEXTURE_COORDINATES_KEY];
-	
-	columns = [[[NSMutableArray alloc] initWithCapacity:2] autorelease];
-	column = [[[NSTableColumn alloc] initWithIdentifier:@"R"] autorelease];
-	[[column headerCell] setStringValue:@"R"];
-	//[[column headerCell] setTextAlignment:alignment];
-	[column setResizingMask:resizingMask];
-	[columns addObject:column];
-	column = [[[NSTableColumn alloc] initWithIdentifier:@"G"] autorelease];
-	[[column headerCell] setStringValue:@"G"];
-	//[[column headerCell] setTextAlignment:alignment];
-	[column setResizingMask:resizingMask];
-	[columns addObject:column];
-	column = [[[NSTableColumn alloc] initWithIdentifier:@"B"] autorelease];
-	[[column headerCell] setStringValue:@"B"];
-	//[[column headerCell] setTextAlignment:alignment];
-	[column setResizingMask:resizingMask];
-	[columns addObject:column];
-	column = [[[NSTableColumn alloc] initWithIdentifier:@"A"] autorelease];
-	[[column headerCell] setStringValue:@"A"];
-	//[[column headerCell] setTextAlignment:alignment];
-	[column setResizingMask:resizingMask];
-	[columns addObject:column];
-	[tableColumns setObject:[NSArray arrayWithArray:columns] forKey:COLORS_KEY];
-	
-	columns = [[[NSMutableArray alloc] initWithCapacity:3] autorelease];
-	column = [[[NSTableColumn alloc] initWithIdentifier:@"1"] autorelease];
-	[[column headerCell] setStringValue:@"Index 1"];
-	//[[column headerCell] setTextAlignment:alignment];
-	[column setResizingMask:resizingMask];
-	[columns addObject:column];
-	column = [[[NSTableColumn alloc] initWithIdentifier:@"2"] autorelease];
-	[[column headerCell] setStringValue:@"Index 2"];
-	//[[column headerCell] setTextAlignment:alignment];
-	[column setResizingMask:resizingMask];
-	[columns addObject:column];
-	column = [[[NSTableColumn alloc] initWithIdentifier:@"3"] autorelease];
-	[[column headerCell] setStringValue:@"Index 3"];
-	//[[column headerCell] setTextAlignment:alignment];
-	[column setResizingMask:resizingMask];
-	[columns addObject:column];
-	[tableColumns setObject:[NSArray arrayWithArray:columns] forKey:TRIANGLE_INDECES];
+	[self updateTable];
 	
 	
 }
@@ -179,37 +82,86 @@
 -(void) updateTable {
 	
 	NSString *selectedPopUpItemTitle = [tableInputPopUpButton titleOfSelectedItem];
-	[self emptyTableColums];
 	
-	NSArray *columns = [tableColumns objectForKey:selectedPopUpItemTitle];
-	
-	NSLog(@"tableColumns is %@, Columns is %@", tableColumns, columns);
-	
-	CGFloat width = mainTableView.frame.size.width;
-	
-	for (NSInteger i = 0; i < [columns count]; i++) {
-		[[columns objectAtIndex:i] setWidth:(width / [columns count])];
-		[mainTableView addTableColumn:[columns objectAtIndex:i]];
+	if ([selectedPopUpItemTitle isEqualToString:COORDINATES_KEY]) {
+		[self setNumberOfColumnsTo:3];
+		NSArray *columns = [mainTableView tableColumns];
+		[[(NSTableColumn*)[columns objectAtIndex:0] headerCell] setStringValue:@"X"];
+		[[(NSTableColumn*)[columns objectAtIndex:1] headerCell] setStringValue:@"Y"];
+		[[(NSTableColumn*)[columns objectAtIndex:2] headerCell] setStringValue:@"Z"];
 	}
+	else if ([selectedPopUpItemTitle isEqualToString:NORMALS_KEY]) {
+		[self setNumberOfColumnsTo:3];
+		NSArray *columns = [mainTableView tableColumns];
+		[[(NSTableColumn*)[columns objectAtIndex:0] headerCell] setStringValue:@"X"];
+		[[(NSTableColumn*)[columns objectAtIndex:1] headerCell] setStringValue:@"Y"];
+		[[(NSTableColumn*)[columns objectAtIndex:2] headerCell] setStringValue:@"Z"];
+	}
+	else if ([selectedPopUpItemTitle isEqualToString:TEXTURE_COORDINATES_KEY]) {
+		[self setNumberOfColumnsTo:2];
+		NSArray *columns = [mainTableView tableColumns];
+		[[(NSTableColumn*)[columns objectAtIndex:0] headerCell] setStringValue:@"X"];
+		[[(NSTableColumn*)[columns objectAtIndex:1] headerCell] setStringValue:@"Y"];
+	}
+	else if ([selectedPopUpItemTitle isEqualToString:COLORS_KEY]) {
+		[self setNumberOfColumnsTo:4];
+		NSArray *columns = [mainTableView tableColumns];
+		[[(NSTableColumn*)[columns objectAtIndex:0] headerCell] setStringValue:@"R"];
+		[[(NSTableColumn*)[columns objectAtIndex:1] headerCell] setStringValue:@"G"];
+		[[(NSTableColumn*)[columns objectAtIndex:2] headerCell] setStringValue:@"B"];
+		[[(NSTableColumn*)[columns objectAtIndex:3] headerCell] setStringValue:@"A"];
+	}
+	else if ([selectedPopUpItemTitle isEqualToString:TRIANGLE_INDECES]) {
+		[self setNumberOfColumnsTo:3];
+		NSArray *columns = [mainTableView tableColumns];
+		[[(NSTableColumn*)[columns objectAtIndex:0] headerCell] setStringValue:@"1"];
+		[[(NSTableColumn*)[columns objectAtIndex:1] headerCell] setStringValue:@"2"];
+		[[(NSTableColumn*)[columns objectAtIndex:2] headerCell] setStringValue:@"3"];
+	}
+	
+	NSArray *columns = [mainTableView tableColumns];
+	
+	NSLog(@"At A, columns is %@", columns);
 	
 	[mainTableView reloadData];
 	
 }
 
--(void) emptyTableColums {
+-(void) setNumberOfColumnsTo:(NSInteger)n {
 	
 	NSArray *columns = [mainTableView tableColumns];
 	
-	NSLog(@"Before empty columns is %@", columns);
+	NSLog(@"Setting number of columns to %d", n);
 	
-	
-	for (NSInteger i = 0; i < [columns count]; i++) {
-		[mainTableView removeTableColumn:[columns objectAtIndex:i]];
+	if (n == [columns count]) {
+		return;
 	}
 	
-	columns = [mainTableView tableColumns];
+	else if (n > [columns count]) {
+		
+		for (int i = [columns count]; i < n; i++) {
+			NSTableColumn* c = [[NSTableColumn alloc] initWithIdentifier:[NSString stringWithFormat:@"%d", i+1]];
+			[mainTableView addTableColumn:[c autorelease]];
+		}
+		
+	}
 	
-	NSLog(@"After	empty columns is %@", columns);
+	else if (n < [columns count]) {
+		
+		for (int i = [columns count] - 1; i > n - 1; i--) {
+			NSTableColumn *c = [columns objectAtIndex:i];
+			[mainTableView removeTableColumn:c];
+		}
+		 
+	}
+
+	NSLog(@"Table view frame is %@", NSStringFromRect(mainTableView.frame));
+	for (int i = 0; i < [columns count]; i++) {
+		
+		[[columns objectAtIndex:i] setWidth:mainTableView.frame.size.width/(float)n];
+	}
+	
+	NSLog(@"After empty columns is %@", columns);
 
 }
 
@@ -248,49 +200,49 @@
 	if (dataSource.modelMesh) {
 		
 		if ([[tableInputPopUpButton titleOfSelectedItem] isEqualToString:COORDINATES_KEY]) {
-			if ([[tableColumn identifier] isEqualToString:@"X"]) {
+			if ([[tableColumn identifier] isEqualToString:@"1"]) {
 				return [NSNumber numberWithFloat:dataSource.modelMesh->getVertexCoordinates(row)[0]];
 			}
-			else if ([[tableColumn identifier] isEqualToString:@"Y"]) {
+			else if ([[tableColumn identifier] isEqualToString:@"2"]) {
 				return [NSNumber numberWithFloat:dataSource.modelMesh->getVertexCoordinates(row)[1]];
 			}
-			else if ([[tableColumn identifier] isEqualToString:@"Z"]) {
+			else if ([[tableColumn identifier] isEqualToString:@"3"]) {
 				return [NSNumber numberWithFloat:dataSource.modelMesh->getVertexCoordinates(row)[2]];
 			}
 		}
 		
 		else if ([[tableInputPopUpButton titleOfSelectedItem] isEqualToString:NORMALS_KEY]) {
-			if ([[tableColumn identifier] isEqualToString:@"X"]) {
+			if ([[tableColumn identifier] isEqualToString:@"1"]) {
 				return [NSNumber numberWithFloat:dataSource.modelMesh->getVertexNormals(row)[0]];
 			}
-			else if ([[tableColumn identifier] isEqualToString:@"Y"]) {
+			else if ([[tableColumn identifier] isEqualToString:@"2"]) {
 				return [NSNumber numberWithFloat:dataSource.modelMesh->getVertexNormals(row)[1]];
 			}
-			else if ([[tableColumn identifier] isEqualToString:@"Z"]) {
+			else if ([[tableColumn identifier] isEqualToString:@"3"]) {
 				return [NSNumber numberWithFloat:dataSource.modelMesh->getVertexNormals(row)[2]];
 			}
 		}
 		
 		else if ([[tableInputPopUpButton titleOfSelectedItem] isEqualToString:TEXTURE_COORDINATES_KEY]) {
-			if ([[tableColumn identifier] isEqualToString:@"X"]) {
+			if ([[tableColumn identifier] isEqualToString:@"1"]) {
 				return [NSNumber numberWithFloat:dataSource.modelMesh->getVertexTextureCoordinates(row)[0]];
 			}
-			else if ([[tableColumn identifier] isEqualToString:@"Y"]) {
+			else if ([[tableColumn identifier] isEqualToString:@"2"]) {
 				return [NSNumber numberWithFloat:dataSource.modelMesh->getVertexTextureCoordinates(row)[0]];
 			}
 		}
 		
 		else if ([[tableInputPopUpButton titleOfSelectedItem] isEqualToString:COLORS_KEY]) {
-			if ([[tableColumn identifier] isEqualToString:@"R"]) {
+			if ([[tableColumn identifier] isEqualToString:@"1"]) {
 				return [NSNumber numberWithFloat:dataSource.modelMesh->getVertexColors(row)[0]];
 			}
-			else if ([[tableColumn identifier] isEqualToString:@"G"]) {
+			else if ([[tableColumn identifier] isEqualToString:@"2"]) {
 				return [NSNumber numberWithFloat:dataSource.modelMesh->getVertexColors(row)[1]];
 			}
-			else if ([[tableColumn identifier] isEqualToString:@"B"]) {
+			else if ([[tableColumn identifier] isEqualToString:@"3"]) {
 				return [NSNumber numberWithFloat:dataSource.modelMesh->getVertexColors(row)[2]];
 			}
-			else if ([[tableColumn identifier] isEqualToString:@"A"]) {
+			else if ([[tableColumn identifier] isEqualToString:@"4"]) {
 				return [NSNumber numberWithFloat:dataSource.modelMesh->getVertexColors(row)[3]];
 			}
 		}
@@ -304,7 +256,7 @@
 			else if ([[tableColumn identifier] isEqualToString:@"2"]) {
 				return [NSString stringWithFormat:@"%d", n2];
 			}
-			else if ([[tableColumn identifier] isEqualToString:@"Node 3 id"]) {
+			else if ([[tableColumn identifier] isEqualToString:@"3"]) {
 				return [NSString stringWithFormat:@"%d", n3];
 			}
 		}

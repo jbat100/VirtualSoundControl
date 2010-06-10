@@ -13,7 +13,7 @@
 
 @protocol GLViewInteractionDelegate
 
--(JBAT_LightSet *) lightSet; // to be able to call the opengl draw operations 
+-(JBAT_LightSet*) lightSet; // to be able to call the opengl draw operations 
 -(JBAT_Camera*) camera;
 
 @end
@@ -38,6 +38,8 @@
 	BOOL forwardIsPressed;
 	BOOL backwardIsPressed;
 	
+	id <GLViewInteractionDelegate> delegate;
+	
 }
 
 
@@ -52,6 +54,8 @@
 @property (nonatomic) BOOL rightIsPressed;
 @property (nonatomic) BOOL forwardIsPressed;
 @property (nonatomic) BOOL backwardIsPressed;
+
+@property (assign) id <GLViewInteractionDelegate> delegate;
 
 -(void) rotateCameraThetaBy:(float)angle;
 -(void) rotateCameraPhiBy:(float)angle;
