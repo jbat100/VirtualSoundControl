@@ -40,7 +40,7 @@
 			</object>
 			<object class="NSCustomView" id="1005">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">268</int>
+				<int key="NSvFlags">286</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSPopUpButton" id="436890716">
@@ -339,7 +339,6 @@
 								<int key="NSvFlags">-2147483392</int>
 								<string key="NSFrame">{{1, 255}, {260, 15}}</string>
 								<reference key="NSSuperview" ref="251743611"/>
-								<bool key="NSEnabled">YES</bool>
 								<int key="NSsFlags">1</int>
 								<reference key="NSTarget" ref="251743611"/>
 								<string key="NSAction">_doScroller:</string>
@@ -364,7 +363,7 @@
 						<string key="NSFrame">{{20, 20}, {802, 294}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSNextKeyView" ref="662663638"/>
-						<int key="NSsFlags">690</int>
+						<int key="NSsFlags">562</int>
 						<reference key="NSVScroller" ref="93871937"/>
 						<reference key="NSHScroller" ref="429912030"/>
 						<reference key="NSContentView" ref="662663638"/>

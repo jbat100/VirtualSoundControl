@@ -26,6 +26,7 @@
 
 }
 
+@property (assign) BaseGLView *glView;
 @property (assign) id<MeshDisplayViewControllerDataSource> dataSource;
 @property (nonatomic) JBAT_Camera *camera;
 

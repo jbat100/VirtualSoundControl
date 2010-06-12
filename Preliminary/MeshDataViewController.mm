@@ -121,7 +121,7 @@
 	
 	NSArray *columns = [mainTableView tableColumns];
 	
-	NSLog(@"At A, columns is %@", columns);
+	//NSLog(@"At A, columns is %@", columns);
 	
 	[mainTableView reloadData];
 	
@@ -131,7 +131,7 @@
 	
 	NSArray *columns = [mainTableView tableColumns];
 	
-	NSLog(@"Setting number of columns to %d", n);
+	//NSLog(@"Setting number of columns to %d", n);
 	
 	if (n == [columns count]) {
 		return;
@@ -155,13 +155,13 @@
 		 
 	}
 
-	NSLog(@"Table view frame is %@", NSStringFromRect(mainTableView.frame));
+	//NSLog(@"Table view frame is %@", NSStringFromRect(mainTableView.frame));
 	for (int i = 0; i < [columns count]; i++) {
 		
 		[[columns objectAtIndex:i] setWidth:mainTableView.frame.size.width/(float)n];
 	}
 	
-	NSLog(@"After empty columns is %@", columns);
+	//NSLog(@"After empty columns is %@", columns);
 
 }
 

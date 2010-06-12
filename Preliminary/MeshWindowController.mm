@@ -25,6 +25,8 @@
 
 -(void) windowDidLoad {
 	
+	rendering = NO;
+	
 	meshFilePath = [[NSString stringWithString:@"/Users/jonathanthorpe/Programming/Files/VTK/SphereOutput.vtk"] retain];
 	modelMesh = nil;
 	
@@ -110,6 +112,25 @@
 	}
 	
 	[viewComponentsControlWindowController showWindow:self];
+	
+}
+
+-(IBAction) testGLClicked:(id)sender {
+	
+	NSLog(@"Clicked GL rendering");
+	
+	if (rendering) {
+		[[meshDisplayViewController glView] stopRenderingBase];
+		rendering = NO;
+	}
+	else {
+		[[meshDisplayViewController glView] startRenderingBase];
+		[[meshDisplayViewController glView] becomeFirstResponder];
+		rendering = YES;
+	}
+
+	
+	
 	
 }
 

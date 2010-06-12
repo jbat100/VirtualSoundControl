@@ -8,6 +8,9 @@
 
 #import "BaseGLView.h"
 #include <Carbon/Carbon.h>
+#include <OpenGL/gl.h>
+
+
 
 @implementation BaseGLView
 
@@ -38,16 +41,195 @@
     return self;
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
-    // Drawing code here.
+
+#pragma mark -
+#pragma mark Graphics Methods
+
+-(void) startRenderingBase {
+	
+	thisContext = [self openGLContext];
+	
+	[thisContext setView:self];
+	[thisContext update];
+	[thisContext makeCurrentContext];
+	[self setOpenGLContext:thisContext];
+	
+	NSOpenGLContext* ctx = [NSOpenGLContext currentContext];
+	
+	NSLog(@"in startRenderingBase");
+	NSLog(@"Current context is %@", ctx);
+	NSLog(@"This context is %@", [self openGLContext]);
+	
+	[self prepareOpenGL];
+	
+	pTimer = [NSTimer timerWithTimeInterval:(0.04) target:self selector:@selector(idle:) userInfo:nil repeats:YES];
+	[[NSRunLoop currentRunLoop]addTimer:pTimer forMode:NSDefaultRunLoopMode];
+	
+	
+	
+}
+
+-(void) stopRenderingBase {
+	
+	[pTimer invalidate];
+	
+}
+
+
+- (void) prepareOpenGL { 
+	[super prepareOpenGL];
+	
+
+	
+	
+	/*----------------------------------------------------------------*/
+	//SetupRC(); (do actual setup)
+	
+	glEnable(GL_DEPTH_TEST);	// Hidden surface removal
+	glFrontFace(GL_CCW);		// Counter clock-wise polygons face out
+	glEnable(GL_CULL_FACE);		// Do not calculate inside of jet
+	
+	// Black background
+	glClearColor(0.0f, 0.2f, 0.2f, 1.0f );	
+	
+	
+	/*----------------------------------------------------------------*/
+	
+
+
+}
+
+- (void) clearGLContext { 
+	//ShutdownRC(); 
+}
+
+- (void)reshape { 
+	
+	NSLog(@"In reshape");
+	
+	NSRect rect = [self bounds]; 
+	//ChangeSize(rect.size.width, rect.size.height); 
+	
+	int w = rect.size.width;
+	int h = rect.size.height;
+	
+	GLfloat fAspect;
+	
+    // Prevent a divide by zero
+    if(h == 0)
+        h = 1;
+	
+    // Set Viewport to window dimensions
+    glViewport(0, 0, w, h);
+	
+    // Reset coordinate system
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+	
+    fAspect = (float)w/(float)h;
+    gluPerspective(45.0, fAspect, 0.1, 500.0);
+	
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glTranslatef(0.0f, 0.0f, -250.0f);
+	
+	glutPostRedisplay();
+	
+}
+
+static void drawAnObject ()
+
+{
+	
+    glColor3f(1.0f, 0.85f, 0.35f);
+	
+	glPushMatrix();
+	glLoadIdentity();
+	glTranslatef(-0.0, 0.0, -0.5);
+	
+//    glBegin(GL_TRIANGLES);
+//	
+//    {
+//		
+//        glVertex3f(  0.0,  0.6, 0.0);
+//		
+//        glVertex3f( -0.2, -0.3, 0.0);
+//		
+//        glVertex3f(  0.2, -0.3 ,0.0);
+//		
+//    }
+	
+
+	//glutSolidSphere(0.5, 10, 10);
+	
+	glutWireSphere(0.5, 40, 40);
+	
+	glPopMatrix();
+	
+    glEnd();
+	
+}
+
+-(void) drawRect: (NSRect) bounds
+
+{
+	
+    //glClearColor(0, 0, 0, 0);
+	
+    
+	
+	glClearColor(0.0f, 0.2f, 0.2f, 1.0f );	
+	
+	glClear(GL_COLOR_BUFFER_BIT);
+	
+    drawAnObject();
+	
+    glFlush();
+	
+}
+
+- (void)idle:(NSTimer *)pTimer {
+	//NSLog(@"In idle");
+	[self drawRect:[self bounds]]; 
+	
+	if (forwardIsPressed) {
+		NSLog(@"Forward is pressed");
+	}
+	
+	if (backwardIsPressed) {
+		NSLog(@"Backward is pressed");
+	}
+	
+	if (upIsPressed) {
+		NSLog(@"Up is pressed");
+	}
+	
+	if (downIsPressed) {
+		NSLog(@"Down is pressed");
+	}
+	
+	if (leftIsPressed) {
+		NSLog(@"Left is pressed");
+	}
+	
+	if (rightIsPressed) {
+		NSLog(@"Right is pressed");
+	}
 }
 
 
 #pragma mark -
 #pragma mark Camera Interaction Methods
 
+- (BOOL)acceptsFirstMouse:(NSEvent *)theEvent {
+	
+	return YES;
+	
+}
 
 - (void)mouseDragged:(NSEvent *)theEvent {
+	
+	NSLog(@"In mouse dragged");
 	
 	if (mouseInteractionEnabled) {
 		[self rotateCameraThetaBy:(mouseSensitivity*[theEvent deltaX])];
@@ -80,6 +262,8 @@
 
 
 - (void)keyDown:(NSEvent *)theEvent {
+	
+	NSLog(@"In key down, event is %@", theEvent);
 	
 
 	/* 
@@ -155,6 +339,8 @@
 }
 
 - (void)keyUp:(NSEvent *)theEvent {
+	
+	NSLog(@"In key up, event is %@", theEvent);
 	
 	/*
 	
@@ -232,7 +418,6 @@
 	[delegate camera]->addPhi(angle);
 }
 
-#pragma mark -
-#pragma mark GL Methods
+
 
 @end

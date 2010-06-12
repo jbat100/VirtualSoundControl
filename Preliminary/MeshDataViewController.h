@@ -38,7 +38,7 @@
 -(void) setup;
 -(void) setNumberOfColumnsTo:(NSInteger)n;
 
--(void) showTableWaitingView;
--(void) hideTableWaitingView;
+//-(void) showTableWaitingView;
+//-(void) hideTableWaitingView;
 
 @end

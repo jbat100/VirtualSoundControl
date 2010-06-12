@@ -20,6 +20,9 @@
 
 
 @interface BaseGLView : NSOpenGLView {
+	
+	// used to update screen
+	NSTimer *pTimer;
 
 	float mouseSensitivity;
 	
@@ -37,6 +40,8 @@
 	
 	BOOL forwardIsPressed;
 	BOOL backwardIsPressed;
+	
+	NSOpenGLContext *thisContext;
 	
 	id <GLViewInteractionDelegate> delegate;
 	
@@ -56,6 +61,10 @@
 @property (nonatomic) BOOL backwardIsPressed;
 
 @property (assign) id <GLViewInteractionDelegate> delegate;
+
+-(void) startRenderingBase;
+-(void) stopRenderingBase;
+- (void) prepareOpenGL;
 
 -(void) rotateCameraThetaBy:(float)angle;
 -(void) rotateCameraPhiBy:(float)angle;

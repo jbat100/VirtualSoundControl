@@ -12,11 +12,20 @@
 
 @implementation MeshDisplayViewController
 
-@synthesize camera, dataSource;
+@synthesize camera, glView, dataSource;
 
 -(void) awakeFromNib {
 	
+	NSRect frame = self.view.frame;
+	frame.origin.x = frame.origin.y = 0;
+	
+	glView = [[BaseGLView alloc] initWithFrame:frame];
+	
 	camera = new JBAT_Camera();
+	
+	NSLog(@"In MeshDisplayViewController awakeFromNib");
+	NSLog(@"glView is %@", glView);
+	NSLog(@"glView rendering context is %@", [glView openGLContext]);
 	
 }
 
