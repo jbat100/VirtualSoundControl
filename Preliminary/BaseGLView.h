@@ -70,4 +70,8 @@
 -(void) rotateCameraPhiBy:(float)angle;
 
 
+-(void) resize;
+- (void)reshape;
+
+
 @end

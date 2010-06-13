@@ -14,13 +14,13 @@ float fullRangedAngle (float angle) {
 	
 	if (angle > M_PI) {
 		while (angle > M_PI) {
-			angle =- (2*M_PI);
+			angle -= (2*M_PI);
 		}
 	}
 	
-	else if (angle < M_PI) {
-		while (angle < M_PI) {
-			angle =+ (2*M_PI);
+	else if (angle < -M_PI) {
+		while (angle < -M_PI) {
+			angle += (2*M_PI);
 		}
 	}
 	

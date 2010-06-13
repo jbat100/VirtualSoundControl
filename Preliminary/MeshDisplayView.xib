@@ -12,6 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -38,7 +39,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="1005">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -50,12 +51,13 @@
 						<reference key="NSSuperview" ref="1005"/>
 						<object class="NSOpenGLPixelFormat" key="NSPixelFormat">
 							<object class="NSMutableData" key="NSPixelAttributes">
-								<bytes key="NS.bytes">AAAAYAAAAAgAAAAYAAAACwAAAAgAAAAMAAAAEAAAAAA</bytes>
+								<bytes key="NS.bytes">AAAAYAAAAAA</bytes>
 							</object>
 						</object>
 					</object>
 				</object>
 				<string key="NSFrameSize">{840, 471}</string>
+				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 		</object>
@@ -126,7 +128,7 @@
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>{{97, 195}, {840, 471}}</string>
+					<string>{{239, 157}, {840, 471}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{628, 654}</string>
 					<string>{{217, 442}, {480, 272}}</string>

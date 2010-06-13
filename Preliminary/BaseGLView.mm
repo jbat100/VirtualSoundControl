@@ -9,7 +9,21 @@
 #import "BaseGLView.h"
 #include <Carbon/Carbon.h>
 #include <OpenGL/gl.h>
+#include <math.h>
+#include "JBAT_MathTools.h"
 
+
+static float x;
+
+static void drawAnObject () {
+	
+    glColor3f(1.0f, 0.85f, 0.35f);
+	
+	//glutSolidSphere(10.0, 40, 40);
+
+	glutWireSphere(1.0f, 40, 40);
+	
+}
 
 
 @implementation BaseGLView
@@ -47,12 +61,16 @@
 
 -(void) startRenderingBase {
 	
-	thisContext = [self openGLContext];
+	x = 0.0;
 	
-	[thisContext setView:self];
-	[thisContext update];
-	[thisContext makeCurrentContext];
-	[self setOpenGLContext:thisContext];
+//	thisContext = [self openGLContext];
+//	
+//	[thisContext setView:self];
+//	[thisContext update];
+//	[thisContext makeCurrentContext];
+//	[self setOpenGLContext:thisContext];
+	
+	//[self becomeFirstResponder];
 	
 	NSOpenGLContext* ctx = [NSOpenGLContext currentContext];
 	
@@ -61,8 +79,9 @@
 	NSLog(@"This context is %@", [self openGLContext]);
 	
 	[self prepareOpenGL];
+	[self reshape];
 	
-	pTimer = [NSTimer timerWithTimeInterval:(0.04) target:self selector:@selector(idle:) userInfo:nil repeats:YES];
+	pTimer = [NSTimer timerWithTimeInterval:(0.1) target:self selector:@selector(idle:) userInfo:nil repeats:YES];
 	[[NSRunLoop currentRunLoop]addTimer:pTimer forMode:NSDefaultRunLoopMode];
 	
 	
@@ -71,6 +90,8 @@
 
 -(void) stopRenderingBase {
 	
+	//[self resignFirstResponder];
+	
 	[pTimer invalidate];
 	
 }
@@ -78,9 +99,6 @@
 
 - (void) prepareOpenGL { 
 	[super prepareOpenGL];
-	
-
-	
 	
 	/*----------------------------------------------------------------*/
 	//SetupRC(); (do actual setup)
@@ -103,9 +121,15 @@
 	//ShutdownRC(); 
 }
 
+-(void) resize {
+	
+	NSLog(@"\n\nIN RESIZE\n\n");
+	
+}
+
 - (void)reshape { 
 	
-	NSLog(@"In reshape");
+	NSLog(@"\n\nIN RESHAPE\n\n");
 	
 	NSRect rect = [self bounds]; 
 	//ChangeSize(rect.size.width, rect.size.height); 
@@ -119,78 +143,55 @@
     if(h == 0)
         h = 1;
 	
+	NSLog(@"h is %d, w is %d", h, w);
+	
     // Set Viewport to window dimensions
     glViewport(0, 0, w, h);
+	
 	
     // Reset coordinate system
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-	
     fAspect = (float)w/(float)h;
     gluPerspective(45.0, fAspect, 0.1, 500.0);
 	
-    glMatrixMode(GL_MODELVIEW);
+	
+	
+	glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glTranslatef(0.0f, 0.0f, -250.0f);
 	
 	glutPostRedisplay();
 	
 }
 
-static void drawAnObject ()
 
-{
+
+-(void) drawRect: (NSRect) bounds {
 	
-    glColor3f(1.0f, 0.85f, 0.35f);
+	
+	glClearColor(0.0f, 0.2f, 0.2f, 1.0f );	
+	glClear(GL_COLOR_BUFFER_BIT);
 	
 	glPushMatrix();
 	glLoadIdentity();
-	glTranslatef(-0.0, 0.0, -0.5);
-	
-//    glBegin(GL_TRIANGLES);
-//	
-//    {
-//		
-//        glVertex3f(  0.0,  0.6, 0.0);
-//		
-//        glVertex3f( -0.2, -0.3, 0.0);
-//		
-//        glVertex3f(  0.2, -0.3 ,0.0);
-//		
-//    }
-	
-
-	//glutSolidSphere(0.5, 10, 10);
-	
-	glutWireSphere(0.5, 40, 40);
-	
+	glTranslatef(sin(x), sin(x), -10.0);	
+    drawAnObject();
 	glPopMatrix();
 	
-    glEnd();
 	
-}
-
--(void) drawRect: (NSRect) bounds
-
-{
-	
-    //glClearColor(0, 0, 0, 0);
-	
-    
-	
-	glClearColor(0.0f, 0.2f, 0.2f, 1.0f );	
-	
-	glClear(GL_COLOR_BUFFER_BIT);
-	
-    drawAnObject();
-	
+	glutSwapBuffers();	
     glFlush();
+
 	
 }
 
 - (void)idle:(NSTimer *)pTimer {
-	//NSLog(@"In idle");
+	
+	x = fullRangedAngle(x+0.1);
+	
 	[self drawRect:[self bounds]]; 
+	
+	[self setNeedsDisplay:YES];
 	
 	if (forwardIsPressed) {
 		NSLog(@"Forward is pressed");
@@ -221,10 +222,20 @@ static void drawAnObject ()
 #pragma mark -
 #pragma mark Camera Interaction Methods
 
+//- (BOOL)acceptsFirstResponder {
+//	return YES;
+//}
+//
+//- (BOOL)becomeFirstResponder {
+//	return  YES;
+//}
+//
+//- (BOOL)resignFirstResponder {
+//	return YES;
+//}
+
 - (BOOL)acceptsFirstMouse:(NSEvent *)theEvent {
-	
 	return YES;
-	
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent {
