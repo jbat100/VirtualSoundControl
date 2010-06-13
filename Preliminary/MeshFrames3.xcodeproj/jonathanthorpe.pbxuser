@@ -62,16 +62,16 @@
 	};
 	100CB76C115EBE7300C82B15 /* MeshWindowController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {826, 663}}";
-			sepNavSelRange = "{609, 8}";
-			sepNavVisRange = "{46, 1056}";
+			sepNavIntBoundsRect = "{{0, 0}, {822, 663}}";
+			sepNavSelRange = "{392, 0}";
+			sepNavVisRange = "{49, 1071}";
 		};
 	};
 	100CB76D115EBE7300C82B15 /* MeshWindowController.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {852, 1885}}";
-			sepNavSelRange = "{2638, 0}";
-			sepNavVisRange = "{1319, 1195}";
+			sepNavIntBoundsRect = "{{0, 0}, {822, 1963}}";
+			sepNavSelRange = "{3484, 0}";
+			sepNavVisRange = "{2598, 892}";
 			sepNavWindowFrame = "{{18, 165}, {1024, 608}}";
 		};
 	};
@@ -87,14 +87,14 @@
 	};
 	100CB791115EE0BB00C82B15 /* MeshDisplayViewController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {826, 645}}";
+			sepNavIntBoundsRect = "{{0, 0}, {822, 625}}";
 			sepNavSelRange = "{515, 6}";
 			sepNavVisRange = "{0, 659}";
 		};
 	};
 	100CB792115EE0BB00C82B15 /* MeshDisplayViewController.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {826, 645}}";
+			sepNavIntBoundsRect = "{{0, 0}, {822, 625}}";
 			sepNavSelRange = "{624, 0}";
 			sepNavVisRange = "{0, 656}";
 		};
@@ -115,7 +115,7 @@
 	};
 	100CB7C1115FA0BD00C82B15 /* MainWindowController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {826, 645}}";
+			sepNavIntBoundsRect = "{{0, 0}, {822, 625}}";
 			sepNavSelRange = "{361, 0}";
 			sepNavVisRange = "{0, 361}";
 		};
@@ -192,7 +192,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 214";
 		rLen = 0;
-		rLoc = 3421;
+		rLoc = 3522;
 		rType = 0;
 		vrLen = 780;
 		vrLoc = 3266;
@@ -302,7 +302,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 214";
 		rLen = 0;
-		rLoc = 3421;
+		rLoc = 3522;
 		rType = 0;
 		vrLen = 779;
 		vrLoc = 3267;
@@ -322,7 +322,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 207";
 		rLen = 0;
-		rLoc = 3394;
+		rLoc = 3495;
 		rType = 0;
 		vrLen = 670;
 		vrLoc = 3721;
@@ -332,7 +332,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 197";
 		rLen = 0;
-		rLoc = 3238;
+		rLoc = 3339;
 		rType = 0;
 		vrLen = 807;
 		vrLoc = 2946;
@@ -402,7 +402,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 178";
 		rLen = 0;
-		rLoc = 2975;
+		rLoc = 3076;
 		rType = 0;
 		vrLen = 754;
 		vrLoc = 2683;
@@ -412,7 +412,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 209";
 		rLen = 0;
-		rLoc = 3274;
+		rLoc = 3375;
 		rType = 0;
 		vrLen = 782;
 		vrLoc = 3076;
@@ -422,7 +422,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 179";
 		rLen = 0;
-		rLoc = 2975;
+		rLoc = 3076;
 		rType = 0;
 		vrLen = 817;
 		vrLoc = 3003;
@@ -432,7 +432,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 209";
 		rLen = 0;
-		rLoc = 3238;
+		rLoc = 3339;
 		rType = 0;
 		vrLen = 769;
 		vrLoc = 3278;
@@ -442,7 +442,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 209";
 		rLen = 0;
-		rLoc = 3238;
+		rLoc = 3339;
 		rType = 0;
 		vrLen = 768;
 		vrLoc = 3278;
@@ -462,7 +462,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 209";
 		rLen = 0;
-		rLoc = 3238;
+		rLoc = 3339;
 		rType = 0;
 		vrLen = 816;
 		vrLoc = 3108;
@@ -472,7 +472,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 209";
 		rLen = 0;
-		rLoc = 3238;
+		rLoc = 3339;
 		rType = 0;
 		vrLen = 740;
 		vrLoc = 3276;
@@ -482,7 +482,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 179";
 		rLen = 0;
-		rLoc = 2975;
+		rLoc = 3076;
 		rType = 0;
 		vrLen = 850;
 		vrLoc = 2951;
@@ -492,7 +492,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 183";
 		rLen = 0;
-		rLoc = 3057;
+		rLoc = 3158;
 		rType = 0;
 		vrLen = 836;
 		vrLoc = 3018;
@@ -502,7 +502,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 209";
 		rLen = 0;
-		rLoc = 3274;
+		rLoc = 3375;
 		rType = 0;
 		vrLen = 704;
 		vrLoc = 3172;
@@ -542,7 +542,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 188";
 		rLen = 0;
-		rLoc = 3269;
+		rLoc = 3370;
 		rType = 0;
 		vrLen = 691;
 		vrLoc = 2915;
@@ -552,7 +552,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 190";
 		rLen = 0;
-		rLoc = 3272;
+		rLoc = 3373;
 		rType = 0;
 		vrLen = 723;
 		vrLoc = 2917;
@@ -562,7 +562,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 190";
 		rLen = 0;
-		rLoc = 3272;
+		rLoc = 3373;
 		rType = 0;
 		vrLen = 722;
 		vrLoc = 2917;
@@ -572,7 +572,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 194";
 		rLen = 0;
-		rLoc = 3337;
+		rLoc = 3438;
 		rType = 0;
 		vrLen = 713;
 		vrLoc = 2917;
@@ -582,7 +582,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 198";
 		rLen = 0;
-		rLoc = 3354;
+		rLoc = 3455;
 		rType = 0;
 		vrLen = 717;
 		vrLoc = 2917;
@@ -592,7 +592,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 177";
 		rLen = 0;
-		rLoc = 3126;
+		rLoc = 3227;
 		rType = 0;
 		vrLen = 720;
 		vrLoc = 2825;
@@ -602,7 +602,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 177";
 		rLen = 0;
-		rLoc = 3126;
+		rLoc = 3227;
 		rType = 0;
 		vrLen = 699;
 		vrLoc = 2825;
@@ -662,7 +662,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 176";
 		rLen = 0;
-		rLoc = 3126;
+		rLoc = 3227;
 		rType = 0;
 		vrLen = 643;
 		vrLoc = 3017;
@@ -672,7 +672,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 193";
 		rLen = 0;
-		rLoc = 3354;
+		rLoc = 3455;
 		rType = 0;
 		vrLen = 645;
 		vrLoc = 3017;
@@ -682,7 +682,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 185";
 		rLen = 0;
-		rLoc = 3269;
+		rLoc = 3370;
 		rType = 0;
 		vrLen = 601;
 		vrLoc = 2967;
@@ -692,7 +692,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 160";
 		rLen = 0;
-		rLoc = 3057;
+		rLoc = 3158;
 		rType = 0;
 		vrLen = 633;
 		vrLoc = 3024;
@@ -702,7 +702,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 155";
 		rLen = 0;
-		rLoc = 2975;
+		rLoc = 3076;
 		rType = 0;
 		vrLen = 739;
 		vrLoc = 2449;
@@ -712,7 +712,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 180";
 		rLen = 0;
-		rLoc = 3299;
+		rLoc = 3400;
 		rType = 0;
 		vrLen = 650;
 		vrLoc = 3065;
@@ -722,7 +722,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 178";
 		rLen = 0;
-		rLoc = 3272;
+		rLoc = 3373;
 		rType = 0;
 		vrLen = 688;
 		vrLoc = 2969;
@@ -732,7 +732,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 161";
 		rLen = 0;
-		rLoc = 3057;
+		rLoc = 3158;
 		rType = 0;
 		vrLen = 690;
 		vrLoc = 2969;
@@ -752,7 +752,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 146";
 		rLen = 0;
-		rLoc = 2757;
+		rLoc = 2858;
 		rType = 0;
 		vrLen = 756;
 		vrLoc = 2373;
@@ -762,7 +762,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 180";
 		rLen = 0;
-		rLoc = 3238;
+		rLoc = 3339;
 		rType = 0;
 		vrLen = 706;
 		vrLoc = 3129;
@@ -772,7 +772,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 188";
 		rLen = 0;
-		rLoc = 3315;
+		rLoc = 3416;
 		rType = 0;
 		vrLen = 672;
 		vrLoc = 2803;
@@ -782,7 +782,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 165";
 		rLen = 2;
-		rLoc = 3081;
+		rLoc = 3182;
 		rType = 0;
 		vrLen = 672;
 		vrLoc = 2803;
@@ -792,7 +792,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 183";
 		rLen = 0;
-		rLoc = 3238;
+		rLoc = 3339;
 		rType = 0;
 		vrLen = 664;
 		vrLoc = 2923;
@@ -802,7 +802,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 183";
 		rLen = 0;
-		rLoc = 3238;
+		rLoc = 3339;
 		rType = 0;
 		vrLen = 661;
 		vrLoc = 2923;
@@ -812,7 +812,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 183";
 		rLen = 0;
-		rLoc = 3238;
+		rLoc = 3339;
 		rType = 0;
 		vrLen = 664;
 		vrLoc = 2923;
@@ -822,7 +822,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 183";
 		rLen = 0;
-		rLoc = 3238;
+		rLoc = 3339;
 		rType = 0;
 		vrLen = 662;
 		vrLoc = 2923;
@@ -832,7 +832,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 183";
 		rLen = 0;
-		rLoc = 3238;
+		rLoc = 3339;
 		rType = 0;
 		vrLen = 662;
 		vrLoc = 2923;
@@ -842,7 +842,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 184";
 		rLen = 0;
-		rLoc = 3272;
+		rLoc = 3373;
 		rType = 0;
 		vrLen = 663;
 		vrLoc = 2923;
@@ -852,7 +852,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 184";
 		rLen = 0;
-		rLoc = 3272;
+		rLoc = 3373;
 		rType = 0;
 		vrLen = 664;
 		vrLoc = 2923;
@@ -862,7 +862,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 163";
 		rLen = 0;
-		rLoc = 3057;
+		rLoc = 3158;
 		rType = 0;
 		vrLen = 666;
 		vrLoc = 2923;
@@ -872,7 +872,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 173";
 		rLen = 0;
-		rLoc = 3200;
+		rLoc = 3301;
 		rType = 0;
 		vrLen = 751;
 		vrLoc = 3668;
@@ -918,7 +918,7 @@
 		ignoreCount = 0;
 		lineNumber = 23;
 		location = MeshFrames3;
-		modificationTime = 298128548.725678;
+		modificationTime = 298142791.860111;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -994,7 +994,7 @@
 		ignoreCount = 0;
 		lineNumber = 115;
 		location = MeshFrames3;
-		modificationTime = 298128548.725708;
+		modificationTime = 298142791.860148;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -1012,7 +1012,7 @@
 		ignoreCount = 0;
 		lineNumber = 120;
 		location = MeshFrames3;
-		modificationTime = 298128548.725728;
+		modificationTime = 298142791.86019;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -1259,7 +1259,7 @@
 		fRef = 100CB76C115EBE7300C82B15 /* MeshWindowController.h */;
 		name = "MeshWindowController.h: 26";
 		rLen = 8;
-		rLoc = 609;
+		rLoc = 627;
 		rType = 0;
 		vrLen = 1056;
 		vrLoc = 46;
@@ -1781,7 +1781,7 @@
 		fRef = 100CB76D115EBE7300C82B15 /* MeshWindowController.mm */;
 		name = "MeshWindowController.mm: 110";
 		rLen = 0;
-		rLoc = 2638;
+		rLoc = 2673;
 		rType = 0;
 		vrLen = 1195;
 		vrLoc = 1319;
@@ -1791,7 +1791,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 226";
 		rLen = 163;
-		rLoc = 3898;
+		rLoc = 3999;
 		rType = 0;
 		vrLen = 751;
 		vrLoc = 3659;
@@ -1801,7 +1801,7 @@
 		fRef = 10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */;
 		name = "BaseGLView.mm: 177";
 		rLen = 0;
-		rLoc = 3126;
+		rLoc = 3227;
 		rType = 0;
 		vrLen = 836;
 		vrLoc = 2548;
@@ -1829,9 +1829,9 @@
 	};
 	10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {822, 6214}}";
+			sepNavIntBoundsRect = "{{0, 0}, {831, 5655}}";
 			sepNavSelRange = "{3200, 0}";
-			sepNavVisRange = "{3668, 751}";
+			sepNavVisRange = "{0, 947}";
 		};
 	};
 	10C2EA6C11AB24190033EC49 /* JBAT_Scene.h */ = {

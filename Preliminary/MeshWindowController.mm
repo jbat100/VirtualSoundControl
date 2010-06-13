@@ -25,6 +25,8 @@
 
 -(void) windowDidLoad {
 	
+	[self.window setDelegate:self];
+	
 	rendering = NO;
 	
 	meshFilePath = [[NSString stringWithString:@"/Users/jonathanthorpe/Programming/Files/VTK/SphereOutput.vtk"] retain];
@@ -53,6 +55,7 @@
 
 		if ([[tabViewItem identifier] isEqualToString:@"Display"]) {
 			[tabViewItem setView:[meshDisplayViewController view]];
+			
 		}
 		
 	}
@@ -138,6 +141,11 @@
 #pragma mark Interface Callback Methods
 
 - (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem {
+	
+}
+
+- (void)windowDidResize:(NSNotification *)notification {
+	
 	
 }
 

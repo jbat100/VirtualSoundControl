@@ -19,7 +19,9 @@
 	NSRect frame = self.view.frame;
 	frame.origin.x = frame.origin.y = 0;
 	
-	glView = [[BaseGLView alloc] initWithFrame:frame];
+	//glView = [[BaseGLView alloc] initWithFrame:frame];
+	
+	NSLog(@"In MeshDisplayViewController glView is %@", glView);
 	
 	camera = new JBAT_Camera();
 	

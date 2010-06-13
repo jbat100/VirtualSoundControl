@@ -19,7 +19,7 @@
 
 @interface MeshDisplayViewController : NSViewController {
 	
-	BaseGLView *glView;
+	IBOutlet BaseGLView *glView;
 	id<MeshDisplayViewControllerDataSource> dataSource;
 	
 	JBAT_Camera *camera;

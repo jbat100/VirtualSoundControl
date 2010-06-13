@@ -15,7 +15,7 @@
 #import "JBAT_Object.h"
 
 
-@interface MeshWindowController : NSWindowController <NSTabViewDelegate, 
+@interface MeshWindowController : NSWindowController <NSWindowDelegate, NSTabViewDelegate, 
 MeshDataViewControllerDataSource, MeshDisplayViewControllerDataSource> {
 	
 	

@@ -134,6 +134,8 @@ static void drawAnObject () {
 	NSRect rect = [self bounds]; 
 	//ChangeSize(rect.size.width, rect.size.height); 
 	
+	NSLog(@"bounds in %@, frame is %@", NSStringFromRect(self.bounds), NSStringFromRect(self.frame));
+	
 	int w = rect.size.width;
 	int h = rect.size.height;
 	
