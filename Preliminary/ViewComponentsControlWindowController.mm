@@ -15,20 +15,16 @@
 @synthesize lightSet;
 
 -(id) init {
-	//NSLog(@"In ViewComponentsControlWindowController init");
+
 	if ([super initWithWindowNibName:@"ViewComponentsControlWindow"]) {
-		//NSLog(@"Created ViewComponentsControlWindowController");
 		lightSet = new JBAT_LightSet();
-		//std::cout << viewComponents;
-		
 	}
 	return self;
 }
 
 -(void) windowDidLoad {
 	
-	//NSLog(@"In ViewComponentsControlWindowController windowDidLoad");
-	
+
 	viewComponentsControlViewController = 
 	[[ViewComponentsControlViewController alloc] initWithNibName:@"ViewComponentsControlView" 
 														  bundle:[NSBundle mainBundle]];

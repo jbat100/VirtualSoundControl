@@ -21,7 +21,7 @@ static void drawAnObject () {
 	
 	//glutSolidSphere(10.0, 40, 40);
 
-	glutWireSphere(1.0f, 40, 40);
+	glutWireSphere(1.0f, 15, 15);
 	
 }
 
@@ -63,25 +63,10 @@ static void drawAnObject () {
 	
 	x = 0.0;
 	
-//	thisContext = [self openGLContext];
-//	
-//	[thisContext setView:self];
-//	[thisContext update];
-//	[thisContext makeCurrentContext];
-//	[self setOpenGLContext:thisContext];
-	
-	//[self becomeFirstResponder];
-	
-	NSOpenGLContext* ctx = [NSOpenGLContext currentContext];
-	
-	NSLog(@"in startRenderingBase");
-	NSLog(@"Current context is %@", ctx);
-	NSLog(@"This context is %@", [self openGLContext]);
-	
 	[self prepareOpenGL];
 	[self reshape];
 	
-	pTimer = [NSTimer timerWithTimeInterval:(0.1) target:self selector:@selector(idle:) userInfo:nil repeats:YES];
+	pTimer = [NSTimer timerWithTimeInterval:(0.04) target:self selector:@selector(idle:) userInfo:nil repeats:YES];
 	[[NSRunLoop currentRunLoop]addTimer:pTimer forMode:NSDefaultRunLoopMode];
 	
 	
@@ -121,20 +106,11 @@ static void drawAnObject () {
 	//ShutdownRC(); 
 }
 
--(void) resize {
-	
-	NSLog(@"\n\nIN RESIZE\n\n");
-	
-}
 
 - (void)reshape { 
 	
-	NSLog(@"\n\nIN RESHAPE\n\n");
-	
 	NSRect rect = [self bounds]; 
 	//ChangeSize(rect.size.width, rect.size.height); 
-	
-	NSLog(@"bounds in %@, frame is %@", NSStringFromRect(self.bounds), NSStringFromRect(self.frame));
 	
 	int w = rect.size.width;
 	int h = rect.size.height;
@@ -144,8 +120,6 @@ static void drawAnObject () {
     // Prevent a divide by zero
     if(h == 0)
         h = 1;
-	
-	NSLog(@"h is %d, w is %d", h, w);
 	
     // Set Viewport to window dimensions
     glViewport(0, 0, w, h);

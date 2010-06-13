@@ -20,18 +20,12 @@ MeshDataViewControllerDataSource, MeshDisplayViewControllerDataSource> {
 	
 	
 	IBOutlet NSTextField *meshFilePathTextField;
-	
 	IBOutlet NSButton *importMeshButton;
-	IBOutlet NSButton *viewComponentsButton;
-	IBOutlet NSButton *testGLButton;
 	
 	IBOutlet NSTabView *meshTabView;
 	
 	MeshDataViewController *meshDataViewController;
 	MeshDisplayViewController *meshDisplayViewController;
-	
-	ViewComponentsControlWindowController *viewComponentsControlWindowController;
-	
 	
 	JBAT_Object *modelMesh;
 	NSString *meshFilePath;
@@ -43,8 +37,6 @@ MeshDataViewControllerDataSource, MeshDisplayViewControllerDataSource> {
 @property JBAT_Object *modelMesh;
 
 -(IBAction)	importMeshClicked:(id)sender;
--(IBAction)	viewComponentsClicked:(id)sender;
--(IBAction) testGLClicked:(id)sender;
 
 
 @end

@@ -61,6 +61,7 @@
 	}
 	
 	[meshDataViewController setup];
+	[meshDisplayViewController setup];
 
 	
 }
@@ -108,34 +109,7 @@
 	
 }
 
--(IBAction)	viewComponentsClicked:(id)sender {
-	
-	if (!viewComponentsControlWindowController) {
-		viewComponentsControlWindowController = [[ViewComponentsControlWindowController alloc] init];
-	}
-	
-	[viewComponentsControlWindowController showWindow:self];
-	
-}
 
--(IBAction) testGLClicked:(id)sender {
-	
-	NSLog(@"Clicked GL rendering");
-	
-	if (rendering) {
-		[[meshDisplayViewController glView] stopRenderingBase];
-		rendering = NO;
-	}
-	else {
-		[[meshDisplayViewController glView] startRenderingBase];
-		[[meshDisplayViewController glView] becomeFirstResponder];
-		rendering = YES;
-	}
-
-	
-	
-	
-}
 
 #pragma mark -
 #pragma mark Interface Callback Methods
@@ -146,6 +120,7 @@
 
 - (void)windowDidResize:(NSNotification *)notification {
 	
+	NSLog(@"Window frame is %@", NSStringFromRect(self.window.frame));
 	
 }
 

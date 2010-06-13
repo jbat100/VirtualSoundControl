@@ -69,8 +69,6 @@
 -(void) rotateCameraThetaBy:(float)angle;
 -(void) rotateCameraPhiBy:(float)angle;
 
-
--(void) resize;
 - (void)reshape;
 
 

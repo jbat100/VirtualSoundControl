@@ -11,11 +11,9 @@
 #import "JBAT_LightSet.h"
 
 
-@interface ViewComponentsControlWindowController : NSWindowController 
-<LightsControlViewControllerDataSource> {
+@interface ViewComponentsControlWindowController : NSWindowController <LightsControlViewControllerDataSource> {
 	
 	IBOutlet ViewComponentsControlViewController *viewComponentsControlViewController;
-	
 	JBAT_LightSet* lightSet;
 
 }

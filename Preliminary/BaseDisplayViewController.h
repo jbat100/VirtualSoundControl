@@ -1,0 +1,38 @@
+//
+//  BaseDisplayViewController.h
+//  MeshFrames3
+//
+//  Created by Jonathan Thorpe on 13/06/2010.
+//  Copyright 2010 JBAT. All rights reserved.
+//
+
+#import <Cocoa/Cocoa.h>
+#import "BaseGLView.h"
+#import "JBAT_Camera.h"
+#import "ViewComponentsControlWindowController.h"
+
+@interface BaseDisplayViewController : NSViewController {
+
+	IBOutlet BaseGLView *glView;
+	
+	IBOutlet NSButton* viewComponentsButton;
+	IBOutlet NSButton* cameraButton;
+	IBOutlet NSButton* interactionButton;
+	IBOutlet NSButton* renderingButton;
+
+	ViewComponentsControlWindowController *viewComponentsControlWindowController;
+	JBAT_Camera *camera;
+		
+}
+
+@property (assign) BaseGLView *glView;
+@property (nonatomic) JBAT_Camera *camera;
+
+-(void) setup;
+
+-(IBAction)	viewComponentsClicked:(id)sender;
+-(IBAction) renderingClicked:(id)sender;
+-(IBAction) cameraClicked:(id)sender;
+-(IBAction) interactionClicked:(id)sender;
+
+@end

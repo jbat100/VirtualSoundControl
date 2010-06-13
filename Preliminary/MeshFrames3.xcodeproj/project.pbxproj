@@ -15,6 +15,7 @@
 		100CB793115EE0BB00C82B15 /* MeshDisplayViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 100CB792115EE0BB00C82B15 /* MeshDisplayViewController.mm */; };
 		100CB79F115F7CB100C82B15 /* ViewComponentsControlViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 100CB79E115F7CB100C82B15 /* ViewComponentsControlViewController.mm */; };
 		100CB7C3115FA0BD00C82B15 /* MainWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 100CB7C2115FA0BD00C82B15 /* MainWindowController.mm */; };
+		103815F311C556450081FCDE /* BaseDisplayViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 103815F211C556450081FCDE /* BaseDisplayViewController.mm */; };
 		105FDA2011B11D25005421E3 /* JBAT_VSoundProject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105FDA1F11B11D25005421E3 /* JBAT_VSoundProject.cpp */; };
 		107350EC119DE46E000F97C5 /* JBAT_Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107350EB119DE46E000F97C5 /* JBAT_Object.cpp */; };
 		108139E51163DE650074D3AD /* JBAT_LightSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108139E41163DE650074D3AD /* JBAT_LightSet.cpp */; };
@@ -66,6 +67,8 @@
 		100CB79E115F7CB100C82B15 /* ViewComponentsControlViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewComponentsControlViewController.mm; sourceTree = "<group>"; };
 		100CB7C1115FA0BD00C82B15 /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		100CB7C2115FA0BD00C82B15 /* MainWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MainWindowController.mm; sourceTree = "<group>"; };
+		103815F111C556450081FCDE /* BaseDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseDisplayViewController.h; sourceTree = "<group>"; };
+		103815F211C556450081FCDE /* BaseDisplayViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BaseDisplayViewController.mm; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		105FDA1E11B11D25005421E3 /* JBAT_VSoundProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBAT_VSoundProject.h; sourceTree = "<group>"; };
 		105FDA1F11B11D25005421E3 /* JBAT_VSoundProject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JBAT_VSoundProject.cpp; sourceTree = "<group>"; };
@@ -174,18 +177,19 @@
 			isa = PBXGroup;
 			children = (
 				100CB7A5115F805F00C82B15 /* Control View Controllers */,
-				100CB7A4115F805000C82B15 /* Mesh View */,
+				100CB7A4115F805000C82B15 /* Display Views */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
-		100CB7A4115F805000C82B15 /* Mesh View */ = {
+		100CB7A4115F805000C82B15 /* Display Views */ = {
 			isa = PBXGroup;
 			children = (
+				103815E711C555C70081FCDE /* Base Display */,
 				10C40A9F116A11B20041F17D /* Mesh Data */,
 				10C40AA0116A11BC0041F17D /* Mesh Display */,
 			);
-			name = "Mesh View";
+			name = "Display Views";
 			sourceTree = "<group>";
 		};
 		100CB7A5115F805F00C82B15 /* Control View Controllers */ = {
@@ -205,6 +209,17 @@
 				100CB7C2115FA0BD00C82B15 /* MainWindowController.mm */,
 			);
 			name = "Main Window";
+			sourceTree = "<group>";
+		};
+		103815E711C555C70081FCDE /* Base Display */ = {
+			isa = PBXGroup;
+			children = (
+				10C2EA6711AAE0D20033EC49 /* BaseGLView.h */,
+				10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */,
+				103815F111C556450081FCDE /* BaseDisplayViewController.h */,
+				103815F211C556450081FCDE /* BaseDisplayViewController.mm */,
+			);
+			name = "Base Display";
 			sourceTree = "<group>";
 		};
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
@@ -379,8 +394,6 @@
 				100CB791115EE0BB00C82B15 /* MeshDisplayViewController.h */,
 				100CB792115EE0BB00C82B15 /* MeshDisplayViewController.mm */,
 				10C40AA1116A11D90041F17D /* MeshDisplayView.xib */,
-				10C2EA6711AAE0D20033EC49 /* BaseGLView.h */,
-				10C2EA6811AAE0D20033EC49 /* BaseGLView.mm */,
 			);
 			name = "Mesh Display";
 			sourceTree = "<group>";
@@ -523,6 +536,7 @@
 				10C2EA6E11AB24190033EC49 /* JBAT_Scene.cpp in Sources */,
 				10F1F76F11AC5F7900D49CCF /* JBAT_ObjectSet.cpp in Sources */,
 				105FDA2011B11D25005421E3 /* JBAT_VSoundProject.cpp in Sources */,
+				103815F311C556450081FCDE /* BaseDisplayViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

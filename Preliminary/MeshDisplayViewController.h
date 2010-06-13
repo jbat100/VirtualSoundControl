@@ -7,9 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "BaseGLView.h"
+#import "BaseDisplayViewController.h"
 #import "JBAT_BaseMesh.h"
-#import "JBAT_Camera.h"
+
 
 @protocol MeshDisplayViewControllerDataSource
 
@@ -17,19 +17,12 @@
 
 @end
 
-@interface MeshDisplayViewController : NSViewController {
+@interface MeshDisplayViewController : BaseDisplayViewController {
 	
-	IBOutlet BaseGLView *glView;
 	id<MeshDisplayViewControllerDataSource> dataSource;
-	
-	JBAT_Camera *camera;
 
 }
 
-@property (assign) BaseGLView *glView;
 @property (assign) id<MeshDisplayViewControllerDataSource> dataSource;
-@property (nonatomic) JBAT_Camera *camera;
-
--(void) setup;
 
 @end
