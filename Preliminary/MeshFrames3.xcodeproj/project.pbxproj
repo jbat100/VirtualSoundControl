@@ -29,6 +29,8 @@
 		109AD4C6114D985D00723265 /* GLee.c in Sources */ = {isa = PBXBuildFile; fileRef = 109AD4C4114D985D00723265 /* GLee.c */; };
 		109C0B0D119C185F00366977 /* FloorControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 109C0B0C119C185F00366977 /* FloorControlViewController.m */; };
 		109C0B0F119C19EA00366977 /* FloorControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109C0B0E119C19EA00366977 /* FloorControlView.xib */; };
+		109CC84D11CABEEE007E5FE6 /* LightSetWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109CC84C11CABEEE007E5FE6 /* LightSetWindowController.mm */; };
+		109CC84F11CABF1B007E5FE6 /* LightSetWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109CC84E11CABF1B007E5FE6 /* LightSetWindow.xib */; };
 		10C2E4EF116FBC530008A8F7 /* ViewComponentsControlWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10C2E4EE116FBC530008A8F7 /* ViewComponentsControlWindow.xib */; };
 		10C2E5981171DF360008A8F7 /* CameraControlWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10C2E5971171DF360008A8F7 /* CameraControlWindowController.mm */; };
 		10C2E59A1171E08C0008A8F7 /* CameraControlWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10C2E5991171E08C0008A8F7 /* CameraControlWindowController.xib */; };
@@ -94,6 +96,9 @@
 		109C0B0B119C185F00366977 /* FloorControlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloorControlViewController.h; sourceTree = "<group>"; };
 		109C0B0C119C185F00366977 /* FloorControlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloorControlViewController.m; sourceTree = "<group>"; };
 		109C0B0E119C19EA00366977 /* FloorControlView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FloorControlView.xib; sourceTree = "<group>"; };
+		109CC84B11CABEEE007E5FE6 /* LightSetWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightSetWindowController.h; sourceTree = "<group>"; };
+		109CC84C11CABEEE007E5FE6 /* LightSetWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LightSetWindowController.mm; sourceTree = "<group>"; };
+		109CC84E11CABF1B007E5FE6 /* LightSetWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LightSetWindow.xib; sourceTree = "<group>"; };
 		10C2E4EE116FBC530008A8F7 /* ViewComponentsControlWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewComponentsControlWindow.xib; sourceTree = "<group>"; };
 		10C2E5961171DF360008A8F7 /* CameraControlWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraControlWindowController.h; sourceTree = "<group>"; };
 		10C2E5971171DF360008A8F7 /* CameraControlWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CameraControlWindowController.mm; sourceTree = "<group>"; };
@@ -155,6 +160,7 @@
 		100CB76F115EBEB100C82B15 /* Window Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				109CC84A11CABE7B007E5FE6 /* Light Set Window Controller */,
 				100CB7C0115FA08F00C82B15 /* Main Window */,
 				100CB7A0115F7FFB00C82B15 /* Mesh Window */,
 				10C40A88116A0B8B0041F17D /* View Components Control Window  */,
@@ -324,6 +330,16 @@
 				109C0B0E119C19EA00366977 /* FloorControlView.xib */,
 			);
 			name = Floor;
+			sourceTree = "<group>";
+		};
+		109CC84A11CABE7B007E5FE6 /* Light Set Window Controller */ = {
+			isa = PBXGroup;
+			children = (
+				109CC84B11CABEEE007E5FE6 /* LightSetWindowController.h */,
+				109CC84C11CABEEE007E5FE6 /* LightSetWindowController.mm */,
+				109CC84E11CABF1B007E5FE6 /* LightSetWindow.xib */,
+			);
+			name = "Light Set Window Controller";
 			sourceTree = "<group>";
 		};
 		10C2E5911171CF2D0008A8F7 /* Camera Window */ = {
@@ -500,6 +516,7 @@
 				10C2E4EF116FBC530008A8F7 /* ViewComponentsControlWindow.xib in Resources */,
 				10C2E59A1171E08C0008A8F7 /* CameraControlWindowController.xib in Resources */,
 				109C0B0F119C19EA00366977 /* FloorControlView.xib in Resources */,
+				109CC84F11CABF1B007E5FE6 /* LightSetWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,6 +554,7 @@
 				10F1F76F11AC5F7900D49CCF /* JBAT_ObjectSet.cpp in Sources */,
 				105FDA2011B11D25005421E3 /* JBAT_VSoundProject.cpp in Sources */,
 				103815F311C556450081FCDE /* BaseDisplayViewController.mm in Sources */,
+				109CC84D11CABEEE007E5FE6 /* LightSetWindowController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

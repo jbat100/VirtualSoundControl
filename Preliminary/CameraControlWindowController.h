@@ -9,12 +9,47 @@
 #import <Cocoa/Cocoa.h>
 #import "JBAT_Camera.h"
 
+@protocol CameraControlWindowControllerDelegate
+
+-(JBAT_Camera*) camera;
+
+@end
+
+
 
 @interface CameraControlWindowController : NSWindowController {
 	
 	NSPopUpButton *cameraTypeButton;
-	JBAT_Camera *camera;
 
+	IBOutlet NSTextField *positionXTextField;
+	IBOutlet NSTextField *positionYTextField;
+	IBOutlet NSTextField *positionZTextField;
+	
+	IBOutlet NSTextField *forwardXTextField;
+	IBOutlet NSTextField *forwardYTextField;
+	IBOutlet NSTextField *forwardZTextField;
+	
+	IBOutlet NSTextField *upXTextField;
+	IBOutlet NSTextField *upYTextField;
+	IBOutlet NSTextField *upZTextField;
+	
+	IBOutlet NSTextField *phiTextField;
+	IBOutlet NSTextField *thetaTextField;
+	
+	IBOutlet NSButton *resetButton;
+	IBOutlet NSButton *lookAtOriginButton;
+	IBOutlet NSButton *sweeptButton;
+	
+	id<CameraControlWindowControllerDelegate> delegate;
+	
 }
+
+@property (assign) id<CameraControlWindowControllerDelegate> delegate;
+
+-(void) updateTextFields;
+-(IBAction) resetClicked:(id)sender;
+-(IBAction) lookAtOriginClicked:(id)sender;
+-(IBAction) sweepClicked:(id)sender;
+
 
 @end

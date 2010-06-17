@@ -11,25 +11,40 @@
 
 @implementation BaseDisplayViewController
 
-@synthesize camera, glView;
+@synthesize camera, lightSet, glView;
 
 -(void) setup {
 	
 	camera = new JBAT_Camera();
+	lightSet = new JBAT_LightSet();
 	
 	[renderingButton setState:0];
 	[interactionButton setState:0];
 	
+	[glView setDelegate:self];
+	
 }
 
 
--(IBAction)	viewComponentsClicked:(id)sender {
+-(IBAction)	lightSetClicked:(id)sender {
 	
-	if (!viewComponentsControlWindowController) {
-		viewComponentsControlWindowController = [[ViewComponentsControlWindowController alloc] init];
+	if (!lightSetWindowController) {
+		lightSetWindowController = [[LightSetWindowController alloc] init];
+		[lightSetWindowController setDataSource:self];
 	}
 	
-	[viewComponentsControlWindowController showWindow:self];
+	[lightSetWindowController showWindow:self];
+	
+}
+
+-(IBAction) cameraClicked:(id)sender {
+	
+	if (!cameraControlWindowController) {
+		cameraControlWindowController = [[CameraControlWindowController alloc] init];
+		[cameraControlWindowController setDelegate:self];
+	}
+	
+	[cameraControlWindowController showWindow:self];
 	
 }
 
@@ -48,9 +63,6 @@
 }
 
 
--(IBAction) cameraClicked:(id)sender {
-	NSLog(@"Camera clicked");
-}
 
 -(IBAction) interactionClicked:(id)sender {
 	NSLog(@"Interaction clicked");

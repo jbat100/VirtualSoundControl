@@ -9,9 +9,18 @@
 #import <Cocoa/Cocoa.h>
 #import "BaseGLView.h"
 #import "JBAT_Camera.h"
-#import "ViewComponentsControlWindowController.h"
+#import "JBAT_LightSet.h"
+#import "CameraControlWindowController.h"
+#import "LightSetWindowController.h"
 
-@interface BaseDisplayViewController : NSViewController {
+
+@interface BaseDisplayViewController : NSViewController 
+
+<GLViewInteractionDelegate,
+CameraControlWindowControllerDelegate,
+LightSetWindowControllerDataSource> 
+
+{
 
 	IBOutlet BaseGLView *glView;
 	
@@ -19,18 +28,23 @@
 	IBOutlet NSButton* cameraButton;
 	IBOutlet NSButton* interactionButton;
 	IBOutlet NSButton* renderingButton;
+	
+	CameraControlWindowController *cameraControlWindowController;
+	LightSetWindowController *lightSetWindowController;
 
-	ViewComponentsControlWindowController *viewComponentsControlWindowController;
+	
 	JBAT_Camera *camera;
+	JBAT_LightSet *lightSet;
 		
 }
 
 @property (assign) BaseGLView *glView;
-@property (nonatomic) JBAT_Camera *camera;
+@property (assign) JBAT_Camera *camera;
+@property (assign) JBAT_LightSet *lightSet;
 
 -(void) setup;
 
--(IBAction)	viewComponentsClicked:(id)sender;
+-(IBAction)	lightSetClicked:(id)sender;
 -(IBAction) renderingClicked:(id)sender;
 -(IBAction) cameraClicked:(id)sender;
 -(IBAction) interactionClicked:(id)sender;

@@ -62,6 +62,10 @@ public:
 	float* getUpReference();
 	float* getForwardReference();
 	
+	float* getOrigin();
+	float* getForward();
+	float* getUp();
+	
 	JBAT_OpenGLCameraType getCameraType();
 	void setCameraType(JBAT_OpenGLCameraType type);
 	

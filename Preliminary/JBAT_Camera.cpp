@@ -110,6 +110,19 @@ float* JBAT_Camera::getForwardReference()  {
 	return &forwardReference[0];
 }
 
+float* JBAT_Camera::getOrigin()  {
+	return &vOrigin[0];
+}
+
+float* JBAT_Camera::getForward()  {
+	return &vForward[0];
+}
+
+float* JBAT_Camera::getUp()  {
+	return &vUp[0];
+}
+
+
 JBAT_OpenGLCameraType JBAT_Camera::getCameraType()  {
 	return cameraType;
 }
