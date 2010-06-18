@@ -21,6 +21,7 @@
 	[renderingButton setState:0];
 	[interactionButton setState:0];
 	
+	[glView setup];
 	[glView setDelegate:self];
 	
 }
@@ -41,10 +42,11 @@
 	
 	if (!cameraControlWindowController) {
 		cameraControlWindowController = [[CameraControlWindowController alloc] init];
-		[cameraControlWindowController setDelegate:self];
+		[cameraControlWindowController setDataSource:self];
 	}
 	
 	[cameraControlWindowController showWindow:self];
+	[cameraControlWindowController updateTextFields];
 	
 }
 
@@ -66,7 +68,15 @@
 
 -(IBAction) interactionClicked:(id)sender {
 	NSLog(@"Interaction clicked");
+	if ([interactionButton state]) 
+		glView.mouseInteractionEnabled = YES;
+	else 
+		glView.mouseInteractionEnabled = NO;
 }
 
+-(void) cameraFrameChanged {
+	camera->updateFPSFrame();
+	[cameraControlWindowController updateTextFields];
+}
 
 @end

@@ -11,7 +11,7 @@
 
 @implementation CameraControlWindowController
 
-@synthesize delegate;
+@synthesize dataSource;
 
 -(id) init {
 	
@@ -21,30 +21,31 @@
 	return self;
 }
 
+
 -(void) updateTextFields {
 	
-	if ([delegate camera]) {
+	if ([dataSource camera]) {
 	
-		float* pos = [delegate camera]->getOrigin();
+		float* pos = [dataSource camera]->getOrigin();
 		
 		[positionXTextField setStringValue:[NSString stringWithFormat:@"%f", pos[0]]];
 		[positionYTextField setStringValue:[NSString stringWithFormat:@"%f", pos[1]]];
 		[positionZTextField setStringValue:[NSString stringWithFormat:@"%f", pos[2]]];
 		
-		float* forward = [delegate camera]->getForward();
+		float* forward = [dataSource camera]->getForward();
 		
 		[forwardXTextField setStringValue:[NSString stringWithFormat:@"%f", forward[0]]];
 		[forwardYTextField setStringValue:[NSString stringWithFormat:@"%f", forward[1]]];
 		[forwardZTextField setStringValue:[NSString stringWithFormat:@"%f", forward[2]]];
 
-		float* up = [delegate camera]->getUp();
+		float* up = [dataSource camera]->getUp();
 		
 		[upXTextField setStringValue:[NSString stringWithFormat:@"%f", up[0]]];
 		[upYTextField setStringValue:[NSString stringWithFormat:@"%f", up[1]]];
 		[upZTextField setStringValue:[NSString stringWithFormat:@"%f", up[2]]];
 		
-		[thetaTextField setStringValue:[NSString stringWithFormat:@"%f", [delegate camera]->getTheta()]];
-		[phiTextField setStringValue:[NSString stringWithFormat:@"%f", [delegate camera]->getPhi()]];
+		[thetaTextField setStringValue:[NSString stringWithFormat:@"%f", [dataSource camera]->getTheta()]];
+		[phiTextField setStringValue:[NSString stringWithFormat:@"%f", [dataSource camera]->getPhi()]];
 		
 	}
 	

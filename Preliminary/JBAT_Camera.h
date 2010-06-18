@@ -34,7 +34,6 @@ protected:
 	
 	bool needsUpdate;
 	
-	void updateFPSFrame(void);
 	
 public:
 	
@@ -68,6 +67,8 @@ public:
 	
 	JBAT_OpenGLCameraType getCameraType();
 	void setCameraType(JBAT_OpenGLCameraType type);
+	
+	void updateFPSFrame(void);
 	
 	void applyGLCameraTransform();
 	

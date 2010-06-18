@@ -39,22 +39,27 @@ static void drawAnObject () {
     if (self) {
         // Initialization code here.
 		
-		mouseInteractionEnabled = YES;
-		keyIntereactionEnabled = YES;
-		
-		mouseSensitivity = 1.0;
-		
-		upIsPressed = NO;
-		downIsPressed = NO;
-		leftIsPressed = NO;
-		rightIsPressed = NO;
-		forwardIsPressed = NO;
-		backwardIsPressed = NO;
+
 		
     }
     return self;
 }
 
+-(void) setup {
+	
+	mouseInteractionEnabled = NO;
+	keyIntereactionEnabled = NO;
+	
+	mouseSensitivity = 0.001;
+	
+	upIsPressed = NO;
+	downIsPressed = NO;
+	leftIsPressed = NO;
+	rightIsPressed = NO;
+	forwardIsPressed = NO;
+	backwardIsPressed = NO;
+	
+}
 
 #pragma mark -
 #pragma mark Graphics Methods
@@ -219,6 +224,7 @@ static void drawAnObject () {
 	NSLog(@"In mouse dragged");
 	
 	if (mouseInteractionEnabled) {
+		NSLog(@"Delta X is %f, Y is %f", [theEvent deltaX], [theEvent deltaY]);
 		[self rotateCameraThetaBy:(mouseSensitivity*[theEvent deltaX])];
 		[self rotateCameraPhiBy:(mouseSensitivity*[theEvent deltaY])];
 		return;
@@ -398,11 +404,16 @@ static void drawAnObject () {
 }
 
 -(void) rotateCameraThetaBy:(float)angle {
+	NSLog(@"In rotate camera theta, angle is %f", angle);
 	[delegate camera]->addTheta(angle);
+	[delegate cameraFrameChanged];
+	
 }
 
 -(void) rotateCameraPhiBy:(float)angle {
+	NSLog(@"In rotate camera phi, angle is %f", angle);
 	[delegate camera]->addPhi(angle);
+	[delegate cameraFrameChanged];
 }
 
 

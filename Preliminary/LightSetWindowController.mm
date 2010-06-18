@@ -31,10 +31,11 @@
 	NSRect f = lightSetView.frame;
 	f.origin.x = f.origin.y = 0;
 	lightsControlViewController.view.frame = f;
-	
 	[lightsControlViewController setDataSource:self];
-
 	[lightSetView addSubview:[lightsControlViewController view]];
+	
+	[lightsControlViewController setup];
+	[lightsControlViewController updateInterface];
 	
 }
 

@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="136"/>
+			<integer value="135"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -121,7 +121,7 @@
 											<reference key="NSSuperview" ref="566097268"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="239818054">
-												<int key="NSCellFlags">-1804468671</int>
+												<int key="NSCellFlags">-2075001280</int>
 												<int key="NSCellFlags2">272630784</int>
 												<string key="NSContents"/>
 												<reference key="NSSupport" ref="478398720"/>
@@ -151,7 +151,7 @@
 											<reference key="NSSuperview" ref="566097268"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="895043177">
-												<int key="NSCellFlags">-1804468671</int>
+												<int key="NSCellFlags">-2075001280</int>
 												<int key="NSCellFlags2">272630784</int>
 												<string key="NSContents"/>
 												<reference key="NSSupport" ref="478398720"/>
@@ -255,7 +255,7 @@
 											<reference key="NSSuperview" ref="863475645"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="520040617">
-												<int key="NSCellFlags">-1804468671</int>
+												<int key="NSCellFlags">-2075001280</int>
 												<int key="NSCellFlags2">272630784</int>
 												<string key="NSContents"/>
 												<reference key="NSSupport" ref="478398720"/>
@@ -272,7 +272,7 @@
 											<reference key="NSSuperview" ref="863475645"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="918481117">
-												<int key="NSCellFlags">-1804468671</int>
+												<int key="NSCellFlags">-2075001280</int>
 												<int key="NSCellFlags2">272630784</int>
 												<string key="NSContents"/>
 												<reference key="NSSupport" ref="478398720"/>
@@ -289,7 +289,7 @@
 											<reference key="NSSuperview" ref="863475645"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="1016309903">
-												<int key="NSCellFlags">-1804468671</int>
+												<int key="NSCellFlags">-2075001280</int>
 												<int key="NSCellFlags2">272630784</int>
 												<string key="NSContents"/>
 												<reference key="NSSupport" ref="478398720"/>
@@ -306,7 +306,7 @@
 											<reference key="NSSuperview" ref="863475645"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="716036460">
-												<int key="NSCellFlags">-1804468671</int>
+												<int key="NSCellFlags">-2075001280</int>
 												<int key="NSCellFlags2">272630784</int>
 												<string key="NSContents"/>
 												<reference key="NSSupport" ref="478398720"/>
@@ -323,7 +323,7 @@
 											<reference key="NSSuperview" ref="863475645"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="669057543">
-												<int key="NSCellFlags">-1804468671</int>
+												<int key="NSCellFlags">-2075001280</int>
 												<int key="NSCellFlags2">272630784</int>
 												<string key="NSContents"/>
 												<reference key="NSSupport" ref="478398720"/>
@@ -340,7 +340,7 @@
 											<reference key="NSSuperview" ref="863475645"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="735691141">
-												<int key="NSCellFlags">-1804468671</int>
+												<int key="NSCellFlags">-2075001280</int>
 												<int key="NSCellFlags2">272630784</int>
 												<string key="NSContents"/>
 												<reference key="NSSupport" ref="478398720"/>
@@ -357,7 +357,7 @@
 											<reference key="NSSuperview" ref="863475645"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="795911339">
-												<int key="NSCellFlags">-1804468671</int>
+												<int key="NSCellFlags">-2075001280</int>
 												<int key="NSCellFlags2">272630784</int>
 												<string key="NSContents"/>
 												<reference key="NSSupport" ref="478398720"/>
@@ -374,7 +374,7 @@
 											<reference key="NSSuperview" ref="863475645"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="858540453">
-												<int key="NSCellFlags">-1804468671</int>
+												<int key="NSCellFlags">-2075001280</int>
 												<int key="NSCellFlags2">272630784</int>
 												<string key="NSContents"/>
 												<reference key="NSSupport" ref="478398720"/>
@@ -391,7 +391,7 @@
 											<reference key="NSSuperview" ref="863475645"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="480440022">
-												<int key="NSCellFlags">-1804468671</int>
+												<int key="NSCellFlags">-2075001280</int>
 												<int key="NSCellFlags2">272630784</int>
 												<string key="NSContents"/>
 												<reference key="NSSupport" ref="478398720"/>
@@ -1238,6 +1238,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>delegate</string>
 							<string>forwardXTextField</string>
 							<string>forwardYTextField</string>
 							<string>forwardZTextField</string>
@@ -1255,6 +1256,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>

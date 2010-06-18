@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "JBAT_Camera.h"
 
-@protocol CameraControlWindowControllerDelegate
+@protocol CameraControlWindowControllerDataSource
 
 -(JBAT_Camera*) camera;
 
@@ -40,11 +40,11 @@
 	IBOutlet NSButton *lookAtOriginButton;
 	IBOutlet NSButton *sweeptButton;
 	
-	id<CameraControlWindowControllerDelegate> delegate;
+	id<CameraControlWindowControllerDataSource> dataSource;
 	
 }
 
-@property (assign) id<CameraControlWindowControllerDelegate> delegate;
+@property (assign) id<CameraControlWindowControllerDataSource> dataSource;
 
 -(void) updateTextFields;
 -(IBAction) resetClicked:(id)sender;

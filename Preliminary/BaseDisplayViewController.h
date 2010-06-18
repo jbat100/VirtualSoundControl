@@ -17,7 +17,7 @@
 @interface BaseDisplayViewController : NSViewController 
 
 <GLViewInteractionDelegate,
-CameraControlWindowControllerDelegate,
+CameraControlWindowControllerDataSource,
 LightSetWindowControllerDataSource> 
 
 {

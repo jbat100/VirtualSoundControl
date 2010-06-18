@@ -11,6 +11,7 @@
 #include "JBAT_MathTools.h"
 #include "Math3d.h"
 #include <math.h>
+#include <iostream>
 
 JBAT_Camera::JBAT_Camera(void) {
 	setToDefault();
@@ -50,11 +51,13 @@ void JBAT_Camera::setThetaAndPhi(float _theta, float _phi) {
 
 void JBAT_Camera::addTheta(float deltaTheta) {
 	theta = fullRangedAngle(theta+deltaTheta);
+	std::cout << "\nChanged theta to " << theta;
 	needsUpdate = true;
 }
 
 void JBAT_Camera::addPhi(float deltaPhi) {
 	phi = halfRangedAngle(phi+deltaPhi);
+	std::cout << "\nChanged phi to " << phi;
 	needsUpdate = true;
 }
 
@@ -65,6 +68,8 @@ void JBAT_Camera::addThetaAndPhi(float deltaTheta, float deltaPhi) {
 }
 
 void JBAT_Camera::updateFPSFrame(void) {
+	
+	std::cout << "\nUpdating FPS camera frame";
 
 	// Rotate reference forward vector by theta around reference up to get new flat forward
 	M3DVector3f flatForward;

@@ -15,6 +15,7 @@
 
 -(JBAT_LightSet*) lightSet; // to be able to call the opengl draw operations 
 -(JBAT_Camera*) camera;
+-(void) cameraFrameChanged;
 
 @end
 
@@ -61,6 +62,8 @@
 @property (nonatomic) BOOL backwardIsPressed;
 
 @property (assign) id <GLViewInteractionDelegate> delegate;
+
+-(void) setup;
 
 -(void) startRenderingBase;
 -(void) stopRenderingBase;
