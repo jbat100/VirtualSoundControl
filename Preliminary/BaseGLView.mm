@@ -29,8 +29,8 @@ static void drawAnObject () {
 @implementation BaseGLView
 
 
-@synthesize mouseSensitivity, mouseInteractionEnabled, keyIntereactionEnabled;
-@synthesize upIsPressed, downIsPressed, leftIsPressed, rightIsPressed, forwardIsPressed, backwardIsPressed;
+//@synthesize mouseSensitivity, interactionEnabled, rendering;
+//@synthesize upIsPressed, downIsPressed, leftIsPressed, rightIsPressed, forwardIsPressed, backwardIsPressed;
 @synthesize delegate;
 
 
@@ -47,48 +47,16 @@ static void drawAnObject () {
 
 -(void) setup {
 	
-	mouseInteractionEnabled = NO;
-	keyIntereactionEnabled = NO;
-	
-	mouseSensitivity = 0.001;
-	
-	upIsPressed = NO;
-	downIsPressed = NO;
-	leftIsPressed = NO;
-	rightIsPressed = NO;
-	forwardIsPressed = NO;
-	backwardIsPressed = NO;
-	
 }
 
 #pragma mark -
 #pragma mark Graphics Methods
 
--(void) startRenderingBase {
-	
-	x = 0.0;
-	
-	[self prepareOpenGL];
-	[self reshape];
-	
-	pTimer = [NSTimer timerWithTimeInterval:(0.04) target:self selector:@selector(idle:) userInfo:nil repeats:YES];
-	[[NSRunLoop currentRunLoop]addTimer:pTimer forMode:NSDefaultRunLoopMode];
-	
-	
-	
-}
-
--(void) stopRenderingBase {
-	
-	//[self resignFirstResponder];
-	
-	[pTimer invalidate];
-	
-}
-
 
 - (void) prepareOpenGL { 
 	[super prepareOpenGL];
+	
+	x = 0.0;
 	
 	/*----------------------------------------------------------------*/
 	//SetupRC(); (do actual setup)
@@ -149,20 +117,20 @@ static void drawAnObject () {
 
 -(void) drawRect: (NSRect) bounds {
 	
-	
 	glClearColor(0.0f, 0.2f, 0.2f, 1.0f );	
 	glClear(GL_COLOR_BUFFER_BIT);
 	
-	glPushMatrix();
 	glLoadIdentity();
-	glTranslatef(sin(x), sin(x), -10.0);	
-    drawAnObject();
-	glPopMatrix();
+	[delegate camera]->applyGLCameraTransform();
 	
+	
+	glPushMatrix();
+	//glTranslatef(sin(x), sin(x), 0.0);	
+	drawAnObject();
+	glPopMatrix();
 	
 	glutSwapBuffers();	
     glFlush();
-
 	
 }
 
@@ -174,46 +142,13 @@ static void drawAnObject () {
 	
 	[self setNeedsDisplay:YES];
 	
-	if (forwardIsPressed) {
-		NSLog(@"Forward is pressed");
-	}
-	
-	if (backwardIsPressed) {
-		NSLog(@"Backward is pressed");
-	}
-	
-	if (upIsPressed) {
-		NSLog(@"Up is pressed");
-	}
-	
-	if (downIsPressed) {
-		NSLog(@"Down is pressed");
-	}
-	
-	if (leftIsPressed) {
-		NSLog(@"Left is pressed");
-	}
-	
-	if (rightIsPressed) {
-		NSLog(@"Right is pressed");
-	}
 }
 
 
 #pragma mark -
 #pragma mark Camera Interaction Methods
 
-//- (BOOL)acceptsFirstResponder {
-//	return YES;
-//}
-//
-//- (BOOL)becomeFirstResponder {
-//	return  YES;
-//}
-//
-//- (BOOL)resignFirstResponder {
-//	return YES;
-//}
+
 
 - (BOOL)acceptsFirstMouse:(NSEvent *)theEvent {
 	return YES;
@@ -221,16 +156,13 @@ static void drawAnObject () {
 
 - (void)mouseDragged:(NSEvent *)theEvent {
 	
-	NSLog(@"In mouse dragged");
+	//NSLog(@"In mouse dragged");
+	//NSLog(@"Delta X is %f, Y is %f", [theEvent deltaX], [theEvent deltaY]);
 	
-	if (mouseInteractionEnabled) {
-		NSLog(@"Delta X is %f, Y is %f", [theEvent deltaX], [theEvent deltaY]);
-		[self rotateCameraThetaBy:(mouseSensitivity*[theEvent deltaX])];
-		[self rotateCameraPhiBy:(mouseSensitivity*[theEvent deltaY])];
-		return;
-	}
-	
-	[super mouseDragged:theEvent];
+	float sensitivity = [delegate camera]->getRotationSpeed();
+	[delegate camera]->addTheta(sensitivity*[theEvent deltaX]);
+	[delegate camera]->addPhi(-sensitivity*[theEvent deltaY]);
+	[delegate cameraFrameChanged];
 	
 }
 
@@ -254,167 +186,6 @@ static void drawAnObject () {
  */
 
 
-- (void)keyDown:(NSEvent *)theEvent {
-	
-	NSLog(@"In key down, event is %@", theEvent);
-	
-
-	/* 
-	 
-	 // This is done doing basic character check
-	
-	NSString *characters = [theEvent charactersIgnoringModifiers];
-	
-	unichar keyChar = 0;
-	if ( [characters length] == 0 )
-		return;            // reject dead keys
-	
-	if ( [characters length] == 1 ) {
-
-		keyChar = [characters characterAtIndex:0];
-		
-		if ( keyChar == NSLeftArrowFunctionKey || keyChar == 'a') {
-			leftIsPressed = YES;
-			return;
-		}
-		
-		if ( keyChar == NSRightArrowFunctionKey || keyChar == 'd') {
-			rightIsPressed = YES;
-			return;
-		}
-		
-		if ( keyChar == NSUpArrowFunctionKey || keyChar == 'w') {
-			forwardIsPressed = YES;
-			return;
-		}
-		
-		if ( keyChar == NSDownArrowFunctionKey || keyChar == 's') {
-			backwardIsPressed = YES;
-			return;
-		}			
-	}
-	
-	*/
-	
-	// This should be better as it should be able to handle any keyboard layout
-	
-	if ([theEvent modifierFlags]) {
-		
-		NSLog(@"There is at least one modeifier flag");
-		
-	}
-	
-	unsigned short code = [theEvent keyCode];
-	
-	if (code == kVK_ANSI_A || code == kVK_LeftArrow) {
-		leftIsPressed = YES;
-		return;
-	}
-	
-	if (code == kVK_ANSI_W || code == kVK_UpArrow) {
-		forwardIsPressed = YES;
-		return;
-	}
-	
-	if (code == kVK_ANSI_D || code == kVK_RightArrow) {
-		rightIsPressed = YES;
-		return;
-	}
-	
-	if (code == kVK_ANSI_S || code == kVK_DownArrow) {
-		backwardIsPressed = YES;
-		return;
-	}
-		
-	
-    [super keyDown:theEvent];
-	
-}
-
-- (void)keyUp:(NSEvent *)theEvent {
-	
-	NSLog(@"In key up, event is %@", theEvent);
-	
-	/*
-	
-    if ([theEvent modifierFlags] & NSNumericPadKeyMask) { // arrow keys have this mask
-		
-        NSString *theArrow = [theEvent charactersIgnoringModifiers];
-		
-        unichar keyChar = 0;
-        if ( [theArrow length] == 0 )
-            return;            // reject dead keys
-		
-        if ( [theArrow length] == 1 ) {
-			
-            keyChar = [theArrow characterAtIndex:0];
-			
-            if ( keyChar == NSLeftArrowFunctionKey || keyChar == 'a') {
-				leftIsPressed = NO;
-                return;
-            }
-			
-            if ( keyChar == NSRightArrowFunctionKey || keyChar == 'd') {
-				rightIsPressed = NO;
-                return;
-            }
-			
-            if ( keyChar == NSUpArrowFunctionKey || keyChar == 'w') {
-				forwardIsPressed = NO;
-                return;
-            }
-			
-            if ( keyChar == NSDownArrowFunctionKey || keyChar == 's') {
-				backwardIsPressed = NO;
-                return;
-            }			
-        }
-		
-    }
-	 
-	 */
-	
-	// This should be better as it should be able to handle any keyboard layout
-	
-	unsigned short code = [theEvent keyCode];
-
-	
-	if (code == kVK_ANSI_A || code == kVK_LeftArrow) {
-		leftIsPressed = NO;
-		return;
-	}
-	
-	if (code == kVK_ANSI_W || code == kVK_UpArrow) {
-		forwardIsPressed = NO;
-		return;
-	}
-	
-	if (code == kVK_ANSI_D || code == kVK_RightArrow) {
-		rightIsPressed = NO;
-		return;
-	}
-	
-	if (code == kVK_ANSI_S || code == kVK_DownArrow) {
-		backwardIsPressed = NO;
-		return;
-	}
-	
-    [super keyUp:theEvent];
-	
-}
-
--(void) rotateCameraThetaBy:(float)angle {
-	NSLog(@"In rotate camera theta, angle is %f", angle);
-	[delegate camera]->addTheta(angle);
-	[delegate cameraFrameChanged];
-	
-}
-
--(void) rotateCameraPhiBy:(float)angle {
-	NSLog(@"In rotate camera phi, angle is %f", angle);
-	[delegate camera]->addPhi(angle);
-	[delegate cameraFrameChanged];
-}
 
 
 

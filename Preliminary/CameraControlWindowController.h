@@ -40,6 +40,9 @@
 	IBOutlet NSButton *lookAtOriginButton;
 	IBOutlet NSButton *sweeptButton;
 	
+	IBOutlet NSSlider *speedSlider;
+	IBOutlet NSSlider *mouseSensitivitySlider;
+	
 	id<CameraControlWindowControllerDataSource> dataSource;
 	
 }
@@ -47,9 +50,15 @@
 @property (assign) id<CameraControlWindowControllerDataSource> dataSource;
 
 -(void) updateTextFields;
+-(void) updateInteractionSliders;
+
 -(IBAction) resetClicked:(id)sender;
 -(IBAction) lookAtOriginClicked:(id)sender;
 -(IBAction) sweepClicked:(id)sender;
+
+-(IBAction) speedSliderChanged:(id)sender;
+-(IBAction) mouseSensitivitySliderChanged:(id)sender;
+
 
 
 @end

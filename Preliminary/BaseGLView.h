@@ -22,25 +22,7 @@
 
 @interface BaseGLView : NSOpenGLView {
 	
-	// used to update screen
-	NSTimer *pTimer;
 
-	float mouseSensitivity;
-	
-	BOOL mouseInteractionEnabled;
-	BOOL keyIntereactionEnabled;
-	
-	
-	// KEY TRACKING
-	
-	BOOL upIsPressed;
-	BOOL downIsPressed;
-	
-	BOOL leftIsPressed;
-	BOOL rightIsPressed;
-	
-	BOOL forwardIsPressed;
-	BOOL backwardIsPressed;
 	
 	NSOpenGLContext *thisContext;
 	
@@ -49,28 +31,21 @@
 }
 
 
-@property (nonatomic) float mouseSensitivity;
-
-@property (nonatomic) BOOL mouseInteractionEnabled;
-@property (nonatomic) BOOL keyIntereactionEnabled;
-
-@property (nonatomic) BOOL upIsPressed;
-@property (nonatomic) BOOL downIsPressed;
-@property (nonatomic) BOOL leftIsPressed;
-@property (nonatomic) BOOL rightIsPressed;
-@property (nonatomic) BOOL forwardIsPressed;
-@property (nonatomic) BOOL backwardIsPressed;
+//@property (nonatomic) float mouseSensitivity;
+//@property (nonatomic) BOOL interactionEnabled;
+//@property (nonatomic) BOOL rendering;
+//
+//@property (nonatomic) BOOL upIsPressed;
+//@property (nonatomic) BOOL downIsPressed;
+//@property (nonatomic) BOOL leftIsPressed;
+//@property (nonatomic) BOOL rightIsPressed;
+//@property (nonatomic) BOOL forwardIsPressed;
+//@property (nonatomic) BOOL backwardIsPressed;
 
 @property (assign) id <GLViewInteractionDelegate> delegate;
 
 -(void) setup;
-
--(void) startRenderingBase;
--(void) stopRenderingBase;
 - (void) prepareOpenGL;
-
--(void) rotateCameraThetaBy:(float)angle;
--(void) rotateCameraPhiBy:(float)angle;
 
 - (void)reshape;
 

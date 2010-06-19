@@ -27,9 +27,11 @@ void JBAT_Camera::setToDefault(void) {
 	
 	m3dLoadVector3(upReference, 0.0, 0.0, 1.0);
 	m3dLoadVector3(forwardReference, 1.0, 0.0, 0.0);
-	m3dLoadVector3(vOrigin, 0.0, 0.0, 0.0);
+	m3dLoadVector3(vOrigin, -20.0, 0.0, 0.0);
 	theta = 0.0;
 	phi = 0.0;
+	movementSpeed = 0.2;
+	rotationSpeed = 0.02;
 	needsUpdate = true;
 }
 
@@ -51,13 +53,13 @@ void JBAT_Camera::setThetaAndPhi(float _theta, float _phi) {
 
 void JBAT_Camera::addTheta(float deltaTheta) {
 	theta = fullRangedAngle(theta+deltaTheta);
-	std::cout << "\nChanged theta to " << theta;
+	//std::cout << "\nChanged theta to " << theta;
 	needsUpdate = true;
 }
 
 void JBAT_Camera::addPhi(float deltaPhi) {
 	phi = halfRangedAngle(phi+deltaPhi);
-	std::cout << "\nChanged phi to " << phi;
+	//std::cout << "\nChanged phi to " << phi;
 	needsUpdate = true;
 }
 
@@ -69,12 +71,12 @@ void JBAT_Camera::addThetaAndPhi(float deltaTheta, float deltaPhi) {
 
 void JBAT_Camera::updateFPSFrame(void) {
 	
-	std::cout << "\nUpdating FPS camera frame";
+	//std::cout << "\nUpdating FPS camera frame";
 
 	// Rotate reference forward vector by theta around reference up to get new flat forward
 	M3DVector3f flatForward;
 	M3DMatrix33f thetaRotationMatrix;
-	m3dRotationMatrix33(thetaRotationMatrix, theta, upReference[0], upReference[1], upReference[3]);
+	m3dRotationMatrix33(thetaRotationMatrix, theta, upReference[0], upReference[1], upReference[2]);
 	m3dRotateVector(flatForward, forwardReference, thetaRotationMatrix);
 	
 	// Calculate new flat left (to use as rotation axis for phi)
@@ -83,12 +85,12 @@ void JBAT_Camera::updateFPSFrame(void) {
 	
 	// Rotate new flat forward by phi around new flat left to get new forward vector 
 	M3DMatrix33f phiRotationMatrix;
-	m3dRotationMatrix33(phiRotationMatrix, phi, flatLeft[0], flatLeft[1], flatLeft[3]);
+	m3dRotationMatrix33(phiRotationMatrix, phi, flatLeft[0], flatLeft[1], flatLeft[2]);
 	m3dRotateVector(vForward, flatForward, phiRotationMatrix);
 	
 	// Rotate new forward  vector by pi/2 around new flat left to get new up vector
 	M3DMatrix33f upRotationMatrix;
-	m3dRotationMatrix33(upRotationMatrix, M_PI/2.0, flatLeft[0], flatLeft[1], flatLeft[3]);
+	m3dRotationMatrix33(upRotationMatrix, M_PI/2.0, flatLeft[0], flatLeft[1], flatLeft[2]);
 	m3dRotateVector(vUp, vForward, upRotationMatrix);
 	
 	m3dNormalizeVector(vForward);
@@ -147,6 +149,20 @@ void JBAT_Camera::applyGLCameraTransform() {
 	}
 	
 	this->ApplyCameraTransform(false);
+	
+}
+
+std::ostream & operator<<(std::ostream& s, JBAT_Camera & camera) {
+
+	s << "\nJBAT_Camera at position: " << camera.vOrigin[0] << " " << camera.vOrigin[1] << " " << camera.vOrigin[2];
+	s << "\ntheta: " << camera.theta << " phi: " << camera.phi;
+	s << "\nupReference: " << camera.upReference[0] << " " << camera.upReference[1] << " " << camera.upReference[2];
+	s << "\nforwardReference: " << camera.forwardReference[0] << " " << camera.forwardReference[1] << " " << camera.forwardReference[2];
+	s << "\nupVector: " << camera.vUp[0] << " " << camera.vUp[1] << " " << camera.vUp[2];
+	s << "\nforwardVector: " << camera.vForward[0] << " " << camera.vForward[1] << " " << camera.vForward[2];
+	s << "\n";
+
+	return s;
 	
 }
 

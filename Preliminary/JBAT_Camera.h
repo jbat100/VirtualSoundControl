@@ -12,6 +12,7 @@
 
 #include "Math3d.h"
 #include "GLFrame.h"
+#include <iostream>
 
 
 typedef enum _JBAT_OpenGLCameraType {
@@ -27,6 +28,9 @@ protected:
 	float theta;
 	float phi;
 	
+	float movementSpeed;
+	float rotationSpeed;
+	
 	M3DVector3f upReference;
 	M3DVector3f forwardReference;
 	
@@ -40,8 +44,19 @@ public:
 	JBAT_Camera(void);
 	~JBAT_Camera(void);
 	
-	
 	void setToDefault(void);
+	
+	void setMovementSpeed(float s) {movementSpeed = s;}
+	float getMovementSpeed() {return movementSpeed;}
+	void setRotationSpeed(float s) {rotationSpeed = s;}
+	float getRotationSpeed() {return rotationSpeed;}
+	
+	void moveForward() {MoveForward(movementSpeed);}
+	void moveBackward() {MoveForward(-movementSpeed);}
+	void moveRight() {MoveRight(movementSpeed);}
+	void moveLeft() {MoveRight(-movementSpeed);}
+	void moveUp() {MoveUp(movementSpeed);}
+	void moveDown() {MoveUp(-movementSpeed);}
 	
 	void setTheta(float _theta);
 	void setPhi(float _phi);
@@ -71,6 +86,8 @@ public:
 	void updateFPSFrame(void);
 	
 	void applyGLCameraTransform();
+	
+	friend std::ostream & operator<<(std::ostream& s, JBAT_Camera & camera);
 	
 	/*
 	

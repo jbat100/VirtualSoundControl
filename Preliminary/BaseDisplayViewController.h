@@ -31,10 +31,23 @@ LightSetWindowControllerDataSource>
 	
 	CameraControlWindowController *cameraControlWindowController;
 	LightSetWindowController *lightSetWindowController;
-
 	
 	JBAT_Camera *camera;
 	JBAT_LightSet *lightSet;
+	
+	// used to update screen
+	NSTimer *renderingTimer;
+	NSTimer *interactionTimer;
+	
+	BOOL interactionEnabled;
+	BOOL rendering;
+	// KEY TRACKING
+	BOOL upIsPressed;
+	BOOL downIsPressed;
+	BOOL leftIsPressed;
+	BOOL rightIsPressed;
+	BOOL forwardIsPressed;
+	BOOL backwardIsPressed;
 		
 }
 
@@ -48,5 +61,10 @@ LightSetWindowControllerDataSource>
 -(IBAction) renderingClicked:(id)sender;
 -(IBAction) cameraClicked:(id)sender;
 -(IBAction) interactionClicked:(id)sender;
+
+-(void) startRenderingBase;
+-(void) stopRenderingBase;
+
+- (void)keyDown:(NSEvent *)theEvent;
 
 @end

@@ -76,7 +76,19 @@
 #pragma mark -
 #pragma mark Interface Callback Methods
 
+- (void)keyDown:(NSEvent *)theEvent {
+	
+	//NSLog(@"In MeshWindowController key down, event is %@", theEvent);
+	[meshDisplayViewController keyDown:theEvent];
+	
+}
 
+- (void)keyUp:(NSEvent *)theEvent {
+	
+	//NSLog(@"In MeshWindowController key up, event is %@", theEvent);
+	[meshDisplayViewController keyUp:theEvent];
+	
+}
 
 -(IBAction)	importMeshClicked:(id)sender {
 	

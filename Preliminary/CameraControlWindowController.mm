@@ -8,6 +8,12 @@
 
 #import "CameraControlWindowController.h"
 
+#define MIN_SPEED 0.05
+#define MAX_SPEED 1.00
+
+#define MIN_SENSITIVITY 0.0005
+#define MAX_SENSITIVITY 0.02
+
 
 @implementation CameraControlWindowController
 
@@ -16,7 +22,11 @@
 -(id) init {
 	
 	if ([super initWithWindowNibName:@"CameraControlWindow"]) {
-		
+		[(NSPanel*)[self window] setFloatingPanel:NO];
+		[speedSlider setMinValue:(double)MIN_SPEED];
+		[speedSlider setMaxValue:(double)MAX_SPEED];
+		[mouseSensitivitySlider setMinValue:(double)MIN_SENSITIVITY];
+		[mouseSensitivitySlider setMaxValue:(double)MAX_SENSITIVITY];
 	}
 	return self;
 }
@@ -63,7 +73,12 @@
 		[phiTextField setStringValue:@""];
 	}
 
+}
+
+-(void) updateInteractionSliders {
 	
+	[mouseSensitivitySlider setFloatValue:[dataSource camera]->getRotationSpeed()];
+	[speedSlider setFloatValue:[dataSource camera]->getMovementSpeed()];
 }
 
 -(IBAction) resetClicked:(id)sender {
@@ -76,6 +91,14 @@
 
 -(IBAction) sweepClicked:(id)sender {
 	
+}
+
+-(IBAction) speedSliderChanged:(id)sender {
+	[dataSource camera]->setMovementSpeed([speedSlider floatValue]);
+}
+
+-(IBAction) mouseSensitivitySliderChanged:(id)sender {
+	[dataSource camera]->setRotationSpeed([mouseSensitivitySlider floatValue]);
 }
 
 
