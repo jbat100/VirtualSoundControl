@@ -12,16 +12,36 @@
 
 @implementation MeshDisplayViewController
 
-@synthesize camera, dataSource;
+@synthesize dataSource;
 
 -(void) awakeFromNib {
+	
+	[(MeshGLView*)glView setMeshSource:self];
 	
 	
 }
 
 -(void) setup {
 	[super setup];
-	
+}
+	 
+
+	 
+-(void) startRendering {
+	JBAT_SetupOpenGLClientStates(JBAT_OpenGLClientStatesDefault);
+	[super startRendering];
 }
 
+-(void) stopRendering {
+	JBAT_SetupOpenGLClientStates(JBAT_OpenGLClientStatesOff);
+	[super startRendering];
+}
+
+-(JBAT_BufferedMesh*) mesh {
+	
+	return [dataSource modelMesh];
+	
+}
+								  
+								  
 @end

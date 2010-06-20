@@ -62,8 +62,8 @@ LightSetWindowControllerDataSource>
 -(IBAction) cameraClicked:(id)sender;
 -(IBAction) interactionClicked:(id)sender;
 
--(void) startRenderingBase;
--(void) stopRenderingBase;
+-(void) startRendering;
+-(void) stopRendering;
 
 - (void)keyDown:(NSEvent *)theEvent;
 

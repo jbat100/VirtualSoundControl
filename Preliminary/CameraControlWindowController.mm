@@ -83,6 +83,10 @@
 
 -(IBAction) resetClicked:(id)sender {
 	
+	[dataSource camera]->setToDefault();
+	[dataSource cameraFrameChanged];
+	[self updateInteractionSliders];
+	
 }
 
 -(IBAction) lookAtOriginClicked:(id)sender {

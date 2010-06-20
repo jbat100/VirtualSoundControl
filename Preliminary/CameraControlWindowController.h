@@ -12,6 +12,7 @@
 @protocol CameraControlWindowControllerDataSource
 
 -(JBAT_Camera*) camera;
+-(void) cameraFrameChanged;
 
 @end
 

@@ -45,6 +45,7 @@
 		10C40A9E116A11A80041F17D /* MeshDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10C40A9D116A11A80041F17D /* MeshDataView.xib */; };
 		10C40AA2116A11D90041F17D /* MeshDisplayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10C40AA1116A11D90041F17D /* MeshDisplayView.xib */; };
 		10F1F76F11AC5F7900D49CCF /* JBAT_ObjectSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F1F76E11AC5F7900D49CCF /* JBAT_ObjectSet.cpp */; };
+		10F5B5FF11CE27FD003B6E91 /* MeshGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F5B5FE11CE27FD003B6E91 /* MeshGLView.mm */; };
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* MeshFrames3AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* MeshFrames3AppDelegate.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -120,6 +121,8 @@
 		10C40AA1116A11D90041F17D /* MeshDisplayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeshDisplayView.xib; sourceTree = "<group>"; };
 		10F1F76D11AC5F7900D49CCF /* JBAT_ObjectSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBAT_ObjectSet.h; sourceTree = "<group>"; };
 		10F1F76E11AC5F7900D49CCF /* JBAT_ObjectSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JBAT_ObjectSet.cpp; sourceTree = "<group>"; };
+		10F5B5FD11CE27FD003B6E91 /* MeshGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeshGLView.h; sourceTree = "<group>"; };
+		10F5B5FE11CE27FD003B6E91 /* MeshGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MeshGLView.mm; sourceTree = "<group>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		256AC3D80F4B6AC300CF3369 /* MeshFrames3AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeshFrames3AppDelegate.h; sourceTree = "<group>"; };
@@ -407,6 +410,8 @@
 		10C40AA0116A11BC0041F17D /* Mesh Display */ = {
 			isa = PBXGroup;
 			children = (
+				10F5B5FD11CE27FD003B6E91 /* MeshGLView.h */,
+				10F5B5FE11CE27FD003B6E91 /* MeshGLView.mm */,
 				100CB791115EE0BB00C82B15 /* MeshDisplayViewController.h */,
 				100CB792115EE0BB00C82B15 /* MeshDisplayViewController.mm */,
 				10C40AA1116A11D90041F17D /* MeshDisplayView.xib */,
@@ -555,6 +560,7 @@
 				105FDA2011B11D25005421E3 /* JBAT_VSoundProject.cpp in Sources */,
 				103815F311C556450081FCDE /* BaseDisplayViewController.mm in Sources */,
 				109CC84D11CABEEE007E5FE6 /* LightSetWindowController.mm in Sources */,
+				10F5B5FF11CE27FD003B6E91 /* MeshGLView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -71,12 +71,12 @@
 	if (![renderingButton state]) {
 		NSLog(@"Stopped rendering");
 		rendering = NO;
-		[self stopRenderingBase];
+		[self stopRendering];
 	}
 	else {
 		NSLog(@"Started rendering");
 		rendering = NO;
-		[self startRenderingBase];
+		[self startRendering];
 	}
 	
 }
@@ -180,7 +180,8 @@
 	[cameraControlWindowController updateTextFields];
 }
 
--(void) startRenderingBase {
+
+-(void) startRendering {
 	
 	[glView prepareOpenGL];
 	[glView reshape];
@@ -193,7 +194,7 @@
 	
 }
 
--(void) stopRenderingBase {
+-(void) stopRendering {
 
 	[renderingTimer invalidate];
 	[interactionTimer invalidate];

@@ -8,16 +8,16 @@
 
 #import <Cocoa/Cocoa.h>
 #import "BaseDisplayViewController.h"
-#import "JBAT_BaseMesh.h"
-
+#import "JBAT_BufferedMesh.h"
+#import "MeshGLView.h"
 
 @protocol MeshDisplayViewControllerDataSource
 
--(JBAT_BaseMesh *) modelMesh;
+-(JBAT_BufferedMesh *) modelMesh;
 
 @end
 
-@interface MeshDisplayViewController : BaseDisplayViewController {
+@interface MeshDisplayViewController : BaseDisplayViewController <MeshDataSource> {
 	
 	id<MeshDisplayViewControllerDataSource> dataSource;
 
