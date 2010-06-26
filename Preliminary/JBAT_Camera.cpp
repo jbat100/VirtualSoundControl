@@ -30,8 +30,8 @@ void JBAT_Camera::setToDefault(void) {
 	m3dLoadVector3(vOrigin, -20.0, 0.0, 0.0);
 	theta = 0.0;
 	phi = 0.0;
-	movementSpeed = 0.1;
-	rotationSpeed = 0.005;
+	movementSpeed = 0.3;
+	rotationSpeed = 0.01;
 	needsUpdate = true;
 }
 

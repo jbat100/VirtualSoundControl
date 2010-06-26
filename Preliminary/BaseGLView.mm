@@ -31,7 +31,7 @@ static void drawAnObject () {
 
 //@synthesize mouseSensitivity, interactionEnabled, rendering;
 //@synthesize upIsPressed, downIsPressed, leftIsPressed, rightIsPressed, forwardIsPressed, backwardIsPressed;
-@synthesize delegate;
+@synthesize baseEnvironment;
 
 
 - (id)initWithFrame:(NSRect)frame {
@@ -62,7 +62,7 @@ static void drawAnObject () {
 	//SetupRC(); (do actual setup)
 	
 	glEnable(GL_DEPTH_TEST);	// Hidden surface removal
-	glFrontFace(GL_CCW);		// Counter clock-wise polygons face out
+	glFrontFace(GL_CW);		// Counter clock-wise polygons face out
 	glEnable(GL_CULL_FACE);		// Do not calculate inside of jet
 	
 	// Black background
@@ -119,7 +119,7 @@ static void drawAnObject () {
 	glClear(GL_COLOR_BUFFER_BIT);
 	
 	glLoadIdentity();
-	[delegate camera]->applyGLCameraTransform();
+	[baseEnvironment camera]->applyGLCameraTransform();
 	
 	
 	glPushMatrix();
@@ -157,10 +157,10 @@ static void drawAnObject () {
 	//NSLog(@"In mouse dragged");
 	//NSLog(@"Delta X is %f, Y is %f", [theEvent deltaX], [theEvent deltaY]);
 	
-	float sensitivity = [delegate camera]->getRotationSpeed();
-	[delegate camera]->addTheta(sensitivity*[theEvent deltaX]);
-	[delegate camera]->addPhi(-sensitivity*[theEvent deltaY]);
-	[delegate cameraFrameChanged];
+	float sensitivity = [baseEnvironment camera]->getRotationSpeed();
+	[baseEnvironment camera]->addTheta(sensitivity*[theEvent deltaX]);
+	[baseEnvironment camera]->addPhi(-sensitivity*[theEvent deltaY]);
+	[baseEnvironment cameraFrameChanged];
 	
 }
 

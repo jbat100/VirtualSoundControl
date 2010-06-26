@@ -542,9 +542,7 @@ void JBAT_BaseMesh::scale(GLfloat fScaleValue) {
 
 
 
-
-
-extern void JBAT_SetUpOpenGLMeshSetup(JBAT_OpenGLMeshType meshType, JBAT_OpenGLColorSetup colorSetup) {
+void JBAT_SetUpOpenGLMeshSetup(JBAT_OpenGLMeshType meshType, JBAT_OpenGLColorSetup colorSetup) {
 	
 	/* 
 	 

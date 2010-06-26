@@ -62,6 +62,12 @@
 	
 	[meshDataViewController setup];
 	[meshDisplayViewController setup];
+	
+	// Load default mesh
+	
+//	std::string filename = [meshFilePath UTF8String];
+//	modelMesh = new JBAT_Object(); 
+//	modelMesh->readVTKFile(filename);
 
 	
 }

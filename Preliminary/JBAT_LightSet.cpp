@@ -114,6 +114,54 @@ int JBAT_LightSet::numberOfLights(void) {
 	return lights.size();
 }
 
+void JBAT_LightSet::applyGL() {
+	
+	GLenum lightIndex;
+	int count = 0;
+	
+	for (std::list<JBAT_Light*>::iterator iter = lights.begin(); iter != lights.end(); iter++) {
+		
+		if (count > 7) {
+			break;
+		}
+		
+		switch (count) {
+			case 0:
+				lightIndex = GL_LIGHT0;
+				break;
+			case 1:
+				lightIndex = GL_LIGHT1;
+				break;
+			case 2:
+				lightIndex = GL_LIGHT2;
+				break;
+			case 3:
+				lightIndex = GL_LIGHT3;
+				break;
+			case 4:
+				lightIndex = GL_LIGHT4;
+				break;
+			case 5:
+				lightIndex = GL_LIGHT5;
+				break;
+			case 6:
+				lightIndex = GL_LIGHT6;
+				break;
+			case 7:
+				lightIndex = GL_LIGHT7;
+				break;
+			default:
+				break;
+		}
+		
+		(*iter)->applyGLWithId(lightIndex);
+		
+		count++;
+		
+	}
+	
+}
+
 
 std::ostream & operator<<(std::ostream& s, JBAT_LightSet const & components) {
 	

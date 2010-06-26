@@ -64,7 +64,7 @@
 
 - (void) updateInterface {
 	
-	NSLog(@"Updating light interface");
+	//NSLog(@"Updating light interface");
 	
 	JBAT_Light *light = [dataSource light];
 	
@@ -73,8 +73,7 @@
 		JBAT_Light *light = [dataSource light];
 		
 		//NSLog(@"Updating light interface, light is: ");
-		
-		std::cout << *light;
+		//std::cout << *light;
 	
 		[self enableInterface:light->isOn() ];
 		
@@ -100,7 +99,7 @@
 		[zDirectionTextField setStringValue:[NSString stringWithFormat:@"%f", direction[2]]];
 		
 		
-		NSLog(@"Setting ambientColorButton cell background color to %@", [self ambientColor]);
+		//NSLog(@"Setting ambientColorButton cell background color to %@", [self ambientColor]);
 		[[ambientColorButton cell] setBackgroundColor:[self ambientColor]];
 		[[diffuseColorButton cell] setBackgroundColor:[self diffuseColor]];
 		[[specularColorButton cell] setBackgroundColor:[self specularColor]];
@@ -113,7 +112,7 @@
 	
 	else {
 		
-		NSLog(@"Updating light interface, light is NULL");
+		//NSLog(@"Updating light interface, light is NULL");
 		
 		[self enableInterface:NO];
 	}
@@ -213,7 +212,7 @@
 
 -(IBAction) sliderMoved:(id)sender {
 	
-	NSLog(@"Slider moved to value %f", [spotlightAngleSlider floatValue]);
+	//NSLog(@"Slider moved to value %f", [spotlightAngleSlider floatValue]);
 	
 	JBAT_Light *light = [dataSource light]; 
 	
@@ -291,7 +290,7 @@
 
 - (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor {
 	
-	NSLog(@"Control %@ text should end %@", control, fieldEditor);
+	//NSLog(@"Control %@ text should end %@", control, fieldEditor);
 	
 	JBAT_Light *light = [dataSource light];
 	

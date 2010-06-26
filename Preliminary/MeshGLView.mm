@@ -7,13 +7,19 @@
 //
 
 #import "MeshGLView.h"
+
 #import "JBAT_BufferedMesh.h"
+#import "JBAT_Light.h"
+#include "JBAT_MathTools.h"
+
 #import <iostream>
+
+static float x;
 
 
 @implementation MeshGLView
 
-@synthesize meshSource;
+@synthesize meshEnvironment;
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -25,26 +31,34 @@
 
 - (void) prepareOpenGL { 
 	[super prepareOpenGL];	
+	
+	x = 0.0;
+	
+	JBAT_SetupOpenGLLighting(JBAT_OpenGLLightingSetupDefault);
+	JBAT_SetUpOpenGLMeshSetup(JBAT_OpenGLMeshTypeDefault, JBAT_OpenGLColorSetupDefault);
+	
 }
 
 
 -(void) drawRect: (NSRect) bounds {
 	
+	x = fullRangedAngle(x+0.1);
+	
 	glClearColor(0.0f, 0.2f, 0.2f, 1.0f );	
 	glClear(GL_COLOR_BUFFER_BIT);
 	
-	glLoadIdentity();
-	[delegate camera]->applyGLCameraTransform();
+	[baseEnvironment lightSet]->applyGL();
 	
+	glLoadIdentity();
+	[baseEnvironment camera]->applyGLCameraTransform();
 	
 	glPushMatrix();
-	
-	//NSLog(@"Drawing mesh %@", [meshSource mesh]);
-	if ([meshSource mesh]) {
-		//std::cout << "\nDrawing " << *[meshSource mesh];
-		[meshSource mesh]->draw();
-	}
-	
+		//NSLog(@"Drawing mesh %@", [meshEnvironment mesh]);
+		if ([meshEnvironment mesh]) {
+			//glTranslatef(sin(x), sin(x), 0.0);	
+			//std::cout << "\nDrawing " << *[meshEnvironment mesh];
+			[meshEnvironment mesh]->draw();
+		}
 	glPopMatrix();
 	
 	glutSwapBuffers();	

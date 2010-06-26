@@ -119,7 +119,7 @@
 		[[(NSTableColumn*)[columns objectAtIndex:2] headerCell] setStringValue:@"3"];
 	}
 	
-	NSArray *columns = [mainTableView tableColumns];
+	//NSArray *columns = [mainTableView tableColumns];
 	
 	//NSLog(@"At A, columns is %@", columns);
 	

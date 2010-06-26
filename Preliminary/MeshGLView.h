@@ -10,7 +10,7 @@
 #import "BaseGLView.h"
 #import "JBAT_BufferedMesh.h"
 
-@protocol MeshDataSource
+@protocol MeshGLViewEnvironment
 
 -(JBAT_BufferedMesh*) mesh;
 
@@ -20,10 +20,10 @@
 
 @interface MeshGLView : BaseGLView {
 	
-	id<MeshDataSource> meshSource;
+	id<MeshGLViewEnvironment> meshEnvironment;
 
 }
 
-@property (assign) id<MeshDataSource> meshSource;
+@property (assign) id<MeshGLViewEnvironment> meshEnvironment;
 
 @end

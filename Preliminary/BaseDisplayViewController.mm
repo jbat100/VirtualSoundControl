@@ -33,7 +33,7 @@
 	camera->SetOrigin(-20.0, 0.0, 0.0);
 	
 	[glView setup];
-	[glView setDelegate:self];
+	[glView setBaseEnvironment:self];
 	
 	[renderingButton setState:rendering ? 1 : 0];
 	[interactionButton setState:interactionEnabled ? 1 : 0];
@@ -102,7 +102,7 @@
 		
 		if ([theEvent modifierFlags]) {
 			
-			NSLog(@"There is at least one modeifier flag");
+			//NSLog(@"There is at least one modeifier flag");
 			
 		}
 		

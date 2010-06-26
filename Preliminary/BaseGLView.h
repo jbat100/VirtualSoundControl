@@ -11,7 +11,7 @@
 #import "JBAT_Camera.h"
 
 
-@protocol GLViewInteractionDelegate
+@protocol BaseGLViewEnvironment
 
 -(JBAT_LightSet*) lightSet; // to be able to call the opengl draw operations 
 -(JBAT_Camera*) camera;
@@ -26,7 +26,7 @@
 	
 	NSOpenGLContext *thisContext;
 	
-	id <GLViewInteractionDelegate> delegate;
+	id <BaseGLViewEnvironment> baseEnvironment;
 	
 }
 
@@ -42,7 +42,7 @@
 //@property (nonatomic) BOOL forwardIsPressed;
 //@property (nonatomic) BOOL backwardIsPressed;
 
-@property (assign) id <GLViewInteractionDelegate> delegate;
+@property (assign) id <BaseGLViewEnvironment> baseEnvironment;
 
 -(void) setup;
 - (void) prepareOpenGL;

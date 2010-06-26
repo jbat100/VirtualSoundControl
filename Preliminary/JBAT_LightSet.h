@@ -38,6 +38,8 @@ public:
 	JBAT_Light* getLightAtIndex(int index);
 	int numberOfLights(void);
 	
+	void applyGL();
+	
 	friend std::ostream & operator<<(std::ostream& s, JBAT_LightSet const & components);
 	
 };

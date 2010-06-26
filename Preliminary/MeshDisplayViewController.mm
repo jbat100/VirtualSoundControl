@@ -15,10 +15,7 @@
 @synthesize dataSource;
 
 -(void) awakeFromNib {
-	
-	[(MeshGLView*)glView setMeshSource:self];
-	
-	
+	[(MeshGLView*)glView setMeshEnvironment:self];
 }
 
 -(void) setup {
@@ -29,6 +26,7 @@
 	 
 -(void) startRendering {
 	JBAT_SetupOpenGLClientStates(JBAT_OpenGLClientStatesDefault);
+	JBAT_SetupOpenGLLighting(JBAT_OpenGLLightingSetupDefault);
 	[super startRendering];
 }
 
@@ -38,9 +36,7 @@
 }
 
 -(JBAT_BufferedMesh*) mesh {
-	
 	return [dataSource modelMesh];
-	
 }
 								  
 								  

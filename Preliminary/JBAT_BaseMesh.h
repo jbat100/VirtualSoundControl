@@ -117,6 +117,6 @@ typedef enum _JBAT_OpenGLColorSetup {
 } JBAT_OpenGLColorSetup;
 
 
-void JBAT_SetUpOpenGLMaterial(JBAT_OpenGLMeshType meshType, JBAT_OpenGLColorSetup colorSetup);
+void JBAT_SetUpOpenGLMeshSetup(JBAT_OpenGLMeshType meshType, JBAT_OpenGLColorSetup colorSetup);
 
 #endif

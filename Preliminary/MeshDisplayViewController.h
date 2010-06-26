@@ -17,7 +17,7 @@
 
 @end
 
-@interface MeshDisplayViewController : BaseDisplayViewController <MeshDataSource> {
+@interface MeshDisplayViewController : BaseDisplayViewController <MeshGLViewEnvironment> {
 	
 	id<MeshDisplayViewControllerDataSource> dataSource;
 

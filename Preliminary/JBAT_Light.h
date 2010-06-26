@@ -30,7 +30,7 @@ public:
 	~JBAT_Light();
 	
 	void setToDefault();
-	void applyLightTo(GLenum lightId);
+	void applyGLWithId(GLenum lightId);
 	
 	void enable() {on = true; onNeedsUpdate = true;}
 	void disable() {on = false; onNeedsUpdate = true;}
@@ -104,6 +104,6 @@ typedef enum _JBAT_OpenGLLightingSetup {
 } JBAT_OpenGLLightingSetup;
 
 
-extern void JBAT_SetUpOpenGLLighting(JBAT_OpenGLLightingSetup setup);
+extern void JBAT_SetupOpenGLLighting(JBAT_OpenGLLightingSetup setup);
 
 #endif

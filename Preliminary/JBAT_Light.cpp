@@ -30,11 +30,20 @@ JBAT_Light::~JBAT_Light() {
 
 void JBAT_Light::setToDefault() {
 	
+	ambientColorNeedsUpdate = true;
+	diffuseColorNeedsUpdate = true;
+	specularColorNeedsUpdate = true;
+	positionNeedsUpdate = true;
+	directionNeedsUpdate = true;
+	spotLightNeedsUpdate = true;
+	spotLightAngleNeedsUpdate = true;
+	onNeedsUpdate = true;
+	
 	on = true;
 	spotlight = false;
 	spotAngle = 360.0;
 	
-	m3dLoadVector4(ambientColor, 1.0, 1.0, 1.0, 1.0);
+	m3dLoadVector4(ambientColor, 0.2, 0.2, 0.2, 1.0);
 	m3dLoadVector4(diffuseColor, 1.0, 1.0, 1.0, 1.0);
 	m3dLoadVector4(specularColor, 1.0, 1.0, 1.0, 1.0);
 	m3dLoadVector4(specularColor, 1.0, 1.0, 1.0, 1.0);
@@ -105,42 +114,57 @@ float* JBAT_Light::getDirection() {
 #pragma mark Graphics
 
 
-void JBAT_Light::applyLightTo(GLenum lightId) {
-	
-	
-	/*
-	 
-	 The posiition of the light is relative to the current frame of reference 
-	 
-	 */
+void JBAT_Light::applyGLWithId(GLenum lightId) {
 	
 	if (onNeedsUpdate) {
-		if (on) 
+		if (on) {
+			std::cout << "\nEnabling light " << lightId;
 			glEnable(lightId);
-		else
+		}
+		else {
+			std::cout << "\nDisabling light " << lightId;
 			glDisable(lightId);
+		}
+		onNeedsUpdate = false;
 	}
 	
 	
 	// The light is composed of just diffuse and specular components 
-	if (ambientColorNeedsUpdate)
+	if (ambientColorNeedsUpdate) {
+		std::cout << "\nSetting light " << lightId << " ambient color to " << ambientColor[0] << " " << ambientColor[1] << " " << ambientColor[2] << " " << ambientColor[3];
 		glLightfv(lightId, GL_AMBIENT, ambientColor); 
+		ambientColorNeedsUpdate = false;
+	}
 	
-	if (diffuseColorNeedsUpdate)
+	if (diffuseColorNeedsUpdate) {
+		std::cout << "\nSetting light " << lightId << " diffuse color to " << diffuseColor[0] << " " << diffuseColor[1] << " " << diffuseColor[2] << " " << diffuseColor[3];
 		glLightfv(lightId, GL_DIFFUSE, diffuseColor); 
+		diffuseColorNeedsUpdate = false;
+	}
 	
 	
-	if (specularColorNeedsUpdate)
+	if (specularColorNeedsUpdate) {
+		std::cout << "\nSetting light " << lightId << " specular color to " << specularColor[0] << " " << specularColor[1] << " " << specularColor[2] << " " << specularColor[3];
 		glLightfv(lightId, GL_SPECULAR, specularColor); 
+		specularColorNeedsUpdate = false;
+	}
 	
-	if (positionNeedsUpdate)
-		glLightfv(lightId, GL_POSITION, position);
+	if (positionNeedsUpdate) {
+		// The posiition of the light is relative to the current frame of reference 
+		std::cout << "\nSetting light " << lightId << " position to " << position[0] << " " << position[1] << " " << position[2];
+		glPushMatrix();
+			glLoadIdentity();
+			glLightfv(lightId, GL_POSITION, position);
+		glPopMatrix();
+		
+		positionNeedsUpdate = false;
+		
+	}
 	
 	// Specific spot effects // Cut-off angle is 60 degrees 
 	//glLightf(GL_LIGHT0,GL_SPOT_CUTOFF,60.0f);
 	
-	// Enable this light in particular 
-	//glEnable(GL_LIGHT0);
+
 	
 
 	
@@ -177,23 +201,19 @@ std::ostream & operator<<(std::ostream & s, JBAT_Light & c) {
 }
 
 
-void JBAT_SetUpOpenGLLighting(JBAT_OpenGLLightingSetup setup) {
+void JBAT_SetupOpenGLLighting(JBAT_OpenGLLightingSetup setup) {
 	
 	if (setup == JBAT_OpenGLLightingSetupDefault) {
 		
 		glEnable(GL_LIGHTING);
+		glEnable(GL_NORMALIZE); //Have OpenGL automatically normalize our normals
+		glShadeModel(GL_SMOOTH); //Enable smooth shading
+		
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f); //Set the background color to black
 		
 		//Ambient lighting (this is for the whole seen and does not have a source position)
 		GLfloat ambientLight[] = {0.2f, 0.2f, 0.2f, 1.0f};
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
-		
-		
-
-		glEnable(GL_NORMALIZE); //Have OpenGL automatically normalize our normals
-		glShadeModel(GL_SMOOTH); //Enable smooth shading
-		
-
 		
 
 	}

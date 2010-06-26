@@ -79,6 +79,5 @@ typedef enum _JBAT_OpenGLMaterialSetup {
 	JBAT_OpenGLMaterialSetupDefault
 } JBAT_OpenGLMaterialSetup;
 
-void JBAT_SetUpOpenGLMaterial(JBAT_OpenGLMaterialSetup materialSetup);
 
 #endif
