@@ -29,6 +29,8 @@ LightSetWindowControllerDataSource>
 	IBOutlet NSButton* interactionButton;
 	IBOutlet NSButton* renderingButton;
 	
+	IBOutlet NSPopUpButton* meshDisplayModePopUpButton;
+	
 	CameraControlWindowController *cameraControlWindowController;
 	LightSetWindowController *lightSetWindowController;
 	
@@ -56,6 +58,7 @@ LightSetWindowControllerDataSource>
 @property (assign) JBAT_LightSet *lightSet;
 
 -(void) setup;
+-(void) updateMeshDisplayMode;
 
 -(IBAction)	lightSetClicked:(id)sender;
 -(IBAction) renderingClicked:(id)sender;

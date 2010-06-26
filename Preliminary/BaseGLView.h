@@ -11,11 +11,19 @@
 #import "JBAT_Camera.h"
 
 
+typedef enum _MeshDisplayMode {
+	MeshDisplayModeSurface,
+	MeshDisplayModeWireframe,
+	MeshDisplayModePoints
+} MeshDisplayMode;
+
+
 @protocol BaseGLViewEnvironment
 
 -(JBAT_LightSet*) lightSet; // to be able to call the opengl draw operations 
 -(JBAT_Camera*) camera;
 -(void) cameraFrameChanged;
+-(MeshDisplayMode) meshDisplayMode;
 
 @end
 
@@ -44,10 +52,11 @@
 
 @property (assign) id <BaseGLViewEnvironment> baseEnvironment;
 
--(void) setup;
-- (void) prepareOpenGL;
+-(void) setMeshDisplayMode:(MeshDisplayMode)meshDisplayMode;
 
-- (void)reshape;
+-(void) setup;
+-(void) prepareOpenGL;
+-(void)reshape;
 
 
 @end

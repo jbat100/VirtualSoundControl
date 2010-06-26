@@ -18,6 +18,17 @@
 
 -(void) setup {
 	
+	[meshDisplayModePopUpButton setPullsDown:NO];
+	[meshDisplayModePopUpButton removeAllItems];
+	[meshDisplayModePopUpButton addItemsWithTitles:[NSArray arrayWithObjects:
+													@"Surface",
+													@"Wireframe", 
+													@"Points", nil]];
+	[meshDisplayModePopUpButton selectItemWithTitle:@"Surface"];
+	[meshDisplayModePopUpButton setTarget:self];
+	[meshDisplayModePopUpButton setAction:@selector(updateMeshDisplayMode)];
+	
+	
 	interactionEnabled = NO;
 	rendering = NO;
 	upIsPressed = NO;
@@ -75,7 +86,7 @@
 	}
 	else {
 		NSLog(@"Started rendering");
-		rendering = NO;
+		rendering = YES;
 		[self startRendering];
 	}
 	
@@ -243,6 +254,29 @@
 		
 	}
 	
+}
+
+-(void) updateMeshDisplayMode {
+	
+	[glView setMeshDisplayMode:[self meshDisplayMode]];
+	
+}
+
+-(MeshDisplayMode) meshDisplayMode {
+	
+	if ([[meshDisplayModePopUpButton titleOfSelectedItem] isEqualToString:@"Surface"]) {
+		return MeshDisplayModeSurface;
+	}
+	
+	else if ([[meshDisplayModePopUpButton titleOfSelectedItem] isEqualToString:@"Wireframe"]) {
+		return MeshDisplayModeWireframe;
+	}
+	
+	else if ([[meshDisplayModePopUpButton titleOfSelectedItem] isEqualToString:@"Points"]) {
+		return MeshDisplayModePoints;
+	}
+	
+	return MeshDisplayModeSurface;
 }
 
 

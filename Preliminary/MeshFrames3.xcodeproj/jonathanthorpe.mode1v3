@@ -300,15 +300,16 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>16</integer>
-									<integer>12</integer>
-									<integer>5</integer>
+									<integer>45</integer>
+									<integer>43</integer>
+									<integer>42</integer>
+									<integer>31</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {367, 644}}</string>
+							<string>{{0, 433}, {367, 644}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -347,7 +348,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>JBAT_Light.cpp</string>
+								<string>BaseGLView.mm</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -355,11 +356,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>JBAT_Light.cpp</string>
+										<string>BaseGLView.mm</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>100C3FA911D6708400012886</string>
+										<string>100C3FEA11D67CA000012886</string>
 										<key>history</key>
 										<array>
 											<string>109AD426114D007200723265</string>
@@ -404,35 +405,35 @@
 											<string>1012792A11CD39BF00872B2F</string>
 											<string>10F5B63011CE4FA5003B6E91</string>
 											<string>10F5B67B11CE7E82003B6E91</string>
-											<string>10F5B69811CE89E5003B6E91</string>
 											<string>10F5B69911CE89E5003B6E91</string>
 											<string>10F5B69A11CE89E5003B6E91</string>
 											<string>10F5B69B11CE89E5003B6E91</string>
-											<string>10F5B69C11CE89E5003B6E91</string>
 											<string>100C3F2111D624D600012886</string>
 											<string>100C3F2211D624D600012886</string>
 											<string>100C3F2511D624D600012886</string>
 											<string>100C3F2611D624D600012886</string>
-											<string>100C3F2711D624D600012886</string>
-											<string>100C3F2811D624D600012886</string>
-											<string>100C3F5911D637BE00012886</string>
-											<string>100C3F5A11D637BE00012886</string>
-											<string>100C3F5C11D637BE00012886</string>
-											<string>100C3F5D11D637BE00012886</string>
 											<string>100C3F5E11D637BE00012886</string>
 											<string>100C3F5F11D637BE00012886</string>
 											<string>100C3F6111D637BE00012886</string>
-											<string>100C3F6211D637BE00012886</string>
-											<string>100C3F6311D637BE00012886</string>
-											<string>100C3F6411D637BE00012886</string>
-											<string>100C3F6511D637BE00012886</string>
 											<string>100C3F6D11D66A1900012886</string>
 											<string>100C3F6E11D66A1900012886</string>
-											<string>100C3F7D11D66E3D00012886</string>
 											<string>100C3F7E11D66E3D00012886</string>
 											<string>100C3F8011D66E3D00012886</string>
 											<string>100C3F9F11D6704E00012886</string>
-											<string>100C3FA011D6704E00012886</string>
+											<string>100C3FB111D673FA00012886</string>
+											<string>100C3FB211D673FA00012886</string>
+											<string>100C3FB711D673FA00012886</string>
+											<string>100C3FB811D673FA00012886</string>
+											<string>100C3FBB11D676C400012886</string>
+											<string>100C3FC211D6778B00012886</string>
+											<string>100C3FC311D6778B00012886</string>
+											<string>100C3FC411D6778B00012886</string>
+											<string>100C3FC511D6778B00012886</string>
+											<string>100C3FCA11D67A3F00012886</string>
+											<string>100C3FE611D67CA000012886</string>
+											<string>100C3FE711D67CA000012886</string>
+											<string>100C3FE811D67CA000012886</string>
+											<string>100C3FE911D67CA000012886</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -630,13 +631,13 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>100C3FAA11D6708400012886</string>
+		<string>100C3FEB11D67CA000012886</string>
 		<string>100C3F3E11D624D600012886</string>
 		<string>100C3F3F11D624D600012886</string>
-		<string>1CD10A99069EF8BA00B06720</string>
-		<string>109AD3DB114C3CAF00723265</string>
 		<string>1C530D57069F1CE1000CFCEE</string>
+		<string>1CD10A99069EF8BA00B06720</string>
 		<string>/Users/jonathanthorpe/Programming/Projects/Repository/Preliminary/MeshFrames3.xcodeproj</string>
+		<string>109AD3DB114C3CAF00723265</string>
 		<string>1C78EAAD065D492600B07095</string>
 	</array>
 	<key>WindowString</key>
@@ -663,7 +664,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>MeshGLView.mm</string>
+								<string>BaseDisplayViewController.mm</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -856,7 +857,7 @@
 			<key>WindowToolGUID</key>
 			<string>1CD10A99069EF8BA00B06720</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>

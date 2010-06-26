@@ -13,6 +13,8 @@
 #include "JBAT_MathTools.h"
 
 
+
+
 static float x;
 
 static void drawAnObject () {
@@ -70,6 +72,8 @@ static void drawAnObject () {
 	
 	
 	/*----------------------------------------------------------------*/
+	
+	[self setMeshDisplayMode:[baseEnvironment meshDisplayMode]];
 
 }
 
@@ -142,6 +146,18 @@ static void drawAnObject () {
 	
 }
 
+-(void) setMeshDisplayMode:(MeshDisplayMode)meshDisplayMode {
+	if (meshDisplayMode == MeshDisplayModeSurface) {
+		glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
+	}
+	else if (meshDisplayMode == MeshDisplayModeWireframe) {
+		glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
+	}
+	else if (meshDisplayMode == MeshDisplayModePoints) {
+		glPolygonMode (GL_FRONT_AND_BACK, GL_POINT);
+	}
+
+}
 
 #pragma mark -
 #pragma mark Camera Interaction Methods
