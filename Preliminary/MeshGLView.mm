@@ -44,7 +44,7 @@ static float x;
 	
 	x = fullRangedAngle(x+0.1);
 	
-	glClearColor(0.0f, 0.2f, 0.2f, 1.0f );	
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f );	
 	glClear(GL_COLOR_BUFFER_BIT);
 	
 	[baseEnvironment lightSet]->applyGL();
@@ -52,10 +52,19 @@ static float x;
 	glLoadIdentity();
 	[baseEnvironment camera]->applyGLCameraTransform();
 	
+	if ([baseEnvironment floor]) {
+		glPushMatrix();
+			glRotatef(3.1415, 0.0, 0.0, 0.1);
+			glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
+			[baseEnvironment floor]->draw();
+			[self setMeshDisplayMode:[baseEnvironment meshDisplayMode]];
+		glPopMatrix();
+	}
+	
 	glPushMatrix();
 		//NSLog(@"Drawing mesh %@", [meshEnvironment mesh]);
 		if ([meshEnvironment mesh]) {
-			//glTranslatef(sin(x), sin(x), 0.0);	
+			glTranslatef(0.0, 0.0, 0.0);	
 			//std::cout << "\nDrawing " << *[meshEnvironment mesh];
 			[meshEnvironment mesh]->draw();
 		}

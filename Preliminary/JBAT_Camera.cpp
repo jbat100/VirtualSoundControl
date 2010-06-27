@@ -25,7 +25,7 @@ JBAT_Camera::~JBAT_Camera(void) {
 
 void JBAT_Camera::setToDefault(void) {
 	
-	m3dLoadVector3(upReference, 0.0, 0.0, 1.0);
+	m3dLoadVector3(upReference, 0.0, 0.0, -1.0);
 	m3dLoadVector3(forwardReference, 1.0, 0.0, 0.0);
 	m3dLoadVector3(vOrigin, -20.0, 0.0, 0.0);
 	theta = 0.0;

@@ -125,39 +125,37 @@ void JBAT_LightSet::applyGL() {
 			break;
 		}
 		
-		switch (count) {
-			case 0:
-				lightIndex = GL_LIGHT0;
-				break;
-			case 1:
-				lightIndex = GL_LIGHT1;
-				break;
-			case 2:
-				lightIndex = GL_LIGHT2;
-				break;
-			case 3:
-				lightIndex = GL_LIGHT3;
-				break;
-			case 4:
-				lightIndex = GL_LIGHT4;
-				break;
-			case 5:
-				lightIndex = GL_LIGHT5;
-				break;
-			case 6:
-				lightIndex = GL_LIGHT6;
-				break;
-			case 7:
-				lightIndex = GL_LIGHT7;
-				break;
-			default:
-				break;
-		}
+		lightIndex = JBAT_GL_LightForIndex(count);
 		
 		(*iter)->applyGLWithId(lightIndex);
 		
 		count++;
 		
+	}
+	
+}
+
+GLenum JBAT_GL_LightForIndex(int index) {
+	
+	switch (index) {
+		case 0:
+			return GL_LIGHT0;
+		case 1:
+			return GL_LIGHT1;
+		case 2:
+			return GL_LIGHT2;
+		case 3:
+			return GL_LIGHT3;
+		case 4:
+			return GL_LIGHT4;
+		case 5:
+			return GL_LIGHT5;
+		case 6:
+			return GL_LIGHT6;
+		case 7:
+			return GL_LIGHT7;
+		default:
+			return GL_LIGHT0;
 	}
 	
 }

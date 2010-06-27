@@ -34,6 +34,7 @@ public:
 	JBAT_BufferedMesh(const JBAT_BufferedMesh& mesh);
 	~JBAT_BufferedMesh();
 	
+	void initialize(GLuint nMaxVerts);
 	void setToDefault();
 	
 	void addTriangle(M3DVector3f verts[3], M3DVector3f vNorms[3], M3DVector2f vTexCoords[3], M3DVector4f vColors[3]);
@@ -53,6 +54,7 @@ protected:
 	
 	GLuint bufferObjects[4];
 	bool buffersAreCreated;
+	bool buffersNeedUpdate;
 	
 	GLenum glUsage; 
 	// GL_STATIC_DRAW: rarely changes

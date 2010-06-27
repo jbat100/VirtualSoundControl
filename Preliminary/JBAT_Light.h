@@ -93,8 +93,6 @@ protected:
 	bool spotLightAngleNeedsUpdate;
 	bool onNeedsUpdate;
 	
-	
-	
 };
 
 

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		1004A69F1167467F00F19B63 /* JBAT_Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1004A69E1167467F00F19B63 /* JBAT_Camera.cpp */; };
 		1004A6A811675BE900F19B63 /* JBAT_MathTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1004A6A711675BE900F19B63 /* JBAT_MathTools.cpp */; };
-		1004A6AB1167AC2B00F19B63 /* JBAT_Floor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1004A6AA1167AC2B00F19B63 /* JBAT_Floor.cpp */; };
+		100C400911D6C46E00012886 /* Plane_100.vtk in Resources */ = {isa = PBXBuildFile; fileRef = 100C400811D6C46E00012886 /* Plane_100.vtk */; };
 		100CB76E115EBE7300C82B15 /* MeshWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 100CB76D115EBE7300C82B15 /* MeshWindowController.mm */; };
 		100CB77B115EBF3100C82B15 /* MeshWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 100CB77A115EBF3100C82B15 /* MeshWindow.xib */; };
 		100CB793115EE0BB00C82B15 /* MeshDisplayViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 100CB792115EE0BB00C82B15 /* MeshDisplayViewController.mm */; };
@@ -59,8 +59,7 @@
 		1004A69E1167467F00F19B63 /* JBAT_Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JBAT_Camera.cpp; sourceTree = "<group>"; };
 		1004A6A611675BE900F19B63 /* JBAT_MathTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBAT_MathTools.h; sourceTree = "<group>"; };
 		1004A6A711675BE900F19B63 /* JBAT_MathTools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JBAT_MathTools.cpp; sourceTree = "<group>"; };
-		1004A6A91167AC2B00F19B63 /* JBAT_Floor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBAT_Floor.h; sourceTree = "<group>"; };
-		1004A6AA1167AC2B00F19B63 /* JBAT_Floor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JBAT_Floor.cpp; sourceTree = "<group>"; };
+		100C400811D6C46E00012886 /* Plane_100.vtk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Plane_100.vtk; sourceTree = "<group>"; };
 		100CB76C115EBE7300C82B15 /* MeshWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeshWindowController.h; sourceTree = "<group>"; };
 		100CB76D115EBE7300C82B15 /* MeshWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MeshWindowController.mm; sourceTree = "<group>"; };
 		100CB77A115EBF3100C82B15 /* MeshWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeshWindow.xib; sourceTree = "<group>"; };
@@ -158,6 +157,14 @@
 				100CB76F115EBEB100C82B15 /* Window Controllers */,
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		100C405F11D6CD3C00012886 /* VTK Files */ = {
+			isa = PBXGroup;
+			children = (
+				100C400811D6C46E00012886 /* Plane_100.vtk */,
+			);
+			name = "VTK Files";
 			sourceTree = "<group>";
 		};
 		100CB76F115EBEB100C82B15 /* Window Controllers */ = {
@@ -289,7 +296,7 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
-		107350EF119EB360000F97C5 /* View Components */ = {
+		107350EF119EB360000F97C5 /* Lights and Camera */ = {
 			isa = PBXGroup;
 			children = (
 				108139E31163DE650074D3AD /* JBAT_LightSet.h */,
@@ -298,10 +305,8 @@
 				108139F41163E55F0074D3AD /* JBAT_Light.cpp */,
 				1004A69D1167467F00F19B63 /* JBAT_Camera.h */,
 				1004A69E1167467F00F19B63 /* JBAT_Camera.cpp */,
-				1004A6A91167AC2B00F19B63 /* JBAT_Floor.h */,
-				1004A6AA1167AC2B00F19B63 /* JBAT_Floor.cpp */,
 			);
-			name = "View Components";
+			name = "Lights and Camera";
 			sourceTree = "<group>";
 		};
 		109AD3ED114C3CF300723265 /* VSounds Lib */ = {
@@ -309,7 +314,7 @@
 			children = (
 				105FDA1C11B11CF5005421E3 /* Project */,
 				10C2EA6F11AB24220033EC49 /* Scene */,
-				107350EF119EB360000F97C5 /* View Components */,
+				107350EF119EB360000F97C5 /* Lights and Camera */,
 				107350EE119EB34D000F97C5 /* Utilities */,
 				107350ED119EB337000F97C5 /* Objects */,
 			);
@@ -451,6 +456,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				100C405F11D6CD3C00012886 /* VTK Files */,
 				8D1107310486CEB800E47090 /* MeshFrames3-Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
@@ -522,6 +528,7 @@
 				10C2E59A1171E08C0008A8F7 /* CameraControlWindow.xib in Resources */,
 				109C0B0F119C19EA00366977 /* FloorControlView.xib in Resources */,
 				109CC84F11CABF1B007E5FE6 /* LightSetWindow.xib in Resources */,
+				100C400911D6C46E00012886 /* Plane_100.vtk in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,7 +554,6 @@
 				108139F51163E55F0074D3AD /* JBAT_Light.cpp in Sources */,
 				1004A69F1167467F00F19B63 /* JBAT_Camera.cpp in Sources */,
 				1004A6A811675BE900F19B63 /* JBAT_MathTools.cpp in Sources */,
-				1004A6AB1167AC2B00F19B63 /* JBAT_Floor.cpp in Sources */,
 				10C40A86116A0AA60041F17D /* LightControlViewController.mm in Sources */,
 				10C40A8B116A0BEA0041F17D /* ViewComponentsControlWindowController.mm in Sources */,
 				10C40A91116A106F0041F17D /* LightsControlViewController.mm in Sources */,

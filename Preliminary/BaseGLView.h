@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "JBAT_LightSet.h"
 #import "JBAT_Camera.h"
+#import "JBAT_Object.h"
 
 
 typedef enum _MeshDisplayMode {
@@ -24,6 +25,7 @@ typedef enum _MeshDisplayMode {
 -(JBAT_Camera*) camera;
 -(void) cameraFrameChanged;
 -(MeshDisplayMode) meshDisplayMode;
+-(JBAT_Object*) floor;
 
 @end
 

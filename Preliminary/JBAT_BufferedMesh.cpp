@@ -12,16 +12,19 @@
 
 JBAT_BufferedMesh::JBAT_BufferedMesh() : JBAT_BaseMesh() {
 	buffersAreCreated = false; 
+	buffersNeedUpdate = true;
 	setToDefault();
 }
 
 JBAT_BufferedMesh::JBAT_BufferedMesh(std::string const & fileName) : JBAT_BaseMesh(fileName) {
 	buffersAreCreated = false; 
+	buffersNeedUpdate = true;
 	setToDefault();
 }
 
 JBAT_BufferedMesh::JBAT_BufferedMesh(const JBAT_BufferedMesh& mesh) : JBAT_BaseMesh(mesh) {
 	buffersAreCreated = false;
+	buffersNeedUpdate = true;
 	glUsage = mesh.glUsage;
 }
 
@@ -29,7 +32,16 @@ JBAT_BufferedMesh::JBAT_BufferedMesh(const JBAT_BufferedMesh& mesh) : JBAT_BaseM
 JBAT_BufferedMesh::~JBAT_BufferedMesh(void) { 
 	std::cout << "\nIn JBAT_BufferedMesh destructor";
 	// Delete buffer objects
-	glDeleteBuffers(4, bufferObjects);
+	if (buffersAreCreated) {
+		glDeleteBuffers(4, bufferObjects);
+	}
+}
+
+void JBAT_BufferedMesh::initialize(GLuint nMaxVerts) {
+	if (buffersAreCreated) {
+		glDeleteBuffers(4, bufferObjects);
+	}
+	JBAT_BaseMesh::initialize(nMaxVerts);
 }
 
 void JBAT_BufferedMesh::setToDefault() {
@@ -41,7 +53,7 @@ void JBAT_BufferedMesh::setGlUsage(GLenum u) {
 	
 	if (glUsage != u) {
 		glUsage = u;
-		buffersAreCreated = false;
+		buffersNeedUpdate = true;
 	}
 
 }
@@ -51,6 +63,7 @@ GLenum JBAT_BufferedMesh::getGlUsage() {
 
 void JBAT_BufferedMesh::addTriangle(M3DVector3f verts[3], M3DVector3f vNorms[3], M3DVector2f vTexCoords[3], M3DVector4f vColors[3]) {
 	JBAT_BaseMesh::addTriangle(verts, vNorms, vTexCoords, vColors);
+	buffersNeedUpdate = true;
 }
 
 void JBAT_BufferedMesh::readVTKFile(std::string const & vtk_file) {
@@ -71,6 +84,10 @@ void JBAT_BufferedMesh::readOBJFile(std::string const & obj_file) {
 // save the results of the indexing for future use if the model data
 // is static (doesn't change).
 void JBAT_BufferedMesh::endMesh() {
+	
+	if (buffersAreCreated) {
+		glDeleteBuffers(4, bufferObjects);
+	}
 	
 	//std::cout << "\nGenerating buffers with " << nNumVerts << " vertices and " << getCellCount() << " polys";
 	
@@ -109,6 +126,7 @@ void JBAT_BufferedMesh::endMesh() {
 //    pTexCoords = NULL;
  
 	buffersAreCreated = true;
+	buffersNeedUpdate = false;
 	
 }
 
@@ -133,6 +151,10 @@ void JBAT_BufferedMesh::scale(GLfloat fScaleValue) {
 //////////////////////////////////////////////////////////////////////////
 // Draw - make sure you call glEnableClientState for these arrays
 void JBAT_BufferedMesh::draw() {
+	
+	if (buffersNeedUpdate) {
+		endMesh();
+	}
 	
 	if (buffersAreCreated) {
 		

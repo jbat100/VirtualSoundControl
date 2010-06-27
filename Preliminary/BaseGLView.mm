@@ -70,6 +70,8 @@ static void drawAnObject () {
 	// Black background
 	glClearColor(0.0f, 0.2f, 0.2f, 1.0f );	
 	
+	[baseEnvironment camera]->updateFPSFrame();
+	
 	
 	/*----------------------------------------------------------------*/
 	
@@ -125,6 +127,7 @@ static void drawAnObject () {
 	glLoadIdentity();
 	[baseEnvironment camera]->applyGLCameraTransform();
 	
+
 	
 	glPushMatrix();
 	//glTranslatef(sin(x), sin(x), 0.0);	

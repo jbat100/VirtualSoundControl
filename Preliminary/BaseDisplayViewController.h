@@ -10,6 +10,8 @@
 #import "BaseGLView.h"
 #import "JBAT_Camera.h"
 #import "JBAT_LightSet.h"
+#import "JBAT_BufferedMesh.h"
+
 #import "CameraControlWindowController.h"
 #import "LightSetWindowController.h"
 
@@ -36,6 +38,7 @@ LightSetWindowControllerDataSource>
 	
 	JBAT_Camera *camera;
 	JBAT_LightSet *lightSet;
+	JBAT_BufferedMesh *floor;
 	
 	// used to update screen
 	NSTimer *renderingTimer;
@@ -56,6 +59,7 @@ LightSetWindowControllerDataSource>
 @property (assign) BaseGLView *glView;
 @property (assign) JBAT_Camera *camera;
 @property (assign) JBAT_LightSet *lightSet;
+@property (assign) JBAT_BufferedMesh *floor;
 
 -(void) setup;
 -(void) updateMeshDisplayMode;

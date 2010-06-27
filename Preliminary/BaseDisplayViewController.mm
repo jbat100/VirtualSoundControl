@@ -7,16 +7,19 @@
 //
 
 #import "BaseDisplayViewController.h"
-#include <Carbon/Carbon.h>
+#import <Carbon/Carbon.h>
+
+#import <math.h>
 #import <iostream>
 
 
 
 @implementation BaseDisplayViewController
 
-@synthesize camera, lightSet, glView;
+@synthesize camera, lightSet, floor, glView;
 
 -(void) setup {
+	
 	
 	[meshDisplayModePopUpButton setPullsDown:NO];
 	[meshDisplayModePopUpButton removeAllItems];
@@ -41,7 +44,8 @@
 	camera = new JBAT_Camera();
 	lightSet = new JBAT_LightSet();
 	
-	camera->SetOrigin(-20.0, 0.0, 0.0);
+	camera->SetOrigin(-20.0, 0.0, 20.0);
+	camera->setPhi(-M_PI/4.0);
 	
 	[glView setup];
 	[glView setBaseEnvironment:self];
@@ -87,6 +91,16 @@
 	else {
 		NSLog(@"Started rendering");
 		rendering = YES;
+		
+		NSString* floorFilePath = [[NSBundle mainBundle] pathForResource:@"Plane_100" ofType:@"vtk"];
+		NSLog(@"Floor path is %@", floorFilePath);
+		if (floorFilePath) {
+			floor = new JBAT_BufferedMesh();
+			floor->readVTKFile([floorFilePath UTF8String]);
+			NSLog(@"Floor mesh has %d points and %d cells", floor->getVertexCount(), floor->getCellCount());
+			floor->scale(100.0);
+		}
+		
 		[self startRendering];
 	}
 	

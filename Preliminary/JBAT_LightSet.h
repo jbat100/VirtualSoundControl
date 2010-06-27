@@ -44,6 +44,8 @@ public:
 	
 };
 
+GLenum JBAT_GL_LightForIndex(int index);
+
 
 
 #endif
