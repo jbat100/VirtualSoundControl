@@ -10,7 +10,11 @@
 
 
 @interface TouchRelayView : UIView {
+	
+	NSMutableArray* currentTouches;
 
 }
+
+@property (nonatomic, retain) NSMutableArray* currentTouches;
 
 @end

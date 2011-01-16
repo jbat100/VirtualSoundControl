@@ -7,12 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+@class TouchRelayView;
 
 
 
 @interface SensorRelay : NSObject <UIAccelerometerDelegate> {
 	
+	TouchRelayView* touchRelayView
 	UIAcceleration* currentAcceleration;
+	
+	NSTimer* relayTimer;
 	
 	
 }

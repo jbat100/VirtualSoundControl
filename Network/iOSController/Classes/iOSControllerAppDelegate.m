@@ -45,5 +45,9 @@
     [super dealloc];
 }
 
+-(NSString*) settingsFilePath {
+	
+}
+
 @end
 
