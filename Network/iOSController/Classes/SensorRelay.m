@@ -8,15 +8,16 @@
 
 #import "SensorRelay.h"
 #import "SettingsManager.h"
-#import "JSON.h"
-
+#import "TouchRelayView.h"
+#import "SBJSON.h"
+#import "UITouch+JSONPackaging.h"
 
 
 @implementation SensorRelay
 
 static SensorRelay* sInstance = nil;
 
-@synthesize currentAcceleration;
+@synthesize currentAcceleration, touchRelayView;
 
 +(SensorRelay*) instance {
 	
@@ -34,14 +35,44 @@ static SensorRelay* sInstance = nil;
 -(id) init {
 	
 	if ((self = [super init])) {
+		
 		[UIAccelerometer sharedAccelerometer].delegate = self;
 		[UIAccelerometer sharedAccelerometer].updateInterval = [SettingsManager instance].updateInterval;
+		
+		touchJSONArray = [[NSMutableArray alloc] initWithCapacity:4];
+		stateJSONDictionary;
+		
+		jsonEncoder = [SBJSON new];
+		
 	}
 	
 	return self;
 	
 }
 
+-(void) dealloc {
+	
+	[jsonEncoder release];
+	jsonEncoder = nil;
+	
+	[super dealloc];
+	
+}
+
+#pragma mark -
+#pragma mark Sensor Packaging Methods
+
+-(void) updateTouchJSONArray {
+	
+}
+
+-(void) updateStateJSONDictionary {
+	
+	
+}
+
+#pragma mark -
+#pragma mark Sensor Relay Methods
 
 -(void) startRelaying {
 	
@@ -62,7 +93,6 @@ static SensorRelay* sInstance = nil;
 -(void) stopRelaying {
 	
 	[relayTimer invalidate];
-	
 	relayTimer = nil;
 	
 }

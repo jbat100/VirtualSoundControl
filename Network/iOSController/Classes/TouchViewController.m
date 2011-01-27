@@ -8,6 +8,7 @@
 
 #import "TouchViewController.h"
 #import "TouchRelayView.h"
+#import "SensorRelay.h"
 
 
 @implementation TouchViewController
@@ -42,9 +43,9 @@
 	touchRelayView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	
 	[self.view addSubview:touchRelayView];
-	
 	[self.view bringSubviewToFront:touchRelayView];
 	
+	[SensorRelay instance].touchRelayView = touchRelayView;
 	
 }
 

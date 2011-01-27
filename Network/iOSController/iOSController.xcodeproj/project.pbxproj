@@ -13,6 +13,7 @@
 		105822C212E39FBF006D77AA /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 105822BA12E39FBF006D77AA /* SBJsonBase.m */; };
 		105822C312E39FBF006D77AA /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 105822BC12E39FBF006D77AA /* SBJsonParser.m */; };
 		105822C412E39FBF006D77AA /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 105822BE12E39FBF006D77AA /* SBJsonWriter.m */; };
+		10A73CC712F21D57001EAFAC /* UITouch+JSONPackaging.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A73CC612F21D57001EAFAC /* UITouch+JSONPackaging.m */; };
 		10C1372912E21A2C0092F193 /* TouchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C1372812E21A2C0092F193 /* TouchViewController.m */; };
 		10C1372E12E21A3E0092F193 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C1372D12E21A3E0092F193 /* SettingsViewController.m */; };
 		10C1373C12E21ADB0092F193 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C1373512E21ADB0092F193 /* AsyncSocket.m */; };
@@ -47,6 +48,8 @@
 		105822BC12E39FBF006D77AA /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		105822BD12E39FBF006D77AA /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		105822BE12E39FBF006D77AA /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		10A73CC512F21D57001EAFAC /* UITouch+JSONPackaging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITouch+JSONPackaging.h"; sourceTree = "<group>"; };
+		10A73CC612F21D57001EAFAC /* UITouch+JSONPackaging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITouch+JSONPackaging.m"; sourceTree = "<group>"; };
 		10C1372712E21A2C0092F193 /* TouchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchViewController.h; sourceTree = "<group>"; };
 		10C1372812E21A2C0092F193 /* TouchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchViewController.m; sourceTree = "<group>"; };
 		10C1372C12E21A3E0092F193 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -179,6 +182,8 @@
 		10C1374012E237F10092F193 /* Sensoring */ = {
 			isa = PBXGroup;
 			children = (
+				10A73CC512F21D57001EAFAC /* UITouch+JSONPackaging.h */,
+				10A73CC612F21D57001EAFAC /* UITouch+JSONPackaging.m */,
 				10C1375212E238660092F193 /* SensorRelay.h */,
 				10C1375312E238660092F193 /* SensorRelay.m */,
 			);
@@ -325,6 +330,7 @@
 				105822C212E39FBF006D77AA /* SBJsonBase.m in Sources */,
 				105822C312E39FBF006D77AA /* SBJsonParser.m in Sources */,
 				105822C412E39FBF006D77AA /* SBJsonWriter.m in Sources */,
+				10A73CC712F21D57001EAFAC /* UITouch+JSONPackaging.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,6 +11,8 @@
 
 @implementation TouchRelayView
 
+@synthesize currentTouches;
+
 
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {

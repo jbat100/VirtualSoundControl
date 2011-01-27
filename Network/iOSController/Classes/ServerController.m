@@ -25,10 +25,15 @@ static ServerController* sInstance = nil;
 	
 }
 
+-(void)dealloc {
+    [self stopService];
+    [super dealloc];
+}
+
 #pragma mark -
 #pragma mark Network Service Methods
 
--(void)startService {
+-(void) startService {
     // Start listening socket
     NSError *error;
     self.listeningSocket = [[[AsyncSocket alloc]initWithDelegate:self] autorelease];
@@ -46,7 +51,7 @@ static ServerController* sInstance = nil;
     [netService publish];
 }
 
--(void)stopService {
+-(void) stopService {
 	
     self.listeningSocket = nil;
     self.connectionSocket = nil;
@@ -60,10 +65,10 @@ static ServerController* sInstance = nil;
 
 }
 
--(void)dealloc {
-    [self stopService];
-    [super dealloc];
+-(BOOL) isActive {
+	return netService ? YES : NO;
 }
+
 
 #pragma mark -
 #pragma mark Messaging Methods

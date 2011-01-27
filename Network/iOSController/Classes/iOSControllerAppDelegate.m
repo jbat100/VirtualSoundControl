@@ -47,6 +47,10 @@
 
 -(NSString*) settingsFilePath {
 	
+	NSArray *searchPaths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString* folderPath = [searchPaths objectAtIndex: 0];
+	return [folderPath stringByAppendingPathComponent:@"Settings.dic"];
+	
 }
 
 @end

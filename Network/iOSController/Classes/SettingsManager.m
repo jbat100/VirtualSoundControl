@@ -36,6 +36,7 @@ static SettingsManager* sInstance = nil;
 	
 }
 
+
 -(void) encodeWithCoder:(NSCoder *)coder {
 	
 	[coder encodeDouble:(double)updateInterval forKey:@"SettingsManagerUpdateInterval"];
@@ -44,7 +45,9 @@ static SettingsManager* sInstance = nil;
 
 -(id) initWithCoder:(NSCoder *)coder {
 	
-	updateInterval = [coder decodeDoubleForKey:@"SettingsManagerUpdateInterval"];
+	if ((self = [super init])) {
+		updateInterval = [coder decodeDoubleForKey:@"SettingsManagerUpdateInterval"];
+	}
 	
 }
 
