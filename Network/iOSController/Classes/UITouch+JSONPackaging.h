@@ -11,6 +11,6 @@
 
 @interface UITouch (JSONPackaging)
 
--(NSDictionary*) jsonPackageDictionary;
+-(NSDictionary*) jsonPackageDictionaryCentered:(BOOL)centered;
 
 @end

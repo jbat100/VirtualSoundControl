@@ -32,22 +32,22 @@
 	1023F08E12F61BA200D8EE72 /* TouchViewSetup.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {898, 424}}";
-			sepNavSelRange = "{292, 0}";
-			sepNavVisRange = "{0, 337}";
+			sepNavSelRange = "{199, 0}";
+			sepNavVisRange = "{0, 544}";
 		};
 	};
 	1023F08F12F61BA200D8EE72 /* TouchViewSetup.m */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {898, 424}}";
-			sepNavSelRange = "{236, 0}";
-			sepNavVisRange = "{0, 243}";
+			sepNavSelRange = "{220, 0}";
+			sepNavVisRange = "{0, 249}";
 		};
 	};
 	1023F09112F61BF900D8EE72 /* TouchViewDescription.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {898, 424}}";
-			sepNavSelRange = "{553, 214}";
-			sepNavVisRange = "{0, 774}";
+			sepNavSelRange = "{482, 0}";
+			sepNavVisRange = "{0, 785}";
 		};
 	};
 	1023F09212F61BF900D8EE72 /* TouchViewDescription.m */ = {
@@ -145,15 +145,15 @@
 	10A73CC512F21D57001EAFAC /* UITouch+JSONPackaging.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {898, 424}}";
-			sepNavSelRange = "{171, 0}";
-			sepNavVisRange = "{0, 256}";
+			sepNavSelRange = "{209, 1}";
+			sepNavVisRange = "{0, 279}";
 		};
 	};
 	10A73CC612F21D57001EAFAC /* UITouch+JSONPackaging.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {898, 481}}";
-			sepNavSelRange = "{213, 1}";
-			sepNavVisRange = "{0, 1317}";
+			sepNavIntBoundsRect = "{{0, 0}, {898, 585}}";
+			sepNavSelRange = "{636, 0}";
+			sepNavVisRange = "{148, 1383}";
 		};
 	};
 	10A73CD412F22887001EAFAC /* PBXTextBookmark */ = {
@@ -281,7 +281,7 @@
 	10ADFF3D12F417750037B405 /* NetworkDefinitions.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {898, 424}}";
-			sepNavSelRange = "{428, 0}";
+			sepNavSelRange = "{140, 0}";
 			sepNavVisRange = "{0, 706}";
 		};
 	};
@@ -337,7 +337,7 @@
 		fRef = 10A73CC612F21D57001EAFAC /* UITouch+JSONPackaging.m */;
 		name = "UITouch+JSONPackaging.m: 27";
 		rLen = 0;
-		rLoc = 1278;
+		rLoc = 1493;
 		rType = 0;
 		vrLen = 1075;
 		vrLoc = 3;
@@ -539,23 +539,23 @@
 	};
 	10C1375312E238660092F193 /* SensorRelay.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {782, 2886}}";
-			sepNavSelRange = "{2222, 0}";
-			sepNavVisRange = "{2150, 251}";
+			sepNavIntBoundsRect = "{{0, 0}, {908, 2912}}";
+			sepNavSelRange = "{3342, 0}";
+			sepNavVisRange = "{2778, 1412}";
 		};
 	};
 	10C1375812E23C970092F193 /* SettingsManager.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {898, 424}}";
-			sepNavSelRange = "{247, 14}";
-			sepNavVisRange = "{0, 354}";
+			sepNavSelRange = "{419, 35}";
+			sepNavVisRange = "{0, 461}";
 		};
 	};
 	10C1375912E23C970092F193 /* SettingsManager.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {782, 754}}";
-			sepNavSelRange = "{311, 0}";
-			sepNavVisRange = "{0, 373}";
+			sepNavIntBoundsRect = "{{0, 0}, {898, 819}}";
+			sepNavSelRange = "{1092, 0}";
+			sepNavVisRange = "{652, 447}";
 		};
 	};
 	10C1375B12E244F00092F193 /* Definitions.h */ = {
