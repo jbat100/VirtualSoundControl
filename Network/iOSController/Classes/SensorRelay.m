@@ -57,7 +57,7 @@ static SensorRelay* sInstance = nil;
 		self.touchRelayViews = [[[NSMutableDictionary alloc] initWithCapacity:4] autorelease];
 		
 		[UIAccelerometer sharedAccelerometer].delegate = self;
-		[UIAccelerometer sharedAccelerometer].updateInterval = [SettingsManager instance].updateInterval;
+		[UIAccelerometer sharedAccelerometer].updateInterval = self.updateInterval;
 		
 		self.stateJSONDictionary = [[[NSMutableDictionary alloc] initWithCapacity:4] autorelease];
 		
@@ -167,13 +167,13 @@ static SensorRelay* sInstance = nil;
 
 -(void) sendCurrentState {
 	
-	NSLog(@"Sending current state");
+	//NSLog(@"Sending current state");
 	
 	[self updateStateJSONDictionary];
 	
 	NSString* jsonString = [jsonEncoder stringWithObject:stateJSONDictionary];
 	
-	NSLog(@"JSON string is: %@", jsonString);
+	NSLog(@"Sending JSON State: %@", jsonString);
 	
 	NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
 	
@@ -186,9 +186,6 @@ static SensorRelay* sInstance = nil;
 
 -(void) addTouchRelayView:(TouchRelayView*)relayView forKey:(NSString*)key {
 	[touchRelayViews setObject:relayView forKey:key];
-	
-	NSLog(@"Added view to touchRelayViews, touchRelayViews is %@", touchRelayViews);
-	
 }
 
 -(void) removeTouchRelayViewForKey:(NSString*)key {
@@ -206,5 +203,24 @@ static SensorRelay* sInstance = nil;
 	[currentAcceleration release];
 	currentAcceleration = [aceler retain];
 }
+
+#pragma mark -
+#pragma mark Custom Setters 
+
+-(void) setUpdateInterval:(NSTimeInterval)i {
+	
+	if (i < MINIMUM_UPDATE_INTERVAL) 
+		updateInterval = MINIMUM_UPDATE_INTERVAL;
+	else 
+		updateInterval = i;
+	
+	[UIAccelerometer sharedAccelerometer].updateInterval = updateInterval;
+	
+	// Restart relaying so that the timer gets reinitialised with new time interval;
+	[self stopRelaying];
+	[self startRelaying];
+	
+}
+
 
 @end

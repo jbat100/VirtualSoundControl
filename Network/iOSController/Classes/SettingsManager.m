@@ -55,4 +55,8 @@ static SettingsManager* sInstance = nil;
 	
 }
 
+-(void) checkTouchViewSetupPresets {
+	
+}
+
 @end

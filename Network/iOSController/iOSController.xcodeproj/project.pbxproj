@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1023F09012F61BA200D8EE72 /* TouchViewSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1023F08F12F61BA200D8EE72 /* TouchViewSetup.m */; };
+		1023F09312F61BF900D8EE72 /* TouchViewDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 1023F09212F61BF900D8EE72 /* TouchViewDescription.m */; };
 		105822BF12E39FBF006D77AA /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 105822B412E39FBF006D77AA /* NSObject+SBJSON.m */; };
 		105822C012E39FBF006D77AA /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 105822B612E39FBF006D77AA /* NSString+SBJSON.m */; };
 		105822C112E39FBF006D77AA /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 105822B812E39FBF006D77AA /* SBJSON.m */; };
@@ -35,6 +37,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1023F08E12F61BA200D8EE72 /* TouchViewSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchViewSetup.h; sourceTree = "<group>"; };
+		1023F08F12F61BA200D8EE72 /* TouchViewSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchViewSetup.m; sourceTree = "<group>"; };
+		1023F09112F61BF900D8EE72 /* TouchViewDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchViewDescription.h; sourceTree = "<group>"; };
+		1023F09212F61BF900D8EE72 /* TouchViewDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchViewDescription.m; sourceTree = "<group>"; };
 		105822B212E39FBF006D77AA /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		105822B312E39FBF006D77AA /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		105822B412E39FBF006D77AA /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -197,6 +203,10 @@
 			children = (
 				10C1375812E23C970092F193 /* SettingsManager.h */,
 				10C1375912E23C970092F193 /* SettingsManager.m */,
+				1023F08E12F61BA200D8EE72 /* TouchViewSetup.h */,
+				1023F08F12F61BA200D8EE72 /* TouchViewSetup.m */,
+				1023F09112F61BF900D8EE72 /* TouchViewDescription.h */,
+				1023F09212F61BF900D8EE72 /* TouchViewDescription.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -340,6 +350,8 @@
 				105822C312E39FBF006D77AA /* SBJsonParser.m in Sources */,
 				105822C412E39FBF006D77AA /* SBJsonWriter.m in Sources */,
 				10A73CC712F21D57001EAFAC /* UITouch+JSONPackaging.m in Sources */,
+				1023F09012F61BA200D8EE72 /* TouchViewSetup.m in Sources */,
+				1023F09312F61BF900D8EE72 /* TouchViewDescription.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

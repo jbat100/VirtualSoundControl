@@ -11,13 +11,15 @@
 
 @implementation TouchRelayView
 
-@synthesize currentTouches;
+@synthesize currentTouches, xChannel, yChannel;
 
 
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         // Initialization code
 		currentTouches = [[NSMutableArray alloc] initWithCapacity:4];
+		xChannel = 1;
+		yChannel = 2;
     }
     return self;
 }

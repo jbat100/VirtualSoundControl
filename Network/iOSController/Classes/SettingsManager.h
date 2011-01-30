@@ -12,11 +12,16 @@
 @interface SettingsManager : NSObject <NSCoding> {
 	
 	NSTimeInterval updateInterval;
+	
+	NSMutableArray* presetViewSetups;
+	NSMutableArray* userViewSetups;
 
 }
 
 @property (assign) NSTimeInterval updateInterval;
 
 +(SettingsManager*) instance;
+
+-(void) checkTouchViewSetupPresets;
 
 @end

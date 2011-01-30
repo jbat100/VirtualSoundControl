@@ -1,5 +1,92 @@
 // !$*UTF8*$!
 {
+	1023F07912F5F85300D8EE72 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 10C1372812E21A2C0092F193 /* TouchViewController.m */;
+		name = "TouchViewController.m: 47";
+		rLen = 0;
+		rLoc = 1332;
+		rType = 0;
+		vrLen = 597;
+		vrLoc = 1521;
+	};
+	1023F07A12F5F85300D8EE72 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "Expected ')' before 'touchRelayViews'";
+		fRef = 10C1375312E238660092F193 /* SensorRelay.m */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 1;
+		rLoc = 187;
+		rType = 1;
+	};
+	1023F07B12F5F85300D8EE72 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 10C1375312E238660092F193 /* SensorRelay.m */;
+		name = "SensorRelay.m: 84";
+		rLen = 0;
+		rLoc = 2222;
+		rType = 0;
+		vrLen = 251;
+		vrLoc = 2150;
+	};
+	1023F08E12F61BA200D8EE72 /* TouchViewSetup.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {898, 424}}";
+			sepNavSelRange = "{292, 0}";
+			sepNavVisRange = "{0, 337}";
+		};
+	};
+	1023F08F12F61BA200D8EE72 /* TouchViewSetup.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {898, 424}}";
+			sepNavSelRange = "{236, 0}";
+			sepNavVisRange = "{0, 243}";
+		};
+	};
+	1023F09112F61BF900D8EE72 /* TouchViewDescription.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {898, 424}}";
+			sepNavSelRange = "{553, 214}";
+			sepNavVisRange = "{0, 774}";
+		};
+	};
+	1023F09212F61BF900D8EE72 /* TouchViewDescription.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {898, 424}}";
+			sepNavSelRange = "{269, 0}";
+			sepNavVisRange = "{0, 296}";
+		};
+	};
+	1023F09412F61E4900D8EE72 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 10C1375312E238660092F193 /* SensorRelay.m */;
+		name = "SensorRelay.m: 84";
+		rLen = 0;
+		rLoc = 2222;
+		rType = 0;
+		vrLen = 251;
+		vrLoc = 2150;
+	};
+	1023F09512F61E4A00D8EE72 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 10C1375312E238660092F193 /* SensorRelay.m */;
+		name = "SensorRelay.m: 84";
+		rLen = 0;
+		rLoc = 2222;
+		rType = 0;
+		vrLen = 251;
+		vrLoc = 2150;
+	};
+	1023F09612F61E4B00D8EE72 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 10C1375312E238660092F193 /* SensorRelay.m */;
+		name = "SensorRelay.m: 84";
+		rLen = 0;
+		rLoc = 2222;
+		rType = 0;
+		vrLen = 251;
+		vrLoc = 2150;
+	};
 	105822B212E39FBF006D77AA /* JSON.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {898, 663}}";
@@ -57,16 +144,16 @@
 	};
 	10A73CC512F21D57001EAFAC /* UITouch+JSONPackaging.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {898, 431}}";
+			sepNavIntBoundsRect = "{{0, 0}, {898, 424}}";
 			sepNavSelRange = "{171, 0}";
 			sepNavVisRange = "{0, 256}";
 		};
 	};
 	10A73CC612F21D57001EAFAC /* UITouch+JSONPackaging.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {898, 455}}";
-			sepNavSelRange = "{999, 0}";
-			sepNavVisRange = "{3, 1075}";
+			sepNavIntBoundsRect = "{{0, 0}, {898, 481}}";
+			sepNavSelRange = "{213, 1}";
+			sepNavVisRange = "{0, 1317}";
 		};
 	};
 	10A73CD412F22887001EAFAC /* PBXTextBookmark */ = {
@@ -94,7 +181,7 @@
 		fRef = 1D3623250D0F684500981E51 /* iOSControllerAppDelegate.m */;
 		name = "iOSControllerAppDelegate.m: 48";
 		rLen = 268;
-		rLoc = 1096;
+		rLoc = 2004;
 		rType = 0;
 		vrLen = 883;
 		vrLoc = 489;
@@ -106,7 +193,7 @@
 		rLen = 0;
 		rLoc = 110;
 		rType = 0;
-		vrLen = 511;
+		vrLen = 506;
 		vrLoc = 0;
 	};
 	10A73CD812F22887001EAFAC /* PBXTextBookmark */ = {
@@ -124,7 +211,7 @@
 		fRef = 10C1372812E21A2C0092F193 /* TouchViewController.m */;
 		name = "TouchViewController.m: 48";
 		rLen = 0;
-		rLoc = 1360;
+		rLoc = 1516;
 		rType = 0;
 		vrLen = 772;
 		vrLoc = 1370;
@@ -175,6 +262,11 @@
 		name = dlyDownloadManager.mm;
 		path = "/Users/jonathanthorpe/Work/Immanens/Code/iDeliveryCommon/Data and Download/dlyDownloadManager.mm";
 		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1055, 61490}}";
+			sepNavSelRange = "{47757, 213}";
+			sepNavVisRange = "{43602, 1220}";
+		};
 	};
 	10A73CE112F22887001EAFAC /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -189,8 +281,8 @@
 	10ADFF3D12F417750037B405 /* NetworkDefinitions.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {898, 424}}";
-			sepNavSelRange = "{142, 0}";
-			sepNavVisRange = "{0, 857}";
+			sepNavSelRange = "{428, 0}";
+			sepNavVisRange = "{0, 706}";
 		};
 	};
 	10ADFF4112F425260037B405 /* PBXTextBookmark */ = {
@@ -245,7 +337,7 @@
 		fRef = 10A73CC612F21D57001EAFAC /* UITouch+JSONPackaging.m */;
 		name = "UITouch+JSONPackaging.m: 27";
 		rLen = 0;
-		rLoc = 999;
+		rLoc = 1278;
 		rType = 0;
 		vrLen = 1075;
 		vrLoc = 3;
@@ -265,7 +357,7 @@
 		fRef = 10C1375E12E246630092F193 /* TouchRelayView.m */;
 		name = "TouchRelayView.m: 32";
 		rLen = 0;
-		rLoc = 536;
+		rLoc = 588;
 		rType = 0;
 		vrLen = 633;
 		vrLoc = 141;
@@ -275,7 +367,7 @@
 		fRef = 10C1375212E238660092F193 /* SensorRelay.h */;
 		name = "SensorRelay.h: 23";
 		rLen = 0;
-		rLoc = 423;
+		rLoc = 512;
 		rType = 0;
 		vrLen = 606;
 		vrLoc = 138;
@@ -285,7 +377,7 @@
 		fRef = 10C1375312E238660092F193 /* SensorRelay.m */;
 		name = "SensorRelay.m: 19";
 		rLen = 0;
-		rLoc = 389;
+		rLoc = 418;
 		rType = 0;
 		vrLen = 591;
 		vrLoc = 0;
@@ -295,7 +387,7 @@
 		fRef = 10ADFF3D12F417750037B405 /* NetworkDefinitions.h */;
 		name = "NetworkDefinitions.h: 14";
 		rLen = 0;
-		rLoc = 223;
+		rLoc = 237;
 		rType = 0;
 		vrLen = 869;
 		vrLoc = 0;
@@ -356,16 +448,16 @@
 	};
 	10C1372712E21A2C0092F193 /* TouchViewController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {898, 444}}";
+			sepNavIntBoundsRect = "{{0, 0}, {898, 424}}";
 			sepNavSelRange = "{146, 23}";
 			sepNavVisRange = "{0, 453}";
 		};
 	};
 	10C1372812E21A2C0092F193 /* TouchViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1146, 1144}}";
-			sepNavSelRange = "{1360, 0}";
-			sepNavVisRange = "{1370, 772}";
+			sepNavIntBoundsRect = "{{0, 0}, {1146, 1105}}";
+			sepNavSelRange = "{1332, 0}";
+			sepNavVisRange = "{849, 674}";
 		};
 	};
 	10C1372C12E21A3E0092F193 /* SettingsViewController.h */ = {
@@ -391,9 +483,9 @@
 	};
 	10C1373512E21ADB0092F193 /* AsyncSocket.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {898, 27872}}";
-			sepNavSelRange = "{17984, 0}";
-			sepNavVisRange = "{17405, 1316}";
+			sepNavIntBoundsRect = "{{0, 0}, {1209, 28067}}";
+			sepNavSelRange = "{6111, 68}";
+			sepNavVisRange = "{7175, 1087}";
 		};
 	};
 	10C1373612E21ADB0092F193 /* MTMessage.h */ = {
@@ -412,42 +504,49 @@
 	};
 	10C1373812E21ADB0092F193 /* MTMessageBroker.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {898, 754}}";
+			sepNavIntBoundsRect = "{{0, 0}, {898, 884}}";
 			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 1835}";
+			sepNavVisRange = "{1834, 700}";
+		};
+	};
+	10C1373912E21ADB0092F193 /* MTMessageBroker.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {898, 2041}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{2692, 954}";
 		};
 	};
 	10C1373A12E21ADB0092F193 /* ServerController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {782, 338}}";
-			sepNavSelRange = "{132, 0}";
-			sepNavVisRange = "{0, 459}";
+			sepNavIntBoundsRect = "{{0, 0}, {898, 424}}";
+			sepNavSelRange = "{532, 0}";
+			sepNavVisRange = "{0, 539}";
 		};
 	};
 	10C1373B12E21ADB0092F193 /* ServerController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {999, 1664}}";
-			sepNavSelRange = "{1283, 0}";
-			sepNavVisRange = "{795, 700}";
+			sepNavIntBoundsRect = "{{0, 0}, {999, 1729}}";
+			sepNavSelRange = "{1600, 30}";
+			sepNavVisRange = "{1448, 766}";
 		};
 	};
 	10C1375212E238660092F193 /* SensorRelay.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {898, 546}}";
-			sepNavSelRange = "{423, 0}";
-			sepNavVisRange = "{138, 606}";
+			sepNavIntBoundsRect = "{{0, 0}, {898, 598}}";
+			sepNavSelRange = "{322, 0}";
+			sepNavVisRange = "{134, 615}";
 		};
 	};
 	10C1375312E238660092F193 /* SensorRelay.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {898, 1846}}";
-			sepNavSelRange = "{389, 0}";
-			sepNavVisRange = "{0, 591}";
+			sepNavIntBoundsRect = "{{0, 0}, {782, 2886}}";
+			sepNavSelRange = "{2222, 0}";
+			sepNavVisRange = "{2150, 251}";
 		};
 	};
 	10C1375812E23C970092F193 /* SettingsManager.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {898, 444}}";
+			sepNavIntBoundsRect = "{{0, 0}, {898, 424}}";
 			sepNavSelRange = "{247, 14}";
 			sepNavVisRange = "{0, 354}";
 		};
@@ -468,16 +567,16 @@
 	};
 	10C1375D12E246630092F193 /* TouchRelayView.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {898, 431}}";
-			sepNavSelRange = "{207, 31}";
-			sepNavVisRange = "{0, 311}";
+			sepNavIntBoundsRect = "{{0, 0}, {898, 424}}";
+			sepNavSelRange = "{285, 0}";
+			sepNavVisRange = "{0, 456}";
 		};
 	};
 	10C1375E12E246630092F193 /* TouchRelayView.m */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {898, 1417}}";
-			sepNavSelRange = "{536, 0}";
-			sepNavVisRange = "{141, 633}";
+			sepNavSelRange = "{483, 0}";
+			sepNavVisRange = "{141, 637}";
 		};
 	};
 	10C1376F12E246CC0092F193 /* PBXTextBookmark */ = {
@@ -562,16 +661,16 @@
 	};
 	1D3623240D0F684500981E51 /* iOSControllerAppDelegate.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {898, 468}}";
+			sepNavIntBoundsRect = "{{0, 0}, {898, 424}}";
 			sepNavSelRange = "{151, 23}";
 			sepNavVisRange = "{0, 565}";
 		};
 	};
 	1D3623250D0F684500981E51 /* iOSControllerAppDelegate.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1041, 754}}";
-			sepNavSelRange = "{1096, 268}";
-			sepNavVisRange = "{489, 883}";
+			sepNavIntBoundsRect = "{{0, 0}, {873, 1300}}";
+			sepNavSelRange = "{240, 0}";
+			sepNavVisRange = "{0, 147}";
 		};
 	};
 	1D6058900D05DD3D006BFB54 /* iOSController */ = {
@@ -650,6 +749,12 @@
 			PBXWorkspaceStateSaveDate = 318079741;
 		};
 		perUserProjectItems = {
+			1023F07912F5F85300D8EE72 /* PBXTextBookmark */ = 1023F07912F5F85300D8EE72 /* PBXTextBookmark */;
+			1023F07A12F5F85300D8EE72 /* XCBuildMessageTextBookmark */ = 1023F07A12F5F85300D8EE72 /* XCBuildMessageTextBookmark */;
+			1023F07B12F5F85300D8EE72 /* PBXTextBookmark */ = 1023F07B12F5F85300D8EE72 /* PBXTextBookmark */;
+			1023F09412F61E4900D8EE72 /* PBXTextBookmark */ = 1023F09412F61E4900D8EE72 /* PBXTextBookmark */;
+			1023F09512F61E4A00D8EE72 /* PBXTextBookmark */ = 1023F09512F61E4A00D8EE72 /* PBXTextBookmark */;
+			1023F09612F61E4B00D8EE72 /* PBXTextBookmark */ = 1023F09612F61E4B00D8EE72 /* PBXTextBookmark */;
 			105822D212E3ADE4006D77AA = 105822D212E3ADE4006D77AA /* PBXTextBookmark */;
 			105822D312E3ADE4006D77AA = 105822D312E3ADE4006D77AA /* PBXTextBookmark */;
 			10A73CD412F22887001EAFAC = 10A73CD412F22887001EAFAC /* PBXTextBookmark */;

@@ -12,9 +12,15 @@
 @interface TouchRelayView : UIView {
 	
 	NSMutableArray* currentTouches;
+	
+	NSInteger xChannel;
+	NSInteger yChannel;
 
 }
 
 @property (nonatomic, retain) NSMutableArray* currentTouches;
+
+@property (nonatomic, assign) NSInteger xChannel;
+@property (nonatomic, assign) NSInteger yChannel;
 
 @end

@@ -10,7 +10,7 @@
 @class TouchRelayView;
 @class SBJSON;
 
-
+#define MINIMUM_UPDATE_INTERVAL 0.01
 
 
 @interface SensorRelay : NSObject <UIAccelerometerDelegate> {
