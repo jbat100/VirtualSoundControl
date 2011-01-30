@@ -12,26 +12,34 @@
 
 
 
+
 @interface SensorRelay : NSObject <UIAccelerometerDelegate> {
 	
-	TouchRelayView* touchRelayView;
+	@public
+	
+	NSTimeInterval updateInterval;
+	
+	@private
+	
+	NSMutableDictionary* touchRelayViews;
 	UIAcceleration* currentAcceleration;
-	
-	NSMutableArray* touchJSONArray;
-	NSMutableDictionary* accelerationJSONDictionary;
 	NSMutableDictionary* stateJSONDictionary;
-	
 	SBJSON* jsonEncoder;
 	NSTimer* relayTimer;
 	
+	
+	
 }
 
-@property (nonatomic, retain) TouchRelayView* touchRelayView;
-@property (nonatomic, retain) UIAcceleration* currentAcceleration;
+@property (assign) NSTimeInterval updateInterval;
 
 +(SensorRelay*) instance;
 
--(void) sendCurrentState;
--(void) updateTouchJSONArray;
+-(void) addTouchRelayView:(TouchRelayView*)relayView forKey:(NSString*)key;
+-(void) removeTouchRelayViewForKey:(NSString*)key;
+-(void) removeAllTouchRelayViews;
+
+-(void) startRelaying;
+-(void) stopRelaying;
 
 @end

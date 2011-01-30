@@ -17,6 +17,7 @@
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         // Initialization code
+		currentTouches = [[NSMutableArray alloc] initWithCapacity:4];
     }
     return self;
 }
@@ -28,6 +29,7 @@
 
 
 - (void)dealloc {
+	[currentTouches release];
     [super dealloc];
 }
 
@@ -54,11 +56,11 @@
 	
 	//NSLog(@"======== TOUCHES CANCELLED ==========\n\nTouches:\n%@\n\nEvent:\n%@", touches, event);
 	
-	NSLog(@"======== TOUCHES CANCELLED ==========");
+	//NSLog(@"======== TOUCHES CANCELLED ==========");
 	NSInteger touchCount = 0;
 	for (UITouch* touch in [touches allObjects]) {
 		touchCount++;
-		NSLog(@"Touch %d at 0x%x", touchCount, touch);
+		//NSLog(@"Touch %d at 0x%x", touchCount, touch);
 		
 		[currentTouches removeObjectIdenticalTo:touch];
 		
@@ -70,11 +72,11 @@
 	
 	//NSLog(@"======== TOUCHES ENDED ==========\n\nTouches:\n%@\n\nEvent:\n%@", touches, event);
 	
-	NSLog(@"======== TOUCHES ENDED ==========");
+	//NSLog(@"======== TOUCHES ENDED ==========");
 	NSInteger touchCount = 0;
 	for (UITouch* touch in [touches allObjects]) {
 		touchCount++;
-		NSLog(@"Touch %d at 0x%x", touchCount, touch);
+		//NSLog(@"Touch %d at 0x%x", touchCount, touch);
 		
 		[currentTouches removeObjectIdenticalTo:touch];
 	}
@@ -85,11 +87,11 @@
 	
 	//NSLog(@"======== TOUCHES MOVED ==========\n\nTouches:\n%@\n\nEvent:\n%@", touches, event);
 	
-	NSLog(@"======== TOUCHES MOVED ==========");
+	//NSLog(@"======== TOUCHES MOVED ==========");
 	NSInteger touchCount = 0;
 	for (UITouch* touch in [touches allObjects]) {
 		touchCount++;
-		NSLog(@"Touch %d at 0x%x", touchCount, touch);
+		//NSLog(@"Touch %d at 0x%x", touchCount, touch);
 	}
 	
 }

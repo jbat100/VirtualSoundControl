@@ -14,6 +14,8 @@
 
 static SettingsManager* sInstance = nil;
 
+@synthesize updateInterval;
+
 +(SettingsManager*) instance {
 	
 	@synchronized (self) {
@@ -48,6 +50,8 @@ static SettingsManager* sInstance = nil;
 	if ((self = [super init])) {
 		updateInterval = [coder decodeDoubleForKey:@"SettingsManagerUpdateInterval"];
 	}
+	
+	return self;
 	
 }
 

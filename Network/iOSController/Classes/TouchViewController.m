@@ -9,6 +9,7 @@
 #import "TouchViewController.h"
 #import "TouchRelayView.h"
 #import "SensorRelay.h"
+#import "NetworkDefinitions.h"
 
 
 @implementation TouchViewController
@@ -45,8 +46,11 @@
 	[self.view addSubview:touchRelayView];
 	[self.view bringSubviewToFront:touchRelayView];
 	
-	[SensorRelay instance].touchRelayView = touchRelayView;
-	
+	[[SensorRelay instance] addTouchRelayView:touchRelayView 
+									   forKey:[NSString stringWithCString:JSON_MAIN_TOUCH_VIEW_KEY 
+																 encoding:NSUTF8StringEncoding]];
+
+
 }
 
 

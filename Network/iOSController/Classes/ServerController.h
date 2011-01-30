@@ -4,7 +4,7 @@
 @class AsyncSocket;
 @class MTMessageBroker;
 
-@interface ServerController : NSObject { // <NSNetServiceDelegate> {
+@interface ServerController : NSObject <NSNetServiceDelegate> {
 	
     NSNetService *netService;
     MTMessageBroker *messageBroker;
@@ -22,5 +22,7 @@
 
 -(void)startService;
 -(void)stopService;
+
+-(void) sendData:(NSData*)data;
 
 @end
