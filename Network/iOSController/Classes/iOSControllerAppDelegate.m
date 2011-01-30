@@ -7,7 +7,8 @@
 //
 
 #import "iOSControllerAppDelegate.h"
-
+#import "ServerController.h"
+#import 
 
 @implementation iOSControllerAppDelegate
 
@@ -23,8 +24,52 @@
     
     // Add the tab bar controller's current view as a subview of the window
     [window addSubview:tabBarController.view];
+	
+	[[ServerController instance] startService];
+	
+	[[SensorRelay instance] startRelaying];
+	
 }
 
+-(void) applicationWillEnterForeground:(UIApplication *)application {
+	
+	[[SensorRelay instance] startRelaying];
+	
+}
+
+
+-(void) applicationDidEnterBackground:(UIApplication *)application {
+	
+	//[[ServerController instance] stopService];
+	
+	[[SensorRelay instance] stopRelaying];
+	
+}
+
+
+-(void) applicationDidBecomeActive:(UIApplication *)application {
+	
+	[[SensorRelay instance] startRelaying];
+	
+}
+
+
+-(void) applicationWillResignActive:(UIApplication *)application {
+	
+	//[[ServerController instance] stopService];
+	
+	[[SensorRelay instance] stopRelaying];
+	
+}
+
+
+-(void) applicationWillTerminate:(UIApplication *)application {
+	
+	[[SensorRelay instance] stopRelaying];
+	
+	[[ServerController instance] stopService];
+	
+}
 
 /*
 // Optional UITabBarControllerDelegate method
