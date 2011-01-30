@@ -8,7 +8,7 @@
 
 #import "iOSControllerAppDelegate.h"
 #import "ServerController.h"
-#import 
+#import "SensorRelay.h"
 
 @implementation iOSControllerAppDelegate
 
@@ -27,6 +27,7 @@
 	
 	[[ServerController instance] startService];
 	
+	[SensorRelay instance].updateInterval = 0.5;
 	[[SensorRelay instance] startRelaying];
 	
 }

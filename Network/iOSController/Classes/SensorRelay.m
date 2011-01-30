@@ -52,6 +52,10 @@ static SensorRelay* sInstance = nil;
 	
 	if ((self = [super init])) {
 		
+		self.updateInterval = 0.1;
+		
+		self.touchRelayViews = [[[NSMutableDictionary alloc] initWithCapacity:4] autorelease];
+		
 		[UIAccelerometer sharedAccelerometer].delegate = self;
 		[UIAccelerometer sharedAccelerometer].updateInterval = [SettingsManager instance].updateInterval;
 		
@@ -77,6 +81,7 @@ static SensorRelay* sInstance = nil;
 
 -(void) dealloc {
 	
+	self.touchRelayViews = nil;
 	self.jsonEncoder = nil;
 	self.stateJSONDictionary = nil;
 	
@@ -89,6 +94,8 @@ static SensorRelay* sInstance = nil;
 
 
 -(void) updateStateJSONDictionary {
+	
+	
 	
 	// UPDATE TOUCH JSON DESCRIPTION FOR ALL VIEWS IN THE TOUCHRELAYVIEWS DICTIONARY
 	
@@ -125,10 +132,10 @@ static SensorRelay* sInstance = nil;
 								   [NSString stringWithCString:JSON_ACCELERATION_DICTIONARY_KEY encoding:NSUTF8StringEncoding]];
 	[accelerationJSONDictionary setObject:[NSString stringWithFormat:@"%.4f", currentAcceleration.x] 
 								   forKey:[NSString stringWithCString:JSON_ACCELERATION_X_KEY encoding:NSUTF8StringEncoding]];
-	[accelerationJSONDictionary setObject:[NSString stringWithFormat:@"%.4f", currentAcceleration.x] 
-								   forKey:[NSString stringWithCString:JSON_ACCELERATION_X_KEY encoding:NSUTF8StringEncoding]];
-	[accelerationJSONDictionary setObject:[NSString stringWithFormat:@"%.4f", currentAcceleration.x] 
-								   forKey:[NSString stringWithCString:JSON_ACCELERATION_X_KEY encoding:NSUTF8StringEncoding]];
+	[accelerationJSONDictionary setObject:[NSString stringWithFormat:@"%.4f", currentAcceleration.y] 
+								   forKey:[NSString stringWithCString:JSON_ACCELERATION_Y_KEY encoding:NSUTF8StringEncoding]];
+	[accelerationJSONDictionary setObject:[NSString stringWithFormat:@"%.4f", currentAcceleration.z] 
+								   forKey:[NSString stringWithCString:JSON_ACCELERATION_Z_KEY encoding:NSUTF8StringEncoding]];
 	
 	
 }
@@ -179,6 +186,9 @@ static SensorRelay* sInstance = nil;
 
 -(void) addTouchRelayView:(TouchRelayView*)relayView forKey:(NSString*)key {
 	[touchRelayViews setObject:relayView forKey:key];
+	
+	NSLog(@"Added view to touchRelayViews, touchRelayViews is %@", touchRelayViews);
+	
 }
 
 -(void) removeTouchRelayViewForKey:(NSString*)key {
