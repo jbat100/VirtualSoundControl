@@ -1,0 +1,444 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		10A30C3612FDF6C400B0B5DE /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30C2F12FDF6C400B0B5DE /* AsyncSocket.m */; };
+		10A30C3712FDF6C400B0B5DE /* MTMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30C3112FDF6C400B0B5DE /* MTMessage.m */; };
+		10A30C3812FDF6C400B0B5DE /* MTMessageBroker.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30C3312FDF6C400B0B5DE /* MTMessageBroker.m */; };
+		10A30C3912FDF6C400B0B5DE /* ClientController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30C3512FDF6C400B0B5DE /* ClientController.m */; };
+		10A30C3D12FDF7ED00B0B5DE /* TouchDisplayScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30C3C12FDF7ED00B0B5DE /* TouchDisplayScrollView.m */; };
+		10A30CF812FE084F00B0B5DE /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30CED12FE084F00B0B5DE /* NSObject+SBJSON.m */; };
+		10A30CF912FE084F00B0B5DE /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30CEF12FE084F00B0B5DE /* NSString+SBJSON.m */; };
+		10A30CFA12FE084F00B0B5DE /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30CF112FE084F00B0B5DE /* SBJSON.m */; };
+		10A30CFB12FE084F00B0B5DE /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30CF312FE084F00B0B5DE /* SBJsonBase.m */; };
+		10A30CFC12FE084F00B0B5DE /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30CF512FE084F00B0B5DE /* SBJsonParser.m */; };
+		10A30CFD12FE084F00B0B5DE /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30CF712FE084F00B0B5DE /* SBJsonWriter.m */; };
+		10BA6A9A12F7657E0087B51C /* SoundStationDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 10BA6A9912F7657E0087B51C /* SoundStationDocument.m */; };
+		10BA6AA012F766880087B51C /* SoundStationDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10BA6A9E12F766880087B51C /* SoundStationDocument.xib */; };
+		10D2E39712FB6343000EF30F /* TouchDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10D2E39612FB6343000EF30F /* TouchDisplayView.m */; };
+		10D2E39A12FB63A1000EF30F /* Touch.m in Sources */ = {isa = PBXBuildFile; fileRef = 10D2E39912FB63A1000EF30F /* Touch.m */; };
+		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
+		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
+		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
+		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		10A30C2E12FDF6C400B0B5DE /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
+		10A30C2F12FDF6C400B0B5DE /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
+		10A30C3012FDF6C400B0B5DE /* MTMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTMessage.h; sourceTree = "<group>"; };
+		10A30C3112FDF6C400B0B5DE /* MTMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTMessage.m; sourceTree = "<group>"; };
+		10A30C3212FDF6C400B0B5DE /* MTMessageBroker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTMessageBroker.h; sourceTree = "<group>"; };
+		10A30C3312FDF6C400B0B5DE /* MTMessageBroker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTMessageBroker.m; sourceTree = "<group>"; };
+		10A30C3412FDF6C400B0B5DE /* ClientController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientController.h; sourceTree = "<group>"; };
+		10A30C3512FDF6C400B0B5DE /* ClientController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientController.m; sourceTree = "<group>"; };
+		10A30C3B12FDF7ED00B0B5DE /* TouchDisplayScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchDisplayScrollView.h; sourceTree = "<group>"; };
+		10A30C3C12FDF7ED00B0B5DE /* TouchDisplayScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchDisplayScrollView.m; sourceTree = "<group>"; };
+		10A30CE912FE07E300B0B5DE /* NetworkDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkDefinitions.h; path = ../Network/Definitions/NetworkDefinitions.h; sourceTree = SOURCE_ROOT; };
+		10A30CEB12FE084F00B0B5DE /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		10A30CEC12FE084F00B0B5DE /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		10A30CED12FE084F00B0B5DE /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
+		10A30CEE12FE084F00B0B5DE /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		10A30CEF12FE084F00B0B5DE /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
+		10A30CF012FE084F00B0B5DE /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
+		10A30CF112FE084F00B0B5DE /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
+		10A30CF212FE084F00B0B5DE /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		10A30CF312FE084F00B0B5DE /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
+		10A30CF412FE084F00B0B5DE /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		10A30CF512FE084F00B0B5DE /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		10A30CF612FE084F00B0B5DE /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		10A30CF712FE084F00B0B5DE /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		10BA6A9812F7657E0087B51C /* SoundStationDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundStationDocument.h; sourceTree = "<group>"; };
+		10BA6A9912F7657E0087B51C /* SoundStationDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundStationDocument.m; sourceTree = "<group>"; };
+		10BA6A9F12F766880087B51C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SoundStationDocument.xib; sourceTree = "<group>"; };
+		10D2E39512FB6343000EF30F /* TouchDisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchDisplayView.h; sourceTree = "<group>"; };
+		10D2E39612FB6343000EF30F /* TouchDisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchDisplayView.m; sourceTree = "<group>"; };
+		10D2E39812FB63A1000EF30F /* Touch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Touch.h; sourceTree = "<group>"; };
+		10D2E39912FB63A1000EF30F /* Touch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Touch.m; sourceTree = "<group>"; };
+		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		1DDD582B0DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		2564AD2C0F5327BB00F57823 /* VSoundStation_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSoundStation_Prefix.pch; sourceTree = "<group>"; };
+		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2A37F4BAFDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
+		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		8D15AC360486D014006FF6A4 /* VSoundStation-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "VSoundStation-Info.plist"; sourceTree = "<group>"; };
+		8D15AC370486D014006FF6A4 /* VSoundStation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VSoundStation.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D15AC330486D014006FF6A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1047171512FA09AC00B2FDAD /* External */ = {
+			isa = PBXGroup;
+			children = (
+				10A30CEA12FE084F00B0B5DE /* SBJSON */,
+				10A30CE912FE07E300B0B5DE /* NetworkDefinitions.h */,
+			);
+			name = External;
+			sourceTree = "<group>";
+		};
+		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A8FEA54F5311CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */,
+				13E42FBA07B3F13500E4EEF1 /* CoreData.framework */,
+				2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		10A30C2A12FDF6A100B0B5DE /* Sound station document */ = {
+			isa = PBXGroup;
+			children = (
+				10BA6A9812F7657E0087B51C /* SoundStationDocument.h */,
+				10BA6A9912F7657E0087B51C /* SoundStationDocument.m */,
+				10A30C3B12FDF7ED00B0B5DE /* TouchDisplayScrollView.h */,
+				10A30C3C12FDF7ED00B0B5DE /* TouchDisplayScrollView.m */,
+				10D2E39512FB6343000EF30F /* TouchDisplayView.h */,
+				10D2E39612FB6343000EF30F /* TouchDisplayView.m */,
+				10D2E39812FB63A1000EF30F /* Touch.h */,
+				10D2E39912FB63A1000EF30F /* Touch.m */,
+			);
+			name = "Sound station document";
+			sourceTree = "<group>";
+		};
+		10A30C2B12FDF6B100B0B5DE /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				10A30C2E12FDF6C400B0B5DE /* AsyncSocket.h */,
+				10A30C2F12FDF6C400B0B5DE /* AsyncSocket.m */,
+				10A30C3012FDF6C400B0B5DE /* MTMessage.h */,
+				10A30C3112FDF6C400B0B5DE /* MTMessage.m */,
+				10A30C3212FDF6C400B0B5DE /* MTMessageBroker.h */,
+				10A30C3312FDF6C400B0B5DE /* MTMessageBroker.m */,
+				10A30C3412FDF6C400B0B5DE /* ClientController.h */,
+				10A30C3512FDF6C400B0B5DE /* ClientController.m */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
+		10A30CEA12FE084F00B0B5DE /* SBJSON */ = {
+			isa = PBXGroup;
+			children = (
+				10A30CEB12FE084F00B0B5DE /* JSON.h */,
+				10A30CEC12FE084F00B0B5DE /* NSObject+SBJSON.h */,
+				10A30CED12FE084F00B0B5DE /* NSObject+SBJSON.m */,
+				10A30CEE12FE084F00B0B5DE /* NSString+SBJSON.h */,
+				10A30CEF12FE084F00B0B5DE /* NSString+SBJSON.m */,
+				10A30CF012FE084F00B0B5DE /* SBJSON.h */,
+				10A30CF112FE084F00B0B5DE /* SBJSON.m */,
+				10A30CF212FE084F00B0B5DE /* SBJsonBase.h */,
+				10A30CF312FE084F00B0B5DE /* SBJsonBase.m */,
+				10A30CF412FE084F00B0B5DE /* SBJsonParser.h */,
+				10A30CF512FE084F00B0B5DE /* SBJsonParser.m */,
+				10A30CF612FE084F00B0B5DE /* SBJsonWriter.h */,
+				10A30CF712FE084F00B0B5DE /* SBJsonWriter.m */,
+			);
+			name = SBJSON;
+			path = ../External/SBJSON;
+			sourceTree = SOURCE_ROOT;
+		};
+		19C28FB0FE9D524F11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D15AC370486D014006FF6A4 /* VSoundStation.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2A37F4AAFDCFA73011CA2CEA /* VSoundStation */ = {
+			isa = PBXGroup;
+			children = (
+				2A37F4ABFDCFA73011CA2CEA /* Classes */,
+				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
+				1047171512FA09AC00B2FDAD /* External */,
+				2A37F4B8FDCFA73011CA2CEA /* Resources */,
+				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
+				19C28FB0FE9D524F11CA2CBB /* Products */,
+			);
+			name = VSoundStation;
+			sourceTree = "<group>";
+		};
+		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				10A30C2B12FDF6B100B0B5DE /* Network */,
+				10A30C2A12FDF6A100B0B5DE /* Sound station document */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		2A37F4AFFDCFA73011CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				2564AD2C0F5327BB00F57823 /* VSoundStation_Prefix.pch */,
+				2A37F4B0FDCFA73011CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
+				8D15AC360486D014006FF6A4 /* VSoundStation-Info.plist */,
+				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
+				10BA6A9E12F766880087B51C /* SoundStationDocument.xib */,
+				1DDD582A0DA1D0D100B32029 /* MainMenu.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */,
+				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D15AC270486D014006FF6A4 /* VSoundStation */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "VSoundStation" */;
+			buildPhases = (
+				8D15AC2B0486D014006FF6A4 /* Resources */,
+				8D15AC300486D014006FF6A4 /* Sources */,
+				8D15AC330486D014006FF6A4 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VSoundStation;
+			productInstallPath = "$(HOME)/Applications";
+			productName = VSoundStation;
+			productReference = 8D15AC370486D014006FF6A4 /* VSoundStation.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "VSoundStation" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* VSoundStation */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D15AC270486D014006FF6A4 /* VSoundStation */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D15AC2B0486D014006FF6A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
+				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
+				1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */,
+				10BA6AA012F766880087B51C /* SoundStationDocument.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D15AC300486D014006FF6A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D15AC320486D014006FF6A4 /* main.m in Sources */,
+				10BA6A9A12F7657E0087B51C /* SoundStationDocument.m in Sources */,
+				10D2E39712FB6343000EF30F /* TouchDisplayView.m in Sources */,
+				10D2E39A12FB63A1000EF30F /* Touch.m in Sources */,
+				10A30C3612FDF6C400B0B5DE /* AsyncSocket.m in Sources */,
+				10A30C3712FDF6C400B0B5DE /* MTMessage.m in Sources */,
+				10A30C3812FDF6C400B0B5DE /* MTMessageBroker.m in Sources */,
+				10A30C3912FDF6C400B0B5DE /* ClientController.m in Sources */,
+				10A30C3D12FDF7ED00B0B5DE /* TouchDisplayScrollView.m in Sources */,
+				10A30CF812FE084F00B0B5DE /* NSObject+SBJSON.m in Sources */,
+				10A30CF912FE084F00B0B5DE /* NSString+SBJSON.m in Sources */,
+				10A30CFA12FE084F00B0B5DE /* SBJSON.m in Sources */,
+				10A30CFB12FE084F00B0B5DE /* SBJsonBase.m in Sources */,
+				10A30CFC12FE084F00B0B5DE /* SBJsonParser.m in Sources */,
+				10A30CFD12FE084F00B0B5DE /* SBJsonWriter.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165FFE840EACC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C1660FE840EACC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		10BA6A9E12F766880087B51C /* SoundStationDocument.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				10BA6A9F12F766880087B51C /* English */,
+			);
+			name = SoundStationDocument.xib;
+			sourceTree = "<group>";
+		};
+		1DDD582A0DA1D0D100B32029 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DDD582B0DA1D0D100B32029 /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A37F4BAFDCFA73011CA2CEA /* English */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C05733C808A9546B00998B17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = VSoundStation_Prefix.pch;
+				INFOPLIST_FILE = "VSoundStation-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../Libraries/Boost/lib\"",
+				);
+				PRODUCT_NAME = VSoundStation;
+			};
+			name = Debug;
+		};
+		C05733C908A9546B00998B17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = VSoundStation_Prefix.pch;
+				INFOPLIST_FILE = "VSoundStation-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../Libraries/Boost/lib\"",
+				);
+				PRODUCT_NAME = VSoundStation;
+			};
+			name = Release;
+		};
+		C05733CC08A9546B00998B17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../Libraries/Boost/include/";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../../Libraries/Boost/lib/";
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+				VALID_ARCHS = x86_64;
+			};
+			name = Debug;
+		};
+		C05733CD08A9546B00998B17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../Libraries/Boost/include/";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../../Libraries/Boost/lib/";
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+				VALID_ARCHS = x86_64;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "VSoundStation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C05733C808A9546B00998B17 /* Debug */,
+				C05733C908A9546B00998B17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "VSoundStation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C05733CC08A9546B00998B17 /* Debug */,
+				C05733CD08A9546B00998B17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+}
