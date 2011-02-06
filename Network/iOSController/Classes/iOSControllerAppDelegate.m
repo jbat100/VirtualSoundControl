@@ -27,7 +27,7 @@
 	
 	[[ServerController instance] startService];
 	
-	[SensorRelay instance].updateInterval = 0.5;
+	[SensorRelay instance].updateInterval = 0.1;
 	[[SensorRelay instance] startRelaying];
 	
 }

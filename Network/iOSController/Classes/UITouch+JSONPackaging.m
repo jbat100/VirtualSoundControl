@@ -11,7 +11,13 @@
 
 @implementation UITouch (JSONPackaging)
 
--(NSDictionary*) jsonPackageDictionaryCentered:(BOOL)centered {
+-(NSDictionary*) jsonPackageDictionary {
+	
+	return [self jsonPackageDictionaryCentered:YES normalised:YES inverted:YES];
+	
+}
+
+-(NSDictionary*) jsonPackageDictionaryCentered:(BOOL)centered normalised:(BOOL)normalised inverted:(BOOL)inverted {
 	
 	NSMutableDictionary* dictionary = [[NSMutableDictionary alloc] initWithCapacity:6];
 	
@@ -25,6 +31,23 @@
 		CGFloat heightOffset = [self view].frame.size.height / 2.0;
 		l.y -= heightOffset;
 		pl.y -= heightOffset;
+	}
+	
+	if (normalised) {
+		l.x /= [self view].frame.size.width;
+		pl.x /= [self view].frame.size.width;
+		l.y /= [self view].frame.size.height;
+		pl.y /= [self view].frame.size.height;
+	}
+	
+	if (inverted) {
+		l.y *= -1.0;
+		pl.y *= -1.0;
+	}
+	
+	else {
+		l.x *= -1.0;
+		pl.x *= -1.0;
 	}
 	
 	[dictionary setObject:[NSString stringWithFormat:@"%x", self] forKey:

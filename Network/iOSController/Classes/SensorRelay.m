@@ -121,7 +121,7 @@ static SensorRelay* sInstance = nil;
 		TouchRelayView* touchRelayView = [touchRelayViews objectForKey:key];
 		
 		for (UITouch* touch in touchRelayView.currentTouches) {
-			[touchJSONArray addObject:[touch jsonPackageDictionaryCentered:YES]];
+			[touchJSONArray addObject:[touch jsonPackageDictionary]];
 		}
 		
 	}
