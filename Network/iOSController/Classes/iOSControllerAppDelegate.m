@@ -8,7 +8,7 @@
 
 #import "iOSControllerAppDelegate.h"
 #import "ServerController.h"
-#import "SensorRelay.h"
+#import "ControlStation.h"
 
 @implementation iOSControllerAppDelegate
 
@@ -27,14 +27,14 @@
 	
 	[[ServerController instance] startService];
 	
-	[SensorRelay instance].updateInterval = 0.1;
-	[[SensorRelay instance] startRelaying];
+	[ControlStation instance].updateInterval = 0.01;
+	[[ControlStation instance] startBroadcasting];
 	
 }
 
 -(void) applicationWillEnterForeground:(UIApplication *)application {
 	
-	[[SensorRelay instance] startRelaying];
+	[[ControlStation instance] startBroadcasting];
 	
 }
 
@@ -43,14 +43,14 @@
 	
 	//[[ServerController instance] stopService];
 	
-	[[SensorRelay instance] stopRelaying];
+	[[ControlStation instance] stopBroadcasting];
 	
 }
 
 
 -(void) applicationDidBecomeActive:(UIApplication *)application {
 	
-	[[SensorRelay instance] startRelaying];
+	[[ControlStation instance] startBroadcasting];
 	
 }
 
@@ -59,14 +59,14 @@
 	
 	//[[ServerController instance] stopService];
 	
-	[[SensorRelay instance] stopRelaying];
+	[[ControlStation instance] stopBroadcasting];
 	
 }
 
 
 -(void) applicationWillTerminate:(UIApplication *)application {
 	
-	[[SensorRelay instance] stopRelaying];
+	[[ControlStation instance] stopBroadcasting];
 	
 	[[ServerController instance] stopService];
 	

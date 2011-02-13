@@ -7,17 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-@class TouchRelayView;
+@class TouchControlView;
 
 
 @interface TouchViewController : UIViewController {
 	
 	UIImageView* backgroundImageView;
-	TouchRelayView* touchRelayView;
+	TouchControlView* touchRelayView;
 
 }
 
 @property (nonatomic, retain) UIImageView* backgroundImageView;
-@property (nonatomic, retain) TouchRelayView* touchRelayView;
+@property (nonatomic, retain) TouchControlView* touchRelayView;
 
 @end

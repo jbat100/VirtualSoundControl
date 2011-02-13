@@ -6,15 +6,15 @@
 //  Copyright 2011 JBAT. All rights reserved.
 //
 
-#import "SensorRelay.h"
+#import "ControlStation.h"
 #import "ServerController.h"
 #import "SettingsManager.h"
-#import "TouchRelayView.h"
+#import "TouchControlView.h"
 #import "SBJSON.h"
 #import "UITouch+JSONPackaging.h"
 #import "NetworkDefinitions.h"
 
-@interface SensorRelay () 
+@interface ControlStation () 
 
 -(void) sendCurrentState;
 -(void) updateStateJSONDictionary;
@@ -28,14 +28,14 @@
 @end
 
 
-@implementation SensorRelay
+@implementation ControlStation
 
-static SensorRelay* sInstance = nil;
+static ControlStation* sInstance = nil;
 
 @synthesize updateInterval;
 @synthesize touchRelayViews, currentAcceleration, stateJSONDictionary, jsonEncoder, relayTimer;
 
-+(SensorRelay*) instance {
++(ControlStation*) instance {
 	
 	@synchronized (self) {
 		
@@ -54,16 +54,16 @@ static SensorRelay* sInstance = nil;
 		
 		self.updateInterval = 0.1;
 		
-		self.touchRelayViews = [[[NSMutableDictionary alloc] initWithCapacity:4] autorelease];
+		self.controlViews = [[[NSMutableArray alloc] initWithCapacity:4] autorelease];
 		
 		[UIAccelerometer sharedAccelerometer].delegate = self;
 		[UIAccelerometer sharedAccelerometer].updateInterval = self.updateInterval;
 		
 		self.stateJSONDictionary = [[[NSMutableDictionary alloc] initWithCapacity:4] autorelease];
 		
-		NSMutableDictionary* touchViewsJSONDictionary = [[NSMutableDictionary alloc] initWithCapacity:4];
-		[stateJSONDictionary setObject:touchViewsJSONDictionary forKey:
-		 [NSString stringWithCString:JSON_TOUCH_VIEW_DICTIONARY_KEY encoding:NSUTF8StringEncoding]];
+		NSMutableArray* controlViewsJSONArray = [[NSMutableArray alloc] initWithCapacity:4];
+		[stateJSONDictionary setObject:controlViewsJSONArray forKey:
+		 [NSString stringWithCString:JSON_TOUCH_VIEW_ARRAY_KEY encoding:NSUTF8StringEncoding]];
 		[touchViewsJSONDictionary release];
 		
 		NSMutableDictionary* accelerationJSONDictionary = [[NSMutableDictionary alloc] initWithCapacity:3];
@@ -118,7 +118,7 @@ static SensorRelay* sInstance = nil;
 		
 		[touchJSONArray removeAllObjects];
 		
-		TouchRelayView* touchRelayView = [touchRelayViews objectForKey:key];
+		TouchControlView* touchRelayView = [touchRelayViews objectForKey:key];
 		
 		for (UITouch* touch in touchRelayView.currentTouches) {
 			[touchJSONArray addObject:[touch jsonPackageDictionary]];
@@ -143,7 +143,7 @@ static SensorRelay* sInstance = nil;
 #pragma mark -
 #pragma mark Sensor Relay Methods
 
--(void) startRelaying {
+-(void) startBroadcasting {
 	
 	if (!relayTimer) {
 		
@@ -157,7 +157,7 @@ static SensorRelay* sInstance = nil;
 
 }
 
--(void) stopRelaying {
+-(void) stopBroadcasting {
 	
 	[relayTimer invalidate];
 	relayTimer = nil;
@@ -184,7 +184,7 @@ static SensorRelay* sInstance = nil;
 #pragma mark -
 #pragma mark TouchRelayViews Methods
 
--(void) addTouchRelayView:(TouchRelayView*)relayView forKey:(NSString*)key {
+-(void) addTouchRelayView:(TouchControlView*)relayView forKey:(NSString*)key {
 	[touchRelayViews setObject:relayView forKey:key];
 }
 
@@ -217,8 +217,8 @@ static SensorRelay* sInstance = nil;
 	[UIAccelerometer sharedAccelerometer].updateInterval = updateInterval;
 	
 	// Restart relaying so that the timer gets reinitialised with new time interval;
-	[self stopRelaying];
-	[self startRelaying];
+	[self stopBroadcasting];
+	[self startBroadcasting];
 	
 }
 

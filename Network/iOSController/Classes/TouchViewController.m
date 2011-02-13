@@ -7,8 +7,8 @@
 //
 
 #import "TouchViewController.h"
-#import "TouchRelayView.h"
-#import "SensorRelay.h"
+#import "TouchControlView.h"
+#import "ControlStation.h"
 #import "NetworkDefinitions.h"
 
 
@@ -40,13 +40,13 @@
 	CGRect f = self.view.frame;
 	f.origin.x = f.origin.y = 0.0;
 	
-	self.touchRelayView = [[[TouchRelayView alloc] initWithFrame:f] autorelease];
+	self.touchRelayView = [[[TouchControlView alloc] initWithFrame:f] autorelease];
 	touchRelayView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	
 	[self.view addSubview:touchRelayView];
 	[self.view bringSubviewToFront:touchRelayView];
 	
-	[[SensorRelay instance] addTouchRelayView:touchRelayView 
+	[[ControlStation instance] addTouchRelayView:touchRelayView 
 									   forKey:[NSString stringWithCString:JSON_MAIN_TOUCH_VIEW_KEY 
 																 encoding:NSUTF8StringEncoding]];
 

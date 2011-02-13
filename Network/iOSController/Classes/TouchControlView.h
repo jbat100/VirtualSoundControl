@@ -7,15 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ControlView.h"
 
-
-@interface TouchRelayView : UIView {
+@interface TouchControlView : ControlView {
 	
 	NSMutableArray* currentTouches;
 	
 	NSInteger xChannel;
 	NSInteger yChannel;
 
+	// a cache of dictionaries
+	NSMutableArray* jsonTouchDictionaries;
 }
 
 @property (nonatomic, retain) NSMutableArray* currentTouches;

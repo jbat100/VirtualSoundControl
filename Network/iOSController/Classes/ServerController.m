@@ -82,7 +82,7 @@ static ServerController* sInstance = nil;
 		[messageBroker sendMessage:newMessage];
 	}
 	else {
-		NSLog(@"Cannot send data, network service is not active");
+		//NSLog(@"Cannot send data, network service is not active");
 	}
 
 }

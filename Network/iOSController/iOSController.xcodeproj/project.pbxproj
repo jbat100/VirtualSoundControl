@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1023F09012F61BA200D8EE72 /* TouchViewSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1023F08F12F61BA200D8EE72 /* TouchViewSetup.m */; };
-		1023F09312F61BF900D8EE72 /* TouchViewDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 1023F09212F61BF900D8EE72 /* TouchViewDescription.m */; };
 		105822BF12E39FBF006D77AA /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 105822B412E39FBF006D77AA /* NSObject+SBJSON.m */; };
 		105822C012E39FBF006D77AA /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 105822B612E39FBF006D77AA /* NSString+SBJSON.m */; };
 		105822C112E39FBF006D77AA /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 105822B812E39FBF006D77AA /* SBJSON.m */; };
@@ -22,12 +20,15 @@
 		10C1373D12E21ADB0092F193 /* MTMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C1373712E21ADB0092F193 /* MTMessage.m */; };
 		10C1373E12E21ADB0092F193 /* MTMessageBroker.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C1373912E21ADB0092F193 /* MTMessageBroker.m */; };
 		10C1373F12E21ADB0092F193 /* ServerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C1373B12E21ADB0092F193 /* ServerController.m */; };
-		10C1375412E238660092F193 /* SensorRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C1375312E238660092F193 /* SensorRelay.m */; };
+		10C1375412E238660092F193 /* ControlStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C1375312E238660092F193 /* ControlStation.m */; };
 		10C1375A12E23C970092F193 /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C1375912E23C970092F193 /* SettingsManager.m */; };
-		10C1375F12E246630092F193 /* TouchRelayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C1375E12E246630092F193 /* TouchRelayView.m */; };
+		10C1375F12E246630092F193 /* TouchControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C1375E12E246630092F193 /* TouchControlView.m */; };
 		10C1376112E2468C0092F193 /* TouchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10C1376012E2468C0092F193 /* TouchViewController.xib */; };
 		10C1376312E246A00092F193 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10C1376212E246A00092F193 /* SettingsViewController.xib */; };
 		10C137A812E254370092F193 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C137A712E254370092F193 /* CFNetwork.framework */; };
+		10E8B7A413031F0D0051528A /* ControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E8B7A313031F0D0051528A /* ControlView.m */; };
+		10E8B7AA13034F3C0051528A /* ControlSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E8B7A913034F3C0051528A /* ControlSetup.m */; };
+		10E8B7AE13034FA00051528A /* SliderControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E8B7AD13034FA00051528A /* SliderControlView.m */; };
 		1D3623260D0F684500981E51 /* iOSControllerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iOSControllerAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -37,10 +38,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1023F08E12F61BA200D8EE72 /* TouchViewSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchViewSetup.h; sourceTree = "<group>"; };
-		1023F08F12F61BA200D8EE72 /* TouchViewSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchViewSetup.m; sourceTree = "<group>"; };
-		1023F09112F61BF900D8EE72 /* TouchViewDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchViewDescription.h; sourceTree = "<group>"; };
-		1023F09212F61BF900D8EE72 /* TouchViewDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchViewDescription.m; sourceTree = "<group>"; };
 		105822B212E39FBF006D77AA /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		105822B312E39FBF006D77AA /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		105822B412E39FBF006D77AA /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -69,16 +66,22 @@
 		10C1373912E21ADB0092F193 /* MTMessageBroker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTMessageBroker.m; sourceTree = "<group>"; };
 		10C1373A12E21ADB0092F193 /* ServerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerController.h; sourceTree = "<group>"; };
 		10C1373B12E21ADB0092F193 /* ServerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerController.m; sourceTree = "<group>"; };
-		10C1375212E238660092F193 /* SensorRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensorRelay.h; sourceTree = "<group>"; };
-		10C1375312E238660092F193 /* SensorRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SensorRelay.m; sourceTree = "<group>"; };
+		10C1375212E238660092F193 /* ControlStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlStation.h; sourceTree = "<group>"; };
+		10C1375312E238660092F193 /* ControlStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControlStation.m; sourceTree = "<group>"; };
 		10C1375812E23C970092F193 /* SettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsManager.h; sourceTree = "<group>"; };
 		10C1375912E23C970092F193 /* SettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsManager.m; sourceTree = "<group>"; };
 		10C1375B12E244F00092F193 /* Definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definitions.h; sourceTree = "<group>"; };
-		10C1375D12E246630092F193 /* TouchRelayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchRelayView.h; sourceTree = "<group>"; };
-		10C1375E12E246630092F193 /* TouchRelayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchRelayView.m; sourceTree = "<group>"; };
+		10C1375D12E246630092F193 /* TouchControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchControlView.h; sourceTree = "<group>"; };
+		10C1375E12E246630092F193 /* TouchControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchControlView.m; sourceTree = "<group>"; };
 		10C1376012E2468C0092F193 /* TouchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TouchViewController.xib; sourceTree = "<group>"; };
 		10C1376212E246A00092F193 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		10C137A712E254370092F193 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		10E8B7A213031F0D0051528A /* ControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlView.h; sourceTree = "<group>"; };
+		10E8B7A313031F0D0051528A /* ControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControlView.m; sourceTree = "<group>"; };
+		10E8B7A813034F3C0051528A /* ControlSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlSetup.h; sourceTree = "<group>"; };
+		10E8B7A913034F3C0051528A /* ControlSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControlSetup.m; sourceTree = "<group>"; };
+		10E8B7AC13034FA00051528A /* SliderControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderControlView.h; sourceTree = "<group>"; };
+		10E8B7AD13034FA00051528A /* SliderControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderControlView.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* iOSControllerAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSControllerAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* iOSControllerAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iOSControllerAppDelegate.m; sourceTree = "<group>"; };
@@ -111,7 +114,8 @@
 			children = (
 				10C1372F12E21A780092F193 /* App Delegate */,
 				10C1373012E21A820092F193 /* Root View Controllers */,
-				10C1375C12E2461E0092F193 /* Touch View */,
+				10E8B7A713034ED40051528A /* Control Setup */,
+				10C1375C12E2461E0092F193 /* Control Views */,
 				10C1373112E21A980092F193 /* Networking */,
 				10C1374012E237F10092F193 /* Sensoring */,
 				10C1375712E23C7B0092F193 /* Settings */,
@@ -192,8 +196,8 @@
 			children = (
 				10A73CC512F21D57001EAFAC /* UITouch+JSONPackaging.h */,
 				10A73CC612F21D57001EAFAC /* UITouch+JSONPackaging.m */,
-				10C1375212E238660092F193 /* SensorRelay.h */,
-				10C1375312E238660092F193 /* SensorRelay.m */,
+				10C1375212E238660092F193 /* ControlStation.h */,
+				10C1375312E238660092F193 /* ControlStation.m */,
 			);
 			name = Sensoring;
 			sourceTree = "<group>";
@@ -203,21 +207,46 @@
 			children = (
 				10C1375812E23C970092F193 /* SettingsManager.h */,
 				10C1375912E23C970092F193 /* SettingsManager.m */,
-				1023F08E12F61BA200D8EE72 /* TouchViewSetup.h */,
-				1023F08F12F61BA200D8EE72 /* TouchViewSetup.m */,
-				1023F09112F61BF900D8EE72 /* TouchViewDescription.h */,
-				1023F09212F61BF900D8EE72 /* TouchViewDescription.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
 		};
-		10C1375C12E2461E0092F193 /* Touch View */ = {
+		10C1375C12E2461E0092F193 /* Control Views */ = {
 			isa = PBXGroup;
 			children = (
-				10C1375D12E246630092F193 /* TouchRelayView.h */,
-				10C1375E12E246630092F193 /* TouchRelayView.m */,
+				10E8B7A213031F0D0051528A /* ControlView.h */,
+				10E8B7A313031F0D0051528A /* ControlView.m */,
+				10E8B7AB13034F830051528A /* Sliders */,
+				10E8B79713031E0B0051528A /* Touch */,
 			);
-			name = "Touch View";
+			name = "Control Views";
+			sourceTree = "<group>";
+		};
+		10E8B79713031E0B0051528A /* Touch */ = {
+			isa = PBXGroup;
+			children = (
+				10C1375D12E246630092F193 /* TouchControlView.h */,
+				10C1375E12E246630092F193 /* TouchControlView.m */,
+			);
+			name = Touch;
+			sourceTree = "<group>";
+		};
+		10E8B7A713034ED40051528A /* Control Setup */ = {
+			isa = PBXGroup;
+			children = (
+				10E8B7A813034F3C0051528A /* ControlSetup.h */,
+				10E8B7A913034F3C0051528A /* ControlSetup.m */,
+			);
+			name = "Control Setup";
+			sourceTree = "<group>";
+		};
+		10E8B7AB13034F830051528A /* Sliders */ = {
+			isa = PBXGroup;
+			children = (
+				10E8B7AC13034FA00051528A /* SliderControlView.h */,
+				10E8B7AD13034FA00051528A /* SliderControlView.m */,
+			);
+			name = Sliders;
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -340,9 +369,9 @@
 				10C1373D12E21ADB0092F193 /* MTMessage.m in Sources */,
 				10C1373E12E21ADB0092F193 /* MTMessageBroker.m in Sources */,
 				10C1373F12E21ADB0092F193 /* ServerController.m in Sources */,
-				10C1375412E238660092F193 /* SensorRelay.m in Sources */,
+				10C1375412E238660092F193 /* ControlStation.m in Sources */,
 				10C1375A12E23C970092F193 /* SettingsManager.m in Sources */,
-				10C1375F12E246630092F193 /* TouchRelayView.m in Sources */,
+				10C1375F12E246630092F193 /* TouchControlView.m in Sources */,
 				105822BF12E39FBF006D77AA /* NSObject+SBJSON.m in Sources */,
 				105822C012E39FBF006D77AA /* NSString+SBJSON.m in Sources */,
 				105822C112E39FBF006D77AA /* SBJSON.m in Sources */,
@@ -350,8 +379,9 @@
 				105822C312E39FBF006D77AA /* SBJsonParser.m in Sources */,
 				105822C412E39FBF006D77AA /* SBJsonWriter.m in Sources */,
 				10A73CC712F21D57001EAFAC /* UITouch+JSONPackaging.m in Sources */,
-				1023F09012F61BA200D8EE72 /* TouchViewSetup.m in Sources */,
-				1023F09312F61BF900D8EE72 /* TouchViewDescription.m in Sources */,
+				10E8B7A413031F0D0051528A /* ControlView.m in Sources */,
+				10E8B7AA13034F3C0051528A /* ControlSetup.m in Sources */,
+				10E8B7AE13034FA00051528A /* SliderControlView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

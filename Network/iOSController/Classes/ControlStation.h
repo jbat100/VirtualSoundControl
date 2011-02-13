@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-@class TouchRelayView;
+#import "ControlView.h"
 @class SBJSON;
 
 #define MINIMUM_UPDATE_INTERVAL 0.01
 
 
-@interface SensorRelay : NSObject <UIAccelerometerDelegate> {
+@interface ControlStation : NSObject <UIAccelerometerDelegate> {
 	
 	@public
 	
@@ -21,7 +21,7 @@
 	
 	@private
 	
-	NSMutableDictionary* touchRelayViews;
+	NSMutableArray* controlViews;
 	UIAcceleration* currentAcceleration;
 	NSMutableDictionary* stateJSONDictionary;
 	SBJSON* jsonEncoder;
@@ -33,13 +33,13 @@
 
 @property (assign) NSTimeInterval updateInterval;
 
-+(SensorRelay*) instance;
++(ControlStation*) instance;
 
--(void) addTouchRelayView:(TouchRelayView*)relayView forKey:(NSString*)key;
--(void) removeTouchRelayViewForKey:(NSString*)key;
+-(void) addControlView:(ControlView*)view;
+-(void) removeControlView:(ControlView*)view;
 -(void) removeAllTouchRelayViews;
 
--(void) startRelaying;
--(void) stopRelaying;
+-(void) startBroadcasting;
+-(void) stopBroadcasting;
 
 @end

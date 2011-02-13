@@ -11,15 +11,16 @@
 
 @implementation UITouch (JSONPackaging)
 
--(NSDictionary*) jsonPackageDictionary {
+-(void) fillJSONDictionary:(NSMutableDictionary*)dictionary {
 	
-	return [self jsonPackageDictionaryCentered:YES normalised:YES inverted:YES];
+	[self fillJSONDictionary:dictionary centered:YES normalised:YES inverted:YES];
 	
 }
 
--(NSDictionary*) jsonPackageDictionaryCentered:(BOOL)centered normalised:(BOOL)normalised inverted:(BOOL)inverted {
-	
-	NSMutableDictionary* dictionary = [[NSMutableDictionary alloc] initWithCapacity:6];
+-(void) fillJSONDictionary:(NSMutableDictionary*)dictionary 
+				  centered:(BOOL)centered 
+				normalised:(BOOL)normalised 
+				  inverted:(BOOL)inverted {
 	
 	CGPoint l = [self locationInView:[self view]];
 	CGPoint pl = [self previousLocationInView:[self view]];
@@ -62,8 +63,6 @@
 	 [NSString stringWithCString:JSON_TOUCH_DX_KEY encoding:NSUTF8StringEncoding]];
 	[dictionary setObject:[NSString stringWithFormat:@"%.4f", l.y - pl.y] forKey:
 	 [NSString stringWithCString:JSON_TOUCH_DY_KEY encoding:NSUTF8StringEncoding]];
-
-	return [NSDictionary dictionaryWithDictionary:dictionary];
 	
 }
 
