@@ -6,9 +6,11 @@
 //  Copyright 2011 JBAT. All rights reserved.
 //
 
-#import "ControlSetup.h"
+#import "ControlCenterSetup.h"
 
 
-@implementation ControlSetup
+@implementation ControlCenterSetup
+
+@synthesize controlViews;
 
 @end

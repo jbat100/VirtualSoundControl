@@ -9,8 +9,12 @@
 #import <Foundation/Foundation.h>
 
 
-@interface ControlSetup : NSObject {
+@interface ControlCenterSetup : NSObject {
+	
+	NSMutableArray* controlViews;
 
 }
+
+@property (nonatomic, retain) NSMutableArray* controlViews;
 
 @end

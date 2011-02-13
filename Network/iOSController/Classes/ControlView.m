@@ -7,6 +7,7 @@
 //
 
 #import "ControlView.h"
+#import "NetworkDefinitions.h"
 
 
 @implementation ControlView
@@ -22,7 +23,7 @@
 		jsonDescriptionDictionary = [[NSMutableDictionary alloc] initWithCapacity:10];
 		
 		[jsonDescriptionDictionary setObject:[NSString stringWithFormat:@"%x", self] 
-									  forKey:[NSString stringWithUTF8String:JSON_RELAY_VIEW_ID_KEY]];
+									  forKey:[NSString stringWithUTF8String:JSON_CTRL_VIEW_ID_KEY]];
     
 	}
     return self;
@@ -48,9 +49,9 @@
 	
 	if (descriptor)
 		[jsonDescriptionDictionary setObject:descriptor
-									  forKey:[NSString stringWithUTF8String:JSON_RELAY_VIEW_DESCRIPTOR_KEY]];
+									  forKey:[NSString stringWithUTF8String:JSON_CTRL_VIEW_DESCRIPTOR_KEY]];
 	else 
-		[jsonDescriptionDictionary removeObjectForKey:[NSString stringWithUTF8String:JSON_RELAY_VIEW_DESCRIPTOR_KEY]];
+		[jsonDescriptionDictionary removeObjectForKey:[NSString stringWithUTF8String:JSON_CTRL_VIEW_DESCRIPTOR_KEY]];
 	
 }
 
@@ -61,9 +62,9 @@
 	
 	if (backgroundImageName) 
 		[jsonDescriptionDictionary setObject:backgroundImageName
-									  forKey:[NSString stringWithUTF8String:JSON_RELAY_VIEW_BACKGROUND_IMAGE_KEY]];
+									  forKey:[NSString stringWithUTF8String:JSON_CTRL_VIEW_BACKGROUND_IMAGE_KEY]];
 	else 
-		[jsonDescriptionDictionary removeObjectForKey:[NSString stringWithUTF8String:JSON_RELAY_VIEW_BACKGROUND_IMAGE_KEY]];
+		[jsonDescriptionDictionary removeObjectForKey:[NSString stringWithUTF8String:JSON_CTRL_VIEW_BACKGROUND_IMAGE_KEY]];
 	
 }
 
