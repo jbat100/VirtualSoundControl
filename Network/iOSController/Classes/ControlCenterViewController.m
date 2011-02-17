@@ -7,9 +7,13 @@
 //
 
 #import "ControlCenterViewController.h"
-
+#import "ControlCenterSetup.h"
+#import "ControlStation.h"
+#import "ControlViewSetup.h"
 
 @implementation ControlCenterViewController
+
+@synthesize controlSetup;
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -55,5 +59,27 @@
     [super dealloc];
 }
 
+#pragma mark - 
+#pragma mark Control Setup
+
+-(void) applyControlSetup {
+	[controlSetup applySetupToView:self.view];
+}
+
+-(void) registerControlViewsWithControlStation {
+	
+	for (ControlViewSetup* setup in controlSetup.controlViewSetups) {
+		[[ControlStation instance] addControlView:setup.view];
+	}
+	
+}
+
+-(void) unregisterControlViewsWithControlStation {
+	
+	for (ControlViewSetup* setup in controlSetup.controlViewSetups) {
+		[[ControlStation instance] removeControlView:setup.view];
+	}
+	
+}
 
 @end

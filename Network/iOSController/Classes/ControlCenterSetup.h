@@ -6,15 +6,16 @@
 //  Copyright 2011 JBAT. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
+#import <UIKit/UIKit.h>
 
 @interface ControlCenterSetup : NSObject {
 	
-	NSMutableArray* controlViews;
+	NSMutableArray* controlViewSetups;
 
 }
 
-@property (nonatomic, retain) NSMutableArray* controlViews;
+@property (nonatomic, retain) NSMutableArray* controlViewSetups;
+
+-(void) applySetupToView:(UIView*)view;
 
 @end

@@ -9,20 +9,19 @@
 #import <UIKit/UIKit.h>
 
 
-@interface ControlView : UIView {
+@interface ControlView : UIView  {
 	
-	NSString* descriptor;
-	NSString* backgroundImageName;
+	UIImageView* backgroundImageView;
 
 	NSMutableDictionary* jsonDescriptionDictionary;
+	NSObject* setup;
+	
 }
 
-@property (nonatomic, retain) NSString* descriptor;
-@property (nonatomic, retain) NSString* backgroundImageName;
-
 @property (nonatomic, readonly) NSMutableDictionary* jsonDescriptionDictionary;
+@property (nonatomic, assign) NSObject* setup;
 
 -(void) updateJSONDescriptionDictionary;
-
+-(void) applySetup;
 
 @end

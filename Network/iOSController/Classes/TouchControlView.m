@@ -7,22 +7,37 @@
 //
 
 #import "TouchControlView.h"
+#import "TouchControlViewSetup.h"
+#import "ControlViewSetup.h"
 
-#define MAX_CONCURRENT_TOUCHES 4
+#import "TouchDetectionView.h"
+
+#import "UITouch+JSONPackaging.h"
+
+#import "Definitions.h"
+#import "NetworkDefinitions.h"
 
 
 @implementation TouchControlView
 
-@synthesize currentTouches, xChannel, yChannel;
+
+@synthesize touchDetectionView;
 
 
 - (id)initWithFrame:(CGRect)frame {
+	
     if (self = [super initWithFrame:frame]) {
         // Initialization code
 		
-		currentTouches = [[NSMutableArray alloc] initWithCapacity:MAX_CONCURRENT_TOUCHES];
-		xChannel = 1;
-		yChannel = 2;
+		self.backgroundColor = [UIColor greenColor];
+		
+		CGRect f = frame;
+		f.origin.x = f.origin.y = 0;
+		touchDetectionView = [[TouchDetectionView alloc] initWithFrame:f];
+		touchDetectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		self.autoresizesSubviews = YES;
+		[self addSubview:touchDetectionView];
+		
 		
 		// Instantiate the touch array once and for all...
 		NSMutableArray* jsonTouchArray = [[NSMutableArray alloc] initWithCapacity:MAX_CONCURRENT_TOUCHES];
@@ -30,15 +45,12 @@
 		[jsonDescriptionDictionary setObject:jsonTouchArray 
 									  forKey:[NSString stringWithUTF8String:JSON_TOUCH_ARRAY_KEY]];
 		
-		
 		jsonTouchDictionaries = [[NSMutableArray alloc] initWithCapacity:MAX_CONCURRENT_TOUCHES];
 		
 		for (int i = 0; i<MAX_CONCURRENT_TOUCHES; i++) {
 			NSMutableDictionary* dict = [[NSMutableDictionary alloc] initWithCapacity:6];
 			[jsonTouchDictionaries addObject:dict];
 		}
-		
-		self.multipleTouchEnabled = YES;
 		
     }
     return self;
@@ -51,24 +63,47 @@
 
 
 - (void)dealloc {
-	[currentTouches release];
+	
+	[touchDetectionView release];
+	[jsonTouchDictionaries release];
+	
     [super dealloc];
 }
 
 
 -(void) updateJSONDescriptionDictionary; {
 	
+	
+	
+	if ([setup respondsToSelector:@selector(xChannel)]) {
+		[jsonDescriptionDictionary setObject:[NSString stringWithFormat:@"%d", [(TouchControlViewSetup*)setup xChannel]] 
+									  forKey:[NSString stringWithUTF8String:JSON_CTRL_VIEW_TOUCH_X_CHANNEL]];
+	}
+	else {
+		[jsonDescriptionDictionary removeObjectForKey:[NSString stringWithUTF8String:JSON_CTRL_VIEW_TOUCH_X_CHANNEL]];
+	}
+	
+	if ([setup respondsToSelector:@selector(xChannel)]) {
+		[jsonDescriptionDictionary setObject:[NSString stringWithFormat:@"%d", [(TouchControlViewSetup*)setup xChannel]] 
+									  forKey:[NSString stringWithUTF8String:JSON_CTRL_VIEW_TOUCH_Y_CHANNEL]];
+	}
+	else {
+		[jsonDescriptionDictionary removeObjectForKey:[NSString stringWithUTF8String:JSON_CTRL_VIEW_TOUCH_Y_CHANNEL]];
+	}
+
+	
+	
 	NSMutableArray* jsonTouchArray = [jsonDescriptionDictionary objectForKey:
 									  [NSString stringWithUTF8String:JSON_TOUCH_ARRAY_KEY]];
 	
 	[jsonTouchArray removeAllObjects];
 	
-	for (int = 0; i < [currentTouches count]; i++) {
+	for (int i = 0; i < [touchDetectionView.currentTouches count]; i++) {
 		
-		if (i => MAX_CONCURRENT_TOUCHES)
+		if (i >= MAX_CONCURRENT_TOUCHES)
 			break;
 		
-		UITouch* touch = [currentTouches objectAtIndex:i];
+		UITouch* touch = [touchDetectionView.currentTouches objectAtIndex:i];
 		NSMutableDictionary* dict = [jsonTouchDictionaries objectAtIndex:i];
 		[touch fillJSONDictionary:dict];
 		[jsonTouchArray addObject:dict];
@@ -77,67 +112,20 @@
 	
 }
 
-
 #pragma mark -
-#pragma mark Touch Registering
+#pragma mark Custom Setup Setter
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+-(void) setSetup:(NSObject*)s {
 	
-	//NSLog(@"======== TOUCHES BEGAN ==========\n\nTouches:\n%@\n\nEvent:\n%@", touches, event);
+	[super setSetup:s];
 	
-	//NSLog(@"======== %d TOUCHES BEGAN ==========", [touches count]);
-	NSInteger touchCount = 0;
-	for (UITouch* touch in [touches allObjects]) {
-		touchCount++;
-		//NSLog(@"Touch %d at 0x%x", touchCount, touch);
-	}
+	// if setup != s then the super call failed and that's it...
+	if (setup != s) 
+		return;
 	
-	[currentTouches addObjectsFromArray:[touches allObjects]];
-	
-
-	
-}
-
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-	
-	//NSLog(@"======== TOUCHES CANCELLED ==========\n\nTouches:\n%@\n\nEvent:\n%@", touches, event);
-	
-	//NSLog(@"======== TOUCHES CANCELLED ==========");
-	NSInteger touchCount = 0;
-	for (UITouch* touch in [touches allObjects]) {
-		touchCount++;
-		//NSLog(@"Touch %d at 0x%x", touchCount, touch);
-		
-		[currentTouches removeObjectIdenticalTo:touch];
-		
-	}
-	
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	
-	//NSLog(@"======== TOUCHES ENDED ==========\n\nTouches:\n%@\n\nEvent:\n%@", touches, event);
-	
-	//NSLog(@"======== TOUCHES ENDED ==========");
-	NSInteger touchCount = 0;
-	for (UITouch* touch in [touches allObjects]) {
-		touchCount++;
-		//NSLog(@"Touch %d at 0x%x", touchCount, touch);
-		
-		[currentTouches removeObjectIdenticalTo:touch];
-	}
-	
-}
-
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-	
-	//NSLog(@"======== TOUCHES MOVED ==========\n\nTouches:\n%@\n\nEvent:\n%@", touches, event);
-	
-	//NSLog(@"======== %d TOUCHES MOVED ==========", [touches count]);
-	NSInteger touchCount = 0;
-	for (UITouch* touch in [touches allObjects]) {
-		touchCount++;
-		//NSLog(@"Touch %d at 0x%x", touchCount, touch);
+	if (![s conformsToProtocol:@protocol(TouchControlViewSetup)]) {
+		[NSException raise:@"Invalid setup object" format:@"%@ does not conform to <TouchControlViewSetup>", s];
+		setup = nil;
 	}
 	
 }

@@ -8,21 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "ControlView.h"
+@class TouchDetectionView;
 
 @interface TouchControlView : ControlView {
 	
-	NSMutableArray* currentTouches;
-	
-	NSInteger xChannel;
-	NSInteger yChannel;
+	TouchDetectionView* touchDetectionView;
 
 	// a cache of dictionaries
 	NSMutableArray* jsonTouchDictionaries;
+	
 }
 
-@property (nonatomic, retain) NSMutableArray* currentTouches;
+@property (nonatomic, retain) TouchDetectionView* touchDetectionView;
 
-@property (nonatomic, assign) NSInteger xChannel;
-@property (nonatomic, assign) NSInteger yChannel;
 
 @end

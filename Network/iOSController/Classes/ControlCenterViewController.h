@@ -18,4 +18,8 @@
 
 @property (nonatomic, retain) ControlCenterSetup* controlSetup;
 
+-(void) applyControlSetup;
+-(void) registerControlViewsWithControlStation;
+-(void) unregisterControlViewsWithControlStation;
+
 @end

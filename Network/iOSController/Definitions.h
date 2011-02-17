@@ -8,3 +8,5 @@
  */
 
 #define DEFAULT_UPDATE_INTERVAL 0.1
+
+#define MAX_CONCURRENT_TOUCHES 4

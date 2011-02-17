@@ -9,6 +9,8 @@
 #import "ControlStation.h"
 #import "ServerController.h"
 #import "SettingsManager.h"
+#import "ControlView.h"
+
 #import "TouchControlView.h"
 #import "SBJSON.h"
 #import "UITouch+JSONPackaging.h"
@@ -19,11 +21,7 @@
 -(void) sendCurrentState;
 -(void) updateStateJSONDictionary;
 
-@property (nonatomic, retain) NSMutableDictionary* touchRelayViews;
 @property (nonatomic, retain) UIAcceleration* currentAcceleration;
-@property (nonatomic, retain) NSMutableDictionary* stateJSONDictionary;
-@property (nonatomic, retain) SBJSON* jsonEncoder;
-@property (nonatomic, retain) NSTimer* relayTimer;
 
 @end
 
@@ -32,15 +30,14 @@
 
 static ControlStation* sInstance = nil;
 
-@synthesize updateInterval;
-@synthesize touchRelayViews, currentAcceleration, stateJSONDictionary, jsonEncoder, relayTimer;
+@synthesize updateInterval, currentAcceleration;
 
 +(ControlStation*) instance {
 	
 	@synchronized (self) {
 		
 		if (!sInstance) 
-			sInstance = [[SensorRelay alloc] init];
+			sInstance = [[ControlStation alloc] init];
 		
 	}
 	
@@ -54,24 +51,24 @@ static ControlStation* sInstance = nil;
 		
 		self.updateInterval = 0.1;
 		
-		self.controlViews = [[[NSMutableArray alloc] initWithCapacity:4] autorelease];
+		controlViews = [[NSMutableArray alloc] initWithCapacity:4];
 		
 		[UIAccelerometer sharedAccelerometer].delegate = self;
 		[UIAccelerometer sharedAccelerometer].updateInterval = self.updateInterval;
 		
-		self.stateJSONDictionary = [[[NSMutableDictionary alloc] initWithCapacity:4] autorelease];
+		stateJSONDictionary = [[NSMutableDictionary alloc] initWithCapacity:4];
 		
 		NSMutableArray* controlViewsJSONArray = [[NSMutableArray alloc] initWithCapacity:4];
 		[stateJSONDictionary setObject:controlViewsJSONArray forKey:
-		 [NSString stringWithCString:JSON_TOUCH_VIEW_ARRAY_KEY encoding:NSUTF8StringEncoding]];
-		[touchViewsJSONDictionary release];
+		 [NSString stringWithCString:JSON_CTRL_VIEW_ARRAY_KEY encoding:NSUTF8StringEncoding]];
+		[controlViewsJSONArray release];
 		
 		NSMutableDictionary* accelerationJSONDictionary = [[NSMutableDictionary alloc] initWithCapacity:3];
 		[stateJSONDictionary setObject:accelerationJSONDictionary forKey:
 		 [NSString stringWithCString:JSON_ACCELERATION_DICTIONARY_KEY encoding:NSUTF8StringEncoding]];
 		[accelerationJSONDictionary release];
 		
-		self.jsonEncoder = [[SBJSON new] autorelease];
+		jsonEncoder = [[SBJSON new] autorelease];
 		
 	}
 	
@@ -81,9 +78,9 @@ static ControlStation* sInstance = nil;
 
 -(void) dealloc {
 	
-	self.touchRelayViews = nil;
-	self.jsonEncoder = nil;
-	self.stateJSONDictionary = nil;
+	[controlViews release];
+	[stateJSONDictionary release];
+	[jsonEncoder release];
 	
 	[super dealloc];
 	
@@ -100,29 +97,17 @@ static ControlStation* sInstance = nil;
 	// UPDATE TOUCH JSON DESCRIPTION FOR ALL VIEWS IN THE TOUCHRELAYVIEWS DICTIONARY
 	
 	// Get and empty the json representation
-	NSMutableDictionary* touchViewsJSONDictionary = [stateJSONDictionary objectForKey:
-									  [NSString stringWithCString:JSON_TOUCH_VIEW_DICTIONARY_KEY 
-														 encoding:NSUTF8StringEncoding]];
-	[touchViewsJSONDictionary removeAllObjects];
+	NSMutableArray* controlViewsJSONArray = [stateJSONDictionary objectForKey:
+											 [NSString stringWithCString:JSON_CTRL_VIEW_ARRAY_KEY 
+																encoding:NSUTF8StringEncoding]];
+	
+	[controlViewsJSONArray removeAllObjects];
 
 	
-	for (NSString* key in [touchRelayViews allKeys]) {
+	for (ControlView* controlView in controlViews) {
 		
-		NSMutableArray* touchJSONArray = [touchViewsJSONDictionary objectForKey:key];
-		
-		if (!touchJSONArray) {
-			touchJSONArray = [[NSMutableArray alloc] initWithCapacity:4];
-			[touchViewsJSONDictionary setObject:touchJSONArray forKey:key];
-			[touchJSONArray release];
-		}
-		
-		[touchJSONArray removeAllObjects];
-		
-		TouchControlView* touchRelayView = [touchRelayViews objectForKey:key];
-		
-		for (UITouch* touch in touchRelayView.currentTouches) {
-			[touchJSONArray addObject:[touch jsonPackageDictionary]];
-		}
+		[controlView updateJSONDescriptionDictionary];
+		[controlViewsJSONArray addObject:controlView.jsonDescriptionDictionary];
 		
 	}
 	
@@ -184,16 +169,16 @@ static ControlStation* sInstance = nil;
 #pragma mark -
 #pragma mark TouchRelayViews Methods
 
--(void) addTouchRelayView:(TouchControlView*)relayView forKey:(NSString*)key {
-	[touchRelayViews setObject:relayView forKey:key];
+-(void) addControlView:(ControlView*)relayView  {
+	[controlViews addObject:relayView];
 }
 
--(void) removeTouchRelayViewForKey:(NSString*)key {
-	[touchRelayViews removeObjectForKey:key];
+-(void) removeControlView:(ControlView*)relayView  {
+	[controlViews removeObjectIdenticalTo:relayView];
 }
 
 -(void) removeAllTouchRelayViews {
-	[touchRelayViews removeAllObjects];
+	[controlViews removeAllObjects];
 }
 
 #pragma mark -

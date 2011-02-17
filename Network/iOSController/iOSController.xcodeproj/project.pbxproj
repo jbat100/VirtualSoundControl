@@ -13,8 +13,14 @@
 		105822C212E39FBF006D77AA /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 105822BA12E39FBF006D77AA /* SBJsonBase.m */; };
 		105822C312E39FBF006D77AA /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 105822BC12E39FBF006D77AA /* SBJsonParser.m */; };
 		105822C412E39FBF006D77AA /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 105822BE12E39FBF006D77AA /* SBJsonWriter.m */; };
+		10878093130C571C00D817A8 /* TouchDetectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10878092130C571C00D817A8 /* TouchDetectionView.m */; };
+		10878099130C615000D817A8 /* ButtonControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10878098130C615000D817A8 /* ButtonControlView.m */; };
+		1087809C130C84C900D817A8 /* SliderControlViewSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1087809B130C84C900D817A8 /* SliderControlViewSetup.m */; };
+		1087809F130C84DF00D817A8 /* ButtonControlViewSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1087809E130C84DF00D817A8 /* ButtonControlViewSetup.m */; };
 		1088252D1308174B001CBEFB /* ControlCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1088252B1308174B001CBEFB /* ControlCenterViewController.m */; };
 		1088252E1308174B001CBEFB /* ControlCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1088252C1308174B001CBEFB /* ControlCenterViewController.xib */; };
+		108825791308228A001CBEFB /* ControlViewSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 108825761308228A001CBEFB /* ControlViewSetup.m */; };
+		1088257A1308228A001CBEFB /* TouchControlViewSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 108825781308228A001CBEFB /* TouchControlViewSetup.m */; };
 		10A73CC712F21D57001EAFAC /* UITouch+JSONPackaging.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A73CC612F21D57001EAFAC /* UITouch+JSONPackaging.m */; };
 		10C1372E12E21A3E0092F193 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C1372D12E21A3E0092F193 /* SettingsViewController.m */; };
 		10C1373C12E21ADB0092F193 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C1373512E21ADB0092F193 /* AsyncSocket.m */; };
@@ -51,9 +57,21 @@
 		105822BC12E39FBF006D77AA /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		105822BD12E39FBF006D77AA /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		105822BE12E39FBF006D77AA /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		10878091130C571C00D817A8 /* TouchDetectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchDetectionView.h; sourceTree = "<group>"; };
+		10878092130C571C00D817A8 /* TouchDetectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchDetectionView.m; sourceTree = "<group>"; };
+		10878097130C615000D817A8 /* ButtonControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonControlView.h; sourceTree = "<group>"; };
+		10878098130C615000D817A8 /* ButtonControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonControlView.m; sourceTree = "<group>"; };
+		1087809A130C84C900D817A8 /* SliderControlViewSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderControlViewSetup.h; sourceTree = "<group>"; };
+		1087809B130C84C900D817A8 /* SliderControlViewSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderControlViewSetup.m; sourceTree = "<group>"; };
+		1087809D130C84DF00D817A8 /* ButtonControlViewSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonControlViewSetup.h; sourceTree = "<group>"; };
+		1087809E130C84DF00D817A8 /* ButtonControlViewSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonControlViewSetup.m; sourceTree = "<group>"; };
 		1088252A1308174B001CBEFB /* ControlCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlCenterViewController.h; sourceTree = "<group>"; };
 		1088252B1308174B001CBEFB /* ControlCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControlCenterViewController.m; sourceTree = "<group>"; };
 		1088252C1308174B001CBEFB /* ControlCenterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ControlCenterViewController.xib; sourceTree = "<group>"; };
+		108825751308228A001CBEFB /* ControlViewSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlViewSetup.h; sourceTree = "<group>"; };
+		108825761308228A001CBEFB /* ControlViewSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControlViewSetup.m; sourceTree = "<group>"; };
+		108825771308228A001CBEFB /* TouchControlViewSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchControlViewSetup.h; sourceTree = "<group>"; };
+		108825781308228A001CBEFB /* TouchControlViewSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchControlViewSetup.m; sourceTree = "<group>"; };
 		10A73CC512F21D57001EAFAC /* UITouch+JSONPackaging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITouch+JSONPackaging.h"; sourceTree = "<group>"; };
 		10A73CC612F21D57001EAFAC /* UITouch+JSONPackaging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITouch+JSONPackaging.m"; sourceTree = "<group>"; };
 		10ADFF3D12F417750037B405 /* NetworkDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkDefinitions.h; path = ../Definitions/NetworkDefinitions.h; sourceTree = SOURCE_ROOT; };
@@ -154,6 +172,30 @@
 			path = ../../Libraries/SBJSON;
 			sourceTree = SOURCE_ROOT;
 		};
+		10878096130C613A00D817A8 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				10878097130C615000D817A8 /* ButtonControlView.h */,
+				10878098130C615000D817A8 /* ButtonControlView.m */,
+			);
+			name = Buttons;
+			sourceTree = "<group>";
+		};
+		108780A0130C84E300D817A8 /* View Setups */ = {
+			isa = PBXGroup;
+			children = (
+				108825751308228A001CBEFB /* ControlViewSetup.h */,
+				108825761308228A001CBEFB /* ControlViewSetup.m */,
+				108825771308228A001CBEFB /* TouchControlViewSetup.h */,
+				108825781308228A001CBEFB /* TouchControlViewSetup.m */,
+				1087809A130C84C900D817A8 /* SliderControlViewSetup.h */,
+				1087809B130C84C900D817A8 /* SliderControlViewSetup.m */,
+				1087809D130C84DF00D817A8 /* ButtonControlViewSetup.h */,
+				1087809E130C84DF00D817A8 /* ButtonControlViewSetup.m */,
+			);
+			name = "View Setups";
+			sourceTree = "<group>";
+		};
 		1088252F13081763001CBEFB /* Control */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +214,16 @@
 				10C1376212E246A00092F193 /* SettingsViewController.xib */,
 			);
 			name = Settings;
+			sourceTree = "<group>";
+		};
+		1088256513081E53001CBEFB /* Control Center Setup */ = {
+			isa = PBXGroup;
+			children = (
+				10E8B7A813034F3C0051528A /* ControlCenterSetup.h */,
+				10E8B7A913034F3C0051528A /* ControlCenterSetup.m */,
+				108780A0130C84E300D817A8 /* View Setups */,
+			);
+			name = "Control Center Setup";
 			sourceTree = "<group>";
 		};
 		10C1372F12E21A780092F193 /* App Delegate */ = {
@@ -232,6 +284,7 @@
 			children = (
 				10E8B7A213031F0D0051528A /* ControlView.h */,
 				10E8B7A313031F0D0051528A /* ControlView.m */,
+				10878096130C613A00D817A8 /* Buttons */,
 				10E8B7AB13034F830051528A /* Sliders */,
 				10E8B79713031E0B0051528A /* Touch */,
 			);
@@ -243,6 +296,8 @@
 			children = (
 				10C1375D12E246630092F193 /* TouchControlView.h */,
 				10C1375E12E246630092F193 /* TouchControlView.m */,
+				10878091130C571C00D817A8 /* TouchDetectionView.h */,
+				10878092130C571C00D817A8 /* TouchDetectionView.m */,
 			);
 			name = Touch;
 			sourceTree = "<group>";
@@ -250,8 +305,7 @@
 		10E8B7A713034ED40051528A /* Control Setup */ = {
 			isa = PBXGroup;
 			children = (
-				10E8B7A813034F3C0051528A /* ControlCenterSetup.h */,
-				10E8B7A913034F3C0051528A /* ControlCenterSetup.m */,
+				1088256513081E53001CBEFB /* Control Center Setup */,
 			);
 			name = "Control Setup";
 			sourceTree = "<group>";
@@ -398,6 +452,12 @@
 				10E8B7AA13034F3C0051528A /* ControlCenterSetup.m in Sources */,
 				10E8B7AE13034FA00051528A /* SliderControlView.m in Sources */,
 				1088252D1308174B001CBEFB /* ControlCenterViewController.m in Sources */,
+				108825791308228A001CBEFB /* ControlViewSetup.m in Sources */,
+				1088257A1308228A001CBEFB /* TouchControlViewSetup.m in Sources */,
+				10878093130C571C00D817A8 /* TouchDetectionView.m in Sources */,
+				10878099130C615000D817A8 /* ButtonControlView.m in Sources */,
+				1087809C130C84C900D817A8 /* SliderControlViewSetup.m in Sources */,
+				1087809F130C84DF00D817A8 /* ButtonControlViewSetup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
