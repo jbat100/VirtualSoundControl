@@ -8,6 +8,7 @@
 
 #import "TouchDisplayView.h"
 #import "Touch.h"
+#import "NetworkDefinitions.h"
 
 
 static CGColorRef CGColorCreateFromNSColor (CGColorSpaceRef colorSpace, NSColor *color) {
@@ -32,8 +33,10 @@ static CGColorRef CGColorCreateFromNSColor (CGColorSpaceRef colorSpace, NSColor 
     if (self) {
         // Initialization code here.
 		self.touches = [[[NSMutableDictionary alloc] initWithCapacity:4] autorelease];
-		self.touchColours = [NSArray arrayWithObjects:[NSColor blueColor], [NSColor greenColor], [NSColor redColor], nil];
+		self.touchColours = [NSArray arrayWithObjects:[NSColor blueColor], [NSColor greenColor], 
+							 [NSColor redColor], [NSColor darkGrayColor], [NSColor blackColor], nil];
 		dotRadius = 5.0;
+		//currentColorIndex = 0;
     }
     return self;
 }
@@ -75,17 +78,21 @@ static CGColorRef CGColorCreateFromNSColor (CGColorSpaceRef colorSpace, NSColor 
 	
 	
 	NSInteger count = 0;
-	for (Touch* touch in touches) {
+	for (Touch* touch in [touches allValues]) {
 		
-		CGFloat touchX = size.width*touch.xp;
-		CGFloat touchY = size.height*touch.yp;
+		//NSLog(@"Drawing touch %@", touch);
 		
-		NSColor* touchColour = nil; 
+		CGFloat touchX = size.width*(touch.xp+0.5);
+		CGFloat touchY = size.height*(touch.yp+0.5);
 		
-		if (!touchColours || [touchColours count] < 1) 
-			touchColour = [NSColor blueColor];
-		else 
-			touchColour = [touchColours objectAtIndex:count%[touchColours count]];
+		//NSLog(@"x=%.4f, y=%,4f", touchX, touchY);
+		
+		NSColor* touchColour = [touchColours objectAtIndex:touch.colourIndex]; 
+		
+//		if (!touchColours || [touchColours count] < 1) 
+//			touchColour = [NSColor blueColor];
+//		else 
+//			touchColour = [touchColours objectAtIndex:count%[touchColours count]];
 		
 		CGColorRef cgTouchColor = CGColorCreateFromNSColor (colorSpace, touchColour);
 		
@@ -110,6 +117,89 @@ static CGColorRef CGColorCreateFromNSColor (CGColorSpaceRef colorSpace, NSColor 
 	}
 	
 	CGColorSpaceRelease (colorSpace);
+	
+}
+
+-(void) updateTouchesWithJSONArray:(NSArray*)touchDictArray {
+	
+	NSMutableArray* newTouchKeys = [[NSMutableArray alloc] initWithCapacity:[touchDictArray count]];
+	
+	for (NSDictionary* touchDict in touchDictArray) {
+		
+		NSString* touchId = [touchDict objectForKey:[NSString stringWithUTF8String:JSON_TOUCH_ID_KEY]];
+		[newTouchKeys addObject:touchId];
+		
+		Touch* touch = [touches objectForKey:touchId];
+		
+		if (!touch) {
+			touch = [[Touch alloc] init];
+			//touch.colourIndex = currentColorIndex;
+			[touch setWithJSONDict:touchDict];
+			[touches setObject:touch forKey:touchId];
+			//currentColorIndex = (currentColorIndex + 1) % [touchColours count];
+		}
+		
+		else {
+			[touch setWithJSONDict:touchDict];
+		}
+		
+	}
+	
+	// Remove touches that are no longer active
+	
+	NSArray* touchKeys = [touches allKeys];
+	
+	for (NSString* touchKey in touchKeys) {
+		if ([newTouchKeys indexOfObject:touchKey] == NSNotFound) {
+			[touches removeObjectForKey:touchKey];
+		}
+	}
+	
+	//currentColorIndex = [touches count] % [touchColours count];
+	
+	[newTouchKeys release];
+	
+	[self assignTouchDisplayColours];
+	
+	
+}
+
+-(void) assignTouchDisplayColours {
+	
+	int numberOfColours = (int)[touchColours count];
+	
+	int colourCounts[numberOfColours];
+	
+	memset(colourCounts, 0, sizeof(int)*numberOfColours);
+	
+	NSArray* touchValues = [touches allValues];
+	
+	for (Touch* touch in touchValues) {
+		if (touch.colourIndex != -1 && touch.colourIndex < numberOfColours) 
+			colourCounts[touch.colourIndex]++;
+	}
+	
+		
+	for (Touch* touch in touchValues) {
+		if (touch.colourIndex == -1) {
+			int i = 0;
+			bool done = false;
+			while (!done && i < numberOfColours-1) {
+				if (colourCounts[i] < colourCounts[i+1] || colourCounts[i] == 0) {
+					touch.colourIndex = i;
+					colourCounts[i]++;
+					done = true;
+				}
+				i++;
+			}
+			if (!done) {
+				touch.colourIndex = numberOfColours-1;
+				colourCounts[numberOfColours-1]++;
+			}
+		}
+	}
+
+	
 	
 }
 

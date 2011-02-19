@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="100040"/>
+			<integer value="5"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -296,7 +296,7 @@
 											<int key="NSvFlags">274</int>
 											<string key="NSFrame">{{18, 19}, {159, 120}}</string>
 											<reference key="NSSuperview" ref="368312908"/>
-											<string key="NSClassName">TouchDisplayView</string>
+											<string key="NSClassName">MultiDisplayView</string>
 										</object>
 										<object class="NSMatrix" id="210778244">
 											<reference key="NSNextResponder" ref="368312908"/>
@@ -623,11 +623,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">touchDisplayView</string>
+						<string key="label">multiDisplayView</string>
 						<reference key="source" ref="512844837"/>
 						<reference key="destination" ref="702043145"/>
 					</object>
-					<int key="connectionID">100080</int>
+					<int key="connectionID">100081</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1012,7 +1012,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">100080</int>
+			<int key="maxID">100081</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1104,6 +1104,22 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">DisplayView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">DisplayView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MultiDisplayView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">MultiDisplayView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -1151,6 +1167,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>accelerationSliderMatrix</string>
 							<string>clientController</string>
+							<string>multiDisplayView</string>
 							<string>testButton</string>
 							<string>touchDisplayView</string>
 						</object>
@@ -1158,6 +1175,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSMatrix</string>
 							<string>ClientController</string>
+							<string>MultiDisplayView</string>
 							<string>NSButton</string>
 							<string>TouchDisplayView</string>
 						</object>
@@ -1168,6 +1186,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>accelerationSliderMatrix</string>
 							<string>clientController</string>
+							<string>multiDisplayView</string>
 							<string>testButton</string>
 							<string>touchDisplayView</string>
 						</object>
@@ -1180,6 +1199,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">clientController</string>
 								<string key="candidateClassName">ClientController</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">multiDisplayView</string>
+								<string key="candidateClassName">MultiDisplayView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">testButton</string>
@@ -1198,7 +1221,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">TouchDisplayView</string>
-					<string key="superclassName">NSView</string>
+					<string key="superclassName">DisplayView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">TouchDisplayView.h</string>

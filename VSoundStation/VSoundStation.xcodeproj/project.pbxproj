@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1016666513102C4800B986AA /* DisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1016666413102C4800B986AA /* DisplayView.m */; };
+		1016666E1310367F00B986AA /* MultiDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1016666D1310367F00B986AA /* MultiDisplayView.m */; };
 		10A30C3612FDF6C400B0B5DE /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30C2F12FDF6C400B0B5DE /* AsyncSocket.m */; };
 		10A30C3712FDF6C400B0B5DE /* MTMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30C3112FDF6C400B0B5DE /* MTMessage.m */; };
 		10A30C3812FDF6C400B0B5DE /* MTMessageBroker.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30C3312FDF6C400B0B5DE /* MTMessageBroker.m */; };
 		10A30C3912FDF6C400B0B5DE /* ClientController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30C3512FDF6C400B0B5DE /* ClientController.m */; };
-		10A30C3D12FDF7ED00B0B5DE /* TouchDisplayScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30C3C12FDF7ED00B0B5DE /* TouchDisplayScrollView.m */; };
 		10A30CF812FE084F00B0B5DE /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30CED12FE084F00B0B5DE /* NSObject+SBJSON.m */; };
 		10A30CF912FE084F00B0B5DE /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30CEF12FE084F00B0B5DE /* NSString+SBJSON.m */; };
 		10A30CFA12FE084F00B0B5DE /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A30CF112FE084F00B0B5DE /* SBJSON.m */; };
@@ -31,6 +32,10 @@
 
 /* Begin PBXFileReference section */
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1016666313102C4800B986AA /* DisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayView.h; sourceTree = "<group>"; };
+		1016666413102C4800B986AA /* DisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayView.m; sourceTree = "<group>"; };
+		1016666C1310367F00B986AA /* MultiDisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiDisplayView.h; sourceTree = "<group>"; };
+		1016666D1310367F00B986AA /* MultiDisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiDisplayView.m; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		10A30C2E12FDF6C400B0B5DE /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
 		10A30C2F12FDF6C400B0B5DE /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
@@ -40,8 +45,6 @@
 		10A30C3312FDF6C400B0B5DE /* MTMessageBroker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTMessageBroker.m; sourceTree = "<group>"; };
 		10A30C3412FDF6C400B0B5DE /* ClientController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientController.h; sourceTree = "<group>"; };
 		10A30C3512FDF6C400B0B5DE /* ClientController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientController.m; sourceTree = "<group>"; };
-		10A30C3B12FDF7ED00B0B5DE /* TouchDisplayScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchDisplayScrollView.h; sourceTree = "<group>"; };
-		10A30C3C12FDF7ED00B0B5DE /* TouchDisplayScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchDisplayScrollView.m; sourceTree = "<group>"; };
 		10A30CE912FE07E300B0B5DE /* NetworkDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkDefinitions.h; path = ../Network/Definitions/NetworkDefinitions.h; sourceTree = SOURCE_ROOT; };
 		10A30CEB12FE084F00B0B5DE /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		10A30CEC12FE084F00B0B5DE /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
@@ -86,6 +89,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1016665A13102BC200B986AA /* Display Views */ = {
+			isa = PBXGroup;
+			children = (
+				1016666313102C4800B986AA /* DisplayView.h */,
+				1016666413102C4800B986AA /* DisplayView.m */,
+				10D2E39512FB6343000EF30F /* TouchDisplayView.h */,
+				10D2E39612FB6343000EF30F /* TouchDisplayView.m */,
+				1016666C1310367F00B986AA /* MultiDisplayView.h */,
+				1016666D1310367F00B986AA /* MultiDisplayView.m */,
+			);
+			name = "Display Views";
+			sourceTree = "<group>";
+		};
+		1016666613102CD800B986AA /* Control Data */ = {
+			isa = PBXGroup;
+			children = (
+				10D2E39812FB63A1000EF30F /* Touch.h */,
+				10D2E39912FB63A1000EF30F /* Touch.m */,
+			);
+			name = "Control Data";
+			sourceTree = "<group>";
+		};
 		1047171512FA09AC00B2FDAD /* External */ = {
 			isa = PBXGroup;
 			children = (
@@ -118,12 +143,8 @@
 			children = (
 				10BA6A9812F7657E0087B51C /* SoundStationDocument.h */,
 				10BA6A9912F7657E0087B51C /* SoundStationDocument.m */,
-				10A30C3B12FDF7ED00B0B5DE /* TouchDisplayScrollView.h */,
-				10A30C3C12FDF7ED00B0B5DE /* TouchDisplayScrollView.m */,
-				10D2E39512FB6343000EF30F /* TouchDisplayView.h */,
-				10D2E39612FB6343000EF30F /* TouchDisplayView.m */,
-				10D2E39812FB63A1000EF30F /* Touch.h */,
-				10D2E39912FB63A1000EF30F /* Touch.m */,
+				1016665A13102BC200B986AA /* Display Views */,
+				1016666613102CD800B986AA /* Control Data */,
 			);
 			name = "Sound station document";
 			sourceTree = "<group>";
@@ -296,13 +317,14 @@
 				10A30C3712FDF6C400B0B5DE /* MTMessage.m in Sources */,
 				10A30C3812FDF6C400B0B5DE /* MTMessageBroker.m in Sources */,
 				10A30C3912FDF6C400B0B5DE /* ClientController.m in Sources */,
-				10A30C3D12FDF7ED00B0B5DE /* TouchDisplayScrollView.m in Sources */,
 				10A30CF812FE084F00B0B5DE /* NSObject+SBJSON.m in Sources */,
 				10A30CF912FE084F00B0B5DE /* NSString+SBJSON.m in Sources */,
 				10A30CFA12FE084F00B0B5DE /* SBJSON.m in Sources */,
 				10A30CFB12FE084F00B0B5DE /* SBJsonBase.m in Sources */,
 				10A30CFC12FE084F00B0B5DE /* SBJsonParser.m in Sources */,
 				10A30CFD12FE084F00B0B5DE /* SBJsonWriter.m in Sources */,
+				1016666513102C4800B986AA /* DisplayView.m in Sources */,
+				1016666E1310367F00B986AA /* MultiDisplayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

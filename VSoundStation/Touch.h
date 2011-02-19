@@ -18,6 +18,10 @@
 	
 	float dx;
 	float dy;
+	
+	NSColor* displayColour;
+	
+	NSInteger colourIndex;
 
 }
 
@@ -28,6 +32,13 @@
 
 @property (nonatomic, assign) float dx;
 @property (nonatomic, assign) float dy;
+
+@property (nonatomic, retain) NSColor* displayColour;
+
+@property (nonatomic, assign) NSInteger colourIndex;
+
+-(BOOL) isEqualToTouch:(Touch*)t;
+-(BOOL) isEqual:(id)object;
 
 -(void) setWithJSONDict:(NSDictionary*)jsonDict;
 

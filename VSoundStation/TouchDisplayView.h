@@ -7,16 +7,18 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import "DisplayView.h"
 
 static CGColorRef CGColorCreateFromNSColor (CGColorSpaceRef colorSpace, NSColor *color);
 
 
-@interface TouchDisplayView : NSView {
+@interface TouchDisplayView : DisplayView {
 	
 	NSMutableDictionary* touches;
 	CGFloat dotRadius;
 	NSArray* touchColours;
+	
+	//NSUInteger currentColorIndex;
 	
 	
 }
@@ -24,5 +26,8 @@ static CGColorRef CGColorCreateFromNSColor (CGColorSpaceRef colorSpace, NSColor 
 @property (nonatomic, retain) NSMutableDictionary* touches;
 @property (nonatomic, assign) CGFloat dotRadius;
 @property (nonatomic, retain) NSArray* touchColours;
+
+-(void) updateTouchesWithJSONArray:(NSArray*)touchArray;
+-(void) assignTouchDisplayColours;
 
 @end

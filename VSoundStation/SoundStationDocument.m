@@ -10,6 +10,8 @@
 #import "NetworkDefinitions.h"
 #import "SBJSON.h"
 #import "Touch.h"
+#import "TouchDisplayView.h"
+#import "MultiDisplayView.h"
 
 
 
@@ -66,11 +68,11 @@
 	
 	NSError *errorMsg;	
 	NSDictionary* jsonDict = [jsonParser objectWithString:stateString error:&errorMsg];
-	[jsonParser release];
+	
+	//NSLog(@"Updating with jsonDict: %@", jsonDict);
+	
 	
 	NSDictionary* accelDict = [jsonDict objectForKey:[NSString stringWithUTF8String:JSON_ACCELERATION_DICTIONARY_KEY]];
-	
-	NSLog(@"Acceleration dictionary is: %@", accelDict);
 	
 	NSString* xString = [accelDict objectForKey:[NSString stringWithUTF8String:JSON_ACCELERATION_X_KEY]];
 	NSString* yString = [accelDict objectForKey:[NSString stringWithUTF8String:JSON_ACCELERATION_Y_KEY]];
@@ -96,24 +98,76 @@
 	[cell1 setFloatValue:yf];
 	[cell2 setFloatValue:zf];
 	
-	NSDictionary* viewDictionary = [jsonDict objectForKey:[NSString stringWithUTF8String:JSON_TOUCH_VIEW_DICTIONARY_KEY]];
+	NSArray* controlViewArray = [jsonDict objectForKey:[NSString stringWithUTF8String:JSON_CTRL_VIEW_ARRAY_KEY]];
 	
-	NSLog(@"View dictionary is %@", viewDictionary);
+	//NSLog(@"View dictionary is %@", viewDictionary);
 	
-	for (NSString* viewKey in [viewDictionary allKeys]) {
+	BOOL displayViewChanged = NO;
+	
+	for (NSDictionary* controlViewDict in controlViewArray) {
 		
-		if ([viewKey isEqualToString:JSON_MAIN_TOUCH_VIEW_KEY] ) {
-			NSArray* touchArray = [viewDictionary objectForKey:viewKey];
-			for (NSDictionary* touchDictionary in touchArray) {
-				
-				NSString* touchId = [touchDictionary objectForKey:[NSString stringWithUTF8String:JSON_TOUCH_ID_KEY]];
-				
-				Touch* touch = [touchDisplayView.touches objectForKey:touchId];
-				
+		//NSLog(@"Updating view for controlViewDict: %@", controlViewDict);
+		
+		NSString* viewId = [controlViewDict objectForKey:[NSString stringWithUTF8String:JSON_CTRL_VIEW_ID_KEY]];
+		
+		//NSLog(@"viewId is %@, objectForKey %@", viewId, [NSString stringWithUTF8String:JSON_CTRL_VIEW_ID_KEY]);
+		
+		DisplayView* displayView = [multiDisplayView displayViewWithId:viewId];
+		
+		//NSLog(@"displayView is %@", displayView);
+		
+		
+		
+		NSString* type = [controlViewDict objectForKey:[NSString stringWithUTF8String:JSON_CTRL_VIEW_TYPE_KEY]];
+		
+		if (!displayView) {
+			
+			displayViewChanged = YES;
+			
+			if ([type isEqualToString:[NSString stringWithUTF8String:JSON_CTRL_VIEW_TOUCH_TYPE]]) {
+				displayView = [[TouchDisplayView alloc] init];
+				displayView.viewId = viewId;
+				[multiDisplayView addDisplayView:displayView];
 			}
+			
 		}
 		
+		else {
+			
+			if ([type isEqualToString:[NSString stringWithUTF8String:JSON_CTRL_VIEW_TOUCH_TYPE]]) {
+				
+				if (![displayView isKindOfClass:[TouchDisplayView class]]) {
+					displayViewChanged = YES;
+					[multiDisplayView removeDisplayView:displayView];
+					displayView = [[TouchDisplayView alloc] init];
+					displayView.viewId = viewId;
+					[multiDisplayView addDisplayView:displayView];
+				}
+				
+			}
+				
+		}
+		
+		//NSLog(@"multiDisplayView.displayViews are %@", multiDisplayView.displayViews);
+		
+		
+		if ([type isEqualToString:[NSString stringWithUTF8String:JSON_CTRL_VIEW_TOUCH_TYPE]]) {
+
+			NSArray* touchArray = [controlViewDict objectForKey:[NSString stringWithUTF8String:JSON_TOUCH_ARRAY_KEY]];
+			[(TouchDisplayView*)displayView updateTouchesWithJSONArray:touchArray];
+				
+		}
+		
+		[displayView setNeedsDisplay:YES];
 	}
+	
+	if (displayViewChanged) {
+		[multiDisplayView layoutDisplayViews];
+	}
+	
+	//NSLog(@"Ended: multiDisplayView.displayViews are %@", multiDisplayView.displayViews);
+	
+	[multiDisplayView setNeedsDisplay:YES];
 	
 }
 

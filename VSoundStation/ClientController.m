@@ -95,6 +95,7 @@
 #pragma mark Net Service Browser Delegate Methods
 -(void)netServiceBrowser:(NSNetServiceBrowser *)aBrowser didFindService:(NSNetService *)aService moreComing:(BOOL)more {
     [servicesController addObject:aService];
+	NSLog(@"Added service %@", aService);
 }
 
 -(void)netServiceBrowser:(NSNetServiceBrowser *)aBrowser didRemoveService:(NSNetService *)aService moreComing:(BOOL)more {

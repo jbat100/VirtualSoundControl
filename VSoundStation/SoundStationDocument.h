@@ -10,7 +10,7 @@
 @class SBJSON;
 @class TouchDisplayView;
 @class ClientController;
-@class TouchDisplayScrollView;
+@class MultiDisplayView;
 
 @interface SoundStationDocument : NSDocument {
 	
@@ -22,6 +22,7 @@
 	IBOutlet NSMatrix* accelerationSliderMatrix;
 	
 	IBOutlet TouchDisplayView* touchDisplayView;
+	IBOutlet MultiDisplayView* multiDisplayView;
 	
 	IBOutlet ClientController* clientController;
 
