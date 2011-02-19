@@ -13,4 +13,15 @@
 
 @synthesize xChannel, yChannel;
 
+-(id) init {
+	
+	if ((self = [super init])) {
+		xChannel = 1;
+		yChannel = 2;
+	}
+	
+	return self;
+	
+}
+
 @end

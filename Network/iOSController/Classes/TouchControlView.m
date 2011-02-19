@@ -45,6 +45,9 @@
 		[jsonDescriptionDictionary setObject:jsonTouchArray 
 									  forKey:[NSString stringWithUTF8String:JSON_TOUCH_ARRAY_KEY]];
 		
+		[jsonDescriptionDictionary setObject:[NSString stringWithUTF8String:JSON_CTRL_VIEW_TOUCH_TYPE] 
+									  forKey:[NSString stringWithUTF8String:JSON_CTRL_VIEW_TYPE_KEY]];
+		
 		jsonTouchDictionaries = [[NSMutableArray alloc] initWithCapacity:MAX_CONCURRENT_TOUCHES];
 		
 		for (int i = 0; i<MAX_CONCURRENT_TOUCHES; i++) {

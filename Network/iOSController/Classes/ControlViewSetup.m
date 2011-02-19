@@ -14,6 +14,17 @@
 
 @synthesize normalisedFrame, descriptor, backgroundImageName, view;
 
+
+-(id) init {
+	
+	if ((self = [super init])) {
+		normalisedFrame = CGRectMake(0.0, 0.0, 1.0, 1.0);
+	}
+	
+	return self;
+	
+}
+
 -(void) dealloc {
 	
 	[descriptor release];

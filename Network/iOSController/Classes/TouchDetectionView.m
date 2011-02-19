@@ -11,6 +11,8 @@
 
 @implementation TouchDetectionView
 
+@synthesize currentTouches;
+
 
 - (id)initWithFrame:(CGRect)frame {
     

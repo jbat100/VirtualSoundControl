@@ -68,7 +68,7 @@ static ControlStation* sInstance = nil;
 		 [NSString stringWithCString:JSON_ACCELERATION_DICTIONARY_KEY encoding:NSUTF8StringEncoding]];
 		[accelerationJSONDictionary release];
 		
-		jsonEncoder = [[SBJSON new] autorelease];
+		jsonEncoder = [SBJSON new];
 		
 	}
 	
@@ -155,6 +155,8 @@ static ControlStation* sInstance = nil;
 	//NSLog(@"Sending current state");
 	
 	[self updateStateJSONDictionary];
+	
+	//NSLog(@"stateJSONDictionary: %@", stateJSONDictionary);
 	
 	NSString* jsonString = [jsonEncoder stringWithObject:stateJSONDictionary];
 	

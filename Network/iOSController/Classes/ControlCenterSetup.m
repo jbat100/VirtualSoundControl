@@ -20,7 +20,7 @@
 
 @implementation ControlCenterSetup
 
-@synthesize controlViewSetups;
+@synthesize controlViewSetups, descriptor;
 
 -(id) init {
 	
@@ -28,6 +28,19 @@
 		
 		controlViewSetups = [[NSMutableArray alloc] initWithCapacity:10];
 		
+	}
+	
+	return self;
+	
+}
+
+-(void) setPreset:(ControlCenterSetupPreset)preset {
+	
+	[controlViewSetups removeAllObjects];
+	
+	if (preset == ControlCenterSetupPresetFullScreenTouch) {
+		TouchControlViewSetup* setup = [[TouchControlViewSetup alloc] init];
+		[controlViewSetups addObject:setup];
 	}
 	
 }
