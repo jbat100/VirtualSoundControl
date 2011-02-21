@@ -35,4 +35,27 @@
 	
 }
 
+-(void) encodeWithCoder:(NSCoder *)coder {
+	
+	[coder encodeCGRect:normalisedFrame forKey:@"ControlViewSetupNormalisedFrame"];
+	[coder encodeObject:descriptor forKey:@"ControlViewSetupDescriptor"];
+	[coder encodeObject:backgroundImageName forKey:@"ControlViewSetupBackgroundImageName"];
+
+}
+
+-(id) initWithCoder:(NSCoder *)coder {
+	
+	if ((self = [super init])) {
+		
+		self.normalisedFrame = [coder decodeCGRectForKey:@"ControlViewSetupNormalisedFrame"];
+		self.descriptor = [coder decodeObjectForKey:@"ControlViewSetupDescriptor"];
+		self.backgroundImageName = [coder decodeObjectForKey:@"ControlViewSetupBackgroundImageName"];
+		
+	}
+	
+	return self;
+	
+}
+	 
+
 @end

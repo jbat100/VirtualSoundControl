@@ -12,8 +12,40 @@
 @implementation SliderControlViewSetup
 
 
-@synthesize sliderRanges, sliderValues;
+@synthesize sliderRanges, sliderValues, numberOfSlider, sliderOrientation;
 
+-(id) init {
+	
+	if ((self = [super init])) {
+		sliderOrientation = SliderOrientationHorizontal;
+		sliderSetups = [[NSMutableArray alloc] initWithCapacity:10];
+	}
+	
+	return self;
+	
+}
+
+-(void) encodeWithCoder:(NSCoder *)coder {
+	
+	[super encodeWithCoder:coder];
+	
+	[coder encodeInteger:(NSInteger)sliderOrientation forKey:@"SliderControlViewSetupSliderOrientation"];
+	[coder encodeObject:sliderSetups forKey:@"SliderControlViewSetupSliderSetups"];
+	
+}
+
+-(id) initWithCoder:(NSCoder *)coder {
+	
+	if ((self = [super initWithCoder:coder])) {
+		
+		self.sliderOrientation = (SliderOrientation)[coder decodeCGRectForKey:@"SliderControlViewSetupSliderOrientation"];
+		self.sliderSetups = [coder decodeObjectForKey:@"SliderControlViewSetupSliderSetups"];
+		
+	}
+	
+	return self;
+	
+}
 
 
 @end

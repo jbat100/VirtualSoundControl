@@ -13,6 +13,7 @@
 		105822C212E39FBF006D77AA /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 105822BA12E39FBF006D77AA /* SBJsonBase.m */; };
 		105822C312E39FBF006D77AA /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 105822BC12E39FBF006D77AA /* SBJsonParser.m */; };
 		105822C412E39FBF006D77AA /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 105822BE12E39FBF006D77AA /* SBJsonWriter.m */; };
+		1067FD501313260E00ABFEF3 /* SliderSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1067FD4F1313260E00ABFEF3 /* SliderSetup.m */; };
 		10878093130C571C00D817A8 /* TouchDetectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10878092130C571C00D817A8 /* TouchDetectionView.m */; };
 		10878099130C615000D817A8 /* ButtonControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10878098130C615000D817A8 /* ButtonControlView.m */; };
 		1087809C130C84C900D817A8 /* SliderControlViewSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1087809B130C84C900D817A8 /* SliderControlViewSetup.m */; };
@@ -57,6 +58,8 @@
 		105822BC12E39FBF006D77AA /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		105822BD12E39FBF006D77AA /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		105822BE12E39FBF006D77AA /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		1067FD4E1313260E00ABFEF3 /* SliderSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderSetup.h; sourceTree = "<group>"; };
+		1067FD4F1313260E00ABFEF3 /* SliderSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderSetup.m; sourceTree = "<group>"; };
 		10878091130C571C00D817A8 /* TouchDetectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchDetectionView.h; sourceTree = "<group>"; };
 		10878092130C571C00D817A8 /* TouchDetectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchDetectionView.m; sourceTree = "<group>"; };
 		10878097130C615000D817A8 /* ButtonControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonControlView.h; sourceTree = "<group>"; };
@@ -172,6 +175,35 @@
 			path = ../../Libraries/SBJSON;
 			sourceTree = SOURCE_ROOT;
 		};
+		1067FD511313262900ABFEF3 /* Touch View Setup */ = {
+			isa = PBXGroup;
+			children = (
+				108825771308228A001CBEFB /* TouchControlViewSetup.h */,
+				108825781308228A001CBEFB /* TouchControlViewSetup.m */,
+			);
+			name = "Touch View Setup";
+			sourceTree = "<group>";
+		};
+		1067FD521313264000ABFEF3 /* Slider View Setup */ = {
+			isa = PBXGroup;
+			children = (
+				1087809A130C84C900D817A8 /* SliderControlViewSetup.h */,
+				1087809B130C84C900D817A8 /* SliderControlViewSetup.m */,
+				1067FD4E1313260E00ABFEF3 /* SliderSetup.h */,
+				1067FD4F1313260E00ABFEF3 /* SliderSetup.m */,
+			);
+			name = "Slider View Setup";
+			sourceTree = "<group>";
+		};
+		1067FD671313267C00ABFEF3 /* Button View Setup */ = {
+			isa = PBXGroup;
+			children = (
+				1087809D130C84DF00D817A8 /* ButtonControlViewSetup.h */,
+				1087809E130C84DF00D817A8 /* ButtonControlViewSetup.m */,
+			);
+			name = "Button View Setup";
+			sourceTree = "<group>";
+		};
 		10878096130C613A00D817A8 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,12 +218,9 @@
 			children = (
 				108825751308228A001CBEFB /* ControlViewSetup.h */,
 				108825761308228A001CBEFB /* ControlViewSetup.m */,
-				108825771308228A001CBEFB /* TouchControlViewSetup.h */,
-				108825781308228A001CBEFB /* TouchControlViewSetup.m */,
-				1087809A130C84C900D817A8 /* SliderControlViewSetup.h */,
-				1087809B130C84C900D817A8 /* SliderControlViewSetup.m */,
-				1087809D130C84DF00D817A8 /* ButtonControlViewSetup.h */,
-				1087809E130C84DF00D817A8 /* ButtonControlViewSetup.m */,
+				1067FD511313262900ABFEF3 /* Touch View Setup */,
+				1067FD521313264000ABFEF3 /* Slider View Setup */,
+				1067FD671313267C00ABFEF3 /* Button View Setup */,
 			);
 			name = "View Setups";
 			sourceTree = "<group>";
@@ -458,6 +487,7 @@
 				10878099130C615000D817A8 /* ButtonControlView.m in Sources */,
 				1087809C130C84C900D817A8 /* SliderControlViewSetup.m in Sources */,
 				1087809F130C84DF00D817A8 /* ButtonControlViewSetup.m in Sources */,
+				1067FD501313260E00ABFEF3 /* SliderSetup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

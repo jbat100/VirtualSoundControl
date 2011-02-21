@@ -20,11 +20,12 @@
 
 
 
-@interface ControlViewSetup : NSObject <ControlViewSetup> {
+@interface ControlViewSetup : NSObject <NSCoding, ControlViewSetup> {
 	
 	CGRect normalisedFrame; // Relative frame (all values [0-1])
 	NSString* descriptor;
 	NSString* backgroundImageName;
+	
 	ControlView* view;
 
 }
@@ -32,6 +33,7 @@
 @property (nonatomic, assign) CGRect normalisedFrame;
 @property (nonatomic, retain) NSString* descriptor;
 @property (nonatomic, retain) NSString* backgroundImageName;
+
 @property (nonatomic, retain) ControlView* view;
 
 @end

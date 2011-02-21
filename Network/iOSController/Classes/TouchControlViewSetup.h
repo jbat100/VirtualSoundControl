@@ -17,7 +17,7 @@
 @end
 
 
-@interface TouchControlViewSetup : ControlViewSetup <TouchControlViewSetup> {
+@interface TouchControlViewSetup : ControlViewSetup <NSCoding, TouchControlViewSetup> {
 	
 	NSInteger xChannel;
 	NSInteger yChannel;

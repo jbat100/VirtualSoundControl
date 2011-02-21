@@ -24,4 +24,26 @@
 	
 }
 
+-(void) encodeWithCoder:(NSCoder *)coder {
+	
+	[super encodeWithCoder:coder];
+	
+	[coder encodeInteger:xChannel forKey:@"TouchControlViewSetupXChannel"];
+	[coder encodeInteger:yChannel forKey:@"TouchControlViewSetupYChannel"];
+	
+}
+
+-(id) initWithCoder:(NSCoder *)coder {
+	
+	if ((self = [super initWithCoder:coder])) {
+		
+		self.xChannel = [coder decodeCGRectForKey:@"TouchControlViewSetupXChannel"];
+		self.yChannel = [coder decodeObjectForKey:@"TouchControlViewSetupYChannel"];
+		
+	}
+	
+	return self;
+	
+}
+
 @end

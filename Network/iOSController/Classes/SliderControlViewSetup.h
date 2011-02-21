@@ -9,22 +9,27 @@
 #import <Foundation/Foundation.h>
 #import "ControlViewSetup.h"
 
+typedef enum _SliderOrientation {
+	SliderOrientationHorizontal = 0,
+	SliderOrientationVertical,
+} SliderOrientation;
+
 @protocol SliderControlViewSetup 
 
-@property (nonatomic, retain) NSMutableArray* sliderRanges;
-@property (nonatomic, retain) NSMutableArray* sliderValues;
+@property (nonatomic, retain) NSMutableArray* sliderSetups;
+@property (nonatomic, assign) SliderOrientation sliderOrientation;
 
 @end
 
 
-@interface SliderControlViewSetup : NSObject {
+@interface SliderControlViewSetup : ControlViewSetup {
 	
-	NSMutableArray* sliderRanges;
-	NSMutableArray* sliderValues;
+	NSMutableArray* sliderSetups;
+	SliderOrientation sliderOrientation;
 
 }
 
-@property (nonatomic, retain) NSMutableArray* sliderRanges;
-@property (nonatomic, retain) NSMutableArray* sliderValues;
+@property (nonatomic, retain) NSMutableArray* sliderSetups;
+@property (nonatomic, assign) SliderOrientation sliderOrientation;
 
 @end
