@@ -11,6 +11,8 @@
 
 @implementation SetupsViewController
 
+@synthesize setupTableViewCell, setupsTableView, setups;
+
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -53,6 +55,61 @@
 
 - (void)dealloc {
     [super dealloc];
+}
+
+#pragma mark -
+#pragma mark UITableView Delegate/Datasource
+
+-(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	static NSString* identifier = @"SetupTableViewCellIdentifier";
+	
+    SetupTableViewCell* cell = (SetupTableViewCell*)[tableView dequeueReusableCellWithIdentifier:identifier];
+    if (cell == nil) {
+        [[NSBundle mainBundle] loadNibNamed:@"SetupTableViewCell" owner:self options:nil];
+        cell = setupTableViewCell;
+        self.setupTableViewCell = nil;
+    }
+	
+	if ([indexPath section] == 0 && [indexPath row] < [setupManager.presetSetups count]) 
+		cell.setup = [setupManager.presetSetups objectAtIndex:[indexPath row]];
+	else if ([indexPath section] == 1 && [indexPath row] < [setupManager.userSetups count]) 
+		cell.setup = [setupManager.userSetups objectAtIndex:[indexPath row]];
+	else 
+		cell.setup = nil;
+	
+	[cell update];
+		
+    return cell;
+	
+}
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+}
+
+-(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	if (section == 0)
+		return @"Presets";
+	else if (section == 1)
+		return @"User Setups";
+	return @"";
+}
+
+-(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
+	return 2;
+}
+
+-(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	if (section == 0)
+		return [setupManager.presetSetups count];
+	else if (section == 1)
+		return [setupManager.userSetups count];
+	return 0;
+}
+
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	return 70.0;
 }
 
 

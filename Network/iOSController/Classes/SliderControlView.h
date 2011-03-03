@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ControlView.h"
 
-
-@interface SliderControlView : UIView {
+@interface SliderControlView : ControlView {
 
 }
 

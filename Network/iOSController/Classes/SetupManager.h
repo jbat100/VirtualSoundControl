@@ -7,14 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "ControlCenterSetup.h"
+#import "SetupPresets.h"
 
 @interface SetupManager : NSObject {
 	
-	NSMutableArray* controlCenterSetups;
+	NSMutableArray* presetSetups;
+	NSMutableArray* userSetups;
 
 }
 
-@property (nonatomic, retain) NSMutableArray* controlCenterSetups;
+@property (nonatomic, retain) NSMutableArray* presetSetups;
+@property (nonatomic, retain) NSMutableArray* userSetups;
+
++(SetupManager*) instance;
 
 @end

@@ -34,16 +34,6 @@
 	
 }
 
--(void) setPreset:(ControlCenterSetupPreset)preset {
-	
-	[controlViewSetups removeAllObjects];
-	
-	if (preset == ControlCenterSetupPresetFullScreenTouch) {
-		TouchControlViewSetup* setup = [[TouchControlViewSetup alloc] init];
-		[controlViewSetups addObject:setup];
-	}
-	
-}
 
 
 -(void) applySetupToView:(UIView*)view {

@@ -38,6 +38,9 @@
 		10C1375F12E246630092F193 /* TouchControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C1375E12E246630092F193 /* TouchControlView.m */; };
 		10C1376312E246A00092F193 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10C1376212E246A00092F193 /* SettingsViewController.xib */; };
 		10C137A812E254370092F193 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C137A712E254370092F193 /* CFNetwork.framework */; };
+		10E6EC58131DA5490097AEEA /* SetupConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E6EC56131DA5490097AEEA /* SetupConfigurationViewController.m */; };
+		10E6EC59131DA5490097AEEA /* SetupConfigurationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10E6EC57131DA5490097AEEA /* SetupConfigurationViewController.xib */; };
+		10E6EC63131DA8AD0097AEEA /* SetupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10E6EC62131DA8AD0097AEEA /* SetupTableViewCell.xib */; };
 		10E8B7A413031F0D0051528A /* ControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E8B7A313031F0D0051528A /* ControlView.m */; };
 		10E8B7AA13034F3C0051528A /* ControlCenterSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E8B7A913034F3C0051528A /* ControlCenterSetup.m */; };
 		10E8B7AE13034FA00051528A /* SliderControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E8B7AD13034FA00051528A /* SliderControlView.m */; };
@@ -50,6 +53,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		101CBE3713204ADF00A868B8 /* SetupPresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupPresets.h; sourceTree = "<group>"; };
 		105822B212E39FBF006D77AA /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		105822B312E39FBF006D77AA /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		105822B412E39FBF006D77AA /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -111,6 +115,10 @@
 		10C1375E12E246630092F193 /* TouchControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchControlView.m; sourceTree = "<group>"; };
 		10C1376212E246A00092F193 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		10C137A712E254370092F193 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		10E6EC55131DA5490097AEEA /* SetupConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupConfigurationViewController.h; sourceTree = "<group>"; };
+		10E6EC56131DA5490097AEEA /* SetupConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupConfigurationViewController.m; sourceTree = "<group>"; };
+		10E6EC57131DA5490097AEEA /* SetupConfigurationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SetupConfigurationViewController.xib; sourceTree = "<group>"; };
+		10E6EC62131DA8AD0097AEEA /* SetupTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SetupTableViewCell.xib; sourceTree = "<group>"; };
 		10E8B7A213031F0D0051528A /* ControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlView.h; sourceTree = "<group>"; };
 		10E8B7A313031F0D0051528A /* ControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControlView.m; sourceTree = "<group>"; };
 		10E8B7A813034F3C0051528A /* ControlCenterSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlCenterSetup.h; sourceTree = "<group>"; };
@@ -272,6 +280,9 @@
 		109A9C75131C559300763AA0 /* Setup View */ = {
 			isa = PBXGroup;
 			children = (
+				10E6EC55131DA5490097AEEA /* SetupConfigurationViewController.h */,
+				10E6EC56131DA5490097AEEA /* SetupConfigurationViewController.m */,
+				10E6EC57131DA5490097AEEA /* SetupConfigurationViewController.xib */,
 			);
 			name = "Setup View";
 			sourceTree = "<group>";
@@ -284,6 +295,7 @@
 				109A9C79131C563100763AA0 /* SetupsViewController.xib */,
 				109A9C7C131C570700763AA0 /* SetupTableViewCell.h */,
 				109A9C7D131C570700763AA0 /* SetupTableViewCell.m */,
+				10E6EC62131DA8AD0097AEEA /* SetupTableViewCell.xib */,
 				109A9C7F131C57BB00763AA0 /* SetupSchemaView.h */,
 				109A9C80131C57BB00763AA0 /* SetupSchemaView.m */,
 				109A9C75131C559300763AA0 /* Setup View */,
@@ -373,6 +385,7 @@
 			children = (
 				109A9C82131C585F00763AA0 /* SetupManager.h */,
 				109A9C83131C585F00763AA0 /* SetupManager.m */,
+				101CBE3713204ADF00A868B8 /* SetupPresets.h */,
 				1088256513081E53001CBEFB /* Control Center Setup */,
 			);
 			name = "Control Setup";
@@ -490,6 +503,8 @@
 				10C1376312E246A00092F193 /* SettingsViewController.xib in Resources */,
 				1088252E1308174B001CBEFB /* ControlCenterViewController.xib in Resources */,
 				109A9C7B131C563100763AA0 /* SetupsViewController.xib in Resources */,
+				10E6EC59131DA5490097AEEA /* SetupConfigurationViewController.xib in Resources */,
+				10E6EC63131DA8AD0097AEEA /* SetupTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,6 +547,7 @@
 				109A9C7E131C570700763AA0 /* SetupTableViewCell.m in Sources */,
 				109A9C81131C57BB00763AA0 /* SetupSchemaView.m in Sources */,
 				109A9C84131C585F00763AA0 /* SetupManager.m in Sources */,
+				10E6EC58131DA5490097AEEA /* SetupConfigurationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

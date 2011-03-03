@@ -7,9 +7,11 @@
 //
 
 #import "SetupTableViewCell.h"
-
+#import "ControlCenterSetup.h"
 
 @implementation SetupTableViewCell
+
+@synthesize setup, setupSchemaView, descriptorLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     
@@ -31,6 +33,14 @@
 
 - (void)dealloc {
     [super dealloc];
+}
+
+-(void) update {
+	
+	descriptorLabel.text = setup.descriptor;
+	setupSchemaView.setup = setup;
+	[setupSchemaView setNeedsDisplay];
+	
 }
 
 

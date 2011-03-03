@@ -23,4 +23,8 @@
     // Drawing code here.
 }
 
+-(void) applySetup {
+	
+}
+
 @end

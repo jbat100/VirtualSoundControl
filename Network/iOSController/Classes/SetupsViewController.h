@@ -7,14 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SetupTableViewCell.h"
+
+@class SetupManager;
 
 
-@interface SetupsViewController : UIViewController {
+@interface SetupsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
 	
+	SetupTableViewCell* setupTableViewCell;
 	UITableView* setupsTableView;
+	
+	SetupManager* setupManager;
 
 }
 
+@property (nonatomic, retain) IBOutlet SetupTableViewCell* setupTableViewCell;
 @property (nonatomic, retain) IBOutlet UITableView* setupsTableView;
+
+@property (nonatomic, assign) NSMutableArray* setups;
 
 @end

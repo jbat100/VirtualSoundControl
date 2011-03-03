@@ -32,9 +32,9 @@
 		
 		self.viewOutlineColor = [UIColor blackColor];
 		
-		self.touchViewBackgroundColor = [UIColor grayColor];
-		self.sliderViewBackgroundColor = [UIColor grayColor];
-		self.buttonViewBackgroundColor = [UIColor grayColor];
+		self.touchViewBackgroundColor = [UIColor blueColor];
+		self.sliderViewBackgroundColor = [UIColor purpleColor];
+		self.buttonViewBackgroundColor = [UIColor redColor];
 		
     }
     return self;
@@ -105,6 +105,7 @@
 		CGPathRelease(controlViewOutlinePath);
 		
 		CGContextFillPath(ctx);
+		CGContextStrokePath(ctx);
 		
 	}
 }
