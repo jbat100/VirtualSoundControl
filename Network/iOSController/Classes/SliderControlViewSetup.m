@@ -47,5 +47,22 @@
 	
 }
 
+-(void) setSliderSetup:(SliderSetup*)prototypeSetup forChannels:(NSArray*)channels {
+	
+	[sliderSetups removeAllObjects];
+	
+	for (NSNumber* channel in channels) {
+		if ([channel isKindOfClass:[NSNumber class]])
+			[NSException raise:@"Invalid channels" format:@"%@ should be an array of NSNumber int objects", channels];
+		NSInteger chan = [channel intValue];
+		SliderSetup* sliderSetup = [SliderSetup sliderSetupWithSliderSetup:prototypeSetup];
+		sliderSetup.channel = chan;
+		[sliderSetups addObject:sliderSetup];
+	}
+	
+}
+
+
+
 
 @end

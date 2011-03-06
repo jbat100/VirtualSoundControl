@@ -7,6 +7,10 @@
 //
 
 #import "SetupManager.h"
+#import "SliderSetup.h"
+#import "TouchControlViewSetup.h"
+#import "SliderControlViewSetup.h"
+#import "ButtonControlViewSetup.h"
 
 @interface SetupManager () 
 
@@ -66,21 +70,69 @@ static SetupManager* sInstance = nil;
 
 -(ControlCenterSetup*) controlCenterSetupPreset:(ControlCenterSetupPreset)preset {
 	
+	ControlCenterSetup* controlCenterSetup = [[[ControlCenterSetup alloc] init] autorelease];
+	
 	if (preset == ControlCenterSetupPresetFullScreenTouch) {
 		
+		TouchControlViewSetup* viewSetup1 = [[TouchControlViewSetup alloc] init];
+		viewSetup1.normalisedFrame = CGRectMake(0.0, 0.0, 1.0, 1.0);
+		[controlCenterSetup.controlViewSetups addObject:viewSetup1];
+		[viewSetup1 release];
+		
 	}
+	
 	else if (preset == ControlCenterSetupPresetVerticalSplitScreenTouch) {
 		
-	}
-	else if (preset == ControlCenterSetupPresetHorizontalSplitScreenTouch) {
+		TouchControlViewSetup* viewSetup1 = [[TouchControlViewSetup alloc] init];
+		viewSetup1.normalisedFrame = CGRectMake(0.0, 0.0, 0.5, 1.0);
+		[controlCenterSetup.controlViewSetups addObject:viewSetup1];
+		[viewSetup1 release];
+		
+		TouchControlViewSetup* viewSetup2 = [[TouchControlViewSetup alloc] init];
+		viewSetup2.normalisedFrame = CGRectMake(0.5, 0.0, 0.5, 1.0);
+		[controlCenterSetup.controlViewSetups addObject:viewSetup2];
+		[viewSetup2 release];
 		
 	}
+	
+	else if (preset == ControlCenterSetupPresetHorizontalSplitScreenTouch) {
+		
+		TouchControlViewSetup* viewSetup1 = [[TouchControlViewSetup alloc] init];
+		viewSetup1.normalisedFrame = CGRectMake(0.0, 0.0, 1.0, 0.5);
+		[controlCenterSetup.controlViewSetups addObject:viewSetup1];
+		[viewSetup1 release];
+		
+		TouchControlViewSetup* viewSetup2 = [[TouchControlViewSetup alloc] init];
+		viewSetup2.normalisedFrame = CGRectMake(0.0, 0.5, 1.0, 0.5);
+		[controlCenterSetup.controlViewSetups addObject:viewSetup2];
+		[viewSetup2 release];
+		
+	}
+	
 	else if (preset == ControlCenterSetupPresetMusicController1) {
+		
+		TouchControlViewSetup* viewSetup1 = [[TouchControlViewSetup alloc] init];
+		viewSetup1.normalisedFrame = CGRectMake(0.0, 0.0, 1.0, 0.7);
+		[controlCenterSetup.controlViewSetups addObject:viewSetup1];
+		[viewSetup1 release];
+		
+		SliderControlViewSetup* viewSetup2 = [[SliderControlViewSetup alloc] init];
+		viewSetup2.normalisedFrame = CGRectMake(0.0, 0.7, 1.0, 0.3);
+		SliderSetup* sliderSetup = [[SliderSetup alloc] init];
+		NSArray* sliderCannels = [NSArray arrayWithObjects:
+								  [NSNumber numberWithInteger:1],
+								  [NSNumber numberWithInteger:2],
+								  [NSNumber numberWithInteger:3], nil];
+		[viewSetup2 setSliderSetup:sliderSetup forChannels:sliderCannels];
+		[controlCenterSetup.controlViewSetups addObject:viewSetup2];
+		[viewSetup2 release];
 		
 	}
 	else if (preset == ControlCenterSetupPresetMusicController2) {
 		
 	}
+	
+	return controlCenterSetup;
 	
 }
 

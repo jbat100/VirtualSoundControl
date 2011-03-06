@@ -36,4 +36,9 @@
 
 @property (nonatomic, retain) ControlView* view;
 
+/**
+ Returns an array of NSInteger NSNumbers containing the channels controlled by the view.
+ */
+-(NSArray*) channels;
+
 @end

@@ -12,7 +12,6 @@
 @interface ControlCenterSetup : NSObject {
 	
 	NSString* descriptor;
-	
 	NSMutableArray* controlViewSetups;
 
 }
@@ -21,5 +20,10 @@
 @property (nonatomic, retain) NSMutableArray* controlViewSetups;
 
 -(void) applySetupToView:(UIView*)view;
+
+/**
+ Returns an array of NSInteger NSNumbers containing the channels controlled using this setup.
+ */
+-(NSArray*) channels;
 
 @end

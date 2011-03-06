@@ -32,4 +32,6 @@ typedef enum _SliderOrientation {
 @property (nonatomic, retain) NSMutableArray* sliderSetups;
 @property (nonatomic, assign) SliderOrientation sliderOrientation;
 
+-(void) setSliderSetup:(SliderSetup*)prototypeSetup forChannels:(NSArray*)channels;
+
 @end

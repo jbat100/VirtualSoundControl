@@ -22,6 +22,8 @@
     self = [super initWithFrame:frame];
     if (self) {
 		
+		changedSinceLastUpdate = YES;
+		
 		CGRect f = frame;
 		f.origin.x = f.origin.y = 0;
 		backgroundImageView = [[UIImageView alloc] initWithFrame:f];

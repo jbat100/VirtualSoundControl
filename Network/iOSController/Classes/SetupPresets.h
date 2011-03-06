@@ -6,6 +6,7 @@
 //  Copyright 2011 JBAT. All rights reserved.
 //
 
+
 typedef enum _ControlCenterScreenLayoutPreset {
 	ControlCenterSetupScreenLayoutFullScreen,
 	ControlCenterSetupScreenLayoutVerticalSplitScreen,

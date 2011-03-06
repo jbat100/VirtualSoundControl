@@ -13,6 +13,17 @@
 
 @synthesize value, minValue, maxValue, channel;
 
++(SliderSetup*) sliderSetupWithSliderSetup:(SliderSetup*)sliderSetup {
+	
+	SliderSetup* copiedSlider = [[[SliderSetup alloc] init] autorelease];
+	
+	copiedSlider.value = sliderSetup.value;
+	copiedSlider.minValue = sliderSetup.minValue;
+	copiedSlider.maxValue = sliderSetup.maxValue;
+	copiedSlider.channel = sliderSetup.channel;
+	
+}
+
 -(id) init {
 	
 	if ((self = [super init])) {

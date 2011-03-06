@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "ControlView.h"
-@class TouchDetectionView;
+#import "TouchDetectionView.h"
 
-@interface TouchControlView : ControlView {
+
+@interface TouchControlView : ControlView <TouchDetectionViewDelegate> {
 	
 	TouchDetectionView* touchDetectionView;
 

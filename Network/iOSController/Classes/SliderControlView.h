@@ -10,7 +10,16 @@
 #import "ControlView.h"
 
 @interface SliderControlView : ControlView {
+	
+	NSMutableArray* sliders;
+	NSMutableArray* changedSliders;
 
 }
+
+-(void) updateSliderSetups;
+-(void) sliderValueChanged:(id)sender;
+-(void) clearChangedSliders;
+
+
 
 @end

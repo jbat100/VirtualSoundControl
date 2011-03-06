@@ -73,6 +73,10 @@
     [super dealloc];
 }
 
+-(void) eventOccuredForTouchDetectionView:(TouchDetectionView*)view {
+	changedSinceLastUpdate = YES;
+}
+
 
 -(void) updateJSONDescriptionDictionary; {
 	
@@ -121,10 +125,6 @@
 -(void) setSetup:(NSObject*)s {
 	
 	[super setSetup:s];
-	
-	// if setup != s then the super call failed and that's it...
-	if (setup != s) 
-		return;
 	
 	if (![s conformsToProtocol:@protocol(TouchControlViewSetup)]) {
 		[NSException raise:@"Invalid setup object" format:@"%@ does not conform to <TouchControlViewSetup>", s];

@@ -27,4 +27,9 @@
 
 @property (nonatomic, assign) NSInteger channel;
 
+/**
+ Copy constructor
+ */
++(SliderSetup*) sliderSetupWithSliderSetup:(SliderSetup*)sliderSetup;
+
 @end

@@ -11,7 +11,7 @@
 
 @implementation TouchDetectionView
 
-@synthesize currentTouches;
+@synthesize currentTouches, delegate;
 
 
 - (id)initWithFrame:(CGRect)frame {
@@ -62,6 +62,7 @@
 	
 	[currentTouches addObjectsFromArray:[touches allObjects]];
 	
+	[delegate eventOccuredForTouchDetectionView:self];
 	
 	
 }
@@ -79,6 +80,8 @@
 		[currentTouches removeObjectIdenticalTo:touch];
 		
 	}
+	
+	[delegate eventOccuredForTouchDetectionView:self];
 	
 }
 
@@ -107,6 +110,8 @@
 		touchCount++;
 		//NSLog(@"Touch %d at 0x%x", touchCount, touch);
 	}
+	
+	[delegate eventOccuredForTouchDetectionView:self];
 	
 }
 

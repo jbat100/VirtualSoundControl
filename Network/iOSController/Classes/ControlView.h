@@ -12,6 +12,8 @@
 @interface ControlView : UIView  {
 	
 	UIImageView* backgroundImageView;
+	
+	BOOL changedSinceLastUpdate;
 
 	NSMutableDictionary* jsonDescriptionDictionary;
 	NSObject* setup;
