@@ -24,6 +24,6 @@
 @property (nonatomic, retain) IBOutlet SetupTableViewCell* setupTableViewCell;
 @property (nonatomic, retain) IBOutlet UITableView* setupsTableView;
 
-@property (nonatomic, assign) NSMutableArray* setups;
+@property (nonatomic, assign) SetupManager* setupManager;
 
 @end

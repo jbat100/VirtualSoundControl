@@ -56,6 +56,12 @@
 	return self;
 	
 }
+
+-(NSArray*) channels {
+	
+	return nil;
+	
+}
 	 
 
 @end

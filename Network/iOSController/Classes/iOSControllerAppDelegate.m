@@ -7,13 +7,15 @@
 //
 
 #import "iOSControllerAppDelegate.h"
+#import "SetupManager.h"
+#import "SetupsViewController.h"
 #import "ServerController.h"
 #import "ControlStation.h"
 
 @implementation iOSControllerAppDelegate
 
-@synthesize window;
-@synthesize tabBarController;
+@synthesize window, tabBarController;
+@synthesize setupManager;
 
 +(iOSControllerAppDelegate*) sharedAppDelegate {
 	return (iOSControllerAppDelegate*)[UIApplication sharedApplication].delegate;
@@ -24,6 +26,9 @@
     
     // Add the tab bar controller's current view as a subview of the window
     [window addSubview:tabBarController.view];
+	
+	[self loadSetupManager];
+	[self getSetupsViewController].setupManager = setupManager;
 	
 	[[ServerController instance] startService];
 	
@@ -40,6 +45,8 @@
 
 
 -(void) applicationDidEnterBackground:(UIApplication *)application {
+	
+	[self saveSetupManager];
 	
 	//[[ServerController instance] stopService];
 	
@@ -91,13 +98,54 @@
     [super dealloc];
 }
 
+-(SetupsViewController*) getSetupsViewController {
+	
+	NSInteger setupsViewTabIndex = 1;
+	
+	UINavigationController* navigationController = (UINavigationController*)[[tabBarController viewControllers] 
+																			 objectAtIndex:setupsViewTabIndex];
+	
+	return [[[navigationController objectAtIndex:setupsViewTabIndex] viewControllers] objectAtIndex:0];
+	
+}
+
+
+
 -(NSString*) settingsFilePath {
 	
 	NSArray *searchPaths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString* folderPath = [searchPaths objectAtIndex: 0];
-	return [folderPath stringByAppendingPathComponent:@"Settings.dic"];
+	return [folderPath stringByAppendingPathComponent:@"Settings.arc"];
 	
 }
+
+-(void) loadSetupManager {
+	
+	if ([[NSFileManager defaultManager] fileExistsAtPath:[self setupManagerFilePath]])
+		self.setupManager = [NSKeyedUnarchiver unarchiveObjectWithFile:[self setupManagerFilePath]];
+	else 
+		self.setupManager = [[[SetupManager alloc] init] autorelease];
+	
+}
+
+-(void) saveSetupManager {
+	
+	if (setupManager)
+		[NSKeyedArchiver archiveRootObject:setupManager toFile:[self setupManagerFilePath]];
+	else 
+		[[NSFileManager defaultManager] removeItemAtPath:[self setupManagerFilePath] error:nil];
+	
+}
+
+-(NSString*) setupManagerFilePath {
+	
+	NSArray *searchPaths = NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString* folderPath = [searchPaths objectAtIndex: 0];
+	return [folderPath stringByAppendingPathComponent:@"SetupManager.arc"];
+	
+}
+
+
 
 @end
 

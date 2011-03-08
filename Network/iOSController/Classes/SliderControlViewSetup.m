@@ -38,13 +38,23 @@
 	
 	if ((self = [super initWithCoder:coder])) {
 		
-		self.sliderOrientation = (SliderOrientation)[coder decodeCGRectForKey:@"SliderControlViewSetupSliderOrientation"];
+		self.sliderOrientation = (SliderOrientation)[coder decodeIntegerForKey:@"SliderControlViewSetupSliderOrientation"];
 		self.sliderSetups = [coder decodeObjectForKey:@"SliderControlViewSetupSliderSetups"];
 		
 	}
 	
 	return self;
 	
+}
+
+-(NSArray*) channels {
+	
+	NSMutableArray* chans = [[[NSMutableArray alloc] initWithCapacity:[sliderSetups count]] autorelease];
+	
+	for (SliderSetup* sliderSetup in sliderSetups) 
+		[chans addObject:[NSNumber numberWithInteger:sliderSetup.channel]];
+	
+	return [NSArray arrayWithArray:chans];
 }
 
 -(void) setSliderSetup:(SliderSetup*)prototypeSetup forChannels:(NSArray*)channels {

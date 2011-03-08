@@ -46,4 +46,10 @@
 	
 }
 
+-(NSArray*) channels {
+	
+	return [NSArray arrayWithObjects:[NSNumber numberWithInteger:xChannel], [NSNumber numberWithInteger:yChannel], nil];
+	
+}
+
 @end

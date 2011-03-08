@@ -58,6 +58,8 @@ static SetupManager* sInstance = nil;
 	
 }
 
+
+
 -(void) generatePresets {
 	
 	[presetSetups addObject:[self controlCenterSetupPreset:ControlCenterSetupPresetFullScreenTouch]];
