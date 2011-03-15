@@ -29,6 +29,61 @@
 
 - (void)drawRect:(NSRect)dirtyRect {
     // Drawing code here.
+	
+	CGSize size = self.bounds.size;
+	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+	CGFloat radius = (CGFloat)enveloppeViewSetup.controlPointRadius;
+	
+	if ([enveloppe.controlPoints count] > 1) {
+		for (NSInteger count = 1; count < [enveloppe.controlPoints count]; count++) {
+			
+			CGColorRef cgColor = enveloppeViewSetup.unselectedControlPointColor;
+			
+			EnveloppeControlPoint* controlPoint1 = [enveloppe.controlPoints objectAtIndex:count-1];
+			EnveloppeControlPoint* controlPoint2 = [enveloppe.controlPoints objectAtIndex:count];
+			
+			NSPoint point1 = [self pointForControlPoint:controlPoint1];
+			NSPoint point2 = [self pointForControlPoint:controlPoint2];
+			
+			// Background
+			CGMutablePathRef linePath = CGPathCreateMutable(); 
+			
+			CGPathMoveToPoint(linePath, NULL, point1.x, point1.y);
+			CGPathAddLineToPoint(linePath, NULL, point2.x, point2.x); 
+			
+			CGContextSetLineWidth(ctx, 2);
+			CGContextSetStrokeColorWithColor(ctx, cgColor);
+			CGContextAddPath(ctx, backgroundPath);
+			CGContextStrokePath(ctx);
+		}
+	}
+	
+	
+	for (EnveloppeControlPoint* controlPoint in enveloppe.controlPoints) {
+		
+		NSPoint p = [self pointForControlPoint:controlPoint];
+		
+		CGColorRef cgColor = NULL;
+		
+		if ([currentlySelectedPoints indexOfObjectIdenticalTo:controlPoint] == NSNotFound) 
+			cgColor = enveloppeViewSetup.selectedControlPointColor;
+		else 
+			cgColor = enveloppeViewSetup.unselectedControlPointColor;
+		
+		CGMutablePathRef dotPath = CGPathCreateMutable(); 
+		
+		CGPathAddEllipseInRect(dotPath, NULL, 
+							   CGRectMake(p.x - radius, p.y - radius, 2.0*radius, 2.0*radius));
+		
+		
+		CGContextSetFillColorWithColor(ctx, cgColor);  
+		CGContextSetLineWidth(ctx, 1);
+		CGContextAddPath(ctx, touchDotPath);
+		CGContextFillPath(ctx);
+		CGPathRelease(dotPath);
+		
+	}
+	
 }
 
 -(double) valueForPoint:(NSPoint)point {

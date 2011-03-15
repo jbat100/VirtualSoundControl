@@ -20,6 +20,9 @@
 	BOOL dB;
 	
 	double controlPointRadius;
+	
+	CGColorRef unselectedControlPointColor;
+	CGColorRef selectedControlPointColor;
 
 }
 
@@ -32,5 +35,8 @@
 @property (nonatomic, assign) BOOL dB;
 
 @property (nonatomic, assign) double controlPointRadius;
+
+@property (nonatomic, readwrite) CGColorRef unselectedControlPointColor;
+@property (nonatomic, readwrite) CGColorRef selectedControlPointColor;
 
 @end

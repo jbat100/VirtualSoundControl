@@ -7,11 +7,26 @@
 //
 
 #import "EnveloppeViewSetup.h"
-
+#import "CGColorOperations.h"
 
 @implementation EnveloppeViewSetup
 
 @synthesize minTime, maxTime, minValue, maxValue, dB;
+@synthesize unselectedControlPointColor, selectedControlPointColor;
+
+-(id) init {
+	
+	if ((self == [super init])) {
+		minTime = 0.0;
+		maxTime = 5.0;
+		minValue = -1.0;
+		maxValue = 1.0;
+		dB = NO;
+		unselectedControlPointColor = CGColorCreateFromRGBNSColor([NSColor blackColor]);
+		unselectedControlPointColor = CGColorCreateFromRGBNSColor([NSColor blueColor]);
+	}
+	
+}
 
 -(id) initWithCoder:(NSCoder *)coder {
 	
