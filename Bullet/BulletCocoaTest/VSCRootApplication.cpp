@@ -73,6 +73,9 @@ m_azi(0.f),
 m_cameraPosition(20.f,0.f,0.f),
 m_cameraForward(1.f,0.f,0.f),
 m_cameraUp(0.f,1.f,0.f),
+m_cameraDistance(50.0), // only used for central centered control
+m_cameraSpeed(5.0),
+m_cameraMouseSensitivity(0.2),
 
 m_scaleBottom(0.5f),
 m_scaleFactor(2.f),
@@ -151,23 +154,17 @@ void VSCBaseApplication::simulate()
 {
 	
 	if (!m_idle) {
-		
 		// simple dynamics world doesn't handle fixed-time-stepping
 		float ms = getDeltaTimeMicroseconds();
-		
 		// step the simulation
 		if (m_dynamicsWorld)
 			m_dynamicsWorld->stepSimulation(ms / 1000000.f);
-		
 	}
-	
 	
 }
 
 
 void VSCBaseApplication::display(void) {
-	
-	NSLog(@"VSCBaseApplication::displayCallback(void)");
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
 	
@@ -325,7 +322,7 @@ btVector3	VSCRootApplication::getRayTo(int x,int y)
 btScalar mousePickClamping = 30.f;
 
 
-#pragma mark --- GLUT Interface Methods
+#pragma mark --- Old GLUT Interface Methods
 
 
 void VSCRootApplication::keyboardCallback(unsigned char key, int x, int y)
