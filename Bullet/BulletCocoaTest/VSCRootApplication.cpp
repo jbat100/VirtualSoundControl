@@ -142,7 +142,7 @@ void VSCRootApplication::toggleIdle() {
 }
 
 
-void	VSCRootApplication::setDebugMode(int mode)
+void VSCRootApplication::setDebugMode(int mode)
 {
 	m_debugMode = mode;
 	if (getDynamicsWorld() && getDynamicsWorld()->getDebugDrawer())
@@ -150,7 +150,7 @@ void	VSCRootApplication::setDebugMode(int mode)
 }
 
 
-void VSCBaseApplication::simulate()
+void VSCRootApplication::simulate()
 {
 	
 	if (!m_idle) {
@@ -164,7 +164,7 @@ void VSCBaseApplication::simulate()
 }
 
 
-void VSCBaseApplication::display(void) {
+void VSCRootApplication::display(void) {
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
 	
@@ -249,6 +249,7 @@ void VSCRootApplication::shootBox(const btVector3& destination)
 		body->setAngularVelocity(btVector3(0,0,0));
 		body->setCcdMotionThreshold(0.5);
 		body->setCcdSweptSphereRadius(0.9f);
+        
 //		printf("shootBox uid=%d\n", body->getBroadphaseHandle()->getUid());
 //		printf("camPos=%f,%f,%f\n",camPos.getX(),camPos.getY(),camPos.getZ());
 //		printf("destination=%f,%f,%f\n",destination.getX(),destination.getY(),destination.getZ());
@@ -264,7 +265,7 @@ btVector3 gHitPos(-1,-1,-1);
 float gOldPickingDist  = 0.f;
 btRigidBody* pickedBody = 0;//for deactivation state
 
-btVector3	VSCRootApplication::getRayTo(int x,int y)
+btVector3 VSCRootApplication::getRayTo(int x,int y)
 {
 
 	float top = 1.f;
@@ -273,11 +274,11 @@ btVector3	VSCRootApplication::getRayTo(int x,int y)
 	float tanFov = (top-bottom)*0.5f / nearPlane;
 	float fov = btScalar(2.0) * btAtan(tanFov);
 
-	btVector3	rayFrom = getCameraPosition();
-	btVector3 rayForward = (getCameraTargetPosition()-getCameraPosition());
+	btVector3 rayFrom = getCameraPosition();
+	btVector3 rayForward = getCameraLook();
 	rayForward.normalize();
 	float farPlane = 10000.f;
-	rayForward*= farPlane;
+	rayForward *= farPlane;
 
 	btVector3 rightOffset;
 	btVector3 vertical = m_cameraUp;
@@ -290,7 +291,6 @@ btVector3	VSCRootApplication::getRayTo(int x,int y)
 
 	float tanfov = tanf(0.5f*fov);
 
-
 	hor *= 2.f * farPlane * tanfov;
 	vertical *= 2.f * farPlane * tanfov;
 
@@ -299,19 +299,17 @@ btVector3	VSCRootApplication::getRayTo(int x,int y)
 	if (m_glutScreenWidth > m_glutScreenHeight) 
 	{
 		aspect = m_glutScreenWidth / (btScalar)m_glutScreenHeight;
-		
 		hor*=aspect;
-	} else 
+	} 
+    else 
 	{
 		aspect = m_glutScreenHeight / (btScalar)m_glutScreenWidth;
 		vertical*=aspect;
 	}
 
-
 	btVector3 rayToCenter = rayFrom + rayForward;
 	btVector3 dHor = hor * 1.f/float(m_glutScreenWidth);
 	btVector3 dVert = vertical * 1.f/float(m_glutScreenHeight);
-
 
 	btVector3 rayTo = rayToCenter - 0.5f * hor + 0.5f * vertical;
 	rayTo += btScalar(x) * dHor;
@@ -324,6 +322,7 @@ btScalar mousePickClamping = 30.f;
 
 #pragma mark --- Old GLUT Interface Methods
 
+/*
 
 void VSCRootApplication::keyboardCallback(unsigned char key, int x, int y)
 {
@@ -533,7 +532,7 @@ void VSCRootApplication::mouseFunc(int button, int state, int x, int y)
 		return;
 	}
 
-	/* button 0, state 0 means left mouse down */
+	// button 0, state 0 means left mouse down 
 
 	btVector3 rayTo = getRayTo(x,y);
 
@@ -668,14 +667,6 @@ void VSCRootApplication::mouseFunc(int button, int state, int x, int y)
 									p2p->m_setting.m_impulseClamp = mousePickClamping;
 									//very weak constraint for picking
 									p2p->m_setting.m_tau = 0.001f;
-/*
-									p2p->setParam(BT_CONSTRAINT_CFM,0.8,0);
-									p2p->setParam(BT_CONSTRAINT_CFM,0.8,1);
-									p2p->setParam(BT_CONSTRAINT_CFM,0.8,2);
-									p2p->setParam(BT_CONSTRAINT_ERP,0.1,0);
-									p2p->setParam(BT_CONSTRAINT_ERP,0.1,1);
-									p2p->setParam(BT_CONSTRAINT_ERP,0.1,2);
-									*/
 									
 
 								}
@@ -706,19 +697,6 @@ void VSCRootApplication::mouseFunc(int button, int state, int x, int y)
 
 }
 
-void VSCRootApplication::removePickingConstraint()
-{
-	if (m_pickConstraint && m_dynamicsWorld)
-	{
-		m_dynamicsWorld->removeConstraint(m_pickConstraint);
-		delete m_pickConstraint;
-		//printf("removed constraint %i",gPickingConstraintId);
-		m_pickConstraint = 0;
-		pickedBody->forceActivationState(ACTIVE_TAG);
-		pickedBody->setDeactivationTime( 0.f );
-		pickedBody = 0;
-	}
-}
 
 void	VSCRootApplication::mouseMotionFunc(int x,int y)
 {
@@ -837,6 +815,22 @@ void	VSCRootApplication::mouseMotionFunc(int x,int y)
 	updateCamera();
 
 
+}
+ 
+ */
+
+void VSCRootApplication::removePickingConstraint()
+{
+	if (m_pickConstraint && m_dynamicsWorld)
+	{
+		m_dynamicsWorld->removeConstraint(m_pickConstraint);
+		delete m_pickConstraint;
+		//printf("removed constraint %i",gPickingConstraintId);
+		m_pickConstraint = 0;
+		pickedBody->forceActivationState(ACTIVE_TAG);
+		pickedBody->setDeactivationTime( 0.f );
+		pickedBody = 0;
+	}
 }
 
 
@@ -1255,54 +1249,20 @@ void VSCRootApplication::clientResetScene()
 #pragma mark --- VSC Interface Methods
 
 // interface calls glut-independant
-void VSCRootApplication::keyDown(unsigned char key, VSCKeyboardMode mode) 
+void VSCRootApplication::keyDown(VSCKeyboardCombination keyCombination) 
 {
-	
-	
-	switch (key) {
-		case 'w':
-			m_movingForward = true;
-			break;
-		case 's':
-			m_movingBackward = true;
-			break;
-		case 'a':
-			m_movingLeft = true;
-			break;
-		case 'd':
-			m_movingRight = true;
-			break;
-		default:
-			break;
-	}
 	
 }
 
-void VSCRootApplication::keyUp(unsigned char key, VSCKeyboardMode mode) 
+void VSCRootApplication::keyUp(VSCKeyboardCombination keyCombination) 
 {
 	
-	switch (key) {
-		case 'w':
-			m_movingForward = false;
-			break;
-		case 's':
-			m_movingBackward = false;
-			break;
-		case 'a':
-			m_movingLeft = false;
-			break;
-		case 'd':
-			m_movingRight = false;
-			break;
-		default:
-			break;
-	}
 }
 
-void VSCRootApplication::mouseDown(VSCMouseAction action, int x, int y) 
+void VSCRootApplication::mouseDown(VSCMouseButton button, int x, int y) 
 {
-	
-	/* button 0, state 0 means left mouse down */
+    
+    VSCMouseAction action = VSCMouseActionNone;
 	
 	btVector3 rayTo = getRayTo(x,y);
 	
@@ -1402,8 +1362,10 @@ void VSCRootApplication::mouseDown(VSCMouseAction action, int x, int y)
 	
 }
 
-void VSCRootApplication::mouseUp(VSCMouseAction action, int x, int y) 
+void VSCRootApplication::mouseUp(VSCMouseButton button, int x, int y) 
 {
+    
+    VSCMouseAction action = VSCMouseActionNone;
 	
 	switch (action) {
 		case VSCMouseActionGrab:
@@ -1415,11 +1377,11 @@ void VSCRootApplication::mouseUp(VSCMouseAction action, int x, int y)
 	
 }
 
-void VSCRootApplication::mouseMotion(VSCMouseAction action, int dx, int dy, int x, int y) 
+void VSCRootApplication::mouseMotion(int dx, int dy, int x, int y) 
 {
 	
 	
-	if (action & VSCMouseActionGrab) 
+	if (m_currentMouseAction & VSCMouseActionGrab) 
 	{
 		
 		if (m_pickConstraint)
@@ -1479,11 +1441,10 @@ void VSCRootApplication::mouseMotion(VSCMouseAction action, int dx, int dy, int 
 	}
 	
 
-	if (action & VSCMouseActionCamera)
+	if (m_currentMouseAction & VSCMouseActionCamera)
 	{
 
 		// default sensitivity 0.2
-		
 		m_azi += dx * btScalar(m_cameraMouseSensitivity);
 		m_azi = fmodf(m_azi + 180.f, btScalar(360.f)) - 180.f;
 		
@@ -1493,7 +1454,7 @@ void VSCRootApplication::mouseMotion(VSCMouseAction action, int dx, int dy, int 
 		else if (m_ele > 90.0f)
 			m_ele = 90.f;
 		
-		updateCameraLook();
+		updateCamera();
 
 	}
 		
@@ -1501,7 +1462,7 @@ void VSCRootApplication::mouseMotion(VSCMouseAction action, int dx, int dy, int 
 
 void VSCRootApplication::updateCamera() {
 	
-	btVector3 forward(m_cameraForward.x, m_cameraForward.y, m_cameraForward.z);
+	btVector3 forward = m_cameraForward;
 	forward.normalize();
 	
 	btScalar rele = m_ele * btScalar(RADIANS_PER_DEGREE);
@@ -1594,7 +1555,7 @@ void VSCRootApplication::stepDown() {
 
 void VSCRootApplication::stepForward() {
 	
-	btVector3 forward(m_cameraLook.x, m_cameraLook.y, m_cameraLook.z);
+	btVector3 forward = m_cameraLook;
 	forward.normalize();
 	forward *= m_cameraSpeed;
 	m_cameraPosition += forward;
@@ -1603,7 +1564,7 @@ void VSCRootApplication::stepForward() {
 
 void VSCRootApplication::stepBackward() {
 	
-	btVector3 forward(m_cameraLook.x, m_cameraLook.y, m_cameraLook.z);
+	btVector3 forward = m_cameraLook;
 	forward.normalize();
 	forward *= m_cameraSpeed;
 	m_cameraPosition -= forward;

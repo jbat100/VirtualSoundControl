@@ -10,9 +10,7 @@
 #include "VSCBaseApplication.h"
 
 @protocol VSCOpenGLViewDelegate
-
 -(VSCBaseApplication*)basicDemo;
-
 @end
 
 
@@ -20,9 +18,7 @@
 @interface VSCOpenGLView : NSOpenGLView {
 	
 	NSTimer* drawTimer;
-
 	NSDate* lastDrawDate;
-	
 	id<VSCOpenGLViewDelegate> delegate;
 
 }

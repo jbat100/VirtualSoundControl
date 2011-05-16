@@ -90,34 +90,25 @@ virtual void mouseMotionFunc(int x,int y);
 -(void)mouseDown:(NSEvent*)theEvent {
 	
 	if ([theEvent modifierFlags] & NSAlternateKeyMask) {
-		NSLog(@"ALT Key down, before bitwise operation, m_modifierKeys is %d", [delegate basicDemo]->m_modifierKeys);
-		[delegate basicDemo]->m_modifierKeys |= BT_ACTIVE_ALT;
-		NSLog(@"After bitwise operation, m_modifierKeys is %d", [delegate basicDemo]->m_modifierKeys);
+
 	}
 	else {
-		NSLog(@"NOT ALT Key down, before bitwise operation, m_modifierKeys is %d", [delegate basicDemo]->m_modifierKeys);
-		[delegate basicDemo]->m_modifierKeys &= (~BT_ACTIVE_ALT);
-		NSLog(@"After bitwise operation, m_modifierKeys is %d", [delegate basicDemo]->m_modifierKeys);
-	}
 
+	}
 	
 	NSPoint p1 = [theEvent locationInWindow];
 	NSPoint p2 = [self convertPoint:p1 fromView:(NSView*)[[self window] contentView]];
 
-//	NSLog(@"In mouse down, event is %@, p1 is %@, p2 is %@", theEvent, 
-//		  NSStringFromPoint(p1), NSStringFromPoint(p2));
-	
-	int mouseButton = 0;
+    CGSize s = self.frame.size;
 	
 	if ([theEvent buttonNumber] == NSRightMouseDown) {
-		//NSLog(@"Right Button");
-		mouseButton = 1;
+        if ([delegate basicDemo]) 
+            [delegate basicDemo]->mouseDown(VSCMouseButtonRight, p2.x, s.height-p2.y);
 	}
-	
-	CGSize s = self.frame.size;
-	
-	if ([delegate basicDemo])
-		[delegate basicDemo]->mouseFunc(mouseButton, 0, p2.x, s.height-p2.y);
+    else if ([theEvent buttonNumber] == NSLeftMouseDown) {
+        if ([delegate basicDemo]) 
+            [delegate basicDemo]->mouseDown(VSCMouseButtonLeft, p2.x, s.height-p2.y);
+	}
 	
 }
 
@@ -125,8 +116,8 @@ virtual void mouseMotionFunc(int x,int y);
 	NSLog(@"In mouse dragged, event is %@", theEvent);
 	
 	// not expcting deltas seems like so really screws things up...
-	// int deltaX = [theEvent deltaX];
-	// int deltaY = [theEvent deltaY];
+	int deltaX = [theEvent deltaX];
+	int deltaY = [theEvent deltaY];
 	
 	NSPoint p1 = [theEvent locationInWindow];
 	NSPoint p2 = [self convertPoint:p1 fromView:(NSView*)[[self window] contentView]];
@@ -134,7 +125,7 @@ virtual void mouseMotionFunc(int x,int y);
 	CGSize s = self.frame.size;
 	
 	if ([delegate basicDemo])
-		[delegate basicDemo]->mouseMotionFunc(p2.x, s.height-p2.y);
+		[delegate basicDemo]->mouseMotion(deltaX, -deltaY, p2.x, s.height-p2.y);
 	
 }
 
@@ -143,29 +134,26 @@ virtual void mouseMotionFunc(int x,int y);
 	NSPoint p1 = [theEvent locationInWindow];
 	NSPoint p2 = [self convertPoint:p1 fromView:(NSView*)[[self window] contentView]];
 	
-//	NSLog(@"In mouse up, event is %@, p1 is %@, p2 is %@", theEvent, 
-//		  NSStringFromPoint(p1), NSStringFromPoint(p2));
-	
-	int mouseButton = 0;
-	
-	if ([theEvent buttonNumber] == NSRightMouseDown) {
-		NSLog(@"Right Button");
-		mouseButton = 1;
-	}
-	
 	CGSize s = self.frame.size;
 	
-	if ([delegate basicDemo])
-		[delegate basicDemo]->mouseFunc(mouseButton, 1, p2.x, s.height-p2.y);
+	if ([theEvent buttonNumber] == NSRightMouseDown) {
+        if ([delegate basicDemo]) 
+            [delegate basicDemo]->mouseUp(VSCMouseButtonRight, p2.x, s.height-p2.y);
+	}
+    else if ([theEvent buttonNumber] == NSLeftMouseDown) {
+        if ([delegate basicDemo]) 
+            [delegate basicDemo]->mouseUp(VSCMouseButtonLeft, p2.x, s.height-p2.y);
+	}
 	
 }
 
 -(void)keyDown:(NSEvent *)theEvent {
-	NSLog(@"In key down, event is %@, key is %c", theEvent, 
-		  *[[theEvent charactersIgnoringModifiers] cStringUsingEncoding:NSUTF8StringEncoding]);
+	// NSLog(@"In key down, event is %@, key is %c", theEvent, *[[theEvent charactersIgnoringModifiers] cStringUsingEncoding:NSUTF8StringEncoding]);
 
+    /*
 	if ([delegate basicDemo]) 
 		[delegate basicDemo]->keyboardCallback((unsigned char)*[[theEvent charactersIgnoringModifiers] cStringUsingEncoding:NSUTF8StringEncoding], 0, 0);
+     */
 }
 
 -(void)keyUp:(NSEvent *)theEvent {
@@ -181,7 +169,8 @@ virtual void mouseMotionFunc(int x,int y);
 	
 	if ([delegate basicDemo]) {
 		//NSLog(@"basicDemo exists");
-		[delegate basicDemo]->moveAndDisplay();
+		[delegate basicDemo]->simulate();
+        [delegate basicDemo]->display();
 	}
 	
 	glutSwapBuffers();	

@@ -13,6 +13,7 @@
 		102953E11360C8600079D423 /* VSCOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 102953E01360C8600079D423 /* VSCOpenGLView.m */; };
 		102953EE1360C9210079D423 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 102953ED1360C9210079D423 /* GLUT.framework */; };
 		102953F01360C9210079D423 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 102953EF1360C9210079D423 /* OpenGL.framework */; };
+		107ACB4D138123F5002D7BDE /* VSCControlSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107ACB4B138123F5002D7BDE /* VSCControlSetup.cpp */; };
 		108B4F591364B2660003EF07 /* VSCBaseApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108B4F571364B2660003EF07 /* VSCBaseApplication.cpp */; };
 		10C7F0471380727200F0760F /* libOpenGLSupport.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C7F0461380727200F0760F /* libOpenGLSupport.a */; };
 		10C7F0491380728600F0760F /* libBulletCollision.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C7F0481380728600F0760F /* libBulletCollision.a */; };
@@ -37,6 +38,8 @@
 		102953ED1360C9210079D423 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		102953EF1360C9210079D423 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		107ACB4B138123F5002D7BDE /* VSCControlSetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCControlSetup.cpp; sourceTree = "<group>"; };
+		107ACB4C138123F5002D7BDE /* VSCControlSetup.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = VSCControlSetup.h; sourceTree = "<group>"; };
 		108B4F571364B2660003EF07 /* VSCBaseApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCBaseApplication.cpp; sourceTree = "<group>"; };
 		108B4F581364B2660003EF07 /* VSCBaseApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCBaseApplication.h; sourceTree = "<group>"; };
 		10C7F0441380722D00F0760F /* btBulletCollisionCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = btBulletCollisionCommon.h; path = ../../../../Libraries/bullet/src/btBulletCollisionCommon.h; sourceTree = SOURCE_ROOT; };
@@ -143,6 +146,8 @@
 				102953BD1360C56A0079D423 /* VSCDocument.mm */,
 				102953DF1360C8600079D423 /* VSCOpenGLView.h */,
 				102953E01360C8600079D423 /* VSCOpenGLView.m */,
+				107ACB4B138123F5002D7BDE /* VSCControlSetup.cpp */,
+				107ACB4C138123F5002D7BDE /* VSCControlSetup.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -250,6 +255,7 @@
 				102953E11360C8600079D423 /* VSCOpenGLView.m in Sources */,
 				108B4F591364B2660003EF07 /* VSCBaseApplication.cpp in Sources */,
 				10094589136F47EF00CDCBF3 /* VSCRootApplication.cpp in Sources */,
+				107ACB4D138123F5002D7BDE /* VSCControlSetup.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +308,11 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BulletCocoaTest_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../../Libraries/bullet/Demos/OpenGL/",
+					"$(SRCROOT)/../../../../Libraries/bullet/src/",
+				);
 				INFOPLIST_FILE = "BulletCocoaTest-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
@@ -327,6 +338,11 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BulletCocoaTest_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../../Libraries/bullet/Demos/OpenGL/",
+					"$(SRCROOT)/../../../../Libraries/bullet/src/",
+				);
 				INFOPLIST_FILE = "BulletCocoaTest-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (

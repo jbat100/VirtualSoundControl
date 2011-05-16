@@ -41,13 +41,12 @@ class VSCBaseApplication : public VSCRootApplication
 	public:
 
 	VSCBaseApplication() {} // superclass constructor should be called automatically
-	virtual ~VSCBaseApplication() { exitPhysics(); } // superclass destructor should be called automatically
+    ~VSCBaseApplication() { exitPhysics(); } // superclass destructor should be called automatically
 	
 	void	initPhysics();
 	void	exitPhysics();
 
 	virtual void clientResetScene();
-	
 	virtual void swapBuffers();
 
 	static VSCRootApplication* Create()

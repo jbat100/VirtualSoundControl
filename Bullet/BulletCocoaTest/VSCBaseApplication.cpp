@@ -150,13 +150,14 @@ void VSCBaseApplication::initPhysics()
 
 }
 
-void	VSCBaseApplication::clientResetScene()
+void VSCBaseApplication::clientResetScene()
 {
 	exitPhysics();
 	initPhysics();
 }	
+	
 
-void	VSCBaseApplication::exitPhysics()
+void VSCBaseApplication::exitPhysics()
 {
 
 	//cleanup in the reverse order of creation/initialization

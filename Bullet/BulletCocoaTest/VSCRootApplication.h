@@ -31,6 +31,8 @@ subject to the following restrictions:
 #include "LinearMath/btQuickprof.h"
 #include "LinearMath/btAlignedObjectArray.h"
 
+#include "VSCControlSetup.h"
+
 class	btCollisionShape;
 class	btDynamicsWorld;
 class	btRigidBody;
@@ -38,31 +40,6 @@ class	btTypedConstraint;
 
 #define RADIANS_PER_DEGREE 0.01745329251994329547
 
-enum VSCMouseButton {
-	VSCMouseButtonNone = 0,
-	VSCMouseButtonRight,
-	VSCMouseButtonCenter,
-	VSCMouseButtonLeft
-}
-
-enum VSCMouseAction {
-	VSCMouseActionNone
-	VSCMouseActionDefault,
-	VSCMouseActionCamera,
-	VSCMouseActionGrab,
-	VSCMouseActionShootBox,
-	VSCMouseActionZoom
-}
-
-enum VSCKeyboardMode {
-	VSCKeyboardModeDefault = 0
-}
-
-enum VSCInteractionStyle {
-	VSCInteractionStyleDefault
-	VSCInteractionStyleFPS,
-	VSCInteractionStyleCentered
-}
 
 
 class VSCRootApplication
@@ -106,6 +83,10 @@ protected:
 	// non-accessible (these variable should be used within the class only)
 	// updated depending on m_cameraDistance, m_ele, m_azi, m_cameraPosition, m_cameraUp, m_cameraForward
 	btVector3 m_cameraLook; 
+    // mouse action
+    VSCMouseAction m_rightMouseAction;
+    VSCMouseAction m_leftMouseAction;
+    VSCMouseAction m_currentMouseAction;
 	// moving state
 	bool m_movingForward;
 	bool m_movingBackward;
@@ -203,6 +184,7 @@ public:
 	void setCameraPosition(const btVector3& camPos) { m_cameraPosition = camPos; }
 	btVector3 getCameraForward() { return m_cameraForward; }
 	void setCameraForward(const btVector3& camFor) { m_cameraForward = camFor; }
+    btVector3 getCameraLook() { return m_cameraLook; }
 	void updateCameraLook();
 	virtual void updateCamera();
 
@@ -210,8 +192,11 @@ public:
 	 * Old GLUT Stuff
 	 */
 	//glut callbacks
-	float getCameraDistance();
-	void setCameraDistance(float dist);	
+	float getCameraDistance() { return m_cameraDistance; }
+	void setCameraDistance(float dist) { m_cameraDistance = dist;}	
+    void reshape(int w, int h);
+    void clientResetScene();
+    /*
 	void moveAndDisplay();
 	virtual void clientMoveAndDisplay() = 0;
 	virtual void clientResetScene();
@@ -224,17 +209,18 @@ public:
 	virtual void mouseFunc(int button, int state, int x, int y);
 	virtual void mouseMotionFunc(int x, int y);
 	virtual	void updateModifierKeys() = 0;
+     */
 
 	/*
 	 * Generic (GLUT-independant) Camera Interface
 	 *
 	 * Keyboard / Mouse Input
 	 */
-	void keyDown(unsigned char key, VSCKeyboardMode mode);
-	void keyUp(unsigned char key, VSCKeyboardMode mode);
-	void mouseDown(VSCMouseAction action, int x, int y);
-	void mouseUp(VSCMouseAction action, int x, int y);
-	void mouseMotion(VSCMouseAction action, int dx, int dy, int x, int y);
+	void keyDown(VSCKeyboardCombination keyCombination);
+	void keyUp(VSCKeyboardCombination keyCombination);
+	void mouseDown(VSCMouseButton button, int x, int y);
+	void mouseUp(VSCMouseButton button, int x, int y);
+	void mouseMotion(int dx, int dy, int x, int y);
 	/*
 	 * Movement
 	 */

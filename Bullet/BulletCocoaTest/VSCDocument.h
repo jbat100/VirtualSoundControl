@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "btBulletDynamicsCommon.h"
-#import "VSCOpenGLView.h";
+#import "VSCOpenGLView.h"
 #include "GLDebugDrawer.h"
 class VSCBaseApplication;
 
