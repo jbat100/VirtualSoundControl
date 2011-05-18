@@ -6,10 +6,22 @@
 //
 
 #include "VSCControlSetup.h"
+#include "VSCKeyboard.h"
 
-//#ifdef __APPLE__
-//#include "NSEvent.h"
-//#endif
+#define KEYBOARD_ITERATOR   std::map<VSCKeyboardCombination*,VSCKeyboardAction>::iterator
+#define MOUSE_ITERATOR      std::map<VSCMouseCombination*,VSCMouseAction>::iterator
+
+VSCControlSetup::~VSCControlSetup() {
+    
+    for (KEYBOARD_ITERATOR it = m_keyboard_combination_map.begin(); it != m_keyboard_combination_map.end(); it++) {
+        delete (it->first);
+    }
+    
+    for (MOUSE_ITERATOR it = m_mouse_combination_map.begin(); it != m_mouse_combination_map.end(); it++) {
+        delete (it->first);
+    }
+    
+}
 
 void VSCControlSetup::setToDefault() {
     
@@ -17,24 +29,62 @@ void VSCControlSetup::setToDefault() {
     
 }
 
-void VSCControlSetup::setKeyboardCombinationAction(VSCKeyboardCombination combination, VSCKeyboardAction action) {
-    // remove last key combination (multimap)
-    removeKeyCombination(combination);
+void VSCControlSetup::setKeyboardCombinationAction(VSCKeyboardCombination* combination, VSCKeyboardAction action) {
+    // remove last key combination
+    removeKeyboardCombination(combination);
     // set new key combination
-    //m_key_combination_map.insert(std::pair<VSCKeyboardCombination, VSCKeyboardAction>(combination, action));
-    test_map.insert(std::pair<int, int>(3,3)); 
+    std::pair<VSCKeyboardCombination*,VSCKeyboardAction> p(combination,action);
+    m_keyboard_combination_map.insert(p);
 }
 
-void VSCControlSetup::removeKeyCombination(VSCKeyboardCombination combination) {
-    //m_key_combination_map.erase(m_key_combination_map.find(combination));
+void VSCControlSetup::removeKeyboardCombination(VSCKeyboardCombination* combination) {
+    KEYBOARD_ITERATOR it;
+    for (it = m_keyboard_combination_map.begin(); it != m_keyboard_combination_map.end(); it++) {
+        if (*(it->first) == *combination) 
+            break;
+    }
+    if (it != m_keyboard_combination_map.end()) {
+        delete (it->first);
+        m_keyboard_combination_map.erase(it);
+    }
 }
 
-VSCKeyboardAction VSCControlSetup::getActionForKeyCombination(VSCKeyboardCombination combination) {
-    
-    /*
-    std::map<VSCKeyboardCombination,VSCKeyboardAction>::iterator it = m_key_combination_map.find(combination);
-    if (it != m_key_combination_map.end()) 
-        return it->second;
-    */
+VSCKeyboardAction VSCControlSetup::getActionForKeyboardCombination(VSCKeyboardCombination* combination) {
+    // we don't want to compare the pointers but the content of the VSCKeyboardCombination class
+    for (KEYBOARD_ITERATOR it = m_keyboard_combination_map.begin(); it != m_keyboard_combination_map.end(); it++) {
+        if (*(it->first) == *combination) 
+            return it->second;
+    }
     return VSCKeyboardActionNone;
 }
+
+
+void VSCControlSetup::setMouseCombinationAction(VSCMouseCombination* combination, VSCMouseAction action) {
+    // remove last key combination
+    removeMouseCombination(combination);
+    // set new key combination
+    std::pair<VSCMouseCombination*,VSCMouseAction> p(combination,action);
+    m_mouse_combination_map.insert(p);
+}
+
+void VSCControlSetup::removeMouseCombination(VSCMouseCombination* combination) {
+    MOUSE_ITERATOR it;
+    for (it = m_mouse_combination_map.begin(); it != m_mouse_combination_map.end(); it++) {
+        if (*(it->first) == *combination) 
+            break;
+    }
+    if (it != m_mouse_combination_map.end()) {
+        delete (it->first);
+        m_mouse_combination_map.erase(it);
+    }
+}
+
+VSCMouseAction VSCControlSetup::getActionForMouseCombination(VSCMouseCombination* combination) {
+    // we don't want to compare the pointers but the content of the VSCKeyboardCombination class
+    for (MOUSE_ITERATOR it = m_mouse_combination_map.begin(); it != m_mouse_combination_map.end(); it++) {
+        if (*(it->first) == *combination) 
+            return it->second;
+    }
+    return VSCMouseActionDefault;
+}
+
