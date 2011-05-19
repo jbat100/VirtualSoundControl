@@ -8,6 +8,8 @@
 #include "VSCControlSetup.h"
 #include "VSCKeyboard.h"
 
+#include <stream>
+
 #define KEYBOARD_ITERATOR   std::map<VSCKeyboardCombination*,VSCKeyboardAction>::iterator
 #define MOUSE_ITERATOR      std::map<VSCMouseCombination*,VSCMouseAction>::iterator
 
@@ -26,6 +28,10 @@ VSCControlSetup::~VSCControlSetup() {
 void VSCControlSetup::setToDefault() {
     
     m_interactionStyle = VSCInteractionStyleFPS;
+    
+    VSCKeyboardCombination* keyComb = NULL;
+    
+    keyComb = new VSCKeyboardCombination('a', 0);
     
 }
 
@@ -86,5 +92,12 @@ VSCMouseAction VSCControlSetup::getActionForMouseCombination(VSCMouseCombination
             return it->second;
     }
     return VSCMouseActionDefault;
+}
+
+#pragma mark --- Operator <<
+
+ostream& operator<<(ostream& output, const VSCKeyboardCombination& c) {
+    output << "VSCKeyboardCombination ('" <<  c.unicode_char << "', " << c.modifier_flags <<")";
+    return output;  
 }
 
