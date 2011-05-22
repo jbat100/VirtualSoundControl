@@ -10,7 +10,7 @@
 #include "VSCBaseApplication.h"
 
 @protocol VSCOpenGLViewDelegate
--(VSCBaseApplication*)basicDemo;
+-(VSCBaseApplication*)baseApplication;
 @end
 
 

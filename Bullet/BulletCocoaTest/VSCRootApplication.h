@@ -21,10 +21,6 @@ subject to the following restrictions:
 #include "GlutStuff.h"
 #include "GL_ShapeDrawer.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-
 #include "LinearMath/btVector3.h"
 #include "LinearMath/btMatrix3x3.h"
 #include "LinearMath/btTransform.h"
@@ -32,11 +28,12 @@ subject to the following restrictions:
 #include "LinearMath/btAlignedObjectArray.h"
 
 #include "VSCControlSetup.h"
+#include <iostream>
 
-class	btCollisionShape;
-class	btDynamicsWorld;
-class	btRigidBody;
-class	btTypedConstraint;
+class btCollisionShape;
+class btDynamicsWorld;
+class btRigidBody;
+class btTypedConstraint;
 
 #define RADIANS_PER_DEGREE 0.01745329251994329547
 
@@ -44,6 +41,8 @@ class	btTypedConstraint;
 
 class VSCRootApplication
 {
+	
+	friend std::wostream& operator<<(std::wostream& output, const VSCRootApplication& a);
 	
 protected:
 	
@@ -130,6 +129,10 @@ protected:
 	float m_shootBoxInitialSpeed;
 	bool m_idle;
 	
+	/*
+	 * Control Setup
+	 */
+	VSCControlSetup* m_controlSetup;
 
 public:
 	
@@ -216,10 +219,10 @@ public:
 	 *
 	 * Keyboard / Mouse Input
 	 */
-	void keyDown(VSCKeyboardCombination keyCombination);
-	void keyUp(VSCKeyboardCombination keyCombination);
-	void mouseDown(VSCMouseButton button, int x, int y);
-	void mouseUp(VSCMouseButton button, int x, int y);
+	void keyDown(VSCKeyboardCombination &keyCombination);
+	void keyUp(VSCKeyboardCombination &keyCombination);
+	void mouseDown(VSCMouseCombination &mouseCombination, int x, int y);
+	void mouseUp(VSCMouseCombination &mouseCombination, int x, int y);
 	void mouseMotion(int dx, int dy, int x, int y);
 	/*
 	 * Movement
@@ -251,7 +254,12 @@ public:
 	 */
 	virtual void setShootBoxShape ();
 	virtual void shootBox(const btVector3& destination);
-
+	
+	/*
+	 * Control Setup
+	 */
+	VSCControlSetup* getControlSetup() { return m_controlSetup; }
+	void setControlSetup(VSCControlSetup* cs) { if(m_controlSetup) delete m_controlSetup; m_controlSetup = cs; }
 };
 
 #endif //DEMO_APPLICATION_H

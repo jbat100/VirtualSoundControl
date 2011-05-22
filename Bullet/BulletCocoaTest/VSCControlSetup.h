@@ -10,7 +10,7 @@
 #define VSC_CONTROL_SETUP_H
 
 #include <map>
-#include <stream>
+#include <ostream>
 
 enum VSCMouseButton {
 	VSCMouseButtonNone = 0,
@@ -47,21 +47,23 @@ enum VSCKeyboardAction {
 };
 
 class VSCKeyboardCombination {
-    friend ostream& operator<<(ostream& output, const VSCKeyboardCombination& p);
+    friend std::wostream& operator<<(std::wostream& output, const VSCKeyboardCombination& p);
 public:
-    VSCKeyboardCombination() : unicode_char (NULL), modifier_flags (0) {}
+    
+	VSCKeyboardCombination() : unicode_char (NULL), modifier_flags (0) {}
     VSCKeyboardCombination(wchar_t c, unsigned int m) : unicode_char (c), modifier_flags (m) {}
-    wchar_t unicode_char;
+    
+	wchar_t unicode_char;
     unsigned int modifier_flags;
     
-    bool operator==(VSCKeyboardCombination &other) 
-    { return (unicode_char == other.unicode_char && modifier_flags == other.modifier_flags); }
+    bool operator==(VSCKeyboardCombination &other);
     
     bool operator!=(VSCKeyboardCombination &other) 
     { return !(*this == other); } 
 };
 
 class VSCMouseCombination {
+	friend std::wostream& operator<<(std::wostream& output, const VSCMouseCombination& p);
 public:
     VSCMouseCombination() : button (VSCMouseButtonNone), modifier_flags (0) {}
     VSCMouseButton button;

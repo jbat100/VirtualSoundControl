@@ -33,6 +33,7 @@ subject to the following restrictions:
 #include "LinearMath/btSerializer.h"
 #include "GLDebugFont.h"
 
+
 static bool use6Dof = false;
 extern bool gDisableDeactivation;
 int numObjects = 0;
@@ -99,6 +100,10 @@ m_defaultContactProcessingThreshold(BT_LARGE_FLOAT)
 	m_shapeDrawer = new GL_ShapeDrawer ();
 	m_shapeDrawer->enableTexture(true);
 	m_enableshadows = false;
+	
+	m_controlSetup = new VSCControlSetup();
+	m_controlSetup->setToDefault();
+	
 }
 
 #pragma mark --- Destructor
@@ -115,6 +120,9 @@ VSCRootApplication::~VSCRootApplication()
 
 	if (m_shapeDrawer)
 		delete m_shapeDrawer;
+	
+	if (m_controlSetup)
+		delete m_controlSetup;
 }
 
 #pragma mark --- Timing
@@ -1249,17 +1257,75 @@ void VSCRootApplication::clientResetScene()
 #pragma mark --- VSC Interface Methods
 
 // interface calls glut-independant
-void VSCRootApplication::keyDown(VSCKeyboardCombination keyCombination) 
+void VSCRootApplication::keyDown(VSCKeyboardCombination &keyComb) 
 {
+	
+	std::wcout << "\nGot key down with " << keyComb;
+	
+	VSCKeyboardAction action = m_controlSetup->getActionForKeyboardCombination(&keyComb);
+	
+	std::cout << "\nCorresponding action is " << std::dec << action;
+	
+	switch (action) {
+		case VSCKeyboardActionMoveForward:
+			moveForward(true);
+			break;
+		case VSCKeyboardActionMoveBackward:
+			moveBackward(true);
+			break;
+		case VSCKeyboardActionMoveUp:
+			moveUp(true);
+			break;
+		case VSCKeyboardActionMoveDown:
+			moveDown(true);
+			break;
+		case VSCKeyboardActionMoveLeft:
+			moveLeft(true);
+			break;
+		case VSCKeyboardActionMoveRight:
+			moveRight(true);
+			break;
+		default:
+			break;
+	}
 	
 }
 
-void VSCRootApplication::keyUp(VSCKeyboardCombination keyCombination) 
+void VSCRootApplication::keyUp(VSCKeyboardCombination &keyComb) 
 {
+	
+	//std::cout << "\nGot key up with " << keyComb;
+	
+	VSCKeyboardAction action = m_controlSetup->getActionForKeyboardCombination(&keyComb);
+	
+	//std::cout << "\nCorresponding action is " << action;
+	
+	switch (action) {
+		case VSCKeyboardActionMoveForward:
+			moveForward(false);
+			break;
+		case VSCKeyboardActionMoveBackward:
+			moveBackward(false);
+			break;
+		case VSCKeyboardActionMoveUp:
+			moveUp(false);
+			break;
+		case VSCKeyboardActionMoveDown:
+			moveDown(false);
+			break;
+		case VSCKeyboardActionMoveLeft:
+			moveLeft(false);
+			break;
+		case VSCKeyboardActionMoveRight:
+			moveRight(false);
+			break;
+		default:
+			break;
+	}
 	
 }
 
-void VSCRootApplication::mouseDown(VSCMouseButton button, int x, int y) 
+void VSCRootApplication::mouseDown(VSCMouseCombination &mouseComb, int x, int y) 
 {
     
     VSCMouseAction action = VSCMouseActionNone;
@@ -1362,7 +1428,7 @@ void VSCRootApplication::mouseDown(VSCMouseButton button, int x, int y)
 	
 }
 
-void VSCRootApplication::mouseUp(VSCMouseButton button, int x, int y) 
+void VSCRootApplication::mouseUp(VSCMouseCombination &comb, int x, int y) 
 {
     
     VSCMouseAction action = VSCMouseActionNone;

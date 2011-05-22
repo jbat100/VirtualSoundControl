@@ -16,7 +16,7 @@ class VSCBaseApplication;
 @interface VSCDocument : NSDocument <VSCOpenGLViewDelegate> {
 	
 	VSCOpenGLView* vscOpenGLView;
-	VSCBaseApplication* basicDemo;
+	VSCBaseApplication* baseApplication;
 
 	GLDebugDrawer sDebugDraw;
 	
@@ -24,6 +24,6 @@ class VSCBaseApplication;
 
 @property (retain, nonatomic) IBOutlet VSCOpenGLView* vscOpenGLView;
 
--(VSCBaseApplication*) basicDemo;
+-(VSCBaseApplication*) baseApplication;
 
 @end

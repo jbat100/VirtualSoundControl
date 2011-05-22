@@ -17,9 +17,9 @@
 -(id) init {
 	
 	if ((self = [super init])) {
-		basicDemo = new VSCBaseApplication();
-		basicDemo->initPhysics();
-		//basicDemo->getDynamicsWorld()->setDebugDrawer(&sDebugDraw);
+		baseApplication = new VSCBaseApplication();
+		baseApplication->initPhysics();
+		//baseApplication->getDynamicsWorld()->setDebugDrawer(&sDebugDraw);
 	}
 	
 	return self;
@@ -30,7 +30,7 @@
 	
 	vscOpenGLView.delegate = nil;
 	self.vscOpenGLView = nil;
-	delete basicDemo;
+	delete baseApplication;
 	[super dealloc];
 }
 
@@ -59,8 +59,8 @@
     return YES;
 }
 
--(VSCBaseApplication*) basicDemo {
-	return basicDemo;
+-(VSCBaseApplication*) baseApplication {
+	return baseApplication;
 }
 
 @end

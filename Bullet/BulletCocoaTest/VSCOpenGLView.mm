@@ -7,8 +7,13 @@
 //
 
 #import "VSCOpenGLView.h"
+
 #import "VSCBaseApplication.h"
+#import "VSCControlSetup.h"
+#import "VSCKeyboard.h"
+
 #include <OpenGL/gl.h>
+#include <iostream>
 
 
 @implementation VSCOpenGLView
@@ -101,14 +106,16 @@ virtual void mouseMotionFunc(int x,int y);
 
     CGSize s = self.frame.size;
 	
+	/*
 	if ([theEvent buttonNumber] == NSRightMouseDown) {
-        if ([delegate basicDemo]) 
-            [delegate basicDemo]->mouseDown(VSCMouseButtonRight, p2.x, s.height-p2.y);
+        if ([delegate baseApplication]) 
+            [delegate baseApplication]->mouseDown(VSCMouseButtonRight, p2.x, s.height-p2.y);
 	}
     else if ([theEvent buttonNumber] == NSLeftMouseDown) {
-        if ([delegate basicDemo]) 
-            [delegate basicDemo]->mouseDown(VSCMouseButtonLeft, p2.x, s.height-p2.y);
+        if ([delegate baseApplication]) 
+            [delegate baseApplication]->mouseDown(VSCMouseButtonLeft, p2.x, s.height-p2.y);
 	}
+	 */
 	
 }
 
@@ -124,8 +131,8 @@ virtual void mouseMotionFunc(int x,int y);
 	
 	CGSize s = self.frame.size;
 	
-	if ([delegate basicDemo])
-		[delegate basicDemo]->mouseMotion(deltaX, -deltaY, p2.x, s.height-p2.y);
+	if ([delegate baseApplication])
+		[delegate baseApplication]->mouseMotion(deltaX, -deltaY, p2.x, s.height-p2.y);
 	
 }
 
@@ -136,41 +143,54 @@ virtual void mouseMotionFunc(int x,int y);
 	
 	CGSize s = self.frame.size;
 	
+	/*
 	if ([theEvent buttonNumber] == NSRightMouseDown) {
-        if ([delegate basicDemo]) 
-            [delegate basicDemo]->mouseUp(VSCMouseButtonRight, p2.x, s.height-p2.y);
+        if ([delegate baseApplication]) 
+            [delegate baseApplication]->mouseUp(VSCMouseButtonRight, p2.x, s.height-p2.y);
 	}
     else if ([theEvent buttonNumber] == NSLeftMouseDown) {
-        if ([delegate basicDemo]) 
-            [delegate basicDemo]->mouseUp(VSCMouseButtonLeft, p2.x, s.height-p2.y);
+        if ([delegate baseApplication]) 
+            [delegate baseApplication]->mouseUp(VSCMouseButtonLeft, p2.x, s.height-p2.y);
 	}
+	 */
 	
 }
 
 -(void)keyDown:(NSEvent *)theEvent {
-	// NSLog(@"In key down, event is %@, key is %c", theEvent, *[[theEvent charactersIgnoringModifiers] cStringUsingEncoding:NSUTF8StringEncoding]);
-
-    /*
-	if ([delegate basicDemo]) 
-		[delegate basicDemo]->keyboardCallback((unsigned char)*[[theEvent charactersIgnoringModifiers] cStringUsingEncoding:NSUTF8StringEncoding], 0, 0);
-     */
+	
+	
+	
+	//NSLog(@"In key down, event is %@", theEvent);
+	
+	wchar_t wc = *[[theEvent charactersIgnoringModifiers] cStringUsingEncoding:NSUTF16StringEncoding];
+	
+	//std::wcout << "\nDEBUG: Size of wchar_t is " << sizeof(wc) << ", size of VSCUpArrowFunctionKey is " << sizeof(VSCUpArrowFunctionKey); 
+	//std::wcout << "\nwc is: " << wc;
+	
+	VSCKeyboardCombination comb(wc, [theEvent modifierFlags]);
+	
+	//std::wcout << "----> Created " << comb << std::endl;
+    
+	if ([delegate baseApplication]) 
+		[delegate baseApplication]->keyDown(comb);
 }
 
 -(void)keyUp:(NSEvent *)theEvent {
-	NSLog(@"In key up, event is %@", theEvent);
+	//NSLog(@"In key up, event is %@", theEvent);
 }
 
 #pragma mark - GL functions
 
 - (void)drawRect:(NSRect)dirtyRect {
+	
     // Drawing code here.
 	
 	//NSLog(@"in drawRect");
 	
-	if ([delegate basicDemo]) {
-		//NSLog(@"basicDemo exists");
-		[delegate basicDemo]->simulate();
-        [delegate basicDemo]->display();
+	if ([delegate baseApplication]) {
+		//NSLog(@"baseApplication exists");
+		[delegate baseApplication]->simulate();
+        [delegate baseApplication]->display();
 	}
 	
 	glutSwapBuffers();	
@@ -234,8 +254,8 @@ virtual void mouseMotionFunc(int x,int y);
 	int w = rect.size.width;
 	int h = rect.size.height;
 	
-	if ([delegate basicDemo])
-		[delegate basicDemo]->reshape(w, h);
+	if ([delegate baseApplication])
+		[delegate baseApplication]->reshape(w, h);
 	
 	glutPostRedisplay();
 	
