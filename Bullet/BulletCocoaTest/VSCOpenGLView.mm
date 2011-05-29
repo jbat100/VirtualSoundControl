@@ -53,7 +53,7 @@
 
 -(void) startTimer {
 	
-	drawTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 
+	drawTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 
 												 target:self 
 											   selector:@selector(drawTimerCallback) 
 											   userInfo:nil 
@@ -69,6 +69,11 @@
 }
 
 -(void) drawTimerCallback {
+	if ([delegate baseApplication]) {
+		[delegate baseApplication]->simulate();
+		[delegate baseApplication]->stepCamera();
+		std::cout << [delegate baseApplication]->cameraStateString() << std::endl;
+	}
 	[self setNeedsDisplay:YES];
 }
 
@@ -161,13 +166,18 @@ virtual void mouseMotionFunc(int x,int y);
 	
 	
 	//NSLog(@"In key down, event is %@", theEvent);
+	//wchar_t wc = *[[theEvent charactersIgnoringModifiers] cStringUsingEncoding:NSUTF16StringEncoding];
 	
-	wchar_t wc = *[[theEvent charactersIgnoringModifiers] cStringUsingEncoding:NSUTF16StringEncoding];
+	wchar_t wc = [[theEvent characters] characterAtIndex:0];
+	
+	//unichar uc = [[theEvent characters] characterAtIndex:0];
 	
 	//std::wcout << "\nDEBUG: Size of wchar_t is " << sizeof(wc) << ", size of VSCUpArrowFunctionKey is " << sizeof(VSCUpArrowFunctionKey); 
 	//std::wcout << "\nwc is: " << wc;
+	//std::cout << "\nhex wc is : " << wideCharString(wc) << std::endl;
+	//std::cout << "\nuc is: " << uc;
 	
-	VSCKeyboardCombination comb(wc, [theEvent modifierFlags]);
+	VSCKeyboardCombination comb((wchar_t)wc, [theEvent modifierFlags]);
 	
 	//std::wcout << "----> Created " << comb << std::endl;
     
@@ -189,7 +199,6 @@ virtual void mouseMotionFunc(int x,int y);
 	
 	if ([delegate baseApplication]) {
 		//NSLog(@"baseApplication exists");
-		[delegate baseApplication]->simulate();
         [delegate baseApplication]->display();
 	}
 	

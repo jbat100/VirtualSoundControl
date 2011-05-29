@@ -9,6 +9,7 @@
 #include "VSCKeyboard.h"
 
 #include <iostream>
+#include <sstream>
 #include <string>
 
 
@@ -17,6 +18,20 @@
 
 #define MOUSE_ITERATOR      std::map<VSCMouseCombination*,VSCMouseAction>::iterator
 #define MOUSE_PAIR			std::pair<VSCMouseCombination*,VSCMouseAction>
+
+std::string wideCharString(wchar_t wc) {
+	
+	std::stringstream wcss;
+	for (int i = 0; i < sizeof(wc); i++) {
+	}
+	
+	int wci = (int)wc;
+	
+	wcss << std::hex << wci;
+	
+	return wcss.str();
+	
+}
 
 
 bool VSCKeyboardCombination::operator==(VSCKeyboardCombination &other)
@@ -47,8 +62,6 @@ VSCControlSetup::~VSCControlSetup() {
 
 void VSCControlSetup::setToDefault() {
 	
-	//std::cout << "\nSetting control setup to default";
-    
     m_interactionStyle = VSCInteractionStyleFPS;
     
     VSCKeyboardCombination* keyComb = NULL;
@@ -59,13 +72,24 @@ void VSCControlSetup::setToDefault() {
 	keyComb = new VSCKeyboardCombination(L'w', 0);
 	setKeyboardCombinationAction(keyComb, VSCKeyboardActionMoveForward);
 	
-	//std::wcout << ", forward key combination is: " << *keyComb << std::endl;
-	
 	keyComb = new VSCKeyboardCombination(L's', 0);
 	setKeyboardCombinationAction(keyComb, VSCKeyboardActionMoveBackward);
 	
 	keyComb = new VSCKeyboardCombination(L'd', 0);
 	setKeyboardCombinationAction(keyComb, VSCKeyboardActionMoveRight);
+	
+	keyComb = new VSCKeyboardCombination((wchar_t)VSCUpArrowFunctionKey, 0);
+	setKeyboardCombinationAction(keyComb, VSCKeyboardActionMoveForward);
+	
+	keyComb = new VSCKeyboardCombination((wchar_t)VSCDownArrowFunctionKey, 0);
+	setKeyboardCombinationAction(keyComb, VSCKeyboardActionMoveBackward);
+	
+	keyComb = new VSCKeyboardCombination((wchar_t)VSCLeftArrowFunctionKey, 0);
+	setKeyboardCombinationAction(keyComb, VSCKeyboardActionMoveLeft);
+	
+	keyComb = new VSCKeyboardCombination((wchar_t)VSCRightArrowFunctionKey, 0);
+	setKeyboardCombinationAction(keyComb, VSCKeyboardActionMoveRight);
+	
 	
 	/*
 	std::cout << "\nModifiers: ";

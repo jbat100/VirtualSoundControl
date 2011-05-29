@@ -28,7 +28,9 @@ subject to the following restrictions:
 #include "LinearMath/btAlignedObjectArray.h"
 
 #include "VSCControlSetup.h"
+
 #include <iostream>
+#include <string>
 
 class btCollisionShape;
 class btDynamicsWorld;
@@ -227,6 +229,7 @@ public:
 	/*
 	 * Movement
 	 */
+	void stepCamera();
 	void moveLeft(const bool move) { m_movingLeft = move; } 
 	void moveRight(const bool move) { m_movingRight = move; } 
 	void moveUp(const bool move) { m_movingUp = move; } 
@@ -260,6 +263,11 @@ public:
 	 */
 	VSCControlSetup* getControlSetup() { return m_controlSetup; }
 	void setControlSetup(VSCControlSetup* cs) { if(m_controlSetup) delete m_controlSetup; m_controlSetup = cs; }
+	
+	/*
+	 * State Output
+	 */
+	std::string cameraStateString();
 };
 
 #endif //DEMO_APPLICATION_H

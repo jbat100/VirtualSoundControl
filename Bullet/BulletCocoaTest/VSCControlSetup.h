@@ -11,6 +11,7 @@
 
 #include <map>
 #include <ostream>
+#include <string>
 
 enum VSCMouseButton {
 	VSCMouseButtonNone = 0,
@@ -45,6 +46,8 @@ enum VSCKeyboardAction {
     VSCKeyboardActionMoveUp = 1005,
     VSCKeyboardActionMoveDown = 1006
 };
+
+std::string wideCharString(wchar_t wc);
 
 class VSCKeyboardCombination {
     friend std::wostream& operator<<(std::wostream& output, const VSCKeyboardCombination& p);

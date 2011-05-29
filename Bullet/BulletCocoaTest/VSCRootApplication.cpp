@@ -33,6 +33,11 @@ subject to the following restrictions:
 #include "LinearMath/btSerializer.h"
 #include "GLDebugFont.h"
 
+#include <iostream>
+#include <sstream>
+
+#include "btVectorVSCAds.h"
+
 
 static bool use6Dof = false;
 extern bool gDisableDeactivation;
@@ -1260,7 +1265,7 @@ void VSCRootApplication::clientResetScene()
 void VSCRootApplication::keyDown(VSCKeyboardCombination &keyComb) 
 {
 	
-	std::wcout << "\nGot key down with " << keyComb;
+	//std::wcout << "\nGot key down with " << keyComb;
 	
 	VSCKeyboardAction action = m_controlSetup->getActionForKeyboardCombination(&keyComb);
 	
@@ -1576,6 +1581,37 @@ void VSCRootApplication::updateCamera() {
 			  cameraTargetPosition[0], cameraTargetPosition[1], cameraTargetPosition[2], 
 			  m_cameraUp[0], m_cameraUp[1], m_cameraUp[2]);
 	
+	
+}
+
+void VSCRootApplication::stepCamera() {
+	
+	if (m_movingLeft)
+		stepLeft();
+	if (m_movingRight)
+		stepRight();
+	if (m_movingUp)
+		stepUp();
+	if (m_movingDown)
+		stepDown();
+	if (m_movingForward)
+		stepForward();
+	if (m_movingBackward)
+		stepBackward();
+	
+}
+
+std::string VSCRootApplication::cameraStateString() {
+	
+	std::stringstream camStream;
+	camStream << "Camera : pos->" << m_cameraPosition << " look->" << m_cameraLook << " up->" << m_cameraUp;
+	
+	std::string camString = camStream.str();
+	
+	std::cout << camString << std::endl;
+	
+	return camStream.str();
+
 	
 }
 
