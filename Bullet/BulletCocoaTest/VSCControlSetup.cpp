@@ -41,7 +41,6 @@ bool VSCKeyboardCombination::operator==(VSCKeyboardCombination &other)
 	unsigned int vsc_modifier_flags_mask = VSCModifierMask;
 	unsigned int other_vsc_modifier_flags = other.modifier_flags & vsc_modifier_flags_mask;
 	unsigned int this_vsc_modifier_flags = (*this).modifier_flags & vsc_modifier_flags_mask;
-	
 	if (!other_vsc_modifier_flags == this_vsc_modifier_flags) 
 		return false;
 	
@@ -66,6 +65,10 @@ void VSCControlSetup::setToDefault() {
     
     VSCKeyboardCombination* keyComb = NULL;
     
+    /*
+     * KEYS
+     */
+    
     keyComb = new VSCKeyboardCombination(L'a', 0);
 	setKeyboardCombinationAction(keyComb, VSCKeyboardActionMoveLeft);
 	
@@ -89,7 +92,13 @@ void VSCControlSetup::setToDefault() {
 	
 	keyComb = new VSCKeyboardCombination((wchar_t)VSCRightArrowFunctionKey, 0);
 	setKeyboardCombinationAction(keyComb, VSCKeyboardActionMoveRight);
+    
+    
+    /*
+     * MOUSE
+     */
 	
+    
 	
 	/*
 	std::cout << "\nModifiers: ";

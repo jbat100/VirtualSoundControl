@@ -12,13 +12,13 @@
 std::ostream& operator<<(std::ostream& output, const btVector3& v)
 {
 	output << std::dec;
-	output.precision(2);
+	output.precision(4);
 	output << "("; 
 	output << v.getX(); 
-	output << "; ";
+	output << " ";
 	output << v.getY();  
-	output << "; "; 
-	output << v.getY();   
+	output << " "; 
+	output << v.getZ();   
 	output << ")";
 	return output;
 }

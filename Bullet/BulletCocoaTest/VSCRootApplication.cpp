@@ -74,13 +74,13 @@ m_pickConstraint(0),
 m_shootBoxShape(0),
 m_debugMode(0),
 
-m_ele(20.f),
+m_ele(-20.f),
 m_azi(0.f),
-m_cameraPosition(20.f,0.f,0.f),
+m_cameraPosition(-20.f,20.f,0.f),
 m_cameraForward(1.f,0.f,0.f),
 m_cameraUp(0.f,1.f,0.f),
 m_cameraDistance(50.0), // only used for central centered control
-m_cameraSpeed(5.0),
+m_cameraSpeed(0.5),
 m_cameraMouseSensitivity(0.2),
 
 m_scaleBottom(0.5f),
@@ -108,6 +108,13 @@ m_defaultContactProcessingThreshold(BT_LARGE_FLOAT)
 	
 	m_controlSetup = new VSCControlSetup();
 	m_controlSetup->setToDefault();
+    
+    m_movingForward = false;
+    m_movingBackward = false;
+    m_movingRight = false;
+    m_movingLeft = false;
+    m_movingUp = false;
+    m_movingDown = false;
 	
 }
 
@@ -1269,7 +1276,7 @@ void VSCRootApplication::keyDown(VSCKeyboardCombination &keyComb)
 	
 	VSCKeyboardAction action = m_controlSetup->getActionForKeyboardCombination(&keyComb);
 	
-	std::cout << "\nCorresponding action is " << std::dec << action;
+	std::cout << "Key down action: " << std::dec << action << std::endl;
 	
 	switch (action) {
 		case VSCKeyboardActionMoveForward:
@@ -1586,19 +1593,40 @@ void VSCRootApplication::updateCamera() {
 
 void VSCRootApplication::stepCamera() {
 	
-	if (m_movingLeft)
+    bool log = true;
+    bool filterConflicts = false;
+    
+    if (log)
+        std::cout << "Camera step (";
+    
+	if (m_movingLeft && (!m_movingRight || !filterConflicts)) {
 		stepLeft();
-	if (m_movingRight)
+        if(log) std::cout << " left";
+    }
+	if (m_movingRight && (!m_movingLeft || !filterConflicts)) {
 		stepRight();
-	if (m_movingUp)
+        if(log) std::cout << " right";
+    }
+	if (m_movingUp && (!m_movingDown || !filterConflicts)) {
 		stepUp();
-	if (m_movingDown)
+        if(log) std::cout << " up";
+    }
+	if (m_movingDown && (!m_movingUp || !filterConflicts)) {
 		stepDown();
-	if (m_movingForward)
+        if(log) std::cout << " down";
+    }
+	if (m_movingForward && (!m_movingBackward || !filterConflicts)) {
 		stepForward();
-	if (m_movingBackward)
+        if(log) std::cout << "forward";
+    }
+	if (m_movingBackward && (!m_movingForward || !filterConflicts)) {
 		stepBackward();
+        if(log) std::cout << " backward";
+    }
 	
+    if (log)
+        std::cout << ")" << std::endl;
+    
 }
 
 std::string VSCRootApplication::cameraStateString() {

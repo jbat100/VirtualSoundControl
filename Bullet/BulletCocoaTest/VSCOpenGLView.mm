@@ -168,25 +168,52 @@ virtual void mouseMotionFunc(int x,int y);
 	//NSLog(@"In key down, event is %@", theEvent);
 	//wchar_t wc = *[[theEvent charactersIgnoringModifiers] cStringUsingEncoding:NSUTF16StringEncoding];
 	
-	wchar_t wc = [[theEvent characters] characterAtIndex:0];
-	
-	//unichar uc = [[theEvent characters] characterAtIndex:0];
-	
-	//std::wcout << "\nDEBUG: Size of wchar_t is " << sizeof(wc) << ", size of VSCUpArrowFunctionKey is " << sizeof(VSCUpArrowFunctionKey); 
-	//std::wcout << "\nwc is: " << wc;
-	//std::cout << "\nhex wc is : " << wideCharString(wc) << std::endl;
-	//std::cout << "\nuc is: " << uc;
-	
-	VSCKeyboardCombination comb((wchar_t)wc, [theEvent modifierFlags]);
-	
-	//std::wcout << "----> Created " << comb << std::endl;
+    if ([[theEvent characters] length] > 0) {
+        
+        wchar_t wc = [[theEvent characters] characterAtIndex:0];
+        
+        //unichar uc = [[theEvent characters] characterAtIndex:0];
+        
+        //std::wcout << "\nDEBUG: Size of wchar_t is " << sizeof(wc) << ", size of VSCUpArrowFunctionKey is " << sizeof(VSCUpArrowFunctionKey); 
+        //std::wcout << "\nwc is: " << wc;
+        //std::cout << "\nhex wc is : " << wideCharString(wc) << std::endl;
+        //std::cout << "\nuc is: " << uc;
+        
+        VSCKeyboardCombination comb((wchar_t)wc, [theEvent modifierFlags]);
+        
+        //std::wcout << "----> Created " << comb << std::endl;
+        
+        if ([delegate baseApplication]) 
+            [delegate baseApplication]->keyDown(comb);
+        
+    }
     
-	if ([delegate baseApplication]) 
-		[delegate baseApplication]->keyDown(comb);
+
 }
 
 -(void)keyUp:(NSEvent *)theEvent {
 	//NSLog(@"In key up, event is %@", theEvent);
+    
+    if ([[theEvent characters] length] > 0) {
+        
+        wchar_t wc = [[theEvent characters] characterAtIndex:0];
+        
+        //unichar uc = [[theEvent characters] characterAtIndex:0];
+        
+        //std::wcout << "\nDEBUG: Size of wchar_t is " << sizeof(wc) << ", size of VSCUpArrowFunctionKey is " << sizeof(VSCUpArrowFunctionKey); 
+        //std::wcout << "\nwc is: " << wc;
+        //std::cout << "\nhex wc is : " << wideCharString(wc) << std::endl;
+        //std::cout << "\nuc is: " << uc;
+        
+        VSCKeyboardCombination comb((wchar_t)wc, [theEvent modifierFlags]);
+        
+        //std::wcout << "----> Created " << comb << std::endl;
+        
+        if ([delegate baseApplication]) 
+            [delegate baseApplication]->keyUp(comb);
+        
+    }
+    
 }
 
 #pragma mark - GL functions
