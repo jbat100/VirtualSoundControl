@@ -99,65 +99,69 @@ virtual void mouseMotionFunc(int x,int y);
 
 -(void)mouseDown:(NSEvent*)theEvent {
 	
-	if ([theEvent modifierFlags] & NSAlternateKeyMask) {
-
-	}
-	else {
-
-	}
+	if ([delegate baseApplication]) {
 	
-	NSPoint p1 = [theEvent locationInWindow];
-	NSPoint p2 = [self convertPoint:p1 fromView:(NSView*)[[self window] contentView]];
+		NSPoint p1 = [theEvent locationInWindow];
+		NSPoint p2 = [self convertPoint:p1 fromView:(NSView*)[[self window] contentView]];
 
-    CGSize s = self.frame.size;
-	
-	/*
-	if ([theEvent buttonNumber] == NSRightMouseDown) {
-        if ([delegate baseApplication]) 
-            [delegate baseApplication]->mouseDown(VSCMouseButtonRight, p2.x, s.height-p2.y);
+		CGSize s = self.frame.size;
+		
+		VSCMouseButton b = VSCMouseButtonNone;
+		
+		if ([theEvent buttonNumber] == NSRightMouseDown) 
+			b = VSCMouseButtonRight;
+		else if ([theEvent buttonNumber] == NSLeftMouseDown) 
+			b = VSCMouseButtonLeft;
+		
+		VSCMouseCombination comb(b, [theEvent modifierFlags]);
+		
+		[delegate baseApplication]->mouseDown(comb, p2.x, s.height-p2.y);
+		
 	}
-    else if ([theEvent buttonNumber] == NSLeftMouseDown) {
-        if ([delegate baseApplication]) 
-            [delegate baseApplication]->mouseDown(VSCMouseButtonLeft, p2.x, s.height-p2.y);
-	}
-	 */
 	
 }
 
 -(void)mouseDragged:(NSEvent *)theEvent {
 	NSLog(@"In mouse dragged, event is %@", theEvent);
 	
-	// not expcting deltas seems like so really screws things up...
-	int deltaX = [theEvent deltaX];
-	int deltaY = [theEvent deltaY];
+	if ([delegate baseApplication]) {
 	
-	NSPoint p1 = [theEvent locationInWindow];
-	NSPoint p2 = [self convertPoint:p1 fromView:(NSView*)[[self window] contentView]];
-	
-	CGSize s = self.frame.size;
-	
-	if ([delegate baseApplication])
+		// not expcting deltas seems like so really screws things up...
+		int deltaX = [theEvent deltaX];
+		int deltaY = [theEvent deltaY];
+		
+		NSPoint p1 = [theEvent locationInWindow];
+		NSPoint p2 = [self convertPoint:p1 fromView:(NSView*)[[self window] contentView]];
+		
+		CGSize s = self.frame.size;
+		
 		[delegate baseApplication]->mouseMotion(deltaX, -deltaY, p2.x, s.height-p2.y);
+	
+	}
 	
 }
 
 -(void)mouseUp:(NSEvent *)theEvent {
 	
-	NSPoint p1 = [theEvent locationInWindow];
-	NSPoint p2 = [self convertPoint:p1 fromView:(NSView*)[[self window] contentView]];
-	
-	CGSize s = self.frame.size;
-	
-	/*
-	if ([theEvent buttonNumber] == NSRightMouseDown) {
-        if ([delegate baseApplication]) 
-            [delegate baseApplication]->mouseUp(VSCMouseButtonRight, p2.x, s.height-p2.y);
+	if ([delegate baseApplication]) {
+		
+		NSPoint p1 = [theEvent locationInWindow];
+		NSPoint p2 = [self convertPoint:p1 fromView:(NSView*)[[self window] contentView]];
+		
+		CGSize s = self.frame.size;
+		
+		VSCMouseButton b = VSCMouseButtonNone;
+		
+		if ([theEvent buttonNumber] == NSRightMouseDown) 
+			b = VSCMouseButtonRight;
+		else if ([theEvent buttonNumber] == NSLeftMouseDown) 
+			b = VSCMouseButtonLeft;
+		
+		VSCMouseCombination comb(b, [theEvent modifierFlags]);
+		
+		[delegate baseApplication]->mouseUp(comb, p2.x, s.height-p2.y);
+		
 	}
-    else if ([theEvent buttonNumber] == NSLeftMouseDown) {
-        if ([delegate baseApplication]) 
-            [delegate baseApplication]->mouseUp(VSCMouseButtonLeft, p2.x, s.height-p2.y);
-	}
-	 */
 	
 }
 

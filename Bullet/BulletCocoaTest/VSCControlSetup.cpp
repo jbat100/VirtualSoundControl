@@ -98,7 +98,8 @@ void VSCControlSetup::setToDefault() {
      * MOUSE
      */
 	
-    
+	mouseComb = new VSCMouseCombination(VSCMouseButtonLeft, 0)
+	setMouseCombinationAction(mouseComb, VSCMouseActionDefault);
 	
 	/*
 	std::cout << "\nModifiers: ";
