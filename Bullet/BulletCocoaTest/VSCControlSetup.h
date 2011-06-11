@@ -69,6 +69,7 @@ class VSCMouseCombination {
 	friend std::wostream& operator<<(std::wostream& output, const VSCMouseCombination& p);
 public:
     VSCMouseCombination() : button (VSCMouseButtonNone), modifier_flags (0) {}
+	VSCMouseCombination(VSCMouseButton b, unsigned int m) : button (b), modifier_flags (m) {};
     VSCMouseButton button;
     unsigned int modifier_flags;
     

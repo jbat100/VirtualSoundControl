@@ -98,7 +98,9 @@ void VSCControlSetup::setToDefault() {
      * MOUSE
      */
 	
-	mouseComb = new VSCMouseCombination(VSCMouseButtonLeft, 0)
+	VSCMouseCombination* mouseComb = NULL;
+	
+	mouseComb = new VSCMouseCombination(VSCMouseButtonLeft, 0);
 	setMouseCombinationAction(mouseComb, VSCMouseActionDefault);
 	
 	/*

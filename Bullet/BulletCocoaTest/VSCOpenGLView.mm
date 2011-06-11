@@ -72,7 +72,7 @@
 	if ([delegate baseApplication]) {
 		[delegate baseApplication]->simulate();
 		[delegate baseApplication]->stepCamera();
-		std::cout << [delegate baseApplication]->cameraStateString() << std::endl;
+		//std::cout << [delegate baseApplication]->cameraStateString() << std::endl;
 	}
 	[self setNeedsDisplay:YES];
 }
@@ -122,7 +122,7 @@ virtual void mouseMotionFunc(int x,int y);
 }
 
 -(void)mouseDragged:(NSEvent *)theEvent {
-	NSLog(@"In mouse dragged, event is %@", theEvent);
+	//NSLog(@"In mouse dragged, event is %@", theEvent);
 	
 	if ([delegate baseApplication]) {
 	
@@ -231,7 +231,10 @@ virtual void mouseMotionFunc(int x,int y);
 	if ([delegate baseApplication]) {
 		//NSLog(@"baseApplication exists");
         [delegate baseApplication]->display();
+		glutSolidSphere(2.0, 10, 10);
 	}
+	
+	//glutSolidSphere(2.0, 10, 10);
 	
 	glutSwapBuffers();	
     glFlush();

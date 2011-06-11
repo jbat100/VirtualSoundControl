@@ -85,8 +85,6 @@ protected:
 	// updated depending on m_cameraDistance, m_ele, m_azi, m_cameraPosition, m_cameraUp, m_cameraForward
 	btVector3 m_cameraLook; 
     // mouse action
-    VSCMouseAction m_rightMouseAction;
-    VSCMouseAction m_leftMouseAction;
     VSCMouseAction m_currentMouseAction;
 	// moving state
 	bool m_movingForward;

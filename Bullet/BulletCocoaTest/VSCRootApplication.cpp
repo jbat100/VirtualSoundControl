@@ -74,14 +74,14 @@ m_pickConstraint(0),
 m_shootBoxShape(0),
 m_debugMode(0),
 
-m_ele(-20.f),
+m_ele(-45.f),
 m_azi(0.f),
-m_cameraPosition(-20.f,20.f,0.f),
+m_cameraPosition(20.f,20.f,0.f),
 m_cameraForward(1.f,0.f,0.f),
 m_cameraUp(0.f,1.f,0.f),
 m_cameraDistance(50.0), // only used for central centered control
 m_cameraSpeed(0.5),
-m_cameraMouseSensitivity(0.2),
+m_cameraMouseSensitivity(0.5),
 
 m_scaleBottom(0.5f),
 m_scaleFactor(2.f),
@@ -1102,7 +1102,7 @@ void VSCRootApplication::renderme()
 {
 	myinit();
 
-	updateCamera();
+	//updateCamera();
 
 	if (m_dynamicsWorld)
 	{			
@@ -1340,7 +1340,11 @@ void VSCRootApplication::keyUp(VSCKeyboardCombination &keyComb)
 void VSCRootApplication::mouseDown(VSCMouseCombination &mouseComb, int x, int y) 
 {
     
-    VSCMouseAction action = VSCMouseActionNone;
+    VSCMouseAction action = m_controlSetup->getActionForMouseCombination(&mouseComb);
+	
+	if (action & (VSCMouseActionGrab | VSCMouseActionDefault | VSCMouseActionCamera)) {
+		m_currentMouseAction = (VSCMouseAction) (m_currentMouseAction | action);
+	}
 	
 	btVector3 rayTo = getRayTo(x,y);
 	
@@ -1443,7 +1447,13 @@ void VSCRootApplication::mouseDown(VSCMouseCombination &mouseComb, int x, int y)
 void VSCRootApplication::mouseUp(VSCMouseCombination &comb, int x, int y) 
 {
     
-    VSCMouseAction action = VSCMouseActionNone;
+    VSCMouseAction action = m_controlSetup->getActionForMouseCombination(&comb);
+	
+	if (action & (VSCMouseActionGrab | VSCMouseActionCamera | VSCMouseActionDefault)) {
+		m_currentMouseAction = (VSCMouseAction) (m_currentMouseAction & (~action));
+	}
+	
+	
 	
 	switch (action) {
 		case VSCMouseActionGrab:
@@ -1519,7 +1529,7 @@ void VSCRootApplication::mouseMotion(int dx, int dy, int x, int y)
 	}
 	
 
-	if (m_currentMouseAction & VSCMouseActionCamera)
+	if (m_currentMouseAction & (VSCMouseActionCamera | VSCMouseActionDefault))
 	{
 
 		// default sensitivity 0.2
@@ -1532,13 +1542,20 @@ void VSCRootApplication::mouseMotion(int dx, int dy, int x, int y)
 		else if (m_ele > 90.0f)
 			m_ele = 90.f;
 		
+		//std::cout << std::dec << "Mouse drag azi: " << m_azi << " ele: " << m_ele << std::endl;
+		
 		updateCamera();
+		
+		std::cout << cameraStateString() << std::endl;
 
 	}
 		
 }
 
 void VSCRootApplication::updateCamera() {
+	
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
 	
 	btVector3 forward = m_cameraForward;
 	forward.normalize();
@@ -1588,15 +1605,16 @@ void VSCRootApplication::updateCamera() {
 			  cameraTargetPosition[0], cameraTargetPosition[1], cameraTargetPosition[2], 
 			  m_cameraUp[0], m_cameraUp[1], m_cameraUp[2]);
 	
-	
 }
 
 void VSCRootApplication::stepCamera() {
 	
     bool log = true;
     bool filterConflicts = false;
+	
+	bool stepping = m_movingUp || m_movingDown || m_movingLeft || m_movingRight || m_movingForward || m_movingBackward;
     
-    if (log)
+    if (log && stepping)
         std::cout << "Camera step (";
     
 	if (m_movingLeft && (!m_movingRight || !filterConflicts)) {
@@ -1624,19 +1642,22 @@ void VSCRootApplication::stepCamera() {
         if(log) std::cout << " backward";
     }
 	
-    if (log)
+    if (log && stepping) {
         std::cout << ")" << std::endl;
+		std::cout << cameraStateString() << std::endl;
+	}
     
 }
 
 std::string VSCRootApplication::cameraStateString() {
 	
 	std::stringstream camStream;
-	camStream << "Camera : pos->" << m_cameraPosition << " look->" << m_cameraLook << " up->" << m_cameraUp;
 	
-	std::string camString = camStream.str();
+	camStream << "Camera : pos->" << m_cameraPosition << " look->" << m_cameraLook << " up->" << m_cameraUp << " ";
+	camStream << "azi: " << m_azi << " ele: " << m_ele;
 	
-	std::cout << camString << std::endl;
+	//std::string camString = camStream.str();
+	//std::cout << camString << std::endl;
 	
 	return camStream.str();
 
