@@ -73,8 +73,7 @@ public:
     VSCMouseButton button;
     unsigned int modifier_flags;
     
-    bool operator==(VSCMouseCombination &other) 
-    { return (button == other.button && modifier_flags == other.modifier_flags); }
+    bool operator==(VSCMouseCombination &other);
     
     bool operator!=(VSCMouseCombination &other) 
     { return !(*this == other); } 

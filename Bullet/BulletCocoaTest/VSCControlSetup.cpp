@@ -47,6 +47,19 @@ bool VSCKeyboardCombination::operator==(VSCKeyboardCombination &other)
 	return (unicode_char == other.unicode_char); 
 }
 
+bool VSCMouseCombination::operator==(VSCMouseCombination &other)
+{ 
+	//std::wcout << "Evaluating == between " << *this << " and " << other;
+	
+	unsigned int vsc_modifier_flags_mask = VSCModifierMask;
+	unsigned int other_vsc_modifier_flags = other.modifier_flags & vsc_modifier_flags_mask;
+	unsigned int this_vsc_modifier_flags = (*this).modifier_flags & vsc_modifier_flags_mask;
+	if (!other_vsc_modifier_flags == this_vsc_modifier_flags) 
+		return false;
+	
+	return (button == other.button); 
+}
+
 VSCControlSetup::~VSCControlSetup() {
     
     for (KEYBOARD_ITERATOR it = m_keyboard_combination_map.begin(); it != m_keyboard_combination_map.end(); it++) {
@@ -101,7 +114,10 @@ void VSCControlSetup::setToDefault() {
 	VSCMouseCombination* mouseComb = NULL;
 	
 	mouseComb = new VSCMouseCombination(VSCMouseButtonLeft, 0);
-	setMouseCombinationAction(mouseComb, VSCMouseActionDefault);
+	setMouseCombinationAction(mouseComb, VSCMouseActionCamera);
+	
+	mouseComb = new VSCMouseCombination(VSCMouseButtonRight, 0);
+	setMouseCombinationAction(mouseComb, VSCMouseActionGrab);
 	
 	/*
 	std::cout << "\nModifiers: ";
@@ -176,10 +192,11 @@ void VSCControlSetup::removeMouseCombination(VSCMouseCombination* combination) {
 VSCMouseAction VSCControlSetup::getActionForMouseCombination(VSCMouseCombination* combination) {
     // we don't want to compare the pointers but the content of the VSCKeyboardCombination class
     for (MOUSE_ITERATOR it = m_mouse_combination_map.begin(); it != m_mouse_combination_map.end(); it++) {
+		std::wcout << "Comparing " << *combination << " with preset " << *(it->first) << std::endl;
         if (*(it->first) == *combination) 
             return it->second;
     }
-    return VSCMouseActionDefault;
+    return VSCMouseActionNone;
 }
 
 #pragma mark --- Operator <<
@@ -214,7 +231,7 @@ std::wostream& operator<<(std::wostream& output, const VSCKeyboardCombination& c
 }
 
 std::wostream& operator<<(std::wostream& output, const VSCMouseCombination& c) {
-    output << "VSCMouseCombination ('" <<  c.button << "', modifiers: " << c.modifier_flags <<")";
+    output << "VSCMouseCombination ('" <<  c.button << "', modifiers: " << c.modifier_flags <<":";
 	output << modifierString(c.modifier_flags) << ")";
     return output;  
 }

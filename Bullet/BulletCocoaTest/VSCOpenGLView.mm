@@ -108,9 +108,11 @@ virtual void mouseMotionFunc(int x,int y);
 		
 		VSCMouseButton b = VSCMouseButtonNone;
 		
-		if ([theEvent buttonNumber] == NSRightMouseDown) 
+		NSLog(@"Button number is %d, pressedMouseButtons is %d", [theEvent buttonNumber], [NSEvent pressedMouseButtons]);
+		
+		if ([NSEvent pressedMouseButtons] & NSRightMouseDown) 
 			b = VSCMouseButtonRight;
-		else if ([theEvent buttonNumber] == NSLeftMouseDown) 
+		else if ([NSEvent pressedMouseButtons] & NSLeftMouseDown) 
 			b = VSCMouseButtonLeft;
 		
 		VSCMouseCombination comb(b, [theEvent modifierFlags]);
@@ -231,7 +233,7 @@ virtual void mouseMotionFunc(int x,int y);
 	if ([delegate baseApplication]) {
 		//NSLog(@"baseApplication exists");
         [delegate baseApplication]->display();
-		glutSolidSphere(2.0, 10, 10);
+		//glutSolidSphere(2.0, 10, 10);
 	}
 	
 	//glutSolidSphere(2.0, 10, 10);

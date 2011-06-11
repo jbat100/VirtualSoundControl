@@ -74,9 +74,9 @@ m_pickConstraint(0),
 m_shootBoxShape(0),
 m_debugMode(0),
 
-m_ele(-45.f),
-m_azi(0.f),
-m_cameraPosition(20.f,20.f,0.f),
+m_ele(-25.f),
+m_azi(-180.f),
+m_cameraPosition(25.f,20.f,0.f),
 m_cameraForward(1.f,0.f,0.f),
 m_cameraUp(0.f,1.f,0.f),
 m_cameraDistance(50.0), // only used for central centered control
@@ -1342,6 +1342,8 @@ void VSCRootApplication::mouseDown(VSCMouseCombination &mouseComb, int x, int y)
     
     VSCMouseAction action = m_controlSetup->getActionForMouseCombination(&mouseComb);
 	
+	std::cout << "Mouse down action " << action << std::endl;
+	
 	if (action & (VSCMouseActionGrab | VSCMouseActionDefault | VSCMouseActionCamera)) {
 		m_currentMouseAction = (VSCMouseAction) (m_currentMouseAction | action);
 	}
@@ -1356,6 +1358,7 @@ void VSCRootApplication::mouseDown(VSCMouseCombination &mouseComb, int x, int y)
 			break;
 
 		case VSCMouseActionGrab:
+		case VSCMouseActionDefault:
 				
 			//add a point to point constraint for picking
 			if (m_dynamicsWorld)
@@ -1457,6 +1460,7 @@ void VSCRootApplication::mouseUp(VSCMouseCombination &comb, int x, int y)
 	
 	switch (action) {
 		case VSCMouseActionGrab:
+		case VSCMouseActionDefault:	
 			removePickingConstraint();
 			break;
 		default:
@@ -1469,7 +1473,7 @@ void VSCRootApplication::mouseMotion(int dx, int dy, int x, int y)
 {
 	
 	
-	if (m_currentMouseAction & VSCMouseActionGrab) 
+	if (m_currentMouseAction & (VSCMouseActionGrab | VSCMouseActionDefault)) 
 	{
 		
 		if (m_pickConstraint)
@@ -1529,12 +1533,15 @@ void VSCRootApplication::mouseMotion(int dx, int dy, int x, int y)
 	}
 	
 
-	if (m_currentMouseAction & (VSCMouseActionCamera | VSCMouseActionDefault))
+	if (m_currentMouseAction & VSCMouseActionCamera || (m_currentMouseAction & VSCMouseActionDefault && !m_pickConstraint))
 	{
 
 		// default sensitivity 0.2
-		m_azi += dx * btScalar(m_cameraMouseSensitivity);
+		// - not + dy for some interesting reason
+		m_azi -= dx * btScalar(m_cameraMouseSensitivity);
+		
 		m_azi = fmodf(m_azi + 180.f, btScalar(360.f)) - 180.f;
+		
 		
 		m_ele += dy * btScalar(m_cameraMouseSensitivity);
 		if (m_ele < -90.f)
@@ -1589,7 +1596,6 @@ void VSCRootApplication::updateCamera() {
 		aspect = m_glutScreenHeight / (btScalar)m_glutScreenWidth;
 		extents.setValue(1.0f, aspect*1.f,0);
 	}
-	
 		
 	if (m_glutScreenWidth > m_glutScreenHeight) 
 		glFrustum (-aspect * m_frustumZNear, aspect * m_frustumZNear, -m_frustumZNear, m_frustumZNear, m_frustumZNear, m_frustumZFar);
@@ -1671,7 +1677,9 @@ void VSCRootApplication::stepLeft() {
 	btVector3 left = m_cameraLook.cross(m_cameraUp);
 	left.normalize();
 	left *= m_cameraSpeed;
-	m_cameraPosition += left;
+	//m_cameraPosition += left; 
+	// don't understand why but it's the other way around 
+	m_cameraPosition -= left; 
 	
 }
 
@@ -1680,7 +1688,9 @@ void VSCRootApplication::stepRight() {
 	btVector3 left = m_cameraLook.cross(m_cameraUp);
 	left.normalize();
 	left *= m_cameraSpeed;
-	m_cameraPosition -= left;
+	//m_cameraPosition -= left;
+	// don't understand why but it's the other way around 
+	m_cameraPosition += left;
 	
 }
 
