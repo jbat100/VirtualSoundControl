@@ -843,6 +843,9 @@ void VSCRootApplication::removePickingConstraint()
 {
 	if (m_pickConstraint && m_dynamicsWorld)
 	{
+		
+		std::cout << "Removing picking constraint " << m_pickConstraint << std::endl;
+		
 		m_dynamicsWorld->removeConstraint(m_pickConstraint);
 		delete m_pickConstraint;
 		//printf("removed constraint %i",gPickingConstraintId);
@@ -1342,7 +1345,7 @@ void VSCRootApplication::mouseDown(VSCMouseCombination &mouseComb, int x, int y)
     
     VSCMouseAction action = m_controlSetup->getActionForMouseCombination(&mouseComb);
 	
-	std::cout << "Mouse down action " << action << std::endl;
+	std::wcout << "Mouse down with comb " << mouseComb << ", action " << action << std::endl;
 	
 	if (action & (VSCMouseActionGrab | VSCMouseActionDefault | VSCMouseActionCamera)) {
 		m_currentMouseAction = (VSCMouseAction) (m_currentMouseAction | action);
@@ -1373,18 +1376,23 @@ void VSCRootApplication::mouseDown(VSCMouseCombination &mouseComb, int x, int y)
 				if (rayCallback.hasHit())
 				{
 					
-					
 					btRigidBody* body = btRigidBody::upcast(rayCallback.m_collisionObject);
+					
 					if (body)
 					{
 						//other exclusions?
 						if (!(body->isStaticObject() || body->isKinematicObject()))
 						{
+							
+							//std::cout << "Picked body " << body << std::endl; 
+							
 							pickedBody = body;
 							pickedBody->setActivationState(DISABLE_DEACTIVATION);
 							
 							btVector3 pickPos = rayCallback.m_hitPointWorld;
-							printf("pickPos=%f,%f,%f\n",pickPos.getX(),pickPos.getY(),pickPos.getZ());
+							
+							std::cout << "Picked object at position (" << pickPos.getX() << "; "; 
+							std::cout << pickPos.getY() << "; " << pickPos.getZ() << ")" << std::endl;
 							
 							
 							btVector3 localPivot = body->getCenterOfMassTransform().inverse() * pickPos;
@@ -1426,6 +1434,7 @@ void VSCRootApplication::mouseDown(VSCMouseCombination &mouseComb, int x, int y)
 								//very weak constraint for picking
 								p2p->m_setting.m_tau = 0.001f;								
 							}
+							
 							use6Dof = !use6Dof;
 							
 							//save mouse position for dragging
@@ -1452,19 +1461,12 @@ void VSCRootApplication::mouseUp(VSCMouseCombination &comb, int x, int y)
     
     VSCMouseAction action = m_controlSetup->getActionForMouseCombination(&comb);
 	
-	if (action & (VSCMouseActionGrab | VSCMouseActionCamera | VSCMouseActionDefault)) {
-		m_currentMouseAction = (VSCMouseAction) (m_currentMouseAction & (~action));
-	}
+	std::wcout << "Mouse up with comb " << comb << ", action " << action << std::endl;
 	
+	m_currentMouseAction = (VSCMouseAction)(m_currentMouseAction & (~action));
 	
-	
-	switch (action) {
-		case VSCMouseActionGrab:
-		case VSCMouseActionDefault:	
-			removePickingConstraint();
-			break;
-		default:
-			break;
+	if (action & VSCMouseActionGrab) {
+		removePickingConstraint();
 	}
 	
 }
@@ -1539,17 +1541,15 @@ void VSCRootApplication::mouseMotion(int dx, int dy, int x, int y)
 		// default sensitivity 0.2
 		// - not + dy for some interesting reason
 		m_azi -= dx * btScalar(m_cameraMouseSensitivity);
-		
 		m_azi = fmodf(m_azi + 180.f, btScalar(360.f)) - 180.f;
 		
 		
 		m_ele += dy * btScalar(m_cameraMouseSensitivity);
-		if (m_ele < -90.f)
-			m_ele = -90.f;
-		else if (m_ele > 90.0f)
-			m_ele = 90.f;
-		
-		//std::cout << std::dec << "Mouse drag azi: " << m_azi << " ele: " << m_ele << std::endl;
+		// not 90 because we want to avoid having a look parrallel to up (creates problems...)
+		if (m_ele < -89.9)
+			m_ele = -89.9;
+		else if (m_ele > 89.9)
+			m_ele = 89.9;
 		
 		updateCamera();
 		

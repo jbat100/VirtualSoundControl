@@ -20,17 +20,12 @@
 #define MOUSE_PAIR			std::pair<VSCMouseCombination*,VSCMouseAction>
 
 std::string wideCharString(wchar_t wc) {
-	
 	std::stringstream wcss;
 	for (int i = 0; i < sizeof(wc); i++) {
 	}
-	
 	int wci = (int)wc;
-	
 	wcss << std::hex << wci;
-	
 	return wcss.str();
-	
 }
 
 
@@ -192,9 +187,12 @@ void VSCControlSetup::removeMouseCombination(VSCMouseCombination* combination) {
 VSCMouseAction VSCControlSetup::getActionForMouseCombination(VSCMouseCombination* combination) {
     // we don't want to compare the pointers but the content of the VSCKeyboardCombination class
     for (MOUSE_ITERATOR it = m_mouse_combination_map.begin(); it != m_mouse_combination_map.end(); it++) {
-		std::wcout << "Comparing " << *combination << " with preset " << *(it->first) << std::endl;
-        if (*(it->first) == *combination) 
+		//std::wcout << "Comparing " << *combination << " with preset " << *(it->first);
+        if (*(it->first) == *combination) {
+			//std::wcout << " FOUND MATCH! " << it->second << std::endl;
             return it->second;
+		}
+		std::wcout << std::endl;
     }
     return VSCMouseActionNone;
 }

@@ -9,7 +9,6 @@
 #import "VSCOpenGLView.h"
 
 #import "VSCBaseApplication.h"
-#import "VSCControlSetup.h"
 #import "VSCKeyboard.h"
 
 #include <OpenGL/gl.h>
@@ -97,23 +96,17 @@ virtual void mouseMotionFunc(int x,int y);
 	return YES;
 }
 
--(void)mouseDown:(NSEvent*)theEvent {
+#pragma mark - VSC Mouse Input 
+
+-(void) mouseDown:(NSEvent *)theEvent withButton:(VSCMouseButton)b {
+	
 	
 	if ([delegate baseApplication]) {
-	
+		
 		NSPoint p1 = [theEvent locationInWindow];
 		NSPoint p2 = [self convertPoint:p1 fromView:(NSView*)[[self window] contentView]];
-
+		
 		CGSize s = self.frame.size;
-		
-		VSCMouseButton b = VSCMouseButtonNone;
-		
-		NSLog(@"Button number is %d, pressedMouseButtons is %d", [theEvent buttonNumber], [NSEvent pressedMouseButtons]);
-		
-		if ([NSEvent pressedMouseButtons] & NSRightMouseDown) 
-			b = VSCMouseButtonRight;
-		else if ([NSEvent pressedMouseButtons] & NSLeftMouseDown) 
-			b = VSCMouseButtonLeft;
 		
 		VSCMouseCombination comb(b, [theEvent modifierFlags]);
 		
@@ -123,11 +116,28 @@ virtual void mouseMotionFunc(int x,int y);
 	
 }
 
--(void)mouseDragged:(NSEvent *)theEvent {
-	//NSLog(@"In mouse dragged, event is %@", theEvent);
+-(void) mouseUp:(NSEvent *)theEvent withButton:(VSCMouseButton)b {
 	
 	if ([delegate baseApplication]) {
+		
+		NSPoint p1 = [theEvent locationInWindow];
+		NSPoint p2 = [self convertPoint:p1 fromView:(NSView*)[[self window] contentView]];
+		
+		CGSize s = self.frame.size;
+		
+		VSCMouseCombination comb(b, [theEvent modifierFlags]);
+		
+		[delegate baseApplication]->mouseUp(comb, p2.x, s.height-p2.y);
+		
+	}
 	
+
+}
+
+-(void) mouseDragged:(NSEvent *)theEvent withButton:(VSCMouseButton)b {
+	
+	if ([delegate baseApplication]) {
+		
 		// not expcting deltas seems like so really screws things up...
 		int deltaX = [theEvent deltaX];
 		int deltaY = [theEvent deltaY];
@@ -138,38 +148,45 @@ virtual void mouseMotionFunc(int x,int y);
 		CGSize s = self.frame.size;
 		
 		[delegate baseApplication]->mouseMotion(deltaX, -deltaY, p2.x, s.height-p2.y);
-	
+		
 	}
 	
+}
+
+#pragma mark - Left Mouse Input 
+
+-(void)mouseDown:(NSEvent*)theEvent {
+	//NSLog(@"Mouse down: Button number is %d, pressedMouseButtons is %d", [theEvent buttonNumber], [NSEvent pressedMouseButtons]);
+	[self mouseDown:theEvent withButton:VSCMouseButtonLeft];
+}
+
+-(void)mouseDragged:(NSEvent *)theEvent {
+	//NSLog(@"In mouse dragged, event is %@", theEvent);
+	[self mouseDragged:theEvent withButton:VSCMouseButtonLeft];
 }
 
 -(void)mouseUp:(NSEvent *)theEvent {
-	
-	if ([delegate baseApplication]) {
-		
-		NSPoint p1 = [theEvent locationInWindow];
-		NSPoint p2 = [self convertPoint:p1 fromView:(NSView*)[[self window] contentView]];
-		
-		CGSize s = self.frame.size;
-		
-		VSCMouseButton b = VSCMouseButtonNone;
-		
-		if ([theEvent buttonNumber] == NSRightMouseDown) 
-			b = VSCMouseButtonRight;
-		else if ([theEvent buttonNumber] == NSLeftMouseDown) 
-			b = VSCMouseButtonLeft;
-		
-		VSCMouseCombination comb(b, [theEvent modifierFlags]);
-		
-		[delegate baseApplication]->mouseUp(comb, p2.x, s.height-p2.y);
-		
-	}
-	
+	//NSLog(@"Mouse up: Button number is %d, pressedMouseButtons is %d", [theEvent buttonNumber], [NSEvent pressedMouseButtons]);
+	[self mouseUp:theEvent withButton:VSCMouseButtonLeft];
 }
 
+#pragma mark - Right Mouse Input 
+
+-(void) rightMouseUp:(NSEvent *)theEvent {
+	[self mouseUp:theEvent withButton:VSCMouseButtonRight];
+}
+
+-(void) rightMouseDown:(NSEvent *)theEvent {
+	[self mouseDown:theEvent withButton:VSCMouseButtonRight];
+}
+
+-(void) rightMouseDragged:(NSEvent *)theEvent {
+	[self mouseDragged:theEvent withButton:VSCMouseButtonRight];
+}
+
+#pragma mark - Keyboard Input 
+
 -(void)keyDown:(NSEvent *)theEvent {
-	
-	
 	
 	//NSLog(@"In key down, event is %@", theEvent);
 	//wchar_t wc = *[[theEvent charactersIgnoringModifiers] cStringUsingEncoding:NSUTF16StringEncoding];

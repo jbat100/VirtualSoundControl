@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #include "VSCBaseApplication.h"
+#include "VSCControlSetup.h"
 
 @protocol VSCOpenGLViewDelegate
 -(VSCBaseApplication*)baseApplication;
@@ -26,6 +27,10 @@
 @property (nonatomic, retain) NSDate* lastDrawDate;
 
 @property (assign) id<VSCOpenGLViewDelegate> delegate;
+
+-(void) mouseDown:(NSEvent *)theEvent withButton:(VSCMouseButton)b;
+-(void) mouseUp:(NSEvent *)theEvent withButton:(VSCMouseButton)b;
+-(void) mouseDragged:(NSEvent *)theEvent withButton:(VSCMouseButton)b;
 
 -(void) startTimer;
 -(void) setup;

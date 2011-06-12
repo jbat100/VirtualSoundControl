@@ -23,12 +23,13 @@ enum VSCMouseButton {
 // bitmask to allow concurrent button presses where needed, never know...
 enum VSCMouseAction {
 	VSCMouseActionNone = 0,
-	VSCMouseActionDefault = 1<<0, // camera except if clicked on world object, then grab
 	VSCMouseActionCamera = 1<<1,
 	VSCMouseActionGrab = 1<<2,
 	VSCMouseActionShootBox = 1<<3,
 	VSCMouseActionZoom = 1<<4
 };
+
+#define VSCMouseActionDefault  (VSCMouseActionCamera|VSCMouseActionGrab)
 
 enum VSCInteractionStyle {
     VSCInteractionStyleNone = 0,
@@ -60,9 +61,7 @@ public:
     unsigned int modifier_flags;
     
     bool operator==(VSCKeyboardCombination &other);
-    
-    bool operator!=(VSCKeyboardCombination &other) 
-    { return !(*this == other); } 
+    bool operator!=(VSCKeyboardCombination &other) { return !(*this == other); } 
 };
 
 class VSCMouseCombination {
@@ -74,9 +73,7 @@ public:
     unsigned int modifier_flags;
     
     bool operator==(VSCMouseCombination &other);
-    
-    bool operator!=(VSCMouseCombination &other) 
-    { return !(*this == other); } 
+    bool operator!=(VSCMouseCombination &other) { return !(*this == other); } 
 };
 
 class VSCControlSetup {
