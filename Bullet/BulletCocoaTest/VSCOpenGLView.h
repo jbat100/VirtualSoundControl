@@ -11,7 +11,7 @@
 #include "VSCControlSetup.h"
 
 @protocol VSCOpenGLViewDelegate
--(VSCBaseApplication*)baseApplication;
+-(VSCRootApplication*)rootApplication;
 @end
 
 

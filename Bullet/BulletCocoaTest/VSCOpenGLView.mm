@@ -68,10 +68,10 @@
 }
 
 -(void) drawTimerCallback {
-	if ([delegate baseApplication]) {
-		[delegate baseApplication]->simulate();
-		[delegate baseApplication]->stepCamera();
-		//std::cout << [delegate baseApplication]->cameraStateString() << std::endl;
+	if ([delegate rootApplication]) {
+		[delegate rootApplication]->simulate();
+		[delegate rootApplication]->stepCamera();
+		//std::cout << [delegate rootApplication]->cameraStateString() << std::endl;
 	}
 	[self setNeedsDisplay:YES];
 }
@@ -101,7 +101,7 @@ virtual void mouseMotionFunc(int x,int y);
 -(void) mouseDown:(NSEvent *)theEvent withButton:(VSCMouseButton)b {
 	
 	
-	if ([delegate baseApplication]) {
+	if ([delegate rootApplication]) {
 		
 		NSPoint p1 = [theEvent locationInWindow];
 		NSPoint p2 = [self convertPoint:p1 fromView:(NSView*)[[self window] contentView]];
@@ -110,7 +110,7 @@ virtual void mouseMotionFunc(int x,int y);
 		
 		VSCMouseCombination comb(b, [theEvent modifierFlags]);
 		
-		[delegate baseApplication]->mouseDown(comb, p2.x, s.height-p2.y);
+		[delegate rootApplication]->mouseDown(comb, p2.x, s.height-p2.y);
 		
 	}
 	
@@ -118,7 +118,7 @@ virtual void mouseMotionFunc(int x,int y);
 
 -(void) mouseUp:(NSEvent *)theEvent withButton:(VSCMouseButton)b {
 	
-	if ([delegate baseApplication]) {
+	if ([delegate rootApplication]) {
 		
 		NSPoint p1 = [theEvent locationInWindow];
 		NSPoint p2 = [self convertPoint:p1 fromView:(NSView*)[[self window] contentView]];
@@ -127,7 +127,7 @@ virtual void mouseMotionFunc(int x,int y);
 		
 		VSCMouseCombination comb(b, [theEvent modifierFlags]);
 		
-		[delegate baseApplication]->mouseUp(comb, p2.x, s.height-p2.y);
+		[delegate rootApplication]->mouseUp(comb, p2.x, s.height-p2.y);
 		
 	}
 	
@@ -136,7 +136,7 @@ virtual void mouseMotionFunc(int x,int y);
 
 -(void) mouseDragged:(NSEvent *)theEvent withButton:(VSCMouseButton)b {
 	
-	if ([delegate baseApplication]) {
+	if ([delegate rootApplication]) {
 		
 		// not expcting deltas seems like so really screws things up...
 		int deltaX = [theEvent deltaX];
@@ -147,7 +147,7 @@ virtual void mouseMotionFunc(int x,int y);
 		
 		CGSize s = self.frame.size;
 		
-		[delegate baseApplication]->mouseMotion(deltaX, -deltaY, p2.x, s.height-p2.y);
+		[delegate rootApplication]->mouseMotion(deltaX, -deltaY, p2.x, s.height-p2.y);
 		
 	}
 	
@@ -206,8 +206,8 @@ virtual void mouseMotionFunc(int x,int y);
         
         //std::wcout << "----> Created " << comb << std::endl;
         
-        if ([delegate baseApplication]) 
-            [delegate baseApplication]->keyDown(comb);
+        if ([delegate rootApplication]) 
+            [delegate rootApplication]->keyDown(comb);
         
     }
     
@@ -232,8 +232,8 @@ virtual void mouseMotionFunc(int x,int y);
         
         //std::wcout << "----> Created " << comb << std::endl;
         
-        if ([delegate baseApplication]) 
-            [delegate baseApplication]->keyUp(comb);
+        if ([delegate rootApplication]) 
+            [delegate rootApplication]->keyUp(comb);
         
     }
     
@@ -247,9 +247,9 @@ virtual void mouseMotionFunc(int x,int y);
 	
 	//NSLog(@"in drawRect");
 	
-	if ([delegate baseApplication]) {
-		//NSLog(@"baseApplication exists");
-        [delegate baseApplication]->display();
+	if ([delegate rootApplication]) {
+		//NSLog(@"rootApplication exists");
+        [delegate rootApplication]->display();
 		//glutSolidSphere(2.0, 10, 10);
 	}
 	
@@ -316,8 +316,8 @@ virtual void mouseMotionFunc(int x,int y);
 	int w = rect.size.width;
 	int h = rect.size.height;
 	
-	if ([delegate baseApplication])
-		[delegate baseApplication]->reshape(w, h);
+	if ([delegate rootApplication])
+		[delegate rootApplication]->reshape(w, h);
 	
 	glutPostRedisplay();
 	

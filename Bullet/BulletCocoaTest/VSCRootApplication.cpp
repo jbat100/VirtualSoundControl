@@ -1539,10 +1539,14 @@ void VSCRootApplication::mouseMotion(int dx, int dy, int x, int y)
 	{
 
 		// default sensitivity 0.2
+		
 		// - not + dy for some interesting reason
 		m_azi -= dx * btScalar(m_cameraMouseSensitivity);
-		m_azi = fmodf(m_azi + 180.f, btScalar(360.f)) - 180.f;
-		
+		//m_azi = fmodf(m_azi + 180.f, btScalar(360.f)) - 180.f;
+		if (m_azi > 180.0)
+			m_azi -= 360.0;
+		else if (m_azi < -180.0)
+			m_azi += 360.0;
 		
 		m_ele += dy * btScalar(m_cameraMouseSensitivity);
 		// not 90 because we want to avoid having a look parrallel to up (creates problems...)
