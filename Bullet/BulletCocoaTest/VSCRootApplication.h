@@ -199,20 +199,6 @@ public:
 	void setCameraDistance(float dist) { m_cameraDistance = dist;}	
     void reshape(int w, int h);
     void clientResetScene();
-    /*
-	void moveAndDisplay();
-	virtual void clientMoveAndDisplay() = 0;
-	virtual void clientResetScene();
-	//callback methods by glut	
-	virtual void keyboardCallback(unsigned char key, int x, int y);
-	virtual void keyboardUpCallback(unsigned char key, int x, int y) {}
-	virtual void specialKeyboard(int key, int x, int y){}
-	virtual void specialKeyboardUp(int key, int x, int y){}
-	virtual void reshape(int w, int h);
-	virtual void mouseFunc(int button, int state, int x, int y);
-	virtual void mouseMotionFunc(int x, int y);
-	virtual	void updateModifierKeys() = 0;
-     */
 
 	/*
 	 * Generic (GLUT-independant) Camera Interface
@@ -266,6 +252,7 @@ public:
 	 * State Output
 	 */
 	std::string cameraStateString();
+	std::string profileInfoString();
 };
 
 #endif //DEMO_APPLICATION_H

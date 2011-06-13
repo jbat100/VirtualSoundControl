@@ -18,8 +18,8 @@ subject to the following restrictions:
 #include "LinearMath/btIDebugDraw.h"
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 
-#include "BulletDynamics/ConstraintSolver/btPoint2PointConstraint.h"//picking
-#include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"//picking
+#include "BulletDynamics/ConstraintSolver/btPoint2PointConstraint.h" //picking
+#include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h" //picking
 
 #include "BulletCollision/CollisionShapes/btCollisionShape.h"
 #include "BulletCollision/CollisionShapes/btBoxShape.h"
@@ -342,502 +342,6 @@ btScalar mousePickClamping = 30.f;
 
 #pragma mark --- Old GLUT Interface Methods
 
-/*
-
-void VSCRootApplication::keyboardCallback(unsigned char key, int x, int y)
-{
-	(void)x;
-	(void)y;
-	
-	m_lastKey = 0;
-	
-#ifndef BT_NO_PROFILE
-	if (key >= 0x31 && key <= 0x39)
-	{
-		int child = key-0x31;
-		m_profileIterator->Enter_Child(child);
-	}
-	if (key==0x30)
-	{
-		m_profileIterator->Enter_Parent();
-	}
-#endif //BT_NO_PROFILE
-	
-	switch (key) 
-	{
-		case 'q' : 
-#ifdef BT_USE_FREEGLUT
-			//return from glutMainLoop(), detect memory leaks etc.
-			glutLeaveMainLoop();
-#else
-			exit(0);
-#endif
-			break;
-			
-		case 'l' : stepLeft(); break;
-		case 'r' : stepRight(); break;
-		case 'f' : stepFront(); break;
-		case 'b' : stepBack(); break;
-		case 'z' : zoomIn(); break;
-		case 'x' : zoomOut(); break;
-		case 'i' : toggleIdle(); break;
-		case 'g' : m_enableshadows=!m_enableshadows;break;
-		case 'u' : m_shapeDrawer->enableTexture(!m_shapeDrawer->enableTexture(false));break;
-		case 'h':
-			if (m_debugMode & btIDebugDraw::DBG_NoHelpText)
-				m_debugMode = m_debugMode & (~btIDebugDraw::DBG_NoHelpText);
-			else
-				m_debugMode |= btIDebugDraw::DBG_NoHelpText;
-			break;
-			
-		case 'w':
-			if (m_debugMode & btIDebugDraw::DBG_DrawWireframe)
-				m_debugMode = m_debugMode & (~btIDebugDraw::DBG_DrawWireframe);
-			else
-				m_debugMode |= btIDebugDraw::DBG_DrawWireframe;
-			break;
-			
-		case 'p':
-			if (m_debugMode & btIDebugDraw::DBG_ProfileTimings)
-				m_debugMode = m_debugMode & (~btIDebugDraw::DBG_ProfileTimings);
-			else
-				m_debugMode |= btIDebugDraw::DBG_ProfileTimings;
-			break;
-			
-		case '=':
-		{
-			int maxSerializeBufferSize = 1024*1024*5;
-			btDefaultSerializer*	serializer = new btDefaultSerializer(maxSerializeBufferSize);
-			//serializer->setSerializationFlags(BT_SERIALIZE_NO_DUPLICATE_ASSERT);
-			m_dynamicsWorld->serialize(serializer);
-			FILE* f2 = fopen("testFile.bullet","wb");
-			fwrite(serializer->getBufferPointer(),serializer->getCurrentBufferSize(),1,f2);
-			fclose(f2);
-			delete serializer;
-			break;
-			
-		}
-			
-		case 'm':
-			if (m_debugMode & btIDebugDraw::DBG_EnableSatComparison)
-				m_debugMode = m_debugMode & (~btIDebugDraw::DBG_EnableSatComparison);
-			else
-				m_debugMode |= btIDebugDraw::DBG_EnableSatComparison;
-			break;
-			
-		case 'n':
-			if (m_debugMode & btIDebugDraw::DBG_DisableBulletLCP)
-				m_debugMode = m_debugMode & (~btIDebugDraw::DBG_DisableBulletLCP);
-			else
-				m_debugMode |= btIDebugDraw::DBG_DisableBulletLCP;
-			break;
-			
-		case 't' : 
-			if (m_debugMode & btIDebugDraw::DBG_DrawText)
-				m_debugMode = m_debugMode & (~btIDebugDraw::DBG_DrawText);
-			else
-				m_debugMode |= btIDebugDraw::DBG_DrawText;
-			break;
-		case 'y':		
-			if (m_debugMode & btIDebugDraw::DBG_DrawFeaturesText)
-				m_debugMode = m_debugMode & (~btIDebugDraw::DBG_DrawFeaturesText);
-			else
-				m_debugMode |= btIDebugDraw::DBG_DrawFeaturesText;
-			break;
-		case 'a':	
-			if (m_debugMode & btIDebugDraw::DBG_DrawAabb)
-				m_debugMode = m_debugMode & (~btIDebugDraw::DBG_DrawAabb);
-			else
-				m_debugMode |= btIDebugDraw::DBG_DrawAabb;
-			break;
-		case 'c' : 
-			if (m_debugMode & btIDebugDraw::DBG_DrawContactPoints)
-				m_debugMode = m_debugMode & (~btIDebugDraw::DBG_DrawContactPoints);
-			else
-				m_debugMode |= btIDebugDraw::DBG_DrawContactPoints;
-			break;
-		case 'C' : 
-			if (m_debugMode & btIDebugDraw::DBG_DrawConstraints)
-				m_debugMode = m_debugMode & (~btIDebugDraw::DBG_DrawConstraints);
-			else
-				m_debugMode |= btIDebugDraw::DBG_DrawConstraints;
-			break;
-		case 'L' : 
-			if (m_debugMode & btIDebugDraw::DBG_DrawConstraintLimits)
-				m_debugMode = m_debugMode & (~btIDebugDraw::DBG_DrawConstraintLimits);
-			else
-				m_debugMode |= btIDebugDraw::DBG_DrawConstraintLimits;
-			break;
-			
-		case 'd' : 
-			if (m_debugMode & btIDebugDraw::DBG_NoDeactivation)
-				m_debugMode = m_debugMode & (~btIDebugDraw::DBG_NoDeactivation);
-			else
-				m_debugMode |= btIDebugDraw::DBG_NoDeactivation;
-			if (m_debugMode & btIDebugDraw::DBG_NoDeactivation)
-			{
-				gDisableDeactivation = true;
-			} else
-			{
-				gDisableDeactivation = false;
-			}
-			break;
-			
-			
-			
-			
-		case 'o' :
-		{
-			m_ortho = !m_ortho;
-			break;
-		}
-		case 's' : clientMoveAndDisplay(); break;
-			//    case ' ' : newRandom(); break;
-		case ' ':
-			clientResetScene();
-			break;
-		case '1':
-		{
-			if (m_debugMode & btIDebugDraw::DBG_EnableCCD)
-				m_debugMode = m_debugMode & (~btIDebugDraw::DBG_EnableCCD);
-			else
-				m_debugMode |= btIDebugDraw::DBG_EnableCCD;
-			break;
-		}
-			
-		case '.':
-		{
-			shootBox(getRayTo(x,y));//getCameraTargetPosition());
-			break;
-		}
-			
-		case '+':
-		{
-			m_shootBoxInitialSpeed += 10.f;
-			break;
-		}
-		case '-':
-		{
-			m_shootBoxInitialSpeed -= 10.f;
-			break;
-		}
-			
-		default:
-			//        std::cout << "unused key : " << key << std::endl;
-			break;
-	}
-	
-	if (getDynamicsWorld() && getDynamicsWorld()->getDebugDrawer())
-		getDynamicsWorld()->getDebugDrawer()->setDebugMode(m_debugMode);
-	
-}
-
-
-void VSCRootApplication::mouseFunc(int button, int state, int x, int y)
-{
-	if (state == 0) 
-	{
-        m_mouseButtons |= 1<<button;
-    } else
-	{
-        m_mouseButtons = 0;
-    }
-
-	m_mouseOldX = x;
-    m_mouseOldY = y;
-
-	updateModifierKeys();
-	if ((m_modifierKeys& BT_ACTIVE_ALT) && (state==0))
-	{
-		return;
-	}
-
-	// button 0, state 0 means left mouse down 
-
-	btVector3 rayTo = getRayTo(x,y);
-
-	switch (button)
-	{
-	case 2:
-		{
-			if (state==0)
-			{
-				shootBox(rayTo);
-			}
-			break;
-		};
-	case 1:
-		{
-
-
-			if (state==0)
-			{
-
-#if 0
-				//apply an impulse
-				if (m_dynamicsWorld)
-				{
-					btCollisionWorld::ClosestRayResultCallback rayCallback(m_cameraPosition,rayTo);
-					m_dynamicsWorld->rayTest(m_cameraPosition,rayTo,rayCallback);
-					if (rayCallback.hasHit())
-					{
-
-						btRigidBody* body = btRigidBody::upcast(rayCallback.m_collisionObject);
-						if (body)
-						{
-							body->setActivationState(ACTIVE_TAG);
-							btVector3 impulse = rayTo;
-							impulse.normalize();
-							float impulseStrength = 10.f;
-							impulse *= impulseStrength;
-							btVector3 relPos = rayCallback.m_hitPointWorld - body->getCenterOfMassPosition();
-							body->applyImpulse(impulse,relPos);
-						}
-					}
-				}
-#endif
-
-
-
-			} else
-			{
-
-			}
-			break;	
-		}
-	case 0:
-		{
-			if (state==0)
-			{
-
-
-				//add a point to point constraint for picking
-				if (m_dynamicsWorld)
-				{
-					
-					btVector3 rayFrom;
-					if (m_ortho)
-					{
-						rayFrom = rayTo;
-						rayFrom.setZ(-100.f);
-					} else
-					{
-						rayFrom = m_cameraPosition;
-					}
-					
-					btCollisionWorld::ClosestRayResultCallback rayCallback(rayFrom,rayTo);
-					m_dynamicsWorld->rayTest(rayFrom,rayTo,rayCallback);
-					if (rayCallback.hasHit())
-					{
-
-
-						btRigidBody* body = btRigidBody::upcast(rayCallback.m_collisionObject);
-						if (body)
-						{
-							//other exclusions?
-							if (!(body->isStaticObject() || body->isKinematicObject()))
-							{
-								pickedBody = body;
-								pickedBody->setActivationState(DISABLE_DEACTIVATION);
-
-
-								btVector3 pickPos = rayCallback.m_hitPointWorld;
-								printf("pickPos=%f,%f,%f\n",pickPos.getX(),pickPos.getY(),pickPos.getZ());
-
-
-								btVector3 localPivot = body->getCenterOfMassTransform().inverse() * pickPos;
-
-								
-
-								
-
-
-								if (use6Dof)
-								{
-									btTransform tr;
-									tr.setIdentity();
-									tr.setOrigin(localPivot);
-									btGeneric6DofConstraint* dof6 = new btGeneric6DofConstraint(*body, tr,false);
-									dof6->setLinearLowerLimit(btVector3(0,0,0));
-									dof6->setLinearUpperLimit(btVector3(0,0,0));
-									dof6->setAngularLowerLimit(btVector3(0,0,0));
-									dof6->setAngularUpperLimit(btVector3(0,0,0));
-
-									m_dynamicsWorld->addConstraint(dof6);
-									m_pickConstraint = dof6;
-
-									dof6->setParam(BT_CONSTRAINT_STOP_CFM,0.8,0);
-									dof6->setParam(BT_CONSTRAINT_STOP_CFM,0.8,1);
-									dof6->setParam(BT_CONSTRAINT_STOP_CFM,0.8,2);
-									dof6->setParam(BT_CONSTRAINT_STOP_CFM,0.8,3);
-									dof6->setParam(BT_CONSTRAINT_STOP_CFM,0.8,4);
-									dof6->setParam(BT_CONSTRAINT_STOP_CFM,0.8,5);
-
-									dof6->setParam(BT_CONSTRAINT_STOP_ERP,0.1,0);
-									dof6->setParam(BT_CONSTRAINT_STOP_ERP,0.1,1);
-									dof6->setParam(BT_CONSTRAINT_STOP_ERP,0.1,2);
-									dof6->setParam(BT_CONSTRAINT_STOP_ERP,0.1,3);
-									dof6->setParam(BT_CONSTRAINT_STOP_ERP,0.1,4);
-									dof6->setParam(BT_CONSTRAINT_STOP_ERP,0.1,5);
-								} else
-								{
-									btPoint2PointConstraint* p2p = new btPoint2PointConstraint(*body,localPivot);
-									m_dynamicsWorld->addConstraint(p2p);
-									m_pickConstraint = p2p;
-									p2p->m_setting.m_impulseClamp = mousePickClamping;
-									//very weak constraint for picking
-									p2p->m_setting.m_tau = 0.001f;
-									
-
-								}
-								use6Dof = !use6Dof;
-
-								//save mouse position for dragging
-								gOldPickingPos = rayTo;
-								gHitPos = pickPos;
-
-								gOldPickingDist  = (pickPos-rayFrom).length();
-							}
-						}
-					}
-				}
-
-			} else
-			{
-				removePickingConstraint();
-			}
-
-			break;
-
-		}
-	default:
-		{
-		}
-	}
-
-}
-
-
-void	VSCRootApplication::mouseMotionFunc(int x,int y)
-{
-
-	if (m_pickConstraint)
-	{
-		//move the constraint pivot
-
-		if (m_pickConstraint->getConstraintType() == D6_CONSTRAINT_TYPE)
-		{
-			btGeneric6DofConstraint* pickCon = static_cast<btGeneric6DofConstraint*>(m_pickConstraint);
-			if (pickCon)
-			{
-				//keep it at the same picking distance
-
-				btVector3 newRayTo = getRayTo(x,y);
-				btVector3 rayFrom;
-				btVector3 oldPivotInB = pickCon->getFrameOffsetA().getOrigin();
-
-				btVector3 newPivotB;
-				if (m_ortho)
-				{
-					newPivotB = oldPivotInB;
-					newPivotB.setX(newRayTo.getX());
-					newPivotB.setY(newRayTo.getY());
-				} else
-				{
-					rayFrom = m_cameraPosition;
-					btVector3 dir = newRayTo-rayFrom;
-					dir.normalize();
-					dir *= gOldPickingDist;
-
-					newPivotB = rayFrom + dir;
-				}
-				pickCon->getFrameOffsetA().setOrigin(newPivotB);
-			}
-
-		} else
-		{
-			btPoint2PointConstraint* pickCon = static_cast<btPoint2PointConstraint*>(m_pickConstraint);
-			if (pickCon)
-			{
-				//keep it at the same picking distance
-
-				btVector3 newRayTo = getRayTo(x,y);
-				btVector3 rayFrom;
-				btVector3 oldPivotInB = pickCon->getPivotInB();
-				btVector3 newPivotB;
-				if (m_ortho)
-				{
-					newPivotB = oldPivotInB;
-					newPivotB.setX(newRayTo.getX());
-					newPivotB.setY(newRayTo.getY());
-				} else
-				{
-					rayFrom = m_cameraPosition;
-					btVector3 dir = newRayTo-rayFrom;
-					dir.normalize();
-					dir *= gOldPickingDist;
-
-					newPivotB = rayFrom + dir;
-				}
-				pickCon->setPivotB(newPivotB);
-			}
-		}
-	}
-
-	float dx, dy;
-    dx = btScalar(x) - m_mouseOldX;
-    dy = btScalar(y) - m_mouseOldY;
-
-
-	///only if ALT key is pressed (Maya style)
-	if (m_modifierKeys& BT_ACTIVE_ALT)
-	{
-		if(m_mouseButtons & 2)
-		{
-			btVector3 hor = getRayTo(0,0)-getRayTo(1,0);
-			btVector3 vert = getRayTo(0,0)-getRayTo(0,1);
-			btScalar multiplierX = btScalar(0.001);
-			btScalar multiplierY = btScalar(0.001);
-			if (m_ortho)
-			{
-				multiplierX = 1;
-				multiplierY = 1;
-			}
-
-
-			m_cameraTargetPosition += hor* dx * multiplierX;
-			m_cameraTargetPosition += vert* dy * multiplierY;
-		}
-
-		if(m_mouseButtons & (2 << 2) && m_mouseButtons & 1)
-		{
-		}
-		else if(m_mouseButtons & 1) 
-		{
-			m_azi += dx * btScalar(0.2);
-			m_azi = fmodf(m_azi, btScalar(360.f));
-			m_ele += dy * btScalar(0.2);
-			m_ele = fmodf(m_ele, btScalar(180.f));
-		} 
-		else if(m_mouseButtons & 4) 
-		{
-			m_cameraDistance -= dy * btScalar(0.02f);
-			if (m_cameraDistance<btScalar(0.1))
-				m_cameraDistance = btScalar(0.1);
-
-			
-		} 
-	}
-
-
-	m_mouseOldX = x;
-    m_mouseOldY = y;
-	updateCamera();
-
-
-}
- 
- */
 
 void VSCRootApplication::removePickingConstraint()
 {
@@ -948,11 +452,9 @@ void VSCRootApplication::resetPerspectiveProjection()
 	updateCamera();
 }
 
-
-
-
 extern CProfileIterator * m_profileIterator;
 
+/*
 void VSCRootApplication::displayProfileString(int xOffset,int yStart,char* message)
 {
 	glRasterPos3f(btScalar(xOffset),btScalar(yStart),btScalar(0));
@@ -965,6 +467,7 @@ void VSCRootApplication::showProfileInfo(int& xOffset,int& yStart, int yIncr)
 #ifndef BT_NO_PROFILE
 
 	static double time_since_reset = 0.f;
+	
 	if (!m_idle)
 	{
 		time_since_reset = CProfileManager::Get_Time_Since_Reset();
@@ -1027,9 +530,51 @@ void VSCRootApplication::showProfileInfo(int& xOffset,int& yStart, int yIncr)
 	}
 #endif//BT_NO_PROFILE
 
+}
+ 
+ */
 
+std::string VSCRootApplication::profileInfoString () {
+	
+	static double time_since_reset = 0.f;
+	
+	if (!m_idle)
+		time_since_reset = CProfileManager::Get_Time_Since_Reset();
+		
+	double totalTime = 0;
+	
+	std::stringstream profileStream;
+	profileStream.precision(3);
+	
+	int frames_since_reset = CProfileManager::Get_Frame_Count_Since_Reset();
+	
+	m_profileIterator->First();
+	
+	double parent_time = m_profileIterator->Is_Root() ? time_since_reset : m_profileIterator->Get_Current_Parent_Total_Time();
 
+	profileStream << "--- Profiling: " << std::string(m_profileIterator->Get_Current_Parent_Name()) << " (total running time: ";
+	profileStream << parent_time << " ms) --- \n";
 
+	double accumulated_time = 0.f;
+	
+	for (int i = 0; !m_profileIterator->Is_Done(); m_profileIterator->Next())
+	{
+		double current_total_time = m_profileIterator->Get_Current_Total_Time();
+		accumulated_time += current_total_time;
+		double fraction = parent_time > SIMD_EPSILON ? (current_total_time / parent_time) * 100 : 0.f;
+		
+		profileStream << i++ << " -- " << std::string(m_profileIterator->Get_Current_Name()) << " (";
+		profileStream << fraction << "%) : " << (current_total_time / (double)frames_since_reset) << " ms / frame (";
+		profileStream << m_profileIterator->Get_Current_Total_Calls() << " calls) \n";
+		
+		totalTime += current_total_time;
+	}
+	
+	profileStream << "Unaccounted -- (" << (parent_time > SIMD_EPSILON ? ((parent_time - accumulated_time) / parent_time) * 100 : 0.f);
+	profileStream << " %) : " << parent_time - accumulated_time << " ms" << std::endl;
+	
+	return profileStream.str();
+	
 }
 
 
@@ -1157,10 +702,6 @@ void VSCRootApplication::renderme()
 			renderscene(0);
 		}
 
-		int	xOffset = 10;
-		int yStart = 20;
-		int yIncr = 20;
-
 
 		glDisable(GL_LIGHTING);
 		glColor3f(0, 0, 0);
@@ -1169,7 +710,7 @@ void VSCRootApplication::renderme()
 		{
 			setOrthographicProjection();
 
-			showProfileInfo(xOffset,yStart,yIncr);
+			//showProfileInfo(xOffset,yStart,yIncr);
 
 #ifdef USE_QUICKPROF
 			if ( getDebugMode() & btIDebugDraw::DBG_ProfileTimings)

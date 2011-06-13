@@ -9,11 +9,13 @@
 #import "VSCDocument.h"
 #import "VSCBaseApplication.h"
 
+#include <string>
+
 
 @implementation VSCDocument
 
-@synthesize vscOpenGLView;
-@synthesize resetButton, mouseSensitivitySlider, cameraSpeedSlider, applicationPopUpButton;
+@synthesize vscOpenGLView, vscGLProfilingView;
+@synthesize resetButton, pauseButton, mouseSensitivitySlider, cameraSpeedSlider, applicationPopUpButton;
 
 
 -(id) init {
@@ -92,6 +94,10 @@
 		//baseApplication->getDynamicsWorld()->setDebugDrawer(&sDebugDraw);
 	}
 	
+	rootApplication->setCameraSpeed((float)cameraSpeed);
+	rootApplication->setCameraMouseSensitivity((float)mouseSensitivity);
+	
+	[self updatePauseButton];
 }
 
 #pragma mark - VSCOpenGLViewDelegate Methods
@@ -100,12 +106,48 @@
 	return rootApplication;
 }
 
+-(void) drewGL {
+	
+	if (rootApplication) {
+		//std::string profileString = rootApplication->profileInfoString();
+		//NSString* nsProfileString = [NSString stringWithCString:profileString.c_str()];
+	}
+	
+}
+
+#pragma mark - Interface Methods
+
+-(void) updatePauseButton {
+	
+	if (rootApplication) {
+		if (rootApplication->isIdle()) {
+			[pauseButton setTitle:@"Simulate"];
+		}
+		else {
+			[pauseButton setTitle:@"Pause"];
+		}
+
+	}
+	else {
+		[pauseButton setTitle:@"No App"];
+	}
+	
+}
+
 #pragma mark - Interface Callbacks
 
 -(IBAction) buttonClicked:(id)sender {
+	
 	if (rootApplication) {
 		if (sender == resetButton)
 			rootApplication->clientResetScene();
+		if (sender == pauseButton) {
+			rootApplication->setIdle(!rootApplication->isIdle());
+		}
+	}
+	
+	if (sender == pauseButton) {
+		[self updatePauseButton];
 	}
 }
 
@@ -125,6 +167,7 @@
 }
 
 -(IBAction) popUpButtonAction:(id)sender {
+	
 }
 
 @end

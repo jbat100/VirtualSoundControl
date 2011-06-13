@@ -253,6 +253,8 @@ virtual void mouseMotionFunc(int x,int y);
 		//glutSolidSphere(2.0, 10, 10);
 	}
 	
+	[delegate drewGL];
+	
 	//glutSolidSphere(2.0, 10, 10);
 	
 	glutSwapBuffers();	

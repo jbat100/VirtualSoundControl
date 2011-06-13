@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import "btBulletDynamicsCommon.h"
 #import "VSCOpenGLView.h"
+#import "VSCGLProfilingView.h"
+#import "VSCDocumentProtocol.h"
 
 #include "GLDebugDrawer.h"
 class VSCBaseApplication;
@@ -25,17 +27,22 @@ enum VSCApplicationType {
 	VSCApplicationTypeBasic
 };
 
-@interface VSCDocument : NSDocument <VSCOpenGLViewDelegate> {
+@interface VSCDocument : NSDocument <VSCDocumentProtocol> {
+	
+	VSCRootApplication* rootApplication;
 	
 	VSCOpenGLView* vscOpenGLView;
-	VSCRootApplication* rootApplication;
+	VSCGLProfilingView* vscGLProfilingView;
 
 	GLDebugDrawer sDebugDraw;
 	
 	NSButton* resetButton;
+	NSButton* pauseButton;
 	NSSlider* mouseSensitivitySlider;
 	NSSlider* cameraSpeedSlider;
 	NSPopUpButton* applicationPopUpButton;
+	
+	
 	
 	double mouseSensitivity;
 	double cameraSpeed;
@@ -43,8 +50,10 @@ enum VSCApplicationType {
 }
 
 @property (retain, nonatomic) IBOutlet VSCOpenGLView* vscOpenGLView;
+@property (retain, nonatomic) IBOutlet VSCGLProfilingView* vscGLProfilingView;
 
 @property (retain, nonatomic) IBOutlet NSButton* resetButton;
+@property (retain, nonatomic) IBOutlet NSButton* pauseButton;
 @property (retain, nonatomic) IBOutlet NSSlider* mouseSensitivitySlider;
 @property (retain, nonatomic) IBOutlet NSSlider* cameraSpeedSlider;
 @property (retain, nonatomic) IBOutlet NSPopUpButton* applicationPopUpButton;
@@ -55,5 +64,7 @@ enum VSCApplicationType {
 
 -(VSCRootApplication*) rootApplication;
 -(void) createApplicationWithType:(VSCApplicationType)t;
+
+-(void) updatePauseButton;
 
 @end

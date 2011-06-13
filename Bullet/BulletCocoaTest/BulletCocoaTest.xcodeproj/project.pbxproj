@@ -14,6 +14,7 @@
 		102953EE1360C9210079D423 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 102953ED1360C9210079D423 /* GLUT.framework */; };
 		102953F01360C9210079D423 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 102953EF1360C9210079D423 /* OpenGL.framework */; };
 		1031594A1392CE9500773CC3 /* btVectorVSCAds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103159491392CE9500773CC3 /* btVectorVSCAds.cpp */; };
+		1070338413A685A4002AFAC6 /* VSCGLProfilingView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1070338313A685A4002AFAC6 /* VSCGLProfilingView.mm */; };
 		107ACB4D138123F5002D7BDE /* VSCControlSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107ACB4B138123F5002D7BDE /* VSCControlSetup.cpp */; };
 		108B4F591364B2660003EF07 /* VSCBaseApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108B4F571364B2660003EF07 /* VSCBaseApplication.cpp */; };
 		10C7F0471380727200F0760F /* libOpenGLSupport.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C7F0461380727200F0760F /* libOpenGLSupport.a */; };
@@ -42,6 +43,9 @@
 		103159491392CE9500773CC3 /* btVectorVSCAds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = btVectorVSCAds.cpp; sourceTree = "<group>"; };
 		1050188C13840FEB00C12E6E /* VSCKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCKeyboard.h; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		1070338213A685A4002AFAC6 /* VSCGLProfilingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCGLProfilingView.h; sourceTree = "<group>"; };
+		1070338313A685A4002AFAC6 /* VSCGLProfilingView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCGLProfilingView.mm; sourceTree = "<group>"; };
+		1070338513A685D6002AFAC6 /* VSCDocumentProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCDocumentProtocol.h; sourceTree = "<group>"; };
 		107ACB4B138123F5002D7BDE /* VSCControlSetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCControlSetup.cpp; sourceTree = "<group>"; };
 		107ACB4C138123F5002D7BDE /* VSCControlSetup.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = VSCControlSetup.h; sourceTree = "<group>"; };
 		108B4F571364B2660003EF07 /* VSCBaseApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCBaseApplication.cpp; sourceTree = "<group>"; };
@@ -148,6 +152,7 @@
 		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				1070338513A685D6002AFAC6 /* VSCDocumentProtocol.h */,
 				102953BC1360C56A0079D423 /* VSCDocument.h */,
 				102953BD1360C56A0079D423 /* VSCDocument.mm */,
 				102953DF1360C8600079D423 /* VSCOpenGLView.h */,
@@ -155,6 +160,8 @@
 				107ACB4B138123F5002D7BDE /* VSCControlSetup.cpp */,
 				107ACB4C138123F5002D7BDE /* VSCControlSetup.h */,
 				1050188C13840FEB00C12E6E /* VSCKeyboard.h */,
+				1070338213A685A4002AFAC6 /* VSCGLProfilingView.h */,
+				1070338313A685A4002AFAC6 /* VSCGLProfilingView.mm */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -264,6 +271,7 @@
 				10094589136F47EF00CDCBF3 /* VSCRootApplication.cpp in Sources */,
 				107ACB4D138123F5002D7BDE /* VSCControlSetup.cpp in Sources */,
 				1031594A1392CE9500773CC3 /* btVectorVSCAds.cpp in Sources */,
+				1070338413A685A4002AFAC6 /* VSCGLProfilingView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
