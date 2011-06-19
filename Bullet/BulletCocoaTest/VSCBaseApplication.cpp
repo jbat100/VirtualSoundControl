@@ -35,12 +35,9 @@ subject to the following restrictions:
 #include <stdio.h> //printf debugging
 
 
-
-
 void VSCBaseApplication::swapBuffers()
 {
 	glutSwapBuffers();
-	
 }
 
 void VSCBaseApplication::initPhysics()

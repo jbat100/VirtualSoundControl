@@ -8,12 +8,14 @@
 
 #import "VSCDocument.h"
 #import "VSCBaseApplication.h"
+#import "VSCConstraintApplication.h"
 
 #include <string>
 
 
 @implementation VSCDocument
 
+@synthesize currentApplicationType;
 @synthesize vscOpenGLView, vscGLProfilingView;
 @synthesize resetButton, pauseButton, mouseSensitivitySlider, cameraSpeedSlider, applicationPopUpButton;
 
@@ -24,6 +26,7 @@
 		
 		mouseSensitivity = 0.5;
 		cameraSpeed = 0.5;
+		currentApplicationType = VSCApplicationTypeNone;
 		
 		[self createApplicationWithType:VSCApplicationTypeBasic];
 		
@@ -77,6 +80,16 @@
 	[cameraSpeedSlider setMaxValue:VSC_MAXIMUM_CAMERA_SPEED];
 	[cameraSpeedSlider setDoubleValue:cameraSpeed];
 	
+	[applicationPopUpButton removeAllItems];
+	
+	
+	NSArray* popUpTitles = [NSArray arrayWithObjects:
+							[NSString stringWithCString:VSCApplicationTypeBasicDescriptionString encoding:NSUTF8StringEncoding],
+							[NSString stringWithCString:VSCApplicationTypeConstraintDescriptionString encoding:NSUTF8StringEncoding],
+							nil];
+							
+	[applicationPopUpButton addItemsWithTitles:popUpTitles];
+	
 }
 
 #pragma mark - VSC Application
@@ -88,10 +101,21 @@
 	
 	rootApplication = NULL;
 	
-	if (VSCApplicationTypeBasic) {
+	if (t == VSCApplicationTypeBasic) {
+		NSLog(@"Creating basic application");
 		rootApplication = new VSCBaseApplication();
 		rootApplication->initPhysics();
 		//baseApplication->getDynamicsWorld()->setDebugDrawer(&sDebugDraw);
+		currentApplicationType = VSCApplicationTypeBasic;
+	}
+	
+	if (t == VSCApplicationTypeConstraint) {
+		NSLog(@"Creating constraint application");
+		rootApplication = new VSCConstraintApplication();
+		rootApplication->initPhysics();
+		//constraintDemo->getDynamicsWorld()->setDebugDrawer(&gDebugDrawer);
+		//constraintDemo->setDebugMode(btIDebugDraw::DBG_DrawConstraints+btIDebugDraw::DBG_DrawConstraintLimits);
+		currentApplicationType = VSCApplicationTypeConstraint;
 	}
 	
 	rootApplication->setCameraSpeed((float)cameraSpeed);
@@ -167,6 +191,21 @@
 }
 
 -(IBAction) popUpButtonAction:(id)sender {
+	
+	if (sender == applicationPopUpButton) {
+		if ([[applicationPopUpButton titleOfSelectedItem] isEqualToString:
+			 [NSString stringWithCString:VSCApplicationTypeBasicDescriptionString encoding:NSUTF8StringEncoding]]) {
+			if (currentApplicationType != VSCApplicationTypeBasic) {
+				[self createApplicationWithType:VSCApplicationTypeBasic];
+			}
+		}
+		else if ([[applicationPopUpButton titleOfSelectedItem] isEqualToString:
+				  [NSString stringWithCString:VSCApplicationTypeConstraintDescriptionString encoding:NSUTF8StringEncoding]]) {
+			if (currentApplicationType != VSCApplicationTypeConstraint) {
+				[self createApplicationWithType:VSCApplicationTypeConstraint];
+			}
+		}
+	}
 	
 }
 

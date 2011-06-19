@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		10094589136F47EF00CDCBF3 /* VSCRootApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10094587136F47EF00CDCBF3 /* VSCRootApplication.cpp */; };
+		1011C58313AAB35200DB156A /* VSCConstraintApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1011C58213AAB35200DB156A /* VSCConstraintApplication.cpp */; };
 		102953B81360C5180079D423 /* VSCDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 102953B61360C5180079D423 /* VSCDocument.xib */; };
 		102953BE1360C56A0079D423 /* VSCDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 102953BD1360C56A0079D423 /* VSCDocument.mm */; };
 		102953E11360C8600079D423 /* VSCOpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 102953E01360C8600079D423 /* VSCOpenGLView.mm */; };
@@ -32,6 +33,8 @@
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		10094587136F47EF00CDCBF3 /* VSCRootApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCRootApplication.cpp; sourceTree = "<group>"; };
 		10094588136F47EF00CDCBF3 /* VSCRootApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCRootApplication.h; sourceTree = "<group>"; };
+		1011C58113AAB35200DB156A /* VSCConstraintApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCConstraintApplication.h; sourceTree = "<group>"; };
+		1011C58213AAB35200DB156A /* VSCConstraintApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCConstraintApplication.cpp; sourceTree = "<group>"; };
 		102953B71360C5180079D423 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/VSCDocument.xib; sourceTree = "<group>"; };
 		102953BC1360C56A0079D423 /* VSCDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCDocument.h; sourceTree = "<group>"; };
 		102953BD1360C56A0079D423 /* VSCDocument.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCDocument.mm; sourceTree = "<group>"; };
@@ -85,10 +88,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1011C56B13AAB1B100DB156A /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				10094587136F47EF00CDCBF3 /* VSCRootApplication.cpp */,
+				10094588136F47EF00CDCBF3 /* VSCRootApplication.h */,
+			);
+			name = Root;
+			sourceTree = "<group>";
+		};
+		1011C56D13AAB1C100DB156A /* Basic */ = {
+			isa = PBXGroup;
+			children = (
+				108B4F571364B2660003EF07 /* VSCBaseApplication.cpp */,
+				108B4F581364B2660003EF07 /* VSCBaseApplication.h */,
+			);
+			name = Basic;
+			sourceTree = "<group>";
+		};
+		1011C57B13AAB29E00DB156A /* Constraint */ = {
+			isa = PBXGroup;
+			children = (
+				1011C58113AAB35200DB156A /* VSCConstraintApplication.h */,
+				1011C58213AAB35200DB156A /* VSCConstraintApplication.cpp */,
+			);
+			name = Constraint;
+			sourceTree = "<group>";
+		};
 		102953F51360C98F0079D423 /* Bullet */ = {
 			isa = PBXGroup;
 			children = (
-				102954501360CD600079D423 /* Basic Demo */,
+				102954501360CD600079D423 /* Bullet Apps */,
 				10C7F0441380722D00F0760F /* btBulletCollisionCommon.h */,
 				10C7F0451380722D00F0760F /* btBulletDynamicsCommon.h */,
 				103159481392CE9500773CC3 /* btVectorVSCAds.h */,
@@ -97,15 +127,14 @@
 			name = Bullet;
 			sourceTree = "<group>";
 		};
-		102954501360CD600079D423 /* Basic Demo */ = {
+		102954501360CD600079D423 /* Bullet Apps */ = {
 			isa = PBXGroup;
 			children = (
-				10094587136F47EF00CDCBF3 /* VSCRootApplication.cpp */,
-				10094588136F47EF00CDCBF3 /* VSCRootApplication.h */,
-				108B4F571364B2660003EF07 /* VSCBaseApplication.cpp */,
-				108B4F581364B2660003EF07 /* VSCBaseApplication.h */,
+				1011C57B13AAB29E00DB156A /* Constraint */,
+				1011C56D13AAB1C100DB156A /* Basic */,
+				1011C56B13AAB1B100DB156A /* Root */,
 			);
-			name = "Basic Demo";
+			name = "Bullet Apps";
 			sourceTree = "<group>";
 		};
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
@@ -272,6 +301,7 @@
 				107ACB4D138123F5002D7BDE /* VSCControlSetup.cpp in Sources */,
 				1031594A1392CE9500773CC3 /* btVectorVSCAds.cpp in Sources */,
 				1070338413A685A4002AFAC6 /* VSCGLProfilingView.mm in Sources */,
+				1011C58313AAB35200DB156A /* VSCConstraintApplication.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

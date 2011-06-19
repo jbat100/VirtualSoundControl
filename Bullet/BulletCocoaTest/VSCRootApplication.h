@@ -39,7 +39,14 @@ class btTypedConstraint;
 
 #define RADIANS_PER_DEGREE 0.01745329251994329547
 
+enum VSCApplicationType {
+	VSCApplicationTypeNone = 0,
+	VSCApplicationTypeBasic,
+	VSCApplicationTypeConstraint
+};
 
+#define VSCApplicationTypeBasicDescriptionString			"Basic Application"
+#define VSCApplicationTypeConstraintDescriptionString		"Constraint Application"
 
 class VSCRootApplication
 {
@@ -239,7 +246,7 @@ public:
 	/*
 	 * Shooting
 	 */
-	virtual void setShootBoxShape ();
+	virtual void setShootBoxShape();
 	virtual void shootBox(const btVector3& destination);
 	
 	/*

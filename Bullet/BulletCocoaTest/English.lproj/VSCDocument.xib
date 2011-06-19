@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="5"/>
+			<integer value="6"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -299,7 +299,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="851544396">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -339,9 +339,8 @@
 												<string>public.url</string>
 											</object>
 										</object>
-										<string key="NSFrameSize">{441, 42}</string>
+										<string key="NSFrame">{{0, 14}, {441, 28}}</string>
 										<reference key="NSSuperview" ref="975730550"/>
-										<reference key="NSWindow"/>
 										<object class="NSTextContainer" key="NSTextContainer" id="820822647">
 											<object class="NSLayoutManager" key="NSLayoutManager">
 												<object class="NSTextStorage" key="NSTextStorage">
@@ -451,7 +450,7 @@ aXNoJ2FpaGE</bytes>
 								</object>
 								<string key="NSFrame">{{1, 1}, {441, 224}}</string>
 								<reference key="NSSuperview" ref="94218142"/>
-								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="1050902320"/>
 								<reference key="NSDocView" ref="1050902320"/>
 								<reference key="NSBGColor" ref="1067689745"/>
 								<object class="NSCursor" key="NSCursor">
@@ -465,7 +464,6 @@ aXNoJ2FpaGE</bytes>
 								<int key="NSvFlags">256</int>
 								<string key="NSFrame">{{442, 1}, {15, 210}}</string>
 								<reference key="NSSuperview" ref="94218142"/>
-								<reference key="NSWindow"/>
 								<reference key="NSTarget" ref="94218142"/>
 								<string key="NSAction">_doScroller:</string>
 								<double key="NSCurValue">1</double>
@@ -476,7 +474,6 @@ aXNoJ2FpaGE</bytes>
 								<int key="NSvFlags">-2147483392</int>
 								<string key="NSFrame">{{-100, -100}, {87, 18}}</string>
 								<reference key="NSSuperview" ref="94218142"/>
-								<reference key="NSWindow"/>
 								<int key="NSsFlags">1</int>
 								<reference key="NSTarget" ref="94218142"/>
 								<string key="NSAction">_doScroller:</string>
@@ -486,7 +483,7 @@ aXNoJ2FpaGE</bytes>
 						</object>
 						<string key="NSFrameSize">{458, 226}</string>
 						<reference key="NSSuperview" ref="851544396"/>
-						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="975730550"/>
 						<int key="NSsFlags">18</int>
 						<reference key="NSVScroller" ref="475635348"/>
 						<reference key="NSHScroller" ref="547223454"/>
@@ -494,8 +491,6 @@ aXNoJ2FpaGE</bytes>
 					</object>
 				</object>
 				<string key="NSFrameSize">{458, 226}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<string key="NSClassName">VSCGLProfilingView</string>
 			</object>
 		</object>
@@ -665,11 +660,11 @@ aXNoJ2FpaGE</bytes>
 							<reference ref="574636602"/>
 							<reference ref="851455266"/>
 							<reference ref="1048301637"/>
-							<reference ref="1029550678"/>
 							<reference ref="1017886203"/>
 							<reference ref="19972815"/>
 							<reference ref="760758740"/>
 							<reference ref="905565766"/>
+							<reference ref="1029550678"/>
 						</object>
 						<reference key="parent" ref="275939982"/>
 					</object>
@@ -946,7 +941,7 @@ aXNoJ2FpaGE</bytes>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABDaAAAw6+AAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABDaAAAw6oAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1058,6 +1053,7 @@ aXNoJ2FpaGE</bytes>
 							<string>mouseSensitivitySlider</string>
 							<string>pauseButton</string>
 							<string>resetButton</string>
+							<string>vscGLProfilingView</string>
 							<string>vscOpenGLView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -1067,6 +1063,7 @@ aXNoJ2FpaGE</bytes>
 							<string>NSSlider</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
+							<string>VSCGLProfilingView</string>
 							<string>VSCOpenGLView</string>
 						</object>
 					</object>
@@ -1079,6 +1076,7 @@ aXNoJ2FpaGE</bytes>
 							<string>mouseSensitivitySlider</string>
 							<string>pauseButton</string>
 							<string>resetButton</string>
+							<string>vscGLProfilingView</string>
 							<string>vscOpenGLView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -1102,6 +1100,10 @@ aXNoJ2FpaGE</bytes>
 							<object class="IBToOneOutletInfo">
 								<string key="name">resetButton</string>
 								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">vscGLProfilingView</string>
+								<string key="candidateClassName">VSCGLProfilingView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">vscOpenGLView</string>

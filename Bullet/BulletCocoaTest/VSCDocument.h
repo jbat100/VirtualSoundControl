@@ -11,9 +11,8 @@
 #import "VSCOpenGLView.h"
 #import "VSCGLProfilingView.h"
 #import "VSCDocumentProtocol.h"
-
-#include "GLDebugDrawer.h"
-class VSCBaseApplication;
+#import "GLDebugDrawer.h"
+#import "VSCRootApplication.h"
 
 
 #define VSC_MINIMUM_MOUSE_SENSITIVITY 0.05
@@ -22,14 +21,11 @@ class VSCBaseApplication;
 #define VSC_MINIMUM_CAMERA_SPEED 0.05
 #define VSC_MAXIMUM_CAMERA_SPEED 5.0
 
-enum VSCApplicationType {
-	VSCApplicationTypeNone = 0,
-	VSCApplicationTypeBasic
-};
 
 @interface VSCDocument : NSDocument <VSCDocumentProtocol> {
 	
 	VSCRootApplication* rootApplication;
+	VSCApplicationType currentApplicationType;
 	
 	VSCOpenGLView* vscOpenGLView;
 	VSCGLProfilingView* vscGLProfilingView;
@@ -41,8 +37,6 @@ enum VSCApplicationType {
 	NSSlider* mouseSensitivitySlider;
 	NSSlider* cameraSpeedSlider;
 	NSPopUpButton* applicationPopUpButton;
-	
-	
 	
 	double mouseSensitivity;
 	double cameraSpeed;
@@ -57,6 +51,8 @@ enum VSCApplicationType {
 @property (retain, nonatomic) IBOutlet NSSlider* mouseSensitivitySlider;
 @property (retain, nonatomic) IBOutlet NSSlider* cameraSpeedSlider;
 @property (retain, nonatomic) IBOutlet NSPopUpButton* applicationPopUpButton;
+
+@property (nonatomic, assign) VSCApplicationType currentApplicationType;
 
 -(IBAction) buttonClicked:(id)sender;
 -(IBAction) sliderValueChanged:(id)sender;

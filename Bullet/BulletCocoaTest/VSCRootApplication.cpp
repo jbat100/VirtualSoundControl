@@ -216,12 +216,9 @@ btRigidBody* VSCRootApplication::localCreateRigidBody(float mass, const btTransf
 	
 #ifdef USE_MOTIONSTATE
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-	
 	btRigidBody::btRigidBodyConstructionInfo cInfo(mass,myMotionState,shape,localInertia);
-	
 	btRigidBody* body = new btRigidBody(cInfo);
 	body->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
-	
 #else
 	btRigidBody* body = new btRigidBody(mass,0,shape,localInertia);	
 	body->setWorldTransform(startTransform);
@@ -247,6 +244,7 @@ void VSCRootApplication::shootBox(const btVector3& destination)
 
 	if (m_dynamicsWorld)
 	{
+		
 		float mass = 1.f;
 		btTransform startTransform;
 		startTransform.setIdentity();
@@ -269,10 +267,6 @@ void VSCRootApplication::shootBox(const btVector3& destination)
 		body->setAngularVelocity(btVector3(0,0,0));
 		body->setCcdMotionThreshold(0.5);
 		body->setCcdSweptSphereRadius(0.9f);
-        
-//		printf("shootBox uid=%d\n", body->getBroadphaseHandle()->getUid());
-//		printf("camPos=%f,%f,%f\n",camPos.getX(),camPos.getY(),camPos.getZ());
-//		printf("destination=%f,%f,%f\n",destination.getX(),destination.getY(),destination.getZ());
 		
 	}
 }
@@ -338,10 +332,6 @@ btVector3 VSCRootApplication::getRayTo(int x,int y)
 }
 
 btScalar mousePickClamping = 30.f;
-
-
-#pragma mark --- Old GLUT Interface Methods
-
 
 void VSCRootApplication::removePickingConstraint()
 {
@@ -1129,17 +1119,17 @@ void VSCRootApplication::updateCamera() {
 		return;
 	
 	btScalar aspect;
-	btVector3 extents;
+	//btVector3 extents;
 	
 	if (m_glutScreenWidth > m_glutScreenHeight) 
 	{
 		aspect = m_glutScreenWidth / (btScalar)m_glutScreenHeight;
-		extents.setValue(aspect * 1.0f, 1.0f,0);
+		//extents.setValue(aspect * 1.0f, 1.0f,0);
 	} 
 	else 
 	{
 		aspect = m_glutScreenHeight / (btScalar)m_glutScreenWidth;
-		extents.setValue(1.0f, aspect*1.f,0);
+		//extents.setValue(1.0f, aspect*1.f,0);
 	}
 		
 	if (m_glutScreenWidth > m_glutScreenHeight) 
