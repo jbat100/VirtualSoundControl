@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 
 
+
+
 @interface EnveloppeViewSetup : NSObject <NSCoding> {
 	
 	double minTime;
@@ -17,9 +19,10 @@
 	double minValue;
 	double maxValue;
 	
-	BOOL dB;
+	//EnveloppeDisplayType enveloppeDisplayType;
 	
 	double controlPointRadius;
+	double lineWidth;
 	
 	CGColorRef unselectedControlPointColor;
 	CGColorRef selectedControlPointColor;
@@ -32,7 +35,7 @@
 @property (nonatomic, assign) double minValue;
 @property (nonatomic, assign) double maxValue;
 
-@property (nonatomic, assign) BOOL dB;
+@property (nonatomic, assign) EnveloppeDisplayType enveloppeDisplayType;
 
 @property (nonatomic, assign) double controlPointRadius;
 

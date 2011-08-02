@@ -7,6 +7,7 @@
  *
  */
 
+
 class VSCEnveloppePoint {
 	
 protected:
@@ -16,6 +17,8 @@ protected:
 	
 public:
 	
+	VSCEnveloppePoint(const VSCEnveloppePoint& p);
+	
 	void setValue(double value);
 	double getValue(void);
 	
@@ -23,3 +26,6 @@ public:
 	double getTime(void);
 
 }
+
+bool compareEnveloppePointValues (VSCEnveloppePoint* firstPoint, VSCEnveloppePoint* secondPoint);
+bool compareEnveloppePointTimes (VSCEnveloppePoint* firstPoint, VSCEnveloppePoint* secondPoint);

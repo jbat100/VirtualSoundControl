@@ -13,17 +13,30 @@
 #include <cmath>
 
 #define std::list<VSCEnveloppePoint*>::iterator POINT_ITERATOR
+#define std::list<VSCEnveloppePoint*>::reverse_iterator REVERSE_POINT_ITERATOR
+
+void VSCEnveloppe::setName(std::string name) {
+	_name = name;
+}
+
+std::string VSCEnveloppe::getName(void) {
+	return _name;
+}
+
+void VSCEnveloppe::setChannel(int channel) {
+	_channel = channel;
+}
+
+int VSCEnveloppe::getChannel(void) {
+	return channel;
+}
 
 void setMinimumTimeStep(double minimumTimeStep) {
-	
 	_minimumTimeStep = minimumTimeStep;
-	
 }
 
 double getMinimumTimeStep(void) {
-	
 	return _minimumTimeStep;
-	
 }
 
 void VSCEnveloppe::addPoint(VSCEnveloppePoint* point) {
@@ -127,16 +140,16 @@ void VSCEnveloppe::removePointsInTimeRange(double lowerTime, double upperTime){
 /* get points */
 
 VSCEnveloppePoint* VSCEnveloppe::getPointClosestToTime(double time) {
+	getPointClosestToTime(time, true);
+}
+
+VSCEnveloppePoint* VSCEnveloppe::getPointClosestToTime(double time, bool copy) {
 	
-	if (_points.size() == 0) {
+	if (_points.size() == 0) 
 		return NULL;
-	}
 	
 	POINT_ITERATOR it = _points.begin();
-	
-	if (_points.size() == 1) {
-		return *it;
-	}
+	POINT_ITERATOR closestIt = _points.begin();
 	
 	double minimumTimeDifference = abs((*it)->getTime - time);
 	
@@ -144,35 +157,134 @@ VSCEnveloppePoint* VSCEnveloppe::getPointClosestToTime(double time) {
 	
 	for (; it != _points.end(); it++) {
 		
+		double timeDifference = abs((*it)->getTime - time);
 		
+		if (timeDifference < minimumTimeDifference) {
+			minimumTimeDifference = timeDifference;
+			closestIt = it;
+		}
 		
 	}
+	
+	if (copy)
+		return new VSCEnveloppePoint(*closestIt);
+		
+	return (*closestIt);
 	
 }
 
 VSCEnveloppePoint* VSCEnveloppe::getFirstPointAfterTime(double time) {
+	getFirstPointAfterTime(time, true);
+}
+
+VSCEnveloppePoint* VSCEnveloppe::getFirstPointAfterTime(double time, bool copy) {
+	
+	if (_points.size() == 0) 
+		return NULL;
+	
+	for (POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
+		
+		if ((*it)->getTime() > time) {
+			
+			if (copy)
+				return new VSCEnveloppePoint(*it);
+			
+			else 
+				return (*it);
+			
+		}
+		
+	}
+	
+	return NULL;
+	
 }
 
 VSCEnveloppePoint* VSCEnveloppe::getFirstPointBeforeTime(double time) {
+	getFirstPointBeforeTime(time, true);
 }
 
-std::list<VSCEnveloppePoint*> VSCEnveloppe::getPointsInTimeRange(double lower, double higher) {
+VSCEnveloppePoint* VSCEnveloppe::getFirstPointBeforeTime(double time, bool copy) {
+	
+	if (_points.size() == 0) 
+		return NULL;
+	
+	for (REVERSE_POINT_ITERATOR it = _points.rbegin(); it != _points.rend(); it++) {
+		
+		if ((*it)->getTime*() < time) {
+			
+			if (copy)
+				return new VSCEnveloppePoint(*it);
+			
+			else 
+				return (*it);
+			
+		}
+		
+	}
+	
+	return NULL;
+	
 }
 
-std::list<VSCEnveloppePoint*> VSCEnveloppe::getAllPoints(void) {
+std::list<VSCEnveloppePoint*> VSCEnveloppe::getPointsInTimeRange(double lowerTime, double upperTime) {
+	getPointsInTimeRange(lowerTime, upperTime, true);
+}
+
+
+std::list<VSCEnveloppePoint*> VSCEnveloppe::getPointsInTimeRange(double lowerTime, double upperTime, bool copy) {
+	
+	std::list<VSCEnveloppePoint*> ps;
+	
+	for (POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
+		
+		if ((*it)->getTime() > lowerTime && (*it)->getTime() < upperTime) {
+			if (copy)
+				ps.push_back(new VSCEnveloppePoint(*it));
+			else 
+				ps.push_back(*it);
+		}
+		
+	}
+
+	return ps;
+}
+
+std::list<VSCEnveloppePoint*> VSCEnveloppe::getAllPoints(bool copy) {
 }
 
 int VSCEnveloppe::numberOfPoints(void) {
+	return _points.size();
 }
 
 
 /* value */
 
 double VSCEnveloppe::getValueAtTime(double time) {
+	
+	VSCEnveloppePoint* lp = getFirstPointBeforeTime(time, false);
+	VSCEnveloppePoint* up = getFirstPointAfterTime(time, false);
+	
+	if (lp == NULL || up == NULL) 
+		return NAN;
+	/*
+	if (lp == NULL)
+		return up->getValue();
+	if (up == NULL)
+		return lp->getValue();
+	 */
+	
+	double normDiff = (up->getTime() - lp->getTime()) / (time - lp->getTime()); 
+	
+	return lp->getValue() + ((up->getValue() - lp->getValue()) * normDiff);
+
 }
 
 /* sorting */
 
 void VSCEnveloppe::sortPointsByTime(void) {
+	
+	_points.sort(compareEnveloppePointTimes);
+	
 }
 

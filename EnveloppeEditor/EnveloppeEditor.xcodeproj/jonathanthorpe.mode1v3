@@ -255,7 +255,7 @@
 							<key>PBXSmartGroupTreeModuleColumnWidthsKey</key>
 							<array>
 								<real>22</real>
-								<real>207</real>
+								<real>292</real>
 							</array>
 							<key>PBXSmartGroupTreeModuleColumnsKey_v4</key>
 							<array>
@@ -283,14 +283,14 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>15</integer>
-									<integer>12</integer>
+									<integer>6</integer>
+									<integer>2</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {229, 671}}</string>
+							<string>{{0, 0}, {314, 673}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -302,21 +302,21 @@
 					<key>GeometryConfiguration</key>
 					<dict>
 						<key>Frame</key>
-						<string>{{0, 0}, {246, 689}}</string>
+						<string>{{0, 0}, {331, 691}}</string>
 						<key>GroupTreeTableConfiguration</key>
 						<array>
 							<string>SCMStatusColumn</string>
 							<real>22</real>
 							<string>MainColumn</string>
-							<real>207</real>
+							<real>292</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>349 48 927 730 0 0 1280 778 </string>
+						<string>4 46 1276 732 0 0 1280 778 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
 					<key>Proportion</key>
-					<string>246pt</string>
+					<string>331pt</string>
 				</dict>
 				<dict>
 					<key>Dock</key>
@@ -329,7 +329,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>EnveloppeControlPoint.h</string>
+								<string>CGColorOperations.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -337,29 +337,33 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>EnveloppeControlPoint.h</string>
+										<string>CGColorOperations.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>108CD8AD133025460002A0A7</string>
+										<string>103C220213E5BF6C00A405DA</string>
 										<key>history</key>
 										<array>
 											<string>1030EFEF13298D9800E4BCA1</string>
 											<string>1030EFF013298D9800E4BCA1</string>
 											<string>1030EFF113298D9800E4BCA1</string>
 											<string>107A7908132ADF3700C4B1FE</string>
-											<string>1017812C132D4C99001C6A96</string>
-											<string>1017812D132D4C99001C6A96</string>
-											<string>10178131132D4C99001C6A96</string>
-											<string>108CD891133016A60002A0A7</string>
 											<string>108CD892133016A60002A0A7</string>
 											<string>108CD893133016A60002A0A7</string>
-											<string>108CD899133021D50002A0A7</string>
-											<string>108CD89A133021D50002A0A7</string>
-											<string>108CD89B133021D50002A0A7</string>
 											<string>108CD89C133021D50002A0A7</string>
 											<string>108CD8AB133025460002A0A7</string>
-											<string>108CD8AC133025460002A0A7</string>
+											<string>109A1E1E13E3738800407874</string>
+											<string>109A1E1F13E3738800407874</string>
+											<string>103C21F913E5BF6C00A405DA</string>
+											<string>103C21FA13E5BF6C00A405DA</string>
+											<string>103C21FB13E5BF6C00A405DA</string>
+											<string>103C21FC13E5BF6C00A405DA</string>
+											<string>103C21FD13E5BF6C00A405DA</string>
+											<string>103C21FE13E5BF6C00A405DA</string>
+											<string>103C21FF13E5BF6C00A405DA</string>
+											<string>103C220013E5BF6C00A405DA</string>
+											<string>103C220113E5BF6C00A405DA</string>
+											<string>108CD891133016A60002A0A7</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -371,14 +375,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {676, 485}}</string>
+								<string>{{0, 0}, {940, 686}}</string>
 								<key>RubberWindowFrame</key>
-								<string>349 48 927 730 0 0 1280 778 </string>
+								<string>4 46 1276 732 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>485pt</string>
+							<string>686pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -391,18 +395,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 490}, {676, 199}}</string>
+								<string>{{0, 691}, {940, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>349 48 927 730 0 0 1280 778 </string>
+								<string>4 46 1276 732 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
 							<key>Proportion</key>
-							<string>199pt</string>
+							<string>0pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
-					<string>676pt</string>
+					<string>940pt</string>
 				</dict>
 			</array>
 			<key>Name</key>
@@ -417,9 +421,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>108CD83713300FB50002A0A7</string>
+				<string>103C220313E5BF6C00A405DA</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>108CD83813300FB50002A0A7</string>
+				<string>103C220413E5BF6C00A405DA</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -561,7 +565,7 @@
 		<string>/Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/EnveloppeEditor.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>349 48 927 730 0 0 1280 778 </string>
+	<string>4 46 1276 732 0 0 1280 778 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -638,7 +642,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1030EFFB13298D9800E4BCA1</string>
-				<string>108CD83913300FB50002A0A7</string>
+				<string>103C220513E5BF6C00A405DA</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
