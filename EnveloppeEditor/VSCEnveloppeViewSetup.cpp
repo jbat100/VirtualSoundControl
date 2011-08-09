@@ -9,7 +9,7 @@
 
 #include "VSCEnveloppeViewSetup.h"
 
-double VSCEnveloppeViewSetup::getMinTime(void) {
+double VSCEnveloppeViewSetup::getMinTime(void) const {
 	return _minTime;
 }
 
@@ -18,7 +18,7 @@ void VSCEnveloppeViewSetup::setMinTime(double  minTime) {
 }
 
 
-double VSCEnveloppeViewSetup::getMaxTime(void) {
+double VSCEnveloppeViewSetup::getMaxTime(void) const {
 	return _maxTime;
 }
 
@@ -27,7 +27,7 @@ void VSCEnveloppeViewSetup::setMaxTime(double  maxTime) {
 }
 
 
-double VSCEnveloppeViewSetup::getMinValue(void) {
+double VSCEnveloppeViewSetup::getMinValue(void) const {
 	return _minValue;
 }
 
@@ -36,7 +36,7 @@ void VSCEnveloppeViewSetup::setMinValue(double  minValue) {
 }
 
 
-double VSCEnveloppeViewSetup::getMaxValue(void) {
+double VSCEnveloppeViewSetup::getMaxValue(void) const {
 	return _maxValue;
 }
 
@@ -45,7 +45,7 @@ void VSCEnveloppeViewSetup::setMaxValue(double  maxValue) {
 }
 
 
-VSCEnveloppeDisplayType VSCEnveloppeViewSetup::getDisplayType(void) {
+VSCEnveloppeDisplayType VSCEnveloppeViewSetup::getDisplayType(void) const {
 	return _displayType;
 }
 
@@ -54,7 +54,7 @@ void VSCEnveloppeViewSetup::setDisplayType(VSCEnveloppeDisplayType displayType) 
 }
 
 
-double VSCEnveloppeViewSetup::getControlPointRadius(void) {
+double VSCEnveloppeViewSetup::getControlPointRadius(void) const {
 	return _controlPointRadius;
 }
 
@@ -63,7 +63,7 @@ void VSCEnveloppeViewSetup::setControlPointRadius(double controlPointRadius) {
 }
 
 
-double VSCEnveloppeViewSetup::getLineWidth(void) {
+double VSCEnveloppeViewSetup::getLineWidth(void) const {
 	return _lineWidth;
 }
 

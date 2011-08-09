@@ -32,25 +32,25 @@ protected:
 	
 public:
 	
-	double getMinTime(void);
+	double getMinTime(void) const;
 	void setMinTime(double  minTime);
 	
-	double getMaxTime(void);
+	double getMaxTime(void) const;
 	void setMaxTime(double  maxTime);
 	
-	double getMinValue(void);
+	double getMinValue(void) const;
 	void setMinValue(double  minValue);
 	
-	double getMaxValue(void);
+	double getMaxValue(void) const;
 	void setMaxValue(double  maxValue);
 	
-	VSCEnveloppeDisplayType getDisplayType(void);
+	VSCEnveloppeDisplayType getDisplayType(void) const;
 	void setDisplayType(VSCEnveloppeDisplayType displayType);
 	
-	double getControlPointRadius(void);
+	double getControlPointRadius(void) const;
 	void setControlPointRadius(double controlPointRadius);
 	
-	double getLineWidth(void);
+	double getLineWidth(void) const;
 	void setLineWidth(double lineWidth);
 
-}
+};

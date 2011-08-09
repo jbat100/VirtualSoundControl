@@ -8,6 +8,7 @@
  */
 
 #include "VSCEnveloppePoint.h"
+#include <cstddef>
 
 bool compareEnveloppePointValues (VSCEnveloppePoint* firstPoint, VSCEnveloppePoint* secondPoint) {
 	return firstPoint->getValue() < secondPoint->getValue();
@@ -17,18 +18,35 @@ bool compareEnveloppePointTimes (VSCEnveloppePoint* firstPoint, VSCEnveloppePoin
 	return firstPoint->getTime() < secondPoint->getTime();
 }
 
+VSCEnveloppePoint::VSCEnveloppePoint(void) {
+    setTime(0.0);
+    setValue(0.0);
+    setLeftControlPoint(NULL);
+    setRightControlPoint(NULL);
+}
+
 VSCEnveloppePoint::VSCEnveloppePoint(const VSCEnveloppePoint& p) {
-	
+    
 	_value = p.getValue();
 	_time = p.getTime();
-	
+    
+    if (p.getLeftControlPoint() != NULL) 
+        setLeftControlPoint(new VSCEnveloppePoint(*(p.getLeftControlPoint())));
+    else 
+        setLeftControlPoint(NULL);
+    
+    if (p.getRightControlPoint() != NULL) 
+        setRightControlPoint(new VSCEnveloppePoint(*(p.getRightControlPoint())));
+    else 
+        setRightControlPoint(NULL);
+    
 }
 
 void VSCEnveloppePoint::setValue(double value) {
 	_value = value;
 }
 
-double VSCEnveloppePoint::getValue(void) {
+double VSCEnveloppePoint::getValue(void) const {
 	return _value;
 }
 
@@ -36,6 +54,22 @@ void VSCEnveloppePoint::setTime(double time) {
 	_time = time;
 }
 
-double VSCEnveloppePoint::getTime(void) {
+double VSCEnveloppePoint::getTime(void) const {
 	return _time;
+}
+
+void VSCEnveloppePoint::setLeftControlPoint(VSCEnveloppePoint* controlPoint) {
+    _leftControlPoint = controlPoint;
+}
+
+VSCEnveloppePoint* VSCEnveloppePoint::getLeftControlPoint(void) const {
+    return _leftControlPoint;
+}
+
+void VSCEnveloppePoint::setRightControlPoint(VSCEnveloppePoint* controlPoint) {
+    _rightControlPoint = controlPoint;
+}
+
+VSCEnveloppePoint* VSCEnveloppePoint::getRightControlPoint(void) const {
+    return _rightControlPoint;
 }

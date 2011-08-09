@@ -8,6 +8,7 @@
  */
 
 #include <list>
+#include <string>
 class VSCEnveloppePoint;
 
 class VSCEnveloppe {
@@ -44,6 +45,8 @@ public:
 	void removePointsInTimeRange(double lowerTime, double upperTime, bool clean);
 	
 	/* get points */
+    
+    /* NOTE: when copy is true the caller takes responsibility for deleting the point */
 	
 	VSCEnveloppePoint* getPointClosestToTime(double time);
 	VSCEnveloppePoint* getPointClosestToTime(double time, bool copy);
