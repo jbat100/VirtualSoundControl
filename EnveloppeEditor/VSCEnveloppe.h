@@ -11,6 +11,11 @@
 #include <string>
 class VSCEnveloppePoint;
 
+#define POINT_ITERATOR                  std::list<VSCEnveloppePoint*>::iterator 
+#define REVERSE_POINT_ITERATOR          std::list<VSCEnveloppePoint*>::reverse_iterator 
+#define CONST_POINT_ITERATOR            std::list<VSCEnveloppePoint*>::const_iterator 
+#define CONST_REVERSE_POINT_ITERATOR    std::list<VSCEnveloppePoint*>::const_reverse_iterator 
+
 typedef enum _VSCEnveloppeType {
 	VSCEnveloppeTypeLinear = 1, // in linear mode, enveloppe point control points are ignored
 	VSCEnveloppeTypeBezierCubic

@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface EnveloppeEditorDocument : NSDocument {
+@interface VSCEnveloppeEditorDocument : NSDocument {
 
 }
 

@@ -12,11 +12,6 @@
 
 #include <cmath>
 
-#define POINT_ITERATOR                  std::list<VSCEnveloppePoint*>::iterator 
-#define REVERSE_POINT_ITERATOR          std::list<VSCEnveloppePoint*>::reverse_iterator 
-#define CONST_POINT_ITERATOR            std::list<VSCEnveloppePoint*>::const_iterator 
-#define CONST_REVERSE_POINT_ITERATOR    std::list<VSCEnveloppePoint*>::const_reverse_iterator 
-
 void VSCEnveloppe::setName(std::string name) {
 	_name = name;
 }

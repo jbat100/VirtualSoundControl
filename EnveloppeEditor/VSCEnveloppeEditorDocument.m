@@ -6,14 +6,14 @@
 //  Copyright 2011 JBAT. All rights reserved.
 //
 
-#import "EnveloppeEditorDocument.h"
+#import "VSCEnveloppeEditorDocument.h"
 
 
-@implementation EnveloppeEditorDocument
+@implementation VSCEnveloppeEditorDocument
 
 - (NSString *)windowNibName {
     // Implement this to return a nib to load OR implement -makeWindowControllers to manually create your controllers.
-    return @"EnveloppeDocument";
+    return @"VSCEnveloppeDocument";
 }
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError

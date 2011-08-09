@@ -6,23 +6,22 @@
 //  Copyright 2011 JBAT. All rights reserved.
 //
 
-#import "EnveloppeView.h"
-#import "EnveloppeViewSetup.h"
+#import "VSCEnveloppeView.h"
+#import "VSCEnveloppeViewSetup.h"
 
 #import <math.h>
-#import "Geom.h"
+#import "NSGeomOperations.h"
 
 
 
-@implementation EnveloppeView
+@implementation VSCEnveloppeView
 
-@synthesize enveloppe, enveloppeViewSetup, currentlySelectedPoints;
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
-		self.currentlySelectedPoints = [NSMutableArray arrayWithCapacity:50]; 
+
     }
     return self;
 }
@@ -30,9 +29,41 @@
 - (void)drawRect:(NSRect)dirtyRect {
     // Drawing code here.
 	
+	if (!_enveloppe) {
+		// draw whatever is needed to show that no enveloppe is associated with the view
+		return;
+	}
+	
 	CGSize size = self.bounds.size;
 	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
-	CGFloat radius = (CGFloat)enveloppeViewSetup.controlPointRadius;
+	
+	CGFloat radius = (CGFloat)_enveloppeViewSetup->getControlPointRadius();
+	
+	
+	
+	std::list<VSCEnveloppePoint*> allPoints = _enveloppe->getAllPoints(void);
+	
+	
+	
+	POINT_ITERATOR currentIt;
+	POINT_ITERATOR nextIt;
+	
+	for (POINT_ITERATOR it = allPoints.begin(); it != allPoints.end(); it++) {
+		
+		VSCEnveloppePoint* currentPoint = *it;
+		
+		// draw control circle for point
+		
+		nextIt = it;
+		nextIt++;
+		
+		
+		
+		
+	}
+	
+	
+	
 	
 	if ([enveloppe.controlPoints count] > 1) {
 		for (NSInteger count = 1; count < [enveloppe.controlPoints count]; count++) {
