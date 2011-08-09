@@ -11,13 +11,20 @@
 #include <string>
 class VSCEnveloppePoint;
 
+typedef enum _VSCEnveloppeType {
+	VSCEnveloppeTypeLinear = 1, // in linear mode, enveloppe point control points are ignored
+	VSCEnveloppeTypeBezierCubic
+} VSCEnveloppeType;
+
 class VSCEnveloppe {
 	
 protected:
 	
 	std::list<VSCEnveloppePoint*> _points;
-	double _minimumTimeStep;
-	bool _copyAddedPoints;
+	
+    VSCEnveloppeType _type;
+    
+    double _minimumTimeStep;
 	std::string _name;
 	int _channel;
 	
@@ -25,14 +32,15 @@ public:
 	
 	/* getters / setters */
 	
+    
 	void setName(std::string name);
-	std::string getName(void);
+	std::string getName(void) const;
 	void setChannel(int channel);
-	int getChannel(void);
+	int getChannel(void) const;
 	void setMinimumTimeStep(double minimumTimeStep);
-	double getMinimumTimeStep(void);
+	double getMinimumTimeStep(void) const;
 	
-	/* edit */
+	/* edit points */
 	
 	void addPoint(VSCEnveloppePoint* point);
 	void addPoints(std::list<VSCEnveloppePoint*> points); 
@@ -48,21 +56,21 @@ public:
     
     /* NOTE: when copy is true the caller takes responsibility for deleting the point */
 	
-	VSCEnveloppePoint* getPointClosestToTime(double time);
-	VSCEnveloppePoint* getPointClosestToTime(double time, bool copy);
-	VSCEnveloppePoint* getFirstPointAfterTime(double time);
-	VSCEnveloppePoint* getFirstPointAfterTime(double time, bool copy);
-	VSCEnveloppePoint* getFirstPointBeforeTime(double time);
-	VSCEnveloppePoint* getFirstPointBeforeTime(double time, bool copy);
-	std::list<VSCEnveloppePoint*> getPointsInTimeRange(double lowerTime, double upperTime);
-	std::list<VSCEnveloppePoint*> getPointsInTimeRange(double lowerTime, double upperTime, bool copy);
-	std::list<VSCEnveloppePoint*> getAllPoints(void);
-	std::list<VSCEnveloppePoint*> getAllPoints(bool copy);
-	int numberOfPoints(void);
+	VSCEnveloppePoint* getPointClosestToTime(double time) const;
+	VSCEnveloppePoint* getPointClosestToTime(double time, bool copy) const;
+	VSCEnveloppePoint* getFirstPointAfterTime(double time) const;
+	VSCEnveloppePoint* getFirstPointAfterTime(double time, bool copy) const;
+	VSCEnveloppePoint* getFirstPointBeforeTime(double time) const;
+	VSCEnveloppePoint* getFirstPointBeforeTime(double time, bool copy) const;
+	std::list<VSCEnveloppePoint*> getPointsInTimeRange(double lowerTime, double upperTime) const;
+	std::list<VSCEnveloppePoint*> getPointsInTimeRange(double lowerTime, double upperTime, bool copy) const;
+	std::list<VSCEnveloppePoint*> getAllPoints(void) const;
+	std::list<VSCEnveloppePoint*> getAllPoints(bool copy) const;
+	int numberOfPoints(void) const;
 	
 	/* value */
 	
-	double getValueAtTime(double time);
+	double getValueAtTime(double time) const;
 	
 	/* sorting */
 	

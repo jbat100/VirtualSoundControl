@@ -12,14 +12,16 @@
 
 #include <cmath>
 
-#define POINT_ITERATOR          std::list<VSCEnveloppePoint*>::iterator 
-#define REVERSE_POINT_ITERATOR  std::list<VSCEnveloppePoint*>::reverse_iterator 
+#define POINT_ITERATOR                  std::list<VSCEnveloppePoint*>::iterator 
+#define REVERSE_POINT_ITERATOR          std::list<VSCEnveloppePoint*>::reverse_iterator 
+#define CONST_POINT_ITERATOR            std::list<VSCEnveloppePoint*>::const_iterator 
+#define CONST_REVERSE_POINT_ITERATOR    std::list<VSCEnveloppePoint*>::const_reverse_iterator 
 
 void VSCEnveloppe::setName(std::string name) {
 	_name = name;
 }
 
-std::string VSCEnveloppe::getName(void) {
+std::string VSCEnveloppe::getName(void) const {
 	return _name;
 }
 
@@ -27,7 +29,7 @@ void VSCEnveloppe::setChannel(int channel) {
 	_channel = channel;
 }
 
-int VSCEnveloppe::getChannel(void) {
+int VSCEnveloppe::getChannel(void) const {
 	return _channel;
 }
 
@@ -35,7 +37,7 @@ void VSCEnveloppe::setMinimumTimeStep(double minimumTimeStep) {
 	_minimumTimeStep = minimumTimeStep;
 }
 
-double VSCEnveloppe::getMinimumTimeStep(void) {
+double VSCEnveloppe::getMinimumTimeStep(void) const {
 	return _minimumTimeStep;
 }
 
@@ -140,17 +142,17 @@ void VSCEnveloppe::removePointsInTimeRange(double lowerTime, double upperTime){
 
 /* get points */
 
-VSCEnveloppePoint* VSCEnveloppe::getPointClosestToTime(double time) {
+VSCEnveloppePoint* VSCEnveloppe::getPointClosestToTime(double time) const {
 	return getPointClosestToTime(time, false);
 }
 
-VSCEnveloppePoint* VSCEnveloppe::getPointClosestToTime(double time, bool copy) {
+VSCEnveloppePoint* VSCEnveloppe::getPointClosestToTime(double time, bool copy) const {
 	
 	if (_points.size() == 0) 
 		return NULL;
 	
-	POINT_ITERATOR it = _points.begin();
-	POINT_ITERATOR closestIt = _points.begin();
+	CONST_POINT_ITERATOR it = _points.begin();
+	CONST_POINT_ITERATOR closestIt = _points.begin();
 	
 	double minimumTimeDifference = abs((*it)->getTime() - time);
 	
@@ -174,16 +176,16 @@ VSCEnveloppePoint* VSCEnveloppe::getPointClosestToTime(double time, bool copy) {
 	
 }
 
-VSCEnveloppePoint* VSCEnveloppe::getFirstPointAfterTime(double time) {
+VSCEnveloppePoint* VSCEnveloppe::getFirstPointAfterTime(double time) const {
 	return getFirstPointAfterTime(time, false);
 }
 
-VSCEnveloppePoint* VSCEnveloppe::getFirstPointAfterTime(double time, bool copy) {
+VSCEnveloppePoint* VSCEnveloppe::getFirstPointAfterTime(double time, bool copy) const {
 	
 	if (_points.size() == 0) 
 		return NULL;
 	
-	for (POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
+	for (CONST_POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
 		
 		if ((*it)->getTime() > time) {
 			
@@ -201,16 +203,16 @@ VSCEnveloppePoint* VSCEnveloppe::getFirstPointAfterTime(double time, bool copy) 
 	
 }
 
-VSCEnveloppePoint* VSCEnveloppe::getFirstPointBeforeTime(double time) {
+VSCEnveloppePoint* VSCEnveloppe::getFirstPointBeforeTime(double time) const {
 	return getFirstPointBeforeTime(time, false);
 }
 
-VSCEnveloppePoint* VSCEnveloppe::getFirstPointBeforeTime(double time, bool copy) {
+VSCEnveloppePoint* VSCEnveloppe::getFirstPointBeforeTime(double time, bool copy) const {
 	
 	if (_points.size() == 0) 
 		return NULL;
 	
-	for (REVERSE_POINT_ITERATOR it = _points.rbegin(); it != _points.rend(); it++) {
+	for (CONST_REVERSE_POINT_ITERATOR it = _points.rbegin(); it != _points.rend(); it++) {
 		
 		if ((*it)->getTime() < time) {
 			
@@ -228,16 +230,16 @@ VSCEnveloppePoint* VSCEnveloppe::getFirstPointBeforeTime(double time, bool copy)
 	
 }
 
-std::list<VSCEnveloppePoint*> VSCEnveloppe::getPointsInTimeRange(double lowerTime, double upperTime) {
+std::list<VSCEnveloppePoint*> VSCEnveloppe::getPointsInTimeRange(double lowerTime, double upperTime) const {
 	return getPointsInTimeRange(lowerTime, upperTime, false);
 }
 
 
-std::list<VSCEnveloppePoint*> VSCEnveloppe::getPointsInTimeRange(double lowerTime, double upperTime, bool copy) {
+std::list<VSCEnveloppePoint*> VSCEnveloppe::getPointsInTimeRange(double lowerTime, double upperTime, bool copy) const {
 	
 	std::list<VSCEnveloppePoint*> ps;
 	
-	for (POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
+	for (CONST_POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
 		
 		if ((*it)->getTime() > lowerTime && (*it)->getTime() < upperTime) {
 			if (copy)
@@ -251,17 +253,17 @@ std::list<VSCEnveloppePoint*> VSCEnveloppe::getPointsInTimeRange(double lowerTim
 	return ps;
 }
 
-std::list<VSCEnveloppePoint*> VSCEnveloppe::getAllPoints(void) {
+std::list<VSCEnveloppePoint*> VSCEnveloppe::getAllPoints(void) const {
     return getAllPoints(false);
 }
 
-std::list<VSCEnveloppePoint*> VSCEnveloppe::getAllPoints(bool copy) {
+std::list<VSCEnveloppePoint*> VSCEnveloppe::getAllPoints(bool copy) const {
     
     if (copy) {
         
         std::list<VSCEnveloppePoint*> copiedPoints;
         
-        for (POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
+        for (CONST_POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
             VSCEnveloppePoint* newPoint = new VSCEnveloppePoint(*(*it));
             copiedPoints.push_back(newPoint);
         }
@@ -274,14 +276,14 @@ std::list<VSCEnveloppePoint*> VSCEnveloppe::getAllPoints(bool copy) {
     
 }
 
-int VSCEnveloppe::numberOfPoints(void) {
+int VSCEnveloppe::numberOfPoints(void) const {
 	return _points.size();
 }
 
 
 /* value */
 
-double VSCEnveloppe::getValueAtTime(double time) {
+double VSCEnveloppe::getValueAtTime(double time) const {
 	
 	VSCEnveloppePoint* lp = getFirstPointBeforeTime(time, false);
 	VSCEnveloppePoint* up = getFirstPointAfterTime(time, false);
