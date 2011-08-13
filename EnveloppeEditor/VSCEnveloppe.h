@@ -7,6 +7,9 @@
  *
  */
 
+#ifndef _VSC_ENVELOPPE_H_
+#define _VSC_ENVELOPPE_H_
+
 #include <list>
 #include <string>
 class VSCEnveloppePoint;
@@ -82,4 +85,6 @@ public:
 	void sortPointsByTime(void);
 	
 };
+
+#endif
 

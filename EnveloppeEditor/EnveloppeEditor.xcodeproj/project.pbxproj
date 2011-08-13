@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1017811E132BF9B6001C6A96 /* NSGeomOperations.c in Sources */ = {isa = PBXBuildFile; fileRef = 1017811D132BF9B6001C6A96 /* NSGeomOperations.c */; };
+		1017811E132BF9B6001C6A96 /* NSGeomOperations.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1017811D132BF9B6001C6A96 /* NSGeomOperations.mm */; };
 		1023D46513E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1023D46413E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp */; };
 		1030EFE3132985C300E4BCA1 /* VSCEnveloppeEditorDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 1030EFE2132985C300E4BCA1 /* VSCEnveloppeEditorDocument.m */; };
 		1030EFE7132985E800E4BCA1 /* EnveloppeEditorDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1030EFE5132985E800E4BCA1 /* EnveloppeEditorDocument.xib */; };
+		1055176813F6BAEE000D011D /* VSCColour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1055176713F6BAEE000D011D /* VSCColour.cpp */; };
 		107A78FE132ADE3700C4B1FE /* VSCEnveloppeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */; };
-		108CD8891330124F0002A0A7 /* CGColorOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 108CD8881330124F0002A0A7 /* CGColorOperations.m */; };
+		108CD8891330124F0002A0A7 /* CGColorOperations.mm in Sources */ = {isa = PBXBuildFile; fileRef = 108CD8881330124F0002A0A7 /* CGColorOperations.mm */; };
 		108F294813F16E77007F7A6A /* VSCMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108F294613F16E77007F7A6A /* VSCMath.cpp */; };
 		109A1E1513E35FB200407874 /* VSCEnveloppe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A1E1413E35FB200407874 /* VSCEnveloppe.cpp */; };
 		109A1E1813E3613A00407874 /* VSCEnveloppePoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A1E1713E3613A00407874 /* VSCEnveloppePoint.cpp */; };
@@ -26,17 +27,19 @@
 /* Begin PBXFileReference section */
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1017811C132BF9B6001C6A96 /* NSGeomOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSGeomOperations.h; sourceTree = "<group>"; };
-		1017811D132BF9B6001C6A96 /* NSGeomOperations.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = NSGeomOperations.c; sourceTree = "<group>"; };
+		1017811D132BF9B6001C6A96 /* NSGeomOperations.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NSGeomOperations.mm; sourceTree = "<group>"; };
 		1023D46313E8A58700BB9080 /* VSCEnveloppeViewSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeViewSetup.h; sourceTree = "<group>"; };
 		1023D46413E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppeViewSetup.cpp; sourceTree = "<group>"; };
 		1030EFE1132985C300E4BCA1 /* VSCEnveloppeEditorDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeEditorDocument.h; sourceTree = "<group>"; };
 		1030EFE2132985C300E4BCA1 /* VSCEnveloppeEditorDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSCEnveloppeEditorDocument.m; sourceTree = "<group>"; };
 		1030EFE6132985E800E4BCA1 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/EnveloppeEditorDocument.xib; sourceTree = "<group>"; };
+		1055176613F6BAEE000D011D /* VSCColour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCColour.h; sourceTree = "<group>"; };
+		1055176713F6BAEE000D011D /* VSCColour.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCColour.cpp; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		107A78FC132ADE3700C4B1FE /* VSCEnveloppeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeView.h; sourceTree = "<group>"; };
 		107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCEnveloppeView.mm; sourceTree = "<group>"; };
 		108CD8871330124F0002A0A7 /* CGColorOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGColorOperations.h; sourceTree = "<group>"; };
-		108CD8881330124F0002A0A7 /* CGColorOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGColorOperations.m; sourceTree = "<group>"; };
+		108CD8881330124F0002A0A7 /* CGColorOperations.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CGColorOperations.mm; sourceTree = "<group>"; };
 		108F294613F16E77007F7A6A /* VSCMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCMath.cpp; sourceTree = "<group>"; };
 		108F294713F16E77007F7A6A /* VSCMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCMath.h; sourceTree = "<group>"; };
 		109A1E1313E35FB200407874 /* VSCEnveloppe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppe.h; sourceTree = "<group>"; };
@@ -70,11 +73,13 @@
 			isa = PBXGroup;
 			children = (
 				1017811C132BF9B6001C6A96 /* NSGeomOperations.h */,
-				1017811D132BF9B6001C6A96 /* NSGeomOperations.c */,
+				1017811D132BF9B6001C6A96 /* NSGeomOperations.mm */,
 				108CD8871330124F0002A0A7 /* CGColorOperations.h */,
-				108CD8881330124F0002A0A7 /* CGColorOperations.m */,
+				108CD8881330124F0002A0A7 /* CGColorOperations.mm */,
 				108F294613F16E77007F7A6A /* VSCMath.cpp */,
 				108F294713F16E77007F7A6A /* VSCMath.h */,
+				1055176613F6BAEE000D011D /* VSCColour.h */,
+				1055176713F6BAEE000D011D /* VSCColour.cpp */,
 			);
 			name = Generic;
 			sourceTree = "<group>";
@@ -256,12 +261,13 @@
 				8D15AC320486D014006FF6A4 /* main.m in Sources */,
 				1030EFE3132985C300E4BCA1 /* VSCEnveloppeEditorDocument.m in Sources */,
 				107A78FE132ADE3700C4B1FE /* VSCEnveloppeView.mm in Sources */,
-				1017811E132BF9B6001C6A96 /* NSGeomOperations.c in Sources */,
-				108CD8891330124F0002A0A7 /* CGColorOperations.m in Sources */,
+				1017811E132BF9B6001C6A96 /* NSGeomOperations.mm in Sources */,
+				108CD8891330124F0002A0A7 /* CGColorOperations.mm in Sources */,
 				109A1E1513E35FB200407874 /* VSCEnveloppe.cpp in Sources */,
 				109A1E1813E3613A00407874 /* VSCEnveloppePoint.cpp in Sources */,
 				1023D46513E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp in Sources */,
 				108F294813F16E77007F7A6A /* VSCMath.cpp in Sources */,
+				1055176813F6BAEE000D011D /* VSCColour.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

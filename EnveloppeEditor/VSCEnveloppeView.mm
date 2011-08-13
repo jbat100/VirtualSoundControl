@@ -8,9 +8,11 @@
 
 #import "VSCEnveloppeView.h"
 #import "VSCEnveloppeViewSetup.h"
+#import "VSCColour.h"
+#import "CGColorOperations.h"
+#import "NSGeomOperations.h"
 
 #import <math.h>
-#import "NSGeomOperations.h"
 
 
 
@@ -35,18 +37,50 @@
 	}
 	
 	CGSize size = self.bounds.size;
-	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
 	
-	CGFloat radius = (CGFloat)_enveloppeViewSetup->getControlPointRadius();
+	NSGraphicsContext * nsGraphicsContext = [NSGraphicsContext currentContext]; 
+	CGContextRef ctx = (CGContextRef) [nsGraphicsContext graphicsPort];
 	
+	CGFloat radius = (CGFloat)(_enveloppeViewSetup->getControlPointRadius());
 	
+	CGColorRef cgSelectedColourRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getControlPointSelectedColour());
+	CGColorRef cgUnselectedColourRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getControlPointUnselectedColour());
 	
-	std::list<VSCEnveloppePoint*> allPoints = _enveloppe->getAllPoints(void);
+	CGColorRef cgLineColorRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getLineColour());
 	
-	
+	std::list<VSCEnveloppePoint*> allPoints = _enveloppe->getAllPoints();	
 	
 	POINT_ITERATOR currentIt;
 	POINT_ITERATOR nextIt;
+	
+	for (POINT_ITERATOR it = allPoints.begin(); it != allPoints.end(); it++) {
+		
+		nextIt = it;
+		nextIt++;
+		
+		if (nextIt != allPoints.end()) {
+			
+			VSCEnveloppePoint* currentPoint = *it;
+			VSCEnveloppePoint* nextPoint = *nextIt;
+			
+			// draw line between this point and next
+			
+			NSPoint point1 = [self pointForEnveloppePoint:currentPoint];
+			NSPoint point2 = [self pointForEnveloppePoint:nextPoint];
+			
+			// Background
+			CGMutablePathRef linePath = CGPathCreateMutable(); 
+			
+			CGPathMoveToPoint(linePath, NULL, point1.x, point1.y);
+			CGPathAddLineToPoint(linePath, NULL, point2.x, point2.x); 
+			CGContextSetLineWidth(ctx, 2);
+			CGContextSetStrokeColorWithColor(ctx, cgLineColorRef);
+			CGContextAddPath(ctx, linePath);
+			CGContextStrokePath(ctx);
+			
+		}
+		
+	}
 	
 	for (POINT_ITERATOR it = allPoints.begin(); it != allPoints.end(); it++) {
 		
@@ -54,76 +88,36 @@
 		
 		// draw control circle for point
 		
-		nextIt = it;
-		nextIt++;
-		
-		
-		
-		
-	}
-	
-	
-	
-	
-	if ([enveloppe.controlPoints count] > 1) {
-		for (NSInteger count = 1; count < [enveloppe.controlPoints count]; count++) {
-			
-			CGColorRef cgColor = enveloppeViewSetup.unselectedControlPointColor;
-			
-			EnveloppeControlPoint* controlPoint1 = [enveloppe.controlPoints objectAtIndex:count-1];
-			EnveloppeControlPoint* controlPoint2 = [enveloppe.controlPoints objectAtIndex:count];
-			
-			NSPoint point1 = [self pointForControlPoint:controlPoint1];
-			NSPoint point2 = [self pointForControlPoint:controlPoint2];
-			
-			// Background
-			CGMutablePathRef linePath = CGPathCreateMutable(); 
-			
-			CGPathMoveToPoint(linePath, NULL, point1.x, point1.y);
-			CGPathAddLineToPoint(linePath, NULL, point2.x, point2.x); 
-			
-			CGContextSetLineWidth(ctx, 2);
-			CGContextSetStrokeColorWithColor(ctx, cgColor);
-			CGContextAddPath(ctx, backgroundPath);
-			CGContextStrokePath(ctx);
-		}
-	}
-	
-	
-	for (EnveloppeControlPoint* controlPoint in enveloppe.controlPoints) {
-		
-		NSPoint p = [self pointForControlPoint:controlPoint];
+		NSPoint p = [self pointForEnveloppePoint:currentPoint];
 		
 		CGColorRef cgColor = NULL;
 		
-		if ([currentlySelectedPoints indexOfObjectIdenticalTo:controlPoint] == NSNotFound) 
-			cgColor = enveloppeViewSetup.selectedControlPointColor;
+		if (_currentlySelectedPoints.find(currentPoint) != _currentlySelectedPoints.end())
+			cgColor = cgSelectedColourRef;
 		else 
-			cgColor = enveloppeViewSetup.unselectedControlPointColor;
+			cgColor = cgUnselectedColourRef;
 		
 		CGMutablePathRef dotPath = CGPathCreateMutable(); 
-		
-		CGPathAddEllipseInRect(dotPath, NULL, 
-							   CGRectMake(p.x - radius, p.y - radius, 2.0*radius, 2.0*radius));
-		
-		
+		CGPathAddEllipseInRect(dotPath, NULL, CGRectMake(p.x - radius, p.y - radius, 2.0*radius, 2.0*radius));
 		CGContextSetFillColorWithColor(ctx, cgColor);  
 		CGContextSetLineWidth(ctx, 1);
-		CGContextAddPath(ctx, touchDotPath);
+		CGContextAddPath(ctx, dotPath);
 		CGContextFillPath(ctx);
 		CGPathRelease(dotPath);
 		
 	}
+	
+	
 	
 }
 
 -(double) valueForPoint:(NSPoint)point {
 	
 	double normalisedY = 1.0 - (point.y / self.frame.size.height);
-	double range = enveloppeViewSetup.maxValue - enveloppeViewSetup.minValue; 
-	double adjustedY = enveloppeViewSetup.minValue + (normalisedY*range);
+	double range = _enveloppeViewSetup->getMaxValue() - _enveloppeViewSetup->getMinValue(); 
+	double adjustedY = _enveloppeViewSetup->getMinValue() + (normalisedY*range);
 	
-	if (enveloppeViewSetup.dB)
+	if (_enveloppeViewSetup->getDisplayType() == VSCEnveloppeDisplayTypeDB)
 		return pow(10.0, adjustedY) / 10.0;
 	
 	return adjustedY;
@@ -133,61 +127,78 @@
 -(NSTimeInterval) timeForPoint:(CGPoint)point {
 	
 	double normalisedX = 1.0 - (point.x / self.frame.size.width);
-	double range = enveloppeViewSetup.maxTime - enveloppeViewSetup.minTime; 
-	return (NSTimeInterval)(enveloppeViewSetup.minValue + (normalisedX*range));
+	double range = _enveloppeViewSetup->getMaxTime() - _enveloppeViewSetup->getMinTime(); 
+	return (NSTimeInterval)(_enveloppeViewSetup->getMinValue() + (normalisedX*range));
 	
 }
 
--(NSPoint) pointForControlPoint:(EnveloppeControlPoint*)controlPoint {
-	return [self pointForTime:controlPoint.timeStamp value:controlPoint.value];
+-(NSPoint) pointForEnveloppePoint:(VSCEnveloppePoint*)enveloppePoint {
+	return [self pointForTime:(NSTimeInterval)enveloppePoint->getTime() value:(double)enveloppePoint->getValue()];
 }
 
 -(NSPoint) pointForTime:(NSTimeInterval)time value:(double)value {
 	
-	double timeRange = enveloppeViewSetup.maxTime - enveloppeViewSetup.minTime; 
+	double timeRange = _enveloppeViewSetup->getMaxTime() - _enveloppeViewSetup->getMinTime(); 
 	double timePerPixel = timeRange / self.frame.size.width; 
-	double x = (time - enveloppeViewSetup.minTime) / timePerPixel;
+	double x = (time - _enveloppeViewSetup->getMinTime()) / timePerPixel;
 	
-	double valueRange = enveloppeViewSetup.maxValue - enveloppeViewSetup.minValue; 
+	double valueRange = _enveloppeViewSetup->getMaxValue() - _enveloppeViewSetup->getMinValue(); 
 	double valuePerPixel = valueRange / self.frame.size.height; 
-	double y = (value - enveloppeViewSetup.minValue) / valuePerPixel;
+	double y = (value - _enveloppeViewSetup->getMinValue()) / valuePerPixel;
 	
 	return NSMakePoint(x, y);
 }
 
--(EnveloppeControlPoint*) controlPointForPoint:(NSPoint)point {
+-(BOOL) point:(NSPoint)p touchesEnveloppePoint:(VSCEnveloppePoint*)enveloppePoint {
 	
-	for (EnveloppeControlPoint* controlPoint in enveloppe.controlPoints) {
-		
-		NSPoint p = [self pointForTime:controlPoint.time value:controlPoint.value];
-		CGFloat distanceToPoint = DistanceBetweenCGPoints(p, point);
-		
-		if (distanceToPoint < enveloppeViewSetup.controlPointRadius) 
-			return controlPoint;
-		
-	}
+	float radius = _enveloppeViewSetup->getControlPointRadius();
 	
-	return nil;
+	/* First do a simple sqaure test to discard faster */
+	NSPoint envP = [self pointForEnveloppePoint:enveloppePoint];
+	CGRect testRect = CGRectMake(envP.x-radius, envP.y, radius*2, radius*2);
+	if (!CGRectContainsPoint(testRect, envP))
+		return NO;
 	
-}
-
--(NSArray*) controlPointsInRect:(NSRect)rect {
+	/* If first test succeeded, do proper test */
+	CGFloat distanceToPoint = DistanceBetweenCGPoints(p, envP);
+	if (distanceToPoint < radius) 
+		return YES;
 	
-	NSMutableArray* controlPoints = [NSMutableArray arrayWithCapacity:[[enveloppe.controlPoints] count]];
-	
-	for (EnveloppeControlPoint* controlPoint in enveloppe.controlPoints) {
-		NSPoint p = [self pointForControlPoint:controlPoint];
-		if (NSPointInRect(p, rect))
-			[controlPoints addObject:controlPoint];
-	}
-	
-	return [NSArray arrayWithArray:controlPoints];
+	return NO;
 	
 }
 
--(void) setControlPoint:(EnveloppeControlPoint*)controlPoint withPoint:(NSPoint)p {
-	controlPoint.value = [self valueForPoint:p];
-	controlPoint.timeStamp = [self timeForPoint:p];
+-(VSCEnveloppePoint*) enveloppePointForPoint:(NSPoint)point {
+	
+	std::list<VSCEnveloppePoint*> allPoints = _enveloppe->getAllPoints();	
+	
+	for (POINT_ITERATOR it = allPoints.begin(); it != allPoints.end(); it++) {
+		if ([self point:point touchesEnveloppePoint:(*it)])
+			return (*it);
+	}
+	
+	return NULL;
+	
+}
+
+-(std::list<VSCEnveloppePoint*>) enveloppePointsInRect:(NSRect)rect {
+	
+	std::list<VSCEnveloppePoint*> allPoints = _enveloppe->getAllPoints();
+	std::list<VSCEnveloppePoint*> rectPoints;
+	
+	for (POINT_ITERATOR it = allPoints.begin(); it != allPoints.end(); it++) {
+		NSPoint p = [self pointForEnveloppePoint:(*it)];
+		if (CGRectContainsPoint(rect, p))
+			rectPoints.push_back(*it);
+	}
+	
+	return rectPoints;
+	
+}
+
+-(void) setEnveloppePoint:(VSCEnveloppePoint*)controlPoint withPoint:(NSPoint)p {
+	controlPoint->setValue([self valueForPoint:p]);
+	controlPoint->setTime([self timeForPoint:p]);
 }
 
 #pragma mark -

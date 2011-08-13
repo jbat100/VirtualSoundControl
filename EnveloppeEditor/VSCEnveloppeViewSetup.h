@@ -7,10 +7,15 @@
  *
  */
 
+#ifndef _VSC_ENVELOPPE_VIEW_SETUP_H_
+#define _VSC_ENVELOPPE_VIEW_SETUP_H_
+
+#include "VSCColour.h"
+
 typedef enum _VSCEnveloppeDisplayType {
-	EnveloppeDisplayTypeDefault = 0,
-	EnveloppeDisplayTypeLinear,
-	EnveloppeDisplayTypeDB
+	VSCEnveloppeDisplayTypeDefault = 0,
+	VSCEnveloppeDisplayTypeLinear,
+	VSCEnveloppeDisplayTypeDB
 } VSCEnveloppeDisplayType;
 
 
@@ -18,39 +23,71 @@ class VSCEnveloppeViewSetup {
 	
 protected:
 	
-	double _minTime;
-	double _maxTime;
+	/*
+	 *	View range
+	 */
+	float _minTime;
+	float _maxTime;
+	float _minValue;
+	float _maxValue;
 	
-	double _minValue;
-	double _maxValue;
-	
+	/*
+	 *	Display type
+	 */
 	VSCEnveloppeDisplayType _displayType;
 	
-	double _controlPointRadius;
-	double _lineWidth;
+	/*
+	 *	Control Points
+	 */
+	float _controlPointRadius;
+	VSCColour _controlPointSelectedColour;
+	VSCColour _controlPointUnselectedColour;
+	
+	/*
+	 *	Enveloppe lines
+	 */
+	float _lineWidth;
+	VSCColour _lineColour;
 	
 	
 public:
 	
-	double getMinTime(void) const;
-	void setMinTime(double  minTime);
+	/*
+	 *	View range setters / getters
+	 */
+	float getMinTime(void) const;
+	void setMinTime(float  minTime);
+	float getMaxTime(void) const;
+	void setMaxTime(float  maxTime);
+	float getMinValue(void) const;
+	void setMinValue(float  minValue);
+	float getMaxValue(void) const;
+	void setMaxValue(float  maxValue);
 	
-	double getMaxTime(void) const;
-	void setMaxTime(double  maxTime);
-	
-	double getMinValue(void) const;
-	void setMinValue(double  minValue);
-	
-	double getMaxValue(void) const;
-	void setMaxValue(double  maxValue);
-	
+	/*
+	 *	Display type setters / getters
+	 */
 	VSCEnveloppeDisplayType getDisplayType(void) const;
 	void setDisplayType(VSCEnveloppeDisplayType displayType);
 	
-	double getControlPointRadius(void) const;
-	void setControlPointRadius(double controlPointRadius);
+	/*
+	 *	Control Points setters / getters
+	 */
+	float getControlPointRadius(void) const;
+	void setControlPointRadius(float controlPointRadius);
+	VSCColour getControlPointSelectedColour(void) const;
+	void setControlPointSelectedColour(VSCColour colour);
+	VSCColour getControlPointUnselectedColour(void) const;
+	void setControlPointUnselectedColour(VSCColour colour);
 	
-	double getLineWidth(void) const;
-	void setLineWidth(double lineWidth);
+	/*
+	 *	Enveloppe lines setters / getters
+	 */
+	float getLineWidth(void) const;
+	void setLineWidth(float lineWidth);
+	VSCColour getLineColour(void) const;
+	void setLineColour(VSCColour colour);
 
 };
+
+#endif

@@ -73,3 +73,10 @@ void VSCEnveloppePoint::setRightControlPoint(VSCEnveloppePoint* controlPoint) {
 VSCEnveloppePoint* VSCEnveloppePoint::getRightControlPoint(void) const {
     return _rightControlPoint;
 }
+
+#pragma mark --- Operator <<
+
+std::ostream& operator<<(std::ostream& output, const VSCEnveloppePoint& p) {
+    output << "VSCEnveloppePoint (time: " <<  p._time << "s, value:" << p._value <<")";
+    return output;  
+}

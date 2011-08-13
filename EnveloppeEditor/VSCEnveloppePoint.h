@@ -7,8 +7,14 @@
  *
  */
 
+#ifndef _VSC_ENVELOPPE_POINT_H_
+#define _VSC_ENVELOPPE_POINT_H_
+
+#include <ostream>
 
 class VSCEnveloppePoint {
+	
+	friend std::ostream& operator<<(std::ostream& output, const VSCEnveloppePoint& p);
 	
 protected:
     
@@ -40,3 +46,5 @@ public:
 
 bool compareEnveloppePointValues (VSCEnveloppePoint* firstPoint, VSCEnveloppePoint* secondPoint);
 bool compareEnveloppePointTimes (VSCEnveloppePoint* firstPoint, VSCEnveloppePoint* secondPoint);
+
+#endif

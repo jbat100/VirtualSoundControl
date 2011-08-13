@@ -8,36 +8,53 @@
 
 #import <Cocoa/Cocoa.h>
 
-class VSCEnveloppeViewSetup;
-class VSCEnveloppe;
-class VSCEnveloppePoint;
+#import "VSCEnveloppeViewSetup.h";
+#import "VSCEnveloppe.h";
+#import "VSCEnveloppePoint.h";
 
-#import <list>
+#include <list>
+#include <set>
+
+typedef enum _VSCEnveloppeViewClickArea {
+	VSCEnveloppeViewClickAreaNone,
+	VSCEnveloppeViewClickAreaSelection,
+	VSCEnveloppeViewClickAreaPoint
+} VSCEnveloppeViewClickArea;
 
 
 @interface VSCEnveloppeView : NSView {
 	
 	VSCEnveloppe* _enveloppe;
 	VSCEnveloppeViewSetup* _enveloppeViewSetup;
-	std::list<VSCEnveloppePoint*> _currentlySelectedPoints;
-	BOOL _performingSelection;
-	NSRect _selectionRect;
+	
+	std::set<VSCEnveloppePoint*> _currentlySelectedPoints;
+	
+	VSCEnveloppeViewClickArea clickArea;
+	BOOL movedSinceMouseDown;
+	NSRect selectionRect;
 
 }
 
+@property (nonatomic, assign) BOOL performingSelection;
+@property (nonatomic, assign) NSRect selectionRect;
+
 /* C++ setters / getters */
--(VSCEnveloppe*) enveloppe;
--(void) setEnveloppe(VSCEnveloppe* enveloppe); // class takes responsability for deleting on dealloc
--(VSCEnveloppeViewSetup*) enveloppeViewSetup;
--(void) setEnveloppeViewSetup(VSCEnveloppeViewSetup* enveloppe); // class takes responsability for deleting on dealloc
--(std::list<VSCEnveloppePoint*>*) currentlySelectedPoints;
+-(VSCEnveloppe*)getEnveloppe;
+-(void)setEnveloppe:(VSCEnveloppe*)enveloppe; // class takes responsability for deleting on dealloc
+-(VSCEnveloppeViewSetup*) getEnveloppeViewSetup;
+-(void)setEnveloppeViewSetup:(VSCEnveloppeViewSetup*)enveloppe; // class takes responsability for deleting on dealloc
+-(std::set<VSCEnveloppePoint*>&) getCurrentlySelectedPoints;
+-(void)setCurrentlySelectedPoints:(std::set<VSCEnveloppePoint*>)points;
 
 
 -(double) valueForPoint:(NSPoint)point;
 -(double) timeForPoint:(NSPoint)point;
+-(BOOL) point:(NSPoint)p touchesEnveloppePoint:(VSCEnveloppePoint*)enveloppePoint;
 -(NSPoint) pointForTime:(double)time value:(double)value;
--(NSPoint) pointForControlPoint:(VSCEnveloppePoint*)controlPoint;
--(void) setControlPoint:(VSCEnveloppePoint*)point withPoint:(NSPoint)p;
+-(NSPoint) pointForEnveloppePoint:(VSCEnveloppePoint*)controlPoint;
+-(void) setEnveloppePoint:(VSCEnveloppePoint*)point withPoint:(NSPoint)p;
 -(VSCEnveloppePoint*) controlPointForPoint:(NSPoint)point;
+
+-(std::list<VSCEnveloppePoint*>) enveloppePointsInRect:(NSRect)rect; 
 
 @end
