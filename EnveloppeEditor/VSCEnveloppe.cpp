@@ -36,11 +36,11 @@ double VSCEnveloppe::getMinimumTimeStep(void) const {
 	return _minimumTimeStep;
 }
 
-void VSCEnveloppe::addPoint(VSCEnveloppePoint* point) {
+void VSCEnveloppe::addPoint(VSCEnveloppePointPtr point) {
 	
 	POINT_ITERATOR it;
 	
-	std::list<VSCEnveloppePoint*> pointsToRemove;
+	std::list<VSCEnveloppePointPtr> pointsToRemove;
 	
 	// remove close points
 	for (it = _points.begin(); it != _points.end(); it++) {
@@ -66,9 +66,10 @@ void VSCEnveloppe::addPoint(VSCEnveloppePoint* point) {
 			break;
 		}
 		
+		VSCEnveloppePointPtr p(*it);
+		VSCEnveloppePointPtr np(*next);
+		
 		// insert in the list if the time value is contained between this point's time and next point's time
-		VSCEnveloppePoint* p = *it;
-		VSCEnveloppePoint* np = *next;
 		if (p->getTime() < point->getTime() && np->getTime() > point->getTime()) {
 			found = true;
 			break;
@@ -85,49 +86,20 @@ void VSCEnveloppe::addPoint(VSCEnveloppePoint* point) {
 	
 }
 
-void VSCEnveloppe::removePoint(VSCEnveloppePoint* point) {
-	
-	removePoint(point, true);
-	
-}
-
-void VSCEnveloppe::removePoint(VSCEnveloppePoint* point, bool clean) {
-	
-	if (clean) {
-		
-		for (POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
-			
-			if (point == *it) {
-				delete point;
-				break;
-			}
-			
-		}
-		
-	}
-	
+void VSCEnveloppe::removePoint(VSCEnveloppePointPtr point) {
 	_points.remove(point);
 }
 
-void VSCEnveloppe::addPoints(std::list<VSCEnveloppePoint*> points) {
-	
+void VSCEnveloppe::addPoints(std::list<VSCEnveloppePointPtr> points) {
 	for (POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
 		addPoint(*it);
 	}
-	
 }
 
-void VSCEnveloppe::removePoints(std::list<VSCEnveloppePoint*> points) {
+void VSCEnveloppe::removePoints(std::list<VSCEnveloppePointPtr> points) {
 	for (POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
 		removePoint(*it);
 	}
-}
-
-void VSCEnveloppe::removePoints(std::list<VSCEnveloppePoint*> points, bool clean) {
-	for (POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
-		removePoint(*it, clean);
-	}
-	
 }
 
 void VSCEnveloppe::removePointsInTimeRange(double lowerTime, double upperTime){
@@ -137,11 +109,11 @@ void VSCEnveloppe::removePointsInTimeRange(double lowerTime, double upperTime){
 
 /* get points */
 
-VSCEnveloppePoint* VSCEnveloppe::getPointClosestToTime(double time) const {
+VSCEnveloppePointPtr VSCEnveloppe::getPointClosestToTime(double time) const {
 	return getPointClosestToTime(time, false);
 }
 
-VSCEnveloppePoint* VSCEnveloppe::getPointClosestToTime(double time, bool copy) const {
+VSCEnveloppePointPtr VSCEnveloppe::getPointClosestToTime(double time, bool copy) const {
 	
 	if (_points.size() == 0) 
 		return NULL;
@@ -165,17 +137,17 @@ VSCEnveloppePoint* VSCEnveloppe::getPointClosestToTime(double time, bool copy) c
 	}
 	
 	if (copy)
-		return new VSCEnveloppePoint(*(*closestIt));
+		return VSCEnveloppePointPtr(new VSCEnveloppePoint(*(*closestIt)));
 		
 	return (*closestIt);
 	
 }
 
-VSCEnveloppePoint* VSCEnveloppe::getFirstPointAfterTime(double time) const {
+VSCEnveloppePointPtr VSCEnveloppe::getFirstPointAfterTime(double time) const {
 	return getFirstPointAfterTime(time, false);
 }
 
-VSCEnveloppePoint* VSCEnveloppe::getFirstPointAfterTime(double time, bool copy) const {
+VSCEnveloppePointPtr VSCEnveloppe::getFirstPointAfterTime(double time, bool copy) const {
 	
 	if (_points.size() == 0) 
 		return NULL;
@@ -198,11 +170,11 @@ VSCEnveloppePoint* VSCEnveloppe::getFirstPointAfterTime(double time, bool copy) 
 	
 }
 
-VSCEnveloppePoint* VSCEnveloppe::getFirstPointBeforeTime(double time) const {
+VSCEnveloppePointPtr VSCEnveloppe::getFirstPointBeforeTime(double time) const {
 	return getFirstPointBeforeTime(time, false);
 }
 
-VSCEnveloppePoint* VSCEnveloppe::getFirstPointBeforeTime(double time, bool copy) const {
+VSCEnveloppePointPtr VSCEnveloppe::getFirstPointBeforeTime(double time, bool copy) const {
 	
 	if (_points.size() == 0) 
 		return NULL;
@@ -225,14 +197,14 @@ VSCEnveloppePoint* VSCEnveloppe::getFirstPointBeforeTime(double time, bool copy)
 	
 }
 
-std::list<VSCEnveloppePoint*> VSCEnveloppe::getPointsInTimeRange(double lowerTime, double upperTime) const {
+std::list<VSCEnveloppePointPtr> VSCEnveloppe::getPointsInTimeRange(double lowerTime, double upperTime) const {
 	return getPointsInTimeRange(lowerTime, upperTime, false);
 }
 
 
-std::list<VSCEnveloppePoint*> VSCEnveloppe::getPointsInTimeRange(double lowerTime, double upperTime, bool copy) const {
+std::list<VSCEnveloppePointPtr> VSCEnveloppe::getPointsInTimeRange(double lowerTime, double upperTime, bool copy) const {
 	
-	std::list<VSCEnveloppePoint*> ps;
+	std::list<VSCEnveloppePointPtr> ps;
 	
 	for (CONST_POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
 		
@@ -248,18 +220,18 @@ std::list<VSCEnveloppePoint*> VSCEnveloppe::getPointsInTimeRange(double lowerTim
 	return ps;
 }
 
-std::list<VSCEnveloppePoint*> VSCEnveloppe::getAllPoints(void) const {
+std::list<VSCEnveloppePointPtr> VSCEnveloppe::getAllPoints(void) const {
     return getAllPoints(false);
 }
 
-std::list<VSCEnveloppePoint*> VSCEnveloppe::getAllPoints(bool copy) const {
+std::list<VSCEnveloppePointPtr> VSCEnveloppe::getAllPoints(bool copy) const {
     
     if (copy) {
         
-        std::list<VSCEnveloppePoint*> copiedPoints;
+        std::list<VSCEnveloppePointPtr> copiedPoints;
         
         for (CONST_POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
-            VSCEnveloppePoint* newPoint = new VSCEnveloppePoint(*(*it));
+            VSCEnveloppePointPtr newPoint (new VSCEnveloppePoint(*(*it)));
             copiedPoints.push_back(newPoint);
         }
         
@@ -280,8 +252,8 @@ int VSCEnveloppe::numberOfPoints(void) const {
 
 double VSCEnveloppe::getValueAtTime(double time) const {
 	
-	VSCEnveloppePoint* lp = getFirstPointBeforeTime(time, false);
-	VSCEnveloppePoint* up = getFirstPointAfterTime(time, false);
+	VSCEnveloppePointPtr lp = getFirstPointBeforeTime(time, false);
+	VSCEnveloppePointPtr up = getFirstPointAfterTime(time, false);
 	
 	if (lp == NULL || up == NULL) 
 		return NAN;

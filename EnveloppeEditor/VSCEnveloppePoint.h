@@ -10,6 +10,7 @@
 #ifndef _VSC_ENVELOPPE_POINT_H_
 #define _VSC_ENVELOPPE_POINT_H_
 
+#include <iostream>
 #include <ostream>
 
 class VSCEnveloppePoint {
@@ -28,6 +29,7 @@ public:
 	
     VSCEnveloppePoint(void);
 	VSCEnveloppePoint(const VSCEnveloppePoint& p);
+	~VSCEnveloppePoint(void);
 	
 	void setValue(double value);
 	double getValue(void) const;

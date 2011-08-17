@@ -12,12 +12,16 @@
 
 #include <list>
 #include <string>
+#include <boost/shared_ptr.hpp>
+
 class VSCEnveloppePoint;
 
-#define POINT_ITERATOR                  std::list<VSCEnveloppePoint*>::iterator 
-#define REVERSE_POINT_ITERATOR          std::list<VSCEnveloppePoint*>::reverse_iterator 
-#define CONST_POINT_ITERATOR            std::list<VSCEnveloppePoint*>::const_iterator 
-#define CONST_REVERSE_POINT_ITERATOR    std::list<VSCEnveloppePoint*>::const_reverse_iterator 
+#define boost::shared_ptr<VSCEnveloppePoint*> VSCEnveloppePointPtr
+
+#define POINT_ITERATOR                  std::list<VSCEnveloppePointPtr>::iterator 
+#define REVERSE_POINT_ITERATOR          std::list<VSCEnveloppePointPtr>::reverse_iterator 
+#define CONST_POINT_ITERATOR            std::list<VSCEnveloppePointPtr>::const_iterator 
+#define CONST_REVERSE_POINT_ITERATOR    std::list<VSCEnveloppePointPtr>::const_reverse_iterator 
 
 typedef enum _VSCEnveloppeType {
 	VSCEnveloppeTypeLinear = 1, // in linear mode, enveloppe point control points are ignored
@@ -28,7 +32,7 @@ class VSCEnveloppe {
 	
 protected:
 	
-	std::list<VSCEnveloppePoint*> _points;
+	std::list<VSCEnveloppePointPtr> _points;
 	
     VSCEnveloppeType _type;
     
@@ -50,30 +54,27 @@ public:
 	
 	/* edit points */
 	
-	void addPoint(VSCEnveloppePoint* point);
-	void addPoints(std::list<VSCEnveloppePoint*> points); 
+	void addPoint(VSCEnveloppePointPtr point);
+	void addPoints(std::list<VSCEnveloppePointPtr> points); 
 	
-	void removePoint(VSCEnveloppePoint* point);
-	void removePoint(VSCEnveloppePoint* point, bool clean);
-	void removePoints(std::list<VSCEnveloppePoint*> points); 
-	void removePoints(std::list<VSCEnveloppePoint*> points, bool clean); 
+	void removePoint(VSCEnveloppePointPtr point);
+	void removePoints(std::list<VSCEnveloppePointPtr> points); 
 	void removePointsInTimeRange(double lowerTime, double upperTime);
-	void removePointsInTimeRange(double lowerTime, double upperTime, bool clean);
 	
 	/* get points */
-    
-    /* NOTE: when copy is true the caller takes responsibility for deleting the point */
 	
-	VSCEnveloppePoint* getPointClosestToTime(double time) const;
-	VSCEnveloppePoint* getPointClosestToTime(double time, bool copy) const;
-	VSCEnveloppePoint* getFirstPointAfterTime(double time) const;
-	VSCEnveloppePoint* getFirstPointAfterTime(double time, bool copy) const;
-	VSCEnveloppePoint* getFirstPointBeforeTime(double time) const;
-	VSCEnveloppePoint* getFirstPointBeforeTime(double time, bool copy) const;
-	std::list<VSCEnveloppePoint*> getPointsInTimeRange(double lowerTime, double upperTime) const;
-	std::list<VSCEnveloppePoint*> getPointsInTimeRange(double lowerTime, double upperTime, bool copy) const;
-	std::list<VSCEnveloppePoint*> getAllPoints(void) const;
-	std::list<VSCEnveloppePoint*> getAllPoints(bool copy) const;
+	VSCEnveloppePointPtr getPointClosestToTime(double time) const;
+	VSCEnveloppePointPtr getPointClosestToTime(double time, bool copy) const;
+	VSCEnveloppePointPtr getFirstPointAfterTime(double time) const;
+	VSCEnveloppePointPtr getFirstPointAfterTime(double time, bool copy) const;
+	VSCEnveloppePointPtr getFirstPointBeforeTime(double time) const;
+	VSCEnveloppePointPtr getFirstPointBeforeTime(double time, bool copy) const;
+	
+	std::list<VSCEnveloppePointPtr> getPointsInTimeRange(double lowerTime, double upperTime) const;
+	std::list<VSCEnveloppePointPtr> getPointsInTimeRange(double lowerTime, double upperTime, bool copy) const;
+	std::list<VSCEnveloppePointPtr> getAllPoints(void) const;
+	std::list<VSCEnveloppePointPtr> getAllPoints(bool copy) const;
+	
 	int numberOfPoints(void) const;
 	
 	/* value */

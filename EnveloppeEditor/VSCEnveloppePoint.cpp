@@ -9,6 +9,7 @@
 
 #include "VSCEnveloppePoint.h"
 #include <cstddef>
+#
 
 bool compareEnveloppePointValues (VSCEnveloppePoint* firstPoint, VSCEnveloppePoint* secondPoint) {
 	return firstPoint->getValue() < secondPoint->getValue();
@@ -40,6 +41,10 @@ VSCEnveloppePoint::VSCEnveloppePoint(const VSCEnveloppePoint& p) {
     else 
         setRightControlPoint(NULL);
     
+}
+
+VSCEnveloppePoint::~VSCEnveloppePoint(void) {
+	std::cout << "Destroying enveloppe point!" << std::endl;
 }
 
 void VSCEnveloppePoint::setValue(double value) {

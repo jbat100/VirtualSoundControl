@@ -231,6 +231,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -322,8 +324,6 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -341,7 +341,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1055180E13F7047D000D011D</string>
+										<string>1048C65F13FC56C900B684D1</string>
 										<key>history</key>
 										<array>
 											<string>1030EFEF13298D9800E4BCA1</string>
@@ -370,8 +370,8 @@
 											<string>105517F213F6FBA9000D011D</string>
 											<string>105517FC13F70218000D011D</string>
 											<string>105517FE13F70218000D011D</string>
-											<string>1055180C13F7047D000D011D</string>
-											<string>1055180D13F7047D000D011D</string>
+											<string>1055181313F70E11000D011D</string>
+											<string>1048C65E13FC56C900B684D1</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -429,9 +429,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>1055177513F6C19D000D011D</string>
+				<string>1048C66013FC56C900B684D1</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>1055177613F6C19D000D011D</string>
+				<string>1048C66113FC56C900B684D1</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -569,7 +569,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>1030EFFB13298D9800E4BCA1</string>
 		<string>/Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/EnveloppeEditor.xcodeproj</string>
 	</array>
@@ -595,7 +594,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>VSCEnveloppeView.mm</string>
+								<string></string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -612,8 +611,6 @@
 							<string>295pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -653,7 +650,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1030EFFB13298D9800E4BCA1</string>
-				<string>1055177713F6C19D000D011D</string>
+				<string>1048C66213FC56C900B684D1</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -666,7 +663,7 @@
 			<key>WindowToolGUID</key>
 			<string>1030EFFB13298D9800E4BCA1</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
