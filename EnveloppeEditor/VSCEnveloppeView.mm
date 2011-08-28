@@ -11,12 +11,22 @@
 #import "VSCColour.h"
 #import "CGColorOperations.h"
 #import "NSGeomOperations.h"
+#import "VSCBoost.h"
 
 #import <math.h>
+#import <assert.h>
+
+@interface VSCEnveloppeView ()
+
+-(void) updateCurrentlySelectedPoints;
+
+@end
 
 
 
 @implementation VSCEnveloppeView
+
+@synthesize selectionRects;
 
 
 - (id)initWithFrame:(NSRect)frame {
@@ -48,20 +58,19 @@
 	
 	CGColorRef cgLineColorRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getLineColour());
 	
-	std::list<VSCEnveloppePoint*> allPoints = _enveloppe->getAllPoints();	
 	
-	POINT_ITERATOR currentIt;
-	POINT_ITERATOR nextIt;
+	CONST_ENVPNT_ITER nextIt;
+	CONST_ENVPNT_ITER endIt = _enveloppe->getPointEndIterator();
 	
-	for (POINT_ITERATOR it = allPoints.begin(); it != allPoints.end(); it++) {
+	for (CONST_ENVPNT_ITER it = _enveloppe->getPointBeginIterator(); it !=endIt; it++) {
 		
 		nextIt = it;
 		nextIt++;
 		
-		if (nextIt != allPoints.end()) {
+		if (nextIt != endIt) {
 			
-			VSCEnveloppePoint* currentPoint = *it;
-			VSCEnveloppePoint* nextPoint = *nextIt;
+			VSCEnveloppePointPtr currentPoint = *it;
+			VSCEnveloppePointPtr nextPoint = *nextIt;
 			
 			// draw line between this point and next
 			
@@ -82,9 +91,9 @@
 		
 	}
 	
-	for (POINT_ITERATOR it = allPoints.begin(); it != allPoints.end(); it++) {
+	for (CONST_ENVPNT_ITER it = _enveloppe->getPointBeginIterator(); it !=endIt; it++) {
 		
-		VSCEnveloppePoint* currentPoint = *it;
+		VSCEnveloppePointPtr currentPoint = *it;
 		
 		// draw control circle for point
 		
@@ -107,7 +116,19 @@
 		
 	}
 	
+}
+
+-(double) valueDeltaForPointYDelta:(double)pointYDelta {
 	
+	double range = _enveloppeViewSetup->getMaxValue() - _enveloppeViewSetup->getMinValue(); 
+	return (pointYDelta / (double)self.frame.size.height) * range;
+	
+}
+
+-(double) timeDeltaForPointXDelta:(double)pointXDelta {
+	
+	double range = _enveloppeViewSetup->getMaxTime() - _enveloppeViewSetup->getMinTime(); 
+	return (pointXDelta / (double)self.frame.size.width) * range;
 	
 }
 
@@ -117,14 +138,16 @@
 	double range = _enveloppeViewSetup->getMaxValue() - _enveloppeViewSetup->getMinValue(); 
 	double adjustedY = _enveloppeViewSetup->getMinValue() + (normalisedY*range);
 	
+	/*
 	if (_enveloppeViewSetup->getDisplayType() == VSCEnveloppeDisplayTypeDB)
 		return pow(10.0, adjustedY) / 10.0;
+	 */
 	
 	return adjustedY;
 	
 }
 
--(NSTimeInterval) timeForPoint:(CGPoint)point {
+-(double) timeForPoint:(CGPoint)point {
 	
 	double normalisedX = 1.0 - (point.x / self.frame.size.width);
 	double range = _enveloppeViewSetup->getMaxTime() - _enveloppeViewSetup->getMinTime(); 
@@ -132,7 +155,7 @@
 	
 }
 
--(NSPoint) pointForEnveloppePoint:(VSCEnveloppePoint*)enveloppePoint {
+-(NSPoint) pointForEnveloppePoint:(VSCEnveloppePointPtr)enveloppePoint {
 	return [self pointForTime:(NSTimeInterval)enveloppePoint->getTime() value:(double)enveloppePoint->getValue()];
 }
 
@@ -149,7 +172,7 @@
 	return NSMakePoint(x, y);
 }
 
--(BOOL) point:(NSPoint)p touchesEnveloppePoint:(VSCEnveloppePoint*)enveloppePoint {
+-(BOOL) point:(NSPoint)p touchesEnveloppePoint:(VSCEnveloppePointPtr)enveloppePoint {
 	
 	float radius = _enveloppeViewSetup->getControlPointRadius();
 	
@@ -168,41 +191,71 @@
 	
 }
 
--(VSCEnveloppePoint*) enveloppePointForPoint:(NSPoint)point {
+-(VSCEnveloppePointPtr) enveloppePointUnderPoint:(NSPoint)point {
 	
-	std::list<VSCEnveloppePoint*> allPoints = _enveloppe->getAllPoints();	
-	
-	for (POINT_ITERATOR it = allPoints.begin(); it != allPoints.end(); it++) {
+	for (CONST_ENVPNT_ITER it = _enveloppe->getPointBeginIterator(); it !=_enveloppe->getPointEndIterator(); it++) {
 		if ([self point:point touchesEnveloppePoint:(*it)])
 			return (*it);
 	}
 	
-	return NULL;
+	return VSCEnveloppePointPtr();
 	
 }
 
--(std::list<VSCEnveloppePoint*>) enveloppePointsInRect:(NSRect)rect {
+-(void) getEnveloppePoints:(std::list<VSCEnveloppePointPtr>&)ps InRect:(NSRect)rect {
 	
-	std::list<VSCEnveloppePoint*> allPoints = _enveloppe->getAllPoints();
-	std::list<VSCEnveloppePoint*> rectPoints;
-	
-	for (POINT_ITERATOR it = allPoints.begin(); it != allPoints.end(); it++) {
+	for (CONST_ENVPNT_ITER it = _enveloppe->getPointBeginIterator(); it !=_enveloppe->getPointEndIterator(); it++) {
 		NSPoint p = [self pointForEnveloppePoint:(*it)];
 		if (CGRectContainsPoint(rect, p))
-			rectPoints.push_back(*it);
+			ps.push_back(*it);
 	}
-	
-	return rectPoints;
 	
 }
 
--(void) setEnveloppePoint:(VSCEnveloppePoint*)controlPoint withPoint:(NSPoint)p {
+-(void) setEnveloppePoint:(VSCEnveloppePointPtr)controlPoint withPoint:(NSPoint)p {
 	controlPoint->setValue([self valueForPoint:p]);
 	controlPoint->setTime([self timeForPoint:p]);
 }
 
-#pragma mark -
-#pragma mark Mouse Input
+-(VSCEnveloppePointPtr) createEnveloppePointForPoint:(NSPoint)point {
+	
+	return VSCEnveloppePointPtr(new VSCEnveloppePoint([self valueForPoint:point], [self timeForPoint:point]));
+	
+}
+
+/*
+ *	Updates the currently selected points based on the selection rects
+ */
+-(void) updateCurrentlySelectedPoints {
+	
+	_currentlySelectedPoints.clear();
+	
+	for (NSValue* rectValue in selectionRects) {
+		
+		NSRect rect = [rectValue rectValue];
+		std::list<VSCEnveloppePointPtr> rectPoints; 
+		
+		[self getEnveloppePoints:rectPoints InRect:rect];
+		
+		for (CONST_ENVPNT_ITER it = rectPoints.begin(); it != rectPoints.end(); it++) {
+			_currentlySelectedPoints.insert(*it);
+		}
+	}
+	
+}
+
+-(void) addToCurrentlySelectedPointsInRect:(NSRect)rect {
+	
+	std::list<VSCEnveloppePointPtr> rectPoints; 
+	[self getEnveloppePoints:rectPoints InRect:rect];
+	
+	for (CONST_ENVPNT_ITER it = rectPoints.begin(); it != rectPoints.end(); it++) {
+		_currentlySelectedPoints.insert(*it);
+	}
+	
+}
+
+#pragma mark - Mouse Input
 
 -(BOOL) acceptsFirstMouse:(NSEvent*)event {
 	return YES;
@@ -215,6 +268,8 @@
     [self setNeedsDisplay:YES];
 	
 	NSLog(@"Mouse down at x: %f, y: %f", locationInView.x, locationInView.y);
+	
+	VSCEnveloppePointPtr enveloppePoint = [self enveloppePointUnderPoint:locationInView];
 	
 	/*
 	NSAlphaShiftKeyMask
@@ -234,34 +289,67 @@
 	if (modifierFlags & NSShiftKeyMask) {
 		NSLog(@"With shift");
 		foundModifier = YES;
-		performingSelection = YES;
+		currentMouseAction = VSCEnveloppeViewMouseActionSelectPoints;
 	}
-	if (modifierFlags & NSAlphaShiftKeyMask) {
+	else if (modifierFlags & NSAlphaShiftKeyMask) {
 		NSLog(@"With alpha shift");
 		foundModifier = YES;
 	}
-	if (modifierFlags & NSControlKeyMask) {
+	else if (modifierFlags & NSControlKeyMask) {
 		NSLog(@"With control");
 		foundModifier = YES;
 	}
-	if (modifierFlags & NSAlternateKeyMask) {
+	else if (modifierFlags & NSAlternateKeyMask) {
 		NSLog(@"With alternate");
 		foundModifier = YES;
 	}
-	if (modifierFlags & NSCommandKeyMask) {
+	else if (modifierFlags & NSCommandKeyMask) {
 		NSLog(@"With command");
 		foundModifier = YES;
 	}
-	
-	if (!foundModifier) {
-		[currentlySelectedPoints removeAllObjects];
-		EnveloppeControlPoint* controlPoint = [self controlPointForPoint:locationInView];
-		if (!controlPoint) {
-			double v = [self valueForPoint:locationInView];
-			NSTimeInterval t = [self timeForPoint:locationInView];
-			controlPoint = [EnveloppeControlPoint controlPointWithValue:v andTimeStamp:t];
+	else {
+		
+		if (!enveloppePoint) {
+			currentMouseAction = VSCEnveloppeViewMouseActionCreatePoints;
 		}
-		[currentlySelectedPoints addObject:controlPoint];
+		
+		else {
+			currentMouseAction = VSCEnveloppeViewMouseActionMovePoints;
+		}
+		
+	}
+	
+
+	
+	if (currentMouseAction == VSCEnveloppeViewMouseActionSelectPoints) {
+		
+		// If a point exists at the point where the click occured then select/deselect the point
+		if (enveloppePoint) {
+			std::set<VSCEnveloppePointPtr>::iterator iter = _currentlySelectedPoints.find(enveloppePoint);
+			// if the point is not selected, add it to selected...
+			if (iter == _currentlySelectedPoints.end()) {
+				_currentlySelectedPoints.insert(enveloppePoint);
+			}
+			// else remove it from the currently selected points
+			else {
+				_currentlySelectedPoints.erase(enveloppePoint);
+			}
+			// if the click was on an enveloppe point then the selection process should not continue
+			currentMouseAction = VSCEnveloppeViewMouseActionNone;
+		}
+		
+		// If a point exists at the point where the click occured
+		else {
+			NSRect selectionRect = CGRectMake(locationInView.x, locationInView.y, 0.0, 0.0);
+			NSValue* rectValue = [NSValue valueWithRect:selectionRect];
+			[selectionRects addObject:rectValue];
+			
+		}
+	}
+	
+	else if (currentMouseAction == VSCEnveloppeViewMouseActionCreatePoints) {
+		VSCEnveloppePointPtr newPoint = [self createEnveloppePointForPoint:locationInView];
+		_enveloppe->addPoint(newPoint);
 	}
 	
 	[self setNeedsDisplay:YES];
@@ -275,9 +363,9 @@
     NSPoint locationInView = [self convertPoint:eventLocation fromView:self];
     [self setNeedsDisplay:YES];
 	
-	NSLog(@"Mouse down at x: %f, y: %f", locationInView.x, locationInView.y);
+	NSLog(@"Mouse up at x: %f, y: %f", locationInView.x, locationInView.y);
 	
-	performingSelection = NO;
+	currentMouseAction = VSCEnveloppeViewMouseActionNone;
 	
 }
 
@@ -289,7 +377,12 @@
 	CGFloat deltaX = [event deltaX];
 	CGFloat deltaY = [event deltaY];
 	
-	if (performingSelection) {
+	if (currentMouseAction == VSCEnveloppeViewMouseActionSelectPoints) {
+		
+		NSValue* rectValue = [selectionRects lastObject]
+		assert(rectValue);
+		
+		NSRect selectionRect = [rectValue rectValue];
 		
 		// current values 
 		CGFloat cx = selectionRect.origin.x;
@@ -319,15 +412,23 @@
 		}
 		
 		selectionRect = NSMakeRect(nx, ny, nw, nh);
-		self.currentlySelectedPoints = [self controlPointsInRect:selectionRect];
+		
+		[selectionRects removeLastObject];
+		[selectionRects addObject:[NSValue valueWithRect:selectionRect]];
+		
+		[self updateCurrentlySelectedPoints];
+		
 	}
 	
-	if (!performingSelection) {
-		for (EnveloppeControlPoint* controlPoint in currentlySelectedPoints) {
-			NSPoint p = [self pointForControlPoint:controlPoint];
+	else if (currentMouseAction == VSCEnveloppeViewMouseActionMovePoints) {
+		
+		std::set<VSCEnveloppePointPtr>::iterator it;
+		
+		for (it = _currentlySelectedPoints.begin(); it != _currentlySelectedPoints.end(); it++) {
+			NSPoint p = [self pointForEnveloppePoint:(*it)];
 			p.x += deltaX;
 			p.y += deltaY;
-			[self setControlPoint:controlPoint withPoint:p];
+			[self setEnveloppePoint:(*it) withPoint:p];
 		}
 	}
 	

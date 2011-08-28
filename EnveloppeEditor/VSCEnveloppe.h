@@ -16,17 +16,18 @@
 
 class VSCEnveloppePoint;
 
-#define boost::shared_ptr<VSCEnveloppePoint*> VSCEnveloppePointPtr
+#define VSCEnveloppePointPtr boost::shared_ptr<VSCEnveloppePoint>
 
-#define POINT_ITERATOR                  std::list<VSCEnveloppePointPtr>::iterator 
-#define REVERSE_POINT_ITERATOR          std::list<VSCEnveloppePointPtr>::reverse_iterator 
-#define CONST_POINT_ITERATOR            std::list<VSCEnveloppePointPtr>::const_iterator 
-#define CONST_REVERSE_POINT_ITERATOR    std::list<VSCEnveloppePointPtr>::const_reverse_iterator 
+#define ENVPNT_ITER				std::list<VSCEnveloppePointPtr>::iterator 
+#define REV_ENVPNT_ITER			std::list<VSCEnveloppePointPtr>::reverse_iterator 
+#define CONST_ENVPNT_ITER		std::list<VSCEnveloppePointPtr>::const_iterator 
+#define CONST_REV_ENVPNT_ITER	std::list<VSCEnveloppePointPtr>::const_reverse_iterator 
 
 typedef enum _VSCEnveloppeType {
 	VSCEnveloppeTypeLinear = 1, // in linear mode, enveloppe point control points are ignored
 	VSCEnveloppeTypeBezierCubic
 } VSCEnveloppeType;
+
 
 class VSCEnveloppe {
 	
@@ -55,11 +56,16 @@ public:
 	/* edit points */
 	
 	void addPoint(VSCEnveloppePointPtr point);
-	void addPoints(std::list<VSCEnveloppePointPtr> points); 
+	void addPoints(std::list<VSCEnveloppePointPtr>& points); 
 	
 	void removePoint(VSCEnveloppePointPtr point);
-	void removePoints(std::list<VSCEnveloppePointPtr> points); 
+	void removePoints(std::list<VSCEnveloppePointPtr>& points); 
 	void removePointsInTimeRange(double lowerTime, double upperTime);
+	
+	/* get points iter */
+	
+	CONST_ENVPNT_ITER getPointBeginIterator(void) const;
+	CONST_ENVPNT_ITER getPointEndIterator(void) const;
 	
 	/* get points */
 	
@@ -70,10 +76,10 @@ public:
 	VSCEnveloppePointPtr getFirstPointBeforeTime(double time) const;
 	VSCEnveloppePointPtr getFirstPointBeforeTime(double time, bool copy) const;
 	
-	std::list<VSCEnveloppePointPtr> getPointsInTimeRange(double lowerTime, double upperTime) const;
-	std::list<VSCEnveloppePointPtr> getPointsInTimeRange(double lowerTime, double upperTime, bool copy) const;
-	std::list<VSCEnveloppePointPtr> getAllPoints(void) const;
-	std::list<VSCEnveloppePointPtr> getAllPoints(bool copy) const;
+	void getPointsInTimeRange(std::list<VSCEnveloppePointPtr>&, double lowerTime, double upperTime) const;
+	void getPointsInTimeRange(std::list<VSCEnveloppePointPtr>&, double lowerTime, double upperTime, bool copy) const;
+	void getAllPoints(std::list<VSCEnveloppePointPtr>&) const;
+	void getAllPoints(std::list<VSCEnveloppePointPtr>&, bool copy) const;
 	
 	int numberOfPoints(void) const;
 	

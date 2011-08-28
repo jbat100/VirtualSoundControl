@@ -26,6 +26,13 @@ VSCEnveloppePoint::VSCEnveloppePoint(void) {
     setRightControlPoint(NULL);
 }
 
+VSCEnveloppePoint::VSCEnveloppePoint(double value, double time) {
+	setTime(time);
+    setValue(value);
+    setLeftControlPoint(NULL);
+    setRightControlPoint(NULL);
+}
+
 VSCEnveloppePoint::VSCEnveloppePoint(const VSCEnveloppePoint& p) {
     
 	_value = p.getValue();
@@ -45,6 +52,13 @@ VSCEnveloppePoint::VSCEnveloppePoint(const VSCEnveloppePoint& p) {
 
 VSCEnveloppePoint::~VSCEnveloppePoint(void) {
 	std::cout << "Destroying enveloppe point!" << std::endl;
+	
+	if (_leftControlPoint)
+		delete _leftControlPoint;
+	
+	if (_rightControlPoint)
+		delete _rightControlPoint;
+	
 }
 
 void VSCEnveloppePoint::setValue(double value) {

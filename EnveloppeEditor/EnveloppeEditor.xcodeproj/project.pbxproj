@@ -15,6 +15,7 @@
 		107A78FE132ADE3700C4B1FE /* VSCEnveloppeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */; };
 		108CD8891330124F0002A0A7 /* CGColorOperations.mm in Sources */ = {isa = PBXBuildFile; fileRef = 108CD8881330124F0002A0A7 /* CGColorOperations.mm */; };
 		108F294813F16E77007F7A6A /* VSCMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108F294613F16E77007F7A6A /* VSCMath.cpp */; };
+		1095D85D14083FC900AB0A89 /* VSCBoost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1095D85C14083FC900AB0A89 /* VSCBoost.cpp */; };
 		109A1E1513E35FB200407874 /* VSCEnveloppe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A1E1413E35FB200407874 /* VSCEnveloppe.cpp */; };
 		109A1E1813E3613A00407874 /* VSCEnveloppePoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A1E1713E3613A00407874 /* VSCEnveloppePoint.cpp */; };
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
@@ -42,6 +43,8 @@
 		108CD8881330124F0002A0A7 /* CGColorOperations.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CGColorOperations.mm; sourceTree = "<group>"; };
 		108F294613F16E77007F7A6A /* VSCMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCMath.cpp; sourceTree = "<group>"; };
 		108F294713F16E77007F7A6A /* VSCMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCMath.h; sourceTree = "<group>"; };
+		1095D85B14083FC900AB0A89 /* VSCBoost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCBoost.h; sourceTree = "<group>"; };
+		1095D85C14083FC900AB0A89 /* VSCBoost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCBoost.cpp; sourceTree = "<group>"; };
 		109A1E1313E35FB200407874 /* VSCEnveloppe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppe.h; sourceTree = "<group>"; };
 		109A1E1413E35FB200407874 /* VSCEnveloppe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppe.cpp; sourceTree = "<group>"; };
 		109A1E1613E3613A00407874 /* VSCEnveloppePoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppePoint.h; sourceTree = "<group>"; };
@@ -80,6 +83,8 @@
 				108F294713F16E77007F7A6A /* VSCMath.h */,
 				1055176613F6BAEE000D011D /* VSCColour.h */,
 				1055176713F6BAEE000D011D /* VSCColour.cpp */,
+				1095D85B14083FC900AB0A89 /* VSCBoost.h */,
+				1095D85C14083FC900AB0A89 /* VSCBoost.cpp */,
 			);
 			name = Generic;
 			sourceTree = "<group>";
@@ -268,6 +273,7 @@
 				1023D46513E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp in Sources */,
 				108F294813F16E77007F7A6A /* VSCMath.cpp in Sources */,
 				1055176813F6BAEE000D011D /* VSCColour.cpp in Sources */,
+				1095D85D14083FC900AB0A89 /* VSCBoost.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +354,8 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(BOOST_INCLUDE)";
+				LIBRARY_SEARCH_PATHS = "$(BOOST_LIB)";
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
@@ -361,6 +369,8 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(BOOST_INCLUDE)";
+				LIBRARY_SEARCH_PATHS = "$(BOOST_LIB)";
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 			};

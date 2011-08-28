@@ -9,6 +9,7 @@
 
 #include "VSCEnveloppe.h"
 #include "VSCEnveloppePoint.h"
+#include "VSCBoost.h"
 
 #include <cmath>
 
@@ -38,7 +39,7 @@ double VSCEnveloppe::getMinimumTimeStep(void) const {
 
 void VSCEnveloppe::addPoint(VSCEnveloppePointPtr point) {
 	
-	POINT_ITERATOR it;
+	ENVPNT_ITER it;
 	
 	std::list<VSCEnveloppePointPtr> pointsToRemove;
 	
@@ -60,7 +61,7 @@ void VSCEnveloppe::addPoint(VSCEnveloppePointPtr point) {
 		}
 		
 		// is there a next element
-		POINT_ITERATOR next = it;
+		ENVPNT_ITER next = it;
         next++;
 		if (next == _points.end()) {
 			break;
@@ -90,22 +91,32 @@ void VSCEnveloppe::removePoint(VSCEnveloppePointPtr point) {
 	_points.remove(point);
 }
 
-void VSCEnveloppe::addPoints(std::list<VSCEnveloppePointPtr> points) {
-	for (POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
+void VSCEnveloppe::addPoints(std::list<VSCEnveloppePointPtr>& points) {
+	for (ENVPNT_ITER it = _points.begin(); it != _points.end(); it++) {
 		addPoint(*it);
 	}
 }
 
-void VSCEnveloppe::removePoints(std::list<VSCEnveloppePointPtr> points) {
-	for (POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
+void VSCEnveloppe::removePoints(std::list<VSCEnveloppePointPtr>& points) {
+	for (ENVPNT_ITER it = _points.begin(); it != _points.end(); it++) {
 		removePoint(*it);
 	}
 }
 
 void VSCEnveloppe::removePointsInTimeRange(double lowerTime, double upperTime){
-	removePoints(getPointsInTimeRange(lowerTime, upperTime));
+	std::list<VSCEnveloppePointPtr> l;
+	getPointsInTimeRange(l, lowerTime, upperTime);
+	removePoints(l);
 }
 
+
+CONST_ENVPNT_ITER VSCEnveloppe::getPointBeginIterator(void) const {
+	return _points.begin();
+}
+
+CONST_ENVPNT_ITER VSCEnveloppe::getPointEndIterator(void) const {
+	return _points.end();
+}
 
 /* get points */
 
@@ -116,10 +127,10 @@ VSCEnveloppePointPtr VSCEnveloppe::getPointClosestToTime(double time) const {
 VSCEnveloppePointPtr VSCEnveloppe::getPointClosestToTime(double time, bool copy) const {
 	
 	if (_points.size() == 0) 
-		return NULL;
+		return VSCEnveloppePointPtr();
 	
-	CONST_POINT_ITERATOR it = _points.begin();
-	CONST_POINT_ITERATOR closestIt = _points.begin();
+	CONST_ENVPNT_ITER it = _points.begin();
+	CONST_ENVPNT_ITER closestIt = _points.begin();
 	
 	double minimumTimeDifference = abs((*it)->getTime() - time);
 	
@@ -150,14 +161,14 @@ VSCEnveloppePointPtr VSCEnveloppe::getFirstPointAfterTime(double time) const {
 VSCEnveloppePointPtr VSCEnveloppe::getFirstPointAfterTime(double time, bool copy) const {
 	
 	if (_points.size() == 0) 
-		return NULL;
+		return VSCEnveloppePointPtr();
 	
-	for (CONST_POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
+	for (CONST_ENVPNT_ITER it = _points.begin(); it != _points.end(); it++) {
 		
 		if ((*it)->getTime() > time) {
 			
 			if (copy)
-				return new VSCEnveloppePoint(*(*it));
+				return VSCEnveloppePointPtr(new VSCEnveloppePoint(*(*it)));
 			
 			else 
 				return (*it);
@@ -166,7 +177,7 @@ VSCEnveloppePointPtr VSCEnveloppe::getFirstPointAfterTime(double time, bool copy
 		
 	}
 	
-	return NULL;
+	return VSCEnveloppePointPtr();
 	
 }
 
@@ -177,14 +188,14 @@ VSCEnveloppePointPtr VSCEnveloppe::getFirstPointBeforeTime(double time) const {
 VSCEnveloppePointPtr VSCEnveloppe::getFirstPointBeforeTime(double time, bool copy) const {
 	
 	if (_points.size() == 0) 
-		return NULL;
+		return VSCEnveloppePointPtr();
 	
-	for (CONST_REVERSE_POINT_ITERATOR it = _points.rbegin(); it != _points.rend(); it++) {
+	for (CONST_REV_ENVPNT_ITER it = _points.rbegin(); it != _points.rend(); it++) {
 		
 		if ((*it)->getTime() < time) {
 			
 			if (copy)
-				return new VSCEnveloppePoint(*(*it));
+				return VSCEnveloppePointPtr(new VSCEnveloppePoint(*(*it)));
 			
 			else 
 				return (*it);
@@ -193,53 +204,52 @@ VSCEnveloppePointPtr VSCEnveloppe::getFirstPointBeforeTime(double time, bool cop
 		
 	}
 	
-	return NULL;
+	return VSCEnveloppePointPtr();
 	
 }
 
-std::list<VSCEnveloppePointPtr> VSCEnveloppe::getPointsInTimeRange(double lowerTime, double upperTime) const {
-	return getPointsInTimeRange(lowerTime, upperTime, false);
+void VSCEnveloppe::getPointsInTimeRange(std::list<VSCEnveloppePointPtr>& l, double lowerTime, double upperTime) const {
+	getPointsInTimeRange(l, lowerTime, upperTime, false);
 }
 
 
-std::list<VSCEnveloppePointPtr> VSCEnveloppe::getPointsInTimeRange(double lowerTime, double upperTime, bool copy) const {
+void VSCEnveloppe::getPointsInTimeRange(std::list<VSCEnveloppePointPtr>& l, double lowerTime, double upperTime, bool copy) const {
 	
-	std::list<VSCEnveloppePointPtr> ps;
-	
-	for (CONST_POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
+	for (CONST_ENVPNT_ITER it = _points.begin(); it != _points.end(); it++) {
 		
 		if ((*it)->getTime() > lowerTime && (*it)->getTime() < upperTime) {
 			if (copy)
-				ps.push_back(new VSCEnveloppePoint(*(*it)));
+				l.push_back(VSCEnveloppePointPtr(new VSCEnveloppePoint(*(*it))));
 			else 
-				ps.push_back(*it);
+				l.push_back(*it);
 		}
 		
 	}
 
-	return ps;
 }
 
-std::list<VSCEnveloppePointPtr> VSCEnveloppe::getAllPoints(void) const {
-    return getAllPoints(false);
+void VSCEnveloppe::getAllPoints(std::list<VSCEnveloppePointPtr>& l) const {
+    getAllPoints(l, false);
 }
 
-std::list<VSCEnveloppePointPtr> VSCEnveloppe::getAllPoints(bool copy) const {
+void VSCEnveloppe::getAllPoints(std::list<VSCEnveloppePointPtr>& l, bool copy) const {
     
     if (copy) {
         
-        std::list<VSCEnveloppePointPtr> copiedPoints;
-        
-        for (CONST_POINT_ITERATOR it = _points.begin(); it != _points.end(); it++) {
+        for (CONST_ENVPNT_ITER it = _points.begin(); it != _points.end(); it++) {
             VSCEnveloppePointPtr newPoint (new VSCEnveloppePoint(*(*it)));
-            copiedPoints.push_back(newPoint);
+            l.push_back(newPoint);
         }
-        
-        return copiedPoints;
         
     }
     
-    return _points;
+    else {
+		
+		for (CONST_ENVPNT_ITER it = _points.begin(); it != _points.end(); it++) {
+            l.push_back(*it);
+        }
+		
+	}
     
 }
 
@@ -274,7 +284,7 @@ double VSCEnveloppe::getValueAtTime(double time) const {
 
 void VSCEnveloppe::sortPointsByTime(void) {
 	
-	_points.sort(compareEnveloppePointTimes);
+	//_points.sort(compareEnveloppePointTimes);
 	
 }
 

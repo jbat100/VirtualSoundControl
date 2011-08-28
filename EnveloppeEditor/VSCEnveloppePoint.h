@@ -27,8 +27,10 @@ protected:
 	
 public:
 	
+	/* Constructors / Destructors */
     VSCEnveloppePoint(void);
 	VSCEnveloppePoint(const VSCEnveloppePoint& p);
+	VSCEnveloppePoint(double value, double time);
 	~VSCEnveloppePoint(void);
 	
 	void setValue(double value);
