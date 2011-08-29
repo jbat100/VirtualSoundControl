@@ -11,6 +11,9 @@
 #define _VSC_ENVELOPPE_VIEW_SETUP_H_
 
 #include "VSCColour.h"
+#include <boost/shared_ptr.hpp>
+
+#define VSCEnveloppeViewSetupPtr    boost::shared_ptr<VSCEnveloppeViewSetup>
 
 typedef enum _VSCEnveloppeDisplayType {
 	VSCEnveloppeDisplayTypeDefault = 0,

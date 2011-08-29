@@ -14,14 +14,9 @@
 #include <string>
 #include <boost/shared_ptr.hpp>
 
-class VSCEnveloppePoint;
+#include "VSCEnveloppePoint.h"
 
-#define VSCEnveloppePointPtr boost::shared_ptr<VSCEnveloppePoint>
-
-#define ENVPNT_ITER				std::list<VSCEnveloppePointPtr>::iterator 
-#define REV_ENVPNT_ITER			std::list<VSCEnveloppePointPtr>::reverse_iterator 
-#define CONST_ENVPNT_ITER		std::list<VSCEnveloppePointPtr>::const_iterator 
-#define CONST_REV_ENVPNT_ITER	std::list<VSCEnveloppePointPtr>::const_reverse_iterator 
+#define VSCEnveloppePtr         boost::shared_ptr<VSCEnveloppe>
 
 typedef enum _VSCEnveloppeType {
 	VSCEnveloppeTypeLinear = 1, // in linear mode, enveloppe point control points are ignored
@@ -30,6 +25,8 @@ typedef enum _VSCEnveloppeType {
 
 
 class VSCEnveloppe {
+    
+    friend std::ostream& operator<<(std::ostream& output, const VSCEnveloppe& p);
 	
 protected:
 	
@@ -40,6 +37,11 @@ protected:
     double _minimumTimeStep;
 	std::string _name;
 	int _channel;
+    
+    bool isSortedByTime(void) const;
+    
+    /* sorting */
+	void sortPointsByTime(void);
 	
 public:
 	
@@ -64,8 +66,8 @@ public:
 	
 	/* get points iter */
 	
-	CONST_ENVPNT_ITER getPointBeginIterator(void) const;
-	CONST_ENVPNT_ITER getPointEndIterator(void) const;
+	ConstEnvPntIter getPointBeginIterator(void) const;
+	ConstEnvPntIter getPointEndIterator(void) const;
 	
 	/* get points */
 	
@@ -86,10 +88,14 @@ public:
 	/* value */
 	
 	double getValueAtTime(double time) const;
+    
+    /* extremes */
+    double minTime(void) const;
+    double maxTime(void) const;
+    double minValue(void) const;
+    double maxValue(void) const;
+    
 	
-	/* sorting */
-	
-	void sortPointsByTime(void);
 	
 };
 

@@ -26,8 +26,6 @@
 
 @implementation VSCEnveloppeView
 
-@synthesize selectionRects;
-
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -59,10 +57,10 @@
 	CGColorRef cgLineColorRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getLineColour());
 	
 	
-	CONST_ENVPNT_ITER nextIt;
-	CONST_ENVPNT_ITER endIt = _enveloppe->getPointEndIterator();
+	ConstEnvPntIter nextIt;
+	ConstEnvPntIter endIt = _enveloppe->getPointEndIterator();
 	
-	for (CONST_ENVPNT_ITER it = _enveloppe->getPointBeginIterator(); it !=endIt; it++) {
+	for (ConstEnvPntIter it = _enveloppe->getPointBeginIterator(); it !=endIt; it++) {
 		
 		nextIt = it;
 		nextIt++;
@@ -91,7 +89,7 @@
 		
 	}
 	
-	for (CONST_ENVPNT_ITER it = _enveloppe->getPointBeginIterator(); it !=endIt; it++) {
+	for (ConstEnvPntIter it = _enveloppe->getPointBeginIterator(); it !=endIt; it++) {
 		
 		VSCEnveloppePointPtr currentPoint = *it;
 		
@@ -118,6 +116,59 @@
 	
 }
 
+#pragma mark - Auto Adjust View Setup
+
+/* 
+ * Automatic View Setup
+ */
+-(void)autoAdjustEnveloppeViewSetup {
+    
+    ConstEnvPntIter beginIter = _enveloppe->getPointBeginIterator();
+    ConstEnvPntIter endIter = _enveloppe->getPointEndIterator();
+    
+    double minTime = (*beginIter)->getTime();
+    double maxTime = (*endIter)->getTime();
+}
+
+#pragma mark - C++ Setters/Getters
+
+-(VSCEnveloppePtr) getEnveloppe {
+    return _enveloppe;
+}
+
+-(void) setEnveloppe:(VSCEnveloppePtr)enveloppe {
+    _enveloppe = enveloppe;
+}
+
+-(VSCEnveloppeViewSetupPtr) getEnveloppeViewSetup {
+    return _enveloppeViewSetup;
+}
+
+-(void) setEnveloppeViewSetup:(VSCEnveloppeViewSetupPtr)enveloppeViewSetup {
+    _enveloppeViewSetup = enveloppeViewSetup;
+}
+
+-(void)getCurrentlySelectedPoints:(std::set<VSCEnveloppePointPtr>&)points {
+    
+    for (std::set<VSCEnveloppePointPtr>::iterator it = _currentlySelectedPoints.begin(); it != _currentlySelectedPoints.end(); it++) {
+		points.insert(*it);
+	}
+    
+}
+
+-(void)setCurrentlySelectedPoints:(std::set<VSCEnveloppePointPtr>&)points {
+    
+    _currentlySelectedPoints.clear();
+    
+    for (std::set<VSCEnveloppePointPtr>::iterator it = points.begin(); it != points.end(); it++) {
+		_currentlySelectedPoints.insert(*it);
+	}
+    
+}
+
+
+#pragma mark - View to enveloppe conversion tools
+
 -(double) valueDeltaForPointYDelta:(double)pointYDelta {
 	
 	double range = _enveloppeViewSetup->getMaxValue() - _enveloppeViewSetup->getMinValue(); 
@@ -137,11 +188,6 @@
 	double normalisedY = 1.0 - (point.y / self.frame.size.height);
 	double range = _enveloppeViewSetup->getMaxValue() - _enveloppeViewSetup->getMinValue(); 
 	double adjustedY = _enveloppeViewSetup->getMinValue() + (normalisedY*range);
-	
-	/*
-	if (_enveloppeViewSetup->getDisplayType() == VSCEnveloppeDisplayTypeDB)
-		return pow(10.0, adjustedY) / 10.0;
-	 */
 	
 	return adjustedY;
 	
@@ -191,9 +237,11 @@
 	
 }
 
+#pragma mark - Enveloppe points handling
+
 -(VSCEnveloppePointPtr) enveloppePointUnderPoint:(NSPoint)point {
 	
-	for (CONST_ENVPNT_ITER it = _enveloppe->getPointBeginIterator(); it !=_enveloppe->getPointEndIterator(); it++) {
+	for (ConstEnvPntIter it = _enveloppe->getPointBeginIterator(); it !=_enveloppe->getPointEndIterator(); it++) {
 		if ([self point:point touchesEnveloppePoint:(*it)])
 			return (*it);
 	}
@@ -204,7 +252,7 @@
 
 -(void) getEnveloppePoints:(std::list<VSCEnveloppePointPtr>&)ps InRect:(NSRect)rect {
 	
-	for (CONST_ENVPNT_ITER it = _enveloppe->getPointBeginIterator(); it !=_enveloppe->getPointEndIterator(); it++) {
+	for (ConstEnvPntIter it = _enveloppe->getPointBeginIterator(); it !=_enveloppe->getPointEndIterator(); it++) {
 		NSPoint p = [self pointForEnveloppePoint:(*it)];
 		if (CGRectContainsPoint(rect, p))
 			ps.push_back(*it);
@@ -230,14 +278,14 @@
 	
 	_currentlySelectedPoints.clear();
 	
-	for (NSValue* rectValue in selectionRects) {
+	for (NSValue* rectValue in stackedSelectionRects) {
 		
 		NSRect rect = [rectValue rectValue];
 		std::list<VSCEnveloppePointPtr> rectPoints; 
 		
 		[self getEnveloppePoints:rectPoints InRect:rect];
 		
-		for (CONST_ENVPNT_ITER it = rectPoints.begin(); it != rectPoints.end(); it++) {
+		for (ConstEnvPntIter it = rectPoints.begin(); it != rectPoints.end(); it++) {
 			_currentlySelectedPoints.insert(*it);
 		}
 	}
@@ -249,11 +297,12 @@
 	std::list<VSCEnveloppePointPtr> rectPoints; 
 	[self getEnveloppePoints:rectPoints InRect:rect];
 	
-	for (CONST_ENVPNT_ITER it = rectPoints.begin(); it != rectPoints.end(); it++) {
+	for (ConstEnvPntIter it = rectPoints.begin(); it != rectPoints.end(); it++) {
 		_currentlySelectedPoints.insert(*it);
 	}
 	
 }
+
 
 #pragma mark - Mouse Input
 
@@ -342,7 +391,7 @@
 		else {
 			NSRect selectionRect = CGRectMake(locationInView.x, locationInView.y, 0.0, 0.0);
 			NSValue* rectValue = [NSValue valueWithRect:selectionRect];
-			[selectionRects addObject:rectValue];
+			[stackedSelectionRects addObject:rectValue];
 			
 		}
 	}
@@ -379,9 +428,7 @@
 	
 	if (currentMouseAction == VSCEnveloppeViewMouseActionSelectPoints) {
 		
-		NSValue* rectValue = [selectionRects lastObject]
-		assert(rectValue);
-		
+		NSValue* rectValue = [stackedSelectionRects lastObject];
 		NSRect selectionRect = [rectValue rectValue];
 		
 		// current values 
@@ -413,8 +460,8 @@
 		
 		selectionRect = NSMakeRect(nx, ny, nw, nh);
 		
-		[selectionRects removeLastObject];
-		[selectionRects addObject:[NSValue valueWithRect:selectionRect]];
+		[stackedSelectionRects removeLastObject];
+		[stackedSelectionRects addObject:[NSValue valueWithRect:selectionRect]];
 		
 		[self updateCurrentlySelectedPoints];
 		

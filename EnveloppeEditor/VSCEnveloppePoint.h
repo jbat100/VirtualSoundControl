@@ -12,6 +12,14 @@
 
 #include <iostream>
 #include <ostream>
+#include <boost/shared_ptr.hpp>
+
+#define VSCEnveloppePointPtr    boost::shared_ptr<VSCEnveloppePoint>
+
+#define EnvPntIter				std::list<VSCEnveloppePointPtr>::iterator 
+#define RevEnvPntIter			std::list<VSCEnveloppePointPtr>::reverse_iterator 
+#define ConstEnvPntIter         std::list<VSCEnveloppePointPtr>::const_iterator 
+#define ConstRevEnvPntIter      std::list<VSCEnveloppePointPtr>::const_reverse_iterator 
 
 class VSCEnveloppePoint {
 	

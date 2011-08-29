@@ -9,7 +9,7 @@
 
 #include "VSCEnveloppePoint.h"
 #include <cstddef>
-#
+#include <assert.h>
 
 bool compareEnveloppePointValues (VSCEnveloppePoint* firstPoint, VSCEnveloppePoint* secondPoint) {
 	return firstPoint->getValue() < secondPoint->getValue();
@@ -70,6 +70,7 @@ double VSCEnveloppePoint::getValue(void) const {
 }
 
 void VSCEnveloppePoint::setTime(double time) {
+    assert(time >= 0.0);
 	_time = time;
 }
 
