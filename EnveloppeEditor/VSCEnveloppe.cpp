@@ -10,6 +10,7 @@
 #include "VSCEnveloppe.h"
 #include "VSCEnveloppePoint.h"
 #include "VSCBoost.h"
+#include "VSCException.h"
 
 #include <cmath>
 #include <assert.h>
@@ -324,7 +325,7 @@ double VSCEnveloppe::minTime(void) const {
     ConstEnvPntIter beginIter = getPointBeginIterator();
     ConstEnvPntIter endIter = getPointEndIterator();
     if (beginIter != endIter) return (*beginIter)->getTime();
-    return 0.0;
+    throw VSCEnveloppeEmptyException();
     
 }
 
@@ -337,23 +338,39 @@ double VSCEnveloppe::maxTime(void) const {
         endIter--;
         return (*endIter)->getTime();
     }
-    return 0.0;
+    throw VSCEnveloppeEmptyException();
     
 }
 
 double VSCEnveloppe::minValue(void) const {
     
-    for (ConstEnvPntIter it = _points.begin(); it != _points.end(); it++) {
-        
+    ConstEnvPntIter beginIter = getPointBeginIterator();
+    ConstEnvPntIter endIter = getPointEndIterator();
+    if (beginIter == endIter) throw VSCEnveloppeEmptyException();
+    
+    double minValue = (*beginIter)->getValue();
+    for (ConstEnvPntIter it = beginIter; it != endIter; it++) {
+        if ((*it)->getValue() < minValue) {
+            minValue = (*it)->getValue();
+        }
     }
     
+    return minValue;
 }
 
 double VSCEnveloppe::maxValue(void) const {
     
+    ConstEnvPntIter beginIter = getPointBeginIterator();
+    ConstEnvPntIter endIter = getPointEndIterator();
+    if (beginIter == endIter) throw VSCEnveloppeEmptyException();
+    
+    double maxValue = (*beginIter)->getValue();
     for (ConstEnvPntIter it = _points.begin(); it != _points.end(); it++) {
-        
+        if ((*it)->getValue() < maxValue) {
+            maxValue = (*it)->getValue();
+        }
     }
     
+    return maxValue;
 }
 

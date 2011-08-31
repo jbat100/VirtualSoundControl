@@ -18,8 +18,10 @@
 
 #define VSCEnveloppePtr         boost::shared_ptr<VSCEnveloppe>
 
+
 typedef enum _VSCEnveloppeType {
-	VSCEnveloppeTypeLinear = 1, // in linear mode, enveloppe point control points are ignored
+	VSCEnveloppeTypeLinear = 1, // in linear mode, enveloppe point control points are ignored (and should't exist anyway)
+    VSCEnveloppeTypeBezierQuadratic,
 	VSCEnveloppeTypeBezierCubic
 } VSCEnveloppeType;
 

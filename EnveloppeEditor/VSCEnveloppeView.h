@@ -22,14 +22,19 @@ typedef enum _VSCEnveloppeViewClickArea {
 	VSCEnveloppeViewClickAreaPoint
 } VSCEnveloppeViewClickArea;
 
-
+/* 
+ *  Using bitmask type as multiple actions are possible on click down (select, deselect, move, create)
+ */
 typedef enum _VSCEnveloppeViewMouseAction {
-	VSCEnveloppeViewMouseActionNone,
-	VSCEnveloppeViewMouseActionSelectPoints,
-	VSCEnveloppeViewMouseActionCreatePoints,
-	VSCEnveloppeViewMouseActionMovePoints,
-	VSCEnveloppeViewMouseActionCreateControlPoints,
-	VSCEnveloppeViewMouseActionMoveControlPoints
+	VSCEnveloppeViewMouseActionNone = 0,
+	VSCEnveloppeViewMouseActionSelect = 1 << 0,
+    VSCEnveloppeViewMouseActionPersistentSelect = 1 << 1,
+	VSCEnveloppeViewMouseActionCreate = 1 << 2,
+    VSCEnveloppeViewMouseActionDelete = 1 << 3,
+	VSCEnveloppeViewMouseActionMove = 1 << 4,
+	VSCEnveloppeViewMouseActionCreateControl = 1 << 5,
+	VSCEnveloppeViewMouseActionDeleteControl = 1 << 6,
+    VSCEnveloppeViewMouseActionMoveControl = 1 << 7,
 } VSCEnveloppeViewMouseAction;
 
 @interface VSCEnveloppeView : NSView {
@@ -57,12 +62,10 @@ typedef enum _VSCEnveloppeViewMouseAction {
     
     /*
      *  Keeps track of the selection rectangles
-     *  - stackedSelectionRects keeps a record of all the previously specified selection rects (for composite selection procedures)
      *  - currentSelectionRect is the rect which should currently be affected by mouse movements (in case the currentMouseAction
-     *  VSCEnveloppeViewMouseActionSelectPoints)
+     *  VSCEnveloppeViewMouseActionSelect)
      *  
      */
-	NSMutableArray* stackedSelectionRects; 
     NSRect currentSelectionRect;
 
 }

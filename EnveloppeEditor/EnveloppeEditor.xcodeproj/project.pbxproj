@@ -18,6 +18,7 @@
 		1095D85D14083FC900AB0A89 /* VSCBoost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1095D85C14083FC900AB0A89 /* VSCBoost.cpp */; };
 		109A1E1513E35FB200407874 /* VSCEnveloppe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A1E1413E35FB200407874 /* VSCEnveloppe.cpp */; };
 		109A1E1813E3613A00407874 /* VSCEnveloppePoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A1E1713E3613A00407874 /* VSCEnveloppePoint.cpp */; };
+		10CEDD9C140CDDE900D81E96 /* VSCException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CEDD9B140CDDE900D81E96 /* VSCException.cpp */; };
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
@@ -49,6 +50,8 @@
 		109A1E1413E35FB200407874 /* VSCEnveloppe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppe.cpp; sourceTree = "<group>"; };
 		109A1E1613E3613A00407874 /* VSCEnveloppePoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppePoint.h; sourceTree = "<group>"; };
 		109A1E1713E3613A00407874 /* VSCEnveloppePoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppePoint.cpp; sourceTree = "<group>"; };
+		10CEDD9B140CDDE900D81E96 /* VSCException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCException.cpp; sourceTree = "<group>"; };
+		10CEDD9D140CDDFD00D81E96 /* VSCException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCException.h; sourceTree = "<group>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD582B0DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2564AD2C0F5327BB00F57823 /* EnveloppeEditor_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnveloppeEditor_Prefix.pch; sourceTree = "<group>"; };
@@ -85,6 +88,8 @@
 				1055176713F6BAEE000D011D /* VSCColour.cpp */,
 				1095D85B14083FC900AB0A89 /* VSCBoost.h */,
 				1095D85C14083FC900AB0A89 /* VSCBoost.cpp */,
+				10CEDD9B140CDDE900D81E96 /* VSCException.cpp */,
+				10CEDD9D140CDDFD00D81E96 /* VSCException.h */,
 			);
 			name = Generic;
 			sourceTree = "<group>";
@@ -274,6 +279,7 @@
 				108F294813F16E77007F7A6A /* VSCMath.cpp in Sources */,
 				1055176813F6BAEE000D011D /* VSCColour.cpp in Sources */,
 				1095D85D14083FC900AB0A89 /* VSCBoost.cpp in Sources */,
+				10CEDD9C140CDDE900D81E96 /* VSCException.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

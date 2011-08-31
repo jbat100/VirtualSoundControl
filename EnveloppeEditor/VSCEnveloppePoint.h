@@ -27,8 +27,8 @@ class VSCEnveloppePoint {
 	
 protected:
     
-    VSCEnveloppePoint* _leftControlPoint;
-    VSCEnveloppePoint* _rightControlPoint;
+    VSCEnveloppePointPtr _leftControlPoint;
+    VSCEnveloppePointPtr _rightControlPoint;
 	
 	double _value;
 	double _time;
@@ -47,16 +47,16 @@ public:
 	void setTime(double time);
 	double getTime(void) const;
     
-    void setLeftControlPoint(VSCEnveloppePoint* controlPoint);
-    VSCEnveloppePoint* getLeftControlPoint(void) const;
+    void setLeftControlPoint(VSCEnveloppePointPtr controlPoint);
+    VSCEnveloppePointPtr getLeftControlPoint(void) const;
     
-    void setRightControlPoint(VSCEnveloppePoint* controlPoint);
-    VSCEnveloppePoint* getRightControlPoint(void) const;
+    void setRightControlPoint(VSCEnveloppePointPtr controlPoint);
+    VSCEnveloppePointPtr getRightControlPoint(void) const;
     
 
 };
 
-bool compareEnveloppePointValues (VSCEnveloppePoint* firstPoint, VSCEnveloppePoint* secondPoint);
-bool compareEnveloppePointTimes (VSCEnveloppePoint* firstPoint, VSCEnveloppePoint* secondPoint);
+bool compareEnveloppePointValues (VSCEnveloppePointPtr firstPoint, VSCEnveloppePointPtr secondPoint);
+bool compareEnveloppePointTimes (VSCEnveloppePointPtr firstPoint, VSCEnveloppePointPtr secondPoint);
 
 #endif
