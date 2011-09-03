@@ -21,6 +21,7 @@
 @interface VSCEnveloppeView ()
 
 -(void) updateCurrentlySelectedPoints;
+-(void) addPointsInRect:(NSRect)rect toPointSet:(std::set<VSCEnveloppePointPtr>&)pointSet;
 
 @end
 
@@ -300,13 +301,13 @@
 	
 }
 
--(void) addToCurrentlySelectedPointsInRect:(NSRect)rect {
+-(void) addPointsInRect:(NSRect)rect toPointSet:(std::set<VSCEnveloppePointPtr>&)pointSet {
 	
 	std::list<VSCEnveloppePointPtr> rectPoints; 
 	[self getEnveloppePoints:rectPoints InRect:rect];
 	
 	for (ConstEnvPntIter it = rectPoints.begin(); it != rectPoints.end(); it++) {
-		_currentlySelectedPoints.insert(*it);
+		pointSet.insert(*it);
 	}
 	
 }
@@ -369,7 +370,7 @@
 	else {
 		
 		if (!enveloppePoint) {
-			currentMouseAction = VSCEnveloppeViewMouseAction(VSCEnveloppeViewMouseActionCreate | VSCEnveloppeViewMouseActionPersistentSelect);
+			currentMouseAction = VSCEnveloppeViewMouseAction(VSCEnveloppeViewMouseActionCreate | VSCEnveloppeViewMouseActionSelect);
 		}
 		
 		else {
@@ -377,16 +378,9 @@
 		}
 		
 	}
-	
-
-	
+		
 	if (currentMouseAction & (VSCEnveloppeViewMouseActionSelect | VSCEnveloppeViewMouseActionPersistentSelect)) {
 		currentSelectionRect = CGRectMake(locationInView.x, locationInView.y, 0.0, 0.0);
-	}
-	
-	else if (currentMouseAction == VSCEnveloppeViewMouseActionCreate) {
-		VSCEnveloppePointPtr newPoint = [self createEnveloppePointForPoint:locationInView];
-		_enveloppe->addPoint(newPoint);
 	}
 	
 	[self setNeedsDisplay:YES];
@@ -399,12 +393,30 @@
 	NSPoint eventLocation = [event locationInWindow];
     NSPoint locationInView = [self convertPoint:eventLocation fromView:self];
     [self setNeedsDisplay:YES];
-	
 	NSLog(@"Mouse up at x: %f, y: %f", locationInView.x, locationInView.y);
     
     VSCEnveloppePointPtr enveloppePoint = [self enveloppePointUnderPoint:locationInView];
     
-    if (currentMouseAction == VSCEnveloppeViewMouseActionPersistentSelect && !movedSinceMouseDown) {
+	/*
+	 *	If the mouse action contains create and the mouse has not moved since click down, then create
+	 *	a new point at the click location
+	 */
+	if ((currentMouseAction & VSCEnveloppeViewMouseActionCreate) && movedSinceMouseDown == NO) {
+		VSCEnveloppePointPtr newPoint = [self createEnveloppePointForPoint:locationInView];
+		_enveloppe->addPoint(newPoint);
+	}
+	
+	/*
+	 *	If the mouse action is select or persistant select and the mouse has not moved since click down
+	 *	then select/deselect the point at mouse location, if non-persistent select then deselect all other 
+	 *	points, reset current selection rect
+	 */
+	if ((currentMouseAction & (VSCEnveloppeViewMouseActionSelect | VSCEnveloppeViewMouseActionPersistentSelect)) && 
+		movedSinceMouseDown == NO) {
+		
+		if (currentMouseAction & VSCEnveloppeViewMouseActionSelect) {
+			_currentlySelectedPoints.clear();
+		}
 		
 		// If a point exists at the point where the click occured then select/deselect the point
 		if (enveloppePoint) {
@@ -417,25 +429,65 @@
 			else {
 				_currentlySelectedPoints.erase(enveloppePoint);
 			}
-			// if the click was on an enveloppe point then the selection process should not continue
-			currentMouseAction = VSCEnveloppeViewMouseActionNone;
 		}
+		
+		currentSelectionRect = NSMakeRect(0.0, 0.0, 0.0, 0.0);
+
+	}
+
+	/*
+	 *	If the mouse action contains delete and the mouse has not moved since click down, then delete
+	 *	the point at the click location
+	 */
+	if ((currentMouseAction & VSCEnveloppeViewMouseActionDelete) && movedSinceMouseDown == NO) {
+		if (enveloppePoint) {
+			_enveloppe->removePoint(enveloppePoint);
+			_currentlySelectedPoints.erase(enveloppePoint);
+			_pointsInCurrentSelectionRect.erase(enveloppePoint);
+		}
+	}
+	
+	/*
+	 *	If the mouse action is select or persistant select and the mouse has moved since click down
+	 *	then add the points in currentSelectionRect to _currentlySelectedPoints, if non-persistent select then 
+	 *	deselect all other points, reset current selection rect.
+	 */
+    if ((currentMouseAction & (VSCEnveloppeViewMouseActionSelect | VSCEnveloppeViewMouseActionPersistentSelect)) 
+		&& movedSinceMouseDown == YES) {
+		
+		if (currentMouseAction & VSCEnveloppeViewMouseActionSelect) {
+			_currentlySelectedPoints.clear();
+		}
+		
+		[self addPointsInRect:currentSelectionRect toPointSet:_currentlySelectedPoints];
+		
+		_pointsInCurrentSelectionRect.clear();
+		
+		currentSelectionRect = NSMakeRect(0.0, 0.0, 0.0, 0.0);
 		
 	}
 	
 	currentMouseAction = VSCEnveloppeViewMouseActionNone;
+	movedSinceMouseDown = NO;
+	
+	[self setNeedsDisplay:YES];
 	
 }
 
 -(void) mouseDragged:(NSEvent *)event {
 	
+	movedSinceMouseDown = YES;
+	
 	NSPoint eventLocation = [event locationInWindow];
     NSPoint locationInView = [self convertPoint:eventLocation fromView:self];
-	
 	CGFloat deltaX = [event deltaX];
 	CGFloat deltaY = [event deltaY];
 	
-	if (currentMouseAction == VSCEnveloppeViewMouseActionSelect || currentMouseAction == VSCEnveloppeViewMouseActionPersistentSelect) {
+	/*
+	 *	Eliminate mouse actions which are impossible once 
+	 */
+	
+	if (currentMouseAction & (VSCEnveloppeViewMouseActionSelect |VSCEnveloppeViewMouseActionPersistentSelect)) {
 		
 		NSRect selectionRect = currentSelectionRect;
 		
@@ -466,13 +518,15 @@
 			nh = locationInView.y - cy;
 		}
 		
-		selectionRect = NSMakeRect(nx, ny, nw, nh);
+		currentSelectionRect = NSMakeRect(nx, ny, nw, nh);
 		
-		[self addToCurrentlySelectedPointsInRect:selectionRect];
+		[self addPointsInRect:currentSelectionRect toPointSet:_pointsInCurrentSelectionRect];
 		
 	}
 	
-	else if (currentMouseAction == VSCEnveloppeViewMouseActionMove) {
+	else if (currentMouseAction & VSCEnveloppeViewMouseActionMove) {
+		
+		currentMouseAction = VSCEnveloppeViewMouseActionMove;
 		
 		std::set<VSCEnveloppePointPtr>::iterator it;
 		

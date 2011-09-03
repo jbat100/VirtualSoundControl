@@ -37,6 +37,7 @@ typedef enum _VSCEnveloppeViewMouseAction {
     VSCEnveloppeViewMouseActionMoveControl = 1 << 7,
 } VSCEnveloppeViewMouseAction;
 
+
 @interface VSCEnveloppeView : NSView {
 	
     /*
@@ -53,6 +54,7 @@ typedef enum _VSCEnveloppeViewMouseAction {
      *  Keeps track of the currently selected points for group operations (move for example)
      */
 	std::set<VSCEnveloppePointPtr> _currentlySelectedPoints;
+	std::set<VSCEnveloppePointPtr> _pointsInCurrentSelectionRect;
 	
     /*
      *  Keeps track of the current mouse action
