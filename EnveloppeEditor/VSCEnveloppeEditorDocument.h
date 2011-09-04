@@ -8,9 +8,24 @@
 
 #import <Cocoa/Cocoa.h>
 
+#include <string>
+#include <list>
+#include <boost/shared_ptr.hpp>
+
+#include "VSCEnveloppe.h"
+#include "VSCEnveloppePoint.h"
+
+#define EnvIter				std::list<VSCEnveloppePtr>::iterator 
+#define ConstEnvIter		std::list<VSCEnveloppePtr>::const_iterator 
 
 @interface VSCEnveloppeEditorDocument : NSDocument {
+	
+	/*
+	 *	Enveloppe mapped by pathname
+	 */
+	std::list<VSCEnveloppePtr> _mainEnveloppeMap;
 
 }
+
 
 @end

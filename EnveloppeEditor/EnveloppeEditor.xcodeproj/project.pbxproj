@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		1017811E132BF9B6001C6A96 /* NSGeomOperations.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1017811D132BF9B6001C6A96 /* NSGeomOperations.mm */; };
 		1023D46513E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1023D46413E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp */; };
-		1030EFE3132985C300E4BCA1 /* VSCEnveloppeEditorDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 1030EFE2132985C300E4BCA1 /* VSCEnveloppeEditorDocument.m */; };
+		1030EFE3132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1030EFE2132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm */; };
 		1030EFE7132985E800E4BCA1 /* VSCEnveloppeDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1030EFE5132985E800E4BCA1 /* VSCEnveloppeDocument.xib */; };
 		1055176813F6BAEE000D011D /* VSCColour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1055176713F6BAEE000D011D /* VSCColour.cpp */; };
 		107A78FE132ADE3700C4B1FE /* VSCEnveloppeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */; };
@@ -19,6 +19,8 @@
 		109A1E1513E35FB200407874 /* VSCEnveloppe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A1E1413E35FB200407874 /* VSCEnveloppe.cpp */; };
 		109A1E1813E3613A00407874 /* VSCEnveloppePoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A1E1713E3613A00407874 /* VSCEnveloppePoint.cpp */; };
 		10CEDD9C140CDDE900D81E96 /* VSCException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CEDD9B140CDDE900D81E96 /* VSCException.cpp */; };
+		10DE92361413EDE600CC602A /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE92351413EDE600CC602A /* libboost_filesystem.a */; };
+		10DE923E1413EEB200CC602A /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE923D1413EEB200CC602A /* libboost_system.a */; };
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
@@ -33,7 +35,7 @@
 		1023D46313E8A58700BB9080 /* VSCEnveloppeViewSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeViewSetup.h; sourceTree = "<group>"; };
 		1023D46413E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppeViewSetup.cpp; sourceTree = "<group>"; };
 		1030EFE1132985C300E4BCA1 /* VSCEnveloppeEditorDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeEditorDocument.h; sourceTree = "<group>"; };
-		1030EFE2132985C300E4BCA1 /* VSCEnveloppeEditorDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSCEnveloppeEditorDocument.m; sourceTree = "<group>"; };
+		1030EFE2132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCEnveloppeEditorDocument.mm; sourceTree = "<group>"; };
 		1030EFE6132985E800E4BCA1 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/VSCEnveloppeDocument.xib; sourceTree = "<group>"; };
 		1055176613F6BAEE000D011D /* VSCColour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCColour.h; sourceTree = "<group>"; };
 		1055176713F6BAEE000D011D /* VSCColour.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCColour.cpp; sourceTree = "<group>"; };
@@ -52,6 +54,8 @@
 		109A1E1713E3613A00407874 /* VSCEnveloppePoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppePoint.cpp; sourceTree = "<group>"; };
 		10CEDD9B140CDDE900D81E96 /* VSCException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCException.cpp; sourceTree = "<group>"; };
 		10CEDD9D140CDDFD00D81E96 /* VSCException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCException.h; sourceTree = "<group>"; };
+		10DE92351413EDE600CC602A /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = /usr/local/lib/libboost_filesystem.a; sourceTree = "<absolute>"; };
+		10DE923D1413EEB200CC602A /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = /usr/local/lib/libboost_system.a; sourceTree = "<absolute>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD582B0DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2564AD2C0F5327BB00F57823 /* EnveloppeEditor_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnveloppeEditor_Prefix.pch; sourceTree = "<group>"; };
@@ -69,6 +73,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
+				10DE92361413EDE600CC602A /* libboost_filesystem.a in Frameworks */,
+				10DE923E1413EEB200CC602A /* libboost_system.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +111,8 @@
 		1058C7A8FEA54F5311CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				10DE923D1413EEB200CC602A /* libboost_system.a */,
+				10DE92351413EDE600CC602A /* libboost_filesystem.a */,
 				2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */,
 				13E42FBA07B3F13500E4EEF1 /* CoreData.framework */,
 				2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */,
@@ -116,7 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				1030EFE1132985C300E4BCA1 /* VSCEnveloppeEditorDocument.h */,
-				1030EFE2132985C300E4BCA1 /* VSCEnveloppeEditorDocument.m */,
+				1030EFE2132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm */,
 			);
 			name = "Enveloppe Document";
 			sourceTree = "<group>";
@@ -269,7 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D15AC320486D014006FF6A4 /* main.m in Sources */,
-				1030EFE3132985C300E4BCA1 /* VSCEnveloppeEditorDocument.m in Sources */,
+				1030EFE3132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm in Sources */,
 				107A78FE132ADE3700C4B1FE /* VSCEnveloppeView.mm in Sources */,
 				1017811E132BF9B6001C6A96 /* NSGeomOperations.mm in Sources */,
 				108CD8891330124F0002A0A7 /* CGColorOperations.mm in Sources */,
@@ -363,6 +371,7 @@
 				HEADER_SEARCH_PATHS = "$(BOOST_INCLUDE)";
 				LIBRARY_SEARCH_PATHS = "$(BOOST_LIB)";
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 			};
@@ -377,6 +386,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(BOOST_INCLUDE)";
 				LIBRARY_SEARCH_PATHS = "$(BOOST_LIB)";
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 			};

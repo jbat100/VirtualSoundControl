@@ -370,17 +370,20 @@
 	else {
 		
 		if (!enveloppePoint) {
-			currentMouseAction = VSCEnveloppeViewMouseAction(VSCEnveloppeViewMouseActionCreate | VSCEnveloppeViewMouseActionSelect);
+			currentMouseAction = VSCEnveloppeViewMouseAction(VSCEnveloppeViewMouseActionCreate | 
+															 VSCEnveloppeViewMouseActionSelect);
 		}
 		
 		else {
-			currentMouseAction = VSCEnveloppeViewMouseAction(VSCEnveloppeViewMouseActionDelete | VSCEnveloppeViewMouseActionMove);
+			currentMouseAction = VSCEnveloppeViewMouseAction(VSCEnveloppeViewMouseActionDelete | 
+															 VSCEnveloppeViewMouseActionMove);
 		}
 		
 	}
 		
 	if (currentMouseAction & (VSCEnveloppeViewMouseActionSelect | VSCEnveloppeViewMouseActionPersistentSelect)) {
-		currentSelectionRect = CGRectMake(locationInView.x, locationInView.y, 0.0, 0.0);
+		currentSelectionRect = NSMakeRect(locationInView.x, locationInView.y, 0.0, 0.0);
+		currentSelectionOrigin = NSMakePoint(locationInView.x, locationInView.y);
 	}
 	
 	[self setNeedsDisplay:YES];
@@ -402,6 +405,7 @@
 	 *	a new point at the click location
 	 */
 	if ((currentMouseAction & VSCEnveloppeViewMouseActionCreate) && movedSinceMouseDown == NO) {
+		NSAssert(!enveloppePoint.get(), @"Expected enveloppePoint to be NULL");
 		VSCEnveloppePointPtr newPoint = [self createEnveloppePointForPoint:locationInView];
 		_enveloppe->addPoint(newPoint);
 	}
@@ -432,6 +436,7 @@
 		}
 		
 		currentSelectionRect = NSMakeRect(0.0, 0.0, 0.0, 0.0);
+		currentSelectionOrigin = NSMakePoint(0.0, 0.0);
 
 	}
 
@@ -440,6 +445,7 @@
 	 *	the point at the click location
 	 */
 	if ((currentMouseAction & VSCEnveloppeViewMouseActionDelete) && movedSinceMouseDown == NO) {
+		NSAssert(enveloppePoint.get(), @"Expected enveloppePoint to be non-NULL");
 		if (enveloppePoint) {
 			_enveloppe->removePoint(enveloppePoint);
 			_currentlySelectedPoints.erase(enveloppePoint);
@@ -464,6 +470,7 @@
 		_pointsInCurrentSelectionRect.clear();
 		
 		currentSelectionRect = NSMakeRect(0.0, 0.0, 0.0, 0.0);
+		currentSelectionOrigin = NSMakePoint(0.0, 0.0);
 		
 	}
 	
@@ -484,38 +491,31 @@
 	CGFloat deltaY = [event deltaY];
 	
 	/*
-	 *	Eliminate mouse actions which are impossible once 
+	 *	Eliminate mouse actions which are impossible once the mouse has mooved (create and delete)
 	 */
+	currentMouseAction = VSCEnveloppeViewMouseAction(currentMouseAction & ~(VSCEnveloppeViewMouseActionCreate | VSCEnveloppeViewMouseActionDelete));
 	
 	if (currentMouseAction & (VSCEnveloppeViewMouseActionSelect |VSCEnveloppeViewMouseActionPersistentSelect)) {
 		
 		NSRect selectionRect = currentSelectionRect;
+		CGFloat nx, ny, nw, nh;
 		
-		// current values 
-		CGFloat cx = selectionRect.origin.x;
-		CGFloat cy = selectionRect.origin.y;		
-		// new values
-		CGFloat nx;
-		CGFloat ny;
-		CGFloat nw;
-		CGFloat nh;
-		
-		if (locationInView.x < cx) {
+		if (locationInView.x < currentSelectionOrigin.x) {
 			nx = locationInView.x;
-			nw = cx - locationInView.x;
+			nw = currentSelectionOrigin.x - locationInView.x;
 		}
 		else {
-			nx = cx;
-			nw = locationInView.x - cx;
+			nx = currentSelectionOrigin.x;
+			nw = locationInView.x - currentSelectionOrigin.x;
 		}
 		
-		if (locationInView.y < cy) {
+		if (locationInView.y < currentSelectionOrigin.y) {
 			ny = locationInView.y;
-			nh = cy - locationInView.y;
+			nh = currentSelectionOrigin.y - locationInView.y;
 		}
 		else {
-			ny = cy;
-			nh = locationInView.y - cy;
+			ny = currentSelectionOrigin.y;
+			nh = locationInView.y - currentSelectionOrigin.y;
 		}
 		
 		currentSelectionRect = NSMakeRect(nx, ny, nw, nh);

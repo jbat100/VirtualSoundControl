@@ -14,16 +14,25 @@
 #include <string>
 #include <boost/shared_ptr.hpp>
 
+
 #include "VSCEnveloppePoint.h"
 
-#define VSCEnveloppePtr         boost::shared_ptr<VSCEnveloppe>
+#define VSCEnveloppePtr		boost::shared_ptr<VSCEnveloppe>
 
 
-typedef enum _VSCEnveloppeType {
-	VSCEnveloppeTypeLinear = 1, // in linear mode, enveloppe point control points are ignored (and should't exist anyway)
-    VSCEnveloppeTypeBezierQuadratic,
-	VSCEnveloppeTypeBezierCubic
-} VSCEnveloppeType;
+typedef enum _VSCEnveloppeInterpolationType {
+	VSCEnveloppeInterpolationTypeNone = 0,
+	// in linear mode, enveloppe point control points are ignored (and should't exist anyway)
+	VSCEnveloppeInterpolationTypeLinear = 1, 
+    VSCEnveloppeInterpolationTypeBezierQuadratic,
+	VSCEnveloppeInterpolationTypeBezierCubic
+} VSCEnveloppeInterpolationType;
+
+typedef enum _VSCEnveloppeScaleType {
+	VSCEnveloppeScaleTypeNone = 0,
+	VSCEnveloppeScaleTypeLinear = 1,
+	VSCEnveloppeScaleTypeLinearDB
+} VSCEnveloppeScaleType;
 
 
 class VSCEnveloppe {
@@ -32,12 +41,38 @@ class VSCEnveloppe {
 	
 protected:
 	
+	/*
+	 *	Contains all the enveloppe points
+	 */
 	std::list<VSCEnveloppePointPtr> _points;
 	
-    VSCEnveloppeType _type;
+	/*
+	 *	The scale type determines the scaling undergone by generated enveloppe points during firing
+	 *	(if linear then no scaling, if DB then 0.1pow(v,10))
+	 */
+	VSCEnveloppeScaleType _scaleType;
+	
+	/*
+	 *	The interpolation type determine how values between two enveloppe points are calculated
+	 */
+    VSCEnveloppeInterpolationType _interpolationType;
     
+	/*
+	 *	The minimum time step between two adjascent enveloppe points, if a point is added to the enveloppe,
+	 *	it's neighbourghs which are closer than this time step will be removed from the enveloppe
+	 */
     double _minimumTimeStep;
-	std::string _name;
+	
+	/*
+	 *	VSC project data directories will have an enveloppe sub-directory which will serve as bas for the 
+	 *	enveloppe's relative path
+	 */
+	std::string _relativePath;
+	
+	/*
+	 *	The enveloppe has an associated int channel which can be used to define where update signals are sent 
+	 *	when the enveloppe is fired (consider also adding observers)
+	 */
 	int _channel;
     
     bool isSortedByTime(void) const;
@@ -47,11 +82,21 @@ protected:
 	
 public:
 	
+	/* FIRE !!! */
+	void fire(void);
+	void fireAfterInterval(double time);
+	
 	/* getters / setters */
 	
-    
-	void setName(std::string name);
-	std::string getName(void) const;
+	void setScaleType(VSCEnveloppeScaleType scaleType);
+	VSCEnveloppeScaleType getScaleType(void) const;
+	void setInterpolationType(VSCEnveloppeInterpolationType interpolationType);
+	VSCEnveloppeInterpolationType getInterpolationType(void) const;
+	
+	void setRelativePath(std::string relativePath);
+	std::string getRelativePath(void) const;
+	std::string getName(void) const; /* Get the last component of the file path */
+	
 	void setChannel(int channel);
 	int getChannel(void) const;
 	void setMinimumTimeStep(double minimumTimeStep);
@@ -96,8 +141,6 @@ public:
     double maxTime(void) const;
     double minValue(void) const;
     double maxValue(void) const;
-    
-	
 	
 };
 

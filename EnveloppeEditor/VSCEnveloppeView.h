@@ -69,6 +69,7 @@ typedef enum _VSCEnveloppeViewMouseAction {
      *  
      */
     NSRect currentSelectionRect;
+	NSPoint currentSelectionOrigin;
 
 }
 

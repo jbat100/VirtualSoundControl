@@ -15,12 +15,43 @@
 #include <cmath>
 #include <assert.h>
 
-void VSCEnveloppe::setName(std::string name) {
-	_name = name;
+#include <boost/filesystem.hpp>
+
+
+void VSCEnveloppe::fire(void) {
+	
+}
+
+void VSCEnveloppe::fireAfterInterval(double time) {
+	
+}
+
+void VSCEnveloppe::setScaleType(VSCEnveloppeScaleType scaleType) {
+	_scaleType = scaleType;
+}
+
+VSCEnveloppeScaleType VSCEnveloppe::getScaleType(void) const {
+	return _scaleType;
+}
+
+void VSCEnveloppe::setInterpolationType(VSCEnveloppeInterpolationType interpolationType) {
+	_interpolationType = interpolationType;
+}
+
+VSCEnveloppeInterpolationType VSCEnveloppe::getInterpolationType(void) const {
+	return _interpolationType;
+}
+
+void VSCEnveloppe::setRelativePath(std::string relativePath) {
+	_relativePath = relativePath;
+}
+
+std::string VSCEnveloppe::getRelativePath(void) const {
+	return _relativePath;
 }
 
 std::string VSCEnveloppe::getName(void) const {
-	return _name;
+	return boost::filesystem::path(_relativePath).replace_extension(NULL).filename().string();
 }
 
 void VSCEnveloppe::setChannel(int channel) {
@@ -221,17 +252,12 @@ VSCEnveloppePointPtr VSCEnveloppe::getFirstPointBeforeTime(double time, bool cop
 		return VSCEnveloppePointPtr();
 	
 	for (ConstRevEnvPntIter it = _points.rbegin(); it != _points.rend(); it++) {
-		
 		if ((*it)->getTime() < time) {
-			
 			if (copy)
 				return VSCEnveloppePointPtr(new VSCEnveloppePoint(*(*it)));
-			
 			else 
 				return (*it);
-			
 		}
-		
 	}
 	
 	return VSCEnveloppePointPtr();
