@@ -9,8 +9,9 @@
 /* Begin PBXBuildFile section */
 		1017811E132BF9B6001C6A96 /* NSGeomOperations.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1017811D132BF9B6001C6A96 /* NSGeomOperations.mm */; };
 		1023D46513E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1023D46413E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp */; };
+		102C2146141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 102C2145141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm */; };
+		102C2156141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 102C2155141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib */; };
 		1030EFE3132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1030EFE2132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm */; };
-		1030EFE7132985E800E4BCA1 /* VSCEnveloppeDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1030EFE5132985E800E4BCA1 /* VSCEnveloppeDocument.xib */; };
 		1055176813F6BAEE000D011D /* VSCColour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1055176713F6BAEE000D011D /* VSCColour.cpp */; };
 		107A78FE132ADE3700C4B1FE /* VSCEnveloppeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */; };
 		108CD8891330124F0002A0A7 /* CGColorOperations.mm in Sources */ = {isa = PBXBuildFile; fileRef = 108CD8881330124F0002A0A7 /* CGColorOperations.mm */; };
@@ -34,9 +35,11 @@
 		1017811D132BF9B6001C6A96 /* NSGeomOperations.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NSGeomOperations.mm; sourceTree = "<group>"; };
 		1023D46313E8A58700BB9080 /* VSCEnveloppeViewSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeViewSetup.h; sourceTree = "<group>"; };
 		1023D46413E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppeViewSetup.cpp; sourceTree = "<group>"; };
+		102C2144141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeEditorWindowController.h; sourceTree = "<group>"; };
+		102C2145141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCEnveloppeEditorWindowController.mm; sourceTree = "<group>"; };
+		102C2155141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSCEnveloppeEditorWindowController.xib; sourceTree = "<group>"; };
 		1030EFE1132985C300E4BCA1 /* VSCEnveloppeEditorDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeEditorDocument.h; sourceTree = "<group>"; };
 		1030EFE2132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCEnveloppeEditorDocument.mm; sourceTree = "<group>"; };
-		1030EFE6132985E800E4BCA1 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/VSCEnveloppeDocument.xib; sourceTree = "<group>"; };
 		1055176613F6BAEE000D011D /* VSCColour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCColour.h; sourceTree = "<group>"; };
 		1055176713F6BAEE000D011D /* VSCColour.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCColour.cpp; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -100,6 +103,15 @@
 			name = Generic;
 			sourceTree = "<group>";
 		};
+		102C2147141CFAC400EEEF55 /* Nibs */ = {
+			isa = PBXGroup;
+			children = (
+				102C2155141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib */,
+				1DDD582A0DA1D0D100B32029 /* MainMenu.xib */,
+			);
+			name = Nibs;
+			sourceTree = "<group>";
+		};
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +137,8 @@
 			children = (
 				1030EFE1132985C300E4BCA1 /* VSCEnveloppeEditorDocument.h */,
 				1030EFE2132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm */,
+				102C2144141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.h */,
+				102C2145141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm */,
 			);
 			name = "Enveloppe Document";
 			sourceTree = "<group>";
@@ -194,11 +208,10 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				102C2147141CFAC400EEEF55 /* Nibs */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
 				8D15AC360486D014006FF6A4 /* EnveloppeEditor-Info.plist */,
 				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
-				1030EFE5132985E800E4BCA1 /* VSCEnveloppeDocument.xib */,
-				1DDD582A0DA1D0D100B32029 /* MainMenu.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -265,7 +278,7 @@
 				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */,
-				1030EFE7132985E800E4BCA1 /* VSCEnveloppeDocument.xib in Resources */,
+				102C2156141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +301,7 @@
 				1055176813F6BAEE000D011D /* VSCColour.cpp in Sources */,
 				1095D85D14083FC900AB0A89 /* VSCBoost.cpp in Sources */,
 				10CEDD9C140CDDE900D81E96 /* VSCException.cpp in Sources */,
+				102C2146141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,14 +314,6 @@
 				089C1660FE840EACC02AAC07 /* English */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		1030EFE5132985E800E4BCA1 /* VSCEnveloppeDocument.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1030EFE6132985E800E4BCA1 /* English */,
-			);
-			name = VSCEnveloppeDocument.xib;
 			sourceTree = "<group>";
 		};
 		1DDD582A0DA1D0D100B32029 /* MainMenu.xib */ = {

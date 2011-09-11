@@ -15,17 +15,34 @@
 #include "VSCEnveloppe.h"
 #include "VSCEnveloppePoint.h"
 
+#import "VSCEnveloppeEditorWindowController.h"
+
+@class VSCEnveloppeEditorWindowController;
+
 #define EnvIter				std::list<VSCEnveloppePtr>::iterator 
 #define ConstEnvIter		std::list<VSCEnveloppePtr>::const_iterator 
 
 @interface VSCEnveloppeEditorDocument : NSDocument {
 	
-	/*
-	 *	Enveloppe mapped by pathname
-	 */
-	std::list<VSCEnveloppePtr> _mainEnveloppeMap;
+	std::list<VSCEnveloppePtr> _mainEnveloppeList;
+	
+	VSCEnveloppeEditorWindowController* enveloppeEditorWindowController;
 
 }
 
+/*
+ *	Enveloppe Base File Paths
+ */
+-(NSArray*) enveloppeBaseFilePaths;
+
+/*
+ *	Enveloppe Access/Create/Add/Remove
+ */
+
+-(void) addEnveloppe:(VSCEnveloppePtr)enveloppe;
+-(void) removeEnveloppe:(VSCEnveloppePtr)enveloppe;
+-(ConstEnvIter) beginMainEnveloppeListIterator;
+-(ConstEnvIter) endMainEnveloppeListIterator;
+-(void) createDefaultEnveloppe;
 
 @end

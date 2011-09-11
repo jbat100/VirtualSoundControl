@@ -8,23 +8,26 @@
 
 #import "VSCEnveloppeEditorDocument.h"
 
-
 @implementation VSCEnveloppeEditorDocument
 
 -(id) init {
 	
 	if ((self = [super init])) {
-		
+		[self createDefaultEnveloppe];
 	}
 	
 	return self;
 	
 }
 
+#pragma mark - NSDocument Methods
+
+/*
 - (NSString *)windowNibName {
     // Implement this to return a nib to load OR implement -makeWindowControllers to manually create your controllers.
     return @"VSCEnveloppeDocument";
 }
+ */
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
 {
@@ -46,6 +49,79 @@
     // For applications targeted for Panther or earlier systems, you should use the deprecated API -loadDataRepresentation:ofType. In this case you can also choose to override -readFromFile:ofType: or -loadFileWrapperRepresentation:ofType: instead.
     
     return YES;
+}
+
+-(void) makeWindowControllers {
+	
+	NSLog(@"%@ windowControllers are %@", self, [self windowControllers]);
+	
+	NSLog(@"%@ makeWindowControllers", self);
+	
+	enveloppeEditorWindowController = [[VSCEnveloppeEditorWindowController alloc] 
+									   initWithWindowNibName:@"VSCEnveloppeEditorWindowController"];
+	
+	[self addWindowController:enveloppeEditorWindowController];
+	
+	NSLog(@"%@ added window controller %@", self, enveloppeEditorWindowController);
+	
+	[enveloppeEditorWindowController release];
+	
+	[enveloppeEditorWindowController.loadedTextField setStringValue:@"LOADED WITHOUT CALLBACKS"];
+	
+	NSLog(@"%@ windowControllers are %@", self, [self windowControllers]);
+	
+}
+
+- (void)windowControllerWillLoadNib:(NSWindowController *)windowController {
+	NSLog(@"%@ window %@ windowControllerWillLoadNib", self, windowController);
+	if (windowController == enveloppeEditorWindowController) {
+		[enveloppeEditorWindowController.loadedTextField setStringValue:@"LOADED WILL LOAD FROM DOCUMENT"];
+	}
+}
+
+
+- (void)windowControllerDidLoadNib:(NSWindowController *)windowController {
+	NSLog(@"%@ window %@ windowControllerDidLoadNib", self, windowController);
+	if (windowController == enveloppeEditorWindowController) {
+		[enveloppeEditorWindowController.loadedTextField setStringValue:@"LOADED DID LOAD FROM DOCUMENT"];
+	}
+}
+
+#pragma mark - Enveloppe Base File Paths
+
+-(NSArray*) enveloppeBaseFilePaths {
+	
+}
+
+#pragma mark - Enveloppe Access/Creation/Add/Remove
+
+-(void) createDefaultEnveloppe {
+	
+	VSCEnveloppePtr enveloppe = VSCEnveloppePtr(new VSCEnveloppe());
+	
+	enveloppe->addPoint(VSCEnveloppePointPtr(new VSCEnveloppePoint(0.0, 0.0)));
+	enveloppe->addPoint(VSCEnveloppePointPtr(new VSCEnveloppePoint(0.0, 1.0)));
+	enveloppe->addPoint(VSCEnveloppePointPtr(new VSCEnveloppePoint(0.0, 2.0)));
+	enveloppe->addPoint(VSCEnveloppePointPtr(new VSCEnveloppePoint(0.0, 3.0)));
+	
+	enveloppe->setRelativePath("Default");
+	
+}
+
+-(void) addEnveloppe:(VSCEnveloppePtr)enveloppe {
+	_mainEnveloppeList.push_back(enveloppe);
+}
+
+-(void) removeEnveloppe:(VSCEnveloppePtr)enveloppe {
+	_mainEnveloppeList.remove(enveloppe);
+}
+
+-(ConstEnvIter) beginMainEnveloppeListIterator {
+	return _mainEnveloppeList.begin();
+}
+
+-(ConstEnvIter) endMainEnveloppeListIterator {
+	return _mainEnveloppeList.end();
 }
 
 @end

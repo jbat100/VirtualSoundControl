@@ -20,7 +20,6 @@
 
 @interface VSCEnveloppeView ()
 
--(void) updateCurrentlySelectedPoints;
 -(void) addPointsInRect:(NSRect)rect toPointSet:(std::set<VSCEnveloppePointPtr>&)pointSet;
 
 @end
