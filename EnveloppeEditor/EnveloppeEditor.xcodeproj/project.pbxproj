@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		100B34A514226F970037AF8F /* VSCSTKEnveloppe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100B34A414226F970037AF8F /* VSCSTKEnveloppe.cpp */; };
 		1017811E132BF9B6001C6A96 /* NSGeomOperations.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1017811D132BF9B6001C6A96 /* NSGeomOperations.mm */; };
 		1023D46513E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1023D46413E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp */; };
 		102C2146141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 102C2145141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm */; };
@@ -31,8 +32,13 @@
 
 /* Begin PBXFileReference section */
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		100B34A314226F970037AF8F /* VSCSTKEnveloppe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSTKEnveloppe.h; sourceTree = "<group>"; };
+		100B34A414226F970037AF8F /* VSCSTKEnveloppe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSTKEnveloppe.cpp; sourceTree = "<group>"; };
 		1017811C132BF9B6001C6A96 /* NSGeomOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSGeomOperations.h; sourceTree = "<group>"; };
 		1017811D132BF9B6001C6A96 /* NSGeomOperations.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NSGeomOperations.mm; sourceTree = "<group>"; };
+		101C3AEC1422A15200364681 /* Stk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stk.h; sourceTree = STK_INCLUDE; };
+		101C3AED1422A16C00364681 /* Generator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Generator.h; sourceTree = STK_INCLUDE; };
+		101C3AEE1422A16C00364681 /* SineWave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SineWave.h; sourceTree = STK_INCLUDE; };
 		1023D46313E8A58700BB9080 /* VSCEnveloppeViewSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeViewSetup.h; sourceTree = "<group>"; };
 		1023D46413E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppeViewSetup.cpp; sourceTree = "<group>"; };
 		102C2144141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeEditorWindowController.h; sourceTree = "<group>"; };
@@ -103,6 +109,16 @@
 			name = Generic;
 			sourceTree = "<group>";
 		};
+		101C3ADE1422A13200364681 /* STK (for reference...) */ = {
+			isa = PBXGroup;
+			children = (
+				101C3AEC1422A15200364681 /* Stk.h */,
+				101C3AED1422A16C00364681 /* Generator.h */,
+				101C3AEE1422A16C00364681 /* SineWave.h */,
+			);
+			name = "STK (for reference...)";
+			sourceTree = "<group>";
+		};
 		102C2147141CFAC400EEEF55 /* Nibs */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +162,8 @@
 		107A7903132ADF1500C4B1FE /* Enveloppe */ = {
 			isa = PBXGroup;
 			children = (
+				100B34A314226F970037AF8F /* VSCSTKEnveloppe.h */,
+				100B34A414226F970037AF8F /* VSCSTKEnveloppe.cpp */,
 				109A1E1313E35FB200407874 /* VSCEnveloppe.h */,
 				109A1E1413E35FB200407874 /* VSCEnveloppe.cpp */,
 				109A1E1613E3613A00407874 /* VSCEnveloppePoint.h */,
@@ -188,6 +206,7 @@
 		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				101C3ADE1422A13200364681 /* STK (for reference...) */,
 				1017811F132BF9BF001C6A96 /* Generic */,
 				107A7904132ADF2000C4B1FE /* Enveloppe View */,
 				107A7903132ADF1500C4B1FE /* Enveloppe */,
@@ -302,6 +321,7 @@
 				1095D85D14083FC900AB0A89 /* VSCBoost.cpp in Sources */,
 				10CEDD9C140CDDE900D81E96 /* VSCException.cpp in Sources */,
 				102C2146141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm in Sources */,
+				100B34A514226F970037AF8F /* VSCSTKEnveloppe.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,8 +394,14 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(BOOST_INCLUDE)";
-				LIBRARY_SEARCH_PATHS = "$(BOOST_LIB)";
+				HEADER_SEARCH_PATHS = (
+					"$(BOOST_INCLUDE)",
+					"$(STK_INCLUDE)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(BOOST_LIB)",
+					"$(STK_LIB)",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
@@ -390,8 +416,14 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(BOOST_INCLUDE)";
-				LIBRARY_SEARCH_PATHS = "$(BOOST_LIB)";
+				HEADER_SEARCH_PATHS = (
+					"$(BOOST_INCLUDE)",
+					"$(STK_INCLUDE)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(BOOST_LIB)",
+					"$(STK_LIB)",
+				);
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;

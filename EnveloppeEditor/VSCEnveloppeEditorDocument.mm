@@ -10,6 +10,8 @@
 
 @implementation VSCEnveloppeEditorDocument
 
+static NSArray* enveloppeBaseFilePaths = nil;
+
 -(id) init {
 	
 	if ((self = [super init])) {
@@ -91,13 +93,20 @@
 
 -(NSArray*) enveloppeBaseFilePaths {
 	
+	if (!enveloppeBaseFilePaths) {
+		@synchronized(self) {
+			enveloppeBaseFilePaths = [NSArray arrayWithObjects:nil];
+		}
+	}
+	
+	return enveloppeBaseFilePaths;
 }
 
 #pragma mark - Enveloppe Access/Creation/Add/Remove
 
 -(void) createDefaultEnveloppe {
 	
-	VSCEnveloppePtr enveloppe = VSCEnveloppePtr(new VSCEnveloppe());
+	VSCSTKEnveloppePtr enveloppe = VSCSTKEnveloppePtr(new VSCSTKEnveloppe());
 	
 	enveloppe->addPoint(VSCEnveloppePointPtr(new VSCEnveloppePoint(0.0, 0.0)));
 	enveloppe->addPoint(VSCEnveloppePointPtr(new VSCEnveloppePoint(0.0, 1.0)));
@@ -108,11 +117,11 @@
 	
 }
 
--(void) addEnveloppe:(VSCEnveloppePtr)enveloppe {
+-(void) addEnveloppe:(VSCSTKEnveloppePtr)enveloppe {
 	_mainEnveloppeList.push_back(enveloppe);
 }
 
--(void) removeEnveloppe:(VSCEnveloppePtr)enveloppe {
+-(void) removeEnveloppe:(VSCSTKEnveloppePtr)enveloppe {
 	_mainEnveloppeList.remove(enveloppe);
 }
 

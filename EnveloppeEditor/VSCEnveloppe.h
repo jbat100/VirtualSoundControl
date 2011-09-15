@@ -14,11 +14,9 @@
 #include <string>
 #include <boost/shared_ptr.hpp>
 
-
 #include "VSCEnveloppePoint.h"
 
 #define VSCEnveloppePtr		boost::shared_ptr<VSCEnveloppe>
-
 
 typedef enum _VSCEnveloppeInterpolationType {
 	VSCEnveloppeInterpolationTypeNone = 0,
