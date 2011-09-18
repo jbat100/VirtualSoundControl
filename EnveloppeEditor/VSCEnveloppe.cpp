@@ -26,6 +26,8 @@ void VSCEnveloppe::fireAfterInterval(double time) {
 	
 }
 
+#pragma mark - General Setters/Getters
+
 void VSCEnveloppe::setScaleType(VSCEnveloppeScaleType scaleType) {
 	_scaleType = scaleType;
 }
@@ -89,6 +91,8 @@ bool VSCEnveloppe::isSortedByTime(void) const {
     return true;
     
 }
+
+#pragma mark - Add/Remove Enveloppe Points
 
 void VSCEnveloppe::addPoint(VSCEnveloppePointPtr point) {
     
@@ -170,6 +174,20 @@ void VSCEnveloppe::removePointsInTimeRange(double lowerTime, double upperTime){
     assert(isSortedByTime());
 }
 
+#pragma mark - Change Notification
+
+/*
+ *	Enveloppe changes calls (mostly for subclasses to update cache tables)
+ */
+virtual void VSCEnveloppe::enveloppeChangedBetweenEnveloppePoints(VSCEnveloppePointPtr begin, VSCEnveloppePointPtr end) {
+	std::cout << "In VSCEnveloppe enveloppeChangedBetweenEnveloppePoints";
+}
+
+virtual void VSCEnveloppe::enveloppeChangedBetweenEnveloppePointAndNext(VSCEnveloppePointPtr point) {
+	std::cout << "In VSCEnveloppe enveloppeChangedBetweenEnveloppePointAndNext";
+}
+
+#pragma mark - Point Getters
 
 ConstEnvPntIter VSCEnveloppe::getPointBeginIterator(void) const {
 	return _points.begin();
@@ -314,12 +332,16 @@ int VSCEnveloppe::numberOfPoints(void) const {
 }
 
 
+#pragma mark - Value Computation
+
 /* value */
 
 double VSCEnveloppe::getValueAtTime(double time) const {
 	
 	VSCEnveloppePointPtr lp = getFirstPointBeforeTime(time, false);
-	VSCEnveloppePointPtr up = getFirstPointAfterTime(time, false);
+	//VSCEnveloppePointPtr up = getFirstPointAfterTime(time, false);
+	VSCEnveloppePointPtr up = lp;
+	up++;
 	
 	if (lp == NULL || up == NULL) 
 		return NAN;
@@ -336,6 +358,8 @@ double VSCEnveloppe::getValueAtTime(double time) const {
 
 }
 
+#pragma mark - Sorting
+
 /* sorting */
 
 void VSCEnveloppe::sortPointsByTime(void) {
@@ -343,6 +367,8 @@ void VSCEnveloppe::sortPointsByTime(void) {
 	//_points.sort(compareEnveloppePointTimes);
 	
 }
+
+#pragma mark - Enveloppe Extremes
 
 /* extremes */
 double VSCEnveloppe::minTime(void) const {

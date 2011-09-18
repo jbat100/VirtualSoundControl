@@ -78,6 +78,12 @@ protected:
     /* sorting */
 	void sortPointsByTime(void);
 	
+	/*
+	 *	Enveloppe changes calls (mostly for subclasses to update cache tables)
+	 */
+	virtual void enveloppeChangedBetweenEnveloppePoints(VSCEnveloppePointPtr begin, VSCEnveloppePointPtr end);
+	virtual void enveloppeChangedBetweenEnveloppePointAndNext(VSCEnveloppePointPtr point);
+	
 public:
 	
 	/* FIRE !!! */
@@ -135,6 +141,7 @@ public:
 	double getValueAtTime(double time) const;
     
     /* extremes */
+	
     double minTime(void) const;
     double maxTime(void) const;
     double minValue(void) const;

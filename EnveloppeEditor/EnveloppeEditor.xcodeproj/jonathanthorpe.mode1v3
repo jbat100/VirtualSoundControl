@@ -271,6 +271,7 @@
 							<array>
 								<string>2A37F4AAFDCFA73011CA2CEA</string>
 								<string>2A37F4ABFDCFA73011CA2CEA</string>
+								<string>101C3ADE1422A13200364681</string>
 								<string>1017811F132BF9BF001C6A96</string>
 								<string>107A7904132ADF2000C4B1FE</string>
 								<string>107A7903132ADF1500C4B1FE</string>
@@ -287,13 +288,14 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>2</integer>
+									<integer>29</integer>
+									<integer>24</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {340, 673}}</string>
+							<string>{{0, 109}, {340, 673}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -330,7 +332,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>VSCSTKEnveloppe.h</string>
+								<string>VSCEnveloppePoint.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -338,11 +340,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>VSCSTKEnveloppe.h</string>
+										<string>VSCEnveloppePoint.h</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>101C3AE91422A13700364681</string>
+										<string>101C3AF61422A29600364681</string>
 										<key>history</key>
 										<array>
 											<string>109A1E1E13E3738800407874</string>
@@ -353,7 +355,6 @@
 											<string>10C1862A13EB4ACB004EAC4B</string>
 											<string>102B719013F1EA730025498A</string>
 											<string>105517C013F6CF0B000D011D</string>
-											<string>105517C113F6CF0B000D011D</string>
 											<string>105517C213F6CF0B000D011D</string>
 											<string>105517C313F6CF0B000D011D</string>
 											<string>105517C413F6CF0B000D011D</string>
@@ -374,15 +375,17 @@
 											<string>106955F6141D251F003541DC</string>
 											<string>106955FB141D611E003541DC</string>
 											<string>100B34A9142271FF0037AF8F</string>
-											<string>100B34AB142271FF0037AF8F</string>
 											<string>101C3ADF1422A13700364681</string>
-											<string>101C3AE11422A13700364681</string>
 											<string>101C3AE31422A13700364681</string>
 											<string>101C3AE41422A13700364681</string>
 											<string>101C3AE51422A13700364681</string>
 											<string>101C3AE61422A13700364681</string>
 											<string>101C3AE71422A13700364681</string>
-											<string>101C3AE81422A13700364681</string>
+											<string>101C3AF11422A29600364681</string>
+											<string>101C3AF21422A29600364681</string>
+											<string>101C3AF31422A29600364681</string>
+											<string>101C3AF41422A29600364681</string>
+											<string>101C3AF51422A29600364681</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
