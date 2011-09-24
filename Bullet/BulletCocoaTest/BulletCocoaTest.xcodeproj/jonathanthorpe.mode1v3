@@ -344,7 +344,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>10F5358713AEAE6800D56193</string>
+										<string>1048C64E13FC56C100B684D1</string>
 										<key>history</key>
 										<array>
 											<string>102953F91360C9970079D423</string>
@@ -393,7 +393,7 @@
 											<string>101BCB4313AEAAFB005BE68A</string>
 											<string>10F5358513AEAE6800D56193</string>
 											<string>10F5358613AEAE6800D56193</string>
-											<string>101BCB3F13AEAAFB005BE68A</string>
+											<string>1048C64D13FC56C100B684D1</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -405,14 +405,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {975, 474}}</string>
+								<string>{{0, 0}, {975, 468}}</string>
 								<key>RubberWindowFrame</key>
 								<string>4 46 1276 732 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>474pt</string>
+							<string>468pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -425,14 +425,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 479}, {975, 212}}</string>
+								<string>{{0, 473}, {975, 218}}</string>
 								<key>RubberWindowFrame</key>
 								<string>4 46 1276 732 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
 							<key>Proportion</key>
-							<string>212pt</string>
+							<string>218pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
@@ -451,9 +451,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>10F5358813AEAE6800D56193</string>
+				<string>1048C64F13FC56C100B684D1</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>10F5358913AEAE6800D56193</string>
+				<string>1048C65013FC56C100B684D1</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -591,8 +591,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>102953B21360C4C40079D423</string>
 		<string>1CD10A99069EF8BA00B06720</string>
+		<string>102953B21360C4C40079D423</string>
 		<string>/Users/jonathanthorpe/Programming/Projects/Repository/Bullet/BulletCocoaTest/BulletCocoaTest.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -673,7 +673,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>102953B21360C4C40079D423</string>
-				<string>10F5357C13AEAE5D00D56193</string>
+				<string>1048C65113FC56C100B684D1</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -795,13 +795,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>10F5357D13AEAE5D00D56193</string>
+				<string>1048C65213FC56C100B684D1</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>10F5357E13AEAE5D00D56193</string>
-				<string>10F5357F13AEAE5D00D56193</string>
-				<string>10F5358013AEAE5D00D56193</string>
-				<string>10F5358113AEAE5D00D56193</string>
-				<string>10F5358213AEAE5D00D56193</string>
+				<string>1048C65313FC56C100B684D1</string>
+				<string>1048C65413FC56C100B684D1</string>
+				<string>1048C65513FC56C100B684D1</string>
+				<string>1048C65613FC56C100B684D1</string>
+				<string>1048C65713FC56C100B684D1</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>

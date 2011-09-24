@@ -9,16 +9,28 @@
 		};
 	};
 	100B34A314226F970037AF8F /* VSCSTKEnveloppe.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = VSCSTKEnveloppe.h;
+		path = /Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/VSCSTKEnveloppe.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {853, 624}}";
-			sepNavSelRange = "{354, 0}";
-			sepNavVisRange = "{223, 474}";
+			sepNavIntBoundsRect = "{{0, 0}, {853, 1079}}";
+			sepNavSelRange = "{1563, 0}";
+			sepNavVisRange = "{490, 1395}";
 			sepNavWindowFrame = "{{19, 41}, {1185, 732}}";
 		};
 	};
 	100B34A414226F970037AF8F /* VSCSTKEnveloppe.cpp */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = VSCSTKEnveloppe.cpp;
+		path = /Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/VSCSTKEnveloppe.cpp;
+		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {853, 436}}";
+			sepNavIntBoundsRect = "{{0, 0}, {853, 536}}";
 			sepNavSelRange = "{180, 0}";
 			sepNavVisRange = "{0, 180}";
 		};
@@ -34,6 +46,12 @@
 		vrLoc = 387;
 	};
 	1017811C132BF9B6001C6A96 /* NSGeomOperations.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = NSGeomOperations.h;
+		path = /Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/NSGeomOperations.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {879, 606}}";
 			sepNavSelRange = "{233, 0}";
@@ -41,6 +59,12 @@
 		};
 	};
 	1017811D132BF9B6001C6A96 /* NSGeomOperations.mm */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.cpp.objcpp;
+		name = NSGeomOperations.mm;
+		path = /Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/NSGeomOperations.mm;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {879, 606}}";
 			sepNavSelRange = "{366, 0}";
@@ -64,16 +88,6 @@
 		name = Envelope.h;
 		path = /Users/jonathanthorpe/Programming/Libraries/STK/include/Envelope.h;
 		sourceTree = "<absolute>";
-	};
-	101C3AE31422A13700364681 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 109A1E1313E35FB200407874 /* VSCEnveloppe.h */;
-		name = "VSCEnveloppe.h: 23";
-		rLen = 0;
-		rLoc = 470;
-		rType = 0;
-		vrLen = 883;
-		vrLoc = 145;
 	};
 	101C3AE41422A13700364681 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -105,49 +119,26 @@
 		vrLen = 896;
 		vrLoc = 3481;
 	};
-	101C3AE71422A13700364681 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 100B34A414226F970037AF8F /* VSCSTKEnveloppe.cpp */;
-		name = "VSCSTKEnveloppe.cpp: 12";
-		rLen = 0;
-		rLoc = 180;
-		rType = 0;
-		vrLen = 180;
-		vrLoc = 0;
-	};
 	101C3AEC1422A15200364681 /* Stk.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {853, 7020}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{2971, 719}";
+			sepNavIntBoundsRect = "{{0, 0}, {853, 6786}}";
+			sepNavSelRange = "{12718, 0}";
+			sepNavVisRange = "{11904, 1914}";
+		};
+	};
+	101C3AED1422A16C00364681 /* Generator.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {853, 663}}";
+			sepNavSelRange = "{557, 0}";
+			sepNavVisRange = "{0, 1514}";
 		};
 	};
 	101C3AEE1422A16C00364681 /* SineWave.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {853, 2080}}";
-			sepNavSelRange = "{201, 0}";
-			sepNavVisRange = "{0, 876}";
+			sepNavIntBoundsRect = "{{0, 0}, {853, 1976}}";
+			sepNavSelRange = "{2245, 525}";
+			sepNavVisRange = "{1906, 1259}";
 		};
-	};
-	101C3AF11422A29600364681 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 100B34A314226F970037AF8F /* VSCSTKEnveloppe.h */;
-		name = "VSCSTKEnveloppe.h: 25";
-		rLen = 0;
-		rLoc = 354;
-		rType = 0;
-		vrLen = 474;
-		vrLoc = 223;
-	};
-	101C3AF21422A29600364681 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 101C3AEC1422A15200364681 /* Stk.h */;
-		name = "Stk.h: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 719;
-		vrLoc = 2971;
 	};
 	101C3AF31422A29600364681 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -157,36 +148,6 @@
 		rLoc = 451;
 		rType = 0;
 		vrLen = 452;
-		vrLoc = 0;
-	};
-	101C3AF41422A29600364681 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 101C3AEE1422A16C00364681 /* SineWave.h */;
-		name = "SineWave.h: 11";
-		rLen = 0;
-		rLoc = 201;
-		rType = 0;
-		vrLen = 876;
-		vrLoc = 0;
-	};
-	101C3AF51422A29600364681 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 109A1E1613E3613A00407874 /* VSCEnveloppePoint.h */;
-		name = "VSCEnveloppePoint.h: 21";
-		rLen = 15;
-		rLoc = 505;
-		rType = 0;
-		vrLen = 967;
-		vrLoc = 182;
-	};
-	101C3AF61422A29600364681 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 109A1E1613E3613A00407874 /* VSCEnveloppePoint.h */;
-		name = "VSCEnveloppePoint.h: 21";
-		rLen = 15;
-		rLoc = 505;
-		rType = 0;
-		vrLen = 920;
 		vrLoc = 0;
 	};
 	1023D46313E8A58700BB9080 /* VSCEnveloppeViewSetup.h */ = {
@@ -342,6 +303,96 @@
 		path = /Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/EnveloppeControlPoint.m;
 		sourceTree = "<absolute>";
 	};
+	1031E13C1426500800FCA9C4 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 101C3AEC1422A15200364681 /* Stk.h */;
+		name = "Stk.h: 347";
+		rLen = 0;
+		rLoc = 12718;
+		rType = 0;
+		vrLen = 1914;
+		vrLoc = 11904;
+	};
+	1031E13D1426500800FCA9C4 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 101C3AEE1422A16C00364681 /* SineWave.h */;
+		name = "SineWave.h: 73";
+		rLen = 525;
+		rLoc = 2245;
+		rType = 0;
+		vrLen = 1259;
+		vrLoc = 1906;
+	};
+	1031E13E1426500800FCA9C4 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 109A1E1613E3613A00407874 /* VSCEnveloppePoint.h */;
+		name = "VSCEnveloppePoint.h: 17";
+		rLen = 20;
+		rLoc = 295;
+		rType = 0;
+		vrLen = 1096;
+		vrLoc = 142;
+	};
+	1031E13F1426500800FCA9C4 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 100B34A414226F970037AF8F /* VSCSTKEnveloppe.cpp */;
+		name = "VSCSTKEnveloppe.cpp: 12";
+		rLen = 0;
+		rLoc = 180;
+		rType = 0;
+		vrLen = 180;
+		vrLoc = 0;
+	};
+	1031E1401426500800FCA9C4 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 100B34A314226F970037AF8F /* VSCSTKEnveloppe.h */;
+		name = "VSCSTKEnveloppe.h: 66";
+		rLen = 0;
+		rLoc = 1563;
+		rType = 0;
+		vrLen = 1395;
+		vrLoc = 490;
+	};
+	1031E1411426500800FCA9C4 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 101C3AED1422A16C00364681 /* Generator.h */;
+		name = "Generator.h: 23";
+		rLen = 0;
+		rLoc = 557;
+		rType = 0;
+		vrLen = 1514;
+		vrLoc = 0;
+	};
+	1031E1421426500800FCA9C4 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 109A1E1413E35FB200407874 /* VSCEnveloppe.cpp */;
+		name = "VSCEnveloppe.cpp: 184";
+		rLen = 0;
+		rLoc = 4091;
+		rType = 0;
+		vrLen = 1413;
+		vrLoc = 3680;
+	};
+	1031E1431426500800FCA9C4 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 109A1E1313E35FB200407874 /* VSCEnveloppe.h */;
+		name = "VSCEnveloppe.h: 84";
+		rLen = 7;
+		rLoc = 2224;
+		rType = 0;
+		vrLen = 1682;
+		vrLoc = 1440;
+	};
+	1031E1441426500800FCA9C4 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 109A1E1313E35FB200407874 /* VSCEnveloppe.h */;
+		name = "VSCEnveloppe.h: 102";
+		rLen = 0;
+		rLoc = 2912;
+		rType = 0;
+		vrLen = 1982;
+		vrLoc = 2218;
+	};
 	103C21FE13E5BF6C00A405DA /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 1030EFEA132986AD00E4BCA1 /* Enveloppe.m */;
@@ -353,6 +404,12 @@
 		vrLoc = 0;
 	};
 	1055176613F6BAEE000D011D /* VSCColour.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = VSCColour.h;
+		path = /Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/VSCColour.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {879, 606}}";
 			sepNavSelRange = "{140, 0}";
@@ -360,6 +417,12 @@
 		};
 	};
 	1055176713F6BAEE000D011D /* VSCColour.cpp */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = VSCColour.cpp;
+		path = /Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/VSCColour.cpp;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {908, 654}}";
 			sepNavSelRange = "{167, 0}";
@@ -474,16 +537,6 @@
 		path = /Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/AppKit.framework/Versions/C/Headers/NSWindowController.h;
 		sourceTree = "<absolute>";
 	};
-	10695588141D09F7003541DC /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 109A1E1413E35FB200407874 /* VSCEnveloppe.cpp */;
-		name = "VSCEnveloppe.cpp: 147";
-		rLen = 53;
-		rLoc = 2975;
-		rType = 0;
-		vrLen = 934;
-		vrLoc = 3281;
-	};
 	106955C9141D1095003541DC /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 089C1660FE840EACC02AAC07 /* English */;
@@ -570,6 +623,12 @@
 		vrLoc = 1262;
 	};
 	108CD8871330124F0002A0A7 /* CGColorOperations.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = CGColorOperations.h;
+		path = /Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/CGColorOperations.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {853, 436}}";
 			sepNavSelRange = "{451, 0}";
@@ -578,6 +637,12 @@
 		};
 	};
 	108CD8881330124F0002A0A7 /* CGColorOperations.mm */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.cpp.objcpp;
+		name = CGColorOperations.mm;
+		path = /Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/CGColorOperations.mm;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {879, 611}}";
 			sepNavSelRange = "{238, 0}";
@@ -586,21 +651,25 @@
 		};
 	};
 	108F294613F16E77007F7A6A /* VSCMath.cpp */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = VSCMath.cpp;
+		path = /Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/VSCMath.cpp;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {879, 654}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 155}";
 		};
 	};
-	108F294713F16E77007F7A6A /* VSCMath.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1126, 604}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 130}";
-			sepNavWindowFrame = "{{42, 20}, {1185, 732}}";
-		};
-	};
 	1095D85B14083FC900AB0A89 /* VSCBoost.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = VSCBoost.h;
+		path = /Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/VSCBoost.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1053, 263}}";
 			sepNavSelRange = "{174, 0}";
@@ -608,6 +677,12 @@
 		};
 	};
 	1095D85C14083FC900AB0A89 /* VSCBoost.cpp */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = VSCBoost.cpp;
+		path = /Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/VSCBoost.cpp;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {908, 606}}";
 			sepNavSelRange = "{0, 0}";
@@ -635,29 +710,53 @@
 		vrLoc = 0;
 	};
 	109A1E1313E35FB200407874 /* VSCEnveloppe.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = VSCEnveloppe.h;
+		path = /Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/VSCEnveloppe.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {853, 2054}}";
-			sepNavSelRange = "{470, 0}";
-			sepNavVisRange = "{145, 883}";
+			sepNavIntBoundsRect = "{{0, 0}, {880, 1911}}";
+			sepNavSelRange = "{2912, 0}";
+			sepNavVisRange = "{2218, 1982}";
 			sepNavWindowFrame = "{{42, 144}, {1024, 608}}";
 		};
 	};
 	109A1E1413E35FB200407874 /* VSCEnveloppe.cpp */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = VSCEnveloppe.cpp;
+		path = /Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/VSCEnveloppe.cpp;
+		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {808, 5343}}";
-			sepNavSelRange = "{2975, 53}";
-			sepNavVisRange = "{3281, 934}";
+			sepNavIntBoundsRect = "{{0, 0}, {880, 5538}}";
+			sepNavSelRange = "{4091, 0}";
+			sepNavVisRange = "{3680, 1413}";
 		};
 	};
 	109A1E1613E3613A00407874 /* VSCEnveloppePoint.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = VSCEnveloppePoint.h;
+		path = /Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/VSCEnveloppePoint.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {853, 806}}";
-			sepNavSelRange = "{965, 0}";
-			sepNavVisRange = "{497, 1219}";
+			sepNavIntBoundsRect = "{{0, 0}, {853, 845}}";
+			sepNavSelRange = "{295, 20}";
+			sepNavVisRange = "{142, 1096}";
 			sepNavWindowFrame = "{{19, 41}, {1185, 732}}";
 		};
 	};
 	109A1E1713E3613A00407874 /* VSCEnveloppePoint.cpp */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = VSCEnveloppePoint.cpp;
+		path = /Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/VSCEnveloppePoint.cpp;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {853, 1365}}";
 			sepNavSelRange = "{1133, 0}";
@@ -758,7 +857,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					675,
+					702,
 					20,
 					48,
 					43,
@@ -797,26 +896,28 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 338048449;
-			PBXWorkspaceStateSaveDate = 338048449;
+			PBXPerProjectTemplateStateSaveDate = 338570127;
+			PBXWorkspaceStateSaveDate = 338570127;
 		};
 		perUserProjectItems = {
 			100B34A9142271FF0037AF8F = 100B34A9142271FF0037AF8F /* PBXTextBookmark */;
 			101C3ADF1422A13700364681 = 101C3ADF1422A13700364681 /* PBXTextBookmark */;
-			101C3AE31422A13700364681 = 101C3AE31422A13700364681 /* PBXTextBookmark */;
 			101C3AE41422A13700364681 = 101C3AE41422A13700364681 /* PBXTextBookmark */;
 			101C3AE51422A13700364681 = 101C3AE51422A13700364681 /* PBXTextBookmark */;
 			101C3AE61422A13700364681 = 101C3AE61422A13700364681 /* PBXTextBookmark */;
-			101C3AE71422A13700364681 = 101C3AE71422A13700364681 /* PBXTextBookmark */;
-			101C3AF11422A29600364681 = 101C3AF11422A29600364681 /* PBXTextBookmark */;
-			101C3AF21422A29600364681 = 101C3AF21422A29600364681 /* PBXTextBookmark */;
 			101C3AF31422A29600364681 = 101C3AF31422A29600364681 /* PBXTextBookmark */;
-			101C3AF41422A29600364681 = 101C3AF41422A29600364681 /* PBXTextBookmark */;
-			101C3AF51422A29600364681 = 101C3AF51422A29600364681 /* PBXTextBookmark */;
-			101C3AF61422A29600364681 = 101C3AF61422A29600364681 /* PBXTextBookmark */;
 			1023D47113E8AD1D00BB9080 = 1023D47113E8AD1D00BB9080 /* PBXTextBookmark */;
 			1023D47613E8AD1D00BB9080 = 1023D47613E8AD1D00BB9080 /* PBXTextBookmark */;
 			102B719013F1EA730025498A = 102B719013F1EA730025498A /* PBXTextBookmark */;
+			1031E13C1426500800FCA9C4 = 1031E13C1426500800FCA9C4 /* PBXTextBookmark */;
+			1031E13D1426500800FCA9C4 = 1031E13D1426500800FCA9C4 /* PBXTextBookmark */;
+			1031E13E1426500800FCA9C4 = 1031E13E1426500800FCA9C4 /* PBXTextBookmark */;
+			1031E13F1426500800FCA9C4 = 1031E13F1426500800FCA9C4 /* PBXTextBookmark */;
+			1031E1401426500800FCA9C4 = 1031E1401426500800FCA9C4 /* PBXTextBookmark */;
+			1031E1411426500800FCA9C4 = 1031E1411426500800FCA9C4 /* PBXTextBookmark */;
+			1031E1421426500800FCA9C4 = 1031E1421426500800FCA9C4 /* PBXTextBookmark */;
+			1031E1431426500800FCA9C4 = 1031E1431426500800FCA9C4 /* PBXTextBookmark */;
+			1031E1441426500800FCA9C4 = 1031E1441426500800FCA9C4 /* PBXTextBookmark */;
 			103C21FE13E5BF6C00A405DA = 103C21FE13E5BF6C00A405DA /* PBXTextBookmark */;
 			105517C013F6CF0B000D011D = 105517C013F6CF0B000D011D /* PBXTextBookmark */;
 			105517C213F6CF0B000D011D = 105517C213F6CF0B000D011D /* PBXTextBookmark */;
@@ -826,7 +927,6 @@
 			105517DD13F6F158000D011D = 105517DD13F6F158000D011D /* PBXTextBookmark */;
 			105517FC13F70218000D011D = 105517FC13F70218000D011D /* PBXTextBookmark */;
 			10695569141D0808003541DC = 10695569141D0808003541DC /* PBXTextBookmark */;
-			10695588141D09F7003541DC = 10695588141D09F7003541DC /* PBXTextBookmark */;
 			106955C9141D1095003541DC = 106955C9141D1095003541DC /* PBXTextBookmark */;
 			106955CA141D1095003541DC = 106955CA141D1095003541DC /* PlistBookmark */;
 			106955F6141D251F003541DC = 106955F6141D251F003541DC /* PBXTextBookmark */;
