@@ -11,32 +11,18 @@
 #include <cstddef>
 #include <assert.h>
 
-bool compareEnveloppePointValues (VSCEnveloppePointPtr firstPoint, VSCEnveloppePointPtr secondPoint) {
-	return firstPoint->getValue() < secondPoint->getValue();
-}
-
-bool compareEnveloppePointTimes (VSCEnveloppePointPtr firstPoint, VSCEnveloppePointPtr secondPoint) {
-	return firstPoint->getTime() < secondPoint->getTime();
-}
 
 VSCEnveloppePoint::VSCEnveloppePoint(void) {
-    setTime(0.0);
-    setValue(0.0);
     setLeftControlPoint(VSCEnveloppePointPtr());
     setRightControlPoint(VSCEnveloppePointPtr());
 }
 
-VSCEnveloppePoint::VSCEnveloppePoint(double value, double time) {
-	setTime(time);
-    setValue(value);
+VSCEnveloppePoint::VSCEnveloppePoint(double value, double time) : VSCEnveloppeCoordinate (value, time) {
     setLeftControlPoint(VSCEnveloppePointPtr());
     setRightControlPoint(VSCEnveloppePointPtr());
 }
 
-VSCEnveloppePoint::VSCEnveloppePoint(const VSCEnveloppePoint& p) {
-    
-	_value = p.getValue();
-	_time = p.getTime();
+VSCEnveloppePoint::VSCEnveloppePoint(const VSCEnveloppePoint& p) : VSCEnveloppeCoordinate(p) {
     
     if (p.getLeftControlPoint()) {
         VSCEnveloppePoint* leftRawPtr = p.getLeftControlPoint().get();
@@ -58,32 +44,7 @@ VSCEnveloppePoint::VSCEnveloppePoint(const VSCEnveloppePoint& p) {
 
 VSCEnveloppePoint::~VSCEnveloppePoint(void) {
 	std::cout << "Destroying enveloppe point!" << std::endl;
-	
-    /* NO NEED TO DELETE SHARED POINTERS */
-    /*
-	if (_leftControlPoint)
-		delete _leftControlPoint;
-	
-	if (_rightControlPoint)
-		delete _rightControlPoint;
-	*/
-}
-
-void VSCEnveloppePoint::setValue(double value) {
-	_value = value;
-}
-
-double VSCEnveloppePoint::getValue(void) const {
-	return _value;
-}
-
-void VSCEnveloppePoint::setTime(double time) {
-    assert(time >= 0.0);
-	_time = time;
-}
-
-double VSCEnveloppePoint::getTime(void) const {
-	return _time;
+    /* MUST NOT DELETE SHARED POINTERS */
 }
 
 void VSCEnveloppePoint::setLeftControlPoint(VSCEnveloppePointPtr controlPoint) {
@@ -105,6 +66,8 @@ VSCEnveloppePointPtr VSCEnveloppePoint::getRightControlPoint(void) const {
 #pragma mark --- Operator <<
 
 std::ostream& operator<<(std::ostream& output, const VSCEnveloppePoint& p) {
-    output << "VSCEnveloppePoint (time: " <<  p._time << "s, value:" << p._value <<")";
+    output << "VSCEnveloppePoint (time: " <<  p._time << "s, value: " << p._value; 
+	output<< ", left control: " << *(_leftControlCoordinate.get()); 
+	output<< ", right control: " << *(_rightControlCoordinate.get()) << ")";
     return output;  
 }

@@ -22,26 +22,38 @@ void VSCEnveloppe::fire(void) {
 	
 }
 
-void VSCEnveloppe::fireAfterInterval(double time) {
+void VSCEnveloppe::fireAfterInterval(double intervalTime) {
+	
+}
+
+virtual void setCurrentTime(double currentTime) {
 	
 }
 
 #pragma mark - General Setters/Getters
 
-void VSCEnveloppe::setScaleType(VSCEnveloppeScaleType scaleType) {
+void VSCEnveloppe::setScaleType(VSCEnveloppe::ScaleType scaleType) {
 	_scaleType = scaleType;
 }
 
-VSCEnveloppeScaleType VSCEnveloppe::getScaleType(void) const {
+VSCEnveloppe::ScaleType VSCEnveloppe::getScaleType(void) const {
 	return _scaleType;
 }
 
-void VSCEnveloppe::setInterpolationType(VSCEnveloppeInterpolationType interpolationType) {
-	_interpolationType = interpolationType;
+void VSCEnveloppe::setCurveType(VSCEnveloppe::CurveType curveType) {
+	_curveType = curveType;
 }
 
-VSCEnveloppeInterpolationType VSCEnveloppe::getInterpolationType(void) const {
+VSCEnveloppe::CurveType VSCEnveloppe::getCurveType(void) const {
 	return _interpolationType;
+}
+
+void setState(VSCEnveloppe::State state) {
+	_state = state;
+}
+
+VSCEnveloppe::State getState(void) const {
+	return _state;
 }
 
 void VSCEnveloppe::setRelativePath(std::string relativePath) {
@@ -331,6 +343,26 @@ int VSCEnveloppe::numberOfPoints(void) const {
 	return _points.size();
 }
 
+#pragma mark - Enveloppe Duration 
+
+double duration(void) const {
+	
+	assert(isSortedByTime());
+	
+	/* 
+	 * If there are no points then return 0 duration 
+	 */
+	if (numberOfPoints() < 1)
+		return 0.0;
+	
+	/* 
+	 * Get last pointand return its time value
+	 */
+	RevEnvPntIter rit = _points.rbegin();
+	
+	return (*rit)->getTime();
+	
+}
 
 #pragma mark - Value Computation
 
