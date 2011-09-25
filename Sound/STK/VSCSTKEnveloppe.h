@@ -18,6 +18,8 @@
 
 /*
  *	STK stuff
+ *
+ *	Using the stk:: namespace scoping explicitely to avoid namespace pollution
  */
 #include <Generator.h>
 
@@ -38,10 +40,10 @@ public:
 	void reset(void);
 	
 	//! Return the last computed output value.
-	StkFloat lastOut(void) const {return lastFrame_[0];};
+	stk::StkFloat lastOut(void) const {return lastFrame_[0];};
 	
 	//! Compute and return one output sample.
-	StkFloat tick(void);
+	stk::StkFloat tick(void);
 	
 	//! Fill a channel of the StkFrames object with computed outputs.
 	/*!
@@ -51,11 +53,12 @@ public:
 	 is defined during compilation, in which case an out-of-range value
 	 will trigger an StkError exception.
 	 */
-	StkFrames& tick(StkFrames& frames, unsigned int channel = 0);
+	stk::StkFrames& tick(stk::StkFrames& frames, unsigned int channel = 0);
 	
 	/* FIRE !!! */
 	virtual void fire(void);
 	virtual void fireAfterInterval(double time);
+	virtual void setCurrentTime(double currentTime);
 	
 	
 protected:
@@ -79,43 +82,33 @@ protected:
 	/*
 	 *	Deal with sample rate changes
 	 */
-	void sampleRateChanged(StkFloat newRate, StkFloat oldRate);
+	void sampleRateChanged(stk::StkFloat newRate, stk::StkFloat oldRate);
 	
 	/*
 	 *	table of samples with fixed time interval (size is proportional to the
 	 *	time duration of the enveloppe.
 	 */ 
-	static StkFrames table_;
+	static stk::StkFrames table_;
 	
 	/*
 	 *	current sample is a float, could be an int really, 
 	 */
-	StkFloat currentSample_;
+	stk::StkFloat currentSample_;
 
 };
 
-inline StkFloat VSCSTKEnveloppe::tick(void)
+inline stk::StkFloat VSCSTKEnveloppe::tick(void)
 {
-	// Check limits of time address ... if necessary, recalculate modulo
-	// TABLE_SIZE.
-	while ( time_ < 0.0 )
-		time_ += TABLE_SIZE;
-	while ( time_ >= TABLE_SIZE )
-		time_ -= TABLE_SIZE;
-	
-	iIndex_ = (unsigned int) time_;
-	alpha_ = time_ - iIndex_;
-	StkFloat tmp = table_[ iIndex_ ];
-	tmp += ( alpha_ * ( table_[ iIndex_ + 1 ] - tmp ) );
-	
-	// Increment time, which can be negative.
-	time_ += rate_;
-	
-	lastFrame_[0] = tmp;
+	currentSample_ += 1.0;
+	unsigned int index = (unsigned int)currentSample_;
+	if (index >= table_.frames())
+		lastFrame_[0] = table_[(unsigned int)currentSample_];
+	else 
+		lastFrame_[0] = table_[(unsigned int)(table_.frames()-1)];
 	return lastFrame_[0];
 }
 
-inline StkFrames& VSCSTKEnveloppe::tick(StkFrames& frames, unsigned int channel)
+inline stk::StkFrames& VSCSTKEnveloppe::tick(stk::StkFrames& frames, unsigned int channel)
 {
 #if defined(_STK_DEBUG_)
 	if ( channel >= frames.channels() ) {
@@ -124,27 +117,18 @@ inline StkFrames& VSCSTKEnveloppe::tick(StkFrames& frames, unsigned int channel)
 	}
 #endif
 	
-	StkFloat *samples = &frames[channel];
-	StkFloat tmp = 0.0;
+	stk::StkFloat *samples = &frames[channel];
+	stk::StkFloat tmp = 0.0;
 	
 	unsigned int hop = frames.channels();
-	for ( unsigned int i=0; i<frames.frames(); i++, samples += hop ) {
-		
-		// Check limits of time address ... if necessary, recalculate modulo
-		// TABLE_SIZE.
-		while ( time_ < 0.0 )
-			time_ += TABLE_SIZE;
-		while ( time_ >= TABLE_SIZE )
-			time_ -= TABLE_SIZE;
-		
-		iIndex_ = (unsigned int) time_;
-		alpha_ = time_ - iIndex_;
-		tmp = table_[ iIndex_ ];
-		tmp += ( alpha_ * ( table_[ iIndex_ + 1 ] - tmp ) );
+	for (unsigned int i=0; i<frames.frames(); i++, samples += hop) {
+		currentSample_ += 1.0;
+		unsigned int index = (unsigned int)currentSample_;
+		if (index >= table_.frames())
+			tmp = table_[(unsigned int)currentSample_];
+		else 
+			tmp = table_[(unsigned int)(table_.frames()-1)];
 		*samples = tmp;
-		
-		// Increment time, which can be negative.
-		time_ += rate_;
 	}
 	
 	lastFrame_[0] = tmp;

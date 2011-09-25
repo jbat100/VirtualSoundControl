@@ -13,31 +13,31 @@
 
 
 VSCEnveloppePoint::VSCEnveloppePoint(void) {
-    setLeftControlPoint(VSCEnveloppePointPtr());
-    setRightControlPoint(VSCEnveloppePointPtr());
+    setLeftControlEnveloppeCoordinate(VSCEnveloppeCoordinatePtr());
+    setRightControlEnveloppeCoordinate(VSCEnveloppeCoordinatePtr());
 }
 
 VSCEnveloppePoint::VSCEnveloppePoint(double value, double time) : VSCEnveloppeCoordinate (value, time) {
-    setLeftControlPoint(VSCEnveloppePointPtr());
-    setRightControlPoint(VSCEnveloppePointPtr());
+    setLeftControlEnveloppeCoordinate(VSCEnveloppeCoordinatePtr());
+    setRightControlEnveloppeCoordinate(VSCEnveloppeCoordinatePtr());
 }
 
 VSCEnveloppePoint::VSCEnveloppePoint(const VSCEnveloppePoint& p) : VSCEnveloppeCoordinate(p) {
     
-    if (p.getLeftControlPoint()) {
-        VSCEnveloppePoint* leftRawPtr = p.getLeftControlPoint().get();
-        setLeftControlPoint(VSCEnveloppePointPtr(new VSCEnveloppePoint(*leftRawPtr)));
+    if (p.getLeftControlEnveloppeCoordinate()) {
+        VSCEnveloppeCoordinate* leftRawPtr = p.getLeftControlEnveloppeCoordinate().get();
+        setLeftControlEnveloppeCoordinate(VSCEnveloppeCoordinatePtr(new VSCEnveloppeCoordinate(*leftRawPtr)));
     }
     else {
-        setLeftControlPoint(VSCEnveloppePointPtr());
+        setLeftControlEnveloppeCoordinate(VSCEnveloppeCoordinatePtr());
     }
     
-    if (p.getRightControlPoint()) {
-        VSCEnveloppePoint* rightRawPtr = p.getRightControlPoint().get();
-        setRightControlPoint(VSCEnveloppePointPtr(new VSCEnveloppePoint(*rightRawPtr)));
+    if (p.getRightControlEnveloppeCoordinate()) {
+        VSCEnveloppeCoordinate* rightRawPtr = p.getRightControlEnveloppeCoordinate().get();
+        setRightControlEnveloppeCoordinate(VSCEnveloppeCoordinatePtr(new VSCEnveloppeCoordinate(*rightRawPtr)));
     }
     else {
-        setRightControlPoint(VSCEnveloppePointPtr());
+        setRightControlEnveloppeCoordinate(VSCEnveloppeCoordinatePtr());
     }
     
 }
@@ -47,27 +47,27 @@ VSCEnveloppePoint::~VSCEnveloppePoint(void) {
     /* MUST NOT DELETE SHARED POINTERS */
 }
 
-void VSCEnveloppePoint::setLeftControlPoint(VSCEnveloppePointPtr controlPoint) {
-    _leftControlPoint = controlPoint;
+void VSCEnveloppePoint::setLeftControlEnveloppeCoordinate(VSCEnveloppeCoordinatePtr controlCoordinate) {
+    _leftControlCoordinate = controlCoordinate;
 }
 
-VSCEnveloppePointPtr VSCEnveloppePoint::getLeftControlPoint(void) const {
-    return _leftControlPoint;
+VSCEnveloppeCoordinatePtr VSCEnveloppePoint::getLeftControlEnveloppeCoordinate(void) const {
+    return _leftControlCoordinate;
 }
 
-void VSCEnveloppePoint::setRightControlPoint(VSCEnveloppePointPtr controlPoint) {
-    _rightControlPoint = controlPoint;
+void VSCEnveloppePoint::setRightControlEnveloppeCoordinate(VSCEnveloppeCoordinatePtr controlCoordinate) {
+    _rightControlCoordinate = controlCoordinate;
 }
 
-VSCEnveloppePointPtr VSCEnveloppePoint::getRightControlPoint(void) const {
-    return _rightControlPoint;
+VSCEnveloppeCoordinatePtr VSCEnveloppePoint::getRightControlEnveloppeCoordinate(void) const {
+    return _rightControlCoordinate;
 }
 
 #pragma mark --- Operator <<
 
 std::ostream& operator<<(std::ostream& output, const VSCEnveloppePoint& p) {
     output << "VSCEnveloppePoint (time: " <<  p._time << "s, value: " << p._value; 
-	output<< ", left control: " << *(_leftControlCoordinate.get()); 
-	output<< ", right control: " << *(_rightControlCoordinate.get()) << ")";
+	output << ", left control: " << *(p._leftControlCoordinate.get()); 
+	output << ", right control: " << *(p._rightControlCoordinate.get()) << ")";
     return output;  
 }

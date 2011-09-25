@@ -40,11 +40,11 @@ public:
 	VSCEnveloppePoint(double value, double time);
 	~VSCEnveloppePoint(void);
     
-    void setLeftControlPoint(VSCEnveloppeCoordinatePtr controlPoint);
-    VSCEnveloppeCoordinatePtr getLeftControlPoint(void) const;
+    void setLeftControlEnveloppeCoordinate(VSCEnveloppeCoordinatePtr controlPoint);
+    VSCEnveloppeCoordinatePtr getLeftControlEnveloppeCoordinate(void) const;
     
-    void setRightControlPoint(VSCEnveloppeCoordinatePtr controlPoint);
-    VSCEnveloppeCoordinatePtr getRightControlPoint(void) const;
+    void setRightControlEnveloppeCoordinate(VSCEnveloppeCoordinatePtr controlPoint);
+    VSCEnveloppeCoordinatePtr getRightControlEnveloppeCoordinate(void) const;
     
 
 };

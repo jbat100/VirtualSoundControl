@@ -67,7 +67,7 @@
 		fRef = 10406130142E2BED0086563C /* VSCSTKEnveloppe.cpp */;
 		name = "VSCSTKEnveloppe.cpp: 115";
 		rLen = 0;
-		rLoc = 3553;
+		rLoc = 3717;
 		rType = 0;
 		vrLen = 1314;
 		vrLoc = 371;
@@ -97,7 +97,7 @@
 		fRef = 10406131142E2BED0086563C /* VSCSTKEnveloppe.h */;
 		name = "VSCSTKEnveloppe.h: 123";
 		rLen = 0;
-		rLoc = 3341;
+		rLoc = 3391;
 		rType = 0;
 		vrLen = 1299;
 		vrLoc = 2767;
@@ -349,7 +349,7 @@
 		fRef = 1040612A142E2BE40086563C /* VSCEnveloppe.cpp */;
 		name = "VSCEnveloppe.cpp: 40";
 		rLen = 0;
-		rLoc = 695;
+		rLoc = 709;
 		rType = 0;
 		vrLen = 949;
 		vrLoc = 252;
@@ -384,17 +384,17 @@
 	};
 	1040612B142E2BE40086563C /* VSCEnveloppe.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1053, 2509}}";
-			sepNavSelRange = "{769, 0}";
-			sepNavVisRange = "{3276, 618}";
+			sepNavIntBoundsRect = "{{0, 0}, {841, 2600}}";
+			sepNavSelRange = "{964, 40}";
+			sepNavVisRange = "{394, 1089}";
 			sepNavWindowFrame = "{{42, 20}, {1185, 732}}";
 		};
 	};
 	1040612C142E2BE40086563C /* VSCEnveloppePoint.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1053, 936}}";
-			sepNavSelRange = "{1418, 0}";
-			sepNavVisRange = "{1768, 782}";
+			sepNavIntBoundsRect = "{{0, 0}, {841, 962}}";
+			sepNavSelRange = "{2218, 0}";
+			sepNavVisRange = "{0, 1765}";
 		};
 	};
 	1040612D142E2BE40086563C /* VSCEnveloppePoint.h */ = {
@@ -407,17 +407,17 @@
 	};
 	10406130142E2BED0086563C /* VSCSTKEnveloppe.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {841, 1781}}";
-			sepNavSelRange = "{3757, 0}";
-			sepNavVisRange = "{744, 1643}";
+			sepNavIntBoundsRect = "{{0, 0}, {841, 2002}}";
+			sepNavSelRange = "{293, 0}";
+			sepNavVisRange = "{0, 1339}";
 			sepNavWindowFrame = "{{19, 41}, {1185, 732}}";
 		};
 	};
 	10406131142E2BED0086563C /* VSCSTKEnveloppe.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1053, 1729}}";
-			sepNavSelRange = "{3130, 0}";
-			sepNavVisRange = "{2930, 661}";
+			sepNavIntBoundsRect = "{{0, 0}, {841, 1807}}";
+			sepNavSelRange = "{898, 0}";
+			sepNavVisRange = "{0, 1100}";
 			sepNavWindowFrame = "{{19, 41}, {1185, 732}}";
 		};
 	};

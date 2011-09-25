@@ -27,33 +27,33 @@ public:
 	/*
 	 *	Curve Type
 	 */
-	enum {
+	enum CurveType {
 		CurveTypeNone = 0,
 		// in linear mode, enveloppe point control points are ignored (and should't exist anyway)
 		CurveTypeLinear = 1, 
 		CurveTypeBezierQuadratic,
 		CurveTypeBezierCubic
-	} CurveType;
+	};
 	
 	/*
 	 *	Scale Type
 	 */
-	enum {
+	enum ScaleType {
 		ScaleTypeNone = 0,
 		ScaleTypeLinear = 1,
 		ScaleTypeLinearDB
-	} ScaleType;
+	};
 	
 	/*
 	 *	State
 	 */
-	enum {
+	enum State {
 		StateNone = 0,
 		StateOff = 1,
 		StateScheduled,
 		StateStarted,
 		StateEnded
-	} State;
+	};
 	
 	
 	/* FIRE !!! */

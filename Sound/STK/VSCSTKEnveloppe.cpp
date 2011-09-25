@@ -11,7 +11,19 @@
 #include <math.h>
 #include <iterator>
 
-StkFrames VSCSTKEnveloppe::table_;
+stk::StkFrames VSCSTKEnveloppe::table_;
+
+void VSCSTKEnveloppe::fire(void) {
+	
+}
+
+void VSCSTKEnveloppe::fireAfterInterval(double time) {
+	
+}
+
+void VSCSTKEnveloppe::setCurrentTime(double currentTime) {
+	
+}
 
 void VSCSTKEnveloppe::enveloppeChangedBetweenEnveloppePoints(VSCEnveloppePointPtr begin, VSCEnveloppePointPtr end) {
 	updateTableBetweenEnveloppePoints(begin, end);
@@ -54,8 +66,8 @@ void VSCSTKEnveloppe::updateTableBetweenEnveloppePoints(ConstEnvPntIter beginIt,
 
 void VSCSTKEnveloppe::updateTableBetweenEnveloppePointAndNext(VSCEnveloppePointPtr point) {
 	ConstEnvPntIter pointIt = find(getPointBeginIterator(), getPointEndIterator(), point);
-	assert(beginIt != getPointEndIterator());
-	updateTableBetweenEnveloppePointAndNext(beginIt);
+	assert(pointIt != getPointEndIterator());
+	updateTableBetweenEnveloppePointAndNext(pointIt);
 }
 
 void VSCSTKEnveloppe::updateTableBetweenEnveloppePointAndNext(ConstEnvPntIter pointIt) {
@@ -68,7 +80,7 @@ void VSCSTKEnveloppe::updateTableBetweenEnveloppePointAndNext(ConstEnvPntIter po
 	/*
 	 *	If the iterator is the end iterator then do nothing...
 	 */
-	EnvPntIter it = getPointEndIterator();
+	EnvPntIter it = _points.end();
 	if (pointIt == it) {
 		return;
 	}
@@ -132,6 +144,6 @@ unsigned int VSCSTKEnveloppe::lowerTableIndexForTime(double time) {
 	return floor(time/Stk::sampleRate());
 }
 
-void VSCSTKEnveloppe::sampleRateChanged(StkFloat newRate, StkFloat oldRate) {
+void VSCSTKEnveloppe::sampleRateChanged(stk::StkFloat newRate, stk::StkFloat oldRate) {
 	updateTable();
 }

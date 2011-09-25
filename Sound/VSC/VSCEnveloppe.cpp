@@ -26,7 +26,7 @@ void VSCEnveloppe::fireAfterInterval(double intervalTime) {
 	
 }
 
-virtual void setCurrentTime(double currentTime) {
+void VSCEnveloppe::setCurrentTime(double currentTime) {
 	
 }
 
@@ -45,14 +45,14 @@ void VSCEnveloppe::setCurveType(VSCEnveloppe::CurveType curveType) {
 }
 
 VSCEnveloppe::CurveType VSCEnveloppe::getCurveType(void) const {
-	return _interpolationType;
+	return _curveType;
 }
 
-void setState(VSCEnveloppe::State state) {
+void VSCEnveloppe::setState(VSCEnveloppe::State state) {
 	_state = state;
 }
 
-VSCEnveloppe::State getState(void) const {
+VSCEnveloppe::State VSCEnveloppe::getState(void) const {
 	return _state;
 }
 
@@ -191,11 +191,11 @@ void VSCEnveloppe::removePointsInTimeRange(double lowerTime, double upperTime){
 /*
  *	Enveloppe changes calls (mostly for subclasses to update cache tables)
  */
-virtual void VSCEnveloppe::enveloppeChangedBetweenEnveloppePoints(VSCEnveloppePointPtr begin, VSCEnveloppePointPtr end) {
+void VSCEnveloppe::enveloppeChangedBetweenEnveloppePoints(VSCEnveloppePointPtr begin, VSCEnveloppePointPtr end) {
 	std::cout << "In VSCEnveloppe enveloppeChangedBetweenEnveloppePoints";
 }
 
-virtual void VSCEnveloppe::enveloppeChangedBetweenEnveloppePointAndNext(VSCEnveloppePointPtr point) {
+void VSCEnveloppe::enveloppeChangedBetweenEnveloppePointAndNext(VSCEnveloppePointPtr point) {
 	std::cout << "In VSCEnveloppe enveloppeChangedBetweenEnveloppePointAndNext";
 }
 
@@ -345,7 +345,7 @@ int VSCEnveloppe::numberOfPoints(void) const {
 
 #pragma mark - Enveloppe Duration 
 
-double duration(void) const {
+double VSCEnveloppe::duration(void) const {
 	
 	assert(isSortedByTime());
 	
@@ -358,7 +358,8 @@ double duration(void) const {
 	/* 
 	 * Get last pointand return its time value
 	 */
-	RevEnvPntIter rit = _points.rbegin();
+	ConstRevEnvPntIter rit = _points.rbegin();
+	//rit--;
 	
 	return (*rit)->getTime();
 	
@@ -371,9 +372,9 @@ double duration(void) const {
 double VSCEnveloppe::getValueAtTime(double time) const {
 	
 	VSCEnveloppePointPtr lp = getFirstPointBeforeTime(time, false);
-	//VSCEnveloppePointPtr up = getFirstPointAfterTime(time, false);
-	VSCEnveloppePointPtr up = lp;
-	up++;
+	VSCEnveloppePointPtr up = getFirstPointAfterTime(time, false);
+	//VSCEnveloppePointPtr up = lp;
+	//up++;
 	
 	if (lp == NULL || up == NULL) 
 		return NAN;

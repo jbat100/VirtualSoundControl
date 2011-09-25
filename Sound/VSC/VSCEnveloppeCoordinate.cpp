@@ -30,11 +30,11 @@ VSCEnveloppeCoordinate::VSCEnveloppeCoordinate(double value, double time) {
 }
 
 VSCEnveloppeCoordinate::VSCEnveloppeCoordinate(const VSCEnveloppeCoordinate& c) {
-	_value = p.getValue();
-	_time = p.getTime();
+	_value = c.getValue();
+	_time = c.getTime();
 }
 
-VSCEnveloppeCoordinate::VSCEnveloppeCoordinate(void) {
+VSCEnveloppeCoordinate::~VSCEnveloppeCoordinate(void) {
 	std::cout << "Destroying enveloppe point!" << std::endl;
 }
 
