@@ -117,11 +117,11 @@ static NSArray* enveloppeBaseFilePaths = nil;
 	
 }
 
--(void) addEnveloppe:(VSCSTKEnveloppePtr)enveloppe {
+-(void) addEnveloppe:(VSCEnveloppePtr)enveloppe {
 	_mainEnveloppeList.push_back(enveloppe);
 }
 
--(void) removeEnveloppe:(VSCSTKEnveloppePtr)enveloppe {
+-(void) removeEnveloppe:(VSCEnveloppePtr)enveloppe {
 	_mainEnveloppeList.remove(enveloppe);
 }
 

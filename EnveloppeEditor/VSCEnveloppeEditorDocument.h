@@ -19,12 +19,12 @@
 
 @class VSCEnveloppeEditorWindowController;
 
-#define EnvIter				std::list<VSCSTKEnveloppePtr>::iterator 
-#define ConstEnvIter		std::list<VSCSTKEnveloppePtr>::const_iterator 
+#define EnvIter				std::list<VSCEnveloppePtr>::iterator 
+#define ConstEnvIter		std::list<VSCEnveloppePtr>::const_iterator 
 
 @interface VSCEnveloppeEditorDocument : NSDocument {
 	
-	std::list<VSCSTKEnveloppePtr> _mainEnveloppeList;
+	std::list<VSCEnveloppePtr> _mainEnveloppeList;
 	
 	VSCEnveloppeEditorWindowController* enveloppeEditorWindowController;
 
