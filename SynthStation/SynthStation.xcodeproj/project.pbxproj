@@ -1,0 +1,518 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1061AAC21430A3B500C29FBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1061AAC11430A3B500C29FBB /* Cocoa.framework */; };
+		1061AACC1430A3B500C29FBB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1061AACA1430A3B500C29FBB /* InfoPlist.strings */; };
+		1061AACE1430A3B600C29FBB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1061AACD1430A3B600C29FBB /* main.m */; };
+		1061AAD21430A3B600C29FBB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1061AAD01430A3B600C29FBB /* Credits.rtf */; };
+		1061AAD51430A3B600C29FBB /* MyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 1061AAD41430A3B600C29FBB /* MyDocument.m */; };
+		1061AAD81430A3B600C29FBB /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1061AAD61430A3B600C29FBB /* MyDocument.xib */; };
+		1061AADB1430A3B600C29FBB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1061AAD91430A3B600C29FBB /* MainMenu.xib */; };
+		1061AAE31430A3B600C29FBB /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1061AAE21430A3B600C29FBB /* SenTestingKit.framework */; };
+		1061AAE41430A3B600C29FBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1061AAC11430A3B500C29FBB /* Cocoa.framework */; };
+		1061AAEC1430A3B600C29FBB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1061AAEA1430A3B600C29FBB /* InfoPlist.strings */; };
+		1061AAEE1430A3B600C29FBB /* SynthStationTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 1061AAED1430A3B600C29FBB /* SynthStationTests.h */; };
+		1061AAF01430A3B600C29FBB /* SynthStationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1061AAEF1430A3B600C29FBB /* SynthStationTests.m */; };
+		1061AB041430A42100C29FBB /* VSCSTKEnveloppe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1061AAFB1430A42100C29FBB /* VSCSTKEnveloppe.cpp */; };
+		1061AB051430A42100C29FBB /* VSCEnveloppe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1061AAFE1430A42100C29FBB /* VSCEnveloppe.cpp */; };
+		1061AB061430A42100C29FBB /* VSCEnveloppeCoordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1061AB001430A42100C29FBB /* VSCEnveloppeCoordinate.cpp */; };
+		1061AB071430A42100C29FBB /* VSCEnveloppePoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1061AB021430A42100C29FBB /* VSCEnveloppePoint.cpp */; };
+		1061AB091430A4DA00C29FBB /* VSCSynthSourceElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1061AB081430A4DA00C29FBB /* VSCSynthSourceElement.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1061AAE51430A3B600C29FBB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1061AAB41430A3B500C29FBB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1061AABC1430A3B500C29FBB;
+			remoteInfo = SynthStation;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1061AABD1430A3B500C29FBB /* SynthStation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SynthStation.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1061AAC11430A3B500C29FBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		1061AAC41430A3B500C29FBB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		1061AAC51430A3B500C29FBB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		1061AAC61430A3B500C29FBB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1061AAC91430A3B500C29FBB /* SynthStation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SynthStation-Info.plist"; sourceTree = "<group>"; };
+		1061AACB1430A3B500C29FBB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1061AACD1430A3B600C29FBB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1061AACF1430A3B600C29FBB /* SynthStation-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SynthStation-Prefix.pch"; sourceTree = "<group>"; };
+		1061AAD11430A3B600C29FBB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		1061AAD31430A3B600C29FBB /* MyDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyDocument.h; sourceTree = "<group>"; };
+		1061AAD41430A3B600C29FBB /* MyDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyDocument.m; sourceTree = "<group>"; };
+		1061AAD71430A3B600C29FBB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MyDocument.xib; sourceTree = "<group>"; };
+		1061AADA1430A3B600C29FBB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		1061AAE11430A3B600C29FBB /* SynthStationTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SynthStationTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1061AAE21430A3B600C29FBB /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		1061AAE91430A3B600C29FBB /* SynthStationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SynthStationTests-Info.plist"; sourceTree = "<group>"; };
+		1061AAEB1430A3B600C29FBB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1061AAED1430A3B600C29FBB /* SynthStationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SynthStationTests.h; sourceTree = "<group>"; };
+		1061AAEF1430A3B600C29FBB /* SynthStationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SynthStationTests.m; sourceTree = "<group>"; };
+		1061AAFB1430A42100C29FBB /* VSCSTKEnveloppe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSTKEnveloppe.cpp; sourceTree = "<group>"; };
+		1061AAFC1430A42100C29FBB /* VSCSTKEnveloppe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSTKEnveloppe.h; sourceTree = "<group>"; };
+		1061AAFE1430A42100C29FBB /* VSCEnveloppe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppe.cpp; sourceTree = "<group>"; };
+		1061AAFF1430A42100C29FBB /* VSCEnveloppe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppe.h; sourceTree = "<group>"; };
+		1061AB001430A42100C29FBB /* VSCEnveloppeCoordinate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppeCoordinate.cpp; sourceTree = "<group>"; };
+		1061AB011430A42100C29FBB /* VSCEnveloppeCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeCoordinate.h; sourceTree = "<group>"; };
+		1061AB021430A42100C29FBB /* VSCEnveloppePoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppePoint.cpp; sourceTree = "<group>"; };
+		1061AB031430A42100C29FBB /* VSCEnveloppePoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppePoint.h; sourceTree = "<group>"; };
+		1061AB081430A4DA00C29FBB /* VSCSynthSourceElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSynthSourceElement.cpp; sourceTree = "<group>"; };
+		1061AB0A1430A4EF00C29FBB /* VSCSynthSourceElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthSourceElement.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1061AABA1430A3B500C29FBB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1061AAC21430A3B500C29FBB /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1061AADD1430A3B600C29FBB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1061AAE31430A3B600C29FBB /* SenTestingKit.framework in Frameworks */,
+				1061AAE41430A3B600C29FBB /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1061AAB21430A3B500C29FBB = {
+			isa = PBXGroup;
+			children = (
+				1061AAF91430A3ED00C29FBB /* Sound */,
+				1061AAC71430A3B500C29FBB /* SynthStation */,
+				1061AAE71430A3B600C29FBB /* SynthStationTests */,
+				1061AAC01430A3B500C29FBB /* Frameworks */,
+				1061AABE1430A3B500C29FBB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1061AABE1430A3B500C29FBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1061AABD1430A3B500C29FBB /* SynthStation.app */,
+				1061AAE11430A3B600C29FBB /* SynthStationTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1061AAC01430A3B500C29FBB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1061AAC11430A3B500C29FBB /* Cocoa.framework */,
+				1061AAE21430A3B600C29FBB /* SenTestingKit.framework */,
+				1061AAC31430A3B500C29FBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1061AAC31430A3B500C29FBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1061AAC41430A3B500C29FBB /* AppKit.framework */,
+				1061AAC51430A3B500C29FBB /* CoreData.framework */,
+				1061AAC61430A3B500C29FBB /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		1061AAC71430A3B500C29FBB /* SynthStation */ = {
+			isa = PBXGroup;
+			children = (
+				1061AAD31430A3B600C29FBB /* MyDocument.h */,
+				1061AAD41430A3B600C29FBB /* MyDocument.m */,
+				1061AAD61430A3B600C29FBB /* MyDocument.xib */,
+				1061AAD91430A3B600C29FBB /* MainMenu.xib */,
+				1061AAC81430A3B500C29FBB /* Supporting Files */,
+			);
+			path = SynthStation;
+			sourceTree = "<group>";
+		};
+		1061AAC81430A3B500C29FBB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1061AAC91430A3B500C29FBB /* SynthStation-Info.plist */,
+				1061AACA1430A3B500C29FBB /* InfoPlist.strings */,
+				1061AACD1430A3B600C29FBB /* main.m */,
+				1061AACF1430A3B600C29FBB /* SynthStation-Prefix.pch */,
+				1061AAD01430A3B600C29FBB /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1061AAE71430A3B600C29FBB /* SynthStationTests */ = {
+			isa = PBXGroup;
+			children = (
+				1061AAED1430A3B600C29FBB /* SynthStationTests.h */,
+				1061AAEF1430A3B600C29FBB /* SynthStationTests.m */,
+				1061AAE81430A3B600C29FBB /* Supporting Files */,
+			);
+			path = SynthStationTests;
+			sourceTree = "<group>";
+		};
+		1061AAE81430A3B600C29FBB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1061AAE91430A3B600C29FBB /* SynthStationTests-Info.plist */,
+				1061AAEA1430A3B600C29FBB /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1061AAF91430A3ED00C29FBB /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				1061AAFA1430A42100C29FBB /* STK */,
+				1061AAFD1430A42100C29FBB /* VSC */,
+			);
+			name = Sound;
+			sourceTree = "<group>";
+		};
+		1061AAFA1430A42100C29FBB /* STK */ = {
+			isa = PBXGroup;
+			children = (
+				1061AAFB1430A42100C29FBB /* VSCSTKEnveloppe.cpp */,
+				1061AAFC1430A42100C29FBB /* VSCSTKEnveloppe.h */,
+			);
+			name = STK;
+			path = ../Sound/STK;
+			sourceTree = "<group>";
+		};
+		1061AAFD1430A42100C29FBB /* VSC */ = {
+			isa = PBXGroup;
+			children = (
+				1061AAFE1430A42100C29FBB /* VSCEnveloppe.cpp */,
+				1061AAFF1430A42100C29FBB /* VSCEnveloppe.h */,
+				1061AB001430A42100C29FBB /* VSCEnveloppeCoordinate.cpp */,
+				1061AB011430A42100C29FBB /* VSCEnveloppeCoordinate.h */,
+				1061AB021430A42100C29FBB /* VSCEnveloppePoint.cpp */,
+				1061AB031430A42100C29FBB /* VSCEnveloppePoint.h */,
+				1061AB081430A4DA00C29FBB /* VSCSynthSourceElement.cpp */,
+				1061AB0A1430A4EF00C29FBB /* VSCSynthSourceElement.h */,
+			);
+			name = VSC;
+			path = ../Sound/VSC;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1061AABC1430A3B500C29FBB /* SynthStation */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1061AAF31430A3B600C29FBB /* Build configuration list for PBXNativeTarget "SynthStation" */;
+			buildPhases = (
+				1061AAB91430A3B500C29FBB /* Sources */,
+				1061AABA1430A3B500C29FBB /* Frameworks */,
+				1061AABB1430A3B500C29FBB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SynthStation;
+			productName = SynthStation;
+			productReference = 1061AABD1430A3B500C29FBB /* SynthStation.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1061AAE01430A3B600C29FBB /* SynthStationTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1061AAF61430A3B600C29FBB /* Build configuration list for PBXNativeTarget "SynthStationTests" */;
+			buildPhases = (
+				1061AADC1430A3B600C29FBB /* Sources */,
+				1061AADD1430A3B600C29FBB /* Frameworks */,
+				1061AADE1430A3B600C29FBB /* Resources */,
+				1061AADF1430A3B600C29FBB /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1061AAE61430A3B600C29FBB /* PBXTargetDependency */,
+			);
+			name = SynthStationTests;
+			productName = SynthStationTests;
+			productReference = 1061AAE11430A3B600C29FBB /* SynthStationTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1061AAB41430A3B500C29FBB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = NXP;
+			};
+			buildConfigurationList = 1061AAB71430A3B500C29FBB /* Build configuration list for PBXProject "SynthStation" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 1061AAB21430A3B500C29FBB;
+			productRefGroup = 1061AABE1430A3B500C29FBB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1061AABC1430A3B500C29FBB /* SynthStation */,
+				1061AAE01430A3B600C29FBB /* SynthStationTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1061AABB1430A3B500C29FBB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1061AACC1430A3B500C29FBB /* InfoPlist.strings in Resources */,
+				1061AAD21430A3B600C29FBB /* Credits.rtf in Resources */,
+				1061AAD81430A3B600C29FBB /* MyDocument.xib in Resources */,
+				1061AADB1430A3B600C29FBB /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1061AADE1430A3B600C29FBB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1061AAEC1430A3B600C29FBB /* InfoPlist.strings in Resources */,
+				1061AAEE1430A3B600C29FBB /* SynthStationTests.h in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1061AADF1430A3B600C29FBB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1061AAB91430A3B500C29FBB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1061AACE1430A3B600C29FBB /* main.m in Sources */,
+				1061AAD51430A3B600C29FBB /* MyDocument.m in Sources */,
+				1061AB041430A42100C29FBB /* VSCSTKEnveloppe.cpp in Sources */,
+				1061AB051430A42100C29FBB /* VSCEnveloppe.cpp in Sources */,
+				1061AB061430A42100C29FBB /* VSCEnveloppeCoordinate.cpp in Sources */,
+				1061AB071430A42100C29FBB /* VSCEnveloppePoint.cpp in Sources */,
+				1061AB091430A4DA00C29FBB /* VSCSynthSourceElement.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1061AADC1430A3B600C29FBB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1061AAF01430A3B600C29FBB /* SynthStationTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1061AAE61430A3B600C29FBB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1061AABC1430A3B500C29FBB /* SynthStation */;
+			targetProxy = 1061AAE51430A3B600C29FBB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1061AACA1430A3B500C29FBB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1061AACB1430A3B500C29FBB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1061AAD01430A3B600C29FBB /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1061AAD11430A3B600C29FBB /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		1061AAD61430A3B600C29FBB /* MyDocument.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1061AAD71430A3B600C29FBB /* en */,
+			);
+			name = MyDocument.xib;
+			sourceTree = "<group>";
+		};
+		1061AAD91430A3B600C29FBB /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1061AADA1430A3B600C29FBB /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		1061AAEA1430A3B600C29FBB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1061AAEB1430A3B600C29FBB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1061AAF11430A3B600C29FBB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		1061AAF21430A3B600C29FBB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		1061AAF41430A3B600C29FBB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SynthStation/SynthStation-Prefix.pch";
+				INFOPLIST_FILE = "SynthStation/SynthStation-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		1061AAF51430A3B600C29FBB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SynthStation/SynthStation-Prefix.pch";
+				INFOPLIST_FILE = "SynthStation/SynthStation-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		1061AAF71430A3B600C29FBB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SynthStation.app/Contents/MacOS/SynthStation";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SynthStation/SynthStation-Prefix.pch";
+				INFOPLIST_FILE = "SynthStationTests/SynthStationTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		1061AAF81430A3B600C29FBB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SynthStation.app/Contents/MacOS/SynthStation";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SynthStation/SynthStation-Prefix.pch";
+				INFOPLIST_FILE = "SynthStationTests/SynthStationTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1061AAB71430A3B500C29FBB /* Build configuration list for PBXProject "SynthStation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1061AAF11430A3B600C29FBB /* Debug */,
+				1061AAF21430A3B600C29FBB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1061AAF31430A3B600C29FBB /* Build configuration list for PBXNativeTarget "SynthStation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1061AAF41430A3B600C29FBB /* Debug */,
+				1061AAF51430A3B600C29FBB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		1061AAF61430A3B600C29FBB /* Build configuration list for PBXNativeTarget "SynthStationTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1061AAF71430A3B600C29FBB /* Debug */,
+				1061AAF81430A3B600C29FBB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1061AAB41430A3B500C29FBB /* Project object */;
+}
