@@ -91,11 +91,23 @@ static NSArray* enveloppeBaseFilePaths = nil;
 
 #pragma mark - Enveloppe Base File Paths
 
+- (NSString *) applicationSupportDirectory {	
+	NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+	NSString *dir = [paths lastObject];
+	
+	if (![[NSFileManager defaultManager] fileExistsAtPath:dir])
+		[[NSFileManager defaultManager] createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:nil];
+	
+	return dir;
+}
+
 -(NSArray*) enveloppeBaseFilePaths {
 	
 	if (!enveloppeBaseFilePaths) {
 		@synchronized(self) {
-			enveloppeBaseFilePaths = [NSArray arrayWithObjects:nil];
+			NSString* defaultEnveloppeFilePath = [[self applicationSupportDirectory] 
+												  stringByAppendingPathComponent:@"Enveloppes"];
+			enveloppeBaseFilePaths = [NSArray arrayWithObjects:defaultEnveloppeFilePath, nil];
 		}
 	}
 	
@@ -114,6 +126,8 @@ static NSArray* enveloppeBaseFilePaths = nil;
 	enveloppe->addPoint(VSCEnveloppePointPtr(new VSCEnveloppePoint(0.0, 3.0)));
 	
 	enveloppe->setRelativePath("Default");
+	
+	[self addEnveloppe:enveloppe];
 	
 }
 

@@ -7,6 +7,10 @@
 //
 
 #import "VSCEnveloppeEditorWindowController.h"
+#import "VSCEnveloppeEditorDocument.h"
+
+#import <string>
+#import <list>
 
 @interface VSCEnveloppeEditorWindowController ()
 
@@ -17,7 +21,7 @@
 
 @implementation VSCEnveloppeEditorWindowController
 
-@synthesize loadedTextField, enveloppePopUpButton;
+@synthesize loadedTextField, enveloppePopUpButton, testButton;
 
 #pragma mark - NSWindowController Window Callbacks
 
@@ -39,6 +43,12 @@
 	currentEnveloppe = enveloppe;
 }
 
+#pragma mark - Convenience 
+
+-(VSCEnveloppeEditorDocument*) enveloppeEditorDocument {
+	return (VSCEnveloppeEditorDocument*)[self document];
+}
+
 #pragma mark - Button Callbacks
 
 -(IBAction) testButtonClicked:(id)sender {
@@ -49,6 +59,17 @@
 
 -(void) updateEnveloppePopUpMenu {
 	
+	
 }
+
+/*
+
+- (void)launchFileOrFolder:(id)sender
+{
+	NSString *filePath = [sender representedObject];
+	[[NSWorkspace sharedWorkspace] openFile:filePath];
+}
+ 
+ */
 
 @end

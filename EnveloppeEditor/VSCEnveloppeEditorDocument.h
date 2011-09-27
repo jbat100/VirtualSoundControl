@@ -33,6 +33,7 @@
 /*
  *	Enveloppe Base File Paths
  */
+-(NSString *) applicationSupportDirectory;
 -(NSArray*) enveloppeBaseFilePaths;
 
 /*

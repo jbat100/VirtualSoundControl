@@ -255,7 +255,7 @@
 							<key>PBXSmartGroupTreeModuleColumnWidthsKey</key>
 							<array>
 								<real>22</real>
-								<real>330</real>
+								<real>288</real>
 							</array>
 							<key>PBXSmartGroupTreeModuleColumnsKey_v4</key>
 							<array>
@@ -286,14 +286,14 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>26</integer>
-									<integer>22</integer>
+									<integer>42</integer>
+									<integer>38</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 124}, {352, 673}}</string>
+							<string>{{0, 29}, {310, 673}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -305,13 +305,13 @@
 					<key>GeometryConfiguration</key>
 					<dict>
 						<key>Frame</key>
-						<string>{{0, 0}, {369, 691}}</string>
+						<string>{{0, 0}, {327, 691}}</string>
 						<key>GroupTreeTableConfiguration</key>
 						<array>
 							<string>SCMStatusColumn</string>
 							<real>22</real>
 							<string>MainColumn</string>
-							<real>330</real>
+							<real>288</real>
 						</array>
 						<key>RubberWindowFrame</key>
 						<string>4 46 1276 732 0 0 1280 778 </string>
@@ -319,7 +319,7 @@
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
 					<key>Proportion</key>
-					<string>369pt</string>
+					<string>327pt</string>
 				</dict>
 				<dict>
 					<key>Dock</key>
@@ -332,7 +332,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>VSCEnveloppe.h</string>
+								<string>VSCEnveloppeEditorDocument.mm</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -340,11 +340,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>VSCEnveloppe.h</string>
+										<string>VSCEnveloppeEditorDocument.mm</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>103B76F8142FA4F000643D71</string>
+										<string>10BC1037143273D2006229D5</string>
 										<key>history</key>
 										<array>
 											<string>1023D47113E8AD1D00BB9080</string>
@@ -357,27 +357,29 @@
 											<string>10695569141D0808003541DC</string>
 											<string>106955C9141D1095003541DC</string>
 											<string>106955CA141D1095003541DC</string>
-											<string>106955F6141D251F003541DC</string>
-											<string>106955FB141D611E003541DC</string>
 											<string>101C3ADF1422A13700364681</string>
 											<string>101C3AE41422A13700364681</string>
-											<string>101C3AE51422A13700364681</string>
-											<string>101C3AE61422A13700364681</string>
 											<string>10057D9B142F76B500C91F5E</string>
 											<string>10057D9C142F76B500C91F5E</string>
 											<string>10057D9D142F76B500C91F5E</string>
 											<string>10057D9E142F76B500C91F5E</string>
-											<string>10057D9F142F76B500C91F5E</string>
-											<string>10057DA0142F76B500C91F5E</string>
-											<string>10057DA2142F76B500C91F5E</string>
-											<string>10057DA3142F76B500C91F5E</string>
 											<string>10057DA5142F76B500C91F5E</string>
 											<string>103B76F2142FA4F000643D71</string>
 											<string>103B76F3142FA4F000643D71</string>
-											<string>103B76F4142FA4F000643D71</string>
 											<string>103B76F5142FA4F000643D71</string>
-											<string>103B76F6142FA4F000643D71</string>
-											<string>103B76F7142FA4F000643D71</string>
+											<string>101915AC142FD1E800740A1E</string>
+											<string>101915AD142FD1E800740A1E</string>
+											<string>101915AE142FD1E800740A1E</string>
+											<string>101915B0142FD1E800740A1E</string>
+											<string>10BC0FF314325CE6006229D5</string>
+											<string>10BC1002143260B0006229D5</string>
+											<string>10BC101814326949006229D5</string>
+											<string>10BC1031143273D2006229D5</string>
+											<string>10BC1032143273D2006229D5</string>
+											<string>10BC1033143273D2006229D5</string>
+											<string>10BC1034143273D2006229D5</string>
+											<string>10BC1035143273D2006229D5</string>
+											<string>10BC1036143273D2006229D5</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -389,7 +391,7 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {902, 686}}</string>
+								<string>{{0, 0}, {944, 686}}</string>
 								<key>RubberWindowFrame</key>
 								<string>4 46 1276 732 0 0 1280 778 </string>
 							</dict>
@@ -409,7 +411,7 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 691}, {902, 0}}</string>
+								<string>{{0, 691}, {944, 0}}</string>
 								<key>RubberWindowFrame</key>
 								<string>4 46 1276 732 0 0 1280 778 </string>
 							</dict>
@@ -420,7 +422,7 @@
 						</dict>
 					</array>
 					<key>Proportion</key>
-					<string>902pt</string>
+					<string>944pt</string>
 				</dict>
 			</array>
 			<key>Name</key>
@@ -435,9 +437,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>103B76F9142FA4F000643D71</string>
+				<string>10BC0FF714325CE6006229D5</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>103B76FA142FA4F000643D71</string>
+				<string>10BC0FF814325CE6006229D5</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -575,9 +577,9 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1030EFFB13298D9800E4BCA1</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>/Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/EnveloppeEditor.xcodeproj</string>
+		<string>1030EFFB13298D9800E4BCA1</string>
 	</array>
 	<key>WindowString</key>
 	<string>4 46 1276 732 0 0 1280 778 </string>
@@ -596,12 +598,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string></string>
+								<string>VSCEnveloppeEditorDocument.mm</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -657,7 +661,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1030EFFB13298D9800E4BCA1</string>
-				<string>103B76FB142FA4F000643D71</string>
+				<string>10BC0FF914325CE6006229D5</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -670,7 +674,7 @@
 			<key>WindowToolGUID</key>
 			<string>1030EFFB13298D9800E4BCA1</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
@@ -779,13 +783,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>103B76FC142FA4F000643D71</string>
+				<string>10BC0FFA14325CE6006229D5</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>103B76FD142FA4F000643D71</string>
-				<string>103B76FE142FA4F000643D71</string>
-				<string>103B76FF142FA4F000643D71</string>
-				<string>103B7700142FA4F000643D71</string>
-				<string>103B7701142FA4F000643D71</string>
+				<string>10BC0FFB14325CE6006229D5</string>
+				<string>10BC0FFC14325CE6006229D5</string>
+				<string>10BC0FFD14325CE6006229D5</string>
+				<string>10BC0FFE14325CE6006229D5</string>
+				<string>10BC0FFF14325CE6006229D5</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -794,7 +798,7 @@
 			<key>WindowToolGUID</key>
 			<string>1CD10A99069EF8BA00B06720</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>

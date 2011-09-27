@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "VSCEnveloppe.h"
+#import "VSCEnveloppe.h"
 
 
 @interface VSCEnveloppeEditorWindowController : NSWindowController {
