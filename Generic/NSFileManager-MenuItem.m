@@ -31,7 +31,9 @@
 		
 		NSArray *children = [fileManager contentsOfDirectoryAtPath:path error:nil];
 		for (NSString* child in children) {
-			[subMenu addItem:[self menuItemAtPath:[path stringByAppendingPathComponent:child]]];
+			NSMenuItem* childMenuItem = [self menuItemAtPath:[path stringByAppendingPathComponent:child]];
+			if (childMenuItem)
+				[subMenu addItem:childMenuItem];
 		}
 		
 		if ([[subMenu itemArray] count] > 0) {

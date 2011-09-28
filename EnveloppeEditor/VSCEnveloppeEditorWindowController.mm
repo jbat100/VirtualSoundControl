@@ -41,6 +41,7 @@
 
 -(void) setCurrentEnveloppe:(VSCEnveloppePtr)enveloppe {
 	currentEnveloppe = enveloppe;
+	std::cout << "Current enveloppe set to " << enveloppe;
 }
 
 #pragma mark - Convenience 
@@ -53,6 +54,7 @@
 
 -(IBAction) testButtonClicked:(id)sender {
 	NSLog(@"%@ window test button clicked", self);
+	[self setCurrentEnveloppe:[[self enveloppeEditorDocument] defaultEnveloppe]]
 }
 
 #pragma mark - Interface Update 

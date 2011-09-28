@@ -344,7 +344,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>10BC1037143273D2006229D5</string>
+										<string>10BC103C14327441006229D5</string>
 										<key>history</key>
 										<array>
 											<string>1023D47113E8AD1D00BB9080</string>
@@ -577,9 +577,9 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>1030EFFB13298D9800E4BCA1</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>/Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/EnveloppeEditor.xcodeproj</string>
-		<string>1030EFFB13298D9800E4BCA1</string>
 	</array>
 	<key>WindowString</key>
 	<string>4 46 1276 732 0 0 1280 778 </string>
@@ -674,7 +674,7 @@
 			<key>WindowToolGUID</key>
 			<string>1030EFFB13298D9800E4BCA1</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>

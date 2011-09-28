@@ -17,6 +17,8 @@
 
 #import "VSCEnveloppeEditorWindowController.h"
 
+#define DEFAULT_ENVELOPPE_RELATIVE_PATH @"Default"
+
 @class VSCEnveloppeEditorWindowController;
 
 #define EnvIter				std::list<VSCEnveloppePtr>::iterator 

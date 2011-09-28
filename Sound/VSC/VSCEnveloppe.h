@@ -22,6 +22,8 @@
 
 class VSCEnveloppe {
 	
+	friend std::ostream& operator<<(std::ostream& output, const VSCEnveloppe& p);
+	
 public:
 	
 	/*

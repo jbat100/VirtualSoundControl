@@ -255,17 +255,12 @@ VSCEnveloppePointPtr VSCEnveloppe::getFirstPointAfterTime(double time, bool copy
 		return VSCEnveloppePointPtr();
 	
 	for (ConstEnvPntIter it = _points.begin(); it != _points.end(); it++) {
-		
 		if ((*it)->getTime() > time) {
-			
 			if (copy)
 				return VSCEnveloppePointPtr(new VSCEnveloppePoint(*(*it)));
-			
 			else 
 				return (*it);
-			
 		}
-		
 	}
 	
 	return VSCEnveloppePointPtr();
@@ -321,20 +316,16 @@ void VSCEnveloppe::getAllPoints(std::list<VSCEnveloppePointPtr>& l) const {
 void VSCEnveloppe::getAllPoints(std::list<VSCEnveloppePointPtr>& l, bool copy) const {
     
     if (copy) {
-        
         for (ConstEnvPntIter it = _points.begin(); it != _points.end(); it++) {
             VSCEnveloppePointPtr newPoint (new VSCEnveloppePoint(*(*it)));
             l.push_back(newPoint);
         }
-        
     }
     
     else {
-		
 		for (ConstEnvPntIter it = _points.begin(); it != _points.end(); it++) {
             l.push_back(*it);
         }
-		
 	}
     
 }
@@ -457,5 +448,9 @@ double VSCEnveloppe::maxValue(void) const {
     }
     
     return maxValue;
+}
+
+friend std::ostream& operator<<(std::ostream& output, const VSCEnveloppe& p) {
+	
 }
 

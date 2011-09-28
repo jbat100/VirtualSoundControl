@@ -125,7 +125,7 @@ static NSArray* enveloppeBaseFilePaths = nil;
 	enveloppe->addPoint(VSCEnveloppePointPtr(new VSCEnveloppePoint(0.0, 2.0)));
 	enveloppe->addPoint(VSCEnveloppePointPtr(new VSCEnveloppePoint(0.0, 3.0)));
 	
-	enveloppe->setRelativePath("Default");
+	enveloppe->setRelativePath(std::string([DEFAULT_ENVELOPPE_RELATIVE_PATH cString]));
 	
 	[self addEnveloppe:enveloppe];
 	
@@ -145,6 +145,18 @@ static NSArray* enveloppeBaseFilePaths = nil;
 
 -(ConstEnvIter) endMainEnveloppeListIterator {
 	return _mainEnveloppeList.end();
+}
+
+-(VSCEnveloppePtr) defaultEnveloppe {
+	std::string defaultRelativePath = std::string([DEFAULT_ENVELOPPE_RELATIVE_PATH cString]);
+	for (EnvIter envIt = [self beginMainEnveloppeListIterator]; envIt != [self endMainEnveloppeListIterator]; envIt++) {
+		VSCEnveloppe* enveloppe = (*envIt)->get();
+		std::string relativePath = enveloppe->getRelativePath();
+		if (relativePath.compare(defaultRelativePath) == 0) {
+			return *envIt;
+		}
+	}
+	return VSCEnveloppePtr();
 }
 
 @end
