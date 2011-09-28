@@ -201,11 +201,18 @@ void VSCEnveloppe::enveloppeChangedBetweenEnveloppePointAndNext(VSCEnveloppePoin
 
 #pragma mark - Point Getters
 
-ConstEnvPntIter VSCEnveloppe::getPointBeginIterator(void) const {
+EnvPntIter VSCEnveloppe::getPointBeginIterator(void) {
 	return _points.begin();
 }
 
-ConstEnvPntIter VSCEnveloppe::getPointEndIterator(void) const {
+EnvPntIter VSCEnveloppe::getPointEndIterator(void) {
+	return _points.end();
+}
+
+ConstEnvPntIter VSCEnveloppe::getPointBeginConstIterator(void) const {
+	return _points.begin();
+}
+ConstEnvPntIter VSCEnveloppe::getPointEndConstIterator(void) const {
 	return _points.end();
 }
 
@@ -398,8 +405,8 @@ void VSCEnveloppe::sortPointsByTime(void) {
 double VSCEnveloppe::minTime(void) const {
     
     assert(isSortedByTime());
-    ConstEnvPntIter beginIter = getPointBeginIterator();
-    ConstEnvPntIter endIter = getPointEndIterator();
+    ConstEnvPntIter beginIter = getPointBeginConstIterator();
+    ConstEnvPntIter endIter = getPointEndConstIterator();
     if (beginIter != endIter) return (*beginIter)->getTime();
     throw VSCEnveloppeEmptyException();
     
@@ -408,8 +415,8 @@ double VSCEnveloppe::minTime(void) const {
 double VSCEnveloppe::maxTime(void) const {
     
     assert(isSortedByTime());
-    ConstEnvPntIter beginIter = getPointBeginIterator();
-    ConstEnvPntIter endIter = getPointEndIterator();
+    ConstEnvPntIter beginIter = getPointBeginConstIterator();
+    ConstEnvPntIter endIter = getPointEndConstIterator();
     if (beginIter != endIter) {
         endIter--;
         return (*endIter)->getTime();
@@ -420,8 +427,8 @@ double VSCEnveloppe::maxTime(void) const {
 
 double VSCEnveloppe::minValue(void) const {
     
-    ConstEnvPntIter beginIter = getPointBeginIterator();
-    ConstEnvPntIter endIter = getPointEndIterator();
+    ConstEnvPntIter beginIter = getPointBeginConstIterator();
+    ConstEnvPntIter endIter = getPointEndConstIterator();
     if (beginIter == endIter) throw VSCEnveloppeEmptyException();
     
     double minValue = (*beginIter)->getValue();
@@ -436,12 +443,12 @@ double VSCEnveloppe::minValue(void) const {
 
 double VSCEnveloppe::maxValue(void) const {
     
-    ConstEnvPntIter beginIter = getPointBeginIterator();
-    ConstEnvPntIter endIter = getPointEndIterator();
+    ConstEnvPntIter beginIter = getPointBeginConstIterator();
+    ConstEnvPntIter endIter = getPointEndConstIterator();
     if (beginIter == endIter) throw VSCEnveloppeEmptyException();
     
     double maxValue = (*beginIter)->getValue();
-    for (ConstEnvPntIter it = _points.begin(); it != _points.end(); it++) {
+    for (ConstEnvPntIter it = beginIter; it != endIter; it++) {
         if ((*it)->getValue() < maxValue) {
             maxValue = (*it)->getValue();
         }
@@ -450,7 +457,11 @@ double VSCEnveloppe::maxValue(void) const {
     return maxValue;
 }
 
-friend std::ostream& operator<<(std::ostream& output, const VSCEnveloppe& p) {
-	
+std::ostream& operator<<(std::ostream& output, VSCEnveloppe& p) {
+	output << "VSCEnveloppe with points:";
+	for (EnvPntIter pntIt = p.getPointBeginIterator(); pntIt != p.getPointEndIterator(); pntIt++) {
+		output << "\n	" << *((*pntIt).get());
+	}
+	return output;
 }
 

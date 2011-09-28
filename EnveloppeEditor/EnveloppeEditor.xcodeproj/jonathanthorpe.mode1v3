@@ -286,14 +286,14 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>42</integer>
-									<integer>38</integer>
+									<integer>27</integer>
+									<integer>24</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 29}, {310, 673}}</string>
+							<string>{{0, 42}, {310, 673}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -332,7 +332,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>VSCEnveloppeEditorDocument.mm</string>
+								<string>VSCEnveloppe.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -340,11 +340,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>VSCEnveloppeEditorDocument.mm</string>
+										<string>VSCEnveloppe.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>10BC103C14327441006229D5</string>
+										<string>10F6C79E1433CDC4001A24A6</string>
 										<key>history</key>
 										<array>
 											<string>1023D47113E8AD1D00BB9080</string>
@@ -365,21 +365,21 @@
 											<string>10057D9E142F76B500C91F5E</string>
 											<string>10057DA5142F76B500C91F5E</string>
 											<string>103B76F2142FA4F000643D71</string>
-											<string>103B76F3142FA4F000643D71</string>
 											<string>103B76F5142FA4F000643D71</string>
 											<string>101915AC142FD1E800740A1E</string>
-											<string>101915AD142FD1E800740A1E</string>
-											<string>101915AE142FD1E800740A1E</string>
-											<string>101915B0142FD1E800740A1E</string>
-											<string>10BC0FF314325CE6006229D5</string>
-											<string>10BC1002143260B0006229D5</string>
-											<string>10BC101814326949006229D5</string>
 											<string>10BC1031143273D2006229D5</string>
 											<string>10BC1032143273D2006229D5</string>
-											<string>10BC1033143273D2006229D5</string>
-											<string>10BC1034143273D2006229D5</string>
-											<string>10BC1035143273D2006229D5</string>
-											<string>10BC1036143273D2006229D5</string>
+											<string>10F636FF1433C8DD002869C5</string>
+											<string>10F637001433C8DD002869C5</string>
+											<string>10F637011433C8DD002869C5</string>
+											<string>10F637021433C8DD002869C5</string>
+											<string>10F637031433C8DD002869C5</string>
+											<string>10F637041433C8DD002869C5</string>
+											<string>10F637051433C8DD002869C5</string>
+											<string>10F637061433C8DD002869C5</string>
+											<string>10F637071433C8DD002869C5</string>
+											<string>10F637081433C8DD002869C5</string>
+											<string>10F6370A1433C8DD002869C5</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -437,9 +437,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>10BC0FF714325CE6006229D5</string>
+				<string>10F6C79A1433CA5E001A24A6</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>10BC0FF814325CE6006229D5</string>
+				<string>10F6C79B1433CA5E001A24A6</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -578,7 +578,6 @@
 	<key>WindowOrderList</key>
 	<array>
 		<string>1030EFFB13298D9800E4BCA1</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>/Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/EnveloppeEditor.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -598,14 +597,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>VSCEnveloppeEditorDocument.mm</string>
+								<string></string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -661,7 +658,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1030EFFB13298D9800E4BCA1</string>
-				<string>10BC0FF914325CE6006229D5</string>
+				<string>10F6C79C1433CA5E001A24A6</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>

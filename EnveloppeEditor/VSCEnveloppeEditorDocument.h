@@ -12,7 +12,7 @@
 #include <list>
 #include <boost/shared_ptr.hpp>
 
-#include "VSCSTKEnveloppe.h"
+#include "VSCEnveloppe.h"
 #include "VSCEnveloppePoint.h"
 
 #import "VSCEnveloppeEditorWindowController.h"
@@ -44,8 +44,9 @@
 
 -(void) addEnveloppe:(VSCEnveloppePtr)enveloppe;
 -(void) removeEnveloppe:(VSCEnveloppePtr)enveloppe;
--(ConstEnvIter) beginMainEnveloppeListIterator;
--(ConstEnvIter) endMainEnveloppeListIterator;
+-(EnvIter) beginMainEnveloppeListIterator;
+-(EnvIter) endMainEnveloppeListIterator;
 -(void) createDefaultEnveloppe;
+-(VSCEnveloppePtr) defaultEnveloppe;
 
 @end

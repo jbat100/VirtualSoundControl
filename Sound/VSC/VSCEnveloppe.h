@@ -21,9 +21,7 @@
 
 
 class VSCEnveloppe {
-	
-	friend std::ostream& operator<<(std::ostream& output, const VSCEnveloppe& p);
-	
+		
 public:
 	
 	/*
@@ -92,8 +90,10 @@ public:
 	
 	/* get points iter */
 	
-	ConstEnvPntIter getPointBeginIterator(void) const;
-	ConstEnvPntIter getPointEndIterator(void) const;
+	EnvPntIter getPointBeginIterator(void);
+	EnvPntIter getPointEndIterator(void);
+	ConstEnvPntIter getPointBeginConstIterator(void) const;
+	ConstEnvPntIter getPointEndConstIterator(void) const;
 	
 	/* get points */
 	
@@ -123,7 +123,7 @@ public:
     double minValue(void) const;
     double maxValue(void) const;
     
-    friend std::ostream& operator<<(std::ostream& output, const VSCEnveloppe& p);
+    friend std::ostream& operator<<(std::ostream& output, VSCEnveloppe& p);
 	
 protected:
 	

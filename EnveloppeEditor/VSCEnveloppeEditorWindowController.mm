@@ -54,7 +54,7 @@
 
 -(IBAction) testButtonClicked:(id)sender {
 	NSLog(@"%@ window test button clicked", self);
-	[self setCurrentEnveloppe:[[self enveloppeEditorDocument] defaultEnveloppe]]
+	[self setCurrentEnveloppe:[[self enveloppeEditorDocument] defaultEnveloppe]];
 }
 
 #pragma mark - Interface Update 

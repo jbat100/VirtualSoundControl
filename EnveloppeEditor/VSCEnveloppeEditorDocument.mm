@@ -8,6 +8,8 @@
 
 #import "VSCEnveloppeEditorDocument.h"
 
+#import "VSCSTKEnveloppe.h"
+
 @implementation VSCEnveloppeEditorDocument
 
 static NSArray* enveloppeBaseFilePaths = nil;
@@ -125,7 +127,7 @@ static NSArray* enveloppeBaseFilePaths = nil;
 	enveloppe->addPoint(VSCEnveloppePointPtr(new VSCEnveloppePoint(0.0, 2.0)));
 	enveloppe->addPoint(VSCEnveloppePointPtr(new VSCEnveloppePoint(0.0, 3.0)));
 	
-	enveloppe->setRelativePath(std::string([DEFAULT_ENVELOPPE_RELATIVE_PATH cString]));
+	enveloppe->setRelativePath(std::string([DEFAULT_ENVELOPPE_RELATIVE_PATH cStringUsingEncoding:NSUTF8StringEncoding]));
 	
 	[self addEnveloppe:enveloppe];
 	
@@ -139,18 +141,18 @@ static NSArray* enveloppeBaseFilePaths = nil;
 	_mainEnveloppeList.remove(enveloppe);
 }
 
--(ConstEnvIter) beginMainEnveloppeListIterator {
+-(EnvIter) beginMainEnveloppeListIterator {
 	return _mainEnveloppeList.begin();
 }
 
--(ConstEnvIter) endMainEnveloppeListIterator {
+-(EnvIter) endMainEnveloppeListIterator {
 	return _mainEnveloppeList.end();
 }
 
 -(VSCEnveloppePtr) defaultEnveloppe {
-	std::string defaultRelativePath = std::string([DEFAULT_ENVELOPPE_RELATIVE_PATH cString]);
+	std::string defaultRelativePath = std::string([DEFAULT_ENVELOPPE_RELATIVE_PATH cStringUsingEncoding:NSUTF8StringEncoding]);
 	for (EnvIter envIt = [self beginMainEnveloppeListIterator]; envIt != [self endMainEnveloppeListIterator]; envIt++) {
-		VSCEnveloppe* enveloppe = (*envIt)->get();
+		VSCEnveloppe* enveloppe = (*envIt).get();
 		std::string relativePath = enveloppe->getRelativePath();
 		if (relativePath.compare(defaultRelativePath) == 0) {
 			return *envIt;
