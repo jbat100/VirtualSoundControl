@@ -32,7 +32,10 @@
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
+		
+		_enveloppe = VSCEnveloppePtr(); 
+		
+		_enveloppeViewSetup = VSCEnveloppeViewSetupPtr(new VSCEnveloppeViewSetup());
 
     }
     return self;
@@ -126,6 +129,10 @@
 -(void)autoAdjustEnveloppeViewSetup {
     
     assert(_enveloppeViewSetup);
+	
+	if (!_enveloppe) {
+		_enveloppeViewSetup->setToDefault();
+	}
     
     float minTime, maxTime, minValue, maxValue;
     
@@ -166,6 +173,8 @@
 }
 
 -(void) setEnveloppe:(VSCEnveloppePtr)enveloppe {
+	_currentlySelectedPoints.clear();
+	_pointsInCurrentSelectionRect.clear();
     _enveloppe = enveloppe;
 }
 
@@ -174,46 +183,42 @@
 }
 
 -(void) setEnveloppeViewSetup:(VSCEnveloppeViewSetupPtr)enveloppeViewSetup {
+	assert(enveloppeViewSetup);
     _enveloppeViewSetup = enveloppeViewSetup;
 }
 
 -(void)getCurrentlySelectedPoints:(std::set<VSCEnveloppePointPtr>&)points {
-    
     for (std::set<VSCEnveloppePointPtr>::iterator it = _currentlySelectedPoints.begin(); it != _currentlySelectedPoints.end(); it++) {
 		points.insert(*it);
 	}
-    
 }
 
 -(void)setCurrentlySelectedPoints:(std::set<VSCEnveloppePointPtr>&)points {
-    
     _currentlySelectedPoints.clear();
-    
     for (std::set<VSCEnveloppePointPtr>::iterator it = points.begin(); it != points.end(); it++) {
 		_currentlySelectedPoints.insert(*it);
 	}
-    
 }
 
 
 #pragma mark - View to enveloppe conversion tools
 
 -(double) valueDeltaForPointYDelta:(double)pointYDelta {
-	
 	double range = _enveloppeViewSetup->getMaxValue() - _enveloppeViewSetup->getMinValue(); 
 	return (pointYDelta / (double)self.frame.size.height) * range;
-	
 }
 
 -(double) timeDeltaForPointXDelta:(double)pointXDelta {
-	
 	double range = _enveloppeViewSetup->getMaxTime() - _enveloppeViewSetup->getMinTime(); 
 	return (pointXDelta / (double)self.frame.size.width) * range;
-	
 }
 
 -(double) valueForPoint:(NSPoint)point {
+
+	assert(_enveloppeViewSetup);
 	
+	if (!_enveloppeViewSetup)
+		return 0.0;
 	double normalisedY = 1.0 - (point.y / self.frame.size.height);
 	double range = _enveloppeViewSetup->getMaxValue() - _enveloppeViewSetup->getMinValue(); 
 	double adjustedY = _enveloppeViewSetup->getMinValue() + (normalisedY*range);
@@ -224,6 +229,10 @@
 
 -(double) timeForPoint:(CGPoint)point {
 	
+	assert(_enveloppeViewSetup);
+	
+	if (!_enveloppeViewSetup)
+		return 0.0;
 	double normalisedX = 1.0 - (point.x / self.frame.size.width);
 	double range = _enveloppeViewSetup->getMaxTime() - _enveloppeViewSetup->getMinTime(); 
 	return (NSTimeInterval)(_enveloppeViewSetup->getMinValue() + (normalisedX*range));
@@ -249,6 +258,8 @@
 
 -(BOOL) point:(NSPoint)p touchesEnveloppePoint:(VSCEnveloppePointPtr)enveloppePoint {
 	
+	assert(_enveloppeViewSetup);
+	
 	float radius = _enveloppeViewSetup->getControlPointRadius();
 	
 	/* First do a simple sqaure test to discard faster */
@@ -270,6 +281,10 @@
 
 -(VSCEnveloppePointPtr) enveloppePointUnderPoint:(NSPoint)point {
 	
+	if (!_enveloppe) {
+		return VSCEnveloppePointPtr();
+	}
+	
 	for (ConstEnvPntIter it = _enveloppe->getPointBeginIterator(); it !=_enveloppe->getPointEndIterator(); it++) {
 		if ([self point:point touchesEnveloppePoint:(*it)])
 			return (*it);
@@ -280,6 +295,9 @@
 }
 
 -(void) getEnveloppePoints:(std::list<VSCEnveloppePointPtr>&)ps InRect:(NSRect)rect {
+	
+	if (!_enveloppe) 
+		return;
 	
 	for (ConstEnvPntIter it = _enveloppe->getPointBeginIterator(); it !=_enveloppe->getPointEndIterator(); it++) {
 		NSPoint p = [self pointForEnveloppePoint:(*it)];
@@ -327,6 +345,11 @@
     movedSinceMouseDown = NO;
 	
 	NSLog(@"Mouse down at x: %f, y: %f", locationInView.x, locationInView.y);
+	
+	if (!_enveloppe) {
+		currentMouseAction = VSCEnveloppeViewMouseActionNone;
+		return;
+	}
 	
 	VSCEnveloppePointPtr enveloppePoint = [self enveloppePointUnderPoint:locationInView];
 	
@@ -396,7 +419,12 @@
     NSPoint locationInView = [self convertPoint:eventLocation fromView:self];
     [self setNeedsDisplay:YES];
 	NSLog(@"Mouse up at x: %f, y: %f", locationInView.x, locationInView.y);
-    
+	
+	if (!_enveloppe) {
+		currentMouseAction = VSCEnveloppeViewMouseActionNone;
+		return;
+    }
+	
     VSCEnveloppePointPtr enveloppePoint = [self enveloppePointUnderPoint:locationInView];
     
 	/*
@@ -488,6 +516,11 @@
     NSPoint locationInView = [self convertPoint:eventLocation fromView:self];
 	CGFloat deltaX = [event deltaX];
 	CGFloat deltaY = [event deltaY];
+	
+	if (!_enveloppe) {
+		currentMouseAction = VSCEnveloppeViewMouseActionNone;
+		return;
+	}
 	
 	/*
 	 *	Eliminate mouse actions which are impossible once the mouse has mooved (create and delete)

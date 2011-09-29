@@ -21,7 +21,7 @@
 
 @implementation VSCEnveloppeEditorWindowController
 
-@synthesize loadedTextField, enveloppePopUpButton, testButton;
+@synthesize enveloppeView, loadedTextField, enveloppePopUpButton, testButton;
 
 #pragma mark - NSWindowController Window Callbacks
 
@@ -41,7 +41,11 @@
 
 -(void) setCurrentEnveloppe:(VSCEnveloppePtr)enveloppe {
 	currentEnveloppe = enveloppe;
-	std::cout << "Current enveloppe set to " << enveloppe;
+	if (enveloppe)
+		std::cout << "Current enveloppe set to " << *currentEnveloppe;
+	else 
+		std::cout << "Current enveloppe set none";
+	[enveloppeView setEnveloppe:enveloppe];
 }
 
 #pragma mark - Convenience 

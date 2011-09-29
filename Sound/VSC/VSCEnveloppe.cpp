@@ -110,6 +110,8 @@ void VSCEnveloppe::addPoint(VSCEnveloppePointPtr point) {
     
     assert(point);
 	
+	std::cout << "\nAdding " << *(point.get());
+	
 	EnvPntIter it;
 	
 	std::list<VSCEnveloppePointPtr> pointsToRemove;
@@ -117,6 +119,8 @@ void VSCEnveloppe::addPoint(VSCEnveloppePointPtr point) {
 	// remove close points
 	for (it = _points.begin(); it != _points.end(); it++) {
 		if (abs(point->getTime() - (*it)->getTime()) < _minimumTimeStep) {
+			std::cout << "\nFound point closer than minimum time step (" << _minimumTimeStep << ") :";
+			std::cout << *((*it).get());
 			pointsToRemove.push_back(*it);
 		}
 	}
@@ -161,6 +165,8 @@ void VSCEnveloppe::addPoint(VSCEnveloppePointPtr point) {
 }
 
 void VSCEnveloppe::removePoint(VSCEnveloppePointPtr point) {
+	assert(point);
+	std::cout << "\nIn removePoint: " << *(point.get());
 	_points.remove(point);
     assert(isSortedByTime());
 }
@@ -172,8 +178,12 @@ void VSCEnveloppe::addPoints(std::list<VSCEnveloppePointPtr>& points) {
     assert(isSortedByTime());
 }
 
-void VSCEnveloppe::removePoints(std::list<VSCEnveloppePointPtr>& points) {
-	for (EnvPntIter it = _points.begin(); it != _points.end(); it++) {
+void VSCEnveloppe::removePoints(std::list<VSCEnveloppePointPtr>& pnts) {
+	std::cout << "\nIn removePoints";
+	if (pnts.size() == 0) {
+		std::cout << ", no points to remove";
+	}
+	for (EnvPntIter it = pnts.begin(); it != pnts.end(); it++) {
 		removePoint(*it);
 	}
     assert(isSortedByTime());

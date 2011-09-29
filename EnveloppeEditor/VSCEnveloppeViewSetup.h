@@ -24,36 +24,11 @@ typedef enum _VSCEnveloppeDisplayType {
 
 class VSCEnveloppeViewSetup {
 	
-protected:
-	
-	/*
-	 *	View range
-	 */
-	float _minTime;
-	float _maxTime;
-	float _minValue;
-	float _maxValue;
-	
-	/*
-	 *	Display type
-	 */
-	VSCEnveloppeDisplayType _displayType;
-	
-	/*
-	 *	Control Points
-	 */
-	float _controlPointRadius;
-	VSCColour _controlPointSelectedColour;
-	VSCColour _controlPointUnselectedColour;
-	
-	/*
-	 *	Enveloppe lines
-	 */
-	float _lineWidth;
-	VSCColour _lineColour;
-	
-	
 public:
+	
+	VSCEnveloppeViewSetup(void);
+	
+	void setToDefault(void);
 	
 	/*
 	 *	View range setters / getters
@@ -90,6 +65,34 @@ public:
 	void setLineWidth(float lineWidth);
 	VSCColour getLineColour(void) const;
 	void setLineColour(VSCColour colour);
+	
+protected:
+	
+	/*
+	 *	View range
+	 */
+	float _minTime;
+	float _maxTime;
+	float _minValue;
+	float _maxValue;
+	
+	/*
+	 *	Display type
+	 */
+	VSCEnveloppeDisplayType _displayType;
+	
+	/*
+	 *	Control Points
+	 */
+	float _controlPointRadius;
+	VSCColour _controlPointSelectedColour;
+	VSCColour _controlPointUnselectedColour;
+	
+	/*
+	 *	Enveloppe lines
+	 */
+	float _lineWidth;
+	VSCColour _lineColour;
 
 };
 

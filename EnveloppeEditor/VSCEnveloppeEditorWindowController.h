@@ -8,10 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "VSCEnveloppeView.h"
 #import "VSCEnveloppe.h"
 
 
 @interface VSCEnveloppeEditorWindowController : NSWindowController {
+	
+	VSCEnveloppeView* enveloppeView;
 	
 	NSTextField* loadedTextField;
 	NSButton* testButton;
@@ -21,13 +24,20 @@
 
 }
 
+@property (nonatomic, retain) IBOutlet VSCEnveloppeView* enveloppeView;
 @property (nonatomic, retain) IBOutlet NSTextField* loadedTextField;
 @property (nonatomic, retain) IBOutlet NSButton* testButton;
 @property (nonatomic, retain) IBOutlet NSPopUpButton* enveloppePopUpButton;
 
+/*
+ *	C++ Setters/Getters
+ */
 -(VSCEnveloppePtr) getCurrentEnveloppe;
 -(void) setCurrentEnveloppe:(VSCEnveloppePtr)enveloppe;
 
+/*
+ *	Interface callbacks
+ */
 -(IBAction) testButtonClicked:(id)sender;
 
 @end

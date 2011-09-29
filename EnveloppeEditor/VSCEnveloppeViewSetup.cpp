@@ -11,6 +11,30 @@
 
 #pragma mark View range setters / getters
 
+VSCEnveloppeViewSetup::VSCEnveloppeViewSetup(void) {
+	
+	setToDefault();
+	
+}
+
+void VSCEnveloppeViewSetup::setToDefault(void) {
+	
+	setMinTime(0.0);
+	setMaxTime(5.0);
+	setMinValue(-1.0);
+	setMaxValue(1.0);
+	
+	setDisplayType(VSCEnveloppeDisplayTypeDefault);
+	
+	setControlPointRadius(3.0);
+	setLineWidth(1.0);
+	
+	setControlPointSelectedColour((VSCColour){0.0, 0.0, 1.0, 1.0});
+	setControlPointUnselectedColour((VSCColour){0.0, 0.0, 0.0, 1.0});
+	setLineColour((VSCColour){0.0, 0.0, 0.0, 1.0});
+	
+}
+
 /*
  *	View range setters / getters
  */

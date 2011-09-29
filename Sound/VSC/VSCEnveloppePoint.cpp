@@ -67,7 +67,10 @@ VSCEnveloppeCoordinatePtr VSCEnveloppePoint::getRightControlEnveloppeCoordinate(
 
 std::ostream& operator<<(std::ostream& output, const VSCEnveloppePoint& p) {
     output << "VSCEnveloppePoint (time: " <<  p._time << "s, value: " << p._value; 
-	output << ", left control: " << *(p._leftControlCoordinate.get()); 
-	output << ", right control: " << *(p._rightControlCoordinate.get()) << ")";
+	if (p._leftControlCoordinate)
+		output << ", left control: " << *(p._leftControlCoordinate.get()); 
+	if (p._rightControlCoordinate)
+		output << ", right control: " << *(p._rightControlCoordinate.get()); 
+	output << ")";
     return output;  
 }
