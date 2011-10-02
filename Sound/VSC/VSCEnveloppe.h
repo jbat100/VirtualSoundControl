@@ -55,6 +55,10 @@ public:
 		StateEnded
 	};
 	
+	VSCEnveloppe(void);
+	// VSCEnveloppe copy construct and file construct
+	
+	void setToDefault(void);
 	
 	/* FIRE !!! */
 	virtual void fire(void);
@@ -87,6 +91,7 @@ public:
 	void removePoint(VSCEnveloppePointPtr point);
 	void removePoints(std::list<VSCEnveloppePointPtr>& points); 
 	void removePointsInTimeRange(double lowerTime, double upperTime);
+	void removeAllPoints(void);
 	
 	/* get points iter */
 	
@@ -176,6 +181,7 @@ protected:
 	 */
 	virtual void enveloppeChangedBetweenEnveloppePoints(VSCEnveloppePointPtr begin, VSCEnveloppePointPtr end);
 	virtual void enveloppeChangedBetweenEnveloppePointAndNext(VSCEnveloppePointPtr point);
+	virtual void enveloppeChanged(void);
 	
 };
 

@@ -17,6 +17,25 @@
 
 #include <boost/filesystem.hpp>
 
+VSCEnveloppe::VSCEnveloppe(void) {
+	
+	setToDefault();
+	
+}
+
+void VSCEnveloppe::setToDefault(void) {
+	
+	setScaleType(ScaleTypeLinear);
+	setCurveType(CurveTypeLinear);
+	setState(StateOff);
+	setRelativePath("");
+	setChannel(0);
+	setMinimumTimeStep(0.01);
+	removeAllPoints();
+	
+}
+
+#pragma mark - Audio stuff
 
 void VSCEnveloppe::fire(void) {
 	
@@ -110,40 +129,42 @@ void VSCEnveloppe::addPoint(VSCEnveloppePointPtr point) {
     
     assert(point);
 	
-	std::cout << "\nAdding " << *(point.get());
+	//std::cout << "Adding " << *(point.get()) << "\n";
 	
-	EnvPntIter it;
+	EnvPntIter currentIt;
+	EnvPntIter nextIt;
 	
 	std::list<VSCEnveloppePointPtr> pointsToRemove;
 	
 	// remove close points
-	for (it = _points.begin(); it != _points.end(); it++) {
-		if (abs(point->getTime() - (*it)->getTime()) < _minimumTimeStep) {
-			std::cout << "\nFound point closer than minimum time step (" << _minimumTimeStep << ") :";
-			std::cout << *((*it).get());
-			pointsToRemove.push_back(*it);
+	for (currentIt = _points.begin(); currentIt != _points.end(); currentIt++) {
+		double difference = std::abs(point->getTime() - (*currentIt)->getTime());
+		if (difference < _minimumTimeStep) {
+			//std::cout << "Found point " << *(*currentIt) << " closer than minimum time step (" << _minimumTimeStep << ") ";
+			//std::cout << "by " << difference << "\n";
+			pointsToRemove.push_back(*currentIt);
 		}
 	}
 	removePoints(pointsToRemove);
 	
 	bool found = false;
 	
-	for (it = _points.begin(); it != _points.end(); it++) {
+	for (currentIt = _points.begin(); currentIt != _points.end(); currentIt++) {
 		
 		// if we already have the point in the enveloppe...
-		if (point == *it) {
+		if (point == *currentIt) {
 			return;
 		}
 		
 		// is there a next element
-		EnvPntIter next = it;
-        next++;
-		if (next == _points.end()) {
+		nextIt = currentIt;
+        nextIt++;
+		if (nextIt == _points.end()) {
 			break;
 		}
 		
-		VSCEnveloppePointPtr p(*it);
-		VSCEnveloppePointPtr np(*next);
+		VSCEnveloppePointPtr p(*currentIt);
+		VSCEnveloppePointPtr np(*nextIt);
 		
 		// insert in the list if the time value is contained between this point's time and next point's time
 		if (p->getTime() < point->getTime() && np->getTime() > point->getTime()) {
@@ -153,12 +174,14 @@ void VSCEnveloppe::addPoint(VSCEnveloppePointPtr point) {
 	}
 	
 	if (found) {
-		_points.insert(it, point);
+		_points.insert(nextIt, point);
 	}
 	
 	else {
 		_points.push_back(point);
 	}
+	
+	//std::cout << "After point add, enveloppe is: " << *this << "\n";
     
     assert(isSortedByTime());
 	
@@ -166,7 +189,7 @@ void VSCEnveloppe::addPoint(VSCEnveloppePointPtr point) {
 
 void VSCEnveloppe::removePoint(VSCEnveloppePointPtr point) {
 	assert(point);
-	std::cout << "\nIn removePoint: " << *(point.get());
+	//std::cout << "In removePoint: " << *(point.get()) << "\n";
 	_points.remove(point);
     assert(isSortedByTime());
 }
@@ -179,9 +202,9 @@ void VSCEnveloppe::addPoints(std::list<VSCEnveloppePointPtr>& points) {
 }
 
 void VSCEnveloppe::removePoints(std::list<VSCEnveloppePointPtr>& pnts) {
-	std::cout << "\nIn removePoints";
+	//std::cout << "In removePoints";
 	if (pnts.size() == 0) {
-		std::cout << ", no points to remove";
+		//std::cout << ", no points to remove\n";
 	}
 	for (EnvPntIter it = pnts.begin(); it != pnts.end(); it++) {
 		removePoint(*it);
@@ -196,17 +219,25 @@ void VSCEnveloppe::removePointsInTimeRange(double lowerTime, double upperTime){
     assert(isSortedByTime());
 }
 
+void VSCEnveloppe::removeAllPoints(void) {
+	_points.clear();
+}
+
 #pragma mark - Change Notification
 
 /*
  *	Enveloppe changes calls (mostly for subclasses to update cache tables)
  */
 void VSCEnveloppe::enveloppeChangedBetweenEnveloppePoints(VSCEnveloppePointPtr begin, VSCEnveloppePointPtr end) {
-	std::cout << "In VSCEnveloppe enveloppeChangedBetweenEnveloppePoints";
+	std::cout << "In VSCEnveloppe enveloppeChangedBetweenEnveloppePoints " << *begin << " " << *end;
 }
 
 void VSCEnveloppe::enveloppeChangedBetweenEnveloppePointAndNext(VSCEnveloppePointPtr point) {
-	std::cout << "In VSCEnveloppe enveloppeChangedBetweenEnveloppePointAndNext";
+	std::cout << "In VSCEnveloppe enveloppeChangedBetweenEnveloppePointAndNext " << *point;
+}
+
+void VSCEnveloppe::enveloppeChanged(void) {
+	std::cout << "In VSCEnveloppe enveloppeChanged";
 }
 
 #pragma mark - Point Getters
@@ -240,13 +271,13 @@ VSCEnveloppePointPtr VSCEnveloppe::getPointClosestToTime(double time, bool copy)
 	ConstEnvPntIter it = _points.begin();
 	ConstEnvPntIter closestIt = _points.begin();
 	
-	double minimumTimeDifference = abs((*it)->getTime() - time);
+	double minimumTimeDifference = std::abs((*it)->getTime() - time);
 	
 	it++;
 	
 	for (; it != _points.end(); it++) {
 		
-		double timeDifference = abs((*it)->getTime() - time);
+		double timeDifference = std::abs((*it)->getTime() - time);
 		
 		if (timeDifference < minimumTimeDifference) {
 			minimumTimeDifference = timeDifference;

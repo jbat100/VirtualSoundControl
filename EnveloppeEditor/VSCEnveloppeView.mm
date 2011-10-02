@@ -15,7 +15,7 @@
 #import "CGColorOperations.h"
 #import "NSGeomOperations.h"
 
-#import <math.h>
+#import <cmath>
 #import <assert.h>
 
 @interface VSCEnveloppeView ()
@@ -32,11 +32,9 @@
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-		
 		_enveloppe = VSCEnveloppePtr(); 
-		
 		_enveloppeViewSetup = VSCEnveloppeViewSetupPtr(new VSCEnveloppeViewSetup());
-
+		[self setNeedsDisplay:YES];
     }
     return self;
 }
@@ -49,21 +47,24 @@
 		return;
 	}
 	
+	//NSDrawLog(@"-------------- In %@ drawRect ----------------", self);
+	
 	CGSize size = self.bounds.size;
 	
 	NSGraphicsContext * nsGraphicsContext = [NSGraphicsContext currentContext]; 
 	CGContextRef ctx = (CGContextRef) [nsGraphicsContext graphicsPort];
 	
-	CGFloat radius = (CGFloat)(_enveloppeViewSetup->getControlPointRadius());
+	drawRectFill(ctx, self.bounds, CGColorCreateFromRGBNSColor([NSColor lightGrayColor]));
 	
+	CGFloat radius = (CGFloat)(_enveloppeViewSetup->getControlPointRadius());
 	CGColorRef cgSelectedColourRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getControlPointSelectedColour());
 	CGColorRef cgUnselectedColourRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getControlPointUnselectedColour());
-	
 	CGColorRef cgLineColorRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getLineColour());
-	
 	
 	ConstEnvPntIter nextIt;
 	ConstEnvPntIter endIt = _enveloppe->getPointEndIterator();
+	
+	//NSDrawLog(@"Drawing enveloppe lines, frame is %@", NSStringFromRect([self frame]));
 	
 	for (ConstEnvPntIter it = _enveloppe->getPointBeginIterator(); it !=endIt; it++) {
 		
@@ -75,39 +76,56 @@
 			VSCEnveloppePointPtr currentPoint = *it;
 			VSCEnveloppePointPtr nextPoint = *nextIt;
 			
+#ifdef VSC_DEBUG_COCOA_DRAW
+			//std::cout << "Drawing path between " << *currentPoint << " and " << *nextPoint << "\n";
+#endif
+			
 			// draw line between this point and next
 			
 			NSPoint point1 = [self pointForEnveloppePoint:currentPoint];
 			NSPoint point2 = [self pointForEnveloppePoint:nextPoint];
 			
+			//NSDrawLog(@"Converted points to %@ and %@", NSStringFromPoint(point1), NSStringFromPoint(point2));
+			
 			// Background
 			CGMutablePathRef linePath = CGPathCreateMutable(); 
-			
 			CGPathMoveToPoint(linePath, NULL, point1.x, point1.y);
-			CGPathAddLineToPoint(linePath, NULL, point2.x, point2.x); 
+			CGPathAddLineToPoint(linePath, NULL, point2.x, point2.y); 
 			CGContextSetLineWidth(ctx, 2);
 			CGContextSetStrokeColorWithColor(ctx, cgLineColorRef);
 			CGContextAddPath(ctx, linePath);
 			CGContextStrokePath(ctx);
+			CGPathRelease(linePath);
 			
 		}
 		
 	}
 	
+	//NSDrawLog(@"Drawing enveloppe points, frame is %@", NSStringFromRect([self frame]));
+	
 	for (ConstEnvPntIter it = _enveloppe->getPointBeginIterator(); it !=endIt; it++) {
 		
 		VSCEnveloppePointPtr currentPoint = *it;
+		
+#ifdef VSC_DEBUG_COCOA_DRAW
+		//std::cout << "Drawing point for " << *currentPoint;
+#endif
 		
 		// draw control circle for point
 		
 		NSPoint p = [self pointForEnveloppePoint:currentPoint];
 		
+		//NSDrawLog(@"Converted points to %@", NSStringFromPoint(p));
+		
 		CGColorRef cgColor = NULL;
 		
-		if (_currentlySelectedPoints.find(currentPoint) != _currentlySelectedPoints.end())
+		if (_currentlySelectedPoints.find(currentPoint) != _currentlySelectedPoints.end()) {
 			cgColor = cgSelectedColourRef;
-		else 
+			//NSDrawLog(@"Point is Selected!");
+		}
+		else {
 			cgColor = cgUnselectedColourRef;
+		}
 		
 		CGMutablePathRef dotPath = CGPathCreateMutable(); 
 		CGPathAddEllipseInRect(dotPath, NULL, CGRectMake(p.x - radius, p.y - radius, 2.0*radius, 2.0*radius));
@@ -118,6 +136,8 @@
 		CGPathRelease(dotPath);
 		
 	}
+	
+	//NSDrawLog(@"-------------- End %@ drawRect ----------------", self);
 	
 }
 
@@ -134,7 +154,7 @@
 		_enveloppeViewSetup->setToDefault();
 	}
     
-    float minTime, maxTime, minValue, maxValue;
+    double minTime, maxTime, minValue, maxValue;
     
     try {
         minTime = _enveloppe->minTime();
@@ -142,8 +162,8 @@
         minValue = _enveloppe->minValue();
         maxValue = _enveloppe->maxValue();
         
-        float timeMargin = abs((maxTime-minTime)*0.2); 
-        float valueMargin = abs((maxValue-minValue)*0.2); 
+        double timeMargin = std::abs((maxTime-minTime)*0.2); 
+        double valueMargin = std::abs((maxValue-minValue)*0.2); 
         
         //minTime -= timeMargin
         maxTime += timeMargin;
@@ -176,6 +196,7 @@
 	_currentlySelectedPoints.clear();
 	_pointsInCurrentSelectionRect.clear();
     _enveloppe = enveloppe;
+	[self setNeedsDisplay:YES];
 }
 
 -(VSCEnveloppeViewSetupPtr) getEnveloppeViewSetup {
@@ -219,7 +240,7 @@
 	
 	if (!_enveloppeViewSetup)
 		return 0.0;
-	double normalisedY = 1.0 - (point.y / self.frame.size.height);
+	double normalisedY = (point.y / (double)self.frame.size.height);
 	double range = _enveloppeViewSetup->getMaxValue() - _enveloppeViewSetup->getMinValue(); 
 	double adjustedY = _enveloppeViewSetup->getMinValue() + (normalisedY*range);
 	
@@ -233,9 +254,9 @@
 	
 	if (!_enveloppeViewSetup)
 		return 0.0;
-	double normalisedX = 1.0 - (point.x / self.frame.size.width);
+	double normalisedX = (point.x / (double)self.frame.size.width);
 	double range = _enveloppeViewSetup->getMaxTime() - _enveloppeViewSetup->getMinTime(); 
-	return (NSTimeInterval)(_enveloppeViewSetup->getMinValue() + (normalisedX*range));
+	return (NSTimeInterval)(_enveloppeViewSetup->getMinTime() + (normalisedX*range));
 	
 }
 
@@ -314,7 +335,12 @@
 
 -(VSCEnveloppePointPtr) createEnveloppePointForPoint:(NSPoint)point {
 	
-	return VSCEnveloppePointPtr(new VSCEnveloppePoint([self valueForPoint:point], [self timeForPoint:point]));
+	double t = [self timeForPoint:point];
+	
+	if (t<0.0) 
+		return VSCEnveloppePointPtr();
+	
+	return VSCEnveloppePointPtr(new VSCEnveloppePoint([self valueForPoint:point], t));
 	
 }
 
@@ -339,7 +365,7 @@
 -(void) mouseDown:(NSEvent*)event {
 	
 	NSPoint eventLocation = [event locationInWindow];
-    NSPoint locationInView = [self convertPoint:eventLocation fromView:self];
+    NSPoint locationInView = [self convertPoint:eventLocation fromView:[[self window] contentView]];
     [self setNeedsDisplay:YES];
     
     movedSinceMouseDown = NO;
@@ -399,6 +425,7 @@
 		else {
 			currentMouseAction = VSCEnveloppeViewMouseAction(VSCEnveloppeViewMouseActionDelete | 
 															 VSCEnveloppeViewMouseActionMove);
+			_currentlySelectedPoints.insert(enveloppePoint);
 		}
 		
 	}
@@ -416,7 +443,7 @@
 -(void) mouseUp:(NSEvent *)event {
 	
 	NSPoint eventLocation = [event locationInWindow];
-    NSPoint locationInView = [self convertPoint:eventLocation fromView:self];
+    NSPoint locationInView = [self convertPoint:eventLocation fromView:[[self window] contentView]];
     [self setNeedsDisplay:YES];
 	NSLog(@"Mouse up at x: %f, y: %f", locationInView.x, locationInView.y);
 	
@@ -513,9 +540,12 @@
 	movedSinceMouseDown = YES;
 	
 	NSPoint eventLocation = [event locationInWindow];
-    NSPoint locationInView = [self convertPoint:eventLocation fromView:self];
+    NSPoint locationInView = [self convertPoint:eventLocation fromView:[[self window] contentView]];
 	CGFloat deltaX = [event deltaX];
 	CGFloat deltaY = [event deltaY];
+	
+	NSLog(@"Mouse dragged to %@", NSStringFromPoint(locationInView));
+	std::cout << _currentlySelectedPoints.size() << " selected point(s)\n";
 	
 	if (!_enveloppe) {
 		currentMouseAction = VSCEnveloppeViewMouseActionNone;
@@ -527,7 +557,7 @@
 	 */
 	currentMouseAction = VSCEnveloppeViewMouseAction(currentMouseAction & ~(VSCEnveloppeViewMouseActionCreate | VSCEnveloppeViewMouseActionDelete));
 	
-	if (currentMouseAction & (VSCEnveloppeViewMouseActionSelect |VSCEnveloppeViewMouseActionPersistentSelect)) {
+	if (currentMouseAction & (VSCEnveloppeViewMouseActionSelect | VSCEnveloppeViewMouseActionPersistentSelect)) {
 		
 		NSRect selectionRect = currentSelectionRect;
 		CGFloat nx, ny, nw, nh;
