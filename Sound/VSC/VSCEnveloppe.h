@@ -109,12 +109,19 @@ public:
 	VSCEnveloppePointPtr getFirstPointBeforeTime(double time) const;
 	VSCEnveloppePointPtr getFirstPointBeforeTime(double time, bool copy) const;
 	
-	void getPointsInTimeRange(std::list<VSCEnveloppePointPtr>&, double lowerTime, double upperTime) const;
-	void getPointsInTimeRange(std::list<VSCEnveloppePointPtr>&, double lowerTime, double upperTime, bool copy) const;
-	void getAllPoints(std::list<VSCEnveloppePointPtr>&) const;
-	void getAllPoints(std::list<VSCEnveloppePointPtr>&, bool copy) const;
+	void getPointsInTimeRange(std::list<VSCEnveloppePointPtr>& pts, double lowerTime, double upperTime) const;
+	void getPointsInTimeRange(std::list<VSCEnveloppePointPtr>& pts, double lowerTime, double upperTime, bool copy) const;
+	void getAllPoints(std::list<VSCEnveloppePointPtr>& pts) const;
+	void getAllPoints(std::list<VSCEnveloppePointPtr>& pts, bool copy) const;
 	
 	int numberOfPoints(void) const;
+	
+	/* move points (disallow manggling...) */
+	bool canDisplacePointTime(ConstEnvPntIter pointIt, double deltaTime);
+	bool canDisplacePointValue(ConstEnvPntIter pointIt, double deltaValue);
+	void displacePoint(VSCEnveloppePointPtr point, double deltaTime, double deltaValue);
+	void displacePoint(ConstEnvPntIter pointIt, double deltaTime, double deltaValue);
+	void displacePoints(std::list<VSCEnveloppePointPtr>& pts, double deltaTime, double deltaValue);
 	
 	/* values */
 	

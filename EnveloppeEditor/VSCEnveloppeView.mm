@@ -119,13 +119,21 @@
 		
 		CGColorRef cgColor = NULL;
 		
-		if (_currentlySelectedPoints.find(currentPoint) != _currentlySelectedPoints.end()) {
+		/*
+		 *	Make a set containing the currently selected point plus the points in the current selection rect
+		 */
+		
+		BOOL isSelected = NO;
+		
+		if (_currentlySelectedPoints.find(currentPoint) != _currentlySelectedPoints.end()) 
+			isSelected = YES;
+		else if (_pointsInCurrentSelectionRect.find(currentPoint) != _pointsInCurrentSelectionRect.end())
+			isSelected = YES;
+		
+		if (isSelected) 
 			cgColor = cgSelectedColourRef;
-			//NSDrawLog(@"Point is Selected!");
-		}
-		else {
+		else 
 			cgColor = cgUnselectedColourRef;
-		}
 		
 		CGMutablePathRef dotPath = CGPathCreateMutable(); 
 		CGPathAddEllipseInRect(dotPath, NULL, CGRectMake(p.x - radius, p.y - radius, 2.0*radius, 2.0*radius));
@@ -138,6 +146,10 @@
 	}
 	
 	//NSDrawLog(@"-------------- End %@ drawRect ----------------", self);
+	
+	if (!CGRectIsNull(currentSelectionRect) && !CGRectIsEmpty(currentSelectionRect)) {
+		drawRectOutline(ctx, currentSelectionRect, 1, CGColorCreateFromRGBNSColor([NSColor grayColor]));
+	}
 	
 }
 
@@ -345,14 +357,11 @@
 }
 
 -(void) addPointsInRect:(NSRect)rect toPointSet:(std::set<VSCEnveloppePointPtr>&)pointSet {
-	
 	std::list<VSCEnveloppePointPtr> rectPoints; 
 	[self getEnveloppePoints:rectPoints InRect:rect];
-	
 	for (ConstEnvPntIter it = rectPoints.begin(); it != rectPoints.end(); it++) {
 		pointSet.insert(*it);
 	}
-	
 }
 
 
@@ -417,11 +426,34 @@
 	}
 	else {
 		
+		/*
+		 *	If mouse click was not done over an enveloppe point
+		 */
 		if (!enveloppePoint) {
-			currentMouseAction = VSCEnveloppeViewMouseAction(VSCEnveloppeViewMouseActionCreate | 
-															 VSCEnveloppeViewMouseActionSelect);
+			
+			/*
+			 * If there are points selected then a simple click should deselect everything
+			 */
+			if (_currentlySelectedPoints.size() > 0) {
+				_currentlySelectedPoints.clear();
+				_pointsInCurrentSelectionRect.clear();
+				currentMouseAction = VSCEnveloppeViewMouseActionNone;
+			}
+			
+			else {
+				
+				currentMouseAction = VSCEnveloppeViewMouseAction(VSCEnveloppeViewMouseActionCreate | 
+																 VSCEnveloppeViewMouseActionSelect);
+				_currentlySelectedPoints.clear();
+				
+			}
+			
 		}
 		
+		/*
+		 *	If mouse click was done over an enveloppe point, the select the point and wait
+		 *	wait for further action (mouse up or mouse dragged) to determine whether to delete or move
+		 */
 		else {
 			currentMouseAction = VSCEnveloppeViewMouseAction(VSCEnveloppeViewMouseActionDelete | 
 															 VSCEnveloppeViewMouseActionMove);
@@ -459,7 +491,7 @@
 	 *	a new point at the click location
 	 */
 	if ((currentMouseAction & VSCEnveloppeViewMouseActionCreate) && movedSinceMouseDown == NO) {
-		NSAssert(!enveloppePoint.get(), @"Expected enveloppePoint to be NULL");
+		NSAssert(!enveloppePoint, @"Expected enveloppePoint to be NULL");
 		VSCEnveloppePointPtr newPoint = [self createEnveloppePointForPoint:locationInView];
 		_enveloppe->addPoint(newPoint);
 	}
@@ -499,7 +531,7 @@
 	 *	the point at the click location
 	 */
 	if ((currentMouseAction & VSCEnveloppeViewMouseActionDelete) && movedSinceMouseDown == NO) {
-		NSAssert(enveloppePoint.get(), @"Expected enveloppePoint to be non-NULL");
+		NSAssert(enveloppePoint, @"Expected enveloppePoint to be non-NULL");
 		if (enveloppePoint) {
 			_enveloppe->removePoint(enveloppePoint);
 			_currentlySelectedPoints.erase(enveloppePoint);
@@ -514,10 +546,6 @@
 	 */
     if ((currentMouseAction & (VSCEnveloppeViewMouseActionSelect | VSCEnveloppeViewMouseActionPersistentSelect)) 
 		&& movedSinceMouseDown == YES) {
-		
-		if (currentMouseAction & VSCEnveloppeViewMouseActionSelect) {
-			_currentlySelectedPoints.clear();
-		}
 		
 		[self addPointsInRect:currentSelectionRect toPointSet:_currentlySelectedPoints];
 		
@@ -542,7 +570,7 @@
 	NSPoint eventLocation = [event locationInWindow];
     NSPoint locationInView = [self convertPoint:eventLocation fromView:[[self window] contentView]];
 	CGFloat deltaX = [event deltaX];
-	CGFloat deltaY = [event deltaY];
+	CGFloat deltaY = -[event deltaY];
 	
 	NSLog(@"Mouse dragged to %@", NSStringFromPoint(locationInView));
 	std::cout << _currentlySelectedPoints.size() << " selected point(s)\n";
@@ -582,6 +610,8 @@
 		
 		currentSelectionRect = NSMakeRect(nx, ny, nw, nh);
 		
+		_pointsInCurrentSelectionRect.clear();
+		
 		[self addPointsInRect:currentSelectionRect toPointSet:_pointsInCurrentSelectionRect];
 		
 	}
@@ -598,6 +628,7 @@
 			p.y += deltaY;
 			[self setEnveloppePoint:(*it) withPoint:p];
 		}
+		
 	}
 	
 	[self setNeedsDisplay:YES];

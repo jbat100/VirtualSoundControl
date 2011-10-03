@@ -382,6 +382,66 @@ int VSCEnveloppe::numberOfPoints(void) const {
 	return _points.size();
 }
 
+#pragma mark - Point Displacement 
+
+bool VSCEnveloppe::canDisplacePointTime(ConstEnvPntIter pointIt, double deltaTime) {
+	
+	assert(pointIt != _points.end());
+	assert(find(_points.begin(), _points.end(), *pointIt) != _points.end());
+	
+	VSCEnveloppePointPtr point = *pointIt;
+	VSCEnveloppePointPtr nextPoint;
+	VSCEnveloppePointPtr previousPoint;
+	
+	ConstEnvPntIter nextPointIt = pointIt;
+	nextPointIt++;
+	ConstEnvPntIter previousPointIt = pointIt;
+	if (pointIt == _points.begin())
+		previousPointIt = _points.end();
+	else 
+		previousPointIt--;
+	
+	if (pointIt == _points.begin()) {
+		if (point->getTime() - deltaTime < 0.0) 
+			return false;
+	}
+	
+	if (nextPointIt != _points.end()) {
+		if (point->getTime()+deltaTime > nextPoint->getTime()) 
+			return false;
+	}
+	
+	if (previousPointIt != _points.end()) {
+		if (point->getTime()+deltaTime < previousPoint->getTime()) 
+			return false;
+	}
+	
+	return true;
+	
+}
+
+bool VSCEnveloppe::canDisplacePointValue(ConstEnvPntIter pointIt, double deltaValue) {
+	
+	return true;
+	
+}
+
+void VSCEnveloppe::displacePoint(ConstEnvPntIter pointIt, double deltaTime, double deltaValue) {
+	
+
+	
+}
+
+void VSCEnveloppe::displacePoint(VSCEnveloppePointPtr point, double deltaTime, double deltaValue) {
+	
+	
+	
+}
+
+void VSCEnveloppe::displacePoints(std::list<VSCEnveloppePointPtr>& pts, double deltaTime, double deltaValue) {
+	
+}
+
 #pragma mark - Enveloppe Duration 
 
 double VSCEnveloppe::duration(void) const {
