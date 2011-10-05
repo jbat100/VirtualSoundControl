@@ -14,14 +14,19 @@
 #include <string>
 #include <boost/shared_ptr.hpp>
 
+#include <boost/serialization/list.hpp>
+#include <boost/serialization/string.hpp>
+#include <boost/serialization/version.hpp>
+#include <boost/serialization/split_member.hpp>
+
 #include "VSCEnveloppePoint.h"
 
 #define VSCEnveloppePtr		boost::shared_ptr<VSCEnveloppe>
 
 
-
 class VSCEnveloppe {
-		
+	
+	
 public:
 	
 	/*
@@ -134,8 +139,33 @@ public:
     double maxTime(void) const;
     double minValue(void) const;
     double maxValue(void) const;
-    
-    friend std::ostream& operator<<(std::ostream& output, VSCEnveloppe& p);
+	
+	
+	
+	
+private:
+	/*
+	 *	Print out and serialization (private)
+	 */
+	
+	friend std::ostream& operator<<(std::ostream& output, VSCEnveloppe& p);
+	
+	friend class boost::serialization::access;
+    template<class Archive>
+    void save(Archive & ar, const unsigned int version) const
+    {
+        // note, version is always the latest when saving
+        ar  & _points;
+        ar  & _scaleType;
+    }
+    template<class Archive>
+    void load(Archive & ar, const unsigned int version)
+    {
+        ar  & _points;
+        ar  & _scaleType;
+    }
+	
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
 	
 protected:
 	
@@ -189,7 +219,7 @@ protected:
 	virtual void enveloppeChangedBetweenEnveloppePoints(VSCEnveloppePointPtr begin, VSCEnveloppePointPtr end);
 	virtual void enveloppeChangedBetweenEnveloppePointAndNext(VSCEnveloppePointPtr point);
 	virtual void enveloppeChanged(void);
-	
+		
 };
 
 #endif

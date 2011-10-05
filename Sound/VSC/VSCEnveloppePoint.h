@@ -12,7 +12,12 @@
 
 #include <iostream>
 #include <ostream>
+
 #include <boost/shared_ptr.hpp>
+
+#include <boost/serialization/base_object.hpp>
+#include <boost/serialization/version.hpp>
+#include <boost/serialization/split_member.hpp>
 
 #include "VSCEnveloppeCoordinate.h"
 
@@ -24,13 +29,6 @@
 #define ConstRevEnvPntIter      std::list<VSCEnveloppePointPtr>::const_reverse_iterator 
 
 class VSCEnveloppePoint : public VSCEnveloppeCoordinate {
-	
-	friend std::ostream& operator<<(std::ostream& output, const VSCEnveloppePoint& p);
-	
-protected:
-    
-    VSCEnveloppeCoordinatePtr _leftControlCoordinate;
-    VSCEnveloppeCoordinatePtr _rightControlCoordinate;
 	
 public:
 	
@@ -45,8 +43,41 @@ public:
     
     void setRightControlEnveloppeCoordinate(VSCEnveloppeCoordinatePtr controlPoint);
     VSCEnveloppeCoordinatePtr getRightControlEnveloppeCoordinate(void) const;
+	
+private:
+	
+	/*
+	 *	Print out and serialization (private)
+	 */
+	
+	friend std::ostream& operator<<(std::ostream& output, const VSCEnveloppePoint& p);
+	
+	friend class boost::serialization::access;
+    template<class Archive>
+    void save(Archive & ar, const unsigned int version) const
+    {
+        ar  & boost::serialization::base_object<VSCEnveloppeCoordinate>(*this);
+        ar  & _leftControlCoordinate;
+        ar  & _rightControlCoordinate;
+    }
+    template<class Archive>
+    void load(Archive & ar, const unsigned int version)
+    {
+		ar  & boost::serialization::base_object<VSCEnveloppeCoordinate>(*this);
+        ar  & _leftControlCoordinate;
+        ar  & _rightControlCoordinate;
+    }
+	
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+	
+protected:
+    
+    VSCEnveloppeCoordinatePtr _leftControlCoordinate;
+    VSCEnveloppeCoordinatePtr _rightControlCoordinate;
     
 
 };
+
+BOOST_CLASS_VERSION(VSCEnveloppePoint, 1)
 
 #endif
