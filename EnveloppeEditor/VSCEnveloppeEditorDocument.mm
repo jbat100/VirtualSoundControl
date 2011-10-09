@@ -12,7 +12,8 @@
 
 @implementation VSCEnveloppeEditorDocument
 
-static NSArray* enveloppeBaseFilePaths = nil;
+static NSString* baseFilePath = nil;
+static NSString* enveloppeBaseFilePath = nil;
 
 -(id) init {
 	
@@ -96,24 +97,52 @@ static NSArray* enveloppeBaseFilePaths = nil;
 - (NSString *) applicationSupportDirectory {	
 	NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
 	NSString *dir = [paths lastObject];
-	
 	if (![[NSFileManager defaultManager] fileExistsAtPath:dir])
 		[[NSFileManager defaultManager] createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:nil];
-	
 	return dir;
 }
 
--(NSArray*) enveloppeBaseFilePaths {
+- (NSString *) applicationLibraryDirectory {	
+	NSArray* paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+	NSString *dir = [paths lastObject];
+	if (![[NSFileManager defaultManager] fileExistsAtPath:dir])
+		[[NSFileManager defaultManager] createDirectoryAtPath:dir 
+								  withIntermediateDirectories:YES attributes:nil error:nil];
+	return dir;
+}
+
+
+
+-(NSString*) baseFilePath {
 	
-	if (!enveloppeBaseFilePaths) {
+	if (!baseFilePath) {
 		@synchronized(self) {
-			NSString* defaultEnveloppeFilePath = [[self applicationSupportDirectory] 
-												  stringByAppendingPathComponent:@"Enveloppes"];
-			enveloppeBaseFilePaths = [NSArray arrayWithObjects:defaultEnveloppeFilePath, nil];
+			baseFilePath = [[[self applicationLibraryDirectory] stringByAppendingPathComponent:@"VSC"] retain];
 		}
 	}
 	
-	return enveloppeBaseFilePaths;
+	if (![[NSFileManager defaultManager] fileExistsAtPath:baseFilePath]) {
+		[[NSFileManager defaultManager] createDirectoryAtPath:baseFilePath 
+								  withIntermediateDirectories:YES attributes:nil error:nil];
+	}
+	
+	return baseFilePath;
+}
+
+-(NSString*) enveloppeBaseFilePath {
+	
+	if (!enveloppeBaseFilePath) {
+		@synchronized(self) {
+			enveloppeBaseFilePath = [[[self baseFilePath] stringByAppendingPathComponent:@"Enveloppes"] retain];
+		}
+	}
+	
+	if (![[NSFileManager defaultManager] fileExistsAtPath:enveloppeBaseFilePath]) {
+		[[NSFileManager defaultManager] createDirectoryAtPath:enveloppeBaseFilePath 
+								  withIntermediateDirectories:YES attributes:nil error:nil];
+	}
+	
+	return enveloppeBaseFilePath;
 }
 
 #pragma mark - Enveloppe Access/Creation/Add/Remove

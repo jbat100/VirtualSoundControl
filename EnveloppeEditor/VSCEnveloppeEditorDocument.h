@@ -17,7 +17,7 @@
 
 #import "VSCEnveloppeEditorWindowController.h"
 
-#define DEFAULT_ENVELOPPE_RELATIVE_PATH @"Default"
+#define DEFAULT_ENVELOPPE_RELATIVE_PATH		@"Default"
 
 @class VSCEnveloppeEditorWindowController;
 
@@ -35,8 +35,10 @@
 /*
  *	Enveloppe Base File Paths
  */
--(NSString *) applicationSupportDirectory;
--(NSArray*) enveloppeBaseFilePaths;
+-(NSString*) applicationSupportDirectory;
+-(NSString*) applicationLibraryDirectory;
+-(NSString*) enveloppeBaseFilePath;
+-(NSString*) baseFilePath;
 
 /*
  *	Enveloppe Access/Create/Add/Remove

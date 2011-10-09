@@ -35,7 +35,7 @@ VSCEnveloppeCoordinate::VSCEnveloppeCoordinate(const VSCEnveloppeCoordinate& c) 
 }
 
 VSCEnveloppeCoordinate::~VSCEnveloppeCoordinate(void) {
-	std::cout << "Destroying enveloppe point!" << std::endl;
+	std::cout << "Destroying enveloppe coordinate!" << std::endl;
 }
 
 void VSCEnveloppeCoordinate::setValue(double value) {

@@ -18,6 +18,7 @@
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/version.hpp>
 #include <boost/serialization/split_member.hpp>
+#include <boost/serialization/nvp.hpp>
 
 #include "VSCEnveloppeCoordinate.h"
 
@@ -56,16 +57,20 @@ private:
     template<class Archive>
     void save(Archive & ar, const unsigned int version) const
     {
-        ar  & boost::serialization::base_object<VSCEnveloppeCoordinate>(*this);
-        ar  & _leftControlCoordinate;
-        ar  & _rightControlCoordinate;
+		using boost::serialization::make_nvp;
+		ar  & make_nvp("point_coordinate", boost::serialization::base_object<VSCEnveloppeCoordinate>(*this));    
+        //ar  & boost::serialization::base_object<VSCEnveloppeCoordinate>(*this);
+		ar  & make_nvp("left_control_coordinate", _leftControlCoordinate);
+		ar  & make_nvp("right_control_coordinate", _rightControlCoordinate);
     }
     template<class Archive>
     void load(Archive & ar, const unsigned int version)
     {
-		ar  & boost::serialization::base_object<VSCEnveloppeCoordinate>(*this);
-        ar  & _leftControlCoordinate;
-        ar  & _rightControlCoordinate;
+		using boost::serialization::make_nvp;
+		ar  & make_nvp("point_coordinate", boost::serialization::base_object<VSCEnveloppeCoordinate>(*this));    
+		//ar  & boost::serialization::base_object<VSCEnveloppeCoordinate>(*this);
+		ar  & make_nvp("left_control_coordinate", _leftControlCoordinate);
+		ar  & make_nvp("right_control_coordinate", _rightControlCoordinate);
     }
 	
     BOOST_SERIALIZATION_SPLIT_MEMBER()
@@ -79,5 +84,6 @@ protected:
 };
 
 BOOST_CLASS_VERSION(VSCEnveloppePoint, 1)
+//BOOST_SERIALIZATION_SHARED_PTR(VSCEnveloppePoint)
 
 #endif

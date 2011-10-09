@@ -21,6 +21,9 @@
 	NSPopUpButton* enveloppePopUpButton;
 	
 	VSCEnveloppePtr currentEnveloppe;
+	
+	NSMenu* fileMenu;
+	NSMenuItem* fileTitleMenuItem;
 
 }
 

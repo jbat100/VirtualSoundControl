@@ -18,10 +18,13 @@
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/version.hpp>
 #include <boost/serialization/split_member.hpp>
+#include <boost/serialization/nvp.hpp>
+#include <boost/serialization/shared_ptr.hpp>
 
 #include "VSCEnveloppePoint.h"
 
-#define VSCEnveloppePtr		boost::shared_ptr<VSCEnveloppe>
+#define ENVELOPPE_FILE_EXTENSION			"vscxenv"
+#define VSCEnveloppePtr						boost::shared_ptr<VSCEnveloppe>
 
 
 class VSCEnveloppe {
@@ -60,8 +63,15 @@ public:
 		StateEnded
 	};
 	
+	enum PointDisplacementConflictResolution {
+		PointDisplacementConflictResolutionNone = 0,
+		PointDisplacementConflictResolutionBlock,
+		PointDisplacementConflictResolutionClear
+	};
+	
 	VSCEnveloppe(void);
 	// VSCEnveloppe copy construct and file construct
+	~VSCEnveloppe(void);
 	
 	void setToDefault(void);
 	
@@ -78,6 +88,8 @@ public:
 	CurveType getCurveType(void) const;
 	void setState(State state);
 	State getState(void) const;
+	void setPointDisplacementConflictResolution(PointDisplacementConflictResolution pointDisplacementConflictResolution);
+	PointDisplacementConflictResolution getPointDisplacementConflictResolution(void) const;
 	
 	void setRelativePath(std::string relativePath);
 	std::string getRelativePath(void) const;
@@ -140,9 +152,6 @@ public:
     double minValue(void) const;
     double maxValue(void) const;
 	
-	
-	
-	
 private:
 	/*
 	 *	Print out and serialization (private)
@@ -154,15 +163,29 @@ private:
     template<class Archive>
     void save(Archive & ar, const unsigned int version) const
     {
+		using boost::serialization::make_nvp;
         // note, version is always the latest when saving
-        ar  & _points;
-        ar  & _scaleType;
+		ar  & make_nvp("points", _points);
+		ar  & make_nvp("scale_type", _scaleType);
+		ar  & make_nvp("curve_type", _curveType);
+		ar  & make_nvp("state", _state);
+		ar  & make_nvp("point_displacement_conflict_resolution", _pointDisplacementConflictResolution);
+		ar  & make_nvp("minimum_time_step", _minimumTimeStep);
+		ar  & make_nvp("relative_path", _relativePath);
+		ar  & make_nvp("channel", _channel);
     }
     template<class Archive>
     void load(Archive & ar, const unsigned int version)
     {
-        ar  & _points;
-        ar  & _scaleType;
+		using boost::serialization::make_nvp;
+		ar  & make_nvp("points", _points);
+		ar  & make_nvp("scale_type", _scaleType);
+		ar  & make_nvp("curve_type", _curveType);
+		ar  & make_nvp("state", _state);
+		ar  & make_nvp("point_displacement_conflict_resolution", _pointDisplacementConflictResolution);
+		ar  & make_nvp("minimum_time_step", _minimumTimeStep);
+		ar  & make_nvp("relative_path", _relativePath);
+		ar  & make_nvp("channel", _channel);
     }
 	
     BOOST_SERIALIZATION_SPLIT_MEMBER()
@@ -189,6 +212,12 @@ protected:
 	 *	State (defines the fire state during audio computations)
 	 */
     State _state;
+	
+	/*
+	 *	When points are being displaced so that they overlap neighboring points this determines
+	 *	how the conflict is resolved (block movements, clear neighboring points)
+	 */
+	PointDisplacementConflictResolution _pointDisplacementConflictResolution;
     
 	/*
 	 *	The minimum time step between two adjascent enveloppe points, if a point is added to the enveloppe,
@@ -207,6 +236,7 @@ protected:
 	 *	when the enveloppe is fired (consider also adding observers)
 	 */
 	int _channel;
+	
     
     bool isSortedByTime(void) const;
     
@@ -221,6 +251,12 @@ protected:
 	virtual void enveloppeChanged(void);
 		
 };
+
+/*
+ *	Save/Load Enveloppes from XML
+ */
+void saveVSCEnveloppeToXML(const VSCEnveloppe &s, const char * filename);
+void loadVSCEnveloppeFromXML(VSCEnveloppe &s, const char * filename);
 
 #endif
 

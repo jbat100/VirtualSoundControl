@@ -16,6 +16,8 @@
 
 #include <boost/serialization/version.hpp>
 #include <boost/serialization/split_member.hpp>
+#include <boost/serialization/nvp.hpp>
+#include <boost/serialization/shared_ptr.hpp>
 
 #define VSCEnveloppeCoordinatePtr    boost::shared_ptr<VSCEnveloppeCoordinate>
 
@@ -44,18 +46,21 @@ private:
 	friend std::ostream& operator<<(std::ostream& output, const VSCEnveloppeCoordinate& c);
 	
 	friend class boost::serialization::access;
+	
     template<class Archive>
     void save(Archive & ar, const unsigned int version) const
     {
+		using boost::serialization::make_nvp;
         // note, version is always the latest when saving
-        ar  & _value;
-        ar  & _time;
+		ar  & make_nvp("value", _value);
+        ar  & make_nvp("time", _time);
     }
     template<class Archive>
     void load(Archive & ar, const unsigned int version)
     {
-        ar  & _value;
-        ar  & _time;
+		using boost::serialization::make_nvp;
+		ar  & make_nvp("value", _value);
+        ar  & make_nvp("time", _time);
     }
 	
     BOOST_SERIALIZATION_SPLIT_MEMBER()
@@ -68,6 +73,7 @@ protected:
 };
 
 BOOST_CLASS_VERSION(VSCEnveloppeCoordinate, 1)
+//BOOST_SERIALIZATION_SHARED_PTR(VSCEnveloppeCoordinate)
 
 bool compareEnveloppeCoordinateValues (VSCEnveloppeCoordinate* firstPoint, VSCEnveloppeCoordinate* secondPoint);
 bool compareEnveloppeCoordinateTimes (VSCEnveloppeCoordinate* firstPoint, VSCEnveloppeCoordinate* secondPoint);

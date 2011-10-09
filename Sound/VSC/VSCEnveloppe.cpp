@@ -12,15 +12,48 @@
 #include "VSCBoost.h"
 #include "VSCException.h"
 
+#include <fstream>
 #include <cmath>
 #include <assert.h>
 
 #include <boost/filesystem.hpp>
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/nvp.hpp>
+
+#pragma mark - Save/Load
+
+/*
+ *	Saving and loading
+ */
+
+void saveVSCEnveloppeToXML(const VSCEnveloppe &s, const char * filename) {
+    // make an archive
+    std::ofstream ofs(filename);
+    assert(ofs.good());
+    boost::archive::xml_oarchive oa(ofs);
+    oa << boost::serialization::make_nvp("enveloppe", s);
+}
+
+void loadVSCEnveloppeFromXML(VSCEnveloppe &s, const char * filename) {
+    // open the archive
+    std::ifstream ifs(filename);
+    assert(ifs.good());
+    boost::archive::xml_iarchive ia(ifs);
+    // restore the schedule from the archive
+    ia >> boost::serialization::make_nvp("enveloppe", s);
+}
+
+#pragma mark - Constructor/Destructor/Defaults
 
 VSCEnveloppe::VSCEnveloppe(void) {
 	
 	setToDefault();
 	
+}
+
+VSCEnveloppe::~VSCEnveloppe(void) {
+	std::cout << "Destroying Enveloppe!" << std::endl;
 }
 
 void VSCEnveloppe::setToDefault(void) {
@@ -73,6 +106,14 @@ void VSCEnveloppe::setState(VSCEnveloppe::State state) {
 
 VSCEnveloppe::State VSCEnveloppe::getState(void) const {
 	return _state;
+}
+
+void VSCEnveloppe::setPointDisplacementConflictResolution(VSCEnveloppe::PointDisplacementConflictResolution r) {
+	_pointDisplacementConflictResolution = r;
+}
+
+VSCEnveloppe::PointDisplacementConflictResolution VSCEnveloppe::getPointDisplacementConflictResolution(void) const {
+	return _pointDisplacementConflictResolution;
 }
 
 void VSCEnveloppe::setRelativePath(std::string relativePath) {
