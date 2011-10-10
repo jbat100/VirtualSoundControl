@@ -66,6 +66,32 @@ public:
 	VSCColour getLineColour(void) const;
 	void setLineColour(VSCColour colour);
 	
+	/*
+	 *	Grid setters / getters
+	 */
+	bool gridIsShowing(void) const;
+	void showGrid(bool showGrid);
+	
+	float getTargetVerticalGridSpacing(void) const;
+	void setTargetVerticalGridSpacing(float targetVerticalGridSpacing);
+	float getTargetHorizontalGridSpacing(void) const;
+	void setTargetHorizontalGridSpacing(float targetHorizontalGridSpacing);
+	
+	float getVerticalGridLineWidth(void) const;
+	void setVerticalGridLineWidth(float verticalGridLineWidth);
+	float getHorizontalGridLineWidth(void) const;
+	void setHorizontalGridLineWidth(float horizontalGridLineWidth);
+	float getHorizontalZeroGridLineWidth(void) const;
+	void setHorizontalZeroGridLineWidth(float horizontalZeroGridLineWidth);
+	
+	VSCColour getHorizontalGridLineColor(void) const;
+	void setHorizontalGridLineColor(VSCColour horizontalGridLineColor);
+	VSCColour getHorizontalZeroGridLineColor(void) const;
+	void setHorizontalZeroGridLineColor(VSCColour horizontalZeroGridLineColor);
+	VSCColour getVerticalGridLineColor(void) const;
+	void setVerticalGridLineColor(VSCColour verticalGridLineColor);
+	
+	
 protected:
 	
 	/*
@@ -93,6 +119,20 @@ protected:
 	 */
 	float _lineWidth;
 	VSCColour _lineColour;
+	
+	/*
+	 *	Grid
+	 */
+	bool _showGrid;
+	float _targetVerticalGridSpacing;
+	float _targetHorizontalGridSpacing;
+	float _verticalGridLineWidth;
+	float _horizontalGridLineWidth;
+	float _horizontalZeroGridLineWidth;
+	VSCColour _horizontalGridLineColor;
+	VSCColour _horizontalZeroGridLineColor;
+	VSCColour _verticalGridLineColor;
+	
 
 };
 

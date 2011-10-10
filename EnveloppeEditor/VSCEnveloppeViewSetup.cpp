@@ -139,4 +139,83 @@ void VSCEnveloppeViewSetup::setLineColour(VSCColour colour) {
 	_lineColour = colour;
 }
 
+/*
+ *	Grid setters / getters
+ */
+
+bool VSCEnveloppeViewSetup::gridIsShowing(void) const {
+	return _showGrid;
+}
+
+void VSCEnveloppeViewSetup::showGrid(bool showGrid) {
+	_showGrid = showGrid;
+}
+
+float VSCEnveloppeViewSetup::getTargetVerticalGridSpacing(void) const {
+	return _targetVerticalGridSpacing;
+}
+
+void VSCEnveloppeViewSetup::setTargetVerticalGridSpacing(float targetVerticalGridSpacing) {
+	_targetVerticalGridSpacing = targetVerticalGridSpacing;
+}
+
+float VSCEnveloppeViewSetup::getTargetHorizontalGridSpacing(void) const {
+	return _targetHorizontalGridSpacing;
+}
+
+void VSCEnveloppeViewSetup::setTargetHorizontalGridSpacing(float targetHorizontalGridSpacing) {
+	_targetHorizontalGridSpacing = targetHorizontalGridSpacing;
+}
+
+
+float VSCEnveloppeViewSetup::getVerticalGridLineWidth(void) const {
+	return _verticalGridLineWidth;
+}
+
+void VSCEnveloppeViewSetup::setVerticalGridLineWidth(float verticalGridLineWidth) {
+	_verticalGridLineWidth = verticalGridLineWidth;
+}
+
+float VSCEnveloppeViewSetup::getHorizontalGridLineWidth(void) const {
+	return _horizontalGridLineWidth;
+}
+
+void VSCEnveloppeViewSetup::setHorizontalGridLineWidth(float horizontalGridLineWidth) {
+	_horizontalGridLineWidth = horizontalGridLineWidth;
+}
+
+float VSCEnveloppeViewSetup::getHorizontalZeroGridLineWidth(void) const {
+	return _horizontalZeroGridLineWidth;
+}
+
+void VSCEnveloppeViewSetup::setHorizontalZeroGridLineWidth(float horizontalZeroGridLineWidth) {
+	_horizontalZeroGridLineWidth = horizontalZeroGridLineWidth;
+}
+
+
+VSCColour VSCEnveloppeViewSetup::getHorizontalGridLineColor(void) const {
+	return _horizontalGridLineColor;
+}
+
+void VSCEnveloppeViewSetup::setHorizontalGridLineColor(VSCColour horizontalGridLineColor) {
+	_horizontalGridLineColor = horizontalGridLineColor;
+}
+
+VSCColour VSCEnveloppeViewSetup::getHorizontalZeroGridLineColor(void) const {
+	return _horizontalZeroGridLineColor;
+}
+
+void VSCEnveloppeViewSetup::setHorizontalZeroGridLineColor(VSCColour horizontalZeroGridLineColor) {
+	_horizontalZeroGridLineColor = horizontalZeroGridLineColor;
+}
+
+VSCColour VSCEnveloppeViewSetup::getVerticalGridLineColor(void) const {
+	return _verticalGridLineColor;
+}
+
+void VSCEnveloppeViewSetup::setVerticalGridLineColor(VSCColour verticalGridLineColor) {
+	_verticalGridLineColor = verticalGridLineColor;
+}
+
+
 

@@ -59,7 +59,6 @@ private:
     {
 		using boost::serialization::make_nvp;
 		ar  & make_nvp("point_coordinate", boost::serialization::base_object<VSCEnveloppeCoordinate>(*this));    
-        //ar  & boost::serialization::base_object<VSCEnveloppeCoordinate>(*this);
 		ar  & make_nvp("left_control_coordinate", _leftControlCoordinate);
 		ar  & make_nvp("right_control_coordinate", _rightControlCoordinate);
     }
@@ -68,7 +67,6 @@ private:
     {
 		using boost::serialization::make_nvp;
 		ar  & make_nvp("point_coordinate", boost::serialization::base_object<VSCEnveloppeCoordinate>(*this));    
-		//ar  & boost::serialization::base_object<VSCEnveloppeCoordinate>(*this);
 		ar  & make_nvp("left_control_coordinate", _leftControlCoordinate);
 		ar  & make_nvp("right_control_coordinate", _rightControlCoordinate);
     }
