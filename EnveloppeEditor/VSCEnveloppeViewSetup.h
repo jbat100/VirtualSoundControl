@@ -69,6 +69,10 @@ public:
 	/*
 	 *	Grid setters / getters
 	 */
+	
+	int getTimeGridPoints(std::list<double>& ptns);
+	int getValueGridPoints(std::list<double>& ptns);
+	
 	bool gridIsShowing(void) const;
 	void showGrid(bool showGrid);
 	
@@ -76,6 +80,11 @@ public:
 	void setTargetVerticalGridSpacing(float targetVerticalGridSpacing);
 	float getTargetHorizontalGridSpacing(void) const;
 	void setTargetHorizontalGridSpacing(float targetHorizontalGridSpacing);
+	
+	float getTargetNumberOfVerticalGridLines(void) const;
+	void setTargetNumberOfVerticalGridLines(float targetNumberOfVerticalGridLines);
+	float getTargetNumberOfHorizontalGridLines(void) const;
+	void setTargetNumberOfHorizontalGridLines(float targetNumberOfHorizontalGridLines);
 	
 	float getVerticalGridLineWidth(void) const;
 	void setVerticalGridLineWidth(float verticalGridLineWidth);
@@ -124,6 +133,8 @@ protected:
 	 *	Grid
 	 */
 	bool _showGrid;
+	unsigned int _targetNumberOfVerticalGridLines;
+	unsigned int _targetNumberOfHorizontalGridLines;
 	float _targetVerticalGridSpacing;
 	float _targetHorizontalGridSpacing;
 	float _verticalGridLineWidth;

@@ -8,6 +8,7 @@
  */
 
 #include "VSCEnveloppeViewSetup.h"
+#include <cmath>
 
 #pragma mark View range setters / getters
 
@@ -33,7 +34,93 @@ void VSCEnveloppeViewSetup::setToDefault(void) {
 	setControlPointUnselectedColour((VSCColour){0.0, 0.0, 0.0, 1.0});
 	setLineColour((VSCColour){0.0, 0.0, 0.0, 1.0});
 	
+	setTargetNumberOfHorizontalGridLines(5);
+	setTargetNumberOfVerticalGridLines(10);
+	
+	setVerticalGridLineColor((VSCColour){0.8, 0.8, 0.8, 1.0});
+	setHorizontalGridLineColor((VSCColour){0.8, 0.8, 0.8, 1.0});
+	setHorizontalZeroGridLineColor((VSCColour){0.5, 0.5, 0.5, 1.0});
+	
+	setVerticalGridLineWidth(1.0);
+	setHorizontalGridLineWidth(1.0);
+	setHorizontalZeroGridLineWidth(1.0);
+	
 }
+
+#pragma mark Grid point calculations
+
+int VSCEnveloppeViewSetup::getTimeGridPoints(std::list<double>& ptns) {
+	
+	int currentScalerPower = 0;
+	double scaledTimeRange = getMaxTime() - getMinTime();
+	
+	if (scaledTimeRange < getTargetNumberOfVerticalGridLines()) {
+		while (scaledTimeRange*5.0 < getTargetNumberOfVerticalGridLines()) {
+			scaledTimeRange *= 10.0;
+			currentScalerPower += 1;
+		}
+	}
+	
+	else if (scaledTimeRange > getTargetNumberOfVerticalGridLines()) {
+		while (scaledTimeRange*0.5 > getTargetNumberOfVerticalGridLines()) {
+			scaledTimeRange *= 0.1;
+			currentScalerPower -= 1;
+		}
+	}
+	
+	double currentScaler = std::pow(10.0, (double)currentScalerPower);
+	
+	double scaledMinTime = getMinTime() * currentScaler;
+	double scaledMaxTime = getMaxTime() * currentScaler;
+	
+	double roundMinTime = std::floor(scaledMinTime);
+	double roundMaxTime = std::ceil(scaledMaxTime);
+	
+	for (double t = roundMinTime; t < roundMaxTime; t = t+1.0) {
+		ptns.push_back(t/currentScaler);
+	}
+	
+	return currentScalerPower;
+	
+}
+
+int VSCEnveloppeViewSetup::getValueGridPoints(std::list<double>& ptns) {
+	
+	int currentScalerPower = 0;
+	double scaledValueRange = getMaxValue() - getMinValue();
+	
+	if (scaledValueRange < getTargetNumberOfHorizontalGridLines()) {
+		while (scaledValueRange*5.0 < getTargetNumberOfHorizontalGridLines()) {
+			currentScalerPower += 1;
+			scaledValueRange *= 10.0;
+		}
+	}
+	
+	else if (scaledValueRange*0.5 > getTargetNumberOfHorizontalGridLines()) {
+		while (scaledValueRange > getTargetNumberOfHorizontalGridLines()) {
+			currentScalerPower -= 1;
+			scaledValueRange *= 0.1;
+		}
+	}
+	
+	double currentScaler = std::pow(10.0, (double)currentScalerPower);
+	
+	double scaledMinValue = getMinValue() * currentScaler;
+	double scaledMaxValue = getMaxValue() * currentScaler;
+	
+	double roundMinValue = std::floor(scaledMinValue);
+	double roundMaxValue = std::ceil(scaledMaxValue);
+	
+	for (double v = roundMinValue; v < roundMaxValue; v = v+1.0) {
+		ptns.push_back(v/currentScaler);
+	}
+	
+	return currentScalerPower;
+	
+}
+
+
+#pragma mark View range setters / getters
 
 /*
  *	View range setters / getters
@@ -165,6 +252,22 @@ float VSCEnveloppeViewSetup::getTargetHorizontalGridSpacing(void) const {
 
 void VSCEnveloppeViewSetup::setTargetHorizontalGridSpacing(float targetHorizontalGridSpacing) {
 	_targetHorizontalGridSpacing = targetHorizontalGridSpacing;
+}
+
+float VSCEnveloppeViewSetup::getTargetNumberOfVerticalGridLines(void) const {
+	return _targetNumberOfVerticalGridLines;
+}
+
+void VSCEnveloppeViewSetup::setTargetNumberOfVerticalGridLines(float targetNumberOfVerticalGridLines) {
+	_targetNumberOfVerticalGridLines = targetNumberOfVerticalGridLines
+}
+
+float VSCEnveloppeViewSetup::getTargetNumberOfHorizontalGridLines(void) const {
+	return _targetNumberOfHorizontalGridLines
+}
+
+void VSCEnveloppeViewSetup::setTargetNumberOfHorizontalGridLines(float targetNumberOfHorizontalGridLines) {
+	_targetNumberOfHorizontalGridLines = targetNumberOfHorizontalGridLines
 }
 
 

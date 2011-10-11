@@ -14,20 +14,10 @@
 @interface VSCEnveloppeEditorView : NSView {
 	
 	VSCEnveloppeView* mainEnveloppeView;
-	
-	/*
-     *  A view setup
-     */
-    VSCEnveloppeViewSetupPtr _enveloppeViewSetup;
 
 }
 
 @property (nonatomic, retain) IBOutlet VSCEnveloppeView* mainEnveloppeView;
 
-/* 
- *  Basic C++ setters / getters *
- */
--(VSCEnveloppeViewSetupPtr) getEnveloppeViewSetup;
--(void)setEnveloppeViewSetup:(VSCEnveloppeViewSetupPtr)enveloppe; 
 
 @end

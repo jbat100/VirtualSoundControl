@@ -21,17 +21,7 @@
     return self;
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
-    // Drawing code here.
-}
 
--(VSCEnveloppeViewSetupPtr) getEnveloppeViewSetup {
-    return _enveloppeViewSetup;
-}
 
--(void) setEnveloppeViewSetup:(VSCEnveloppeViewSetupPtr)enveloppeViewSetup {
-	assert(enveloppeViewSetup);
-    _enveloppeViewSetup = enveloppeViewSetup;
-}
 
 @end
