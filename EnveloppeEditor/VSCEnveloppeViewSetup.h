@@ -70,9 +70,6 @@ public:
 	 *	Grid setters / getters
 	 */
 	
-	int getTimeGridPoints(std::list<double>& ptns);
-	int getValueGridPoints(std::list<double>& ptns);
-	
 	bool gridIsShowing(void) const;
 	void showGrid(bool showGrid);
 	
@@ -100,6 +97,23 @@ public:
 	VSCColour getVerticalGridLineColor(void) const;
 	void setVerticalGridLineColor(VSCColour verticalGridLineColor);
 	
+	/*
+	 *	Grid point calculations
+	 */
+	
+	int getTimeGridPoints(std::list<double>& ptns);
+	int getValueGridPoints(std::list<double>& ptns);
+	int getTimeGridPointsAndPixels(std::list<std::pair<double,int>>& pps, int widthInPixels);
+	int getValueGridPointsAndPixels(std::list<std::pair<double,int>>& pps, int heightInPixels);
+	
+	/*
+	 *	Enveloppe point calculations
+	 */
+	
+	int pixelForTime(double t, int widthInPixels);
+	int pixelForValue(double t, int heightInPixels);
+	double timeForPixel(int pixel, int widthInPixels);
+	double valueForPixel(int pixel, int widthInPixels);
 	
 protected:
 	

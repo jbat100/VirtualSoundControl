@@ -47,6 +47,24 @@ void VSCEnveloppeViewSetup::setToDefault(void) {
 	
 }
 
+#pragma mark Encveloppe point calculations
+
+int VSCEnveloppeViewSetup::pixelForTime(double t, int widthInPixels) {
+	
+}
+
+int VSCEnveloppeViewSetup::pixelForValue(double t, int heightInPixels) {
+	
+}
+
+double VSCEnveloppeViewSetup::timeForPixel(int pixel, int widthInPixels) {
+	
+}
+
+double VSCEnveloppeViewSetup::valueForPixel(int pixel, int widthInPixels) {
+	
+}
+
 #pragma mark Grid point calculations
 
 int VSCEnveloppeViewSetup::getTimeGridPoints(std::list<double>& ptns) {
@@ -119,6 +137,19 @@ int VSCEnveloppeViewSetup::getValueGridPoints(std::list<double>& ptns) {
 	
 }
 
+int VSCEnveloppeViewSetup::getTimeGridPointsAndPixels(std::list<std::pair<double,int>>& pps, int pixelSize) {
+	
+	std::list<double> points;
+	getTimeGridPoints(points);
+	
+}
+
+int VSCEnveloppeViewSetup::getValueGridPointsAndPixels(std::list<std::pair<double,int>>& pps, int pixelSize) {
+	
+	std::list<double> points;
+	getValueGridPoints(points);
+	
+}
 
 #pragma mark View range setters / getters
 

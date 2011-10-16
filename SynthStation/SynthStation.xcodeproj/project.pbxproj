@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		105C47E3144B32760015AE8F /* VSCEnveloppe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47CB144B32760015AE8F /* VSCEnveloppe.cpp */; };
+		105C47E4144B32760015AE8F /* VSCEnveloppeCoordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47CD144B32760015AE8F /* VSCEnveloppeCoordinate.cpp */; };
+		105C47E5144B32760015AE8F /* VSCEnveloppePoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47CF144B32760015AE8F /* VSCEnveloppePoint.cpp */; };
+		105C47E6144B32760015AE8F /* VSCSTKEnveloppe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47D1144B32760015AE8F /* VSCSTKEnveloppe.cpp */; };
+		105C47E7144B32760015AE8F /* VSCSynthSourceElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47D5144B32760015AE8F /* VSCSynthSourceElement.cpp */; };
+		105C47E8144B32760015AE8F /* VSCSynthSourceFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47D7144B32760015AE8F /* VSCSynthSourceFile.cpp */; };
+		105C47E9144B32760015AE8F /* VSCSynthSourceFileLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47D9144B32760015AE8F /* VSCSynthSourceFileLoop.cpp */; };
+		105C47EA144B32760015AE8F /* VSCSynthSourceNoise.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47DB144B32760015AE8F /* VSCSynthSourceNoise.cpp */; };
+		105C47EB144B32760015AE8F /* VSCSynthSourceSaw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47DD144B32760015AE8F /* VSCSynthSourceSaw.cpp */; };
+		105C47EC144B32760015AE8F /* VSCSynthSourceSine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47DF144B32760015AE8F /* VSCSynthSourceSine.cpp */; };
+		105C47ED144B32760015AE8F /* VSCSynthSourceSquare.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47E1144B32760015AE8F /* VSCSynthSourceSquare.cpp */; };
 		1061AAC21430A3B500C29FBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1061AAC11430A3B500C29FBB /* Cocoa.framework */; };
 		1061AACC1430A3B500C29FBB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1061AACA1430A3B500C29FBB /* InfoPlist.strings */; };
 		1061AACE1430A3B600C29FBB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1061AACD1430A3B600C29FBB /* main.m */; };
@@ -19,11 +30,13 @@
 		1061AAEC1430A3B600C29FBB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1061AAEA1430A3B600C29FBB /* InfoPlist.strings */; };
 		1061AAEE1430A3B600C29FBB /* SynthStationTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 1061AAED1430A3B600C29FBB /* SynthStationTests.h */; };
 		1061AAF01430A3B600C29FBB /* SynthStationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1061AAEF1430A3B600C29FBB /* SynthStationTests.m */; };
-		1061AB041430A42100C29FBB /* VSCSTKEnveloppe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1061AAFB1430A42100C29FBB /* VSCSTKEnveloppe.cpp */; };
-		1061AB051430A42100C29FBB /* VSCEnveloppe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1061AAFE1430A42100C29FBB /* VSCEnveloppe.cpp */; };
-		1061AB061430A42100C29FBB /* VSCEnveloppeCoordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1061AB001430A42100C29FBB /* VSCEnveloppeCoordinate.cpp */; };
-		1061AB071430A42100C29FBB /* VSCEnveloppePoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1061AB021430A42100C29FBB /* VSCEnveloppePoint.cpp */; };
-		1061AB091430A4DA00C29FBB /* VSCSynthSourceElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1061AB081430A4DA00C29FBB /* VSCSynthSourceElement.cpp */; };
+		107DA835144A488900D5ACA9 /* FileLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107DA833144A488900D5ACA9 /* FileLoop.cpp */; };
+		107DA836144A488900D5ACA9 /* FileWvIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107DA834144A488900D5ACA9 /* FileWvIn.cpp */; };
+		107DA83A144A48D100D5ACA9 /* FileRead.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107DA837144A48D100D5ACA9 /* FileRead.cpp */; };
+		107DA83B144A48D100D5ACA9 /* FileWrite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107DA838144A48D100D5ACA9 /* FileWrite.cpp */; };
+		107DA83C144A48D100D5ACA9 /* FileWvOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107DA839144A48D100D5ACA9 /* FileWvOut.cpp */; };
+		107DA84B144A495000D5ACA9 /* RtWvIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107DA849144A495000D5ACA9 /* RtWvIn.cpp */; };
+		107DA84C144A495000D5ACA9 /* RtWvOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107DA84A144A495000D5ACA9 /* RtWvOut.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +50,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		105C47CB144B32760015AE8F /* VSCEnveloppe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppe.cpp; sourceTree = "<group>"; };
+		105C47CC144B32760015AE8F /* VSCEnveloppe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppe.h; sourceTree = "<group>"; };
+		105C47CD144B32760015AE8F /* VSCEnveloppeCoordinate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppeCoordinate.cpp; sourceTree = "<group>"; };
+		105C47CE144B32760015AE8F /* VSCEnveloppeCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeCoordinate.h; sourceTree = "<group>"; };
+		105C47CF144B32760015AE8F /* VSCEnveloppePoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppePoint.cpp; sourceTree = "<group>"; };
+		105C47D0144B32760015AE8F /* VSCEnveloppePoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppePoint.h; sourceTree = "<group>"; };
+		105C47D1144B32760015AE8F /* VSCSTKEnveloppe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSTKEnveloppe.cpp; sourceTree = "<group>"; };
+		105C47D2144B32760015AE8F /* VSCSTKEnveloppe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSTKEnveloppe.h; sourceTree = "<group>"; };
+		105C47D5144B32760015AE8F /* VSCSynthSourceElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSynthSourceElement.cpp; sourceTree = "<group>"; };
+		105C47D6144B32760015AE8F /* VSCSynthSourceElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthSourceElement.h; sourceTree = "<group>"; };
+		105C47D7144B32760015AE8F /* VSCSynthSourceFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSynthSourceFile.cpp; sourceTree = "<group>"; };
+		105C47D8144B32760015AE8F /* VSCSynthSourceFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthSourceFile.h; sourceTree = "<group>"; };
+		105C47D9144B32760015AE8F /* VSCSynthSourceFileLoop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSynthSourceFileLoop.cpp; sourceTree = "<group>"; };
+		105C47DA144B32760015AE8F /* VSCSynthSourceFileLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthSourceFileLoop.h; sourceTree = "<group>"; };
+		105C47DB144B32760015AE8F /* VSCSynthSourceNoise.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSynthSourceNoise.cpp; sourceTree = "<group>"; };
+		105C47DC144B32760015AE8F /* VSCSynthSourceNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthSourceNoise.h; sourceTree = "<group>"; };
+		105C47DD144B32760015AE8F /* VSCSynthSourceSaw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSynthSourceSaw.cpp; sourceTree = "<group>"; };
+		105C47DE144B32760015AE8F /* VSCSynthSourceSaw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthSourceSaw.h; sourceTree = "<group>"; };
+		105C47DF144B32760015AE8F /* VSCSynthSourceSine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSynthSourceSine.cpp; sourceTree = "<group>"; };
+		105C47E0144B32760015AE8F /* VSCSynthSourceSine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthSourceSine.h; sourceTree = "<group>"; };
+		105C47E1144B32760015AE8F /* VSCSynthSourceSquare.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSynthSourceSquare.cpp; sourceTree = "<group>"; };
+		105C47E2144B32760015AE8F /* VSCSynthSourceSquare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthSourceSquare.h; sourceTree = "<group>"; };
 		1061AABD1430A3B500C29FBB /* SynthStation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SynthStation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1061AAC11430A3B500C29FBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		1061AAC41430A3B500C29FBB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -57,16 +92,38 @@
 		1061AAEB1430A3B600C29FBB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1061AAED1430A3B600C29FBB /* SynthStationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SynthStationTests.h; sourceTree = "<group>"; };
 		1061AAEF1430A3B600C29FBB /* SynthStationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SynthStationTests.m; sourceTree = "<group>"; };
-		1061AAFB1430A42100C29FBB /* VSCSTKEnveloppe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSTKEnveloppe.cpp; sourceTree = "<group>"; };
-		1061AAFC1430A42100C29FBB /* VSCSTKEnveloppe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSTKEnveloppe.h; sourceTree = "<group>"; };
-		1061AAFE1430A42100C29FBB /* VSCEnveloppe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppe.cpp; sourceTree = "<group>"; };
-		1061AAFF1430A42100C29FBB /* VSCEnveloppe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppe.h; sourceTree = "<group>"; };
-		1061AB001430A42100C29FBB /* VSCEnveloppeCoordinate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppeCoordinate.cpp; sourceTree = "<group>"; };
-		1061AB011430A42100C29FBB /* VSCEnveloppeCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeCoordinate.h; sourceTree = "<group>"; };
-		1061AB021430A42100C29FBB /* VSCEnveloppePoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppePoint.cpp; sourceTree = "<group>"; };
-		1061AB031430A42100C29FBB /* VSCEnveloppePoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppePoint.h; sourceTree = "<group>"; };
-		1061AB081430A4DA00C29FBB /* VSCSynthSourceElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSynthSourceElement.cpp; sourceTree = "<group>"; };
-		1061AB0A1430A4EF00C29FBB /* VSCSynthSourceElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthSourceElement.h; sourceTree = "<group>"; };
+		107DA831144A487200D5ACA9 /* FileLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileLoop.h; sourceTree = STK_INCLUDE; };
+		107DA832144A487200D5ACA9 /* FileWvIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileWvIn.h; sourceTree = STK_INCLUDE; };
+		107DA833144A488900D5ACA9 /* FileLoop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileLoop.cpp; sourceTree = STK_SOURCE; };
+		107DA834144A488900D5ACA9 /* FileWvIn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileWvIn.cpp; sourceTree = STK_SOURCE; };
+		107DA837144A48D100D5ACA9 /* FileRead.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileRead.cpp; sourceTree = STK_SOURCE; };
+		107DA838144A48D100D5ACA9 /* FileWrite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileWrite.cpp; sourceTree = STK_SOURCE; };
+		107DA839144A48D100D5ACA9 /* FileWvOut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileWvOut.cpp; sourceTree = STK_SOURCE; };
+		107DA83D144A48E300D5ACA9 /* FileRead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileRead.h; sourceTree = STK_INCLUDE; };
+		107DA83E144A48E300D5ACA9 /* FileWrite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileWrite.h; sourceTree = STK_INCLUDE; };
+		107DA83F144A48E300D5ACA9 /* FileWvOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileWvOut.h; sourceTree = STK_INCLUDE; };
+		107DA847144A493000D5ACA9 /* WvIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WvIn.h; sourceTree = STK_INCLUDE; };
+		107DA848144A493000D5ACA9 /* WvOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WvOut.h; sourceTree = STK_INCLUDE; };
+		107DA849144A495000D5ACA9 /* RtWvIn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RtWvIn.cpp; sourceTree = STK_SOURCE; };
+		107DA84A144A495000D5ACA9 /* RtWvOut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RtWvOut.cpp; sourceTree = STK_SOURCE; };
+		107DA84D144A496700D5ACA9 /* RtWvIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RtWvIn.h; sourceTree = STK_INCLUDE; };
+		107DA84E144A496700D5ACA9 /* RtWvOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RtWvOut.h; sourceTree = STK_INCLUDE; };
+		1082959B1449A54400B2DADA /* Stk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stk.h; sourceTree = STK_INCLUDE; };
+		1082959C1449A54400B2DADA /* Generator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Generator.h; sourceTree = STK_INCLUDE; };
+		1082959D1449A54400B2DADA /* SineWave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SineWave.h; sourceTree = STK_INCLUDE; };
+		1082959E1449A54400B2DADA /* ADSR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADSR.h; sourceTree = STK_INCLUDE; };
+		1082959F1449A54F00B2DADA /* SineWave.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SineWave.cpp; sourceTree = STK_SOURCE; };
+		108295A01449A54F00B2DADA /* ADSR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ADSR.cpp; sourceTree = STK_SOURCE; };
+		108295B01449CD3F00B2DADA /* Envelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Envelope.h; sourceTree = STK_INCLUDE; };
+		108295B11449CD3F00B2DADA /* Noise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Noise.h; sourceTree = STK_INCLUDE; };
+		108295B21449CD3F00B2DADA /* SingWave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingWave.h; sourceTree = STK_INCLUDE; };
+		108295B31449CD7F00B2DADA /* Envelope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Envelope.cpp; sourceTree = STK_SOURCE; };
+		108295B41449CD7F00B2DADA /* Noise.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Noise.cpp; sourceTree = STK_SOURCE; };
+		108295B51449CD7F00B2DADA /* SingWave.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SingWave.cpp; sourceTree = STK_SOURCE; };
+		108295C81449CE0800B2DADA /* BlitSaw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlitSaw.cpp; sourceTree = STK_SOURCE; };
+		108295C91449CE0800B2DADA /* BlitSquare.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlitSquare.cpp; sourceTree = STK_SOURCE; };
+		108295CC1449CE1A00B2DADA /* BlitSaw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlitSaw.h; sourceTree = STK_INCLUDE; };
+		108295CD1449CE1A00B2DADA /* BlitSquare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlitSquare.h; sourceTree = STK_INCLUDE; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,9 +147,56 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		105C47CA144B32760015AE8F /* Enveloppe */ = {
+			isa = PBXGroup;
+			children = (
+				105C47CB144B32760015AE8F /* VSCEnveloppe.cpp */,
+				105C47CC144B32760015AE8F /* VSCEnveloppe.h */,
+				105C47CD144B32760015AE8F /* VSCEnveloppeCoordinate.cpp */,
+				105C47CE144B32760015AE8F /* VSCEnveloppeCoordinate.h */,
+				105C47CF144B32760015AE8F /* VSCEnveloppePoint.cpp */,
+				105C47D0144B32760015AE8F /* VSCEnveloppePoint.h */,
+				105C47D1144B32760015AE8F /* VSCSTKEnveloppe.cpp */,
+				105C47D2144B32760015AE8F /* VSCSTKEnveloppe.h */,
+			);
+			name = Enveloppe;
+			path = ../Sound/Enveloppe;
+			sourceTree = SOURCE_ROOT;
+		};
+		105C47D3144B32760015AE8F /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Filter;
+			path = ../Sound/Filter;
+			sourceTree = SOURCE_ROOT;
+		};
+		105C47D4144B32760015AE8F /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				105C47D5144B32760015AE8F /* VSCSynthSourceElement.cpp */,
+				105C47D6144B32760015AE8F /* VSCSynthSourceElement.h */,
+				105C47D7144B32760015AE8F /* VSCSynthSourceFile.cpp */,
+				105C47D8144B32760015AE8F /* VSCSynthSourceFile.h */,
+				105C47D9144B32760015AE8F /* VSCSynthSourceFileLoop.cpp */,
+				105C47DA144B32760015AE8F /* VSCSynthSourceFileLoop.h */,
+				105C47DB144B32760015AE8F /* VSCSynthSourceNoise.cpp */,
+				105C47DC144B32760015AE8F /* VSCSynthSourceNoise.h */,
+				105C47DD144B32760015AE8F /* VSCSynthSourceSaw.cpp */,
+				105C47DE144B32760015AE8F /* VSCSynthSourceSaw.h */,
+				105C47DF144B32760015AE8F /* VSCSynthSourceSine.cpp */,
+				105C47E0144B32760015AE8F /* VSCSynthSourceSine.h */,
+				105C47E1144B32760015AE8F /* VSCSynthSourceSquare.cpp */,
+				105C47E2144B32760015AE8F /* VSCSynthSourceSquare.h */,
+			);
+			name = Source;
+			path = ../Sound/Source;
+			sourceTree = SOURCE_ROOT;
+		};
 		1061AAB21430A3B500C29FBB = {
 			isa = PBXGroup;
 			children = (
+				108295901449A4D400B2DADA /* STK Reference Source */,
 				1061AAF91430A3ED00C29FBB /* Sound */,
 				1061AAC71430A3B500C29FBB /* SynthStation */,
 				1061AAE71430A3B600C29FBB /* SynthStationTests */,
@@ -176,36 +280,50 @@
 		1061AAF91430A3ED00C29FBB /* Sound */ = {
 			isa = PBXGroup;
 			children = (
-				1061AAFA1430A42100C29FBB /* STK */,
-				1061AAFD1430A42100C29FBB /* VSC */,
+				105C47CA144B32760015AE8F /* Enveloppe */,
+				105C47D3144B32760015AE8F /* Filter */,
+				105C47D4144B32760015AE8F /* Source */,
 			);
 			name = Sound;
 			sourceTree = "<group>";
 		};
-		1061AAFA1430A42100C29FBB /* STK */ = {
+		108295901449A4D400B2DADA /* STK Reference Source */ = {
 			isa = PBXGroup;
 			children = (
-				1061AAFB1430A42100C29FBB /* VSCSTKEnveloppe.cpp */,
-				1061AAFC1430A42100C29FBB /* VSCSTKEnveloppe.h */,
+				1082959B1449A54400B2DADA /* Stk.h */,
+				1082959C1449A54400B2DADA /* Generator.h */,
+				108295CC1449CE1A00B2DADA /* BlitSaw.h */,
+				108295C81449CE0800B2DADA /* BlitSaw.cpp */,
+				108295CD1449CE1A00B2DADA /* BlitSquare.h */,
+				108295C91449CE0800B2DADA /* BlitSquare.cpp */,
+				108295B01449CD3F00B2DADA /* Envelope.h */,
+				108295B31449CD7F00B2DADA /* Envelope.cpp */,
+				107DA83D144A48E300D5ACA9 /* FileRead.h */,
+				107DA837144A48D100D5ACA9 /* FileRead.cpp */,
+				107DA83E144A48E300D5ACA9 /* FileWrite.h */,
+				107DA838144A48D100D5ACA9 /* FileWrite.cpp */,
+				107DA832144A487200D5ACA9 /* FileWvIn.h */,
+				107DA834144A488900D5ACA9 /* FileWvIn.cpp */,
+				107DA83F144A48E300D5ACA9 /* FileWvOut.h */,
+				107DA839144A48D100D5ACA9 /* FileWvOut.cpp */,
+				107DA831144A487200D5ACA9 /* FileLoop.h */,
+				107DA833144A488900D5ACA9 /* FileLoop.cpp */,
+				108295B11449CD3F00B2DADA /* Noise.h */,
+				108295B41449CD7F00B2DADA /* Noise.cpp */,
+				108295B21449CD3F00B2DADA /* SingWave.h */,
+				108295B51449CD7F00B2DADA /* SingWave.cpp */,
+				1082959D1449A54400B2DADA /* SineWave.h */,
+				1082959F1449A54F00B2DADA /* SineWave.cpp */,
+				1082959E1449A54400B2DADA /* ADSR.h */,
+				108295A01449A54F00B2DADA /* ADSR.cpp */,
+				107DA847144A493000D5ACA9 /* WvIn.h */,
+				107DA848144A493000D5ACA9 /* WvOut.h */,
+				107DA84D144A496700D5ACA9 /* RtWvIn.h */,
+				107DA849144A495000D5ACA9 /* RtWvIn.cpp */,
+				107DA84E144A496700D5ACA9 /* RtWvOut.h */,
+				107DA84A144A495000D5ACA9 /* RtWvOut.cpp */,
 			);
-			name = STK;
-			path = ../Sound/STK;
-			sourceTree = "<group>";
-		};
-		1061AAFD1430A42100C29FBB /* VSC */ = {
-			isa = PBXGroup;
-			children = (
-				1061AAFE1430A42100C29FBB /* VSCEnveloppe.cpp */,
-				1061AAFF1430A42100C29FBB /* VSCEnveloppe.h */,
-				1061AB001430A42100C29FBB /* VSCEnveloppeCoordinate.cpp */,
-				1061AB011430A42100C29FBB /* VSCEnveloppeCoordinate.h */,
-				1061AB021430A42100C29FBB /* VSCEnveloppePoint.cpp */,
-				1061AB031430A42100C29FBB /* VSCEnveloppePoint.h */,
-				1061AB081430A4DA00C29FBB /* VSCSynthSourceElement.cpp */,
-				1061AB0A1430A4EF00C29FBB /* VSCSynthSourceElement.h */,
-			);
-			name = VSC;
-			path = ../Sound/VSC;
+			name = "STK Reference Source";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -319,11 +437,24 @@
 			files = (
 				1061AACE1430A3B600C29FBB /* main.m in Sources */,
 				1061AAD51430A3B600C29FBB /* MyDocument.m in Sources */,
-				1061AB041430A42100C29FBB /* VSCSTKEnveloppe.cpp in Sources */,
-				1061AB051430A42100C29FBB /* VSCEnveloppe.cpp in Sources */,
-				1061AB061430A42100C29FBB /* VSCEnveloppeCoordinate.cpp in Sources */,
-				1061AB071430A42100C29FBB /* VSCEnveloppePoint.cpp in Sources */,
-				1061AB091430A4DA00C29FBB /* VSCSynthSourceElement.cpp in Sources */,
+				107DA835144A488900D5ACA9 /* FileLoop.cpp in Sources */,
+				107DA836144A488900D5ACA9 /* FileWvIn.cpp in Sources */,
+				107DA83A144A48D100D5ACA9 /* FileRead.cpp in Sources */,
+				107DA83B144A48D100D5ACA9 /* FileWrite.cpp in Sources */,
+				107DA83C144A48D100D5ACA9 /* FileWvOut.cpp in Sources */,
+				107DA84B144A495000D5ACA9 /* RtWvIn.cpp in Sources */,
+				107DA84C144A495000D5ACA9 /* RtWvOut.cpp in Sources */,
+				105C47E3144B32760015AE8F /* VSCEnveloppe.cpp in Sources */,
+				105C47E4144B32760015AE8F /* VSCEnveloppeCoordinate.cpp in Sources */,
+				105C47E5144B32760015AE8F /* VSCEnveloppePoint.cpp in Sources */,
+				105C47E6144B32760015AE8F /* VSCSTKEnveloppe.cpp in Sources */,
+				105C47E7144B32760015AE8F /* VSCSynthSourceElement.cpp in Sources */,
+				105C47E8144B32760015AE8F /* VSCSynthSourceFile.cpp in Sources */,
+				105C47E9144B32760015AE8F /* VSCSynthSourceFileLoop.cpp in Sources */,
+				105C47EA144B32760015AE8F /* VSCSynthSourceNoise.cpp in Sources */,
+				105C47EB144B32760015AE8F /* VSCSynthSourceSaw.cpp in Sources */,
+				105C47EC144B32760015AE8F /* VSCSynthSourceSine.cpp in Sources */,
+				105C47ED144B32760015AE8F /* VSCSynthSourceSquare.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,6 +634,7 @@
 				1061AAF51430A3B600C29FBB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1061AAF61430A3B600C29FBB /* Build configuration list for PBXNativeTarget "SynthStationTests" */ = {
 			isa = XCConfigurationList;
@@ -511,6 +643,7 @@
 				1061AAF81430A3B600C29FBB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

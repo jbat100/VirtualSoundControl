@@ -54,7 +54,20 @@
 	NSGraphicsContext * nsGraphicsContext = [NSGraphicsContext currentContext]; 
 	CGContextRef ctx = (CGContextRef) [nsGraphicsContext graphicsPort];
 	
+	/*
+	 *	Draw background
+	 */
 	drawRectFill(ctx, self.bounds, CGColorCreateFromRGBNSColor([NSColor lightGrayColor]));
+	
+	/*
+	 *	Draw enveloppe
+	 */
+	
+	
+	
+	/*
+	 *	Draw enveloppe
+	 */
 	
 	CGFloat radius = (CGFloat)(_enveloppeViewSetup->getControlPointRadius());
 	CGColorRef cgSelectedColourRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getControlPointSelectedColour());

@@ -50,6 +50,12 @@ typedef enum _VSCEnveloppeViewMouseAction {
      */
     VSCEnveloppeViewSetupPtr _enveloppeViewSetup;
 	
+	/*
+     *  Keep track of the current grid points and their corresponding pixel
+	 *  so that they do not need to be calculated on every draw, need updating
+	 *	when frame/bounds change or view range/zoom changes
+     */
+	
     /*
      *  Keeps track of the currently selected points for group operations (move for example)
      */
