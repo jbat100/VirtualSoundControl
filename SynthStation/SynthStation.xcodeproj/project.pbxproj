@@ -18,6 +18,9 @@
 		105C47EB144B32760015AE8F /* VSCSynthSourceSaw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47DD144B32760015AE8F /* VSCSynthSourceSaw.cpp */; };
 		105C47EC144B32760015AE8F /* VSCSynthSourceSine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47DF144B32760015AE8F /* VSCSynthSourceSine.cpp */; };
 		105C47ED144B32760015AE8F /* VSCSynthSourceSquare.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47E1144B32760015AE8F /* VSCSynthSourceSquare.cpp */; };
+		105C480E144B348D0015AE8F /* VSCFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C480D144B348D0015AE8F /* VSCFilter.cpp */; };
+		105C4812144B3D1A0015AE8F /* VSCFilterBiQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C4811144B3D1A0015AE8F /* VSCFilterBiQuad.cpp */; };
+		105C4834144B45C00015AE8F /* VSCSTKFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C4833144B45C00015AE8F /* VSCSTKFilter.cpp */; };
 		1061AAC21430A3B500C29FBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1061AAC11430A3B500C29FBB /* Cocoa.framework */; };
 		1061AACC1430A3B500C29FBB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1061AACA1430A3B500C29FBB /* InfoPlist.strings */; };
 		1061AACE1430A3B600C29FBB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1061AACD1430A3B600C29FBB /* main.m */; };
@@ -30,13 +33,6 @@
 		1061AAEC1430A3B600C29FBB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1061AAEA1430A3B600C29FBB /* InfoPlist.strings */; };
 		1061AAEE1430A3B600C29FBB /* SynthStationTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 1061AAED1430A3B600C29FBB /* SynthStationTests.h */; };
 		1061AAF01430A3B600C29FBB /* SynthStationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1061AAEF1430A3B600C29FBB /* SynthStationTests.m */; };
-		107DA835144A488900D5ACA9 /* FileLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107DA833144A488900D5ACA9 /* FileLoop.cpp */; };
-		107DA836144A488900D5ACA9 /* FileWvIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107DA834144A488900D5ACA9 /* FileWvIn.cpp */; };
-		107DA83A144A48D100D5ACA9 /* FileRead.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107DA837144A48D100D5ACA9 /* FileRead.cpp */; };
-		107DA83B144A48D100D5ACA9 /* FileWrite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107DA838144A48D100D5ACA9 /* FileWrite.cpp */; };
-		107DA83C144A48D100D5ACA9 /* FileWvOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107DA839144A48D100D5ACA9 /* FileWvOut.cpp */; };
-		107DA84B144A495000D5ACA9 /* RtWvIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107DA849144A495000D5ACA9 /* RtWvIn.cpp */; };
-		107DA84C144A495000D5ACA9 /* RtWvOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107DA84A144A495000D5ACA9 /* RtWvOut.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +68,15 @@
 		105C47E0144B32760015AE8F /* VSCSynthSourceSine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthSourceSine.h; sourceTree = "<group>"; };
 		105C47E1144B32760015AE8F /* VSCSynthSourceSquare.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSynthSourceSquare.cpp; sourceTree = "<group>"; };
 		105C47E2144B32760015AE8F /* VSCSynthSourceSquare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthSourceSquare.h; sourceTree = "<group>"; };
+		105C480C144B348D0015AE8F /* VSCFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCFilter.h; sourceTree = "<group>"; };
+		105C480D144B348D0015AE8F /* VSCFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCFilter.cpp; sourceTree = "<group>"; };
+		105C4810144B3D1A0015AE8F /* VSCFilterBiQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCFilterBiQuad.h; sourceTree = "<group>"; };
+		105C4811144B3D1A0015AE8F /* VSCFilterBiQuad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCFilterBiQuad.cpp; sourceTree = "<group>"; };
+		105C4813144B3F810015AE8F /* BiQuad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BiQuad.cpp; sourceTree = STK_SOURCE; };
+		105C4815144B3FA60015AE8F /* BiQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BiQuad.h; sourceTree = STK_INCLUDE; };
+		105C4816144B3FA60015AE8F /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = STK_INCLUDE; };
+		105C4832144B45C00015AE8F /* VSCSTKFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSTKFilter.h; sourceTree = "<group>"; };
+		105C4833144B45C00015AE8F /* VSCSTKFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSTKFilter.cpp; sourceTree = "<group>"; };
 		1061AABD1430A3B500C29FBB /* SynthStation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SynthStation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1061AAC11430A3B500C29FBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		1061AAC41430A3B500C29FBB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -166,6 +171,12 @@
 		105C47D3144B32760015AE8F /* Filter */ = {
 			isa = PBXGroup;
 			children = (
+				105C480C144B348D0015AE8F /* VSCFilter.h */,
+				105C480D144B348D0015AE8F /* VSCFilter.cpp */,
+				105C4832144B45C00015AE8F /* VSCSTKFilter.h */,
+				105C4833144B45C00015AE8F /* VSCSTKFilter.cpp */,
+				105C4810144B3D1A0015AE8F /* VSCFilterBiQuad.h */,
+				105C4811144B3D1A0015AE8F /* VSCFilterBiQuad.cpp */,
 			);
 			name = Filter;
 			path = ../Sound/Filter;
@@ -291,6 +302,8 @@
 			isa = PBXGroup;
 			children = (
 				1082959B1449A54400B2DADA /* Stk.h */,
+				105C4815144B3FA60015AE8F /* BiQuad.h */,
+				105C4813144B3F810015AE8F /* BiQuad.cpp */,
 				1082959C1449A54400B2DADA /* Generator.h */,
 				108295CC1449CE1A00B2DADA /* BlitSaw.h */,
 				108295C81449CE0800B2DADA /* BlitSaw.cpp */,
@@ -308,6 +321,7 @@
 				107DA839144A48D100D5ACA9 /* FileWvOut.cpp */,
 				107DA831144A487200D5ACA9 /* FileLoop.h */,
 				107DA833144A488900D5ACA9 /* FileLoop.cpp */,
+				105C4816144B3FA60015AE8F /* Filter.h */,
 				108295B11449CD3F00B2DADA /* Noise.h */,
 				108295B41449CD7F00B2DADA /* Noise.cpp */,
 				108295B21449CD3F00B2DADA /* SingWave.h */,
@@ -437,13 +451,6 @@
 			files = (
 				1061AACE1430A3B600C29FBB /* main.m in Sources */,
 				1061AAD51430A3B600C29FBB /* MyDocument.m in Sources */,
-				107DA835144A488900D5ACA9 /* FileLoop.cpp in Sources */,
-				107DA836144A488900D5ACA9 /* FileWvIn.cpp in Sources */,
-				107DA83A144A48D100D5ACA9 /* FileRead.cpp in Sources */,
-				107DA83B144A48D100D5ACA9 /* FileWrite.cpp in Sources */,
-				107DA83C144A48D100D5ACA9 /* FileWvOut.cpp in Sources */,
-				107DA84B144A495000D5ACA9 /* RtWvIn.cpp in Sources */,
-				107DA84C144A495000D5ACA9 /* RtWvOut.cpp in Sources */,
 				105C47E3144B32760015AE8F /* VSCEnveloppe.cpp in Sources */,
 				105C47E4144B32760015AE8F /* VSCEnveloppeCoordinate.cpp in Sources */,
 				105C47E5144B32760015AE8F /* VSCEnveloppePoint.cpp in Sources */,
@@ -455,6 +462,9 @@
 				105C47EB144B32760015AE8F /* VSCSynthSourceSaw.cpp in Sources */,
 				105C47EC144B32760015AE8F /* VSCSynthSourceSine.cpp in Sources */,
 				105C47ED144B32760015AE8F /* VSCSynthSourceSquare.cpp in Sources */,
+				105C480E144B348D0015AE8F /* VSCFilter.cpp in Sources */,
+				105C4812144B3D1A0015AE8F /* VSCFilterBiQuad.cpp in Sources */,
+				105C4834144B45C00015AE8F /* VSCSTKFilter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
