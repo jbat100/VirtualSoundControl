@@ -385,6 +385,7 @@
 		1061AAB41430A3B500C29FBB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = NXP;
 			};
 			buildConfigurationList = 1061AAB71430A3B500C29FBB /* Build configuration list for PBXProject "SynthStation" */;
