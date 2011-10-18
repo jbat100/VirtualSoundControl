@@ -26,8 +26,6 @@ class VSCFilter {
 	
 public:
 	
-	virtual void updateFrequencyPoints(void) = 0;
-	
 	ConstFreqPntIter getFrequencyPointBeginConstIterator(void) const;
 	ConstFreqPntIter getFrequencyPointEndConstIterator(void) const;
 	
@@ -38,6 +36,7 @@ protected:
 	
 	bool _bypass;
 	std::list<VSCFrequencyPoint> _frequencyPoints;
+	virtual void updateFrequencyPoints(void) = 0;
 	
 };
 

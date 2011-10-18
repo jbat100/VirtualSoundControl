@@ -9,3 +9,16 @@
 
 #include "VSCSTKFilter.h"
 
+
+VSCFrequencyPoint calculateFrequencyPoint(std::vector<StkFloat>& b, std::vector<StkFloat> a, 
+										  StkFloat samplingFrequency, StkFloat pointFrequency) {
+	
+	/*
+	 *	http://www.bores.com/courses/intro/iir/5_resp.htm
+	 */
+	
+	double numerator = 0.0;
+	
+
+	
+}
