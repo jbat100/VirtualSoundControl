@@ -8,8 +8,21 @@
  */
 
 #include "VSCFilterBiQuad.h"
-
 #include <cmath>
+
+VSCFilterBiQuad::VSCFilterBiQuad(void) {
+	_filterType = FilterTypeLowPass;
+	setParameters(100.0, 0.0, 1.0);
+}
+
+VSCFilterBiQuad::VSCFilterBiQuad(VSCFilterBiQuad::FilterType t, double f = 100.0, double dB = 0.0, double q = 1.0) {
+	
+	if (!t)
+		t = FilterTypeLowPass;
+	
+	_filterType = t;
+	setParameters(f, dB, q);
+}
 
 VSCFilterBiQuad::FilterType VSCFilterBiQuad::getFilterType(void) {
 	return _filterType;
@@ -121,12 +134,12 @@ void VSCFilterBiQuad::setToLowPassFilter(double freq, double dBgain, double Q, b
 	double w0 = 2.0 * M_PI * (freq*Stk::sampleRate());
 	double alpha = std::sin(w0) / (2.0*Q);
 	
-	StkFloat b0 =  (1 - std::cos(w0)) / 2.0;
-	StkFloat b1 =   1 - std::cos(w0);
-	StkFloat b2 =  (1 - std::cos(w0)) / 2.0;
-	StkFloat a0 =   1 + alpha;
-	StkFloat a1 =  -2 * std::cos(w0);
-	StkFloat a2 =   1 - alpha;
+	StkFloat b0 =  (1.0 - std::cos(w0)) / 2.0;
+	StkFloat b1 =   1.0 - std::cos(w0);
+	StkFloat b2 =  (1.0 - std::cos(w0)) / 2.0;
+	StkFloat a0 =   1.0 + alpha;
+	StkFloat a1 =  -2.0 * std::cos(w0);
+	StkFloat a2 =   1.0 - alpha;
 	
 	setCoefficients(b0, b1, b2, a0, a1, a2);
 	
@@ -151,6 +164,15 @@ void VSCFilterBiQuad::setToHighPassFilter(double freq, double dBgain, double Q, 
 	double w0 = 2.0 * M_PI * (freq*Stk::sampleRate());
 	double alpha = std::sin(w0) / (2.0*Q);
 	
+	StkFloat b0 =  (1.0 + std::cos(w0)) / 2.0;
+	StkFloat b1 = -(1.0 + std::cos(w0));
+	StkFloat b2 =  (1.0 + std::cos(w0)) / 2.0;
+	StkFloat a0 =   1.0 + alpha;
+	StkFloat a1 =  -2.0 * std::cos(w0);
+	StkFloat a2 =   1.0 - alpha;
+	
+	setCoefficients(b0, b1, b2, a0, a1, a2);
+	
 }
 
 /*------------------------------------------------------------------------------
@@ -171,6 +193,15 @@ void VSCFilterBiQuad::setToConstantSkirtGainBandPassFilter(double freq, double d
 	double A = std::sqrt(std::pow(10,(dBgain/20)));
 	double w0 = 2.0 * M_PI * (freq*Stk::sampleRate());
 	double alpha = std::sin(w0) / (2.0*Q);
+	
+	StkFloat b0 =   std::sin(w0) / 2.0;  
+	StkFloat b1 =   0.0;
+	StkFloat b2 =  -std::sin(w0) / 2.0; 
+	StkFloat a0 =   1.0 + alpha;
+	StkFloat a1 =  -2.0 * std::cos(w0);
+	StkFloat a2 =   1.0 - alpha;
+	
+	setCoefficients(b0, b1, b2, a0, a1, a2);
 	
 }
 
@@ -193,6 +224,15 @@ void VSCFilterBiQuad::setToConstantPeakGainBandPassFilter(double freq, double dB
 	double w0 = 2.0 * M_PI * (freq*Stk::sampleRate());
 	double alpha = std::sin(w0) / (2.0*Q);
 	
+	StkFloat b0 =   alpha;
+	StkFloat b1 =   0.0;
+	StkFloat b2 =  -alpha;
+	StkFloat a0 =   1.0 + alpha;
+	StkFloat a1 =  -2.0 * std::cos(w0);
+	StkFloat a2 =   1.0 - alpha;
+	
+	setCoefficients(b0, b1, b2, a0, a1, a2);
+	
 }
 
 /*------------------------------------------------------------------------------
@@ -213,6 +253,15 @@ void VSCFilterBiQuad::setToPeakingEQFilter(double freq, double Q, double dBgain,
 	double A = std::pow(10,(dBgain/40));
 	double w0 = 2.0 * M_PI * (freq*Stk::sampleRate());
 	double alpha = std::sin(w0) / (2.0*Q);
+	
+	StkFloat b0 =   1.0 + (alpha*A);
+	StkFloat b1 =  -2.0 * std::cos(w0)
+	StkFloat b2 =   1.0 - (alpha*A);
+	StkFloat a0 =   1.0 + (alpha/A);
+	StkFloat a1 =  -2.0 * std::cos(w0)
+	StkFloat a2 =   1.0 - (alpha/A);
+	
+	setCoefficients(b0, b1, b2, a0, a1, a2);
 	
 }
 
@@ -235,6 +284,15 @@ void VSCFilterBiQuad::setToHighShelfFilter(double freq, double dbGain, double Q,
 	double w0 = 2.0 * M_PI * (freq*Stk::sampleRate());
 	double alpha = std::sin(w0) / (2.0*Q);
 	
+	StkFloat b0 = A * ((A+1.0) + ((A-1.0)*std::cos(w0)) + (2.0*std::sqrt(A)*alpha));
+	StkFloat b1 = -2.0 * A * ((A-1.0) + ((A+1.0)*std::cos(w0)));
+	StkFloat b2 = A * ((A+1.0) + ((A-1.0)*std::cos(w0)) - (2.0*std::sqrt(A)*alpha));
+	StkFloat a0 = (A+1.0) - ((A-1.0)*std::cos(w0)) + (2.0*std::sqrt(A)*alpha);
+	StkFloat a1 = 2.0 * ((A-1.0) - ((A+1.0)*std::cos(w0)));
+	StkFloat a2 = (A+1.0) - ((A-1.0)*std::cos(w0)) - (2.0*std::sqrt(A)*alpha);
+	
+	setCoefficients(b0, b1, b2, a0, a1, a2);
+	
 }
 
 /*------------------------------------------------------------------------------
@@ -255,6 +313,15 @@ void VSCFilterBiQuad::setToLowShelfFilter(double freq, double dbGain, double Q, 
 	double A = std::pow(10,(dBgain/40));
 	double w0 = 2.0 * M_PI * (freq*Stk::sampleRate());
 	double alpha = std::sin(w0) / (2.0*Q);
+	
+	StkFloat b0 = A * ((A+1.0) + ((A-1.0)*std::cos(w0)) + (2.0*std::sqrt(A)*alpha));
+	StkFloat b1 = 2.0 * A * ((A-1.0) + ((A+1.0)*std::cos(w0)));
+	StkFloat b2 = A * ((A+1.0) + ((A-1.0)*std::cos(w0)) - (2.0*std::sqrt(A)*alpha));
+	StkFloat a0 = (A+1.0) - ((A-1.0)*std::cos(w0)) + (2.0*std::sqrt(A)*alpha);
+	StkFloat a1 = -2.0 * ((A-1.0) - ((A+1.0)*std::cos(w0)));
+	StkFloat a2 = (A+1.0) - ((A-1.0)*std::cos(w0)) - (2.0*std::sqrt(A)*alpha);
+	
+	setCoefficients(b0, b1, b2, a0, a1, a2);
 	
 }
 
@@ -287,3 +354,4 @@ void VSCFilterBiQuad::setToLowShelfFilter(double freq, double dbGain, double Q, 
  *	   a2 =   1 - alpha
  *	   
  *------------------------------------------------------------------------------*/
+

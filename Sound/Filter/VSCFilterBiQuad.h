@@ -27,9 +27,9 @@
  *
  *	 First, given a biquad transfer function defined as:
  *	
- *	 b0 + b1*z^-1 + b2*z^-2
+ *			 b0 + b1*z^-1 + b2*z^-2
  *	 H(z) = ------------------------                             
- *	 a0 + a1*z^-1 + a2*z^-2
+ *			 a0 + a1*z^-1 + a2*z^-2
  *	
  *------------------------------------------------------------------------------
  *
@@ -88,15 +88,20 @@ public:
 		FilterTypeLowShelf
 	} FilterType;
 	
+	VSCFilterBiQuad(void);
+	VSCFilterBiQuad(FilterType t, double f = 100.0, double dB = 0.0, double q = 1.0);
+	
 	FilterType getFilterType(void);
 	void setFilterType(FilterType filterType);
 	
-	void setParameters(double freq, double dBgain, double Q, bool clear = false);
+	void setParameters(double freq, double dBgain, double q, bool clear = false);
 	
 	void setFrequency(double freq, bool clear = false);
 	double getFrequency(void);
+	
 	void setDBGain(double dBGain, bool clear = false);
 	double getDBGain(void);
+	
 	void setQ(double q, bool clear = false);
 	double getQ(void);
 	
