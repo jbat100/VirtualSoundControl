@@ -8,6 +8,8 @@
  */
 
 #include "VSCEnveloppePoint.h"
+#include "VSCSound.h"
+
 #include <cstddef>
 #include <assert.h>
 
@@ -17,7 +19,7 @@ VSCEnveloppePoint::VSCEnveloppePoint(void) {
     setRightControlEnveloppeCoordinate(VSCEnveloppeCoordinatePtr());
 }
 
-VSCEnveloppePoint::VSCEnveloppePoint(double value, double time) : VSCEnveloppeCoordinate (value, time) {
+VSCEnveloppePoint::VSCEnveloppePoint(VSCSFloat value, VSCSFloat time) : VSCEnveloppeCoordinate (value, time) {
     setLeftControlEnveloppeCoordinate(VSCEnveloppeCoordinatePtr());
     setRightControlEnveloppeCoordinate(VSCEnveloppeCoordinatePtr());
 }

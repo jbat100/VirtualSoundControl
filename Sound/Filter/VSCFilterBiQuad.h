@@ -11,8 +11,12 @@
 #define _VSC_FILTER_BIQUAD_
 
 #include "VSCFilter.h"
+#include "VSCSound.h"
+#include "VSCFilterUtils.h"
+
 #include "BiQuad.h"
 
+#include <boost/shared_ptr.hpp>
 
 /*
  *	This class extends the STK BiQuad implementation by providing further 
@@ -73,11 +77,11 @@
  *	
  */
 
-class VSCFilterBiQuad : VSCFilter, stk::BiQuad  {
+class VSCFilterBiQuad : public VSCFilter, stk::BiQuad  {
 	
 public:
 	
-	enum {
+	enum FilterType {
 		FilterTypeNone = 0,
 		FilterTypeLowPass,
 		FilterTypeHighPass,
@@ -86,39 +90,39 @@ public:
 		FilterTypePeakingEQ,
 		FilterTypeHighShelf,
 		FilterTypeLowShelf
-	} FilterType;
+	};
 	
 	VSCFilterBiQuad(void);
-	VSCFilterBiQuad(FilterType t, double f = 100.0, double dB = 0.0, double q = 1.0);
+	VSCFilterBiQuad(FilterType t, VSCSFloat f = 100.0, VSCSFloat dB = 0.0, VSCSFloat q = 1.0);
 	
 	FilterType getFilterType(void);
 	void setFilterType(FilterType filterType);
 	
-	void setParameters(double freq, double dBgain, double q, bool clear = false);
+	void setParameters(VSCSFloat freq, VSCSFloat dBgain, VSCSFloat q, bool clear = false);
 	
-	void setFrequency(double freq, bool clear = false);
-	double getFrequency(void);
+	void setFrequency(VSCSFloat freq, bool clear = false);
+	VSCSFloat getFrequency(void);
 	
-	void setDBGain(double dBGain, bool clear = false);
-	double getDBGain(void);
+	void setDBGain(VSCSFloat dBGain, bool clear = false);
+	VSCSFloat getDBGain(void);
 	
-	void setQ(double q, bool clear = false);
-	double getQ(void);
+	void setQ(VSCSFloat q, bool clear = false);
+	VSCSFloat getQ(void);
 	
 protected:
 	
 	FilterType _filterType;
-	double _frequency;
-	double _dBgain;
-	double _Q;
+	VSCSFloat _frequency;
+	VSCSFloat _dBgain;
+	VSCSFloat _Q;
 	
-	void setToLowPassFilter(double freq, double dBgain, double Q, bool clear = false);
-	void setToHighPassFilter(double freq, double dBgain, double Q, bool clear = false);
-	void setToConstantSkirtGainBandPassFilter(double freq, double dBgain, double Q, bool clear = false);
-	void setToConstantPeakGainBandPassFilter(double freq, double dBgain, double Q, bool clear = false);
-	void setToPeakingEQFilter(double freq, double dBgain, double Q, bool clear = false);
-	void setToHighShelfFilter(double freq, double dBgain, double Q, bool clear = false);
-	void setToLowShelfFilter(double freq, double dBgain, double Q, bool clear = false);
+	void setToLowPassFilter(VSCSFloat freq, VSCSFloat dBgain, VSCSFloat Q, bool clear = false);
+	void setToHighPassFilter(VSCSFloat freq, VSCSFloat dBgain, VSCSFloat Q, bool clear = false);
+	void setToConstantSkirtGainBandPassFilter(VSCSFloat freq, VSCSFloat dBgain, VSCSFloat Q, bool clear = false);
+	void setToConstantPeakGainBandPassFilter(VSCSFloat freq, VSCSFloat dBgain, VSCSFloat Q, bool clear = false);
+	void setToPeakingEQFilter(VSCSFloat freq, VSCSFloat dBgain, VSCSFloat Q, bool clear = false);
+	void setToHighShelfFilter(VSCSFloat freq, VSCSFloat dBgain, VSCSFloat Q, bool clear = false);
+	void setToLowShelfFilter(VSCSFloat freq, VSCSFloat dBgain, VSCSFloat Q, bool clear = false);
 	
 	/*
 	 *	Virtual method to update frequency responce for display

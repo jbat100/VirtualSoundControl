@@ -10,6 +10,7 @@
 
 #import "VSCEnveloppeView.h"
 #import "VSCEnveloppeViewSetup.h"
+#import "VSCSound.h"
 
 @interface VSCEnveloppeEditorView : NSView {
 	

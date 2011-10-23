@@ -8,4 +8,5 @@
  */
 
 #include "VSCSynthSourceSine.h"
+#include "VSCSound.h"
 

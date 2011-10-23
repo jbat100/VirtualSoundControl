@@ -8,6 +8,7 @@
  */
 
 #include "VSCEnveloppeCoordinate.h"
+#include "VSCSound.h"
 
 #pragma mark - Comparison Functions
 
@@ -24,7 +25,7 @@ VSCEnveloppeCoordinate::VSCEnveloppeCoordinate(void) {
     setValue(0.0);
 }
 
-VSCEnveloppeCoordinate::VSCEnveloppeCoordinate(double value, double time) {
+VSCEnveloppeCoordinate::VSCEnveloppeCoordinate(VSCSFloat value, VSCSFloat time) {
 	setTime(time);
     setValue(value);
 }
@@ -38,20 +39,20 @@ VSCEnveloppeCoordinate::~VSCEnveloppeCoordinate(void) {
 	std::cout << "Destroying enveloppe coordinate!" << std::endl;
 }
 
-void VSCEnveloppeCoordinate::setValue(double value) {
+void VSCEnveloppeCoordinate::setValue(VSCSFloat value) {
 	_value = value;
 }
 
-double VSCEnveloppeCoordinate::getValue(void) const {
+VSCSFloat VSCEnveloppeCoordinate::getValue(void) const {
 	return _value;
 }
 
-void VSCEnveloppeCoordinate::setTime(double time) {
+void VSCEnveloppeCoordinate::setTime(VSCSFloat time) {
     assert(time >= 0.0);
 	_time = time;
 }
 
-double VSCEnveloppeCoordinate::getTime(void) const {
+VSCSFloat VSCEnveloppeCoordinate::getTime(void) const {
 	return _time;
 }
 

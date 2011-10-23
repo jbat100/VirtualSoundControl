@@ -12,6 +12,8 @@
 #define _VSC_SYNTH_SOURCE_SINE_
 
 #include "VSCSynthSourceElement.h"
+#include "VSCSound.h"
+
 #include "SineWave.h"
 
 class VSCSynthSourceSine : public VSCSynthSourceElement, stk::SineWave {
@@ -26,11 +28,11 @@ public:
 inline stk::StkFloat VSCSynthSourceSine::tick(void)
 {
 	if (_isOn) {
-		stk::STKFloat normalizedValue = stk::SineWave::tick();
+		stk::StkFloat normalizedValue = stk::SineWave::tick();
 		lastFrame_[0] = normalizedValue*_linearGain;
 	}
 	else {
-		stk::STKFloat normalizedValue = stk::SineWave::tick();
+		stk::StkFloat normalizedValue = stk::SineWave::tick();
 		lastFrame_[0] = 0.0;
 	}
 	
@@ -40,7 +42,7 @@ inline stk::StkFloat VSCSynthSourceSine::tick(void)
 inline stk::StkFrames& VSCSynthSourceSine::tick(stk::StkFrames& frames, unsigned int channel)
 {
 	stk::SineWave::tick(frames, channel);
-	StkFloat *samples = &frames[channel];
+	stk::StkFloat *samples = &frames[channel];
 	unsigned int hop = frames.channels();
 	for (unsigned int i=0; i<frames.frames(); i++, samples += hop) {
 		if (_isOn) 

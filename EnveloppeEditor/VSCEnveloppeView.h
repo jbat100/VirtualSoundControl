@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "VSCSound.h"
 #import "VSCEnveloppeViewSetup.h"
 #import "VSCEnveloppe.h"
 #import "VSCEnveloppePoint.h"
@@ -95,10 +96,10 @@ typedef enum _VSCEnveloppeViewMouseAction {
 /* 
  * View/Enveloppe space conversion and manipulation tools 
  */
--(double) valueForPoint:(NSPoint)point;
--(double) timeForPoint:(NSPoint)point;
+-(VSCSFloat) valueForPoint:(NSPoint)point;
+-(VSCSFloat) timeForPoint:(NSPoint)point;
 -(BOOL) point:(NSPoint)p touchesEnveloppePoint:(VSCEnveloppePointPtr)enveloppePoint;
--(NSPoint) pointForTime:(double)time value:(double)value;
+-(NSPoint) pointForTime:(VSCSFloat)time value:(VSCSFloat)value;
 -(NSPoint) pointForEnveloppePoint:(VSCEnveloppePointPtr)controlPoint;
 -(void) setEnveloppePoint:(VSCEnveloppePointPtr)point withPoint:(NSPoint)p;
 -(VSCEnveloppePointPtr) enveloppePointUnderPoint:(NSPoint)point;

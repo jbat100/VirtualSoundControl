@@ -11,16 +11,14 @@
 #ifndef _VSC_FILTER_
 #define _VSC_FILTER_
 
-#include <list>
+#include "VSCFrequencyPoint.h"
+#include "VSCFilterUtils.h"
 
-#define ConstFreqPntIter			std::list<VSCFrequencyPoint>::const_iterator 
-#define ConstRevFreqPntIter			std::list<VSCFrequencyPoint>::const_reverse_iterator 
+#include <vector>
 
-typedef struct VSCFrequencyPoint {
-	double frequency;
-	double magnitude;
-	double phase;
-} VSCFrequencyPoint;
+#define ConstFreqPntIter			std::vector<VSCFrequencyPoint>::const_iterator 
+#define ConstRevFreqPntIter			std::vector<VSCFrequencyPoint>::const_reverse_iterator 
+
 
 class VSCFilter {
 	
@@ -35,8 +33,16 @@ public:
 protected:
 	
 	bool _bypass;
-	std::list<VSCFrequencyPoint> _frequencyPoints;
+	
+	/*
+	 *	there are arguments against using struct for frequency point and seperate into seperate vectors 
+	 *	instead so as to make better use of the accelerate framework
+	 */
+	std::vector<VSCFrequencyPoint> _frequencyPoints;
+	
 	virtual void updateFrequencyPoints(void) = 0;
+	
+	VSCFilterUtilsPtr filterUtils;
 	
 };
 

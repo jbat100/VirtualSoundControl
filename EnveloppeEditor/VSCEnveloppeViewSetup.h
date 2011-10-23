@@ -11,6 +11,9 @@
 #define _VSC_ENVELOPPE_VIEW_SETUP_H_
 
 #include "VSCColour.h"
+#include "VSCSound.h"
+#include <utility>
+#include <list>
 #include <boost/shared_ptr.hpp>
 
 #define VSCEnveloppeViewSetupPtr    boost::shared_ptr<VSCEnveloppeViewSetup>
@@ -101,19 +104,19 @@ public:
 	 *	Grid point calculations
 	 */
 	
-	int getTimeGridPoints(std::list<double>& ptns);
-	int getValueGridPoints(std::list<double>& ptns);
-	int getTimeGridPointsAndPixels(std::list<std::pair<double,int>>& pps, int widthInPixels);
-	int getValueGridPointsAndPixels(std::list<std::pair<double,int>>& pps, int heightInPixels);
+	int getTimeGridPoints(std::list<VSCSFloat>& ptns);
+	int getValueGridPoints(std::list<VSCSFloat>& ptns);
+	int getTimeGridPointsAndPixels(std::list< std::pair<VSCSFloat,int> >& pps, int widthInPixels);
+	int getValueGridPointsAndPixels(std::list< std::pair<VSCSFloat,int> >& pps, int heightInPixels);
 	
 	/*
 	 *	Enveloppe point calculations
 	 */
 	
-	int pixelForTime(double t, int widthInPixels);
-	int pixelForValue(double t, int heightInPixels);
-	double timeForPixel(int pixel, int widthInPixels);
-	double valueForPixel(int pixel, int widthInPixels);
+	int pixelForTime(VSCSFloat t, int widthInPixels);
+	int pixelForValue(VSCSFloat t, int heightInPixels);
+	VSCSFloat timeForPixel(int pixel, int widthInPixels);
+	VSCSFloat valueForPixel(int pixel, int widthInPixels);
 	
 protected:
 	

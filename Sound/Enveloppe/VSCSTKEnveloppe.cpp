@@ -8,6 +8,8 @@
  */
 
 #include "VSCSTKEnveloppe.h"
+#include "VSCSound.h"
+
 #include <math.h>
 #include <iterator>
 
@@ -17,11 +19,11 @@ void VSCSTKEnveloppe::fire(void) {
 	
 }
 
-void VSCSTKEnveloppe::fireAfterInterval(double time) {
+void VSCSTKEnveloppe::fireAfterInterval(VSCSFloat time) {
 	
 }
 
-void VSCSTKEnveloppe::setCurrentTime(double currentTime) {
+void VSCSTKEnveloppe::setCurrentTime(VSCSFloat currentTime) {
 	
 }
 
@@ -40,7 +42,7 @@ void VSCSTKEnveloppe::updateTable(void) {
 }
 
 void VSCSTKEnveloppe::checkTableSize(void) {
-	double dur = duration();
+	VSCSFloat dur = duration();
 	int requiredNumberOfFrames = ceil(dur/Stk::sampleRate());
 	if (table_.frames() != requiredNumberOfFrames) {
 		table_.resize(requiredNumberOfFrames, 1);
@@ -115,20 +117,20 @@ void VSCSTKEnveloppe::updateTableBetweenEnveloppePointAndNext(ConstEnvPntIter po
 	/*
 	 *	Fill the table linearly for now baby
 	 */
-	double startTime = (*startIt)->getTime();
-	double endTime = (*endIt)->getTime();
-	double startValue = (*startIt)->getValue();
-	double endValue = (*endIt)->getValue();
-	double timeRange = endTime - startTime;
-	double valueRange = endValue - startValue;
+	VSCSFloat startTime = (*startIt)->getTime();
+	VSCSFloat endTime = (*endIt)->getTime();
+	VSCSFloat startValue = (*startIt)->getValue();
+	VSCSFloat endValue = (*endIt)->getValue();
+	VSCSFloat timeRange = endTime - startTime;
+	VSCSFloat valueRange = endValue - startValue;
 	
-	double startIndexTime = startIndex * Stk::sampleRate();
-	double endIndexTime = endIndex * Stk::sampleRate();
-	double startIndexValue = ((startIndexTime - startTime)*(valueRange/timeRange)) + startValue;
-	double endIndexValue = ((endIndexTime - endTime)*valueRange) + endValue;
-	double valueStep = (endIndexValue - startIndexValue) / (endIndex - startIndex);
+	VSCSFloat startIndexTime = startIndex * Stk::sampleRate();
+	VSCSFloat endIndexTime = endIndex * Stk::sampleRate();
+	VSCSFloat startIndexValue = ((startIndexTime - startTime)*(valueRange/timeRange)) + startValue;
+	VSCSFloat endIndexValue = ((endIndexTime - endTime)*valueRange) + endValue;
+	VSCSFloat valueStep = (endIndexValue - startIndexValue) / (endIndex - startIndex);
 	
-	double val = startIndexValue;
+	VSCSFloat val = startIndexValue;
 	
 	for (unsigned int tableIndex = startIndex; tableIndex <= endIndex; tableIndex++) {
 		table_[tableIndex] = val;
@@ -136,11 +138,11 @@ void VSCSTKEnveloppe::updateTableBetweenEnveloppePointAndNext(ConstEnvPntIter po
 	}
 }
 
-unsigned int VSCSTKEnveloppe::upperTableIndexForTime(double time) {
+unsigned int VSCSTKEnveloppe::upperTableIndexForTime(VSCSFloat time) {
 	return ceil(time/Stk::sampleRate());
 }
 
-unsigned int VSCSTKEnveloppe::lowerTableIndexForTime(double time) {
+unsigned int VSCSTKEnveloppe::lowerTableIndexForTime(VSCSFloat time) {
 	return floor(time/Stk::sampleRate());
 }
 

@@ -12,6 +12,8 @@
 #define _VSC_SYNTH_SOURCE_SQUARE_
 
 #include "VSCSynthSourceElement.h"
+#include "VSCSound.h"
+
 #include "BlitSquare.h"
 
 class VSCSynthSourceSquare : public VSCSynthSourceElement, stk::BlitSquare {

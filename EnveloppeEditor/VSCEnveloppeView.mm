@@ -8,6 +8,7 @@
 
 #import "VSCEnveloppeView.h"
 #import "VSCEnveloppeViewSetup.h"
+#import "VSCSound.h"
 #import "VSCColour.h"
 #import "VSCBoost.h"
 #import "VSCException.h"
@@ -179,7 +180,7 @@
 		_enveloppeViewSetup->setToDefault();
 	}
     
-    double minTime, maxTime, minValue, maxValue;
+    VSCSFloat minTime, maxTime, minValue, maxValue;
     
     try {
         minTime = _enveloppe->minTime();
@@ -187,8 +188,8 @@
         minValue = _enveloppe->minValue();
         maxValue = _enveloppe->maxValue();
         
-        double timeMargin = std::abs((maxTime-minTime)*0.2); 
-        double valueMargin = std::abs((maxValue-minValue)*0.2); 
+        VSCSFloat timeMargin = std::abs((maxTime-minTime)*0.2); 
+        VSCSFloat valueMargin = std::abs((maxValue-minValue)*0.2); 
         
         //minTime -= timeMargin
         maxTime += timeMargin;
@@ -249,55 +250,55 @@
 
 #pragma mark - View to enveloppe conversion tools
 
--(double) valueDeltaForPointYDelta:(double)pointYDelta {
-	double range = _enveloppeViewSetup->getMaxValue() - _enveloppeViewSetup->getMinValue(); 
-	return (pointYDelta / (double)self.frame.size.height) * range;
+-(VSCSFloat) valueDeltaForPointYDelta:(VSCSFloat)pointYDelta {
+	VSCSFloat range = _enveloppeViewSetup->getMaxValue() - _enveloppeViewSetup->getMinValue(); 
+	return (pointYDelta / (VSCSFloat)self.frame.size.height) * range;
 }
 
--(double) timeDeltaForPointXDelta:(double)pointXDelta {
-	double range = _enveloppeViewSetup->getMaxTime() - _enveloppeViewSetup->getMinTime(); 
-	return (pointXDelta / (double)self.frame.size.width) * range;
+-(VSCSFloat) timeDeltaForPointXDelta:(VSCSFloat)pointXDelta {
+	VSCSFloat range = _enveloppeViewSetup->getMaxTime() - _enveloppeViewSetup->getMinTime(); 
+	return (pointXDelta / (VSCSFloat)self.frame.size.width) * range;
 }
 
--(double) valueForPoint:(NSPoint)point {
+-(VSCSFloat) valueForPoint:(NSPoint)point {
 
 	assert(_enveloppeViewSetup);
 	
 	if (!_enveloppeViewSetup)
 		return 0.0;
-	double normalisedY = (point.y / (double)self.frame.size.height);
-	double range = _enveloppeViewSetup->getMaxValue() - _enveloppeViewSetup->getMinValue(); 
-	double adjustedY = _enveloppeViewSetup->getMinValue() + (normalisedY*range);
+	VSCSFloat normalisedY = (point.y / (VSCSFloat)self.frame.size.height);
+	VSCSFloat range = _enveloppeViewSetup->getMaxValue() - _enveloppeViewSetup->getMinValue(); 
+	VSCSFloat adjustedY = _enveloppeViewSetup->getMinValue() + (normalisedY*range);
 	
 	return adjustedY;
 	
 }
 
--(double) timeForPoint:(CGPoint)point {
+-(VSCSFloat) timeForPoint:(CGPoint)point {
 	
 	assert(_enveloppeViewSetup);
 	
 	if (!_enveloppeViewSetup)
 		return 0.0;
-	double normalisedX = (point.x / (double)self.frame.size.width);
-	double range = _enveloppeViewSetup->getMaxTime() - _enveloppeViewSetup->getMinTime(); 
+	VSCSFloat normalisedX = (point.x / (VSCSFloat)self.frame.size.width);
+	VSCSFloat range = _enveloppeViewSetup->getMaxTime() - _enveloppeViewSetup->getMinTime(); 
 	return (NSTimeInterval)(_enveloppeViewSetup->getMinTime() + (normalisedX*range));
 	
 }
 
 -(NSPoint) pointForEnveloppePoint:(VSCEnveloppePointPtr)enveloppePoint {
-	return [self pointForTime:(NSTimeInterval)enveloppePoint->getTime() value:(double)enveloppePoint->getValue()];
+	return [self pointForTime:(NSTimeInterval)enveloppePoint->getTime() value:(VSCSFloat)enveloppePoint->getValue()];
 }
 
--(NSPoint) pointForTime:(NSTimeInterval)time value:(double)value {
+-(NSPoint) pointForTime:(NSTimeInterval)time value:(VSCSFloat)value {
 	
-	double timeRange = _enveloppeViewSetup->getMaxTime() - _enveloppeViewSetup->getMinTime(); 
-	double timePerPixel = timeRange / self.frame.size.width; 
-	double x = (time - _enveloppeViewSetup->getMinTime()) / timePerPixel;
+	VSCSFloat timeRange = _enveloppeViewSetup->getMaxTime() - _enveloppeViewSetup->getMinTime(); 
+	VSCSFloat timePerPixel = timeRange / self.frame.size.width; 
+	VSCSFloat x = (time - _enveloppeViewSetup->getMinTime()) / timePerPixel;
 	
-	double valueRange = _enveloppeViewSetup->getMaxValue() - _enveloppeViewSetup->getMinValue(); 
-	double valuePerPixel = valueRange / self.frame.size.height; 
-	double y = (value - _enveloppeViewSetup->getMinValue()) / valuePerPixel;
+	VSCSFloat valueRange = _enveloppeViewSetup->getMaxValue() - _enveloppeViewSetup->getMinValue(); 
+	VSCSFloat valuePerPixel = valueRange / self.frame.size.height; 
+	VSCSFloat y = (value - _enveloppeViewSetup->getMinValue()) / valuePerPixel;
 	
 	return NSMakePoint(x, y);
 }
@@ -360,7 +361,7 @@
 
 -(VSCEnveloppePointPtr) createEnveloppePointForPoint:(NSPoint)point {
 	
-	double t = [self timeForPoint:point];
+	VSCSFloat t = [self timeForPoint:point];
 	
 	if (t<0.0) 
 		return VSCEnveloppePointPtr();

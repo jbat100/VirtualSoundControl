@@ -9,17 +9,19 @@
 #ifndef _VSC_SYNTH_SOURCE_ELEMENT_
 #define _VSC_SYNTH_SOURCE_ELEMENT_
 
+#include "VSCSound.h"
+
 class VSCSynthSourceElement {
 	
 public:
 	
 	/* value between 0 and 1 */
-	void setLinearGain(double g);
-	double getLinearGet(void);
+	void setLinearGain(VSCSFloat g);
+	VSCSFloat getLinearGet(void);
 	
 	/* value between 0 and minus infinity */
-	void setDBGain(double g);	
-	double getDBGain(void);
+	void setDBGain(VSCSFloat g);	
+	VSCSFloat getDBGain(void);
 	
 	void setOn(bool on);
 	bool isOn(void);
@@ -28,7 +30,7 @@ public:
 protected:
 	
 	bool _isOn;
-	double _linearGain; /* value between 0 and 1 */
+	VSCSFloat _linearGain; /* value between 0 and 1 */
 	
 };
 

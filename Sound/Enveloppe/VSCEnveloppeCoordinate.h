@@ -10,6 +10,8 @@
 #ifndef _VSC_ENVELOPPE_COORDINATE_H_
 #define _VSC_ENVELOPPE_COORDINATE_H_
 
+#include "VSCSound.h"
+
 #include <iostream>
 #include <ostream>
 #include <boost/shared_ptr.hpp>
@@ -28,14 +30,14 @@ public:
 	/* Constructors / Destructors */
     VSCEnveloppeCoordinate(void);
 	VSCEnveloppeCoordinate(const VSCEnveloppeCoordinate& c);
-	VSCEnveloppeCoordinate(double value, double time);
+	VSCEnveloppeCoordinate(VSCSFloat value, VSCSFloat time);
 	~VSCEnveloppeCoordinate(void);
 	
-	void setValue(double value);
-	double getValue(void) const;
+	void setValue(VSCSFloat value);
+	VSCSFloat getValue(void) const;
 	
-	void setTime(double time);
-	double getTime(void) const;
+	void setTime(VSCSFloat time);
+	VSCSFloat getTime(void) const;
 	
 private:
 	
@@ -67,8 +69,8 @@ private:
 	
 protected:
 	
-	double _value;
-	double _time;
+	VSCSFloat _value;
+	VSCSFloat _time;
 	
 };
 

@@ -15,6 +15,7 @@
  */
 #include "VSCEnveloppe.h"
 #include "VSCEnveloppePoint.h"
+#include "VSCSound.h"
 
 /*
  *	STK stuff
@@ -57,8 +58,8 @@ public:
 	
 	/* FIRE !!! */
 	virtual void fire(void);
-	virtual void fireAfterInterval(double time);
-	virtual void setCurrentTime(double currentTime);
+	virtual void fireAfterInterval(VSCSFloat time);
+	virtual void setCurrentTime(VSCSFloat currentTime);
 	
 	
 protected:
@@ -76,8 +77,8 @@ protected:
 	void updateTableBetweenEnveloppePoints(ConstEnvPntIter beginIt, ConstEnvPntIter endIt);
 	void updateTableBetweenEnveloppePointAndNext(VSCEnveloppePointPtr point);
 	void updateTableBetweenEnveloppePointAndNext(ConstEnvPntIter point);
-	unsigned int upperTableIndexForTime(double time); // closest table index after or == time 
-	unsigned int lowerTableIndexForTime(double time); // closest table index before or == time 
+	unsigned int upperTableIndexForTime(VSCSFloat time); // closest table index after or == time 
+	unsigned int lowerTableIndexForTime(VSCSFloat time); // closest table index before or == time 
 	
 	/*
 	 *	Deal with sample rate changes

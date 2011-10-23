@@ -12,6 +12,8 @@
 #define _VSC_SYNTH_SOURCE_FILE_LOOP_
 
 #include "VSCSynthSourceElement.h"
+#include "VSCSound.h"
+
 #include "FileLoop.h"
 
 class VSCSynthSourceFileLoop : public VSCSynthSourceElement, stk::FileLoop {

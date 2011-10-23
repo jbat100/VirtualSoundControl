@@ -12,6 +12,8 @@
 #define _VSC_SYNTH_SOURCE_SAW_
 
 #include "VSCSynthSourceElement.h"
+#include "VSCSound.h"
+
 #include "BlitSaw.h"
 
 class VSCSynthSourceSaw : public VSCSynthSourceElement, stk::BlitSaw {

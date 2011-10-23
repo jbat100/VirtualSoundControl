@@ -8,21 +8,23 @@
 
 #include <iostream>
 #include "VSCSynthSourceElement.h"
+#include "VSCSound.h"
+
 #include <cmath>
 
-void VSCSynthSourceElement::setLinearGain(double g) {
+void VSCSynthSourceElement::setLinearGain(VSCSFloat g) {
 	_linearGain = g;
 }
 
-double VSCSynthSourceElement::getLinearGet(void) {
+VSCSFloat VSCSynthSourceElement::getLinearGet(void) {
 	return _linearGain;
 }
 
-void VSCSynthSourceElement::setDBGain(double g) {
+void VSCSynthSourceElement::setDBGain(VSCSFloat g) {
 	_linearGain =  0.1 * std::pow(10,g);
 }
 
-void VSCSynthSourceElement::getDBGain(void) {
+VSCSFloat VSCSynthSourceElement::getDBGain(void) {
 	return 10.0 * std::log10(_linearGain);
 }
 

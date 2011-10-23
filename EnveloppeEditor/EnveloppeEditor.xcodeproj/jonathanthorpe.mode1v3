@@ -287,7 +287,8 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>25</integer>
+									<integer>42</integer>
+									<integer>36</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -332,7 +333,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>SineWave.cpp</string>
+								<string>VSCEnveloppeViewSetup.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -340,11 +341,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>SineWave.cpp</string>
+										<string>VSCEnveloppeViewSetup.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>105C480B144B345A0015AE8F</string>
+										<string>10AC2B881454BF72002DE480</string>
 										<key>history</key>
 										<array>
 											<string>1023D47113E8AD1D00BB9080</string>
@@ -372,20 +373,22 @@
 											<string>1056ED6D1441F4B800462AC5</string>
 											<string>1056ED6F1441F4B800462AC5</string>
 											<string>1056EDE41442016300462AC5</string>
-											<string>1056EDF91442050D00462AC5</string>
-											<string>1056EE1814420AD500462AC5</string>
-											<string>1056EE1F14420AD500462AC5</string>
-											<string>1056EE2514420CB000462AC5</string>
 											<string>1063E14A1443B08C00BD55ED</string>
-											<string>10B6F98D1444F53D0012DEB5</string>
-											<string>104E108E1446259A00717F86</string>
-											<string>104E108F1446259A00717F86</string>
-											<string>104E10901446259A00717F86</string>
-											<string>104E109414462A7200717F86</string>
-											<string>108295A31449A55500B2DADA</string>
 											<string>108295A41449A55500B2DADA</string>
 											<string>108295A51449A55500B2DADA</string>
-											<string>108295A61449A55500B2DADA</string>
+											<string>10E46D3F14549F6600B6350B</string>
+											<string>10AC2B651454BDC1002DE480</string>
+											<string>10AC2B661454BDC1002DE480</string>
+											<string>10AC2B741454BF37002DE480</string>
+											<string>10AC2B751454BF37002DE480</string>
+											<string>10AC2B761454BF37002DE480</string>
+											<string>10AC2B771454BF37002DE480</string>
+											<string>10AC2B781454BF37002DE480</string>
+											<string>10AC2B791454BF37002DE480</string>
+											<string>10AC2B7A1454BF37002DE480</string>
+											<string>10AC2B7B1454BF37002DE480</string>
+											<string>10AC2B7C1454BF37002DE480</string>
+											<string>10AC2B7D1454BF37002DE480</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -443,9 +446,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>105C47F6144B32990015AE8F</string>
+				<string>10AC2B4D1454BBCB002DE480</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>105C47F7144B32990015AE8F</string>
+				<string>10AC2B4E1454BBCB002DE480</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -583,6 +586,9 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>10AC2B811454BF37002DE480</string>
+		<string>10AC2B821454BF37002DE480</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>1030EFFB13298D9800E4BCA1</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>/Users/jonathanthorpe/Programming/Projects/Repository/EnveloppeEditor/EnveloppeEditor.xcodeproj</string>
@@ -604,12 +610,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string></string>
+								<string>VSCEnveloppeViewSetup.cpp</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -665,7 +673,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1030EFFB13298D9800E4BCA1</string>
-				<string>105C47F8144B32990015AE8F</string>
+				<string>10AC2B4F1454BBCB002DE480</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -787,13 +795,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>105C47F9144B32990015AE8F</string>
+				<string>10AC2B501454BBCB002DE480</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>105C47FA144B32990015AE8F</string>
-				<string>105C47FB144B32990015AE8F</string>
-				<string>105C47FC144B32990015AE8F</string>
-				<string>105C47FD144B32990015AE8F</string>
-				<string>105C47FE144B32990015AE8F</string>
+				<string>10AC2B511454BBCB002DE480</string>
+				<string>10AC2B521454BBCB002DE480</string>
+				<string>10AC2B531454BBCB002DE480</string>
+				<string>10AC2B541454BBCB002DE480</string>
+				<string>10AC2B551454BBCB002DE480</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -949,7 +957,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>1056ED7A1441F4B800462AC5</string>
+				<string>10AC2B7F1454BF37002DE480</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
@@ -959,7 +967,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>

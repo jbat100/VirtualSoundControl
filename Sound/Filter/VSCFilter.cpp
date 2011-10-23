@@ -8,8 +8,10 @@
  */
 
 #include "VSCFilter.h"
+#include "VSCSound.h"
+#include "VSCFrequencyPoint.h"
 
-#include <list>
+#include <vector>
 
 ConstFreqPntIter VSCFilter::getFrequencyPointBeginConstIterator(void) const {
 	return _frequencyPoints.begin();
@@ -20,9 +22,9 @@ ConstFreqPntIter VSCFilter::getFrequencyPointEndConstIterator(void) const {
 }
 
 void VSCFilter::setBypass(bool b) {
-	
+	_bypass = b;
 }
 
 bool VSCFilter::isBypassed(void) {
-	
+	return _bypass;
 }

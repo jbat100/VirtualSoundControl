@@ -8,6 +8,8 @@
  */
 
 #include "VSCEnveloppeViewSetup.h"
+#include "VSCSound.h"
+
 #include <cmath>
 
 #pragma mark View range setters / getters
@@ -49,28 +51,28 @@ void VSCEnveloppeViewSetup::setToDefault(void) {
 
 #pragma mark Encveloppe point calculations
 
-int VSCEnveloppeViewSetup::pixelForTime(double t, int widthInPixels) {
-	
+int VSCEnveloppeViewSetup::pixelForTime(VSCSFloat t, int widthInPixels) {
+	return 0;
 }
 
-int VSCEnveloppeViewSetup::pixelForValue(double t, int heightInPixels) {
-	
+int VSCEnveloppeViewSetup::pixelForValue(VSCSFloat t, int heightInPixels) {
+	return 0;
 }
 
-double VSCEnveloppeViewSetup::timeForPixel(int pixel, int widthInPixels) {
-	
+VSCSFloat VSCEnveloppeViewSetup::timeForPixel(int pixel, int widthInPixels) {
+	return 0.0;
 }
 
-double VSCEnveloppeViewSetup::valueForPixel(int pixel, int widthInPixels) {
-	
+VSCSFloat VSCEnveloppeViewSetup::valueForPixel(int pixel, int widthInPixels) {
+	return 0.0;
 }
 
 #pragma mark Grid point calculations
 
-int VSCEnveloppeViewSetup::getTimeGridPoints(std::list<double>& ptns) {
+int VSCEnveloppeViewSetup::getTimeGridPoints(std::list<VSCSFloat>& ptns) {
 	
 	int currentScalerPower = 0;
-	double scaledTimeRange = getMaxTime() - getMinTime();
+	VSCSFloat scaledTimeRange = getMaxTime() - getMinTime();
 	
 	if (scaledTimeRange < getTargetNumberOfVerticalGridLines()) {
 		while (scaledTimeRange*5.0 < getTargetNumberOfVerticalGridLines()) {
@@ -86,15 +88,15 @@ int VSCEnveloppeViewSetup::getTimeGridPoints(std::list<double>& ptns) {
 		}
 	}
 	
-	double currentScaler = std::pow(10.0, (double)currentScalerPower);
+	VSCSFloat currentScaler = std::pow(10.0, (VSCSFloat)currentScalerPower);
 	
-	double scaledMinTime = getMinTime() * currentScaler;
-	double scaledMaxTime = getMaxTime() * currentScaler;
+	VSCSFloat scaledMinTime = getMinTime() * currentScaler;
+	VSCSFloat scaledMaxTime = getMaxTime() * currentScaler;
 	
-	double roundMinTime = std::floor(scaledMinTime);
-	double roundMaxTime = std::ceil(scaledMaxTime);
+	VSCSFloat roundMinTime = std::floor(scaledMinTime);
+	VSCSFloat roundMaxTime = std::ceil(scaledMaxTime);
 	
-	for (double t = roundMinTime; t < roundMaxTime; t = t+1.0) {
+	for (VSCSFloat t = roundMinTime; t < roundMaxTime; t = t+1.0) {
 		ptns.push_back(t/currentScaler);
 	}
 	
@@ -102,10 +104,10 @@ int VSCEnveloppeViewSetup::getTimeGridPoints(std::list<double>& ptns) {
 	
 }
 
-int VSCEnveloppeViewSetup::getValueGridPoints(std::list<double>& ptns) {
+int VSCEnveloppeViewSetup::getValueGridPoints(std::list<VSCSFloat>& ptns) {
 	
 	int currentScalerPower = 0;
-	double scaledValueRange = getMaxValue() - getMinValue();
+	VSCSFloat scaledValueRange = getMaxValue() - getMinValue();
 	
 	if (scaledValueRange < getTargetNumberOfHorizontalGridLines()) {
 		while (scaledValueRange*5.0 < getTargetNumberOfHorizontalGridLines()) {
@@ -121,15 +123,15 @@ int VSCEnveloppeViewSetup::getValueGridPoints(std::list<double>& ptns) {
 		}
 	}
 	
-	double currentScaler = std::pow(10.0, (double)currentScalerPower);
+	VSCSFloat currentScaler = std::pow(10.0, (VSCSFloat)currentScalerPower);
 	
-	double scaledMinValue = getMinValue() * currentScaler;
-	double scaledMaxValue = getMaxValue() * currentScaler;
+	VSCSFloat scaledMinValue = getMinValue() * currentScaler;
+	VSCSFloat scaledMaxValue = getMaxValue() * currentScaler;
 	
-	double roundMinValue = std::floor(scaledMinValue);
-	double roundMaxValue = std::ceil(scaledMaxValue);
+	VSCSFloat roundMinValue = std::floor(scaledMinValue);
+	VSCSFloat roundMaxValue = std::ceil(scaledMaxValue);
 	
-	for (double v = roundMinValue; v < roundMaxValue; v = v+1.0) {
+	for (VSCSFloat v = roundMinValue; v < roundMaxValue; v = v+1.0) {
 		ptns.push_back(v/currentScaler);
 	}
 	
@@ -137,18 +139,21 @@ int VSCEnveloppeViewSetup::getValueGridPoints(std::list<double>& ptns) {
 	
 }
 
-int VSCEnveloppeViewSetup::getTimeGridPointsAndPixels(std::list<std::pair<double,int>>& pps, int pixelSize) {
+int VSCEnveloppeViewSetup::getTimeGridPointsAndPixels(std::list< std::pair<VSCSFloat,int> >& pps, int pixelSize) {
 	
-	std::list<double> points;
+	std::list<VSCSFloat> points;
 	getTimeGridPoints(points);
+	
+	return 0;
 	
 }
 
-int VSCEnveloppeViewSetup::getValueGridPointsAndPixels(std::list<std::pair<double,int>>& pps, int pixelSize) {
+int VSCEnveloppeViewSetup::getValueGridPointsAndPixels(std::list< std::pair<VSCSFloat,int> >& pps, int pixelSize) {
 	
-	std::list<double> points;
+	std::list<VSCSFloat> points;
 	getValueGridPoints(points);
 	
+	return 0;
 }
 
 #pragma mark View range setters / getters
@@ -290,15 +295,15 @@ float VSCEnveloppeViewSetup::getTargetNumberOfVerticalGridLines(void) const {
 }
 
 void VSCEnveloppeViewSetup::setTargetNumberOfVerticalGridLines(float targetNumberOfVerticalGridLines) {
-	_targetNumberOfVerticalGridLines = targetNumberOfVerticalGridLines
+	_targetNumberOfVerticalGridLines = targetNumberOfVerticalGridLines;
 }
 
 float VSCEnveloppeViewSetup::getTargetNumberOfHorizontalGridLines(void) const {
-	return _targetNumberOfHorizontalGridLines
+	return _targetNumberOfHorizontalGridLines;
 }
 
 void VSCEnveloppeViewSetup::setTargetNumberOfHorizontalGridLines(float targetNumberOfHorizontalGridLines) {
-	_targetNumberOfHorizontalGridLines = targetNumberOfHorizontalGridLines
+	_targetNumberOfHorizontalGridLines = targetNumberOfHorizontalGridLines;
 }
 
 

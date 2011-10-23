@@ -25,6 +25,7 @@
 		1063E13614439A3400BD55ED /* VSCEnveloppeEditorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1063E13514439A3300BD55ED /* VSCEnveloppeEditorView.mm */; };
 		106A54C5143D097B00455BC2 /* libboost_serialization.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106A54C4143D097B00455BC2 /* libboost_serialization.a */; };
 		107A78FE132ADE3700C4B1FE /* VSCEnveloppeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */; };
+		10AC2B581454BC0C002DE480 /* VSCSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10AC2B561454BC0C002DE480 /* VSCSound.cpp */; };
 		10BC102414326CD1006229D5 /* NSFileManager-MenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 10BC102314326CD1006229D5 /* NSFileManager-MenuItem.m */; };
 		10DE92361413EDE600CC602A /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE92351413EDE600CC602A /* libboost_filesystem.a */; };
 		10DE923E1413EEB200CC602A /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE923D1413EEB200CC602A /* libboost_system.a */; };
@@ -78,6 +79,8 @@
 		107A78FC132ADE3700C4B1FE /* VSCEnveloppeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeView.h; sourceTree = "<group>"; };
 		107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCEnveloppeView.mm; sourceTree = "<group>"; };
 		10ABFCC8142E2FFC00EB8C37 /* SineWave.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SineWave.cpp; sourceTree = STK_SOURCE; };
+		10AC2B561454BC0C002DE480 /* VSCSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCSound.cpp; path = ../Sound/VSCSound.cpp; sourceTree = SOURCE_ROOT; };
+		10AC2B571454BC0C002DE480 /* VSCSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSound.h; path = ../Sound/VSCSound.h; sourceTree = SOURCE_ROOT; };
 		10BC102214326CD1006229D5 /* NSFileManager-MenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSFileManager-MenuItem.h"; path = "../Generic/NSFileManager-MenuItem.h"; sourceTree = SOURCE_ROOT; };
 		10BC102314326CD1006229D5 /* NSFileManager-MenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSFileManager-MenuItem.m"; path = "../Generic/NSFileManager-MenuItem.m"; sourceTree = SOURCE_ROOT; };
 		10DE92351413EDE600CC602A /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = /usr/local/lib/libboost_filesystem.a; sourceTree = "<absolute>"; };
@@ -189,6 +192,8 @@
 		107A7903132ADF1500C4B1FE /* Enveloppe */ = {
 			isa = PBXGroup;
 			children = (
+				10AC2B561454BC0C002DE480 /* VSCSound.cpp */,
+				10AC2B571454BC0C002DE480 /* VSCSound.h */,
 				105C47FF144B32B00015AE8F /* VSCEnveloppe.cpp */,
 				105C4800144B32B00015AE8F /* VSCEnveloppe.h */,
 				105C4801144B32B00015AE8F /* VSCEnveloppeCoordinate.cpp */,
@@ -356,6 +361,7 @@
 				105C4808144B32B00015AE8F /* VSCEnveloppeCoordinate.cpp in Sources */,
 				105C4809144B32B00015AE8F /* VSCEnveloppePoint.cpp in Sources */,
 				105C480A144B32B00015AE8F /* VSCSTKEnveloppe.cpp in Sources */,
+				10AC2B581454BC0C002DE480 /* VSCSound.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

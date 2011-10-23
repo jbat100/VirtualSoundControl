@@ -12,6 +12,8 @@
 #define _VSC_SYNTH_SOURCE_FILE_
 
 #include "VSCSynthSourceElement.h"
+#include "VSCSound.h"
+
 #include "FileWvIn.h"
 
 class VSCSynthSourceFile : public VSCSynthSourceElement, stk::FileWvIn {

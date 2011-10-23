@@ -12,8 +12,8 @@
 
 #include <list>
 #include <string>
-#include <boost/shared_ptr.hpp>
 
+#include <boost/shared_ptr.hpp>
 #include <boost/serialization/list.hpp>
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/version.hpp>
@@ -21,6 +21,7 @@
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 
+#include "VSCSound.h"
 #include "VSCEnveloppePoint.h"
 
 #define ENVELOPPE_FILE_EXTENSION			"vscxenv"
@@ -77,8 +78,8 @@ public:
 	
 	/* FIRE !!! */
 	virtual void fire(void);
-	virtual void fireAfterInterval(double intervalTime);
-	virtual void setCurrentTime(double currentTime);
+	virtual void fireAfterInterval(VSCSFloat intervalTime);
+	virtual void setCurrentTime(VSCSFloat currentTime);
 	
 	/* getters / setters */
 	
@@ -97,8 +98,8 @@ public:
 	
 	void setChannel(int channel);
 	int getChannel(void) const;
-	void setMinimumTimeStep(double minimumTimeStep);
-	double getMinimumTimeStep(void) const;
+	void setMinimumTimeStep(VSCSFloat minimumTimeStep);
+	VSCSFloat getMinimumTimeStep(void) const;
 	
 	/* edit points */
 	
@@ -107,7 +108,7 @@ public:
 	
 	void removePoint(VSCEnveloppePointPtr point);
 	void removePoints(std::list<VSCEnveloppePointPtr>& points); 
-	void removePointsInTimeRange(double lowerTime, double upperTime);
+	void removePointsInTimeRange(VSCSFloat lowerTime, VSCSFloat upperTime);
 	void removeAllPoints(void);
 	
 	/* get points iter */
@@ -119,38 +120,38 @@ public:
 	
 	/* get points */
 	
-	VSCEnveloppePointPtr getPointClosestToTime(double time) const;
-	VSCEnveloppePointPtr getPointClosestToTime(double time, bool copy) const;
-	VSCEnveloppePointPtr getFirstPointAfterTime(double time) const;
-	VSCEnveloppePointPtr getFirstPointAfterTime(double time, bool copy) const;
-	VSCEnveloppePointPtr getFirstPointBeforeTime(double time) const;
-	VSCEnveloppePointPtr getFirstPointBeforeTime(double time, bool copy) const;
+	VSCEnveloppePointPtr getPointClosestToTime(VSCSFloat time) const;
+	VSCEnveloppePointPtr getPointClosestToTime(VSCSFloat time, bool copy) const;
+	VSCEnveloppePointPtr getFirstPointAfterTime(VSCSFloat time) const;
+	VSCEnveloppePointPtr getFirstPointAfterTime(VSCSFloat time, bool copy) const;
+	VSCEnveloppePointPtr getFirstPointBeforeTime(VSCSFloat time) const;
+	VSCEnveloppePointPtr getFirstPointBeforeTime(VSCSFloat time, bool copy) const;
 	
-	void getPointsInTimeRange(std::list<VSCEnveloppePointPtr>& pts, double lowerTime, double upperTime) const;
-	void getPointsInTimeRange(std::list<VSCEnveloppePointPtr>& pts, double lowerTime, double upperTime, bool copy) const;
+	void getPointsInTimeRange(std::list<VSCEnveloppePointPtr>& pts, VSCSFloat lowerTime, VSCSFloat upperTime) const;
+	void getPointsInTimeRange(std::list<VSCEnveloppePointPtr>& pts, VSCSFloat lowerTime, VSCSFloat upperTime, bool copy) const;
 	void getAllPoints(std::list<VSCEnveloppePointPtr>& pts) const;
 	void getAllPoints(std::list<VSCEnveloppePointPtr>& pts, bool copy) const;
 	
 	int numberOfPoints(void) const;
 	
 	/* move points (disallow manggling...) */
-	bool canDisplacePointTime(ConstEnvPntIter pointIt, double deltaTime);
-	bool canDisplacePointValue(ConstEnvPntIter pointIt, double deltaValue);
-	void displacePoint(VSCEnveloppePointPtr point, double deltaTime, double deltaValue);
-	void displacePoint(ConstEnvPntIter pointIt, double deltaTime, double deltaValue);
-	void displacePoints(std::list<VSCEnveloppePointPtr>& pts, double deltaTime, double deltaValue);
+	bool canDisplacePointTime(ConstEnvPntIter pointIt, VSCSFloat deltaTime);
+	bool canDisplacePointValue(ConstEnvPntIter pointIt, VSCSFloat deltaValue);
+	void displacePoint(VSCEnveloppePointPtr point, VSCSFloat deltaTime, VSCSFloat deltaValue);
+	void displacePoint(ConstEnvPntIter pointIt, VSCSFloat deltaTime, VSCSFloat deltaValue);
+	void displacePoints(std::list<VSCEnveloppePointPtr>& pts, VSCSFloat deltaTime, VSCSFloat deltaValue);
 	
 	/* values */
 	
-	double getValueAtTime(double time) const;
-	double duration(void) const;
+	VSCSFloat getValueAtTime(VSCSFloat time) const;
+	VSCSFloat duration(void) const;
     
     /* extremes */
 	
-    double minTime(void) const;
-    double maxTime(void) const;
-    double minValue(void) const;
-    double maxValue(void) const;
+    VSCSFloat minTime(void) const;
+    VSCSFloat maxTime(void) const;
+    VSCSFloat minValue(void) const;
+    VSCSFloat maxValue(void) const;
 	
 private:
 	/*
@@ -223,7 +224,7 @@ protected:
 	 *	The minimum time step between two adjascent enveloppe points, if a point is added to the enveloppe,
 	 *	it's neighbourghs which are closer than this time step will be removed from the enveloppe
 	 */
-    double _minimumTimeStep;
+    VSCSFloat _minimumTimeStep;
 	
 	/*
 	 *	VSC project data directories will have an enveloppe sub-directory which will serve as bas for the 

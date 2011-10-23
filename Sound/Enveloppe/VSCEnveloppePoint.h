@@ -21,6 +21,7 @@
 #include <boost/serialization/nvp.hpp>
 
 #include "VSCEnveloppeCoordinate.h"
+#include "VSCSound.h"
 
 #define VSCEnveloppePointPtr    boost::shared_ptr<VSCEnveloppePoint>
 
@@ -36,7 +37,7 @@ public:
 	/* Constructors / Destructors */
     VSCEnveloppePoint(void);
 	VSCEnveloppePoint(const VSCEnveloppePoint& p);
-	VSCEnveloppePoint(double value, double time);
+	VSCEnveloppePoint(VSCSFloat value, VSCSFloat time);
 	~VSCEnveloppePoint(void);
     
     void setLeftControlEnveloppeCoordinate(VSCEnveloppeCoordinatePtr controlPoint);
