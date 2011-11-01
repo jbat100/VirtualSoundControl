@@ -14,44 +14,54 @@
 #include "VSCSynthSourceElement.h"
 #include "VSCSound.h"
 
+//#ifdef VSCS_USE_STK
+
+#include "Stk.h"
 #include "FileWvIn.h"
 
-class VSCSynthSourceFile : public VSCSynthSourceElement, stk::FileWvIn {
+class VSCSynthSourceFile : public VSCSynthSourceElement, public stk::FileWvIn {
 	
 public:
 	
-	stk::StkFloat tick( void );
-	stk::StkFrames& tick(stk::StkFrames& frames, unsigned int channel = 0);
+	stk::StkFloat tick(unsigned int channel = 0);
+	stk::StkFrames& tick(stk::StkFrames& frames);
 	
 };
 
-inline stk::StkFloat VSCSynthSourceFile::tick(void)
+inline stk::StkFloat VSCSynthSourceFile::tick(unsigned int channel)
 {
 	if (_isOn) {
-		stk::STKFloat normalizedValue = stk::FileWvIn::tick();
+		stk::StkFloat normalizedValue = stk::FileWvIn::tick(channel);
 		lastFrame_[0] = normalizedValue*_linearGain;
 	}
 	else {
-		stk::STKFloat normalizedValue = stk::FileWvIn::tick();
 		lastFrame_[0] = 0.0;
 	}
 	
 	return lastFrame_[0];
 }
 
-inline stk::StkFrames& VSCSynthSourceFile::tick(stk::StkFrames& frames, unsigned int channel)
+inline stk::StkFrames& VSCSynthSourceFile::tick(stk::StkFrames& frames)
 {
-	stk::FileWvIn::tick(frames, channel);
-	StkFloat *samples = &frames[channel];
-	unsigned int hop = frames.channels();
-	for (unsigned int i=0; i<frames.frames(); i++, samples += hop) {
-		if (_isOn) 
+	stk::StkFloat *samples = &frames[0];
+	unsigned int limit = frames.channels() * frames.frames();
+	
+	if (_isOn) {
+		stk::FileWvIn::tick(frames);
+		for (unsigned int i=0; i<limit; i++, samples ++) {
 			*samples = (*samples) * _linearGain;
-		else 
-			*samples = 0.0;
+		}
 	}
+	else {
+		for (unsigned int i=0; i<limit; i++, samples ++) {
+			*samples = 0.0;
+		}
+	}
+	
 	lastFrame_[0] = *samples;
 	return frames;
 }
 
-#endif
+//#endif // #ifdef VSCS_USE_STK
+
+#endif // #ifndef _VSC_SYNTH_SOURCE_FILE_

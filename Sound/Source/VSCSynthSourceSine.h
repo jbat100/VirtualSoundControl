@@ -14,9 +14,11 @@
 #include "VSCSynthSourceElement.h"
 #include "VSCSound.h"
 
+#ifdef VSCS_USE_STK
+
 #include "SineWave.h"
 
-class VSCSynthSourceSine : public VSCSynthSourceElement, stk::SineWave {
+class VSCSynthSourceSine : public VSCSynthSourceElement, public stk::SineWave {
 	
 public:
 	
@@ -41,17 +43,23 @@ inline stk::StkFloat VSCSynthSourceSine::tick(void)
 
 inline stk::StkFrames& VSCSynthSourceSine::tick(stk::StkFrames& frames, unsigned int channel)
 {
-	stk::SineWave::tick(frames, channel);
 	stk::StkFloat *samples = &frames[channel];
 	unsigned int hop = frames.channels();
-	for (unsigned int i=0; i<frames.frames(); i++, samples += hop) {
-		if (_isOn) 
+	if (_isOn) {
+		stk::SineWave::tick(frames, channel);
+		for (unsigned int i=0; i<frames.frames(); i++, samples += hop) {
 			*samples = (*samples) * _linearGain;
-		else 
+		}		
+	}
+	else {
+		for (unsigned int i=0; i<frames.frames(); i++, samples += hop) {
 			*samples = 0.0;
+		}	
 	}
 	lastFrame_[0] = *samples;
 	return frames;
 }
+
+#endif
 
 #endif

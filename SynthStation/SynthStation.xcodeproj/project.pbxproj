@@ -7,8 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		10117E4314560E6900240467 /* VSCSynthStationDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 10117E4214560E6900240467 /* VSCSynthStationDocument.m */; };
+		10117E4514560E9700240467 /* VSCSynthStationWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10117E4414560E9700240467 /* VSCSynthStationWindowController.xib */; };
+		10117E5014560F1700240467 /* VSCSynthStationWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10117E4F14560F1700240467 /* VSCSynthStationWindowController.m */; };
+		10117E661456122500240467 /* NSApplication+VSCPaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 10117E651456122500240467 /* NSApplication+VSCPaths.m */; };
+		10117EC41456195600240467 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1061AAC41430A3B500C29FBB /* AppKit.framework */; };
+		10118007145619DF00240467 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10118005145619DF00240467 /* AppKit.framework */; };
+		10118008145619DF00240467 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10118006145619DF00240467 /* Foundation.framework */; };
 		10516D791453247B00109B4B /* VSCFrequencyPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10516D781453247B00109B4B /* VSCFrequencyPoint.cpp */; };
 		10516D7C1453261800109B4B /* VSCSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10516D7B1453261800109B4B /* VSCSound.cpp */; };
+		10531F7114602C57004DC3A1 /* VSCSynthSourceGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10531F7014602C57004DC3A1 /* VSCSynthSourceGroup.cpp */; };
+		10531F8614604B16004DC3A1 /* VSCSTKUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10531F8514604B16004DC3A1 /* VSCSTKUtils.cpp */; };
 		105C47E3144B32760015AE8F /* VSCEnveloppe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47CB144B32760015AE8F /* VSCEnveloppe.cpp */; };
 		105C47E4144B32760015AE8F /* VSCEnveloppeCoordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47CD144B32760015AE8F /* VSCEnveloppeCoordinate.cpp */; };
 		105C47E5144B32760015AE8F /* VSCEnveloppePoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47CF144B32760015AE8F /* VSCEnveloppePoint.cpp */; };
@@ -23,15 +32,11 @@
 		105C480E144B348D0015AE8F /* VSCFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C480D144B348D0015AE8F /* VSCFilter.cpp */; };
 		105C4812144B3D1A0015AE8F /* VSCFilterBiQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C4811144B3D1A0015AE8F /* VSCFilterBiQuad.cpp */; };
 		105C4834144B45C00015AE8F /* VSCFilterUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C4833144B45C00015AE8F /* VSCFilterUtils.cpp */; };
-		1061AAC21430A3B500C29FBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1061AAC11430A3B500C29FBB /* Cocoa.framework */; };
 		1061AACC1430A3B500C29FBB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1061AACA1430A3B500C29FBB /* InfoPlist.strings */; };
 		1061AACE1430A3B600C29FBB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1061AACD1430A3B600C29FBB /* main.m */; };
 		1061AAD21430A3B600C29FBB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1061AAD01430A3B600C29FBB /* Credits.rtf */; };
-		1061AAD51430A3B600C29FBB /* MyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 1061AAD41430A3B600C29FBB /* MyDocument.m */; };
-		1061AAD81430A3B600C29FBB /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1061AAD61430A3B600C29FBB /* MyDocument.xib */; };
 		1061AADB1430A3B600C29FBB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1061AAD91430A3B600C29FBB /* MainMenu.xib */; };
 		1061AAE31430A3B600C29FBB /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1061AAE21430A3B600C29FBB /* SenTestingKit.framework */; };
-		1061AAE41430A3B600C29FBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1061AAC11430A3B500C29FBB /* Cocoa.framework */; };
 		1061AAEC1430A3B600C29FBB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1061AAEA1430A3B600C29FBB /* InfoPlist.strings */; };
 		1061AAEE1430A3B600C29FBB /* SynthStationTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 1061AAED1430A3B600C29FBB /* SynthStationTests.h */; };
 		1061AAF01430A3B600C29FBB /* SynthStationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1061AAEF1430A3B600C29FBB /* SynthStationTests.m */; };
@@ -60,10 +65,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		10117E4114560E6900240467 /* VSCSynthStationDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthStationDocument.h; sourceTree = "<group>"; };
+		10117E4214560E6900240467 /* VSCSynthStationDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSCSynthStationDocument.m; sourceTree = "<group>"; };
+		10117E4414560E9700240467 /* VSCSynthStationWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSCSynthStationWindowController.xib; sourceTree = "<group>"; };
+		10117E4E14560F1700240467 /* VSCSynthStationWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthStationWindowController.h; sourceTree = "<group>"; };
+		10117E4F14560F1700240467 /* VSCSynthStationWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSCSynthStationWindowController.m; sourceTree = "<group>"; };
+		10117E641456122500240467 /* NSApplication+VSCPaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSApplication+VSCPaths.h"; path = "../Generic/NSApplication+VSCPaths.h"; sourceTree = SOURCE_ROOT; };
+		10117E651456122500240467 /* NSApplication+VSCPaths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSApplication+VSCPaths.m"; path = "../Generic/NSApplication+VSCPaths.m"; sourceTree = SOURCE_ROOT; };
+		10118005145619DF00240467 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = ../../../System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		10118006145619DF00240467 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = ../../../System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		10516D771453247B00109B4B /* VSCFrequencyPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCFrequencyPoint.h; sourceTree = "<group>"; };
 		10516D781453247B00109B4B /* VSCFrequencyPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCFrequencyPoint.cpp; sourceTree = "<group>"; };
 		10516D7A1453261800109B4B /* VSCSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSound.h; path = ../Sound/VSCSound.h; sourceTree = SOURCE_ROOT; };
 		10516D7B1453261800109B4B /* VSCSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCSound.cpp; path = ../Sound/VSCSound.cpp; sourceTree = SOURCE_ROOT; };
+		10531F6F14602C57004DC3A1 /* VSCSynthSourceGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthSourceGroup.h; sourceTree = "<group>"; };
+		10531F7014602C57004DC3A1 /* VSCSynthSourceGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSynthSourceGroup.cpp; sourceTree = "<group>"; };
+		10531F7214602D15004DC3A1 /* Generator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Generator.h; sourceTree = STK_INCLUDE; };
+		10531F8414604B16004DC3A1 /* VSCSTKUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSTKUtils.h; path = ../Sound/VSCSTKUtils.h; sourceTree = SOURCE_ROOT; };
+		10531F8514604B16004DC3A1 /* VSCSTKUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCSTKUtils.cpp; path = ../Sound/VSCSTKUtils.cpp; sourceTree = SOURCE_ROOT; };
 		105C47CB144B32760015AE8F /* VSCEnveloppe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppe.cpp; sourceTree = "<group>"; };
 		105C47CC144B32760015AE8F /* VSCEnveloppe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppe.h; sourceTree = "<group>"; };
 		105C47CD144B32760015AE8F /* VSCEnveloppeCoordinate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppeCoordinate.cpp; sourceTree = "<group>"; };
@@ -96,7 +115,6 @@
 		105C4832144B45C00015AE8F /* VSCFilterUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCFilterUtils.h; sourceTree = "<group>"; };
 		105C4833144B45C00015AE8F /* VSCFilterUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCFilterUtils.cpp; sourceTree = "<group>"; };
 		1061AABD1430A3B500C29FBB /* SynthStation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SynthStation.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		1061AAC11430A3B500C29FBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		1061AAC41430A3B500C29FBB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		1061AAC51430A3B500C29FBB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		1061AAC61430A3B500C29FBB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -105,9 +123,6 @@
 		1061AACD1430A3B600C29FBB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1061AACF1430A3B600C29FBB /* SynthStation-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SynthStation-Prefix.pch"; sourceTree = "<group>"; };
 		1061AAD11430A3B600C29FBB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		1061AAD31430A3B600C29FBB /* MyDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyDocument.h; sourceTree = "<group>"; };
-		1061AAD41430A3B600C29FBB /* MyDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyDocument.m; sourceTree = "<group>"; };
-		1061AAD71430A3B600C29FBB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		1061AADA1430A3B600C29FBB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		1061AAE11430A3B600C29FBB /* SynthStationTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SynthStationTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1061AAE21430A3B600C29FBB /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -174,12 +189,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1061AAC21430A3B500C29FBB /* Cocoa.framework in Frameworks */,
 				10F32D151450C0990051DDAC /* Accelerate.framework in Frameworks */,
 				1067DB2514548C2600F0670E /* libboost_system.a in Frameworks */,
 				1067DB2614548C2600F0670E /* libboost_filesystem.a in Frameworks */,
 				1067DB2714548C2600F0670E /* libboost_serialization.a in Frameworks */,
 				1067DB2914548C3C00F0670E /* libstk.a in Frameworks */,
+				10117EC41456195600240467 /* AppKit.framework in Frameworks */,
+				10118007145619DF00240467 /* AppKit.framework in Frameworks */,
+				10118008145619DF00240467 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,7 +205,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1061AAE31430A3B600C29FBB /* SenTestingKit.framework in Frameworks */,
-				1061AAE41430A3B600C29FBB /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,10 +232,10 @@
 			children = (
 				10516D771453247B00109B4B /* VSCFrequencyPoint.h */,
 				10516D781453247B00109B4B /* VSCFrequencyPoint.cpp */,
-				105C480C144B348D0015AE8F /* VSCFilter.h */,
-				105C480D144B348D0015AE8F /* VSCFilter.cpp */,
 				105C4832144B45C00015AE8F /* VSCFilterUtils.h */,
 				105C4833144B45C00015AE8F /* VSCFilterUtils.cpp */,
+				105C480C144B348D0015AE8F /* VSCFilter.h */,
+				105C480D144B348D0015AE8F /* VSCFilter.cpp */,
 				105C4810144B3D1A0015AE8F /* VSCFilterBiQuad.h */,
 				105C4811144B3D1A0015AE8F /* VSCFilterBiQuad.cpp */,
 			);
@@ -232,6 +248,8 @@
 			children = (
 				105C47D5144B32760015AE8F /* VSCSynthSourceElement.cpp */,
 				105C47D6144B32760015AE8F /* VSCSynthSourceElement.h */,
+				10531F7014602C57004DC3A1 /* VSCSynthSourceGroup.cpp */,
+				10531F6F14602C57004DC3A1 /* VSCSynthSourceGroup.h */,
 				105C47D7144B32760015AE8F /* VSCSynthSourceFile.cpp */,
 				105C47D8144B32760015AE8F /* VSCSynthSourceFile.h */,
 				105C47D9144B32760015AE8F /* VSCSynthSourceFileLoop.cpp */,
@@ -274,11 +292,12 @@
 		1061AAC01430A3B500C29FBB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				10118005145619DF00240467 /* AppKit.framework */,
+				10118006145619DF00240467 /* Foundation.framework */,
 				1067DB2814548C3C00F0670E /* libstk.a */,
 				1067DB2214548C2600F0670E /* libboost_system.a */,
 				1067DB2314548C2600F0670E /* libboost_filesystem.a */,
 				1067DB2414548C2600F0670E /* libboost_serialization.a */,
-				1061AAC11430A3B500C29FBB /* Cocoa.framework */,
 				1061AAE21430A3B600C29FBB /* SenTestingKit.framework */,
 				1061AAC31430A3B500C29FBB /* Other Frameworks */,
 				10F32D141450C0990051DDAC /* Accelerate.framework */,
@@ -299,9 +318,11 @@
 		1061AAC71430A3B500C29FBB /* SynthStation */ = {
 			isa = PBXGroup;
 			children = (
-				1061AAD31430A3B600C29FBB /* MyDocument.h */,
-				1061AAD41430A3B600C29FBB /* MyDocument.m */,
-				1061AAD61430A3B600C29FBB /* MyDocument.xib */,
+				10117E4E14560F1700240467 /* VSCSynthStationWindowController.h */,
+				10117E4F14560F1700240467 /* VSCSynthStationWindowController.m */,
+				10117E4114560E6900240467 /* VSCSynthStationDocument.h */,
+				10117E4214560E6900240467 /* VSCSynthStationDocument.m */,
+				10117E4414560E9700240467 /* VSCSynthStationWindowController.xib */,
 				1061AAD91430A3B600C29FBB /* MainMenu.xib */,
 				1061AAC81430A3B500C29FBB /* Supporting Files */,
 			);
@@ -344,6 +365,8 @@
 			children = (
 				10516D7A1453261800109B4B /* VSCSound.h */,
 				10516D7B1453261800109B4B /* VSCSound.cpp */,
+				10531F8414604B16004DC3A1 /* VSCSTKUtils.h */,
+				10531F8514604B16004DC3A1 /* VSCSTKUtils.cpp */,
 				105C47CA144B32760015AE8F /* Enveloppe */,
 				105C47D3144B32760015AE8F /* Filter */,
 				105C47D4144B32760015AE8F /* Source */,
@@ -354,6 +377,8 @@
 		1067DB2E14548C6700F0670E /* Generic */ = {
 			isa = PBXGroup;
 			children = (
+				10117E641456122500240467 /* NSApplication+VSCPaths.h */,
+				10117E651456122500240467 /* NSApplication+VSCPaths.m */,
 				1067DB4314548C8000F0670E /* CGColorOperations.h */,
 				1067DB4414548C8000F0670E /* CGColorOperations.mm */,
 				1067DB4514548C8000F0670E /* NSFileManager-MenuItem.h */,
@@ -397,6 +422,7 @@
 				107DA831144A487200D5ACA9 /* FileLoop.h */,
 				107DA833144A488900D5ACA9 /* FileLoop.cpp */,
 				105C4816144B3FA60015AE8F /* Filter.h */,
+				10531F7214602D15004DC3A1 /* Generator.h */,
 				108295B11449CD3F00B2DADA /* Noise.h */,
 				108295B41449CD7F00B2DADA /* Noise.cpp */,
 				108295B21449CD3F00B2DADA /* SingWave.h */,
@@ -488,8 +514,8 @@
 			files = (
 				1061AACC1430A3B500C29FBB /* InfoPlist.strings in Resources */,
 				1061AAD21430A3B600C29FBB /* Credits.rtf in Resources */,
-				1061AAD81430A3B600C29FBB /* MyDocument.xib in Resources */,
 				1061AADB1430A3B600C29FBB /* MainMenu.xib in Resources */,
+				10117E4514560E9700240467 /* VSCSynthStationWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,7 +552,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1061AACE1430A3B600C29FBB /* main.m in Sources */,
-				1061AAD51430A3B600C29FBB /* MyDocument.m in Sources */,
 				105C47E3144B32760015AE8F /* VSCEnveloppe.cpp in Sources */,
 				105C47E4144B32760015AE8F /* VSCEnveloppeCoordinate.cpp in Sources */,
 				105C47E5144B32760015AE8F /* VSCEnveloppePoint.cpp in Sources */,
@@ -550,6 +575,11 @@
 				1067DB5814548C8000F0670E /* VSCColour.cpp in Sources */,
 				1067DB5A14548C8000F0670E /* VSCException.cpp in Sources */,
 				1067DB5B14548C8000F0670E /* VSCMath.cpp in Sources */,
+				10117E4314560E6900240467 /* VSCSynthStationDocument.m in Sources */,
+				10117E5014560F1700240467 /* VSCSynthStationWindowController.m in Sources */,
+				10117E661456122500240467 /* NSApplication+VSCPaths.m in Sources */,
+				10531F7114602C57004DC3A1 /* VSCSynthSourceGroup.cpp in Sources */,
+				10531F8614604B16004DC3A1 /* VSCSTKUtils.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -586,14 +616,6 @@
 				1061AAD11430A3B600C29FBB /* en */,
 			);
 			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		1061AAD61430A3B600C29FBB /* MyDocument.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1061AAD71430A3B600C29FBB /* en */,
-			);
-			name = MyDocument.xib;
 			sourceTree = "<group>";
 		};
 		1061AAD91430A3B600C29FBB /* MainMenu.xib */ = {
@@ -640,7 +662,7 @@
 					"$(BOOST_INCLUDE)",
 				);
 				LIBRARY_SEARCH_PATHS = "$(BOOST_LIB)";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -668,6 +690,10 @@
 		1061AAF41430A3B600C29FBB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/../../../System/Library/Frameworks\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SynthStation/SynthStation-Prefix.pch";
 				INFOPLIST_FILE = "SynthStation/SynthStation-Info.plist";
@@ -683,6 +709,10 @@
 		1061AAF51430A3B600C29FBB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/../../../System/Library/Frameworks\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SynthStation/SynthStation-Prefix.pch";
 				INFOPLIST_FILE = "SynthStation/SynthStation-Info.plist";

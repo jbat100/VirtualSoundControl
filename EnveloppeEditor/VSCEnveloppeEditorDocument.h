@@ -35,8 +35,6 @@
 /*
  *	Enveloppe Base File Paths
  */
--(NSString*) applicationSupportDirectory;
--(NSString*) applicationLibraryDirectory;
 -(NSString*) enveloppeBaseFilePath;
 -(NSString*) baseFilePath;
 

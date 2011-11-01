@@ -14,9 +14,11 @@
 #include "VSCSynthSourceElement.h"
 #include "VSCSound.h"
 
+#ifdef VSCS_USE_STK
+
 #include "BlitSaw.h"
 
-class VSCSynthSourceSaw : public VSCSynthSourceElement, stk::BlitSaw {
+class VSCSynthSourceSaw : public VSCSynthSourceElement, public stk::BlitSaw {
 	
 public:
 	
@@ -28,11 +30,12 @@ public:
 inline stk::StkFloat VSCSynthSourceSaw::tick(void)
 {
 	if (_isOn) {
-		stk::STKFloat normalizedValue = stk::BlitSaw::tick();
+		stk::StkFloat normalizedValue = stk::BlitSaw::tick();
 		lastFrame_[0] = normalizedValue*_linearGain;
 	}
 	else {
-		stk::STKFloat normalizedValue = stk::BlitSaw::tick();
+		//stk::StkFloat normalizedValue = 
+		stk::BlitSaw::tick();
 		lastFrame_[0] = 0.0;
 	}
 	
@@ -41,17 +44,23 @@ inline stk::StkFloat VSCSynthSourceSaw::tick(void)
 
 inline stk::StkFrames& VSCSynthSourceSaw::tick(stk::StkFrames& frames, unsigned int channel)
 {
-	stk::BlitSaw::tick(frames, channel);
-	StkFloat *samples = &frames[channel];
+	stk::StkFloat *samples = &frames[channel];
 	unsigned int hop = frames.channels();
-	for (unsigned int i=0; i<frames.frames(); i++, samples += hop) {
-		if (_isOn) 
+	if (_isOn) {
+		stk::BlitSaw::tick(frames, channel);
+		for (unsigned int i=0; i<frames.frames(); i++, samples += hop) {
 			*samples = (*samples) * _linearGain;
-		else 
+		}		
+	}
+	else {
+		for (unsigned int i=0; i<frames.frames(); i++, samples += hop) {
 			*samples = 0.0;
+		}	
 	}
 	lastFrame_[0] = *samples;
 	return frames;
 }
+
+#endif
 
 #endif

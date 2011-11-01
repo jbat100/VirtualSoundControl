@@ -10,7 +10,6 @@
 #ifndef _VSC_FILTER_UTILS_
 #define _VSC_FILTER_UTILS_
 
-#include "VSCFilter.h"
 #include "VSCSound.h"
 #include "VSCFrequencyPoint.h"
 

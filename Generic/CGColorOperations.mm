@@ -35,7 +35,7 @@ CGColorRef CGColorCreateFromVSCColour (const VSCColour& colour) {
 	return CGColorCreateFromRGBA(colour.r, colour.g, colour.b, colour.a);
 }
 
-void drawLinearGradient(CGContextRef context, CGRect rect, CGColorRef startColor, CGColorRef endColor) {
+void drawLinearGradientInContext(CGContextRef context, CGRect rect, CGColorRef startColor, CGColorRef endColor) {
 	
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGFloat locations[] = {0.0, 1.0};

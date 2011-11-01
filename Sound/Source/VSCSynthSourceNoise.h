@@ -14,10 +14,12 @@
 #include "VSCSynthSourceElement.h"
 #include "VSCSound.h"
 
+#ifdef VSCS_USE_STK
+
 #include "Stk.h"
 #include "Noise.h"
 
-class VSCSynthSourceNoise : public VSCSynthSourceElement, stk::Noise {
+class VSCSynthSourceNoise : public VSCSynthSourceElement, public stk::Noise {
 	
 public:
 	
@@ -42,17 +44,23 @@ inline stk::StkFloat VSCSynthSourceNoise::tick(void)
 
 inline stk::StkFrames& VSCSynthSourceNoise::tick(stk::StkFrames& frames, unsigned int channel)
 {
-	stk::Noise::tick(frames, channel);
 	stk::StkFloat *samples = &frames[channel];
 	unsigned int hop = frames.channels();
-	for (unsigned int i=0; i<frames.frames(); i++, samples += hop) {
-		if (_isOn) 
+	if (_isOn) {
+		stk::Noise::tick(frames, channel);
+		for (unsigned int i=0; i<frames.frames(); i++, samples += hop) {
 			*samples = (*samples) * _linearGain;
-		else 
+		}		
+	}
+	else {
+		for (unsigned int i=0; i<frames.frames(); i++, samples += hop) {
 			*samples = 0.0;
+		}	
 	}
 	lastFrame_[0] = *samples;
 	return frames;
 }
+
+#endif
 
 #endif

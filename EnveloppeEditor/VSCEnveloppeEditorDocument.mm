@@ -7,8 +7,10 @@
 //
 
 #import "VSCEnveloppeEditorDocument.h"
+#import "NSApplication+VSCPaths.h"
 
 #import "VSCSTKEnveloppe.h"
+
 
 @implementation VSCEnveloppeEditorDocument
 
@@ -56,6 +58,8 @@ static NSString* enveloppeBaseFilePath = nil;
     return YES;
 }
 
+#pragma mark Window Controllers
+
 -(void) makeWindowControllers {
 	
 	NSLog(@"%@ windowControllers are %@", self, [self windowControllers]);
@@ -94,30 +98,13 @@ static NSString* enveloppeBaseFilePath = nil;
 
 #pragma mark - Enveloppe Base File Paths
 
-- (NSString *) applicationSupportDirectory {	
-	NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-	NSString *dir = [paths lastObject];
-	if (![[NSFileManager defaultManager] fileExistsAtPath:dir])
-		[[NSFileManager defaultManager] createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:nil];
-	return dir;
-}
-
-- (NSString *) applicationLibraryDirectory {	
-	NSArray* paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-	NSString *dir = [paths lastObject];
-	if (![[NSFileManager defaultManager] fileExistsAtPath:dir])
-		[[NSFileManager defaultManager] createDirectoryAtPath:dir 
-								  withIntermediateDirectories:YES attributes:nil error:nil];
-	return dir;
-}
-
-
 
 -(NSString*) baseFilePath {
 	
 	if (!baseFilePath) {
 		@synchronized(self) {
-			baseFilePath = [[[self applicationLibraryDirectory] stringByAppendingPathComponent:@"VSC"] retain];
+			baseFilePath = [[[[NSApplication sharedApplication] applicationLibraryDirectory] 
+							 stringByAppendingPathComponent:@"VSC"] retain];
 		}
 	}
 	

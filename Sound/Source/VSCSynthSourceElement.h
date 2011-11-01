@@ -11,20 +11,39 @@
 
 #include "VSCSound.h"
 
+#include <list>
+#include <boost/shared_ptr.hpp>
+
+#define VSCSynthSourceElementPtr    boost::shared_ptr<VSCSynthSourceElement>
+
+#define ConstSynthSrcElemIter		std::list<VSCSynthSourceElementPtr>::const_iterator 
+#define ConstRevSynthSrcElemIter	std::list<VSCSynthSourceElementPtr>::const_reverse_iterator 
+
+#define SynthSrcElemIter			std::list<VSCSynthSourceElementPtr>::iterator 
+#define RevSynthSrcElemIter			std::list<VSCSynthSourceElementPtr>::reverse_iterator 
+
+/*
+ *	Root class for source elements (deliberatly not dependent on STK for possible future,
+ *	changes in the C++ sound engine)
+ */
+
 class VSCSynthSourceElement {
+	
 	
 public:
 	
 	/* value between 0 and 1 */
 	void setLinearGain(VSCSFloat g);
-	VSCSFloat getLinearGet(void);
+	VSCSFloat getLinearGet(void) const;
 	
 	/* value between 0 and minus infinity */
 	void setDBGain(VSCSFloat g);	
-	VSCSFloat getDBGain(void);
+	VSCSFloat getDBGain(void) const;
 	
 	void setOn(bool on);
-	bool isOn(void);
+	bool isOn(void) const;
+	
+	virtual std::string sourceTypeString(void);
 	
 	
 protected:

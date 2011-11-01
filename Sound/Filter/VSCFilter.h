@@ -14,6 +14,8 @@
 #include "VSCFrequencyPoint.h"
 #include "VSCFilterUtils.h"
 
+#include <boost/shared_ptr.hpp>
+
 #include <vector>
 
 #define ConstFreqPntIter			std::vector<VSCFrequencyPoint>::const_iterator 
