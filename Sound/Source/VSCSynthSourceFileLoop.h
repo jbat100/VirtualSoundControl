@@ -31,6 +31,10 @@ protected:
 	
 };
 
+inline void VSCSynthSourceFileLoop::processComputationFrames(void) {
+	
+}
+
 /*
 
 inline stk::StkFloat VSCSynthSourceFileLoop::tick(unsigned int channel)

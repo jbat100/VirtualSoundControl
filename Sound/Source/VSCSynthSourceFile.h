@@ -14,7 +14,7 @@
 #include "VSCSynthSourceGenerator.h"
 #include "VSCSound.h"
 
-//#ifdef VSCS_USE_STK
+#ifdef VSCS_USE_STK
 
 #include "Stk.h"
 #include "FileWvIn.h"
@@ -31,6 +31,10 @@ protected:
     void processComputationFrames(void);
 	
 };
+
+inline void VSCSynthSourceFile::processComputationFrames(void) {
+	
+}
 
 /*
 
@@ -70,6 +74,6 @@ inline stk::StkFrames& VSCSynthSourceFile::tick(stk::StkFrames& frames)
  
  */
 
-//#endif // #ifdef VSCS_USE_STK
+#endif // #ifdef VSCS_USE_STK
 
 #endif // #ifndef _VSC_SYNTH_SOURCE_FILE_

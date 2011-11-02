@@ -9,18 +9,18 @@
 #ifndef _VSC_SYNTH_SOURCE_GENERATOR_
 #define _VSC_SYNTH_SOURCE_GENERATOR_
 
-
-#ifdef VSCS_USE_STK
-
+#include "VSCSound.h"
 #include "VSCSynthSourceElement.h"
 #include "VSCSTKUtils.h"
-
-#include "Stk.h"
-#include "Generator.h"
 
 #include <list>
 #include <vector>
 #include <boost/shared_ptr.hpp>
+
+#ifdef VSCS_USE_STK
+
+#include "Stk.h"
+#include "Generator.h"
 
 #define VSCSynthSourceGeneratorPtr      boost::shared_ptr<VSCSynthSourceGenerator>
 

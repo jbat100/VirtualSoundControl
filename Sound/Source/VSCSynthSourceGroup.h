@@ -23,8 +23,6 @@
 #include "Stk.h"
 
 class VSCSynthSourceGroup : public VSCSynthSourceGenerator {
-
-//class VSCSynthSourceGroup : public stk::Generator {
 			
 public:
 	
@@ -34,14 +32,15 @@ public:
 	SynthSrcGenIter beginGeneratorsIterator(void);
 	SynthSrcGenIter endGeneratorsIterator(void);
 	
-	virtual stk::StkFrames& tick(stk::StkFrames& frames, unsigned int channel = 0);
-	
 protected:
+	
+	void processComputationFrames(void);
 	
 	std::list<VSCSynthSourceGeneratorPtr> _generators;
 	
 	/*
      *  keep an StkFrames so that it does not need to be created everytime the tick function is called
+	 *  this is used to add the frames of all the generators 
      */
 	stk::StkFrames _tempFrames;
     /*
@@ -53,9 +52,9 @@ protected:
 
 
 
-inline stk::StkFrames& VSCSynthSourceGroup::tick(stk::StkFrames& frames, unsigned int channel)
+inline void VSCSynthSourceGroup::processComputationFrames(void)
 {
-	return frames;
+
 }
 
 #endif // VSCS_USE_STK

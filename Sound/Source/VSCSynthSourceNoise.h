@@ -31,6 +31,10 @@ protected:
     
 };
 
+inline void VSCSynthSourceNoise::processComputationFrames(void) {
+	
+}
+
 /*
  
 inline stk::StkFloat VSCSynthSourceNoise::tick(void)

@@ -11,8 +11,8 @@
 #ifndef _VSC_SYNTH_SOURCE_SAW_
 #define _VSC_SYNTH_SOURCE_SAW_
 
-#include "VSCSynthSourceGenerator.h"
 #include "VSCSound.h"
+#include "VSCSynthSourceGenerator.h"
 
 #ifdef VSCS_USE_STK
 
@@ -29,6 +29,10 @@ protected:
     void processComputationFrames(void);
 	
 };
+
+inline void VSCSynthSourceSaw::processComputationFrames(void) {
+	
+}
 
 /*
 

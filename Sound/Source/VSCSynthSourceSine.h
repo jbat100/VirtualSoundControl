@@ -30,6 +30,10 @@ protected:
 	
 };
 
+inline void VSCSynthSourceSine::processComputationFrames(void) {
+	
+}
+
 /*
 
 inline stk::StkFloat VSCSynthSourceSine::tick(void)

@@ -8,4 +8,3 @@
  */
 
 #include "VSCSynthSourceNoise.h"
-#include "VSCSound.h"

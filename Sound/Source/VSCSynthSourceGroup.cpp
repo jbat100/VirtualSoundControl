@@ -57,6 +57,6 @@ SynthSrcGenIter VSCSynthSourceGroup::endGeneratorsIterator(void) {
 }
 
 void VSCSynthSourceGroup::checkTempFrames(stk::StkFrames& frames) {
-	if (_monoFrames.channels() == frames.channels() || _monoFrames.frames() == frames.frames())
-        _monoFrames.resize(frames.frames(), frames.channels());
+	if (_tempFrames.channels() == frames.channels() || _tempFrames.frames() == frames.frames())
+        _tempFrames.resize(frames.frames(), frames.channels());
 }
