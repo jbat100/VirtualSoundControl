@@ -11,23 +11,28 @@
 #ifndef _VSC_SYNTH_SOURCE_NOISE_
 #define _VSC_SYNTH_SOURCE_NOISE_
 
-#include "VSCSynthSourceElement.h"
 #include "VSCSound.h"
+#include "VSCSynthSourceGenerator.h"
 
 #ifdef VSCS_USE_STK
 
 #include "Stk.h"
 #include "Noise.h"
 
-class VSCSynthSourceNoise : public VSCSynthSourceElement, public stk::Noise {
+class VSCSynthSourceNoise : public VSCSynthSourceGenerator {
 	
 public:
 	
-	stk::StkFloat tick( void );
-	stk::StkFrames& tick(stk::StkFrames& frames, unsigned int channel = 0);
-	
+protected:
+
+	stk::Noise noise;
+    
+    void processComputationFrames(void);
+    
 };
 
+/*
+ 
 inline stk::StkFloat VSCSynthSourceNoise::tick(void)
 {
 	if (_isOn) {
@@ -60,6 +65,8 @@ inline stk::StkFrames& VSCSynthSourceNoise::tick(stk::StkFrames& frames, unsigne
 	lastFrame_[0] = *samples;
 	return frames;
 }
+ 
+ */
 
 #endif
 

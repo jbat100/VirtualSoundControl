@@ -12,6 +12,7 @@
 #include "VSCSound.h"
 
 #include <list>
+#include <vector>
 #include <boost/shared_ptr.hpp>
 
 #define VSCSynthSourceElementPtr    boost::shared_ptr<VSCSynthSourceElement>
@@ -31,25 +32,43 @@ class VSCSynthSourceElement {
 	
 	
 public:
+    
+    virtual void setNumberOfChannels(unsigned int numberOfChannels);
+    virtual unsigned int getNumberOfChannels(void);
 	
+    /*
+     * These methods set the gain equally for the channels
+     */
 	/* value between 0 and 1 */
-	void setLinearGain(VSCSFloat g);
-	VSCSFloat getLinearGet(void) const;
-	
+	virtual void setLinearGain(VSCSFloat g);
 	/* value between 0 and minus infinity */
-	void setDBGain(VSCSFloat g);	
-	VSCSFloat getDBGain(void) const;
+	virtual void setDBGain(VSCSFloat g);	
+    
+    /*
+     * Set/get individual gains for each channel
+     */
+    virtual void setLinearGains(std::vector<VSCSFloat>& channelGains);
+    virtual void getLinearGains(std::vector<VSCSFloat>& channelGains) const;
+    virtual void setDBGains(std::vector<VSCSFloat>& channelDBGains);
+    virtual void getDBGains(std::vector<VSCSFloat>& channelDBGains) const;
 	
-	void setOn(bool on);
-	bool isOn(void) const;
-	
+    /*
+     * Turns off all processing
+     */
+	virtual void setOn(bool on);
+	virtual bool isOn(void) const;
+    
+    /*
+     * A human readable identifier for the source element 
+     */
 	virtual std::string sourceTypeString(void);
 	
 	
 protected:
 	
 	bool _isOn;
-	VSCSFloat _linearGain; /* value between 0 and 1 */
+    std::vector<VSCSFloat> _channelLinearGains;
+    unsigned int _numberOfChannels;
 	
 };
 

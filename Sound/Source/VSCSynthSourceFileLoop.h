@@ -11,21 +11,27 @@
 #ifndef _VSC_SYNTH_SOURCE_FILE_LOOP_
 #define _VSC_SYNTH_SOURCE_FILE_LOOP_
 
-#include "VSCSynthSourceElement.h"
+#include "VSCSynthSourceGenerator.h"
 #include "VSCSound.h"
 
 #ifdef VSCS_USE_STK
 
 #include "FileLoop.h"
 
-class VSCSynthSourceFileLoop : public VSCSynthSourceElement, public stk::FileLoop {
+class VSCSynthSourceFileLoop : public VSCSynthSourceGenerator {
 	
 public:
 	
-	stk::StkFloat tick(unsigned int channel = 0);
-	stk::StkFrames& tick(stk::StkFrames& frames);
+    
+protected:
+    
+    stk::FileLoop fileWvIn;
+    
+    void processComputationFrames(void);
 	
 };
+
+/*
 
 inline stk::StkFloat VSCSynthSourceFileLoop::tick(unsigned int channel)
 {
@@ -60,6 +66,8 @@ inline stk::StkFrames& VSCSynthSourceFileLoop::tick(stk::StkFrames& frames)
 	
 	return frames;
 }
+ 
+ */
 
 #endif // #ifdef VSCS_USE_STK
 

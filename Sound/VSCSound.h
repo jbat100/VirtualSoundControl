@@ -14,19 +14,26 @@
 #ifndef _VSC_SOUND_H_
 #define _VSC_SOUND_H_
 
-#define VSCS_USE_STK
+#include <climits>
 
+#define VSCS_USE_STK
 #define VSCS_USE_DOUBLE_PRECISION
 
 
-//#ifdef VSCS_USE_STK
+
+#ifdef VSCS_USE_STK
 	#include "Stk.h"
 	//Define VSCSFloat (double or float or same as stk::StkFloat)
 	typedef stk::StkFloat VSCSFloat;
-//#else 
-//	typedef double VSCSFloat;
-//#endif
+#else 
+	typedef double VSCSFloat;
+#endif
 
+
+VSCSFloat linearToDBGain(VSCSFloat linearGain);
+VSCSFloat dBToLinearGain(VSCSFloat dBGain);
+
+#define VSCS_ALL_CHANNELS UINT_MAX
 
 #endif
 

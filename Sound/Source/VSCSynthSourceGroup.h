@@ -11,7 +11,7 @@
 #define _VSC_SYNTH_SOURCE_GROUP_
 
 #include "VSCSound.h"
-#include "VSCSynthSourceElement.h"
+#include "VSCSynthSourceGenerator.h"
 
 #include <list>
 #include <boost/foreach.hpp>
@@ -21,32 +21,33 @@
 #ifdef VSCS_USE_STK
 
 #include "Stk.h"
-#include "Generator.h"
 
-class VSCSynthSourceGroup : public VSCSynthSourceElement, public stk::Generator {
+class VSCSynthSourceGroup : public VSCSynthSourceGenerator {
 
 //class VSCSynthSourceGroup : public stk::Generator {
 			
 public:
 	
-	void addElement(VSCSynthSourceElementPtr elem);
-	void removeElement(VSCSynthSourceElementPtr elem);
+	virtual void addGenerator(VSCSynthSourceGeneratorPtr elem);
+	virtual void removeGenerator(VSCSynthSourceGeneratorPtr elem);
 	
-	SynthSrcElemIter beginElementsIterator(void);
-	SynthSrcElemIter endElementsIterator(void);
+	SynthSrcGenIter beginGeneratorsIterator(void);
+	SynthSrcGenIter endGeneratorsIterator(void);
 	
 	virtual stk::StkFrames& tick(stk::StkFrames& frames, unsigned int channel = 0);
 	
 protected:
 	
-	std::list<VSCSynthSourceElementPtr> _elements;
+	std::list<VSCSynthSourceGeneratorPtr> _generators;
 	
-
-	// keep a list of elements (same as _elements) casted to stk::Generator for faster tick computes
-	std::list<stk::Generator*> _stkElements;
-	// keep an StkFrames so that it does not need to be created everytime the tick function is called
+	/*
+     *  keep an StkFrames so that it does not need to be created everytime the tick function is called
+     */
 	stk::StkFrames _tempFrames;
-	void checkTempFramesForCompatibilityWith(stk::StkFrames& frames);
+    /*
+     *  Check that _tempFrames has the same number of frames and channels as argument
+     */
+	virtual void checkTempFrames(stk::StkFrames& frames);
 	
 };
 
@@ -54,7 +55,6 @@ protected:
 
 inline stk::StkFrames& VSCSynthSourceGroup::tick(stk::StkFrames& frames, unsigned int channel)
 {
-
 	return frames;
 }
 

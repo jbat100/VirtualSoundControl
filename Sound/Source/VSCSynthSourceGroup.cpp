@@ -9,62 +9,54 @@
 
 #include "VSCSynthSourceGroup.h"
 
-#include "Generator.h"
 #include "VSCSTKUtils.h"
 #include <algorithm>
 
-void VSCSynthSourceGroup::addElement(VSCSynthSourceElementPtr elem) {
+void VSCSynthSourceGroup::addGenerator(VSCSynthSourceGeneratorPtr elem) {
 	
 	assert(elem);
 	
 	if (!elem)
 		return;
 	
-	ConstSynthSrcElemIter it = find (_elements.begin(), _elements.end(), elem);
+	ConstSynthSrcGenIter it = find (_generators.begin(), _generators.end(), elem);
 	
-	assert(it == _elements.end());
+	assert(it == _generators.end());
 	
-	if (it == _elements.end()) {
-		_elements.push_back(elem);
-		
-		
-		stk::Generator *gen = castVSCSynthSourceElementToStkGenerator(elem.get());
-		
-		assert(gen);
-		
-		if (gen) {
-			_stkElements.push_back(gen);
-		}
+	if (it == _generators.end()) {
+		_generators.push_back(elem);
+
 		
 	}
 	
 }
 
-void VSCSynthSourceGroup::removeElement(VSCSynthSourceElementPtr elem) {
+void VSCSynthSourceGroup::removeGenerator(VSCSynthSourceGeneratorPtr elem) {
 	
 	assert(elem);
 	
 	if (!elem)
 		return;
 	
-	SynthSrcElemIter it = find (_elements.begin(), _elements.end(), elem);
+	SynthSrcGenIter it = find (_generators.begin(), _generators.end(), elem);
 	
-	assert(it != _elements.end());
+	assert(it != _generators.end());
 	
-	if (it != _elements.end()) {
-		_elements.erase(it);
+	if (it != _generators.end()) {
+		_generators.erase(it);
 	}
 	
 }
 
-SynthSrcElemIter VSCSynthSourceGroup::beginElementsIterator(void) {
-	return _elements.begin();
+SynthSrcGenIter VSCSynthSourceGroup::beginGeneratorsIterator(void) {
+	return _generators.begin();
 }
 
-SynthSrcElemIter VSCSynthSourceGroup::endElementsIterator(void) {
-	return _elements.end();
+SynthSrcGenIter VSCSynthSourceGroup::endGeneratorsIterator(void) {
+	return _generators.end();
 }
 
-void VSCSynthSourceGroup::checkTempFramesForCompatibilityWith(stk::StkFrames& frames) {
-	
+void VSCSynthSourceGroup::checkTempFrames(stk::StkFrames& frames) {
+	if (_monoFrames.channels() == frames.channels() || _monoFrames.frames() == frames.frames())
+        _monoFrames.resize(frames.frames(), frames.channels());
 }

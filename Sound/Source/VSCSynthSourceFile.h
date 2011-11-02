@@ -11,7 +11,7 @@
 #ifndef _VSC_SYNTH_SOURCE_FILE_
 #define _VSC_SYNTH_SOURCE_FILE_
 
-#include "VSCSynthSourceElement.h"
+#include "VSCSynthSourceGenerator.h"
 #include "VSCSound.h"
 
 //#ifdef VSCS_USE_STK
@@ -19,14 +19,20 @@
 #include "Stk.h"
 #include "FileWvIn.h"
 
-class VSCSynthSourceFile : public VSCSynthSourceElement, public stk::FileWvIn {
+class VSCSynthSourceFile : public VSCSynthSourceGenerator {
 	
 public:
 	
-	stk::StkFloat tick(unsigned int channel = 0);
-	stk::StkFrames& tick(stk::StkFrames& frames);
+    
+protected:
+    
+    stk::FileWvIn fileWvIn;
+    
+    void processComputationFrames(void);
 	
 };
+
+/*
 
 inline stk::StkFloat VSCSynthSourceFile::tick(unsigned int channel)
 {
@@ -61,6 +67,8 @@ inline stk::StkFrames& VSCSynthSourceFile::tick(stk::StkFrames& frames)
 	lastFrame_[0] = *samples;
 	return frames;
 }
+ 
+ */
 
 //#endif // #ifdef VSCS_USE_STK
 

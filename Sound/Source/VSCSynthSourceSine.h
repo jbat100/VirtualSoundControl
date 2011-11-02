@@ -11,21 +11,26 @@
 #ifndef _VSC_SYNTH_SOURCE_SINE_
 #define _VSC_SYNTH_SOURCE_SINE_
 
-#include "VSCSynthSourceElement.h"
 #include "VSCSound.h"
+#include "VSCSynthSourceGenerator.h"
 
 #ifdef VSCS_USE_STK
 
 #include "SineWave.h"
 
-class VSCSynthSourceSine : public VSCSynthSourceElement, public stk::SineWave {
+class VSCSynthSourceSine : public VSCSynthSourceGenerator {
 	
 public:
 	
-	stk::StkFloat tick( void );
-	stk::StkFrames& tick(stk::StkFrames& frames, unsigned int channel = 0);
+protected:
+    
+	stk::SineWave sineWave;
+    
+    void processComputationFrames(void);
 	
 };
+
+/*
 
 inline stk::StkFloat VSCSynthSourceSine::tick(void)
 {
@@ -59,6 +64,8 @@ inline stk::StkFrames& VSCSynthSourceSine::tick(stk::StkFrames& frames, unsigned
 	lastFrame_[0] = *samples;
 	return frames;
 }
+ 
+ */
 
 #endif
 

@@ -11,21 +11,26 @@
 #ifndef _VSC_SYNTH_SOURCE_SQUARE_
 #define _VSC_SYNTH_SOURCE_SQUARE_
 
-#include "VSCSynthSourceElement.h"
 #include "VSCSound.h"
+#include "VSCSynthSourceGenerator.h"
 
 #ifdef VSCS_USE_STK
 
 #include "BlitSquare.h"
 
-class VSCSynthSourceSquare : public VSCSynthSourceElement, public stk::BlitSquare {
+class VSCSynthSourceSquare : public VSCSynthSourceGenerator {
 	
 public:
 	
-	stk::StkFloat tick( void );
-	stk::StkFrames& tick(stk::StkFrames& frames, unsigned int channel = 0);
+protected:
+    
+	stk::BlitSquare  blitSquare;
+    
+    void processComputationFrames(void);
 	
 };
+
+/*
 
 inline stk::StkFloat VSCSynthSourceSquare::tick(void)
 {
@@ -58,6 +63,8 @@ inline stk::StkFrames& VSCSynthSourceSquare::tick(stk::StkFrames& frames, unsign
 	lastFrame_[0] = *samples;
 	return frames;
 }
+ 
+ */
 
 #endif
 

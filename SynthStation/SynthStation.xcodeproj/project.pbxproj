@@ -51,6 +51,7 @@
 		1067DB5814548C8000F0670E /* VSCColour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1067DB4B14548C8000F0670E /* VSCColour.cpp */; };
 		1067DB5A14548C8000F0670E /* VSCException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1067DB4F14548C8000F0670E /* VSCException.cpp */; };
 		1067DB5B14548C8000F0670E /* VSCMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1067DB5114548C8000F0670E /* VSCMath.cpp */; };
+		10A0CD29146172E700070291 /* VSCSynthSourceGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A0CD28146172E600070291 /* VSCSynthSourceGenerator.cpp */; };
 		10F32D151450C0990051DDAC /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F32D141450C0990051DDAC /* Accelerate.framework */; };
 /* End PBXBuildFile section */
 
@@ -181,6 +182,8 @@
 		108295C91449CE0800B2DADA /* BlitSquare.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlitSquare.cpp; sourceTree = STK_SOURCE; };
 		108295CC1449CE1A00B2DADA /* BlitSaw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlitSaw.h; sourceTree = STK_INCLUDE; };
 		108295CD1449CE1A00B2DADA /* BlitSquare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlitSquare.h; sourceTree = STK_INCLUDE; };
+		10A0CD28146172E600070291 /* VSCSynthSourceGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSynthSourceGenerator.cpp; sourceTree = "<group>"; };
+		10A0CD2A1461730600070291 /* VSCSynthSourceGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthSourceGenerator.h; sourceTree = "<group>"; };
 		10F32D141450C0990051DDAC /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -248,6 +251,8 @@
 			children = (
 				105C47D5144B32760015AE8F /* VSCSynthSourceElement.cpp */,
 				105C47D6144B32760015AE8F /* VSCSynthSourceElement.h */,
+				10A0CD28146172E600070291 /* VSCSynthSourceGenerator.cpp */,
+				10A0CD2A1461730600070291 /* VSCSynthSourceGenerator.h */,
 				10531F7014602C57004DC3A1 /* VSCSynthSourceGroup.cpp */,
 				10531F6F14602C57004DC3A1 /* VSCSynthSourceGroup.h */,
 				105C47D7144B32760015AE8F /* VSCSynthSourceFile.cpp */,
@@ -580,6 +585,7 @@
 				10117E661456122500240467 /* NSApplication+VSCPaths.m in Sources */,
 				10531F7114602C57004DC3A1 /* VSCSynthSourceGroup.cpp in Sources */,
 				10531F8614604B16004DC3A1 /* VSCSTKUtils.cpp in Sources */,
+				10A0CD29146172E700070291 /* VSCSynthSourceGenerator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

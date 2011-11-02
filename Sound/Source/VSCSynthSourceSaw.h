@@ -11,21 +11,26 @@
 #ifndef _VSC_SYNTH_SOURCE_SAW_
 #define _VSC_SYNTH_SOURCE_SAW_
 
-#include "VSCSynthSourceElement.h"
+#include "VSCSynthSourceGenerator.h"
 #include "VSCSound.h"
 
 #ifdef VSCS_USE_STK
 
 #include "BlitSaw.h"
 
-class VSCSynthSourceSaw : public VSCSynthSourceElement, public stk::BlitSaw {
+class VSCSynthSourceSaw : public VSCSynthSourceGenerator {
 	
 public:
 	
-	stk::StkFloat tick( void );
-	stk::StkFrames& tick(stk::StkFrames& frames, unsigned int channel = 0);
+protected:
+    
+	stk::BlitSaw blitSaw;
+    
+    void processComputationFrames(void);
 	
 };
+
+/*
 
 inline stk::StkFloat VSCSynthSourceSaw::tick(void)
 {
@@ -60,6 +65,8 @@ inline stk::StkFrames& VSCSynthSourceSaw::tick(stk::StkFrames& frames, unsigned 
 	lastFrame_[0] = *samples;
 	return frames;
 }
+ 
+ */
 
 #endif
 
