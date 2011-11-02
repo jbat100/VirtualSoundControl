@@ -12,15 +12,14 @@
 
 #include "Stk.h"
 #include "Generator.h"
-#include "FileWvIn.h"
-#include "FileLoop.h"
 
 #include "VSCSound.h"
-#include "VSCSynthSourceElement.h"
 
-
-stk::Generator* castVSCSynthSourceElementToStkGenerator(VSCSynthSourceElement* elem);
-stk::FileWvIn* castVSCSynthSourceElementToStkFileWvIn(VSCSynthSourceElement* elem);
-stk::FileLoop* castVSCSynthSourceElementToStkFileLoop(VSCSynthSourceElement* elem);
+namespace stk {
+    
+void averageFramesChannels(stk::StkFrames& frames, stk::StkFrames& averagedFrames);
+void setFramesChannel(stk::StkFrames& targetFrames, stk::StkFrames& monoFrames, unsigned int channel);
+    
+}
 
 #endif

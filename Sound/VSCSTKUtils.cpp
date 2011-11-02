@@ -8,52 +8,38 @@
  */
 
 #include "VSCSTKUtils.h"
+#include <cassert>
 
-#include "VSCSynthSourceGroup.h"
-#include "VSCSynthSourceFile.h"
-#include "VSCSynthSourceFileLoop.h"
-#include "VSCSynthSourceSine.h"
-#include "VSCSynthSourceSaw.h"
-#include "VSCSynthSourceSquare.h"
+namespace stk {
+    
+void averageFramesChannels(stk::StkFrames& frames, stk::StkFrames& averagedFrames) {
+    
+    /*
+     *  resize averagedFramed with the same number of frames as frames
+     */
+    averagedFrames.resize(frames.frames(), 1);
+    
+    for (unsigned int frameIndex = 0; frameIndex < frames.frames(); frameIndex++) {
+        stk::StkFloat average = 0.0;
+        for (unsigned int channelIndex = 0; channelIndex < frames.channels(); channelIndex++) {
+            average += frames(frameIndex, channelIndex);
+        }
+        average /= (VSCSFloat)frames.channels();
+        averagedFrames[frameIndex] = average;
+    }
+    
+}
 
-stk::Generator* castVSCSynthSourceElementToStkGenerator(VSCSynthSourceElement* elem) {
-	
-	VSCSynthSourceGroup* group = dynamic_cast<VSCSynthSourceGroup*> (elem);
-	if (group)
-		return group;
-	
-	VSCSynthSourceSine* sine = dynamic_cast<VSCSynthSourceSine*> (elem);
-	if (sine)
-		return sine;
-	
-	VSCSynthSourceSaw* saw = dynamic_cast<VSCSynthSourceSaw*> (elem);
-	if (saw)
-		return saw;
-	
-	VSCSynthSourceSquare* square = dynamic_cast<VSCSynthSourceSquare*> (elem);
-	if (square)
-		return square;
-	
-	return NULL;
+void setFramesChannel(stk::StkFrames& targetFrames, stk::StkFrames& monoFrames, unsigned int channel) {
+    
+    std::assert(targetFrames.frames() == monoFrames.frames());
+    std::assert(monoFrames.channels() == 1);
+    
+    for (unsigned int frameIndex = 0; frameIndex < targetFrames.frames(); frameIndex++) {
+        targetFrames(frameIndex, channel) = monoFrames[frameIndex];
+    }
+    
+}
 
 }
 
-stk::FileWvIn* castVSCSynthSourceElementToStkFileWvIn(VSCSynthSourceElement* elem) {
-	
-	VSCSynthSourceFile* file = dynamic_cast<VSCSynthSourceFile*> (elem);
-	if (file)
-		return file;
-	
-	return NULL;
-	
-}
-
-stk::FileLoop* castVSCSynthSourceElementToStkFileLoop(VSCSynthSourceElement* elem) {
-
-	VSCSynthSourceFileLoop* loop = dynamic_cast<VSCSynthSourceFileLoop*> (elem);
-	if (loop)
-		return loop;
-	
-	return NULL;
-	
-}

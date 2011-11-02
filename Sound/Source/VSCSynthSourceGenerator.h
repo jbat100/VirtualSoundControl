@@ -13,6 +13,7 @@
 #ifdef VSCS_USE_STK
 
 #include "VSCSynthSourceElement.h"
+#include "VSCSTKUtils.h"
 
 #include "Stk.h"
 #include "Generator.h"
@@ -44,7 +45,7 @@ public:
 protected:
 	
 	/* 
-     *  keep a seperate StkFrames so that it does not need to be created everytime the tick function is called
+     *  Keep a seperate StkFrames so that it does not need to be created everytime the tick function is called
      *  this is used by the stk generators to compute samples independently of the number of channels of the, 
      *  VSCSynthSourceGenerator. These computed channels are then propagated to the of the VSCSynthSourceGenerator
      *  channels according to specified levels.
@@ -55,6 +56,14 @@ protected:
      *
      */
     stk::StkFrames _computationFrames;
+    
+    /*
+     *  Keep a StkFrames object for averaging (used when multi-channel _computationFrames are generated and the number 
+     *  of channels does not correspond to _numberOfChannels) : the _computationFrames averaged over all channels are then assigned
+     *  to all frames channels.
+     */
+    stk::StkFrames _averageFrames;
+    
     /*
      * compute (call the tick method) mono frames, this is the actual computation of the samples 
      */
@@ -66,14 +75,32 @@ protected:
 	
 };
 
+/*
+ *  Don't use the plain sample tick because it just makes things more confusing, we can just use the frames 
+ *  version below with 1 frame long argument for single multi-channel ticks. Using this will crash in debug,
+ *  and output 0 in release.
+ */
 inline stk::StkFloat VSCSynthSourceGenerator::tick(void) {
-    
+    assert(false);
     return 0.0;
-    
 }
 
 inline stk::StkFrames& VSCSynthSourceGenerator::tick(stk::StkFrames& frames, unsigned int channel)
 {
+    checkComputationFrames(frames);
+    processComputationFrames();
+    
+    if (frames.channels() == _computationFrames.channels()) {
+        /*
+         *  If we have exactly the same number of channels the we just assign the data
+         *  the = operator is overloaded so that the data from _computationFrames is copied over
+         */
+        frames = _computationFrames;
+    }
+    else {
+        stk::averageFramesChannels(_computationFrames, _averageFrames);
+    }
+    
 	return frames;
 }
 
