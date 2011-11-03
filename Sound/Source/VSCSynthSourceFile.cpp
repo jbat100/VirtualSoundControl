@@ -7,6 +7,10 @@
  *
  */
 
-#include "VSCSynthSourceNoise.h"
-#include "VSCSound.h"
+#include "VSCSynthSourceFile.h"
+
+
+stk::FileWvIn* VSCSynthSourceFile::getStkFileWvIn(void) {
+    return &fileWvIn;
+}
 

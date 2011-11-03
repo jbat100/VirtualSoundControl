@@ -10,6 +10,7 @@
 #include "VSCSound.h"
 #include "VSCSTKUtils.h"
 #include <cassert>
+#include <string>
 
 #include <Accelerate/Accelerate.h>
 
@@ -33,7 +34,7 @@ namespace stk {
 		
 	}
 
-	void setFramesChannel(StkFrames& targetFrames, StkFrames& monoFrames, unsigned int channel) {
+	void setFramesChannelWithMonoFrames(StkFrames& targetFrames, StkFrames& monoFrames, unsigned int channel) {
 		
 		assert(targetFrames.frames() == monoFrames.frames());
 		assert(monoFrames.channels() == 1);
@@ -44,6 +45,12 @@ namespace stk {
 		}
 		
 	}
+    
+    void setAllFramesChannelsWithMonoFrames(StkFrames& targetFrames, StkFrames& monoFrames) {
+        for (unsigned int i = 0; i < targetFrames.channels(); i++) {
+            setFramesChannelWithMonoFrames(targetFrames, monoFrames, i);
+        }
+    }
 	
 	void scaleFramesChannel(StkFrames& targetFrames, unsigned int channel, StkFloat scale) {
 		
@@ -61,6 +68,12 @@ namespace stk {
 #endif
 		
 	}
+    
+    void zeroFrames(StkFrames& targetFrames) {
+        
+        std::memset(&targetFrames[0], 0, sizeof(stk::StkFloat) * targetFrames.size());
+        
+    }
 
 }
 

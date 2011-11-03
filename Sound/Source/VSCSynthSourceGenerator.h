@@ -87,20 +87,50 @@ inline stk::StkFloat VSCSynthSourceGenerator::tick(void) {
 
 inline stk::StkFrames& VSCSynthSourceGenerator::tick(stk::StkFrames& frames, unsigned int channel)
 {
+    //assert(frames.channels() == _numberOfChannels);
+    if(frames.channels() != _numberOfChannels)
+        frames.resize(frames.frames(), _numberOfChannels);
+    
+    /*
+     *  Process _computationFrames independantly of _numberOfChannels
+     */
     checkComputationFrames(frames);
     processComputationFrames();
     
+    /*
+     *  If we have exactly the same number of channels the we just assign the data
+     *  the = operator is overloaded so that the data from _computationFrames is copied over
+     */
     if (frames.channels() == _computationFrames.channels()) {
-        /*
-         *  If we have exactly the same number of channels the we just assign the data
-         *  the = operator is overloaded so that the data from _computationFrames is copied over
-         */
         frames = _computationFrames;
     }
+    
+    /*
+     *  If we have a different number of channels in the _computationFrames than _numberOfChannels
+     *  then we average the _computationFrames channels into a single channel and set all 
+     *  _numberOfChannels to this averaged frames
+     */
     else {
-        stk::averageFramesChannels(_computationFrames, _averageFrames);
+        assert(_computationFrames.channels() > 0);
+        if (_computationFrames.channels() > 1) {
+            stk::averageFramesChannels(_computationFrames, _averageFrames);
+            stk::setAllFramesChannelsWithMonoFrames(frames, _averageFrames);
+        }
+        else if (_computationFrames.channels() == 1) {
+            stk::setAllFramesChannelsWithMonoFrames(frames, _computationFrames);
+        }
     }
     
+    assert(_numberOfChannels == _channelLinearGains.size());
+    
+    /*
+     *  Scale the output channels as specified by _channelLinearGains
+     */
+    for (unsigned int i; i < _numberOfChannels; i++) {
+        stk::scaleFramesChannel(frames, i, (stk::StkFloat)_channelLinearGains[i]);
+    }
+    
+    lastFrame_ = frames;
 	return frames;
 }
 

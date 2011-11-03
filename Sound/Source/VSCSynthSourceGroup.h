@@ -31,29 +31,35 @@ public:
 	
 	SynthSrcGenIter beginGeneratorsIterator(void);
 	SynthSrcGenIter endGeneratorsIterator(void);
+    
+    virtual void setNumberOfChannels(unsigned int numberOfChannels);
+    
+    virtual void initialize(void);
+    virtual void updateSoundEngine(void);
 	
 protected:
 	
 	void processComputationFrames(void);
 	
 	std::list<VSCSynthSourceGeneratorPtr> _generators;
-	
-	/*
-     *  keep an StkFrames so that it does not need to be created everytime the tick function is called
-	 *  this is used to add the frames of all the generators 
-     */
-	stk::StkFrames _tempFrames;
-    /*
-     *  Check that _tempFrames has the same number of frames and channels as argument
-     */
-	virtual void checkTempFrames(stk::StkFrames& frames);
+    
+    stk::StkFrames _tempFrames;
 	
 };
 
 
 
 inline void VSCSynthSourceGroup::processComputationFrames(void)
-{
+{  
+    stk::zeroFrames(_computationFrames);
+    
+    if (_computationFrames.frames() != _tempFrames.frames() || _computationFrames.channels() != _tempFrames.channels()) 
+        _tempFrames.resize(_computationFrames.frames(), _computationFrames.channels());
+    
+    for (SynthSrcGenIter iter = _generators.begin(); iter != _generators.end(); iter++) {
+        (*iter)->tick(_tempFrames, kVSCSAllChannels);
+        _computationFrames += _tempFrames;
+    }
 
 }
 

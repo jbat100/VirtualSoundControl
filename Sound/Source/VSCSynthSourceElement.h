@@ -33,33 +33,62 @@ class VSCSynthSourceElement {
 	
 public:
     
-    virtual void setNumberOfChannels(unsigned int numberOfChannels);
-    virtual unsigned int getNumberOfChannels(void);
+    VSCSynthSourceElement();
+    VSCSynthSourceElement(unsigned int numberOfChannels);
+    
+    /*--------------------------------------------------------------*/
+    
+    /*
+     *  METHODS IN THIS SECTION CAN BE CALLED FROM THE CONSTRUCTOR AND SO SHOULD
+     *  NOT BE VIRTUAL
+     */
+    
+    void setNumberOfChannels(unsigned int numberOfChannels);
+    unsigned int getNumberOfChannels(void);
 	
     /*
-     * These methods set the gain equally for the channels
+     *  These methods set the gain equally for the channels.
      */
 	/* value between 0 and 1 */
-	virtual void setLinearGain(VSCSFloat g);
+	void setLinearGain(VSCSFloat g);
 	/* value between 0 and minus infinity */
-	virtual void setDBGain(VSCSFloat g);	
+	void setDBGain(VSCSFloat g);	
     
     /*
-     * Set/get individual gains for each channel
+     *  Set/get individual gains for each channel.
      */
-    virtual void setLinearGains(std::vector<VSCSFloat>& channelGains);
-    virtual void getLinearGains(std::vector<VSCSFloat>& channelGains) const;
-    virtual void setDBGains(std::vector<VSCSFloat>& channelDBGains);
-    virtual void getDBGains(std::vector<VSCSFloat>& channelDBGains) const;
+    void setLinearGains(std::vector<VSCSFloat>& channelGains);
+    void getLinearGains(std::vector<VSCSFloat>& channelGains) const;
+    void setDBGains(std::vector<VSCSFloat>& channelDBGains);
+    void getDBGains(std::vector<VSCSFloat>& channelDBGains) const;
 	
     /*
-     * Turns off all processing
+     *  Turns off all processing.
      */
-	virtual void setOn(bool on);
-	virtual bool isOn(void) const;
+	void setOn(bool on);
+	bool isOn(void) const;
     
     /*
-     * A human readable identifier for the source element 
+     *  Lock number of channels.
+     */
+    void lockChannels(bool _lock);
+    bool numberOfChannelsIsLocked(void);
+    
+    /*--------------------------------------------------------------*/
+    
+    /*
+     *  Perform initialization after constructor (seperate so that it can be virtual).
+     */
+    virtual void initialize(void);
+    
+    /*
+     *  Perform necessary setup operations after:
+     *      - a change in number of channels.
+     */
+    virtual void updateSoundEngine(void);
+    
+    /*
+     *  A human readable identifier for the source element.
      */
 	virtual std::string sourceTypeString(void);
 	
@@ -67,6 +96,7 @@ public:
 protected:
 	
 	bool _isOn;
+    bool _lockNumberOfChannels;
     std::vector<VSCSFloat> _channelLinearGains;
     unsigned int _numberOfChannels;
 	

@@ -7,4 +7,9 @@
  *
  */
 
-#include "VSCSynthSourceNoise.h"
+#include "VSCSynthSourceSaw.h"
+
+
+stk::BlitSaw* VSCSynthSourceSaw::getStkBlitSaw(void) {
+    return &blitSaw;
+}

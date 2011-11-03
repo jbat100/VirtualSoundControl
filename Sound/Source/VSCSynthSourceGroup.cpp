@@ -12,6 +12,18 @@
 #include "VSCSTKUtils.h"
 #include <algorithm>
 
+void VSCSynthSourceGroup::setNumberOfChannels(unsigned int numberOfChannels) {
+    VSCSynthSourceGenerator::setNumberOfChannels(numberOfChannels);
+    
+    for (SynthSrcGenIter iter = _generators.begin(); iter != _generators.end(); iter++) {
+        (*iter)->setNumberOfChannels(numberOfChannels);
+    }
+    
+    _computationFrames.resize(_computationFrames.frames(), _numberOfChannels);
+    _tempFrames.resize(_computationFrames.frames(), _numberOfChannels);
+    
+}
+
 void VSCSynthSourceGroup::addGenerator(VSCSynthSourceGeneratorPtr elem) {
 	
 	assert(elem);
@@ -19,14 +31,19 @@ void VSCSynthSourceGroup::addGenerator(VSCSynthSourceGeneratorPtr elem) {
 	if (!elem)
 		return;
 	
+    assert(elem->getNumberOfChannels() == _numberOfChannels);
+    
+    if (elem->getNumberOfChannels() != _numberOfChannels) {
+        assert(elem->numberOfChannelsIsLocked() == false);
+        elem->setNumberOfChannels(_numberOfChannels);
+    }
+    
 	ConstSynthSrcGenIter it = find (_generators.begin(), _generators.end(), elem);
 	
 	assert(it == _generators.end());
 	
 	if (it == _generators.end()) {
 		_generators.push_back(elem);
-
-		
 	}
 	
 }
@@ -56,7 +73,18 @@ SynthSrcGenIter VSCSynthSourceGroup::endGeneratorsIterator(void) {
 	return _generators.end();
 }
 
-void VSCSynthSourceGroup::checkTempFrames(stk::StkFrames& frames) {
-	if (_tempFrames.channels() == frames.channels() || _tempFrames.frames() == frames.frames())
-        _tempFrames.resize(frames.frames(), frames.channels());
+void VSCSynthSourceGroup::initialize(void) {
+    this->updateSoundEngine();
 }
+
+void VSCSynthSourceGroup::updateSoundEngine(void) {
+    if (_computationFrames.channels() != _numberOfChannels) {
+        _computationFrames.resize(_computationFrames.frames(), _numberOfChannels);
+    }
+    if (_tempFrames.channels() != _numberOfChannels) {
+        _tempFrames.resize(_tempFrames.frames(), _numberOfChannels);
+    }
+}
+
+
+

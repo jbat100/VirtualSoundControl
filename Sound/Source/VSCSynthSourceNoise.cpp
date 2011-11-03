@@ -8,4 +8,8 @@
  */
 
 #include "VSCSynthSourceNoise.h"
-#include "VSCSound.h"
+
+
+stk::Noise* VSCSynthSourceNoise::getStkNoise(void) {
+    return &noise;
+}

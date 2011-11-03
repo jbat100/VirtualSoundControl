@@ -8,5 +8,7 @@
  */
 
 #include "VSCSynthSourceSine.h"
-#include "VSCSound.h"
 
+stk::SineWave* VSCSynthSourceSine::getStkSineWave(void) {
+    return &sineWave;
+}

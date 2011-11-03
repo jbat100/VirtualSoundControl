@@ -13,9 +13,33 @@
 #include <cmath>
 #include <algorithm>
 
+VSCSynthSourceElement::VSCSynthSourceElement() {
+    
+    // DO NOT CALL VIRTUAL METHODS IN CONSTRUCTOR !!!
+    this->setNumberOfChannels(1);
+
+}
+
+VSCSynthSourceElement::VSCSynthSourceElement(unsigned int numberOfChannels) {
+    
+    // DO NOT CALL VIRTUAL METHODS IN CONSTRUCTOR !!!
+    this->setNumberOfChannels(numberOfChannels);
+
+}
+
 void VSCSynthSourceElement::setNumberOfChannels(unsigned int numberOfChannels) {
+    
+    if (numberOfChannelsIsLocked())
+        return;
+    
+    assert(numberOfChannels < kVSCSMaxChannels);
+    if (numberOfChannels > kVSCSMaxChannels)
+        numberOfChannels = kVSCSMaxChannels;
     _numberOfChannels = numberOfChannels;
     _channelLinearGains.resize(_numberOfChannels);
+    
+    // DO NOT CALL VIRTUAL METHODS IN CONSTRUCTOR !!!
+    this->setLinearGain(1.0);
 }
 
 unsigned int VSCSynthSourceElement::getNumberOfChannels(void) {
@@ -24,12 +48,12 @@ unsigned int VSCSynthSourceElement::getNumberOfChannels(void) {
 
 void VSCSynthSourceElement::setLinearGain(VSCSFloat g) {
     std::vector<VSCSFloat> linearGains(_numberOfChannels, g);
-    setLinearGains(linearGains);
+    this->setLinearGains(linearGains);
 }
 
 void VSCSynthSourceElement::setDBGain(VSCSFloat g) {
     std::vector<VSCSFloat> dBGains(_numberOfChannels, g);
-    setDBGains(dBGains);
+    this->setDBGains(dBGains);
 }
 
 
@@ -50,7 +74,7 @@ void VSCSynthSourceElement::setDBGains(std::vector<VSCSFloat>& channelDBGains) {
     std::vector<VSCSFloat> channelGains(_numberOfChannels);
     for (unsigned int i = 0; i < _numberOfChannels; i++) 
         channelGains[i] = dBToLinearGain(channelDBGains[i]);
-    setLinearGains(channelGains);
+    this->setLinearGains(channelGains);
 }
 
 void VSCSynthSourceElement::getDBGains(std::vector<VSCSFloat>& channelDBGains) const {
@@ -68,6 +92,18 @@ bool VSCSynthSourceElement::isOn(void) const {
 	return _isOn;
 }
 
+void VSCSynthSourceElement::lockChannels(bool _lock) {
+    _lockNumberOfChannels = _lock;
+}
+
+bool VSCSynthSourceElement::numberOfChannelsIsLocked(void) {
+    return _lockNumberOfChannels;
+}
+
 std::string VSCSynthSourceElement::sourceTypeString(void) {
 	return "base source element";
+}
+
+void VSCSynthSourceElement::initialize(void) {
+    
 }

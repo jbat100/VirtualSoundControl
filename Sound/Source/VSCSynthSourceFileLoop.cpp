@@ -7,6 +7,9 @@
  *
  */
 
-#include "VSCSynthSourceNoise.h"
+#include "VSCSynthSourceFileLoop.h"
 #include "VSCSound.h"
 
+stk::FileLoop* VSCSynthSourceFileLoop::getStkFileLoop(void) {
+    return &fileLoop;
+}

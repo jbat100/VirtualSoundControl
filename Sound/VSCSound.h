@@ -25,12 +25,17 @@
 #define VSCS_USE_DOUBLE_PRECISION
 
 /*
+ *  Just to avoid silly values for numbers of channels, accidental or not...
+ */
+const unsigned int kVSCSMaxChannels = 16;
+
+/*
  *  Define VSCS_ALL_CHANNELS to specify audio processing tick is to occur for all channels 
  *  
  *  This is used in the stk::generator call
  *  stk::StkFrames& tick(stk::StkFrames& frames, unsigned int channel = 0);
  */
-#define VSCS_ALL_CHANNELS UINT_MAX
+const unsigned int kVSCSAllChannels = UINT_MAX;
 
 #ifdef VSCS_USE_STK
 	#include "Stk.h"

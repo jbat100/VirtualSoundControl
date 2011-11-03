@@ -11,8 +11,8 @@
 #ifndef _VSC_SYNTH_SOURCE_FILE_
 #define _VSC_SYNTH_SOURCE_FILE_
 
-#include "VSCSynthSourceGenerator.h"
 #include "VSCSound.h"
+#include "VSCSynthSourceGenerator.h"
 
 #ifdef VSCS_USE_STK
 
@@ -23,56 +23,18 @@ class VSCSynthSourceFile : public VSCSynthSourceGenerator {
 	
 public:
 	
+    stk::FileWvIn* getStkFileWvIn(void);
     
 protected:
     
     stk::FileWvIn fileWvIn;
-    
     void processComputationFrames(void);
 	
 };
 
 inline void VSCSynthSourceFile::processComputationFrames(void) {
-	
+    fileWvIn.tick(_computationFrames);
 }
-
-/*
-
-inline stk::StkFloat VSCSynthSourceFile::tick(unsigned int channel)
-{
-	if (_isOn) {
-		stk::StkFloat normalizedValue = stk::FileWvIn::tick(channel);
-		lastFrame_[0] = normalizedValue*_linearGain;
-	}
-	else {
-		lastFrame_[0] = 0.0;
-	}
-	
-	return lastFrame_[0];
-}
-
-inline stk::StkFrames& VSCSynthSourceFile::tick(stk::StkFrames& frames)
-{
-	stk::StkFloat *samples = &frames[0];
-	unsigned int limit = frames.channels() * frames.frames();
-	
-	if (_isOn) {
-		stk::FileWvIn::tick(frames);
-		for (unsigned int i=0; i<limit; i++, samples ++) {
-			*samples = (*samples) * _linearGain;
-		}
-	}
-	else {
-		for (unsigned int i=0; i<limit; i++, samples ++) {
-			*samples = 0.0;
-		}
-	}
-	
-	lastFrame_[0] = *samples;
-	return frames;
-}
- 
- */
 
 #endif // #ifdef VSCS_USE_STK
 

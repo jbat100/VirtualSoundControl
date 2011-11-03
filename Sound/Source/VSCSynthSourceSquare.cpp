@@ -7,5 +7,9 @@
  *
  */
 
-#include "VSCSynthSourceNoise.h"
-#include "VSCSound.h"
+#include "VSCSynthSourceSquare.h"
+
+
+stk::BlitSquare* VSCSynthSourceSquare::getStkBlitSquare(void) {
+    return &blitSquare;
+}

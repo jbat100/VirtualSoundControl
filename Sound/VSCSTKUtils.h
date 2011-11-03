@@ -15,8 +15,10 @@
 namespace stk {
     
 	void averageFramesChannels(StkFrames& frames, StkFrames& averagedFrames);
-	void setFramesChannel(StkFrames& targetFrames, StkFrames& monoFrames, unsigned int channel);
+	void setFramesChannelWithMonoFrames(StkFrames& targetFrames, StkFrames& monoFrames, unsigned int channel);
+    void setAllFramesChannelsWithMonoFrames(StkFrames& targetFrames, StkFrames& monoFrames);
 	void scaleFramesChannel(StkFrames& targetFrames, unsigned int channel, StkFloat scale);
+    void zeroFrames(StkFrames& targetFrames);
     
 }
 

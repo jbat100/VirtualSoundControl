@@ -21,10 +21,12 @@
 class VSCSynthSourceSquare : public VSCSynthSourceGenerator {
 	
 public:
+    
+    stk::BlitSquare* getStkBlitSquare(void);
 	
 protected:
     
-	stk::BlitSquare  blitSquare;
+	stk::BlitSquare blitSquare;
     
     void processComputationFrames(void);
 	
@@ -33,42 +35,6 @@ protected:
 inline void VSCSynthSourceSquare::processComputationFrames(void) {
 	
 }
-
-/*
-
-inline stk::StkFloat VSCSynthSourceSquare::tick(void)
-{
-	if (_isOn) {
-		stk::StkFloat normalizedValue = stk::BlitSquare::tick();
-		lastFrame_[0] = normalizedValue*_linearGain;
-	}
-	else {
-		lastFrame_[0] = 0.0;
-	}
-	
-	return lastFrame_[0];
-}
-
-inline stk::StkFrames& VSCSynthSourceSquare::tick(stk::StkFrames& frames, unsigned int channel)
-{
-	stk::StkFloat *samples = &frames[channel];
-	unsigned int hop = frames.channels();
-	if (_isOn) {
-		stk::BlitSquare::tick(frames, channel);
-		for (unsigned int i=0; i<frames.frames(); i++, samples += hop) {
-			*samples = (*samples) * _linearGain;
-		}		
-	}
-	else {
-		for (unsigned int i=0; i<frames.frames(); i++, samples += hop) {
-			*samples = 0.0;
-		}	
-	}
-	lastFrame_[0] = *samples;
-	return frames;
-}
- 
- */
 
 #endif
 
