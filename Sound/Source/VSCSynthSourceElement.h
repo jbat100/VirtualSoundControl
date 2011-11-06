@@ -10,6 +10,7 @@
 #define _VSC_SYNTH_SOURCE_ELEMENT_
 
 #include "VSCSound.h"
+#include "VSCSoundMultiChannelElement.h"
 
 #include <list>
 #include <vector>
@@ -28,13 +29,10 @@
  *	changes in the C++ sound engine)
  */
 
-class VSCSynthSourceElement {
+class VSCSynthSourceElement : public VSCSoundMultiChannelElement {
 	
 	
 public:
-    
-    VSCSynthSourceElement();
-    VSCSynthSourceElement(unsigned int numberOfChannels);
     
     /*--------------------------------------------------------------*/
     
@@ -42,37 +40,12 @@ public:
      *  METHODS IN THIS SECTION CAN BE CALLED FROM THE CONSTRUCTOR AND SO SHOULD
      *  NOT BE VIRTUAL
      */
-    
-    void setNumberOfChannels(unsigned int numberOfChannels);
-    unsigned int getNumberOfChannels(void);
-	
-    /*
-     *  These methods set the gain equally for the channels.
-     */
-	/* value between 0 and 1 */
-	void setLinearGain(VSCSFloat g);
-	/* value between 0 and minus infinity */
-	void setDBGain(VSCSFloat g);	
-    
-    /*
-     *  Set/get individual gains for each channel.
-     */
-    void setLinearGains(std::vector<VSCSFloat>& channelGains);
-    void getLinearGains(std::vector<VSCSFloat>& channelGains) const;
-    void setDBGains(std::vector<VSCSFloat>& channelDBGains);
-    void getDBGains(std::vector<VSCSFloat>& channelDBGains) const;
 	
     /*
      *  Turns off all processing.
      */
 	void setOn(bool on);
 	bool isOn(void) const;
-    
-    /*
-     *  Lock number of channels.
-     */
-    void lockChannels(bool _lock);
-    bool numberOfChannelsIsLocked(void);
     
     /*--------------------------------------------------------------*/
     
@@ -96,9 +69,6 @@ public:
 protected:
 	
 	bool _isOn;
-    bool _lockNumberOfChannels;
-    std::vector<VSCSFloat> _channelLinearGains;
-    unsigned int _numberOfChannels;
 	
 };
 

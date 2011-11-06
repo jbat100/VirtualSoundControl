@@ -24,6 +24,7 @@ class VSCSynthSourceFile : public VSCSynthSourceGenerator {
 public:
 	
     stk::FileWvIn* getStkFileWvIn(void);
+	void updateSoundEngine(void);
     
 protected:
     
@@ -33,6 +34,7 @@ protected:
 };
 
 inline void VSCSynthSourceFile::processComputationFrames(void) {
+	assert(_computationFrames.channels())
     fileWvIn.tick(_computationFrames);
 }
 

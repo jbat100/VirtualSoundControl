@@ -15,6 +15,7 @@
 #define _VSC_SOUND_H_
 
 #include <climits>
+#include <vector>
 
 #define VSCS_USE_STK
 
@@ -46,8 +47,32 @@ const unsigned int kVSCSAllChannels = UINT_MAX;
 #endif
 
 
-VSCSFloat linearToDBGain(VSCSFloat linearGain);
-VSCSFloat dBToLinearGain(VSCSFloat dBGain);
+class VSCSound {
+	
+public:
+	
+	static VSCSFloat linearToDBGain(VSCSFloat linearGain);
+	static VSCSFloat dBToLinearGain(VSCSFloat dBGain);
+	
+	/*
+	 *	0.0 < midiNote < 127.0
+	 */
+	static VSCSFloat frequencyForMidiNote(VSCSFloat midiNote);
+	static VSCSFloat frequencyForMidiNote(unsigned int midiNote);
+	
+	static void setReferenceAFrequency(VSCSFloat f);
+	static VSCSFloat getReferenceAFrequency(void);
+	
+private:
+	
+	static void computeMidiNoteFrequencies(void);
+	
+	static std::vector<VSCSFloat> midiNoteFrequencies;
+	static VSCSFloat referenceAFrequency; // a is 440 hz...
+	
+	static bool midiNoteFrequenciesAreComputed;
+	
+};
 
 #endif
 

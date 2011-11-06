@@ -9,8 +9,10 @@
 
 #include "VSCSound.h"
 #include "VSCSTKUtils.h"
+
 #include <cassert>
 #include <string>
+#include <iostream>
 
 #include <Accelerate/Accelerate.h>
 
@@ -75,5 +77,23 @@ namespace stk {
         
     }
 
+}
+
+std::ostream& operator<<(std::ostream& output, const stk::StkFrames& f) {
+	
+	output << "StkFrames with " << f.channels() << " channels and " << f.frames() << " frames";
+	
+	if (f.channels() > 0 && f.frames() > 0) {
+		for (unsigned int frameIndex = 0; frameIndex < f.frames(); frameIndex++) {
+			output << "\n--- Frame " << frameIndex << " : ";
+			for (unsigned int channelIndex = 0; channelIndex < f.channels(); channelIndex++) {
+				if (channelIndex > 0) output << " | ";
+				output << f(frameIndex, channelIndex);
+			}
+		}
+	}
+	
+	output << std::endl;
+	
 }
 

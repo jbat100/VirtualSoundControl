@@ -22,7 +22,10 @@ class VSCSynthSourceSaw : public VSCSynthSourceGenerator {
 	
 public:
     
+
     stk::BlitSaw* getStkBlitSaw(void);
+	
+	void updateSoundEngine(void);
 	
 protected:
     

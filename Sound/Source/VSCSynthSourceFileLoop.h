@@ -24,6 +24,8 @@ class VSCSynthSourceFileLoop : public VSCSynthSourceGenerator {
 public:
     
     stk::FileLoop* getStkFileLoop(void);
+	
+	void updateSoundEngine(void);
     
 protected:
     

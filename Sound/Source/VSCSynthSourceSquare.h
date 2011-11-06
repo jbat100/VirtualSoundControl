@@ -24,6 +24,8 @@ public:
     
     stk::BlitSquare* getStkBlitSquare(void);
 	
+	void updateSoundEngine(void);
+	
 protected:
     
 	stk::BlitSquare blitSquare;

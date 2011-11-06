@@ -12,17 +12,6 @@
 #include "VSCSTKUtils.h"
 #include <algorithm>
 
-void VSCSynthSourceGroup::setNumberOfChannels(unsigned int numberOfChannels) {
-    VSCSynthSourceGenerator::setNumberOfChannels(numberOfChannels);
-    
-    for (SynthSrcGenIter iter = _generators.begin(); iter != _generators.end(); iter++) {
-        (*iter)->setNumberOfChannels(numberOfChannels);
-    }
-    
-    _computationFrames.resize(_computationFrames.frames(), _numberOfChannels);
-    _tempFrames.resize(_computationFrames.frames(), _numberOfChannels);
-    
-}
 
 void VSCSynthSourceGroup::addGenerator(VSCSynthSourceGeneratorPtr elem) {
 	
@@ -74,16 +63,37 @@ SynthSrcGenIter VSCSynthSourceGroup::endGeneratorsIterator(void) {
 }
 
 void VSCSynthSourceGroup::initialize(void) {
-    this->updateSoundEngine();
+	
+	VSCSynthSourceGenerator::initialize();
+	
+	for (SynthSrcGenIter iter = _generators.begin(); iter != _generators.end(); iter++) {
+        (*iter)->initialize();
+    }
 }
 
 void VSCSynthSourceGroup::updateSoundEngine(void) {
+	
+	// call superclass implementation
+	VSCSynthSourceGenerator::updateSoundEngine();
+	
+	/*
+	 *	resize _computationFrames and _tempFrames to have _numberOfChannels channels 
+	 */
     if (_computationFrames.channels() != _numberOfChannels) {
         _computationFrames.resize(_computationFrames.frames(), _numberOfChannels);
     }
     if (_tempFrames.channels() != _numberOfChannels) {
         _tempFrames.resize(_tempFrames.frames(), _numberOfChannels);
     }
+	
+	/*
+	 *	Synchronize the number of channels for all the generators, and update their soud engine 
+	 */
+	for (SynthSrcGenIter iter = _generators.begin(); iter != _generators.end(); iter++) {
+        (*iter)->setNumberOfChannels(_numberOfChannels);
+		(*iter)->updateSoundEngine();
+    }
+
 }
 
 

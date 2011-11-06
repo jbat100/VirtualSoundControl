@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		100FF8741466DCB20015FE2D /* VSCParamaterControlSlidersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 100FF8731466DCB20015FE2D /* VSCParamaterControlSlidersView.m */; };
+		100FF8781466DDEB0015FE2D /* VSCParameterControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 100FF8771466DDEB0015FE2D /* VSCParameterControlView.m */; };
 		10117E4314560E6900240467 /* VSCSynthStationDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 10117E4214560E6900240467 /* VSCSynthStationDocument.m */; };
 		10117E4514560E9700240467 /* VSCSynthStationWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10117E4414560E9700240467 /* VSCSynthStationWindowController.xib */; };
 		10117E5014560F1700240467 /* VSCSynthStationWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10117E4F14560F1700240467 /* VSCSynthStationWindowController.m */; };
@@ -14,6 +16,7 @@
 		10117EC41456195600240467 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1061AAC41430A3B500C29FBB /* AppKit.framework */; };
 		10118007145619DF00240467 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10118005145619DF00240467 /* AppKit.framework */; };
 		10118008145619DF00240467 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10118006145619DF00240467 /* Foundation.framework */; };
+		10328C771465481C0048559B /* Voicer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10328C761465481C0048559B /* Voicer.cpp */; };
 		10516D791453247B00109B4B /* VSCFrequencyPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10516D781453247B00109B4B /* VSCFrequencyPoint.cpp */; };
 		10516D7C1453261800109B4B /* VSCSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10516D7B1453261800109B4B /* VSCSound.cpp */; };
 		10531F7114602C57004DC3A1 /* VSCSynthSourceGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10531F7014602C57004DC3A1 /* VSCSynthSourceGroup.cpp */; };
@@ -53,6 +56,18 @@
 		1067DB5B14548C8000F0670E /* VSCMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1067DB5114548C8000F0670E /* VSCMath.cpp */; };
 		10A0CD29146172E700070291 /* VSCSynthSourceGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A0CD28146172E600070291 /* VSCSynthSourceGenerator.cpp */; };
 		10A0CD2F14619D6800070291 /* Stk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A0CD2E14619D6800070291 /* Stk.cpp */; };
+		10A8440B1466A01C00B8DB35 /* GradientBlueWhiteHorizontal.png in Resources */ = {isa = PBXBuildFile; fileRef = 10A844091466A01C00B8DB35 /* GradientBlueWhiteHorizontal.png */; };
+		10A8440C1466A01C00B8DB35 /* GradientBlueWhiteVertical.png in Resources */ = {isa = PBXBuildFile; fileRef = 10A8440A1466A01C00B8DB35 /* GradientBlueWhiteVertical.png */; };
+		10A8442C1466A64C00B8DB35 /* VSCSynthSourceSineWaveControlView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10A8442B1466A64C00B8DB35 /* VSCSynthSourceSineWaveControlView.mm */; };
+		10A844301466A83E00B8DB35 /* VSCSynthSourceSineWaveControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10A8442F1466A83E00B8DB35 /* VSCSynthSourceSineWaveControlView.xib */; };
+		10C5CA241464AEFE00849657 /* VSCSoundMultiChannelElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10C5CA231464AEFE00849657 /* VSCSoundMultiChannelElement.cpp */; };
+		10C5CA281464B16700849657 /* VSCSynthInstrument.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10C5CA271464B16700849657 /* VSCSynthInstrument.cpp */; };
+		10E0473014661B1B006AD53D /* VSCSynthInstrumentDebugWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10E0472F14661B1B006AD53D /* VSCSynthInstrumentDebugWindowController.mm */; };
+		10E0473314661C22006AD53D /* VSCSynthInstrumentDebugWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10E0473214661C22006AD53D /* VSCSynthInstrumentDebugWindowController.xib */; };
+		10E0473C14661F1D006AD53D /* VSCSoundSourceGeneratorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10E0473B14661F1D006AD53D /* VSCSoundSourceGeneratorView.mm */; };
+		10E0473E14661F42006AD53D /* VSCSoundSourceGeneratorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10E0473D14661F42006AD53D /* VSCSoundSourceGeneratorView.xib */; };
+		10E0474214661F9A006AD53D /* VSCSoundSourceGroupView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10E0474114661F9A006AD53D /* VSCSoundSourceGroupView.mm */; };
+		10E0474514661FCF006AD53D /* VSCSoundSourceGroupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10E0474414661FCF006AD53D /* VSCSoundSourceGroupView.xib */; };
 		10F32D151450C0990051DDAC /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F32D141450C0990051DDAC /* Accelerate.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +82,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		100FF8721466DCB20015FE2D /* VSCParamaterControlSlidersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCParamaterControlSlidersView.h; sourceTree = "<group>"; };
+		100FF8731466DCB20015FE2D /* VSCParamaterControlSlidersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSCParamaterControlSlidersView.m; sourceTree = "<group>"; };
+		100FF8761466DDEB0015FE2D /* VSCParameterControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCParameterControlView.h; sourceTree = "<group>"; };
+		100FF8771466DDEB0015FE2D /* VSCParameterControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSCParameterControlView.m; sourceTree = "<group>"; };
 		10117E4114560E6900240467 /* VSCSynthStationDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthStationDocument.h; sourceTree = "<group>"; };
 		10117E4214560E6900240467 /* VSCSynthStationDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSCSynthStationDocument.m; sourceTree = "<group>"; };
 		10117E4414560E9700240467 /* VSCSynthStationWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSCSynthStationWindowController.xib; sourceTree = "<group>"; };
@@ -76,6 +95,8 @@
 		10117E651456122500240467 /* NSApplication+VSCPaths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSApplication+VSCPaths.m"; path = "../Generic/NSApplication+VSCPaths.m"; sourceTree = SOURCE_ROOT; };
 		10118005145619DF00240467 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = ../../../System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		10118006145619DF00240467 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = ../../../System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		10328C75146548050048559B /* Voicer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voicer.h; sourceTree = STK_INCLUDE; };
+		10328C761465481C0048559B /* Voicer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Voicer.cpp; sourceTree = STK_SOURCE; };
 		10516D771453247B00109B4B /* VSCFrequencyPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCFrequencyPoint.h; sourceTree = "<group>"; };
 		10516D781453247B00109B4B /* VSCFrequencyPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCFrequencyPoint.cpp; sourceTree = "<group>"; };
 		10516D7A1453261800109B4B /* VSCSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSound.h; path = ../Sound/VSCSound.h; sourceTree = SOURCE_ROOT; };
@@ -186,6 +207,25 @@
 		10A0CD28146172E600070291 /* VSCSynthSourceGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSynthSourceGenerator.cpp; sourceTree = "<group>"; };
 		10A0CD2A1461730600070291 /* VSCSynthSourceGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthSourceGenerator.h; sourceTree = "<group>"; };
 		10A0CD2E14619D6800070291 /* Stk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Stk.cpp; sourceTree = STK_SOURCE; };
+		10A844091466A01C00B8DB35 /* GradientBlueWhiteHorizontal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GradientBlueWhiteHorizontal.png; path = SimpleGradients/GradientBlueWhiteHorizontal.png; sourceTree = VSC_GRAPHICS; };
+		10A8440A1466A01C00B8DB35 /* GradientBlueWhiteVertical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GradientBlueWhiteVertical.png; path = SimpleGradients/GradientBlueWhiteVertical.png; sourceTree = VSC_GRAPHICS; };
+		10A8442A1466A64C00B8DB35 /* VSCSynthSourceSineWaveControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthSourceSineWaveControlView.h; sourceTree = "<group>"; };
+		10A8442B1466A64C00B8DB35 /* VSCSynthSourceSineWaveControlView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCSynthSourceSineWaveControlView.mm; sourceTree = "<group>"; };
+		10A8442F1466A83E00B8DB35 /* VSCSynthSourceSineWaveControlView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSCSynthSourceSineWaveControlView.xib; sourceTree = "<group>"; };
+		10C5CA21146495A900849657 /* Instrmnt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Instrmnt.h; sourceTree = STK_INCLUDE; };
+		10C5CA221464AEFE00849657 /* VSCSoundMultiChannelElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundMultiChannelElement.h; path = ../Sound/VSCSoundMultiChannelElement.h; sourceTree = SOURCE_ROOT; };
+		10C5CA231464AEFE00849657 /* VSCSoundMultiChannelElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCSoundMultiChannelElement.cpp; path = ../Sound/VSCSoundMultiChannelElement.cpp; sourceTree = SOURCE_ROOT; };
+		10C5CA261464B16700849657 /* VSCSynthInstrument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthInstrument.h; sourceTree = "<group>"; };
+		10C5CA271464B16700849657 /* VSCSynthInstrument.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSynthInstrument.cpp; sourceTree = "<group>"; };
+		10E0472E14661B1B006AD53D /* VSCSynthInstrumentDebugWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSynthInstrumentDebugWindowController.h; sourceTree = "<group>"; };
+		10E0472F14661B1B006AD53D /* VSCSynthInstrumentDebugWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCSynthInstrumentDebugWindowController.mm; sourceTree = "<group>"; };
+		10E0473214661C22006AD53D /* VSCSynthInstrumentDebugWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSCSynthInstrumentDebugWindowController.xib; sourceTree = "<group>"; };
+		10E0473A14661F1D006AD53D /* VSCSoundSourceGeneratorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSoundSourceGeneratorView.h; sourceTree = "<group>"; };
+		10E0473B14661F1D006AD53D /* VSCSoundSourceGeneratorView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCSoundSourceGeneratorView.mm; sourceTree = "<group>"; };
+		10E0473D14661F42006AD53D /* VSCSoundSourceGeneratorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSCSoundSourceGeneratorView.xib; sourceTree = "<group>"; };
+		10E0474014661F9A006AD53D /* VSCSoundSourceGroupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSoundSourceGroupView.h; sourceTree = "<group>"; };
+		10E0474114661F9A006AD53D /* VSCSoundSourceGroupView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCSoundSourceGroupView.mm; sourceTree = "<group>"; };
+		10E0474414661FCF006AD53D /* VSCSoundSourceGroupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSCSoundSourceGroupView.xib; sourceTree = "<group>"; };
 		10F32D141450C0990051DDAC /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -216,6 +256,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		100FF8711466DC830015FE2D /* AppKit */ = {
+			isa = PBXGroup;
+			children = (
+				100FF8721466DCB20015FE2D /* VSCParamaterControlSlidersView.h */,
+				100FF8731466DCB20015FE2D /* VSCParamaterControlSlidersView.m */,
+				100FF8761466DDEB0015FE2D /* VSCParameterControlView.h */,
+				100FF8771466DDEB0015FE2D /* VSCParameterControlView.m */,
+			);
+			name = AppKit;
+			path = ../Generic/AppKit;
+			sourceTree = SOURCE_ROOT;
+		};
 		105C47CA144B32760015AE8F /* Enveloppe */ = {
 			isa = PBXGroup;
 			children = (
@@ -325,11 +377,10 @@
 		1061AAC71430A3B500C29FBB /* SynthStation */ = {
 			isa = PBXGroup;
 			children = (
-				10117E4E14560F1700240467 /* VSCSynthStationWindowController.h */,
-				10117E4F14560F1700240467 /* VSCSynthStationWindowController.m */,
-				10117E4114560E6900240467 /* VSCSynthStationDocument.h */,
-				10117E4214560E6900240467 /* VSCSynthStationDocument.m */,
-				10117E4414560E9700240467 /* VSCSynthStationWindowController.xib */,
+				10A8442D1466A65600B8DB35 /* Synth Source Control Interface */,
+				10E0473814661EC7006AD53D /* Debug Interface */,
+				10E0473614661DB2006AD53D /* Synth Station Window Controller */,
+				10E0473714661DE1006AD53D /* Synth Station Document */,
 				1061AAD91430A3B600C29FBB /* MainMenu.xib */,
 				1061AAC81430A3B500C29FBB /* Supporting Files */,
 			);
@@ -339,6 +390,7 @@
 		1061AAC81430A3B500C29FBB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				10A8440814669F2D00B8DB35 /* Graphics */,
 				1061AAC91430A3B500C29FBB /* SynthStation-Info.plist */,
 				1061AACA1430A3B500C29FBB /* InfoPlist.strings */,
 				1061AACD1430A3B600C29FBB /* main.m */,
@@ -374,6 +426,9 @@
 				10516D7B1453261800109B4B /* VSCSound.cpp */,
 				10531F8414604B16004DC3A1 /* VSCSTKUtils.h */,
 				10531F8514604B16004DC3A1 /* VSCSTKUtils.cpp */,
+				10C5CA221464AEFE00849657 /* VSCSoundMultiChannelElement.h */,
+				10C5CA231464AEFE00849657 /* VSCSoundMultiChannelElement.cpp */,
+				10C5CA201464955F00849657 /* Instrument */,
 				105C47CA144B32760015AE8F /* Enveloppe */,
 				105C47D3144B32760015AE8F /* Filter */,
 				105C47D4144B32760015AE8F /* Source */,
@@ -384,6 +439,7 @@
 		1067DB2E14548C6700F0670E /* Generic */ = {
 			isa = PBXGroup;
 			children = (
+				100FF8711466DC830015FE2D /* AppKit */,
 				10117E641456122500240467 /* NSApplication+VSCPaths.h */,
 				10117E651456122500240467 /* NSApplication+VSCPaths.m */,
 				1067DB4314548C8000F0670E /* CGColorOperations.h */,
@@ -431,12 +487,15 @@
 				107DA833144A488900D5ACA9 /* FileLoop.cpp */,
 				105C4816144B3FA60015AE8F /* Filter.h */,
 				10531F7214602D15004DC3A1 /* Generator.h */,
+				10C5CA21146495A900849657 /* Instrmnt.h */,
 				108295B11449CD3F00B2DADA /* Noise.h */,
 				108295B41449CD7F00B2DADA /* Noise.cpp */,
 				108295B21449CD3F00B2DADA /* SingWave.h */,
 				108295B51449CD7F00B2DADA /* SingWave.cpp */,
 				1082959D1449A54400B2DADA /* SineWave.h */,
 				1082959F1449A54F00B2DADA /* SineWave.cpp */,
+				10328C75146548050048559B /* Voicer.h */,
+				10328C761465481C0048559B /* Voicer.cpp */,
 				1082959E1449A54400B2DADA /* ADSR.h */,
 				108295A01449A54F00B2DADA /* ADSR.cpp */,
 				107DA847144A493000D5ACA9 /* WvIn.h */,
@@ -447,6 +506,102 @@
 				107DA84A144A495000D5ACA9 /* RtWvOut.cpp */,
 			);
 			name = "STK Reference Source";
+			sourceTree = "<group>";
+		};
+		10A8440814669F2D00B8DB35 /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				10A844091466A01C00B8DB35 /* GradientBlueWhiteHorizontal.png */,
+				10A8440A1466A01C00B8DB35 /* GradientBlueWhiteVertical.png */,
+			);
+			name = Graphics;
+			sourceTree = "<group>";
+		};
+		10A844291466A5B300B8DB35 /* Synth Source SineWave Control View */ = {
+			isa = PBXGroup;
+			children = (
+				10A8442A1466A64C00B8DB35 /* VSCSynthSourceSineWaveControlView.h */,
+				10A8442B1466A64C00B8DB35 /* VSCSynthSourceSineWaveControlView.mm */,
+				10A8442F1466A83E00B8DB35 /* VSCSynthSourceSineWaveControlView.xib */,
+			);
+			name = "Synth Source SineWave Control View";
+			sourceTree = "<group>";
+		};
+		10A8442D1466A65600B8DB35 /* Synth Source Control Interface */ = {
+			isa = PBXGroup;
+			children = (
+				10A844291466A5B300B8DB35 /* Synth Source SineWave Control View */,
+			);
+			name = "Synth Source Control Interface";
+			sourceTree = "<group>";
+		};
+		10C5CA201464955F00849657 /* Instrument */ = {
+			isa = PBXGroup;
+			children = (
+				10C5CA261464B16700849657 /* VSCSynthInstrument.h */,
+				10C5CA271464B16700849657 /* VSCSynthInstrument.cpp */,
+			);
+			name = Instrument;
+			path = ../Sound/Instrument;
+			sourceTree = SOURCE_ROOT;
+		};
+		10E0473514661D95006AD53D /* Synth Instrument Debug Window */ = {
+			isa = PBXGroup;
+			children = (
+				10E0472E14661B1B006AD53D /* VSCSynthInstrumentDebugWindowController.h */,
+				10E0472F14661B1B006AD53D /* VSCSynthInstrumentDebugWindowController.mm */,
+				10E0473214661C22006AD53D /* VSCSynthInstrumentDebugWindowController.xib */,
+			);
+			name = "Synth Instrument Debug Window";
+			sourceTree = "<group>";
+		};
+		10E0473614661DB2006AD53D /* Synth Station Window Controller */ = {
+			isa = PBXGroup;
+			children = (
+				10117E4E14560F1700240467 /* VSCSynthStationWindowController.h */,
+				10117E4F14560F1700240467 /* VSCSynthStationWindowController.m */,
+				10117E4414560E9700240467 /* VSCSynthStationWindowController.xib */,
+			);
+			name = "Synth Station Window Controller";
+			sourceTree = "<group>";
+		};
+		10E0473714661DE1006AD53D /* Synth Station Document */ = {
+			isa = PBXGroup;
+			children = (
+				10117E4114560E6900240467 /* VSCSynthStationDocument.h */,
+				10117E4214560E6900240467 /* VSCSynthStationDocument.m */,
+			);
+			name = "Synth Station Document";
+			sourceTree = "<group>";
+		};
+		10E0473814661EC7006AD53D /* Debug Interface */ = {
+			isa = PBXGroup;
+			children = (
+				10E0473F14661F57006AD53D /* Sound Source Generator Group Debug View */,
+				10E0473914661EDE006AD53D /* Sound Source Generator Debug View  */,
+				10E0473514661D95006AD53D /* Synth Instrument Debug Window */,
+			);
+			name = "Debug Interface";
+			sourceTree = "<group>";
+		};
+		10E0473914661EDE006AD53D /* Sound Source Generator Debug View  */ = {
+			isa = PBXGroup;
+			children = (
+				10E0473A14661F1D006AD53D /* VSCSoundSourceGeneratorView.h */,
+				10E0473B14661F1D006AD53D /* VSCSoundSourceGeneratorView.mm */,
+				10E0473D14661F42006AD53D /* VSCSoundSourceGeneratorView.xib */,
+			);
+			name = "Sound Source Generator Debug View ";
+			sourceTree = "<group>";
+		};
+		10E0473F14661F57006AD53D /* Sound Source Generator Group Debug View */ = {
+			isa = PBXGroup;
+			children = (
+				10E0474014661F9A006AD53D /* VSCSoundSourceGroupView.h */,
+				10E0474114661F9A006AD53D /* VSCSoundSourceGroupView.mm */,
+				10E0474414661FCF006AD53D /* VSCSoundSourceGroupView.xib */,
+			);
+			name = "Sound Source Generator Group Debug View";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -524,6 +679,12 @@
 				1061AAD21430A3B600C29FBB /* Credits.rtf in Resources */,
 				1061AADB1430A3B600C29FBB /* MainMenu.xib in Resources */,
 				10117E4514560E9700240467 /* VSCSynthStationWindowController.xib in Resources */,
+				10E0473314661C22006AD53D /* VSCSynthInstrumentDebugWindowController.xib in Resources */,
+				10E0473E14661F42006AD53D /* VSCSoundSourceGeneratorView.xib in Resources */,
+				10E0474514661FCF006AD53D /* VSCSoundSourceGroupView.xib in Resources */,
+				10A8440B1466A01C00B8DB35 /* GradientBlueWhiteHorizontal.png in Resources */,
+				10A8440C1466A01C00B8DB35 /* GradientBlueWhiteVertical.png in Resources */,
+				10A844301466A83E00B8DB35 /* VSCSynthSourceSineWaveControlView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,6 +751,15 @@
 				10531F8614604B16004DC3A1 /* VSCSTKUtils.cpp in Sources */,
 				10A0CD29146172E700070291 /* VSCSynthSourceGenerator.cpp in Sources */,
 				10A0CD2F14619D6800070291 /* Stk.cpp in Sources */,
+				10C5CA241464AEFE00849657 /* VSCSoundMultiChannelElement.cpp in Sources */,
+				10C5CA281464B16700849657 /* VSCSynthInstrument.cpp in Sources */,
+				10328C771465481C0048559B /* Voicer.cpp in Sources */,
+				10E0473014661B1B006AD53D /* VSCSynthInstrumentDebugWindowController.mm in Sources */,
+				10E0473C14661F1D006AD53D /* VSCSoundSourceGeneratorView.mm in Sources */,
+				10E0474214661F9A006AD53D /* VSCSoundSourceGroupView.mm in Sources */,
+				10A8442C1466A64C00B8DB35 /* VSCSynthSourceSineWaveControlView.mm in Sources */,
+				100FF8741466DCB20015FE2D /* VSCParamaterControlSlidersView.m in Sources */,
+				100FF8781466DDEB0015FE2D /* VSCParameterControlView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

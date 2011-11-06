@@ -25,6 +25,8 @@ public:
     
     stk::Noise* getStkNoise(void);
 	
+	void updateSoundEngine(void);
+	
 protected:
 
 	stk::Noise noise;

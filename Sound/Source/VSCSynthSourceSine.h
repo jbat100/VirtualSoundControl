@@ -25,6 +25,8 @@ public:
     
     stk::SineWave* getStkSineWave(void);
 	
+	void updateSoundEngine(void);
+	
 protected:
     
 	stk::SineWave sineWave;

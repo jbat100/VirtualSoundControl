@@ -13,13 +13,23 @@
 #include "Stk.h"
 
 namespace stk {
+	
+	/*
+	 *	StkFrames manipulation functions 
+	 */
     
 	void averageFramesChannels(StkFrames& frames, StkFrames& averagedFrames);
 	void setFramesChannelWithMonoFrames(StkFrames& targetFrames, StkFrames& monoFrames, unsigned int channel);
     void setAllFramesChannelsWithMonoFrames(StkFrames& targetFrames, StkFrames& monoFrames);
 	void scaleFramesChannel(StkFrames& targetFrames, unsigned int channel, StkFloat scale);
     void zeroFrames(StkFrames& targetFrames);
+	
+	/*
+	 *	StkFrames operator overloading
+	 */
     
 }
+
+std::ostream& operator<<(std::ostream& output, const stk::StkFrames& f);
 
 #endif

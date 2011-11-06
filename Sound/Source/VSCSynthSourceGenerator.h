@@ -36,11 +36,22 @@ class VSCSynthSourceGenerator : public VSCSynthSourceElement, public stk::Genera
     
 public:
 	
+	VSCSynthSourceGenerator();
+	VSCSynthSourceGenerator(unsigned int numberOfChannels);
+	
     /*
      *  stk::Generator tick method which should be over-ridden.
      */
 	stk::StkFrames& tick(stk::StkFrames& frames, unsigned int channel = 0);
-    stk::StkFloat tick(void);
+	
+	
+	// StkFloat tick( void ); // This method is not actually declared in stk::Generator
+	
+	/*
+	 *	Get the group generator to which this generator belongs, NULL if does not
+	 *	belong to a group 
+	 */
+	VSCSynthSourceGenerator* getGroup(void);
 	
 protected:
 	
@@ -73,6 +84,12 @@ protected:
      */
     virtual void checkComputationFrames(stk::StkFrames& frames);
 	
+	/*
+	 *	Backpointer to the group generator which possesses this as subgenerator, NULL if it does not
+	 *	belong to a group
+	 */
+	VSCSynthSourceGenerator* group;
+	
 };
 
 /*
@@ -80,10 +97,12 @@ protected:
  *  version below with 1 frame long argument for single multi-channel ticks. Using this will crash in debug,
  *  and output 0 in release.
  */
+/*
 inline stk::StkFloat VSCSynthSourceGenerator::tick(void) {
     assert(false);
     return 0.0;
 }
+ */
 
 inline stk::StkFrames& VSCSynthSourceGenerator::tick(stk::StkFrames& frames, unsigned int channel)
 {
