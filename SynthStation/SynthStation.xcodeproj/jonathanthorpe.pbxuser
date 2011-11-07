@@ -1,42 +1,32 @@
 // !$*UTF8*$!
 {
-	100FF8721466DCB20015FE2D /* VSCParamaterControlSlidersView.h */ = {
+	100FF8721466DCB20015FE2D /* VSCParameterControlSlidersView.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {806, 636}}";
-			sepNavSelRange = "{206, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {834, 436}}";
+			sepNavSelRange = "{205, 0}";
 			sepNavVisRange = "{0, 293}";
 		};
 	};
-	100FF8731466DCB20015FE2D /* VSCParamaterControlSlidersView.m */ = {
+	100FF8731466DCB20015FE2D /* VSCParameterControlSlidersView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {806, 636}}";
-			sepNavSelRange = "{459, 0}";
-			sepNavVisRange = "{0, 607}";
+			sepNavIntBoundsRect = "{{0, 0}, {834, 436}}";
+			sepNavSelRange = "{144, 0}";
+			sepNavVisRange = "{0, 622}";
 		};
 	};
 	100FF8761466DDEB0015FE2D /* VSCParameterControlView.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {806, 1092}}";
-			sepNavSelRange = "{237, 0}";
-			sepNavVisRange = "{0, 988}";
+			sepNavIntBoundsRect = "{{0, 0}, {834, 1274}}";
+			sepNavSelRange = "{1545, 1}";
+			sepNavVisRange = "{53, 1078}";
 		};
 	};
 	100FF8771466DDEB0015FE2D /* VSCParameterControlView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {806, 2470}}";
-			sepNavSelRange = "{3594, 0}";
-			sepNavVisRange = "{2781, 901}";
+			sepNavIntBoundsRect = "{{0, 0}, {834, 3263}}";
+			sepNavSelRange = "{882, 0}";
+			sepNavVisRange = "{0, 697}";
 		};
-	};
-	100FF8791466EE440015FE2D /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 10A8442A1466A64C00B8DB35 /* VSCSynthSourceSineWaveControlView.h */;
-		name = "VSCSynthSourceSineWaveControlView.h: 16";
-		rLen = 0;
-		rLoc = 248;
-		rType = 0;
-		vrLen = 249;
-		vrLoc = 0;
 	};
 	100FF87A1466EE440015FE2D /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -46,26 +36,6 @@
 		rLoc = 0;
 		rType = 0;
 		vrLen = 1190;
-		vrLoc = 0;
-	};
-	100FF87B1466EE440015FE2D /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 100FF8721466DCB20015FE2D /* VSCParamaterControlSlidersView.h */;
-		name = "VSCParamaterControlSlidersView.h: 11";
-		rLen = 0;
-		rLoc = 206;
-		rType = 0;
-		vrLen = 293;
-		vrLoc = 0;
-	};
-	100FF87D1466EE440015FE2D /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 100FF8731466DCB20015FE2D /* VSCParamaterControlSlidersView.m */;
-		name = "VSCParamaterControlSlidersView.m: 25";
-		rLen = 0;
-		rLoc = 459;
-		rType = 0;
-		vrLen = 607;
 		vrLoc = 0;
 	};
 	10117E4114560E6900240467 /* VSCSynthStationDocument.h */ = {
@@ -147,6 +117,100 @@
 		name = "/Users/jonathanthorpe/Programming/Projects/Repository/SynthStation/SynthStation/SynthStation-Info.plist";
 		rLen = 0;
 		rLoc = 9223372036854775808;
+	};
+	1017790214688C9500061200 /* VSCSynthSourceGeneratorControlView.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {834, 436}}";
+			sepNavSelRange = "{287, 0}";
+			sepNavVisRange = "{0, 359}";
+		};
+	};
+	1017790314688C9500061200 /* VSCSynthSourceGeneratorControlView.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {834, 436}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 486}";
+		};
+	};
+	1017790514688CE700061200 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 100FF8771466DDEB0015FE2D /* VSCParameterControlView.m */;
+		name = "VSCParameterControlView.m: 44";
+		rLen = 0;
+		rLoc = 882;
+		rType = 0;
+		vrLen = 697;
+		vrLoc = 0;
+	};
+	1017790614688CE700061200 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 100FF8761466DDEB0015FE2D /* VSCParameterControlView.h */;
+		name = "VSCParameterControlView.h: 60";
+		rLen = 1;
+		rLoc = 1545;
+		rType = 0;
+		vrLen = 1078;
+		vrLoc = 53;
+	};
+	1017790714688CE700061200 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 100FF8731466DCB20015FE2D /* VSCParameterControlSlidersView.m */;
+		name = "VSCParameterControlSlidersView.m: 7";
+		rLen = 0;
+		rLoc = 144;
+		rType = 0;
+		vrLen = 622;
+		vrLoc = 0;
+	};
+	1017790814688CE700061200 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 100FF8721466DCB20015FE2D /* VSCParameterControlSlidersView.h */;
+		name = "VSCParameterControlSlidersView.h: 10";
+		rLen = 0;
+		rLoc = 205;
+		rType = 0;
+		vrLen = 293;
+		vrLoc = 0;
+	};
+	1017790A14688CE700061200 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1017790314688C9500061200 /* VSCSynthSourceGeneratorControlView.m */;
+		name = "VSCSynthSourceGeneratorControlView.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 486;
+		vrLoc = 0;
+	};
+	1017790F14688F4900061200 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 10A8442A1466A64C00B8DB35 /* VSCSynthSourceSineWaveControlView.h */;
+		name = "VSCSynthSourceSineWaveControlView.h: 9";
+		rLen = 0;
+		rLoc = 181;
+		rType = 0;
+		vrLen = 249;
+		vrLoc = 0;
+	};
+	1017791014688F4900061200 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1017790214688C9500061200 /* VSCSynthSourceGeneratorControlView.h */;
+		name = "VSCSynthSourceGeneratorControlView.h: 14";
+		rLen = 0;
+		rLoc = 349;
+		rType = 0;
+		vrLen = 315;
+		vrLoc = 0;
+	};
+	1017791214688F4900061200 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1017790214688C9500061200 /* VSCSynthSourceGeneratorControlView.h */;
+		name = "VSCSynthSourceGeneratorControlView.h: 15";
+		rLen = 0;
+		rLoc = 287;
+		rType = 0;
+		vrLen = 359;
+		vrLoc = 0;
 	};
 	10328C75146548050048559B /* Voicer.h */ = {
 		uiCtxt = {
@@ -952,7 +1016,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					628,
+					656,
 					20,
 					48,
 					43,
@@ -974,7 +1038,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					614,
+					616,
 					60,
 					20,
 					48,
@@ -991,19 +1055,24 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 342295537;
-			PBXWorkspaceStateSaveDate = 342295537;
+			PBXPerProjectTemplateStateSaveDate = 342390468;
+			PBXWorkspaceStateSaveDate = 342390468;
 		};
 		perUserProjectItems = {
-			100FF8791466EE440015FE2D /* PBXTextBookmark */ = 100FF8791466EE440015FE2D /* PBXTextBookmark */;
 			100FF87A1466EE440015FE2D /* PBXTextBookmark */ = 100FF87A1466EE440015FE2D /* PBXTextBookmark */;
-			100FF87B1466EE440015FE2D /* PBXTextBookmark */ = 100FF87B1466EE440015FE2D /* PBXTextBookmark */;
-			100FF87D1466EE440015FE2D /* PBXTextBookmark */ = 100FF87D1466EE440015FE2D /* PBXTextBookmark */;
 			10117EA1145618B000240467 /* PBXTextBookmark */ = 10117EA1145618B000240467 /* PBXTextBookmark */;
 			10117EA2145618B000240467 /* PBXTextBookmark */ = 10117EA2145618B000240467 /* PBXTextBookmark */;
 			10117EA6145618B000240467 /* PBXTextBookmark */ = 10117EA6145618B000240467 /* PBXTextBookmark */;
 			10117EA7145618B000240467 /* PBXTextBookmark */ = 10117EA7145618B000240467 /* PBXTextBookmark */;
 			1011801414561E8500240467 /* PlistBookmark */ = 1011801414561E8500240467 /* PlistBookmark */;
+			1017790514688CE700061200 /* PBXTextBookmark */ = 1017790514688CE700061200 /* PBXTextBookmark */;
+			1017790614688CE700061200 /* PBXTextBookmark */ = 1017790614688CE700061200 /* PBXTextBookmark */;
+			1017790714688CE700061200 /* PBXTextBookmark */ = 1017790714688CE700061200 /* PBXTextBookmark */;
+			1017790814688CE700061200 /* PBXTextBookmark */ = 1017790814688CE700061200 /* PBXTextBookmark */;
+			1017790A14688CE700061200 /* PBXTextBookmark */ = 1017790A14688CE700061200 /* PBXTextBookmark */;
+			1017790F14688F4900061200 /* PBXTextBookmark */ = 1017790F14688F4900061200 /* PBXTextBookmark */;
+			1017791014688F4900061200 /* PBXTextBookmark */ = 1017791014688F4900061200 /* PBXTextBookmark */;
+			1017791214688F4900061200 /* PBXTextBookmark */ = 1017791214688F4900061200 /* PBXTextBookmark */;
 			10328C791465B0BD0048559B /* PBXTextBookmark */ = 10328C791465B0BD0048559B /* PBXTextBookmark */;
 			10328C7A1465B0BD0048559B /* PBXTextBookmark */ = 10328C7A1465B0BD0048559B /* PBXTextBookmark */;
 			10328C7B1465B0BD0048559B /* PBXTextBookmark */ = 10328C7B1465B0BD0048559B /* PBXTextBookmark */;
@@ -1095,9 +1164,6 @@
 			10F32D3F1450D79B0051DDAC /* PBXTextBookmark */ = 10F32D3F1450D79B0051DDAC /* PBXTextBookmark */;
 			10F32D411450D79B0051DDAC /* PBXTextBookmark */ = 10F32D411450D79B0051DDAC /* PBXTextBookmark */;
 			10F7253414671048001B7BE4 /* PBXTextBookmark */ = 10F7253414671048001B7BE4 /* PBXTextBookmark */;
-			10F7253514671048001B7BE4 /* PBXTextBookmark */ = 10F7253514671048001B7BE4 /* PBXTextBookmark */;
-			10F7253614671048001B7BE4 /* PBXTextBookmark */ = 10F7253614671048001B7BE4 /* PBXTextBookmark */;
-			10F7253714671048001B7BE4 /* PBXTextBookmark */ = 10F7253714671048001B7BE4 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 1082958A14499C0F00B2DADA /* Source Control */;
 		userBuildSettings = {
@@ -1622,8 +1688,8 @@
 	};
 	10A8442A1466A64C00B8DB35 /* VSCSynthSourceSineWaveControlView.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {806, 636}}";
-			sepNavSelRange = "{248, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {834, 436}}";
+			sepNavSelRange = "{181, 0}";
 			sepNavVisRange = "{0, 249}";
 		};
 	};
@@ -1971,36 +2037,6 @@
 		rLoc = 0;
 		rType = 0;
 		vrLen = 1069;
-		vrLoc = 0;
-	};
-	10F7253514671048001B7BE4 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 100FF8771466DDEB0015FE2D /* VSCParameterControlView.m */;
-		name = "VSCParameterControlView.m: 169";
-		rLen = 0;
-		rLoc = 3594;
-		rType = 0;
-		vrLen = 901;
-		vrLoc = 2781;
-	};
-	10F7253614671048001B7BE4 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 100FF8761466DDEB0015FE2D /* VSCParameterControlView.h */;
-		name = "VSCParameterControlView.h: 32";
-		rLen = 8;
-		rLoc = 869;
-		rType = 0;
-		vrLen = 1174;
-		vrLoc = 148;
-	};
-	10F7253714671048001B7BE4 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 100FF8761466DDEB0015FE2D /* VSCParameterControlView.h */;
-		name = "VSCParameterControlView.h: 14";
-		rLen = 0;
-		rLoc = 237;
-		rType = 0;
-		vrLen = 988;
 		vrLoc = 0;
 	};
 }

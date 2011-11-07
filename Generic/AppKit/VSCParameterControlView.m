@@ -20,6 +20,8 @@
 @synthesize parameterKeys, scrollView;
 @synthesize controllerMatrix, labelMatrix;
 @synthesize controllerCellPrototype, labelCellPrototype;
+@synthesize centerSpacing;
+@synthesize delegate;
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -29,6 +31,16 @@
     }
     return self;
 }
+
+-(id) initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        // Initialization code here.
+		[self customInit];
+    }
+    return self;
+}
+
 
 -(void) dealloc {
 	
@@ -43,6 +55,8 @@
 }
 
 -(void) customInit {
+	
+	self.centerSpacing = 10.0;
 	
 	self.parameterKeys = [NSMutableSet setWithCapacity:10];
 	self.scrollView = [[[NSScrollView alloc] initWithFrame:self.bounds] autorelease];
@@ -77,6 +91,12 @@
 	
 }
 
+-(void) removeAllParameters {
+	
+	[parameterKeys removeAllObjects];
+	
+}
+
 -(NSSet*) parameterKeys {
 	
 	return [[parameterKeys retain] autorelease];
@@ -96,7 +116,7 @@
 												numberOfRows:0 
 											 numberOfColumns:1] autorelease];	
 	
-	[self addSubview:controllerMatrix];
+	[scrollView addSubview:controllerMatrix];
 	
 }
 
@@ -108,7 +128,7 @@
 										   numberOfRows:0 
 										numberOfColumns:1] autorelease];
 	
-	[self addSubview:labelMatrix];
+	[scrollView addSubview:labelMatrix];
 	
 }
 
@@ -146,12 +166,41 @@
 
 #pragma mark Update/Reset Interface
 
--(void) updateInterface {
+-(void) reloadParameterForKey:(NSString*)key {
 	
-	if (!controllerMatrix)
-		[self createLabelMatrix];
-	if (!labelMatrix)
-		[self labelMatrix];
+	NSInteger rowIndex = [delegate parameterControlView:self displayIndexForParameterWithKey:key];
+	
+	NSAssert(rowIndex < [parameterKeys count], @"Invalid row index");
+	
+	if (!delegate)
+		return;
+	
+	if (rowIndex >= [parameterKeys count])
+		rowIndex = [parameterKeys count]-1;
+	
+	NSString* displayString = [delegate parameterControlView:self displayStringForParameterWithKey:key];
+	NSCell* labelCell = [labelMatrix cellAtRow:rowIndex column:0];
+	[labelCell setStringValue:displayString];
+	
+	NSCell* controllerCell = [controllerMatrix cellAtRow:rowIndex column:0];
+	SEL fetchSelector = [delegate parameterControlView:self fetchSelectorForParameterWithKey:key];
+	
+	if (fetchSelector == @selector(parameterControlView:stringForParameterWithKey:)) {
+		NSString* val = [delegate parameterControlView:self stringForParameterWithKey:key];
+		[controllerCell setStringValue:val];
+	}
+	else if (fetchSelector == @selector(parameterControlView:floatForParameterWithKey:)) {
+		float val = [delegate parameterControlView:self floatForParameterWithKey:key];
+		[controllerCell setFloatValue:val];
+	}
+	else if (fetchSelector == @selector(parameterControlView:doubleForParameterWithKey:)) {
+		double val = [delegate parameterControlView:self doubleForParameterWithKey:key];
+		[controllerCell setDoubleValue:val];
+	}
+	
+}
+
+-(void) updateInterface {
 	
 	if ([controllerMatrix numberOfRows] != [parameterKeys count]) {
 		
@@ -169,13 +218,31 @@
 		
 	}
 	
+	if (!delegate)
+		return;
+	
+	for (NSString* key in parameterKeys) {
+		[self reloadParameterForKey:key];
+	}
 	
 }
 
 -(void) resetInterface {
 	
 	[self destroyMatrices];
+	[self createMatrices];
 	[self updateInterface];
+	
+}
+
+#pragma mark Interface Helpers
+
+-(NSSize) sizeOfString:(NSString*)s inCell:(NSCell*)cell {
+	
+	NSFont* font = [cell font];
+	NSDictionary* attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName]];
+	 
+	return [s sizeWithAttributes:attributes];;
 	
 }
 

@@ -16,14 +16,15 @@
 @required
 
 -(void) parameterControlView:(VSCParameterControlView*)view changedParameterWithKey:(NSString*)key;
--(NSString*) displayStringForParameterWithKey:(NSString*)key;
+-(NSString*) parameterControlView:(VSCParameterControlView*)view displayStringForParameterWithKey:(NSString*)key;
+-(NSInteger) parameterControlView:(VSCParameterControlView*)view displayIndexForParameterWithKey:(NSString*)key;
+-(SEL) parameterControlView:(VSCParameterControlView*)view fetchSelectorForParameterWithKey:(NSString*)key;
 
 @optional
 
--(NSString*) stringForParameterWithKey:(NSString*)key;
--(float) floatForParameterWithKey:(NSString*)key;
--(double) doubleForParameterWithKey:(NSString*)key;
--(VSCSFloat) vscsFloatForParameterWithKey:(NSString*)key;
+-(NSString*) parameterControlView:(VSCParameterControlView*)view stringForParameterWithKey:(NSString*)key;
+-(float) parameterControlView:(VSCParameterControlView*)view floatForParameterWithKey:(NSString*)key;
+-(double) parameterControlView:(VSCParameterControlView*)view doubleForParameterWithKey:(NSString*)key;
 
 @end
 
@@ -49,6 +50,13 @@
 	
 	NSActionCell* controllerCellPrototype;
 	NSCell* labelCellPrototype;
+	
+	/*
+	 *	Interface setup parameters 
+	 */
+	CGFloat centerSpacing;
+	
+	id<VSCParameterControlViewDelegate> delegate;
 }
 
 @property (nonatomic, retain) NSScrollView* scrollView; 
@@ -59,13 +67,22 @@
 @property (nonatomic, retain) NSActionCell* controllerCellPrototype;
 @property (nonatomic, retain) NSCell* labelCellPrototype;
 
+@property (nonatomic) CGFloat centerSpacing;
+
+@property (assign) id<VSCParameterControlViewDelegate> delegate;
+
 
 -(void) addParameterWithKey:(NSString*)key;
 -(void) removeParameterWithKey:(NSString*)key;
+-(void) removeAllParameters;
+
 -(NSSet*) parameterKeys;
 
+-(void) reloadParameterForKey:(NSString*)key;
 -(void) updateInterface;
 -(void) resetInterface; // recreates the matrix cells with the current prototype
+
+-(NSSize) sizeOfString:(NSString*)s inCell:(NSCell*)cell;
 
 
 /*

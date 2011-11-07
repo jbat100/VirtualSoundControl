@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "VSCParameterControlView.h"
 
-@interface VSCParamaterControlSlidersView : VSCParameterControlView {
+@interface VSCParameterControlSlidersView : VSCParameterControlView {
 	
 
 	
