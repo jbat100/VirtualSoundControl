@@ -254,7 +254,7 @@
 						<dict>
 							<key>PBXSmartGroupTreeModuleColumnWidthsKey</key>
 							<array>
-								<real>340</real>
+								<real>326</real>
 							</array>
 							<key>PBXSmartGroupTreeModuleColumnsKey_v4</key>
 							<array>
@@ -288,14 +288,14 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>74</integer>
+									<integer>75</integer>
 									<integer>73</integer>
 									<integer>72</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {340, 655}}</string>
+							<string>{{0, 1122}, {326, 655}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -307,19 +307,19 @@
 					<key>GeometryConfiguration</key>
 					<dict>
 						<key>Frame</key>
-						<string>{{0, 0}, {357, 673}}</string>
+						<string>{{0, 0}, {343, 673}}</string>
 						<key>GroupTreeTableConfiguration</key>
 						<array>
 							<string>MainColumn</string>
-							<real>340</real>
+							<real>326</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>7 56 1257 714 0 0 1280 778 </string>
+						<string>8 56 1257 714 0 0 1280 778 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
 					<key>Proportion</key>
-					<string>357pt</string>
+					<string>343pt</string>
 				</dict>
 				<dict>
 					<key>Dock</key>
@@ -332,7 +332,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>VSCSynthSourceGeneratorControlView.h</string>
+								<string>VSCSynthSourceGeneratorControlView.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -340,11 +340,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>VSCSynthSourceGeneratorControlView.h</string>
+										<string>VSCSynthSourceGeneratorControlView.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1017791214688F4900061200</string>
+										<string>10BAF29A1469DD1D00B85EF0</string>
 										<key>history</key>
 										<array>
 											<string>108295D61449CF3000B2DADA</string>
@@ -398,7 +398,6 @@
 											<string>10328C791465B0BD0048559B</string>
 											<string>10328C7A1465B0BD0048559B</string>
 											<string>10328C7B1465B0BD0048559B</string>
-											<string>10328C7D1465B0BD0048559B</string>
 											<string>10328C7E1465B0BD0048559B</string>
 											<string>10328C7F1465B0BD0048559B</string>
 											<string>10328C801465B0BD0048559B</string>
@@ -444,13 +443,16 @@
 											<string>10A844371466ACBF00B8DB35</string>
 											<string>100FF87A1466EE440015FE2D</string>
 											<string>10F7253414671048001B7BE4</string>
-											<string>1017790514688CE700061200</string>
-											<string>1017790614688CE700061200</string>
-											<string>1017790714688CE700061200</string>
 											<string>1017790814688CE700061200</string>
 											<string>1017790A14688CE700061200</string>
 											<string>1017790F14688F4900061200</string>
 											<string>1017791014688F4900061200</string>
+											<string>10BAF2941469DD1D00B85EF0</string>
+											<string>10BAF2951469DD1D00B85EF0</string>
+											<string>10BAF2961469DD1D00B85EF0</string>
+											<string>10BAF2971469DD1D00B85EF0</string>
+											<string>10BAF2981469DD1D00B85EF0</string>
+											<string>10BAF2991469DD1D00B85EF0</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -462,14 +464,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {895, 468}}</string>
+								<string>{{0, 0}, {909, 462}}</string>
 								<key>RubberWindowFrame</key>
-								<string>7 56 1257 714 0 0 1280 778 </string>
+								<string>8 56 1257 714 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>468pt</string>
+							<string>462pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -482,18 +484,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 473}, {895, 200}}</string>
+								<string>{{0, 467}, {909, 206}}</string>
 								<key>RubberWindowFrame</key>
-								<string>7 56 1257 714 0 0 1280 778 </string>
+								<string>8 56 1257 714 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
 							<key>Proportion</key>
-							<string>200pt</string>
+							<string>206pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
-					<string>895pt</string>
+					<string>909pt</string>
 				</dict>
 			</array>
 			<key>Name</key>
@@ -508,9 +510,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>101778FD146886E300061200</string>
+				<string>10BAF29B1469DD1D00B85EF0</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>101778FE146886E300061200</string>
+				<string>10BAF29C1469DD1D00B85EF0</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -648,12 +650,12 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>10117E9B1456189600240467</string>
+		<string>1CD10A99069EF8BA00B06720</string>
 		<string>108295C51449CD9100B2DADA</string>
 		<string>/Users/jonathanthorpe/Programming/Projects/Repository/SynthStation/SynthStation.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>7 56 1257 714 0 0 1280 778 </string>
+	<string>8 56 1257 714 0 0 1280 778 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -730,7 +732,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>108295C51449CD9100B2DADA</string>
-				<string>101778FF146886E300061200</string>
+				<string>10BAF29D1469DD1D00B85EF0</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -774,8 +776,8 @@
 										<string>yes</string>
 										<key>sizes</key>
 										<array>
-											<string>{{0, 0}, {316, 201}}</string>
-											<string>{{316, 0}, {378, 201}}</string>
+											<string>{{0, 0}, {316, 202}}</string>
+											<string>{{316, 0}, {378, 202}}</string>
 										</array>
 									</dict>
 									<key>VerticalSplitView</key>
@@ -790,8 +792,8 @@
 										<string>yes</string>
 										<key>sizes</key>
 										<array>
-											<string>{{0, 0}, {694, 201}}</string>
-											<string>{{0, 201}, {694, 180}}</string>
+											<string>{{0, 0}, {694, 202}}</string>
+											<string>{{0, 202}, {694, 179}}</string>
 										</array>
 									</dict>
 								</dict>
@@ -824,7 +826,7 @@
 										<real>148</real>
 									</array>
 									<key>Frame</key>
-									<string>{{316, 0}, {378, 201}}</string>
+									<string>{{316, 0}, {378, 202}}</string>
 									<key>RubberWindowFrame</key>
 									<string>58 317 694 422 0 0 1280 778 </string>
 								</dict>
@@ -852,13 +854,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>10A844201466A0C300B8DB35</string>
+				<string>10BAF29E1469DD1D00B85EF0</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>10A844211466A0C300B8DB35</string>
-				<string>10A844221466A0C300B8DB35</string>
-				<string>10A844231466A0C300B8DB35</string>
-				<string>10A844241466A0C300B8DB35</string>
-				<string>10A844251466A0C300B8DB35</string>
+				<string>10BAF29F1469DD1D00B85EF0</string>
+				<string>10BAF2A01469DD1D00B85EF0</string>
+				<string>10BAF2A11469DD1D00B85EF0</string>
+				<string>10BAF2A21469DD1D00B85EF0</string>
+				<string>10BAF2A31469DD1D00B85EF0</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>

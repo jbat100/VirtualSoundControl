@@ -8,13 +8,24 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "VSCParameterControlView.h"
 #import "VSCParameterControlSlidersView.h"
 
 
-@interface VSCSynthSourceGeneratorControlView : NSView {
+@interface VSCSynthSourceGeneratorControlView : NSView <VSCParameterControViewDelegate, VSCParameterControViewDataSource> {
 	
 	VSCParameterControlSlidersView* parameterControlSlidersView;
+	NSMutableSet* parameterKeys;
 
 }
+
+@property (nonatomic, retain) IBOutlet VSCParameterControlSlidersView* parameterControlSlidersView;
+@property (nonatomic, retain) NSMutableSet* parameterKeys;
+
+-(void) customInit;
+
+-(void) addParameterWithKey:(NSString*)key;
+-(void) removeParameterWithKey:(NSString*)key;
+-(void) removeAllParameters;
 
 @end

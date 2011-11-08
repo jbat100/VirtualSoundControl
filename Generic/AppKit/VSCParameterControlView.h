@@ -13,15 +13,22 @@
 
 @protocol VSCParameterControlViewDelegate
 
-@required
-
+@optional
 -(void) parameterControlView:(VSCParameterControlView*)view changedParameterWithKey:(NSString*)key;
+
+@end
+
+
+
+@protocol VSCParameterControlViewDataSource
+
+@required
+-(NSMutableSet*) parameterControlViewParameterKeys:(VSCParameterControlView*)view
 -(NSString*) parameterControlView:(VSCParameterControlView*)view displayStringForParameterWithKey:(NSString*)key;
 -(NSInteger) parameterControlView:(VSCParameterControlView*)view displayIndexForParameterWithKey:(NSString*)key;
 -(SEL) parameterControlView:(VSCParameterControlView*)view fetchSelectorForParameterWithKey:(NSString*)key;
 
 @optional
-
 -(NSString*) parameterControlView:(VSCParameterControlView*)view stringForParameterWithKey:(NSString*)key;
 -(float) parameterControlView:(VSCParameterControlView*)view floatForParameterWithKey:(NSString*)key;
 -(double) parameterControlView:(VSCParameterControlView*)view doubleForParameterWithKey:(NSString*)key;
@@ -31,8 +38,6 @@
 
 
 @interface VSCParameterControlView : NSView {
-	
-	NSMutableSet* parameterKeys;
 	
 	NSScrollView* scrollView;
 
@@ -57,6 +62,7 @@
 	CGFloat centerSpacing;
 	
 	id<VSCParameterControlViewDelegate> delegate;
+	id<VSCParameterControlViewDataSource> dataSource;
 }
 
 @property (nonatomic, retain) NSScrollView* scrollView; 
@@ -70,15 +76,11 @@
 @property (nonatomic) CGFloat centerSpacing;
 
 @property (assign) id<VSCParameterControlViewDelegate> delegate;
+@property (assign) id<VSCParameterControlViewDataSource> dataSource;
 
-
--(void) addParameterWithKey:(NSString*)key;
--(void) removeParameterWithKey:(NSString*)key;
--(void) removeAllParameters;
-
--(NSSet*) parameterKeys;
 
 -(void) reloadParameterForKey:(NSString*)key;
+-(void) reloadAllParameters;
 -(void) updateInterface;
 -(void) resetInterface; // recreates the matrix cells with the current prototype
 

@@ -8,20 +8,13 @@
 
 #import "VSCParameterControlView.h"
 
-@interface VSCParameterControlView () 
-
--(void) createControllerMatrix;
--(void) createLabelMatrix;
-
-@end
-
 @implementation VSCParameterControlView
 
 @synthesize parameterKeys, scrollView;
 @synthesize controllerMatrix, labelMatrix;
 @synthesize controllerCellPrototype, labelCellPrototype;
 @synthesize centerSpacing;
-@synthesize delegate;
+@synthesize delegate, dataSource;
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -73,35 +66,6 @@
     // Drawing code here.
 }
 
-#pragma mark Adding/Removing Parameters
-
--(void) addParameterWithKey:(NSString*)key {
-	
-	[parameterKeys addObject:key];
-	
-	[self updateInterface];
-	
-}
-
--(void) removeParameterWithKey:(NSString*)key {
-	
-	[parameterKeys removeObject:key];
-	
-	[self updateInterface];
-	
-}
-
--(void) removeAllParameters {
-	
-	[parameterKeys removeAllObjects];
-	
-}
-
--(NSSet*) parameterKeys {
-	
-	return [[parameterKeys retain] autorelease];
-	
-}
 
 #pragma mark Matrix Creation/Destruction 
 
