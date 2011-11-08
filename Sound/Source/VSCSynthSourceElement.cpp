@@ -23,7 +23,8 @@ bool VSCSynthSourceElement::isOn(void) const {
 }
 
 std::string VSCSynthSourceElement::sourceTypeString(void) {
-	return static const std::string("base source element");
+    static std::string sourceType = "base source element";
+	return sourceType;
 }
 
 void VSCSynthSourceElement::initialize(void) {
