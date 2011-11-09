@@ -13,7 +13,7 @@ stk::SineWave* VSCSynthSourceSine::getStkSineWave(void) {
     return &sineWave;
 }
 
-void VSCSynthSourceGroup::updateSoundEngine(void) {
+void VSCSynthSourceSine::updateSoundEngine(void) {
 	
 	// call superclass implementation
 	VSCSynthSourceGenerator::updateSoundEngine();

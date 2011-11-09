@@ -49,7 +49,7 @@ VSCSFloat VSCSound::getReferenceAFrequency(void) {
 void VSCSound::computeMidiNoteFrequencies(void) {
 	VSCSound::midiNoteFrequencies.resize(128);
 	for (int x = 0; x < 127; ++x) {
-		VSCFloat freq = (VSCSound::referenceAFrequency / 32.0) * (std::pow(2.0, ((x - 9.0) / 12.0)));
+		VSCSFloat freq = (VSCSound::referenceAFrequency / 32.0) * (std::pow(2.0, ((x - 9.0) / 12.0)));
 		VSCSound::midiNoteFrequencies[x] = freq;
 	}
 	VSCSound::midiNoteFrequenciesAreComputed = true;

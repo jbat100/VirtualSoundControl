@@ -34,7 +34,7 @@ protected:
 };
 
 inline void VSCSynthSourceFile::processComputationFrames(void) {
-	assert(_computationFrames.channels())
+	assert(_computationFrames.channels());
     fileWvIn.tick(_computationFrames);
 }
 

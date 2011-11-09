@@ -20,13 +20,13 @@
  *	changes in the C++ sound engine)
  */
 
-class VSCSynthMultiChannelElement {
+class VSCSoundMultiChannelElement {
 	
 	
 public:
     
-    VSCSynthMultiChannelElement();
-    VSCSynthMultiChannelElement(unsigned int numberOfChannels);
+    VSCSoundMultiChannelElement();
+    VSCSoundMultiChannelElement(unsigned int numberOfChannels);
     
     /*--------------------------------------------------------------*/
     

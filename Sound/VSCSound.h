@@ -14,8 +14,9 @@
 #ifndef _VSC_SOUND_H_
 #define _VSC_SOUND_H_
 
-#include <climits>
+//#include <climits>
 #include <vector>
+#include <string>
 
 #define VSCS_USE_STK
 

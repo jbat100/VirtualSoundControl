@@ -8,15 +8,16 @@
  */
 
 #include "VSCSoundMultiChannelElement.h"
+#include <cassert>
 
-VSCSoundMultiChannelElement::VSCSynthSourceElement() {
+VSCSoundMultiChannelElement::VSCSoundMultiChannelElement() {
     
     // DO NOT CALL VIRTUAL METHODS IN CONSTRUCTOR !!!
     this->setNumberOfChannels(1);
 	
 }
 
-VSCSoundMultiChannelElement::VSCSynthSourceElement(unsigned int numberOfChannels) {
+VSCSoundMultiChannelElement::VSCSoundMultiChannelElement(unsigned int numberOfChannels) {
     
     // DO NOT CALL VIRTUAL METHODS IN CONSTRUCTOR !!!
     this->setNumberOfChannels(numberOfChannels);
@@ -70,7 +71,7 @@ void VSCSoundMultiChannelElement::setDBGains(std::vector<VSCSFloat>& channelDBGa
     assert(channelDBGains.size() == _numberOfChannels);
     std::vector<VSCSFloat> channelGains(_numberOfChannels);
     for (unsigned int i = 0; i < _numberOfChannels; i++) 
-        channelGains[i] = dBToLinearGain(channelDBGains[i]);
+        channelGains[i] = VSCSound::dBToLinearGain(channelDBGains[i]);
     this->setLinearGains(channelGains);
 }
 
@@ -78,7 +79,7 @@ void VSCSoundMultiChannelElement::getDBGains(std::vector<VSCSFloat>& channelDBGa
     channelDBGains.resize(_numberOfChannels);
     assert(_channelLinearGains.size() == _numberOfChannels);
     for (unsigned int i = 0; i < _numberOfChannels; i++) 
-        channelDBGains[i] = linearToDBGain(_channelLinearGains[i]);
+        channelDBGains[i] = VSCSound::linearToDBGain(_channelLinearGains[i]);
 }
 
 void VSCSoundMultiChannelElement::lockChannels(bool _lock) {

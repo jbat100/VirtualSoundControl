@@ -14,7 +14,7 @@ stk::BlitSaw* VSCSynthSourceSaw::getStkBlitSaw(void) {
     return &blitSaw;
 }
 
-void VSCSynthSourceGroup::updateSoundEngine(void) {
+void VSCSynthSourceSaw::updateSoundEngine(void) {
 	
 	// call superclass implementation
 	VSCSynthSourceGenerator::updateSoundEngine();

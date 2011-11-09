@@ -7,9 +7,11 @@
 //
 
 #import "VSCSynthSourceSineWaveControlView.h"
+#import "VSCSoundApple.h"
 
 
 @implementation VSCSynthSourceSineWaveControlView
+
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -21,6 +23,15 @@
 
 - (void)drawRect:(NSRect)dirtyRect {
     // Drawing code here.
+}
+
+-(void) customInit {
+	
+	[super customInit];
+	
+	[parameterKeys addObject:[VSCSoundApple VSCSoundFrequencyParameterKey]];
+	
+	
 }
 
 @end

@@ -19,6 +19,7 @@
 #include "Stk.h"
 #include "SineWave.h"
 
+
 class VSCSynthSourceSine : public VSCSynthSourceGenerator {
 	
 public:

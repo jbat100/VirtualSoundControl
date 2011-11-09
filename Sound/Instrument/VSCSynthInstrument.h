@@ -32,7 +32,7 @@
 
 #include "Generator.h"
 
-class VSCSynthInstrument : public VSCSoundMultiChannelElement : public stk::Generator {
+class VSCSynthInstrument : public VSCSoundMultiChannelElement, public stk::Generator {
 	
 	
 public:
@@ -67,12 +67,12 @@ public:
 	virtual void noteOff(VSCSFloat amplitude); // stk::Instrmnt method (amplitude is used for decay time)
 	
 	//! Set instrument parameters for a particular frequency.
-	virtual void setFrequency( StkFloat frequency );
+	virtual void setFrequency(stk::StkFloat frequency);
 	
 	//! Perform the control change specified by \e number and \e value (0.0 - 128.0).
-	virtual void controlChange(int number, StkFloat value);
+	virtual void controlChange(int number, stk::StkFloat value);
 	
-	StkFrames& tick( StkFrames& frames, unsigned int channel = 0 );
+	stk::StkFrames& tick( stk::StkFrames& frames, unsigned int channel = 0 );
 
 	// THIS METHOD IS NOT DECLARED AS VIRTUAL IN INSTRMNT, IT APPARENTLY SHOULD NOT BE SUBCLASSED
 	// StkFrames& tick( StkFrames& frames, unsigned int channel = 0 );
@@ -108,11 +108,12 @@ protected:
 	
 };
 
-inline StkFrames& VSCSynthInstrument::tick(StkFrames& frames, unsigned int channel)
+inline stk::StkFrames& VSCSynthInstrument::tick(stk::StkFrames& frames, unsigned int channel)
 {
-	assert(_sourceGroup.getNumberOfChannels() == _numberOfChannels);
-	
-	_sourceGroup.tick(frames, kVSCSAllChannels);
+	if (_sourceGroup != NULL) {
+		assert(_sourceGroup->getNumberOfChannels() == _numberOfChannels);
+		_sourceGroup->tick(frames, kVSCSAllChannels);
+	}
 	
 	return frames;
 }

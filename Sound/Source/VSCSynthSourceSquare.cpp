@@ -14,7 +14,7 @@ stk::BlitSquare* VSCSynthSourceSquare::getStkBlitSquare(void) {
     return &blitSquare;
 }
 
-void VSCSynthSourceGroup::updateSoundEngine(void) {
+void VSCSynthSourceSquare::updateSoundEngine(void) {
 	
 	// call superclass implementation
 	VSCSynthSourceGenerator::updateSoundEngine();

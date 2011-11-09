@@ -8,8 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "VSCSynthSourceGeneratorControlView.h"
 
-@interface VSCSynthSourceSineWaveControlView : NSView {
+
+@interface VSCSynthSourceSineWaveControlView : VSCSynthSourceGeneratorControlView {
 
 }
 

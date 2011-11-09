@@ -53,6 +53,12 @@ public:
 	 */
 	VSCSynthSourceGenerator* getGroup(void);
 	
+	/*
+	 *   VSCSynthSourceElement methods
+	 */
+	virtual void initialize(void);
+    virtual void updateSoundEngine(void);
+	
 protected:
 	
 	/* 

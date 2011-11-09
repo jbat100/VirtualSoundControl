@@ -15,7 +15,7 @@ stk::Noise* VSCSynthSourceNoise::getStkNoise(void) {
 }
 
 
-void VSCSynthSourceGroup::updateSoundEngine(void) {
+void VSCSynthSourceNoise::updateSoundEngine(void) {
 	
 	// call superclass implementation
 	VSCSynthSourceGenerator::updateSoundEngine();

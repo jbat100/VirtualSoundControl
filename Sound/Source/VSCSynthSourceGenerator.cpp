@@ -26,10 +26,10 @@ void VSCSynthSourceGenerator::processComputationFrames(void) {
 	
 }
 
-void VSCSynthSourceGroup::initialize(void) {
+void VSCSynthSourceGenerator::initialize(void) {
     this->updateSoundEngine();
 }
 
-void VSCSynthSourceGroup::updateSoundEngine(void) {
+void VSCSynthSourceGenerator::updateSoundEngine(void) {
 
 }
