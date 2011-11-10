@@ -19,4 +19,7 @@
 +(NSString*) VSCSoundLinearGainParameterKey;
 +(NSString*) VSCSoundHarmonicsParameterKey;
 
++(NSDictionary*) parameterDisplayStrings;
++(NSString*) displayStringForKey:(NSString*)key;
+
 @end

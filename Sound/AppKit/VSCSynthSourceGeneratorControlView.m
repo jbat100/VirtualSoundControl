@@ -37,30 +37,28 @@
 	self.parameterKeys = [NSMutableSet setWithCapacity:10];
 }
 
+#pragma mark Parameter index paths
+
++(NSDictionary*) parameterIndexPaths {
+    return nil;
+}
+
 
 #pragma mark Adding/Removing Parameters
 
 -(void) addParameterWithKey:(NSString*)key {
 	
-	[parameterKeys addObject:key];
-	[parameterControlSlidersView updateInterface];
-	
+
 }
 
 -(void) removeParameterWithKey:(NSString*)key {
 	
-	[parameterKeys removeObject:key];
-	
-	[parameterControlSlidersView updateInterface];
-	
+
 }
 
 -(void) removeAllParameters {
 	
-	[parameterKeys removeAllObjects];
-	
-	[parameterControlSlidersView updateInterface];
-	
+
 }
 
 
@@ -73,33 +71,48 @@
 
 #pragma mark - VSCParameterControlViewDataSource Methods
 
+/*
+ *  These should never change
+ */
 
--(NSMutableSet*) parameterControlViewParameterKeys:(VSCParameterControlView*)view {
-	return [[parameterKeys retain] autorelease];
+-(NSInteger) parameterControlViewNumberOfParameters:(VSCParameterControlView *)view {
+    return [[self parameterIndexPaths] count];
 }
 
--(NSString*) parameterControlView:(VSCParameterControlView*)view displayStringForParameterWithKey:(NSString*)key {
+
+-(NSIndexPath*) parameterControlView:(VSCParameterControlView*)view indexPathForParameterWithKey:(NSString *)key  {
+	return [[self parameterIndexPaths] objectForKey:key];
+}
+
+-(NSString *)parameterControlView:(VSCParameterControlView *)view parameterKeyForParameterAtIndexPath:(NSIndexPath *)indexPath {
+    NSArray* keys = [[self parameterIndexPaths] keysOfEntriesWithOptions:0 passingTest:^BOOL(id key, id obj, BOOL *stop) {
+        if ([indexPath isEqual:(NSIndexPath *)obj])
+            return YES;
+        return NO;
+    }];
+    if ([keys count] > 0)
+        return [keys objectAtIndex:0];
+    return nil;
+}
+
+-(SEL) parameterControlView:(VSCParameterControlView*)view fetchSelectorForParameterAtIndexPath:(NSIndexPath *)indexPath  {
+    static SEL selector = @selector(parameterControlView:floatForParameterAtIndexPath:);
+	return selector;
+}
+
+/*
+ *  Return nil for all of these...
+ */
+
+-(NSString *)parameterControlView:(VSCParameterControlView *)view parameterKeyForParameterAtIndexPath:(NSIndexPath *)indexPath {
+    return nil;
+}
+
+
+-(NSString*) parameterControlView:(VSCParameterControlView*)view displayStringForParameterAtIndexPath:(NSIndexPath *)indexPath {
 	return nil;
 }
 
--(NSInteger) parameterControlView:(VSCParameterControlView*)view displayIndexForParameterWithKey:(NSString*)key {
-	return nil;
-}
 
--(SEL) parameterControlView:(VSCParameterControlView*)view fetchSelectorForParameterWithKey:(NSString*)key {
-	return nil;
-}
-
--(NSString*) parameterControlView:(VSCParameterControlView*)view stringForParameterWithKey:(NSString*)key {
-	return nil;
-}
-
--(float) parameterControlView:(VSCParameterControlView*)view floatForParameterWithKey:(NSString*)key {
-	return 0.0;
-}
-
--(double) parameterControlView:(VSCParameterControlView*)view doubleForParameterWithKey:(NSString*)key {
-	return 0.0;
-}
 
 @end

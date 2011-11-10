@@ -12,6 +12,10 @@
 
 @implementation VSCSynthSourceSineWaveControlView
 
+static NSArray* sineWaveParameterKeys = nil;
+static NSDictionary* sineWaveParameterIndexPaths = nil;
+static NSDictionary* sineWaveParameterDisplayStrings = nil;
+
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -29,9 +33,53 @@
 	
 	[super customInit];
 	
-	[parameterKeys addObject:[VSCSoundApple VSCSoundFrequencyParameterKey]];
-	
+
 	
 }
+
++(NSArray*) sineWaveParameterKeys {
+    
+    if (sineWaveParameterKeys == nil) {
+        sineWaveParameterKeys = [[NSArray arrayWithObjects:
+                                 [VSCSoundApple VSCSoundFrequencyParameterKey], 
+                                 [VSCSoundApple VSCSoundDBGainParameterKey],
+                                 [VSCSoundApple VSCSoundPhaseParameterKey], nil] retain];
+    }
+    return sineWaveParameterKeys;
+}
+
++(NSDictionary*) sineWaveParameterDisplayStrings {
+    return nil;
+}
+
++(NSDictionary*) sineWaveParameterIndexPaths {
+    
+    if (sineWaveParameterIndexPaths == nil) {
+        sineWaveParameterIndexPaths = [[NSDictionary dictionaryWithObjectsAndKeys:
+                                       [NSIndexPath indexPathWithIndex:0], [VSCSoundApple VSCSoundFrequencyParameterKey], 
+                                       [NSIndexPath indexPathWithIndex:1], [VSCSoundApple VSCSoundDBGainParameterKey], 
+                                       [NSIndexPath indexPathWithIndex:2], [VSCSoundApple VSCSoundPhaseParameterKey], 
+                                        nil] retain];
+    }
+    return sineWaveParameterIndexPaths;
+}
+
+-(NSDictionary*) parameterIndexPaths {
+    return [VSCSynthSourceSineWaveControlView sineWaveParameterIndexPaths];
+}
+
+#pragma mark - VSCParameterControlViewDataSource Methods
+
+
+-(NSString*) parameterControlView:(VSCParameterControlView*)view displayStringForParameterAtIndexPath:(NSIndexPath *)indexPath {
+	return [VSCSoundApple displayStringForKey:[self parameterControlView:nil parameterKeyForParameterAtIndexPath:indexPath]];
+}
+
+-(float) parameterControlView:(VSCParameterControlView*)view floatForParameterAtIndexPath:(NSIndexPath *)indexPath  {
+	return 0.0;
+}
+
+
+
 
 @end

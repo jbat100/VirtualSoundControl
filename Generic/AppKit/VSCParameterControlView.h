@@ -10,10 +10,13 @@
 
 #import "VSCSound.h"
 
+@class VSCParameterControlView;
+
 
 @protocol VSCParameterControlViewDelegate
 
 @optional
+
 -(void) parameterControlView:(VSCParameterControlView*)view changedParameterWithKey:(NSString*)key;
 
 @end
@@ -23,15 +26,20 @@
 @protocol VSCParameterControlViewDataSource
 
 @required
--(NSMutableSet*) parameterControlViewParameterKeys:(VSCParameterControlView*)view
--(NSString*) parameterControlView:(VSCParameterControlView*)view displayStringForParameterWithKey:(NSString*)key;
--(NSInteger) parameterControlView:(VSCParameterControlView*)view displayIndexForParameterWithKey:(NSString*)key;
--(SEL) parameterControlView:(VSCParameterControlView*)view fetchSelectorForParameterWithKey:(NSString*)key;
+
+-(NSInteger) parameterControlViewNumberOfParameters:(VSCParameterControlView*)view;
+-(NSIndexPath*) parameterControlView:(VSCParameterControlView*)view indexPathForParameterWithKey:(NSString*)key;
+
+-(NSString*) parameterControlView:(VSCParameterControlView*)view parameterKeyForParameterAtIndexPath:(NSIndexPath*)indexPath;
+-(NSString*) parameterControlView:(VSCParameterControlView*)view displayStringForParameterAtIndexPath:(NSIndexPath*)indexPath;
+
+-(SEL) parameterControlView:(VSCParameterControlView*)view fetchSelectorForParameterAtIndexPath:(NSIndexPath*)indexPath;
 
 @optional
--(NSString*) parameterControlView:(VSCParameterControlView*)view stringForParameterWithKey:(NSString*)key;
--(float) parameterControlView:(VSCParameterControlView*)view floatForParameterWithKey:(NSString*)key;
--(double) parameterControlView:(VSCParameterControlView*)view doubleForParameterWithKey:(NSString*)key;
+
+-(NSString*) parameterControlView:(VSCParameterControlView*)view stringForParameterAtIndexPath:(NSIndexPath*)indexPath;
+-(float) parameterControlView:(VSCParameterControlView*)view floatForParameterAtIndexPath:(NSIndexPath*)indexPath;
+-(double) parameterControlView:(VSCParameterControlView*)view doubleForParameterAtIndexPath:(NSIndexPath*)indexPath;
 
 @end
 
@@ -43,7 +51,7 @@
 
 	/*
 	 *	Keep two different matrices for labels and sliders (so that they can have 
-	 *	different sizes).
+	 *	different sizes). USE sizeToCells TO RESIZE !!!
 	 */
 	
 	NSMatrix * controllerMatrix;
@@ -79,8 +87,14 @@
 @property (assign) id<VSCParameterControlViewDataSource> dataSource;
 
 
--(void) reloadParameterForKey:(NSString*)key;
--(void) reloadAllParameters;
+-(void) reloadParameterValueForKey:(NSString*)key;
+-(void) reloadParameterValueAtIndexPath:(NSIndexPath*)indexPath;
+-(void) reloadAllParameterValues;
+
+-(void) reloadParameterDisplayStringForKey:(NSString*)key;
+-(void) reloadParameterDisplayStringAtIndexPath:(NSIndexPath*)indexPath;
+-(void) reloadAllParameterDisplayStrings;
+
 -(void) updateInterface;
 -(void) resetInterface; // recreates the matrix cells with the current prototype
 

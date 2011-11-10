@@ -12,15 +12,17 @@
 #import "VSCParameterControlSlidersView.h"
 
 
-@interface VSCSynthSourceGeneratorControlView : NSView <VSCParameterControViewDelegate, VSCParameterControViewDataSource> {
+@interface VSCSynthSourceGeneratorControlView : NSView <VSCParameterControlViewDelegate, VSCParameterControlViewDataSource> {
 	
 	VSCParameterControlSlidersView* parameterControlSlidersView;
-	NSMutableSet* parameterKeys;
 
 }
 
 @property (nonatomic, retain) IBOutlet VSCParameterControlSlidersView* parameterControlSlidersView;
-@property (nonatomic, retain) NSMutableSet* parameterKeys;
+
+-(NSArray*) parameterKeys;
+-(NSDictionary*) parameterIndexPaths;
+-(NSDictionary*) parameterDisplayStrings;
 
 -(void) customInit;
 

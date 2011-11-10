@@ -9,10 +9,18 @@
 #import <Cocoa/Cocoa.h>
 
 #import "VSCSynthSourceGeneratorControlView.h"
+#import "VSCSynthSourceSine.h"
+
 
 
 @interface VSCSynthSourceSineWaveControlView : VSCSynthSourceGeneratorControlView {
+    
+    //VSCSynthSourceSinePtr 
 
 }
+
++(NSArray*) sineWaveParameterKeys;
++(NSDictionary*) sineWaveParameterIndexPaths;
++(NSDictionary*) sineWaveParameterDisplayStrings;
 
 @end

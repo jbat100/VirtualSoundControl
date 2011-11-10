@@ -9,8 +9,12 @@
 #import "VSCSoundApple.h"
 #import "VSCSynthSourceElement.h"
 
-@implementation 
+@implementation VSCSoundApple
 
+static NSDictionary* parameterDisplayStrings = nil;
+
+
+#pragma mark Parameter Keys
 
 +(NSString*) VSCSoundFrequencyParameterKey {
 	
@@ -55,6 +59,30 @@
 	
 	return vscSoundHarmonicsParameterKey;
 	
+}
+
+#pragma mark Parameter Display Strings
+
++(NSDictionary*) parameterDisplayStrings {
+    
+    if (parameterDisplayStrings == nil) {
+        parameterDisplayStrings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @"Frequency (Hz)", [VSCSoundApple VSCSoundFrequencyParameterKey], 
+                                   @"Phase (Degrees)", [VSCSoundApple VSCSoundPhaseParameterKey],
+                                   @"Gain (dB)", [VSCSoundApple VSCSoundDBGainParameterKey],
+                                   @"Gain (Linear)", [VSCSoundApple VSCSoundDBGainParameterKey],
+                                   @"Number of Harmonics", [VSCSoundApple VSCSoundHarmonicsParameterKey],
+                                   nil];
+    }
+    
+    return parameterDisplayStrings;
+    
+}
+
++(NSString*) displayStringForKey:(NSString*)key {
+    
+    return [[VSCSoundApple parameterDisplayStrings] objectForKey:key];
+    
 }
 
 @end

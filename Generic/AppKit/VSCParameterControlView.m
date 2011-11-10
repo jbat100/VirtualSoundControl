@@ -51,7 +51,6 @@
 	
 	self.centerSpacing = 10.0;
 	
-	self.parameterKeys = [NSMutableSet setWithCapacity:10];
 	self.scrollView = [[[NSScrollView alloc] initWithFrame:self.bounds] autorelease];
 	[self addSubview:scrollView];
 	
@@ -62,9 +61,13 @@
 	
 }
 
+/*
+
 - (void)drawRect:(NSRect)dirtyRect {
     // Drawing code here.
 }
+ 
+ */
 
 
 #pragma mark Matrix Creation/Destruction 
@@ -85,6 +88,8 @@
 }
 
 -(void) createLabelMatrix {
+    
+    CGRect labelMatrixFrame = NSMakeRect(0.0, 0.0, self.frame.size.width / 2.0, self.frame.size.height);
 	
 	self.labelMatrix = [[[NSMatrix alloc] initWithFrame:labelMatrixFrame 
 												   mode:NSTrackModeMatrix 
@@ -130,64 +135,52 @@
 
 #pragma mark Update/Reset Interface
 
--(void) reloadParameterForKey:(NSString*)key {
-	
-	NSInteger rowIndex = [delegate parameterControlView:self displayIndexForParameterWithKey:key];
-	
-	NSAssert(rowIndex < [parameterKeys count], @"Invalid row index");
-	
-	if (!delegate)
-		return;
-	
-	if (rowIndex >= [parameterKeys count])
-		rowIndex = [parameterKeys count]-1;
-	
-	NSString* displayString = [delegate parameterControlView:self displayStringForParameterWithKey:key];
-	NSCell* labelCell = [labelMatrix cellAtRow:rowIndex column:0];
-	[labelCell setStringValue:displayString];
-	
-	NSCell* controllerCell = [controllerMatrix cellAtRow:rowIndex column:0];
-	SEL fetchSelector = [delegate parameterControlView:self fetchSelectorForParameterWithKey:key];
-	
-	if (fetchSelector == @selector(parameterControlView:stringForParameterWithKey:)) {
-		NSString* val = [delegate parameterControlView:self stringForParameterWithKey:key];
-		[controllerCell setStringValue:val];
-	}
-	else if (fetchSelector == @selector(parameterControlView:floatForParameterWithKey:)) {
-		float val = [delegate parameterControlView:self floatForParameterWithKey:key];
-		[controllerCell setFloatValue:val];
-	}
-	else if (fetchSelector == @selector(parameterControlView:doubleForParameterWithKey:)) {
-		double val = [delegate parameterControlView:self doubleForParameterWithKey:key];
-		[controllerCell setDoubleValue:val];
-	}
-	
-}
-
 -(void) updateInterface {
+    
+    NSInteger parameterCount = [dataSource parameterControlViewNumberOfParameters:self];
 	
-	if ([controllerMatrix numberOfRows] != [parameterKeys count]) {
+	if ([controllerMatrix numberOfRows] != parameterCount) {
 		
-		if ([controllerMatrix numberOfRows] < [parameterKeys count]) {
-			while ([controllerMatrix numberOfRows] < [parameterKeys count]) {
+		if ([controllerMatrix numberOfRows] < parameterCount) {
+			while ([controllerMatrix numberOfRows] < parameterCount) {
 				[controllerMatrix addRow];
 			}
 		}
 		
-		else if ([controllerMatrix numberOfRows] > [parameterKeys count]) {
-			while ([controllerMatrix numberOfRows] > [parameterKeys count]) {
+		else if ([controllerMatrix numberOfRows] > parameterCount) {
+			while ([controllerMatrix numberOfRows] > parameterCount) {
 				[controllerMatrix removeRow:0];
 			}
 		}
 		
 	}
+    
+    if ([labelMatrix numberOfRows] != parameterCount) {
+		
+		if ([labelMatrix numberOfRows] < parameterCount) {
+			while ([labelMatrix numberOfRows] < parameterCount) {
+				[labelMatrix addRow];
+			}
+		}
+		
+		else if ([labelMatrix numberOfRows] > parameterCount) {
+			while ([labelMatrix numberOfRows] > parameterCount) {
+				[labelMatrix removeRow:0];
+			}
+		}
+		
+	}
+    
+    [controllerMatrix sizeToCells];
+    [labelMatrix sizeToCells];
+    
 	
 	if (!delegate)
 		return;
 	
-	for (NSString* key in parameterKeys) {
-		[self reloadParameterForKey:key];
-	}
+	[self reloadAllParameters];
+    
+    [self setNeedsDisplay:YES];
 	
 }
 
@@ -197,6 +190,108 @@
 	[self createMatrices];
 	[self updateInterface];
 	
+}
+
+#pragma mark - Reload parameter values
+
+-(void) reloadParameterValueAtIndexPath:(NSIndexPath*)indexPath {
+    
+    if (!dataSource)
+		return;
+    
+    NSInteger rowIndex = [indexPath indexAtPosition:0];
+	
+	NSAssert(rowIndex < parameterCount, @"Invalid row index");
+	
+	if (rowIndex >= parameterCount)
+		rowIndex = parameterCount-1;
+	
+	
+	NSCell* controllerCell = [controllerMatrix cellAtRow:rowIndex column:0];
+	SEL fetchSelector = [dataSource parameterControlView:self fetchSelectorForParameterAtIndexPath:indexPath];
+	
+	if (fetchSelector == @selector(parameterControlView:stringForParameterAtIndexPath:)) {
+		NSString* val = [dataSource parameterControlView:self stringForParameterAtIndexPath:indexPath];
+		[controllerCell setStringValue:val];
+	}
+	else if (fetchSelector == @selector(parameterControlView:floatForParameterAtIndexPath:)) {
+		float val = [dataSource parameterControlView:self floatForParameterAtIndexPath:indexPath];
+		[controllerCell setFloatValue:val];
+	}
+	else if (fetchSelector == @selector(parameterControlView:doubleForParameterAtIndexPath:)) {
+		double val = [dataSource parameterControlView:self doubleForParameterAtIndexPath:indexPath];
+		[controllerCell setDoubleValue:val];
+	}
+    
+}
+
+-(void) reloadParameterValueForKey:(NSString*)key {
+    
+    NSAssert(dataSource, @"Need dataSource")
+    
+    if (!dataSource)
+		return;
+    
+    NSIndexPath* indexPath = [dataSource parameterControlView:self indexPathForParameterWithKey:key];
+    
+    [self reloadParameterValueAtIndexPath:indexPath];
+    
+}
+
+-(void) reloadAllParameterValues {
+    
+    NSInteger parameterCount = [dataSource parameterControlViewNumberOfParameters:self];
+    
+    for (NSInteger i = 0; i < parameterCount; i++) {
+        NSIndexPath* path = [NSIndexPath indexPathWithIndex:i];
+        [self reloadParameterValueAtIndexPath:path];
+    }
+    
+}
+
+#pragma mark - Reload parameter display strings
+
+-(void) reloadParameterValueAtIndexPath:(NSIndexPath*)indexPath {
+    
+    if (!dataSource)
+		return;
+    
+    NSInteger rowIndex = [indexPath indexAtPosition:0];
+	
+	NSAssert(rowIndex < parameterCount, @"Invalid row index");
+	
+	if (rowIndex >= parameterCount)
+		rowIndex = parameterCount-1;
+	
+	NSString* displayString = [dataSource parameterControlView:self displayStringForParameterAtIndexPath:indexPath];
+	NSCell* labelCell = [labelMatrix cellAtRow:rowIndex column:0];
+	[labelCell setStringValue:displayString];
+	
+    
+}
+
+-(void) reloadParameterDisplayStringForKey:(NSString*)key {
+    
+    NSAssert(dataSource, @"Need dataSource")
+    
+    if (!dataSource)
+		return;
+    
+    NSIndexPath* indexPath = [dataSource parameterControlView:self indexPathForParameterWithKey:key];
+    
+    [self reloadParameterDisplayStringAtIndexPath:indexPath];
+    
+}
+
+-(void) reloadAllParameterDisplayStrings {
+    
+    NSInteger parameterCount = [dataSource parameterControlViewNumberOfParameters:self];
+    
+    for (NSInteger i = 0; i < parameterCount; i++) {
+        NSIndexPath* path = [NSIndexPath indexPathWithIndex:i];
+        [self reloadParameterDisplayStringAtIndexPath:path];
+    }
+    
 }
 
 #pragma mark Interface Helpers
