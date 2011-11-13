@@ -6,7 +6,7 @@
 //  Copyright 2011 JBAT. All rights reserved.
 //
 
-#import "NSFileManager-MenuItem.h"
+#import "NSFileManager+VSCAdditions.h"
 
 
 @implementation NSFileManager (MenuItem)

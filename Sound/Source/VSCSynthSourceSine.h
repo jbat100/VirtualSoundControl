@@ -13,6 +13,9 @@
 
 #include "VSCSound.h"
 #include "VSCSynthSourceGenerator.h"
+#include <boost/shared_ptr.hpp>
+
+#define VSCSynthSourceSinePtr      boost::shared_ptr<VSCSynthSourceSine>
 
 #ifdef VSCS_USE_STK
 
@@ -23,14 +26,42 @@
 class VSCSynthSourceSine : public VSCSynthSourceGenerator {
 	
 public:
+	
+	/*
+	 *	Default constructor
+	 */
+	VSCSynthSourceSine();
+	
+	/*
+	 *	Setters/Getters
+	 */
+	VSCSFloat getFrequency(void);
+	void setFrequency(VSCSFloat f);
+	
+	VSCSFloat getPhase(void);
+	void setPhase(VSCSFloat f);
+	void addPhase(VSCSFloat f);
     
+	/*
+	 *	STK engine
+	 */
     stk::SineWave* getStkSineWave(void);
 	
+	/*
+	 *	Call on change number of channels
+	 */
 	void updateSoundEngine(void);
 	
 protected:
     
 	stk::SineWave sineWave;
+	
+	/*
+	 *	For some stupid reason the guys at STK have decided not to make it possible to know the 
+	 *	frequency and phase of the SineWave, so we store it here... WTF... why...
+	 */
+	VSCSFloat _frequency;
+	VSCSFloat _phase;
     
     void processComputationFrames(void);
 	

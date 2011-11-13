@@ -17,6 +17,8 @@
 #include <boost/foreach.hpp>
 #include <boost/shared_ptr.hpp>
 
+#define VSCSynthSourceGroupPtr      boost::shared_ptr<VSCSynthSourceGroup>
+
 
 #ifdef VSCS_USE_STK
 
@@ -31,8 +33,6 @@ public:
 	
 	SynthSrcGenIter beginGeneratorsIterator(void);
 	SynthSrcGenIter endGeneratorsIterator(void);
-    
-    virtual void setNumberOfChannels(unsigned int numberOfChannels);
     
     virtual void initialize(void);
     virtual void updateSoundEngine(void);

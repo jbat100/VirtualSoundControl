@@ -8,18 +8,29 @@
 
 #import <Foundation/Foundation.h>
 
+#import "VSCSoundParameters.h"
+
 
 @interface VSCSoundApple : NSObject {
 	
 }
 
+/*
+ * No longer using string based parameter keys
+ *
+ 
 +(NSString*) VSCSoundFrequencyParameterKey;
 +(NSString*) VSCSoundPhaseParameterKey;
 +(NSString*) VSCSoundDBGainParameterKey;
 +(NSString*) VSCSoundLinearGainParameterKey;
 +(NSString*) VSCSoundHarmonicsParameterKey;
+ 
+ 
++(NSDictionary*) parameterLabels;
+ 
+ */
 
-+(NSDictionary*) parameterDisplayStrings;
-+(NSString*) displayStringForKey:(NSString*)key;
+
++(NSString*) labelForKey:(VSCSParameter::Key)key;
 
 @end

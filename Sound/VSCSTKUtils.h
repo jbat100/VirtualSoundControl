@@ -23,12 +23,14 @@ namespace stk {
     void setAllFramesChannelsWithMonoFrames(StkFrames& targetFrames, StkFrames& monoFrames);
 	void scaleFramesChannel(StkFrames& targetFrames, unsigned int channel, StkFloat scale);
     void zeroFrames(StkFrames& targetFrames);
-	
-	/*
-	 *	StkFrames operator overloading
-	 */
+	void zeroFrame(StkFrames& targetFrames, unsigned int frameIndex);
+	void shiftFrames(StkFrames& frames, int shift);
     
 }
+
+/*
+ *	StkFrames operator overloading
+ */
 
 std::ostream& operator<<(std::ostream& output, const stk::StkFrames& f);
 

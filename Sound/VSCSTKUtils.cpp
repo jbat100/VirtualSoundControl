@@ -76,8 +76,64 @@ namespace stk {
         std::memset(&targetFrames[0], 0, sizeof(stk::StkFloat) * targetFrames.size());
         
     }
+	
+	void zeroFrame(StkFrames& targetFrames, unsigned int frameIndex) {
+        
+		assert(targetFrames.frames() > frameIndex);
+		
+		if (targetFrames.frames() <= frameIndex) {
+			return;
+		}
+		
+        for (unsigned int channelIndex = 0; channelIndex < targetFrames.channels(); channelIndex++) {
+			targetFrames(frameIndex, channelIndex) = 0.0;
+		}
+        
+    }
+	
+	void shiftFrames(StkFrames& frames, int shift) {
+		
+		if (std::abs(shift) > frames.frames()) {
+			// if we shift by more than the frame length then might as well zero the whole thing
+			zeroFrames(frames);
+		}
+		
+		else if (shift > 1) {
+			// if the shift is positive, then go backwards to not overwrite needed information
+			for (unsigned int frameIndex = frames.frames()-shift-1; frameIndex >= 0; frameIndex--) {
+				// if we are within the range
+				if (frameIndex+shift < frames.frames()) {
+					// transfer the frame data to the shifted location
+					for (unsigned int channelIndex = 0; channelIndex , frames.channels(); channelIndex++) {
+						frames(frameIndex+shift, channelIndex) = frames(frameIndex, channelIndex);
+					}
+				}
+			}
+			// zero the frames which do not have valid data
+			for (unsigned int frameIndex = 0; frameIndex < shift; frameIndex++) {
+				zeroFrame(frames, frameIndex);
+			}
+		}
+		
+		else if (shift < 1) {
+			// if the shift is positive, then go backwards to not overwrite needed information
+			for (unsigned int frameIndex = 0; frameIndex < frames.frames()-shift; frameIndex++) {
+				// if we are within the range
+				for (unsigned int channelIndex = 0; channelIndex , frames.channels(); channelIndex++) {
+					frames(frameIndex, channelIndex) = frames(frameIndex+shift, channelIndex);
+				}
+			}
+			// zero the frames which do not have valid data
+			for (unsigned int frameIndex = frames.frames()-shift; frameIndex < frames.frames(); frameIndex++) {
+				zeroFrame(frames, frameIndex);
+			}
+		}
+		
+	}
 
 }
+
+
 
 std::ostream& operator<<(std::ostream& output, const stk::StkFrames& f) {
 	
@@ -94,6 +150,8 @@ std::ostream& operator<<(std::ostream& output, const stk::StkFrames& f) {
 	}
 	
 	output << std::endl;
+	
+	return output;
 	
 }
 

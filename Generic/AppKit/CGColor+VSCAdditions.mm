@@ -6,7 +6,7 @@
 //  Copyright 2011 JBAT. All rights reserved.
 //
 
-#import "CGColorOperations.h"
+#import "CGColor+VSCAdditions.h"
 
 
 

@@ -26,7 +26,7 @@
  */
 #define VSCS_USE_DOUBLE_PRECISION
 
-/*
+/*-------------------------------------------------------------------------------------------
  *  Just to avoid silly values for numbers of channels, accidental or not...
  */
 const unsigned int kVSCSMaxChannels = 16;
@@ -39,6 +39,8 @@ const unsigned int kVSCSMaxChannels = 16;
  */
 const unsigned int kVSCSAllChannels = UINT_MAX;
 
+/*-------------------------------------------------------------------------------------------*/
+
 #ifdef VSCS_USE_STK
 	#include "Stk.h"
 	//Define VSCSFloat (double or float or same as stk::StkFloat)
@@ -47,6 +49,12 @@ const unsigned int kVSCSAllChannels = UINT_MAX;
 	typedef double VSCSFloat;
 #endif
 
+
+/*-------------------------------------------------------------------------------------------
+ *
+ *	VSCSound class definition providing general purpose sound related 
+ *	functionality.
+ */
 
 class VSCSound {
 	

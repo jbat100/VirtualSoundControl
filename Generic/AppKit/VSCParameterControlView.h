@@ -8,44 +8,16 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "VSCParameterControlViewProtocol.h"
+
 #import "VSCSound.h"
-
-@class VSCParameterControlView;
-
-
-@protocol VSCParameterControlViewDelegate
-
-@optional
-
--(void) parameterControlView:(VSCParameterControlView*)view changedParameterWithKey:(NSString*)key;
-
-@end
+#import "VSCSoundParameters.h"
 
 
-
-@protocol VSCParameterControlViewDataSource
-
-@required
-
--(NSInteger) parameterControlViewNumberOfParameters:(VSCParameterControlView*)view;
--(NSIndexPath*) parameterControlView:(VSCParameterControlView*)view indexPathForParameterWithKey:(NSString*)key;
-
--(NSString*) parameterControlView:(VSCParameterControlView*)view parameterKeyForParameterAtIndexPath:(NSIndexPath*)indexPath;
--(NSString*) parameterControlView:(VSCParameterControlView*)view displayStringForParameterAtIndexPath:(NSIndexPath*)indexPath;
-
--(SEL) parameterControlView:(VSCParameterControlView*)view fetchSelectorForParameterAtIndexPath:(NSIndexPath*)indexPath;
-
-@optional
-
--(NSString*) parameterControlView:(VSCParameterControlView*)view stringForParameterAtIndexPath:(NSIndexPath*)indexPath;
--(float) parameterControlView:(VSCParameterControlView*)view floatForParameterAtIndexPath:(NSIndexPath*)indexPath;
--(double) parameterControlView:(VSCParameterControlView*)view doubleForParameterAtIndexPath:(NSIndexPath*)indexPath;
-
-@end
-
-
-
-@interface VSCParameterControlView : NSView {
+@interface VSCParameterControlView : NSView <VSCParameterControlViewProtocol> {
+	
+	VSCParameterControlOptions parameterControlOptions;
+	NSInteger numberOfParameters;
 	
 	NSScrollView* scrollView;
 
@@ -54,8 +26,9 @@
 	 *	different sizes). USE sizeToCells TO RESIZE !!!
 	 */
 	
-	NSMatrix * controllerMatrix;
-	NSMatrix * labelMatrix;
+	NSMatrix* controllerMatrix;
+	NSMatrix* labelMatrix;
+	NSMatrix* numericMatrix;
 	
 	/*
 	 *	Prototype NSCells fo the controllers and labels
@@ -63,6 +36,7 @@
 	
 	NSActionCell* controllerCellPrototype;
 	NSCell* labelCellPrototype;
+	NSCell* numericCellPrototype;
 	
 	/*
 	 *	Interface setup parameters 
@@ -70,8 +44,10 @@
 	CGFloat centerSpacing;
 	
 	id<VSCParameterControlViewDelegate> delegate;
-	id<VSCParameterControlViewDataSource> dataSource;
 }
+
+@property (nonatomic, assign) VSCParameterControlOptions parameterControlOptions;
+@property (nonatomic, assign) NSInteger numberOfParameters;
 
 @property (nonatomic, retain) NSScrollView* scrollView; 
 
@@ -80,37 +56,12 @@
 
 @property (nonatomic, retain) NSActionCell* controllerCellPrototype;
 @property (nonatomic, retain) NSCell* labelCellPrototype;
+@property (nonatomic, retain) NSCell* numericCellPrototype;
 
-@property (nonatomic) CGFloat centerSpacing;
+@property (nonatomic, assign) CGFloat centerSpacing;
 
 @property (assign) id<VSCParameterControlViewDelegate> delegate;
-@property (assign) id<VSCParameterControlViewDataSource> dataSource;
 
 
--(void) reloadParameterValueForKey:(NSString*)key;
--(void) reloadParameterValueAtIndexPath:(NSIndexPath*)indexPath;
--(void) reloadAllParameterValues;
-
--(void) reloadParameterDisplayStringForKey:(NSString*)key;
--(void) reloadParameterDisplayStringAtIndexPath:(NSIndexPath*)indexPath;
--(void) reloadAllParameterDisplayStrings;
-
--(void) updateInterface;
--(void) resetInterface; // recreates the matrix cells with the current prototype
-
--(NSSize) sizeOfString:(NSString*)s inCell:(NSCell*)cell;
-
-
-/*
- *	Private stuff which I can't be bothered putting in a separate header file...
- */
-
--(void) customInit;
-// matrix creation
--(void) createControllerMatrix;
--(void) createLabelMatrix;
-// matrix destruction
--(void) createMatrices;
--(void) destroyMatrices;
 
 @end

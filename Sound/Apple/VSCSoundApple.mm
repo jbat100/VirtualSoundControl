@@ -11,8 +11,21 @@
 
 @implementation VSCSoundApple
 
-static NSDictionary* parameterDisplayStrings = nil;
 
++(NSString*) labelForKey:(VSCSParameter::Key)key {
+	
+	std::string label = VSCSParameter::labelForParameterWithKey(key);
+	
+	return [NSString stringWithCString:label.c_str() encoding:[NSString defaultCStringEncoding]];
+	
+}
+
+/*
+ *
+ *	Abandonned string based praameter keys in favour of enum for faster comparisons
+ *
+
+static NSDictionary* parameterDisplayStrings = nil;
 
 #pragma mark Parameter Keys
 
@@ -84,6 +97,8 @@ static NSDictionary* parameterDisplayStrings = nil;
     return [[VSCSoundApple parameterDisplayStrings] objectForKey:key];
     
 }
+ 
+ */
 
 @end
 

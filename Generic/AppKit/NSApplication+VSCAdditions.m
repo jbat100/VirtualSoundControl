@@ -6,7 +6,7 @@
 //  Copyright 2011 JBAT. All rights reserved.
 //
 
-#import "NSApplication+VSCPaths.h"
+#import "NSApplication+VSCAdditions.h"
 
 
 @implementation NSApplication (VSCPaths)

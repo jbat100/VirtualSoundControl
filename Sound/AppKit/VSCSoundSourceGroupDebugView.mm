@@ -6,10 +6,11 @@
 //  Copyright 2011 NXP. All rights reserved.
 //
 
-#import "VSCSoundSourceGroup.h"
+#import "VSCSoundSourceGroupDebugView.h"
 
 
-@implementation VSCSoundSourceGroupView
+
+@implementation VSCSoundSourceGroupDebugView
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];

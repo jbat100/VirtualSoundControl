@@ -7,7 +7,7 @@
  *
  */
 
-#include "NSGeomOperations.h"
+#include "NS+VSCGeomOperations.h"
 #include <math.h>
 
 CGFloat DistanceBetweenCGPoints(NSPoint point1, NSPoint point2) {

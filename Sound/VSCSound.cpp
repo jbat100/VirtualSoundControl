@@ -16,6 +16,7 @@
  *	Static member variable initialization
  */
 
+std::vector<VSCSFloat> VSCSound::midiNoteFrequencies;
 VSCSFloat VSCSound::referenceAFrequency = 440.0;
 bool VSCSound::midiNoteFrequenciesAreComputed = false;
 
@@ -43,7 +44,7 @@ void VSCSound::setReferenceAFrequency(VSCSFloat f) {
 }
 
 VSCSFloat VSCSound::getReferenceAFrequency(void) {
-	
+	return VSCSound::referenceAFrequency;
 }
 
 void VSCSound::computeMidiNoteFrequencies(void) {

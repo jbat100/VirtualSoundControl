@@ -8,6 +8,14 @@
  */
 
 #include "VSCSynthSourceSine.h"
+#include "VSCSound.h"
+
+VSCSynthSourceSine::VSCSynthSourceSine() {
+	
+	this->setFrequency(VSCSound::getReferenceAFrequency());
+	// this->setPhase(0.0); // no need to do that...
+	
+}
 
 stk::SineWave* VSCSynthSourceSine::getStkSineWave(void) {
     return &sineWave;
@@ -27,3 +35,27 @@ void VSCSynthSourceSine::updateSoundEngine(void) {
     }
 	
 }
+
+VSCSFloat VSCSynthSourceSine::getFrequency(void) {
+	return _frequency;
+}
+
+
+void VSCSynthSourceSine::setFrequency(VSCSFloat f) {
+	sineWave.setFrequency(f);
+	_frequency = f;
+}
+
+VSCSFloat VSCSynthSourceSine::getPhase(void) {
+	return _phase;
+}
+
+void VSCSynthSourceSine::setPhase(VSCSFloat f) {
+	sineWave.addPhase(f-_phase);
+	_phase -= f;
+}
+
+void VSCSynthSourceSine::addPhase(VSCSFloat f) {
+	sineWave.addPhase(f);
+	_phase += f;
+}	

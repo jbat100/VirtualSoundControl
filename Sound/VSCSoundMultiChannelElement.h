@@ -14,6 +14,14 @@
 
 #include <list>
 #include <vector>
+#include <boost/shared_ptr.hpp>
+
+/*
+ *	Smart pointer and iterator convenience defines
+ */
+
+#define VSCSoundMultiChannelElementPtr    boost::shared_ptr<VSCSoundMultiChannelElement>
+
 
 /*
  *	Root class for source elements (deliberatly not dependent on STK for possible future,

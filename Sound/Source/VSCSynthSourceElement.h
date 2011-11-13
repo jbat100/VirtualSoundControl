@@ -30,7 +30,11 @@
 #define RevSynthSrcElemIter			std::list<VSCSynthSourceElementPtr>::reverse_iterator 
 
 /*
- *	General synth parameter keys
+ *	General synth parameter string keys
+ *
+ *  This string base parameter technique is needlessly expensive,
+ *	switch to enum based parameter definitions, particularly better
+ *	for use with signaling (boost::signals).
  */
 
 extern const std::string kVSCSoundFrequencyParameterKey;
@@ -38,6 +42,7 @@ extern const std::string kVSCSoundPhaseParameterKey;
 extern const std::string kVSCSoundDBGainParameterKey;
 extern const std::string kVSCSoundLinearGainParameterKey;
 extern const std::string kVSCSoundHarmonicsParameterKey;
+
 
 /*
  *	Root class for source elements (deliberatly not dependent on STK for possible future,

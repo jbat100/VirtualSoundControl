@@ -13,6 +13,9 @@
 
 #include "VSCSound.h"
 #include "VSCSynthSourceGenerator.h"
+#include <boost/shared_ptr.hpp>
+
+#define VSCSynthSourceSquarePtr      boost::shared_ptr<VSCSynthSourceSquare>
 
 #ifdef VSCS_USE_STK
 

@@ -33,6 +33,19 @@ std::string VSCSynthSourceElement::sourceTypeString(void) {
 	return sourceType;
 }
 
+
+
+/*
+ *  Perform initialization after constructor (seperate so that it can be virtual).
+ */
 void VSCSynthSourceElement::initialize(void) {
-    
+	
+}
+
+/*
+ *  Perform necessary setup operations after:
+ *      - a change in number of channels.
+ */
+void VSCSynthSourceElement::updateSoundEngine(void) {
+	
 }

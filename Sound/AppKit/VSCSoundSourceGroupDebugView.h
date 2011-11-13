@@ -1,5 +1,5 @@
 //
-//  VSCSlidersControlView.h
+//  VSCSoundSourceGroup.h
 //  SynthStation
 //
 //  Created by Jonathan Thorpe on 06/11/2011.
@@ -7,15 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "VSCParameterControlView.h"
+#import "VSCSynthSourceGroup.h"
 
-@interface VSCParameterControlSlidersView : VSCParameterControlView {
+@interface VSCSoundSourceGroupDebugView : NSView {
+
+	VSCSynthSourceGroupPtr  sourceGroup;
 	
-
-	
-
 }
-
-
 
 @end
