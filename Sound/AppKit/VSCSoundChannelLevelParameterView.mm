@@ -7,6 +7,7 @@
 //
 
 #import "VSCSoundChannelLevelParameterView.h"
+#import "VSCSoundParameterView+Private.h"
 
 #import <boost/bimap.hpp>
 
@@ -56,6 +57,9 @@ typedef ParamKeyIndexMap::value_type ParamKeyIndexMapEntry;
 	
 }
 
+-(double) doubleValueForParameterWithKey:(VSCSParameter::Key)key {
+	return 0.0;
+}
 	
 
 

@@ -11,6 +11,7 @@
 #import "VSCParameterControlView.h"
 #import "VSCSoundParameters.h"
 
+#import <map>
 #import <boost/bimap.hpp>
 
 
@@ -33,6 +34,7 @@
 -(NSInteger) indexForParameterWithKey:(VSCSParameter::Key)key;
 -(NSString*) labelForParameterWithKey:(VSCSParameter::Key)key;
 -(double) doubleValueForParameterWithKey:(VSCSParameter::Key)key;
+-(std::pair<double, double>) rangeForParameterWithKey:(VSCSParameter::Key)key;
 -(NSInteger) numberOfParameters;
 
 @end

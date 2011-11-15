@@ -11,6 +11,7 @@
 #define _VSC_SYNTH_MULTI_CHANNEL_ELEMENT_
 
 #include "VSCSound.h"
+#include "VSCSoundParameters.h"
 
 #include <list>
 #include <vector>
@@ -61,6 +62,8 @@ public:
     void getLinearGains(std::vector<VSCSFloat>& channelGains) const;
     void setDBGains(std::vector<VSCSFloat>& channelDBGains);
     void getDBGains(std::vector<VSCSFloat>& channelDBGains) const;
+    
+    double getValueForParameterWithKey(VSCSParameter::Key key);
     
     /*
      *  Lock number of channels.

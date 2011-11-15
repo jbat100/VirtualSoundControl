@@ -26,12 +26,15 @@ std::map<VSCSParameter::Key, std::pair<double, double> > VSCSParameter::paramete
 bool VSCSParameter::generatedParameterRanges = false;
 
 /*
- *	Default ranges!
+ *	Default ranges
  */
 std::pair<double, double> VSCSParameter::defaultLinearAmplitudeRange(0.0, 1.0);
 std::pair<double, double> VSCSParameter::defaultDBAmplitudeRange(-30.0, 0.0);
 std::pair<double, double> VSCSParameter::defaultLinearFilterGainRange(0.0, 10.0);
 std::pair<double, double> VSCSParameter::defaultDBFilterGainRange(-30.0, 10.0);
+std::pair<double, double> VSCSParameter::defaultPhaseRange(-kVSC_PI, kVSC_PI);
+std::pair<double, double> VSCSParameter::defaultFrequencyRange(20.0, 20000.0);
+std::pair<double, double> VSCSParameter::defaultHarmonicsRange(0.0, 10.0);
 
 
 /*
@@ -75,80 +78,79 @@ void VSCSParameter::generateParameterLabels(void) {
 		
 	parameterLabels.insert(KeyLabelPair (KeyNone, "None"));
 	
-	parameterLabels.insert(KeyLabelPair (KeyChannelZero, "Channel 0"));
-	parameterLabels.insert(KeyLabelPair (KeyChannelZero, "Channel 1"));
-	parameterLabels.insert(KeyLabelPair (KeyChannelZero, "Channel 2"));
-	parameterLabels.insert(KeyLabelPair (KeyChannelZero, "Channel 3"));
-	parameterLabels.insert(KeyLabelPair (KeyChannelZero, "Channel 4"));
-	parameterLabels.insert(KeyLabelPair (KeyChannelZero, "Channel 5"));
-	parameterLabels.insert(KeyLabelPair (KeyChannelZero, "Channel 6"));
-	parameterLabels.insert(KeyLabelPair (KeyChannelZero, "Channel 7"));
-	parameterLabels.insert(KeyLabelPair (KeyChannelZero, "Channel 8"));
-	parameterLabels.insert(KeyLabelPair (KeyChannelZero, "Channel 9"));
-	parameterLabels.insert(KeyLabelPair (KeyChannelZero, "Channel 10"));
+	parameterLabels.insert(KeyLabelPair (KeyChannelZero,    "Channel 0"));
+	parameterLabels.insert(KeyLabelPair (KeyChannelOne,     "Channel 1"));
+	parameterLabels.insert(KeyLabelPair (KeyChannelTwo,     "Channel 2"));
+	parameterLabels.insert(KeyLabelPair (KeyChannelThree,   "Channel 3"));
+	parameterLabels.insert(KeyLabelPair (KeyChannelFour,    "Channel 4"));
+	parameterLabels.insert(KeyLabelPair (KeyChannelFive,    "Channel 5"));
+	parameterLabels.insert(KeyLabelPair (KeyChannelSix,     "Channel 6"));
+	parameterLabels.insert(KeyLabelPair (KeyChannelSeven,   "Channel 7"));
+	parameterLabels.insert(KeyLabelPair (KeyChannelEight,   "Channel 8"));
+	parameterLabels.insert(KeyLabelPair (KeyChannelNine,    "Channel 9"));
+	parameterLabels.insert(KeyLabelPair (KeyChannelTen,     "Channel 10"));
 	
-	parameterLabels.insert(KeyLabelPair (KeySineFrequency, "Frequency (Hz)"));
-	parameterLabels.insert(KeyLabelPair (KeySinePhase, "Phase (degrees)"));
+	parameterLabels.insert(KeyLabelPair (KeySineFrequency,  "Frequency (Hz)"));
+	parameterLabels.insert(KeyLabelPair (KeySinePhase,      "Phase (degrees)"));
 	
-	parameterLabels.insert(KeyLabelPair (KeySquareFrequency, "Frequency (Hz)"));
-	parameterLabels.insert(KeyLabelPair (KeySquarePhase, "Phase (degrees)"));
-	parameterLabels.insert(KeyLabelPair (KeySquareHarmonics, "Harmonics"));
+	parameterLabels.insert(KeyLabelPair (KeySquareFrequency,    "Frequency (Hz)"));
+	parameterLabels.insert(KeyLabelPair (KeySquarePhase,        "Phase (degrees)"));
+	parameterLabels.insert(KeyLabelPair (KeySquareHarmonics,    "Harmonics"));
 	
-	parameterLabels.insert(KeyLabelPair (KeySawFrequency, "Frequency (Hz)"));
-	parameterLabels.insert(KeyLabelPair (KeySawPhase, "Phase (degrees)"));
-	parameterLabels.insert(KeyLabelPair (KeySawHarmonics, "Harmonics"));
+	parameterLabels.insert(KeyLabelPair (KeySawFrequency,   "Frequency (Hz)"));
+	parameterLabels.insert(KeyLabelPair (KeySawPhase,       "Phase (degrees)"));
+	parameterLabels.insert(KeyLabelPair (KeySawHarmonics,   "Harmonics"));
 	
-	parameterLabels.insert(KeyLabelPair (KeyFileTime, "File Time (s)"));
-	parameterLabels.insert(KeyLabelPair (KeyFilePlaybackSpeed, "Playback Speed"));
-	parameterLabels.insert(KeyLabelPair (KeyFileLoopOffset, "Loop Offset (s)"));
-	parameterLabels.insert(KeyLabelPair (KeyFileLoopDuration, "Loop Duration (s)"));
-	parameterLabels.insert(KeyLabelPair (KeyFileLoopCrossoverDuration, "Loop Crossover Duration (s)"));
+	parameterLabels.insert(KeyLabelPair (KeyFileTime,                       "File Time (s)"));
+	parameterLabels.insert(KeyLabelPair (KeyFilePlaybackSpeed,              "Playback Speed"));
+	parameterLabels.insert(KeyLabelPair (KeyFileLoopOffset,                 "Loop Offset (s)"));
+	parameterLabels.insert(KeyLabelPair (KeyFileLoopDuration,               "Loop Duration (s)"));
+	parameterLabels.insert(KeyLabelPair (KeyFileLoopCrossoverDuration,      "Loop Crossover Duration (s)"));
 	
-	parameterLabels.insert(KeyLabelPair (KeyBiQuadType, "Filter Type"));
-	parameterLabels.insert(KeyLabelPair (KeyBiQuadFrequency, "Frequency (Hz)"));
-	parameterLabels.insert(KeyLabelPair (KeyBiQuadQFactor, "Q Factor"));
-	parameterLabels.insert(KeyLabelPair (KeyBiQuadLinearGain, "Linear Gain"));
+	parameterLabels.insert(KeyLabelPair (KeyBiQuadType,         "Filter Type"));
+	parameterLabels.insert(KeyLabelPair (KeyBiQuadFrequency,    "Frequency (Hz)"));
+	parameterLabels.insert(KeyLabelPair (KeyBiQuadQFactor,      "Q Factor"));
+	parameterLabels.insert(KeyLabelPair (KeyBiQuadLinearGain,   "Linear Gain"));
 	
 	generatedParameterLabels = true;
 }
 
 void VSCSParameter::generateParameterRanges(void) {
 	
-	parameterLabels.insert(KeyRangePair (KeyNone, "None"));
+	parameterLabels.insert(KeyRangePair (KeyNone, Range(0.0, 0.0)));
 	
 	parameterLabels.insert(KeyRangePair (KeyChannelZero, defaultLinearAmplitudeRange));
-	parameterLabels.insert(KeyRangePair (KeyChannelZero, defaultLinearAmplitudeRange));
-	parameterLabels.insert(KeyRangePair (KeyChannelZero, defaultLinearAmplitudeRange));
-	parameterLabels.insert(KeyRangePair (KeyChannelZero, defaultLinearAmplitudeRange));
-	parameterLabels.insert(KeyRangePair (KeyChannelZero, defaultLinearAmplitudeRange));
-	parameterLabels.insert(KeyRangePair (KeyChannelZero, defaultLinearAmplitudeRange));
-	parameterLabels.insert(KeyRangePair (KeyChannelZero, defaultLinearAmplitudeRange));
-	parameterLabels.insert(KeyRangePair (KeyChannelZero, defaultLinearAmplitudeRange));
-	parameterLabels.insert(KeyRangePair (KeyChannelZero, defaultLinearAmplitudeRange));
-	parameterLabels.insert(KeyRangePair (KeyChannelZero, defaultLinearAmplitudeRange));
-	parameterLabels.insert(KeyRangePair (KeyChannelZero, defaultLinearAmplitudeRange));
+	parameterLabels.insert(KeyRangePair (KeyChannelOne, defaultLinearAmplitudeRange));
+	parameterLabels.insert(KeyRangePair (KeyChannelTwo, defaultLinearAmplitudeRange));
+	parameterLabels.insert(KeyRangePair (KeyChannelThree, defaultLinearAmplitudeRange));
+	parameterLabels.insert(KeyRangePair (KeyChannelFour, defaultLinearAmplitudeRange));
+	parameterLabels.insert(KeyRangePair (KeyChannelFive, defaultLinearAmplitudeRange));
+	parameterLabels.insert(KeyRangePair (KeyChannelSix, defaultLinearAmplitudeRange));
+	parameterLabels.insert(KeyRangePair (KeyChannelSeven, defaultLinearAmplitudeRange));
+	parameterLabels.insert(KeyRangePair (KeyChannelEight, defaultLinearAmplitudeRange));
+	parameterLabels.insert(KeyRangePair (KeyChannelNine, defaultLinearAmplitudeRange));
+	parameterLabels.insert(KeyRangePair (KeyChannelTen, defaultLinearAmplitudeRange));
 	
-	parameterLabels.insert(KeyRangePair (KeySineFrequency, Range(20.0, 20000.0) ));
-	parameterLabels.insert(KeyRangePair (KeySinePhase, Range(-kVSC_PI, kVSC_PI) ));
+	parameterLabels.insert(KeyRangePair (KeySineFrequency, defaultFrequencyRange ));
+	parameterLabels.insert(KeyRangePair (KeySinePhase, defaultPhaseRange ));
 	
-	parameterLabels.insert(KeyRangePair (KeySquareFrequency, Range(20.0, 20000.0) ));
-	parameterLabels.insert(KeyRangePair (KeySquarePhase, Range(-kVSC_PI, kVSC_PI) ));
-	parameterLabels.insert(KeyRangePair (KeySquareHarmonics, Range(1.0, 10.0)) );
+	parameterLabels.insert(KeyRangePair (KeySquareFrequency, defaultFrequencyRange ));
+	parameterLabels.insert(KeyRangePair (KeySquarePhase, defaultPhaseRange ));
+	parameterLabels.insert(KeyRangePair (KeySquareHarmonics, defaultHarmonicsRange) );
 	
-	parameterLabels.insert(KeyRangePair (KeySawFrequency, "Frequency (Hz)"));
-	parameterLabels.insert(KeyRangePair (KeySawPhase, "Phase (degrees)"));
-	parameterLabels.insert(KeyRangePair (KeySawHarmonics, "Harmonics"));
+	parameterLabels.insert(KeyRangePair (KeySawFrequency, defaultFrequencyRange));
+	parameterLabels.insert(KeyRangePair (KeySawPhase, defaultPhaseRange));
+	parameterLabels.insert(KeyRangePair (KeySawHarmonics, defaultHarmonicsRange));
 	
-	parameterLabels.insert(KeyRangePair (KeyFileTime, "File Time (s)"));
-	parameterLabels.insert(KeyRangePair (KeyFilePlaybackSpeed, "Playback Speed"));
-	parameterLabels.insert(KeyRangePair (KeyFileLoopOffset, "Loop Offset (s)"));
-	parameterLabels.insert(KeyRangePair (KeyFileLoopDuration, "Loop Duration (s)"));
-	parameterLabels.insert(KeyRangePair (KeyFileLoopCrossoverDuration, "Loop Crossover Duration (s)"));
+	parameterLabels.insert(KeyRangePair (KeyFileTime, Range(0.0, 0.0)));
+	parameterLabels.insert(KeyRangePair (KeyFilePlaybackSpeed, Range(0.0, 50.0)));
+	parameterLabels.insert(KeyRangePair (KeyFileLoopOffset, Range(0.0, 0.0)));
+	parameterLabels.insert(KeyRangePair (KeyFileLoopDuration, Range(0.0, 0.0)));
+	parameterLabels.insert(KeyRangePair (KeyFileLoopCrossoverDuration, Range(0.0, 0.0)));
 	
-	parameterLabels.insert(KeyRangePair (KeyBiQuadType, "Filter Type"));
-	parameterLabels.insert(KeyRangePair (KeyBiQuadFrequency, "Frequency (Hz)"));
-	parameterLabels.insert(KeyRangePair (KeyBiQuadQFactor, "Q Factor"));
-	parameterLabels.insert(KeyRangePair (KeyBiQuadLinearGain, "Linear Gain"));
+	parameterLabels.insert(KeyRangePair (KeyBiQuadFrequency, defaultFrequencyRange));
+	parameterLabels.insert(KeyRangePair (KeyBiQuadQFactor, Range(0.0, 20.0)));
+	parameterLabels.insert(KeyRangePair (KeyBiQuadLinearGain, defaultLinearFilterGainRange));
 	
 	generatedParameterRanges = true;
 	

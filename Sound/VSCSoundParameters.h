@@ -7,6 +7,7 @@
  *
  */
 
+#include "VSCSound.h"
 #include <map>
 #include <string>
 
@@ -89,8 +90,8 @@ public:
 	static int channelIndexForKey(Key k);
 	static Key keyForChannelIndex(int i);
 	
-	static std::string labelForParameterWithKey(Key k);
-	static std::pair<double, double> rangeForParameterWithKey(Key k);
+	static std::string getLabelForParameterWithKey(Key k);
+	static std::pair<double, double> getRangeForParameterWithKey(Key k);
 	static std::pair<double, double> getDefaultLinearGainRange(void);
 	
 	
@@ -103,6 +104,9 @@ private:
 	static std::pair<double, double> defaultDBAmplitudeRange;
 	static std::pair<double, double> defaultLinearFilterGainRange;
 	static std::pair<double, double> defaultDBFilterGainRange;
+    static std::pair<double, double> defaultPhaseRange;
+    static std::pair<double, double> defaultFrequencyRange;
+    static std::pair<double, double> defaultHarmonicsRange;
 	
 	static bool generatedParameterLabels;
 	static void generateParameterLabels(void);

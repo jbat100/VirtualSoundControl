@@ -7,6 +7,7 @@
 //
 
 #import "VSCSynthSourceSineWaveParameterView.h"
+#import "VSCSoundParameterView+Private.h"
 #import "VSCSoundApple.h"
 #import "VSCSoundParameters.h"
 

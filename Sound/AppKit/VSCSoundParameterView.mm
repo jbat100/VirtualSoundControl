@@ -7,7 +7,9 @@
 //
 
 #import "VSCSoundParameterView.h"
-#import "VSCParameterControlSlidersView.h"
+#import "VSCSoundParameterView+Private.h"
+#import "VSCParameterControlView.h"
+#import "VSCSoundApple.h"
 
 typedef boost::bimap<VSCSParameter::Key, NSInteger> ParamKeyIndexBiMap;
 typedef ParamKeyIndexBiMap::value_type ParamKeyIndexBiMapEntry;
@@ -73,7 +75,17 @@ typedef ParamKeyIndexBiMap::value_type ParamKeyIndexBiMapEntry;
 	}
 }
 
+-(void) reloadParameterRanges {
+	NSInteger numberOfParameters = [self numberOfParameters];
+	for (NSInteger i = 0; i < numberOfParameters; i++) {
+		VSCSParameter::Key key = [self keyForParameterAtIndex:i];
+		NSString* label = [self labelForParameterWithKey:key];
+		[parameterControlView setLabel:label forParameterAtIndex:i];
+	}
+}
+
 -(void) reloadValueForParameterWithKey:(VSCSParameter::Key)key {
+    NSInteger i = [self indexForParameterWithKey:key];
 	double val = [self doubleValueForParameterWithKey:key];
 	[parameterControlView setDoubleValue:val forParameterAtIndex:i];
 }
@@ -86,7 +98,7 @@ typedef ParamKeyIndexBiMap::value_type ParamKeyIndexBiMapEntry;
 	
 	// couldn't find the index in the bimap...
 	if (right_iter == paramKeyIndexMap.right.end()) 
-		VSCSParameter::KeyNone;
+		return VSCSParameter::KeyNone;
 	
 	return right_iter->second;	
 }
@@ -113,6 +125,10 @@ typedef ParamKeyIndexBiMap::value_type ParamKeyIndexBiMapEntry;
 
 -(double) doubleValueForParameterWithKey:(VSCSParameter::Key)key {
 	return 0.0;
+}
+
+-(std::pair<double, double>) rangeForParameterWithKey:(VSCSParameter::Key)key {
+    return VSCSParameter::getRangeForParameterWithKey(key);
 }
 
 #pragma mark - VSCParameterControlViewDelegate Methods
