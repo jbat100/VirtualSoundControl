@@ -39,16 +39,16 @@ typedef enum _VSCParameterControlOptions {
 /*
  *	Parameter control limits
  */
--(void) setLowerLimit:(VSCSFloat)low 
-		  higherLimit:(VSCSFloat)high 
+-(void) setLowerLimit:(double)low 
+		  higherLimit:(double)high 
   forParameterAtIndex:(NSUInteger)index;
 
 /*
  *	Value/Label changes
  */
--(void) setVSCSFloat:(VSCSFloat)f forParameterAtIndex:(NSUInteger)index;
+-(void) setDoubleValue:(double)f forParameterAtIndex:(NSUInteger)index;
 -(void) setLabel:(NSString*)l forParameterAtIndex:(NSUInteger)index;
--(VSCSFloat) getParameterAtIndex:(NSUInteger)index;
+-(double) getParameterAtIndex:(NSUInteger)index;
 
 @end
 

@@ -10,13 +10,11 @@
 
 #import "VSCParameterControlView.h"
 #import "VSCSoundParameters.h"
-#import "VSCSoundParameterViewProtocol.h"
 
 #import <boost/bimap.hpp>
 
 
-@interface VSCSoundParameterView : NSView
-<VSCParameterControlViewDelegate, VSCParameterControlViewDataSource, VSCSoundParameterViewProtocol> {
+@interface VSCSoundParameterView : NSView <VSCParameterControlViewDelegate> {
 	
 	VSCParameterControlView* parameterControlView;
 	
@@ -26,9 +24,15 @@
 
 @property (nonatomic, retain) VSCParameterControlView* parameterControlView;
 
--(void) customInit;
--(void) createParameterControlView;
+-(void) reloadParameterLabels;
+-(void) reloadParameterRanges;
+-(void) reloadParameterValues;
+-(void) reloadValueForParameterWithKey:(VSCSParameter::Key)key;
 
-
+-(VSCSParameter::Key) keyForParameterAtIndex:(NSInteger)index;
+-(NSInteger) indexForParameterWithKey:(VSCSParameter::Key)key;
+-(NSString*) labelForParameterWithKey:(VSCSParameter::Key)key;
+-(double) doubleValueForParameterWithKey:(VSCSParameter::Key)key;
+-(NSInteger) numberOfParameters;
 
 @end

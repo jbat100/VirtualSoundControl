@@ -41,6 +41,14 @@ const unsigned int kVSCSAllChannels = UINT_MAX;
 
 /*-------------------------------------------------------------------------------------------*/
 
+/*
+ *	Just because I can't believe how stupid is not to standardize it...
+ */
+
+const double kVSC_PI = 3.1415926535897932384626433832795028;
+
+/*-------------------------------------------------------------------------------------------*/
+
 #ifdef VSCS_USE_STK
 	#include "Stk.h"
 	//Define VSCSFloat (double or float or same as stk::StkFloat)

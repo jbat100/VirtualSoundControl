@@ -46,6 +46,7 @@
 		1067DB2914548C3C00F0670E /* libstk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1067DB2814548C3C00F0670E /* libstk.a */; };
 		10918469146FF0B8006B175E /* VSCSoundSourceSineWaveDebugView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10918468146FF0B8006B175E /* VSCSoundSourceSineWaveDebugView.mm */; };
 		1091846C146FF0C0006B175E /* VSCSoundChannelLevelParameterView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1091846B146FF0C0006B175E /* VSCSoundChannelLevelParameterView.mm */; };
+		109AE6491471BA5D005CAC88 /* NSString+VSCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 109AE6481471BA5D005CAC88 /* NSString+VSCAdditions.m */; };
 		109E60D81469964400879689 /* VSCSoundParameterView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109E60D71469964400879689 /* VSCSoundParameterView.mm */; };
 		109E60DC1469965A00879689 /* VSCSoundSourceGeneratorDebugView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109E60DA1469965A00879689 /* VSCSoundSourceGeneratorDebugView.mm */; };
 		109E60DD1469965A00879689 /* VSCSoundSourceGeneratorDebugView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109E60DB1469965A00879689 /* VSCSoundSourceGeneratorDebugView.xib */; };
@@ -194,6 +195,9 @@
 		1091846B146FF0C0006B175E /* VSCSoundChannelLevelParameterView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCSoundChannelLevelParameterView.mm; path = ../Sound/AppKit/VSCSoundChannelLevelParameterView.mm; sourceTree = SOURCE_ROOT; };
 		109184B414705C29006B175E /* VSCParameterControlView+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VSCParameterControlView+Private.h"; sourceTree = "<group>"; };
 		109184B614705C65006B175E /* VSCParameterControlViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCParameterControlViewProtocol.h; path = ../Generic/AppKit/VSCParameterControlViewProtocol.h; sourceTree = SOURCE_ROOT; };
+		109AE6471471BA5D005CAC88 /* NSString+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+VSCAdditions.h"; sourceTree = "<group>"; };
+		109AE6481471BA5D005CAC88 /* NSString+VSCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+VSCAdditions.m"; sourceTree = "<group>"; };
+		109AE64A1471BC8D005CAC88 /* VSCSoundParameterView+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VSCSoundParameterView+Private.h"; sourceTree = "<group>"; };
 		109E60D61469964400879689 /* VSCSoundParameterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundParameterView.h; path = ../../Sound/AppKit/VSCSoundParameterView.h; sourceTree = "<group>"; };
 		109E60D71469964400879689 /* VSCSoundParameterView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCSoundParameterView.mm; path = ../../Sound/AppKit/VSCSoundParameterView.mm; sourceTree = "<group>"; };
 		109E60D91469965A00879689 /* VSCSoundSourceGeneratorDebugView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundSourceGeneratorDebugView.h; path = ../../Sound/AppKit/VSCSoundSourceGeneratorDebugView.h; sourceTree = "<group>"; };
@@ -283,10 +287,12 @@
 				10A282B61470710900C70799 /* NSApplication+VSCAdditions.m */,
 				10A282B71470710900C70799 /* NSFileManager+VSCAdditions.h */,
 				10A282B81470710900C70799 /* NSFileManager+VSCAdditions.m */,
+				109AE6471471BA5D005CAC88 /* NSString+VSCAdditions.h */,
+				109AE6481471BA5D005CAC88 /* NSString+VSCAdditions.m */,
 				109184B614705C65006B175E /* VSCParameterControlViewProtocol.h */,
 				100FF8761466DDEB0015FE2D /* VSCParameterControlView.h */,
-				100FF8771466DDEB0015FE2D /* VSCParameterControlView.mm */,
 				109184B414705C29006B175E /* VSCParameterControlView+Private.h */,
+				100FF8771466DDEB0015FE2D /* VSCParameterControlView.mm */,
 			);
 			name = AppKit;
 			path = ../Generic/AppKit;
@@ -561,6 +567,7 @@
 			isa = PBXGroup;
 			children = (
 				109E60D61469964400879689 /* VSCSoundParameterView.h */,
+				109AE64A1471BC8D005CAC88 /* VSCSoundParameterView+Private.h */,
 				109E60D71469964400879689 /* VSCSoundParameterView.mm */,
 				1091846A146FF0C0006B175E /* VSCSoundChannelLevelParameterView.h */,
 				1091846B146FF0C0006B175E /* VSCSoundChannelLevelParameterView.mm */,
@@ -800,6 +807,7 @@
 				10A282E11470713800C70799 /* VSCException.cpp in Sources */,
 				10A282E21470713800C70799 /* VSCiOS.m in Sources */,
 				10A282E31470713800C70799 /* VSCMath.cpp in Sources */,
+				109AE6491471BA5D005CAC88 /* NSString+VSCAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

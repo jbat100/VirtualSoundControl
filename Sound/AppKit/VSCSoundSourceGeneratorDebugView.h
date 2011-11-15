@@ -46,6 +46,7 @@
 	 */
 	NSView* generatorParameterParentView;
 	NSView<VSCSoundParameterViewProtocol>* generatorParameterView;
+	
 
 }
 

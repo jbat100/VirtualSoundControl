@@ -90,13 +90,25 @@ public:
 	static Key keyForChannelIndex(int i);
 	
 	static std::string labelForParameterWithKey(Key k);
+	static std::pair<double, double> rangeForParameterWithKey(Key k);
+	static std::pair<double, double> getDefaultLinearGainRange(void);
+	
 	
 private:
 	
 	static std::map<Key, std::string> parameterLabels;
+	static std::map<Key, std::pair<double, double> > parameterRanges;
+	
+	static std::pair<double, double> defaultLinearAmplitudeRange;
+	static std::pair<double, double> defaultDBAmplitudeRange;
+	static std::pair<double, double> defaultLinearFilterGainRange;
+	static std::pair<double, double> defaultDBFilterGainRange;
 	
 	static bool generatedParameterLabels;
 	static void generateParameterLabels(void);
+	
+	static bool generatedParameterRanges;
+	static void generateParameterRanges(void);
 	
 };
 

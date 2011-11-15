@@ -16,6 +16,8 @@
 
 @interface VSCParameterControlView : NSView <VSCParameterControlViewProtocol> {
 	
+	
+	
 	VSCParameterControlOptions parameterControlOptions;
 	NSInteger numberOfParameters;
 	
@@ -53,6 +55,7 @@
 
 @property (nonatomic, retain) NSMatrix* controllerMatrix;
 @property (nonatomic, retain) NSMatrix* labelMatrix;
+@property (nonatomic, retain) NSMatrix* numericMatrix;
 
 @property (nonatomic, retain) NSActionCell* controllerCellPrototype;
 @property (nonatomic, retain) NSCell* labelCellPrototype;

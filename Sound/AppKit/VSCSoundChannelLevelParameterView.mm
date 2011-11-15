@@ -25,11 +25,8 @@ typedef ParamKeyIndexMap::value_type ParamKeyIndexMapEntry;
 }
 
 -(void) customInit {
-	
 	[super customInit];
-	
 	[self setMultiChannelElement:VSCSoundMultiChannelElementPtr()];
-	
 }
 
 /*
@@ -49,16 +46,17 @@ typedef ParamKeyIndexMap::value_type ParamKeyIndexMapEntry;
 	/*
 	 *	Set the parameters to represent the number of channels of the multi channel element
 	 */
-	
 	paramKeyIndexMap.clear();
-	
 	for (int i = 0; i < multiChannelElement->getNumberOfChannels(); i++) {
-		
 		VSCSParameter::Key key = VSCSParameter::keyForChannelIndex(i);
 		paramKeyIndexMap.insert( ParamKeyIndexMapEntry(key, i) );
-		
 	}
 	
+	[self createParameterControlInterface];
+	
 }
+
+	
+
 
 @end

@@ -47,11 +47,35 @@ typedef ParamKeyIndexBiMap::value_type ParamKeyIndexBiMapEntry;
 }
 
 -(void) createParameterControlView {
-	
-	self.parameterControlView = [[[VSCParameterControlSlidersView alloc] initWithFrame:self.bounds] autorelease];
+	self.parameterControlView = [[[VSCParameterControlView alloc] initWithFrame:self.bounds] autorelease];
 	[self addSubview:parameterControlView];
 	parameterControlView.delegate = self;
-	
+}
+
+-(void) createParameterControlInterface {
+	[parameterControlView createInterfaceForParameterCount:[self numberOfParameters]];
+}
+
+-(void) reloadParameterLabels {
+	NSInteger numberOfParameters = [self numberOfParameters];
+	for (NSInteger i = 0; i < numberOfParameters; i++) {
+		VSCSParameter::Key key = [self keyForParameterAtIndex:i];
+		NSString* label = [self labelForParameterWithKey:key];
+		[parameterControlView setLabel:label forParameterAtIndex:i];
+	}
+}
+
+-(void) reloadParameterValues {
+	NSInteger numberOfParameters = [self numberOfParameters];
+	for (NSInteger i = 0; i < numberOfParameters; i++) {
+		VSCSParameter::Key key = [self keyForParameterAtIndex:i];
+		[self reloadValueForParameterWithKey:key];
+	}
+}
+
+-(void) reloadValueForParameterWithKey:(VSCSParameter::Key)key {
+	double val = [self doubleValueForParameterWithKey:key];
+	[parameterControlView setDoubleValue:val forParameterAtIndex:i];
 }
 
 #pragma mark VSCSoundParameterViewProtocol Methods
@@ -79,36 +103,25 @@ typedef ParamKeyIndexBiMap::value_type ParamKeyIndexBiMapEntry;
 	
 }
 
-#pragma mark - VSCParameterControlViewDelegate Methods
-
-
--(void) parameterControlView:(VSCParameterControlView*)view changedParameterWithKey:(VSCSParameter::Key)key {
-	
-}
-
-#pragma mark - VSCParameterControlViewDataSource Methods
-
--(NSInteger) parameterControlViewNumberOfParameters:(VSCParameterControlView*)view {
+-(NSInteger) numberOfParameters {
 	return paramKeyIndexMap.size();
 }
 
--(NSInteger) parameterControlView:(VSCParameterControlView*)view indexForParameterWithKey:(VSCSParameter::Key)key {
-	return [self indexForParameterWithKey:key];
+-(NSString*) labelForParameterWithKey:(VSCSParameter::Key)key {
+	return [VSCSoundApple labelForKey:key];
 }
 
--(VSCSParameter::Key) parameterControlView:(VSCParameterControlView*)view keyForParameterAtIndex:(NSInteger)index {
-    return [self keyForParameterAtIndex:index];	
+-(double) doubleValueForParameterWithKey:(VSCSParameter::Key)key {
+	return 0.0;
 }
 
--(NSString*) parameterControlView:(VSCParameterControlView*)view labelForParameterAtIndex:(NSInteger)index {
-	return nil;
+#pragma mark - VSCParameterControlViewDelegate Methods
+
+-(void) parameterControlView:(id<VSCParameterControlViewProtocol>)view 
+	 changedParameterAtIndex:(NSUInteger)index {
+	double val = [view getParameterAtIndex:index];
+	NSLog(@"%@ received parameter change from %@, value is %f", self, view, val);
 }
-
--(SEL) parameterControlView:(VSCParameterControlView*)view fetchSelectorForParameterAtIndex:(NSInteger)index {
-	return nil;
-}
-
-
 
 
 

@@ -15,22 +15,15 @@
  *	NSCell access and utility
  */
 
--(NSCell*) controllerCellAtIndex:(NSInteger)index;
+-(NSActionCell*) controllerCellAtIndex:(NSInteger)index;
 -(NSCell*) labelCellAtIndex:(NSInteger)index;
 -(NSCell*) numericCellAtIndex:(NSInteger)index;
-
--(NSSize) sizeOfString:(NSString*)s inCell:(NSCell*)cell;
 
 /*
  *	Interface creation/destruction
  */
 
 -(void) customInit;
-// matrix creation
--(void) createControllerMatrix;
--(void) createLabelMatrix;
--(void) createNumericMatrix;
-// matrix destruction
 -(void) createMatrices;
 -(void) destroyMatrices;
 

@@ -13,7 +13,7 @@
 
 @synthesize numberOfParameters, parameterControlOptions;
 @synthesize scrollView;
-@synthesize controllerMatrix, labelMatrix;
+@synthesize controllerMatrix, labelMatrix, numericMatrix;
 @synthesize controllerCellPrototype, labelCellPrototype;
 @synthesize centerSpacing;
 @synthesize delegate, dataSource;
@@ -70,31 +70,46 @@
 	
 }
 
--(void) createInterfaceForParameterCount:(NSUInteger)index 
+-(void) createInterfaceForParameterCount:(NSUInteger)count 
 							 withOptions:(VSCParameterControlOptions)options {
+	
+	self.numberOfParameters = count;
+	self.parameterControlOptions = options;
 	
     [self createMatrices];
 	
     [controllerMatrix sizeToCells];
     [labelMatrix sizeToCells];
 	
-    
     [self setNeedsDisplay:YES];
-	
-	
 	
 }
 
--(void) setVSCSFloat:(VSCSFloat)f forParameterAtIndex:(NSUInteger)index {
+-(void) setLowerLimit:(double)low higherLimit:(double)high forParameterAtIndex:(NSUInteger)index {
+	NSActionCell* controllerCell = [self controllerCellAtIndex:index];
+	if ([controllerCell isKindOfClass:[NSSliderCell class]]) {
+		NSSliderCell* sliderCell = (NSSliderCell*)controllerCell;
+		[sliderCell setMinValue:low];
+		[sliderCell setMaxValue:high];
+	}
+}
+
+-(void) setDoubleValue:(double)f forParameterAtIndex:(NSUInteger)index {
+	NSActionCell* controllerCell = [self controllerCellAtIndex:index];
+	NSCell* numericCell = [self numericCellAtIndex:index];
+	[controllerCell setDoubleValue:f];
+	[numericCell setDoubleValue:f];
 	
 }
 
 -(void) setLabel:(NSString*)l forParameterAtIndex:(NSUInteger)index {
-	
+	NSCell* labelCell = [self labelCellAtIndex:index];
+	[labelCell setStringValue:l];
 }
 
--(VSCSFloat) getParameterAtIndex:(NSUInteger)index {
-	
+-(double) getParameterAtIndex:(NSUInteger)index {
+	NSActionCell* controllerCell = [self controllerCellAtIndex:index];
+	double val = [controllerCell doubleValue];
 }
 
 @end
@@ -112,7 +127,7 @@
 	self.controllerCellPrototype = [[[NSSliderCell alloc] init] autorelease];
 	self.labelCellPrototype = [[NSCell alloc] initTextCell:@"No Parameter"];
 	
-	self.numeOfParameters = 0;
+	self.numberOfParameters = 0;
 	self.parameterControlOptions = VSCParameterControlOptionNone;
 	
 }
@@ -123,27 +138,38 @@
 
 -(void) createMatrices {
 	
-	NSInteger numberOfRows = numeOfParameters;
+	[self destroyMatrices];
 	
-	CGRect controllerMatrixFrame = NSMakeRect(self.frame.size.width / 2.0, 0.0, 
+    CGRect labelMatrixFrame = NSMakeRect(0.0, 0.0, self.frame.size.width / 4.0, self.frame.size.height);
+	self.labelMatrix = [[[NSMatrix alloc] initWithFrame:labelMatrixFrame 
+												   mode:NSTrackModeMatrix 
+											  prototype:self.labelCellPrototype 
+										   numberOfRows:numberOfRows 
+										numberOfColumns:1] autorelease];
+	[labelMatrix setAutoresizingMask: NSViewHeightSizable | NSViewWidthSizable];
+	[scrollView addSubview:labelMatrix];
+	
+	
+	CGRect controllerMatrixFrame = NSMakeRect(self.frame.size.width / 4.0, 0.0, 
 											  self.frame.size.width / 2.0, self.frame.size.height);	
 	self.controllerMatrix = [[[NSMatrix alloc] initWithFrame:controllerMatrixFrame 
 														mode:NSTrackModeMatrix 
 												   prototype:self.controllerCellPrototype 
 												numberOfRows:numeOfParameters 
 											 numberOfColumns:1] autorelease];	
+	[controllerMatrix setAutoresizingMask: NSViewHeightSizable | NSViewWidthSizable];
 	[scrollView addSubview:controllerMatrix];
 	
-
-    
-    CGRect labelMatrixFrame = NSMakeRect(0.0, 0.0, self.frame.size.width / 2.0, self.frame.size.height);
-	self.labelMatrix = [[[NSMatrix alloc] initWithFrame:labelMatrixFrame 
-												   mode:NSTrackModeMatrix 
-											  prototype:self.labelCellPrototype 
-										   numberOfRows:numberOfRows 
-										numberOfColumns:1] autorelease];
+	CGRect numericMatrixFrame = NSMakeRect(self.frame.size.width * (3.0 / 4.0), 0.0, 
+											  self.frame.size.width / 4.0, self.frame.size.height);	
 	
-	[scrollView addSubview:labelMatrix];
+	self.numericMatrix = [[[NSMatrix alloc] initWithFrame:numericMatrixFrame 
+														mode:NSTrackModeMatrix 
+												   prototype:self.numericCellPrototype 
+												numberOfRows:numeOfParameters 
+											 numberOfColumns:1] autorelease];	
+	[controllerMatrix setAutoresizingMask: NSViewHeightSizable | NSViewWidthSizable];
+	[scrollView addSubview:numericMatrix];
 	
 }
 
@@ -158,6 +184,11 @@
 	if (self.labelMatrix) {
 		[labelMatrix removeFromSuperview];
 		self.labelMatrix = nil;
+	}
+	
+	if (self.numericMatrix) {
+		[numericMatrix removeFromSuperview];
+		self.numericMatrix = nil;
 	}
 	
 }
@@ -180,13 +211,6 @@
 	return [numericMatrix cellAtRow:index column:0];
 }
 
--(NSSize) sizeOfString:(NSString*)s withFont:(NSCell*)cell {
-	
-	NSFont* font = [cell font];
-	NSDictionary* attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
-	
-	return [s sizeWithAttributes:attributes];;
-	
-}
+
 
 @end
