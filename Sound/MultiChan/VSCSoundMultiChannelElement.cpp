@@ -90,4 +90,24 @@ bool VSCSoundMultiChannelElement::numberOfChannelsIsLocked(void) {
     return _lockNumberOfChannels;
 }
 
+double VSCSoundMultiChannelElement::getValueForParameterWithKey(VSCSParameter::Key key) {
+	
+	int i = VSCSParameter::channelIndexForKey(key);
+	
+	if (i < this->getNumberOfChannels() && i >= 0) {
+		if (VSCSParameter::parameterIsLinearChannel(key)) 
+			return _channelLinearGains[i];
+		if (VSCSParameter::parameterIsDBChannel(key)) 
+			return VSCSound::linearToDBGain(_channelLinearGains[i]);
+	}
+	
+	assert(false);
+
+	return 0.0;
+}
+
+void VSCSoundMultiChannelElement::setValueForParameterWithKey(double value, VSCSParameter::Key key) {
+	
+}
+
 

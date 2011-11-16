@@ -269,6 +269,8 @@
 								<string>1067DB2E14548C6700F0670E</string>
 								<string>100FF8711466DC830015FE2D</string>
 								<string>1061AAF91430A3ED00C29FBB</string>
+								<string>108642471473362D0017E1CC</string>
+								<string>108642321473358E0017E1CC</string>
 								<string>10C5CA201464955F00849657</string>
 								<string>105C47CA144B32760015AE8F</string>
 								<string>105C47D3144B32760015AE8F</string>
@@ -292,12 +294,13 @@
 							<array>
 								<array>
 									<integer>28</integer>
+									<integer>27</integer>
 									<integer>20</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 601}, {375, 655}}</string>
+							<string>{{0, 273}, {375, 655}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -334,7 +337,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>VSCSoundParameters.cpp</string>
+								<string>VSCSoundMultiChannelElement.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -342,11 +345,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>VSCSoundParameters.cpp</string>
+										<string>VSCSoundMultiChannelElement.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>109AE6781471E8EA005CAC88</string>
+										<string>10864255147338A40017E1CC</string>
 										<key>history</key>
 										<array>
 											<string>108295D61449CF3000B2DADA</string>
@@ -421,7 +424,6 @@
 											<string>1017790A14688CE700061200</string>
 											<string>1017790F14688F4900061200</string>
 											<string>1017791014688F4900061200</string>
-											<string>106120DD146B44710051A965</string>
 											<string>106120F3146B45EA0051A965</string>
 											<string>10881666146D6C8000F5E014</string>
 											<string>10881667146D6C8000F5E014</string>
@@ -436,10 +438,7 @@
 											<string>10E82CCB146E125700D27AED</string>
 											<string>1020A2DF146F3E3400268FED</string>
 											<string>1020A2E1146F3E3400268FED</string>
-											<string>1020A2E3146F3E3400268FED</string>
 											<string>1020A2E4146F3E3400268FED</string>
-											<string>1020A2E8146F3E3400268FED</string>
-											<string>1020A2E9146F3E3400268FED</string>
 											<string>1020A2EA146F3E3400268FED</string>
 											<string>1020A2EB146F3E3400268FED</string>
 											<string>1020A2EC146F3E3400268FED</string>
@@ -447,7 +446,6 @@
 											<string>1020A2F1146F3E3400268FED</string>
 											<string>10918455146F4CA4006B175E</string>
 											<string>1091848614701FAD006B175E</string>
-											<string>1091848714701FAD006B175E</string>
 											<string>1091848D14702527006B175E</string>
 											<string>1091848F14702527006B175E</string>
 											<string>1091849314702F4A006B175E</string>
@@ -462,16 +460,21 @@
 											<string>109AE64E1471BCC9005CAC88</string>
 											<string>109AE64F1471BCC9005CAC88</string>
 											<string>109AE65A1471BECE005CAC88</string>
-											<string>109AE65C1471BECE005CAC88</string>
 											<string>109AE6641471C440005CAC88</string>
 											<string>109AE6661471C440005CAC88</string>
 											<string>109AE66C1471D518005CAC88</string>
 											<string>109AE6701471D6EE005CAC88</string>
-											<string>109AE6731471E8EA005CAC88</string>
-											<string>109AE6741471E8EA005CAC88</string>
-											<string>109AE6751471E8EA005CAC88</string>
 											<string>109AE6761471E8EA005CAC88</string>
-											<string>109AE6771471E8EA005CAC88</string>
+											<string>10864234147335940017E1CC</string>
+											<string>10864237147335940017E1CC</string>
+											<string>10864238147335940017E1CC</string>
+											<string>108642481473363C0017E1CC</string>
+											<string>1086424E147338A30017E1CC</string>
+											<string>1086424F147338A30017E1CC</string>
+											<string>10864250147338A30017E1CC</string>
+											<string>10864251147338A30017E1CC</string>
+											<string>10864252147338A30017E1CC</string>
+											<string>10864253147338A30017E1CC</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -529,9 +532,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>109AE6571471BCC9005CAC88</string>
+				<string>1086423B147335940017E1CC</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>109AE6581471BCC9005CAC88</string>
+				<string>1086423C147335940017E1CC</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -750,7 +753,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>108295C51449CD9100B2DADA</string>
-				<string>109AE6591471BCC9005CAC88</string>
+				<string>1086423D147335940017E1CC</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>

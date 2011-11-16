@@ -10,6 +10,7 @@
 #define _VSC_SYNTH_SOURCE_GENERATOR_
 
 #include "VSCSound.h"
+#include "VSCSoundParameters.h"
 #include "VSCSynthSourceElement.h"
 #include "VSCSTKUtils.h"
 
@@ -58,6 +59,9 @@ public:
 	 */
 	virtual void initialize(void);
     virtual void updateSoundEngine(void);
+	
+	virtual VSCSFloat getValueForParameterWithKey(VSCSParameter::Key k);
+	virtual void setValueForParameterWithKey(double val, VSCSParameter::Key k);
 	
 protected:
 	

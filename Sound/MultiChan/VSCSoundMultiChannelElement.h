@@ -63,8 +63,6 @@ public:
     void setDBGains(std::vector<VSCSFloat>& channelDBGains);
     void getDBGains(std::vector<VSCSFloat>& channelDBGains) const;
     
-    double getValueForParameterWithKey(VSCSParameter::Key key);
-    
     /*
      *  Lock number of channels.
      */
@@ -72,6 +70,9 @@ public:
     bool numberOfChannelsIsLocked(void);
     
     /*--------------------------------------------------------------*/
+	
+	virtual double getValueForParameterWithKey(VSCSParameter::Key key);
+	virtual void setValueForParameterWithKey(double value, VSCSParameter::Key key);
 	
 protected:
 	

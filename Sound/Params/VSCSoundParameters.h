@@ -11,21 +11,16 @@
 #include <map>
 #include <string>
 
-/*-------------------------------------------------------------------------------------------
- *
- *	General sound parameter domain enum 
- */
-
-
-/*-------------------------------------------------------------------------------------------
- *
- *	General sound parameter key enum 
- */
 
 
 class VSCSParameter {
 	
 public:
+	
+	/*-------------------------------------------------------------------------------------------
+	 *
+	 *	General sound parameter domain enum 
+	 */
 	
 	enum Domain {
 		
@@ -40,6 +35,11 @@ public:
 		DomainSourceSine,
 		DomainSourceSquare
 	};
+	
+	/*-------------------------------------------------------------------------------------------
+	 *
+	 *	General sound parameter key enum 
+	 */	
 	
 	enum Key {
 		
@@ -57,6 +57,19 @@ public:
 		KeyChannelEight,
 		KeyChannelNine,
 		KeyChannelTen,
+		
+		// multi chan dB volume ...
+		KeyChannelDBZero,
+		KeyChannelDBOne,
+		KeyChannelDBTwo,
+		KeyChannelDBThree,
+		KeyChannelDBFour,
+		KeyChannelDBFive,
+		KeyChannelDBSix,
+		KeyChannelDBSeven,
+		KeyChannelDBEight,
+		KeyChannelDBNine,
+		KeyChannelDBTen,
 		
 		// Sine
 		KeySineFrequency,
@@ -87,11 +100,20 @@ public:
 		
 	};
 	
+	/*
+	 *	Channel volume/gain specific
+	 */
 	static int channelIndexForKey(Key k);
 	static Key keyForChannelIndex(int i);
+	static bool parameterIsLinearChannel(Key k);
+	static bool parameterIsDBChannel(Key k);
 	
 	static std::string getLabelForParameterWithKey(Key k);
 	static std::pair<double, double> getRangeForParameterWithKey(Key k);
+	
+	/*
+	 *	Default values
+	 */
 	static std::pair<double, double> getDefaultLinearGainRange(void);
 	
 	
