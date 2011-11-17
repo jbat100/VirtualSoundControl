@@ -267,6 +267,7 @@
 							<array>
 								<string>1061AAB21430A3B500C29FBB</string>
 								<string>1067DB2E14548C6700F0670E</string>
+								<string>10A282C71470712700C70799</string>
 								<string>100FF8711466DC830015FE2D</string>
 								<string>1061AAF91430A3ED00C29FBB</string>
 								<string>108642471473362D0017E1CC</string>
@@ -293,14 +294,14 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>28</integer>
-									<integer>27</integer>
-									<integer>20</integer>
+									<integer>49</integer>
+									<integer>42</integer>
+									<integer>32</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 273}, {375, 655}}</string>
+							<string>{{0, 1242}, {375, 655}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -337,7 +338,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>VSCSoundMultiChannelElement.cpp</string>
+								<string>VSCSoundParameterizedElement.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -345,11 +346,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>VSCSoundMultiChannelElement.cpp</string>
+										<string>VSCSoundParameterizedElement.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>10864255147338A40017E1CC</string>
+										<string>1049A6AB1474883E00A7E608</string>
 										<key>history</key>
 										<array>
 											<string>108295D61449CF3000B2DADA</string>
@@ -424,7 +425,6 @@
 											<string>1017790A14688CE700061200</string>
 											<string>1017790F14688F4900061200</string>
 											<string>1017791014688F4900061200</string>
-											<string>106120F3146B45EA0051A965</string>
 											<string>10881666146D6C8000F5E014</string>
 											<string>10881667146D6C8000F5E014</string>
 											<string>10881669146D6C8000F5E014</string>
@@ -432,7 +432,6 @@
 											<string>10881676146D6C8000F5E014</string>
 											<string>10881679146D6C8000F5E014</string>
 											<string>1088167A146D6C8000F5E014</string>
-											<string>10E82CBB146E125700D27AED</string>
 											<string>10E82CBD146E125700D27AED</string>
 											<string>10E82CCA146E125700D27AED</string>
 											<string>10E82CCB146E125700D27AED</string>
@@ -470,11 +469,20 @@
 											<string>10864238147335940017E1CC</string>
 											<string>108642481473363C0017E1CC</string>
 											<string>1086424E147338A30017E1CC</string>
-											<string>1086424F147338A30017E1CC</string>
 											<string>10864250147338A30017E1CC</string>
-											<string>10864251147338A30017E1CC</string>
-											<string>10864252147338A30017E1CC</string>
-											<string>10864253147338A30017E1CC</string>
+											<string>1049A681147472BC00A7E608</string>
+											<string>1049A689147478B900A7E608</string>
+											<string>1049A68B147478B900A7E608</string>
+											<string>1049A68C147478B900A7E608</string>
+											<string>1049A698147480DF00A7E608</string>
+											<string>1049A69E147485F100A7E608</string>
+											<string>1049A6A11474883D00A7E608</string>
+											<string>1049A6A21474883D00A7E608</string>
+											<string>1049A6A31474883D00A7E608</string>
+											<string>1049A6A41474883D00A7E608</string>
+											<string>1049A6A51474883D00A7E608</string>
+											<string>1049A6A61474883D00A7E608</string>
+											<string>1049A6A71474883D00A7E608</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -532,9 +540,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>1086423B147335940017E1CC</string>
+				<string>1049A66C1474562800A7E608</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>1086423C147335940017E1CC</string>
+				<string>1049A66D1474562800A7E608</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -673,6 +681,7 @@
 	<key>WindowOrderList</key>
 	<array>
 		<string>108295C51449CD9100B2DADA</string>
+		<string>1C530D57069F1CE1000CFCEE</string>
 		<string>/Users/jonathanthorpe/Programming/Projects/Repository/SynthStation/SynthStation.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -753,7 +762,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>108295C51449CD9100B2DADA</string>
-				<string>1086423D147335940017E1CC</string>
+				<string>1049A66E1474562800A7E608</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -913,7 +922,7 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CDD528C0622207200134675</string>
 										<key>PBXProjectModuleLabel</key>
-										<string></string>
+										<string>VSCEnveloppe.cpp</string>
 										<key>StatusBarVisibility</key>
 										<true/>
 									</dict>
@@ -971,8 +980,8 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D57069F1CE1000CFCEE</string>
-				<string>10AC2B171454B063002DE480</string>
-				<string>10AC2B181454B063002DE480</string>
+				<string>1049A6A91474883D00A7E608</string>
+				<string>1049A6AA1474883D00A7E608</string>
 				<string>1CDD528C0622207200134675</string>
 				<string>1CD0528E0623707200166675</string>
 			</array>

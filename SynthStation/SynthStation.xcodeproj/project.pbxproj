@@ -13,6 +13,9 @@
 		10118007145619DF00240467 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10118005145619DF00240467 /* AppKit.framework */; };
 		10118008145619DF00240467 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10118006145619DF00240467 /* Foundation.framework */; };
 		10328C771465481C0048559B /* Voicer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10328C761465481C0048559B /* Voicer.cpp */; };
+		1049A6741474575400A7E608 /* VSCSoundParameterizedElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1049A6721474575400A7E608 /* VSCSoundParameterizedElement.cpp */; };
+		1049A6771474578800A7E608 /* VSCSoundPropertizedElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1049A6761474578700A7E608 /* VSCSoundPropertizedElement.cpp */; };
+		1049A67A147457D500A7E608 /* VSCSoundBroadcaster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1049A678147457D500A7E608 /* VSCSoundBroadcaster.cpp */; };
 		10516D791453247B00109B4B /* VSCFrequencyPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10516D781453247B00109B4B /* VSCFrequencyPoint.cpp */; };
 		10516D7C1453261800109B4B /* VSCSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10516D7B1453261800109B4B /* VSCSound.cpp */; };
 		10531F7114602C57004DC3A1 /* VSCSynthSourceGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10531F7014602C57004DC3A1 /* VSCSynthSourceGroup.cpp */; };
@@ -47,7 +50,6 @@
 		108642421473359E0017E1CC /* VSCSoundParameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1086423E1473359E0017E1CC /* VSCSoundParameters.cpp */; };
 		108642431473359E0017E1CC /* VSCSoundProperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108642401473359E0017E1CC /* VSCSoundProperties.cpp */; };
 		10864246147336280017E1CC /* VSCSoundMultiChannelElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10864244147336280017E1CC /* VSCSoundMultiChannelElement.cpp */; };
-		1086424D1473368E0017E1CC /* VSCSoundBroadcaster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1086424C1473368E0017E1CC /* VSCSoundBroadcaster.cpp */; };
 		10918469146FF0B8006B175E /* VSCSoundSourceSineWaveDebugView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10918468146FF0B8006B175E /* VSCSoundSourceSineWaveDebugView.mm */; };
 		1091846C146FF0C0006B175E /* VSCSoundChannelLevelParameterView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1091846B146FF0C0006B175E /* VSCSoundChannelLevelParameterView.mm */; };
 		109AE6491471BA5D005CAC88 /* NSString+VSCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 109AE6481471BA5D005CAC88 /* NSString+VSCAdditions.m */; };
@@ -97,6 +99,12 @@
 		10118006145619DF00240467 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = ../../../System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		10328C75146548050048559B /* Voicer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voicer.h; sourceTree = STK_INCLUDE; };
 		10328C761465481C0048559B /* Voicer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Voicer.cpp; sourceTree = STK_SOURCE; };
+		1049A6721474575400A7E608 /* VSCSoundParameterizedElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCSoundParameterizedElement.cpp; path = ../Sound/Params/VSCSoundParameterizedElement.cpp; sourceTree = SOURCE_ROOT; };
+		1049A6731474575400A7E608 /* VSCSoundParameterizedElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundParameterizedElement.h; path = ../Sound/Params/VSCSoundParameterizedElement.h; sourceTree = SOURCE_ROOT; };
+		1049A6751474578700A7E608 /* VSCSoundPropertizedElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundPropertizedElement.h; path = ../Sound/Params/VSCSoundPropertizedElement.h; sourceTree = SOURCE_ROOT; };
+		1049A6761474578700A7E608 /* VSCSoundPropertizedElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCSoundPropertizedElement.cpp; path = ../Sound/Params/VSCSoundPropertizedElement.cpp; sourceTree = SOURCE_ROOT; };
+		1049A678147457D500A7E608 /* VSCSoundBroadcaster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCSoundBroadcaster.cpp; path = ../Sound/Params/VSCSoundBroadcaster.cpp; sourceTree = SOURCE_ROOT; };
+		1049A679147457D500A7E608 /* VSCSoundBroadcaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundBroadcaster.h; path = ../Sound/Params/VSCSoundBroadcaster.h; sourceTree = SOURCE_ROOT; };
 		10516D771453247B00109B4B /* VSCFrequencyPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCFrequencyPoint.h; sourceTree = "<group>"; };
 		10516D781453247B00109B4B /* VSCFrequencyPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCFrequencyPoint.cpp; sourceTree = "<group>"; };
 		10516D7A1453261800109B4B /* VSCSound.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = VSCSound.h; path = ../Sound/VSCSound.h; sourceTree = SOURCE_ROOT; };
@@ -197,8 +205,6 @@
 		108642411473359E0017E1CC /* VSCSoundProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundProperties.h; path = ../Sound/Params/VSCSoundProperties.h; sourceTree = SOURCE_ROOT; };
 		10864244147336280017E1CC /* VSCSoundMultiChannelElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCSoundMultiChannelElement.cpp; path = ../Sound/MultiChan/VSCSoundMultiChannelElement.cpp; sourceTree = SOURCE_ROOT; };
 		10864245147336280017E1CC /* VSCSoundMultiChannelElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundMultiChannelElement.h; path = ../Sound/MultiChan/VSCSoundMultiChannelElement.h; sourceTree = SOURCE_ROOT; };
-		1086424B1473368E0017E1CC /* VSCSoundBroadcaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSoundBroadcaster.h; sourceTree = "<group>"; };
-		1086424C1473368E0017E1CC /* VSCSoundBroadcaster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSoundBroadcaster.cpp; sourceTree = "<group>"; };
 		10918467146FF0B8006B175E /* VSCSoundSourceSineWaveDebugView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundSourceSineWaveDebugView.h; path = ../Sound/AppKit/VSCSoundSourceSineWaveDebugView.h; sourceTree = SOURCE_ROOT; };
 		10918468146FF0B8006B175E /* VSCSoundSourceSineWaveDebugView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCSoundSourceSineWaveDebugView.mm; path = ../Sound/AppKit/VSCSoundSourceSineWaveDebugView.mm; sourceTree = SOURCE_ROOT; };
 		1091846A146FF0C0006B175E /* VSCSoundChannelLevelParameterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundChannelLevelParameterView.h; path = ../Sound/AppKit/VSCSoundChannelLevelParameterView.h; sourceTree = SOURCE_ROOT; };
@@ -538,8 +544,12 @@
 				1086423F1473359E0017E1CC /* VSCSoundParameters.h */,
 				108642401473359E0017E1CC /* VSCSoundProperties.cpp */,
 				108642411473359E0017E1CC /* VSCSoundProperties.h */,
-				1086424B1473368E0017E1CC /* VSCSoundBroadcaster.h */,
-				1086424C1473368E0017E1CC /* VSCSoundBroadcaster.cpp */,
+				1049A678147457D500A7E608 /* VSCSoundBroadcaster.cpp */,
+				1049A679147457D500A7E608 /* VSCSoundBroadcaster.h */,
+				1049A6721474575400A7E608 /* VSCSoundParameterizedElement.cpp */,
+				1049A6731474575400A7E608 /* VSCSoundParameterizedElement.h */,
+				1049A6761474578700A7E608 /* VSCSoundPropertizedElement.cpp */,
+				1049A6751474578700A7E608 /* VSCSoundPropertizedElement.h */,
 			);
 			name = Params;
 			sourceTree = "<group>";
@@ -835,7 +845,9 @@
 				108642421473359E0017E1CC /* VSCSoundParameters.cpp in Sources */,
 				108642431473359E0017E1CC /* VSCSoundProperties.cpp in Sources */,
 				10864246147336280017E1CC /* VSCSoundMultiChannelElement.cpp in Sources */,
-				1086424D1473368E0017E1CC /* VSCSoundBroadcaster.cpp in Sources */,
+				1049A6741474575400A7E608 /* VSCSoundParameterizedElement.cpp in Sources */,
+				1049A6771474578800A7E608 /* VSCSoundPropertizedElement.cpp in Sources */,
+				1049A67A147457D500A7E608 /* VSCSoundBroadcaster.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

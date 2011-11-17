@@ -27,5 +27,13 @@ class VSCEnveloppeEmptyException : public VSCBaseException
     }
 };
 
+class VSCSBadParameterException : public VSCBaseException
+{
+    virtual const char* what() const throw()
+    {
+        return "Bad Parameter";
+    }
+};
+
 
 #endif

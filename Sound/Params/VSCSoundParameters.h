@@ -45,7 +45,11 @@ public:
 		
 		KeyNone,
 		
-		// multi chan linear volume ...
+		/*
+		 *	multi chan linear volume ...
+		 *	The order is IMPORTANT (used to calculate channel indeces)
+		 */
+		KeyChannelAll,
 		KeyChannelZero,
 		KeyChannelOne,
 		KeyChannelTwo,
@@ -58,7 +62,11 @@ public:
 		KeyChannelNine,
 		KeyChannelTen,
 		
-		// multi chan dB volume ...
+		/*
+		 *	multi chan dB volume ...
+		 *	The order is IMPORTANT (used to calculate channel indeces)
+		 */
+		KeyChannelDBAll,
 		KeyChannelDBZero,
 		KeyChannelDBOne,
 		KeyChannelDBTwo,

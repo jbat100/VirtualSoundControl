@@ -9,3 +9,19 @@
 
 #include "VSCSoundProperties.h"
 
+std::map<VSCSProperty::Key, std::string> VSCSProperty::propertyLabels;
+bool VSCSProperty::generatedPropertyLabels = false;
+
+
+std::string getLabelForPropertyWithKey(Key k) {
+	
+}
+
+void setLabelForPropertyWithKey(Key k) {
+	
+}
+
+
+void generatePropertyLabels(void) {
+
+}
