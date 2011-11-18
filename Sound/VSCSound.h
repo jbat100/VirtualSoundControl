@@ -38,6 +38,7 @@ const unsigned int kVSCSMaxChannels = 16;
  *  stk::StkFrames& tick(stk::StkFrames& frames, unsigned int channel = 0);
  */
 const unsigned int kVSCSAllChannels = UINT_MAX;
+const unsigned int kVSCSVoidChannel = UINT_MAX - 1;
 
 /*-------------------------------------------------------------------------------------------*/
 

@@ -49,8 +49,10 @@ typedef ParamKeyIndexMap::value_type ParamKeyIndexMapEntry;
 	 */
 	paramKeyIndexMap.clear();
 	for (int i = 0; i < multiChannelElement->getNumberOfChannels(); i++) {
-		VSCSParameter::Key key = VSCSParameter::keyForChannelIndex(i);
-		paramKeyIndexMap.insert( ParamKeyIndexMapEntry(key, i) );
+		VSCSParameter::Key linearKey = VSCSParameter::keyForChannelIndex(i, false);
+		paramKeyIndexMap.insert( ParamKeyIndexMapEntry(linearKey, i) );
+        VSCSParameter::Key dBKey = VSCSParameter::keyForChannelIndex(i, true);
+		paramKeyIndexMap.insert( ParamKeyIndexMapEntry(dBKey, i) );
 	}
 	
 	[self createParameterControlInterface];

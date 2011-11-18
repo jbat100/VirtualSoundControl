@@ -8,6 +8,7 @@
  */
 
 #include "VSCSoundParameters.h"
+#include "VSCException.h"
 
 #include <map>
 #include <string>
@@ -37,37 +38,62 @@ std::pair<double, double> VSCSParameter::defaultPhaseRange(-kVSC_PI, kVSC_PI);
 std::pair<double, double> VSCSParameter::defaultFrequencyRange(20.0, 20000.0);
 std::pair<double, double> VSCSParameter::defaultHarmonicsRange(0.0, 10.0);
 
+const unsigned int VSCSParameter::kMaxNumberOfChannels = 11;
+
 
 /*
  *	Multi-channel: channel index / key mapping
  */
 
-int VSCSParameter::channelIndexForKey(VSCSParameter::Key k) {
+unsigned int VSCSParameter::channelIndexForKey(VSCSParameter::Key k, bool* dB) {
+    
+    if (k == KeyChannelAll) {
+        if (dB != NULL) *dB = false;
+        return kVSCSAllChannels;
+    }
 	
-	if (VSCSParameter::parameterIsLinearChannel(k)) {
+    else if (k == KeyChannelDBAll) {
+        if (dB != NULL) *dB = true;
+        return kVSCSAllChannels;
+    }
+    
+	else if (VSCSParameter::parameterIsLinearChannel(k)) {
+        if (dB != NULL) *dB = false;
 		return (int)k - (int)KeyChannelZero;
 	}
 	else if (VSCSParameter::parameterIsDBChannel(k)) {
+        if (dB != NULL) *dB = true;
 		return (int)k - (int)KeyChannelDBZero;
 	}
+    
+    return kVSCSVoidChannel;
+    
+    //throw VSCSBadParameterException();
 	
 }
 
-VSCSParameter::Key VSCSParameter::keyForChannelIndex(int i) {
+VSCSParameter::Key VSCSParameter::keyForChannelIndex(unsigned int i, bool dB) {
 	
-	if (i < 11) {
-		Key k = (Key)(i + (int)KeyChannelZero);
-		return k;
+	if (i < VSCSParameter::kMaxNumberOfChannels) {
+        if (dB) {
+            Key k = (Key)(i + (int)KeyChannelDBZero);
+            return k;
+        }
+        else {
+            Key k = (Key)(i + (int)KeyChannelZero);
+            return k;
+        }
 	}
 	
-    return VSCSParameter::KeyNone;
+    throw VSCSBadParameterException();
 }
+
 
 /*
  *	Parameter labels
  */
 
-std::string VSCSParameter::labelForParameterWithKey(VSCSParameter::Key k) {
+std::string VSCSParameter::getLabelForParameterWithKey(VSCSParameter::Key k) {
 	
 	if (generatedParameterLabels == false) 
 		VSCSParameter::generateParameterLabels();
@@ -77,13 +103,12 @@ std::string VSCSParameter::labelForParameterWithKey(VSCSParameter::Key k) {
 	if (labelIterator != parameterLabels.end()) 
 		return labelIterator->second;
 	
-	if (VSCSParameter::parameterIsLinearChannel(k)) {
-		int i = VSCSParameter::channelIndexForKey(k);
+    bool idDBChannel = false;
+    int i = VSCSParameter::channelIndexForKey(k, &idDBChannel);
+	if (idDBChannel) {
 		return "Channel " + boost::lexical_cast<std::string>(i) + "Volume (Lin)";
 	}
-	
-	if (VSCSParameter::parameterIsDBChannel(k)) {
-		int i = VSCSParameter::channelIndexForKey(k);
+	else {
 		return "Channel " + boost::lexical_cast<std::string>(i) + "Volume (dB)";
 	}
 	
@@ -146,7 +171,7 @@ std::pair<double, double> VSCSParameter::getRangeForParameterWithKey(Key k) {
 			break;
 	}
 	
-	
+	throw VSCSBadParameterException();
 	
 }
 

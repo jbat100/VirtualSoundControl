@@ -7,7 +7,7 @@
 //
 
 #import "VSCSynthStationDocument.h"
-#import "NSApplication+VSCPaths.h"
+#import "NSApplication+VSCAdditions.h"
 #import "VSCSynthStationWindowController.h"
 
 @implementation VSCSynthStationDocument

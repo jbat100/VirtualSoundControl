@@ -7,6 +7,9 @@
  *
  */
 
+#ifndef _VSCS_PARAMETER_H_
+#define _VSCS_PARAMETER_H_
+
 #include "VSCSound.h"
 #include <map>
 #include <string>
@@ -111,11 +114,16 @@ public:
 	/*
 	 *	Channel volume/gain specific
 	 */
-	static int channelIndexForKey(Key k);
-	static Key keyForChannelIndex(int i);
+	static unsigned int channelIndexForKey(Key k, bool* dB);
+	static Key keyForChannelIndex(unsigned int i, bool dB);
 	static bool parameterIsLinearChannel(Key k);
 	static bool parameterIsDBChannel(Key k);
+    static const unsigned int kMaxNumberOfChannels;
+    static const unsigned int kChannelNotFound;
 	
+    /*
+     *
+     */
 	static std::string getLabelForParameterWithKey(Key k);
 	static std::pair<double, double> getRangeForParameterWithKey(Key k);
 	
@@ -143,6 +151,8 @@ private:
 	
 	static bool generatedParameterRanges;
 	static void generateParameterRanges(void);
+    
 	
 };
 
+#endif

@@ -13,6 +13,8 @@
 #include "VSCSound.h"
 #include "VSCSoundParameters.h"
 #include "VSCSoundProperties.h"
+#include "VSCSoundParameterizedElement.h"
+#include "VSCSoundPropertizedElement.h"
 
 #include <list>
 #include <vector>
@@ -63,11 +65,15 @@ public:
     void getLinearGains(std::vector<VSCSFloat>& channelGains) const;
     void setDBGains(std::vector<VSCSFloat>& channelDBGains);
     void getDBGains(std::vector<VSCSFloat>& channelDBGains) const;
+    
+    void setLinearGainAtChannel(VSCSFloat gain, unsigned int channel);
+    VSCSFloat getLinearGainAtChannel(unsigned int channel);
 	
 	/*
 	 *	Not sure why this would be useful outside, but don't see any reason to make it private...
 	 */
 	VSCSFloat averageLinearGain(void);
+    VSCSFloat averageDBGain(void);
     
     /*
      *  Lock number of channels.
@@ -107,6 +113,7 @@ private:
 	
 	void addMultiChannelParameters(void);
 	void addMultiChannelProperties(void);
+    void resetMultiChannelParameters(void);
 	
 };
 

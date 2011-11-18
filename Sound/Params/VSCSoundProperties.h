@@ -8,6 +8,9 @@
  */
 
 
+#ifndef _VSCS_PROPERTY_H_
+#define _VSCS_PROPERTY_H_
+
 #include "VSCSound.h"
 #include <map>
 #include <string>
@@ -42,7 +45,7 @@ public:
 		KeyNone,
 		
 		// multi chan		
-		KeyChannelSetup
+		KeyChannelSetup,
 		
 		// File 
 		KeyFilePath,
@@ -65,3 +68,5 @@ private:
 	static void generatePropertyLabels(void);
 	
 };
+
+#endif
