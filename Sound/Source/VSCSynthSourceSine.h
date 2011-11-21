@@ -32,18 +32,11 @@ public:
 	 */
 	VSCSynthSourceSine();
 	
-	/*
-	 *	Setters/Getters
-	 */
-	VSCSFloat getFrequency(void);
-	void setFrequency(VSCSFloat f);
-	
-	VSCSFloat getPhase(void);
-	void setPhase(VSCSFloat f);
-	void addPhase(VSCSFloat f);
+	virtual double getValueForParameterWithKey(VSCSParameter::Key key);
+	virtual void setValueForParameterWithKey(double value, VSCSParameter::Key key);
     
 	/*
-	 *	STK engine
+	 *	STK engine (shouldn't use apart from debug...)
 	 */
     stk::SineWave* getStkSineWave(void);
 	
@@ -55,6 +48,16 @@ public:
 protected:
     
 	stk::SineWave sineWave;
+	
+	/*
+	 *	Setters/Getters
+	 */
+	VSCSFloat getFrequency(void);
+	void setFrequency(VSCSFloat f);
+	
+	VSCSFloat getPhase(void);
+	void setPhase(VSCSFloat f);
+	void addPhase(VSCSFloat f);
 	
 	/*
 	 *	For some stupid reason the guys at STK have decided not to make it possible to know the 

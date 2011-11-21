@@ -30,19 +30,15 @@ typedef ParamKeyIndexMap::value_type ParamKeyIndexMapEntry;
 	[self setMultiChannelElement:VSCSoundMultiChannelElementPtr()];
 }
 
+#pragma mark - Interface Update
+
 /*
 - (void)drawRect:(NSRect)dirtyRect {
     // Drawing code here.
 }
  */
 
--(VSCSoundMultiChannelElementPtr) getMultiChannelElement {
-	return multiChannelElement;
-}
-
--(void) setMultiChannelElement:(VSCSoundMultiChannelElementPtr)_multiChannelElement {
-	
-	multiChannelElement = _multiChannelElement;
+-(void) updateParameterKeyIndexMap {
 	
 	/*
 	 *	Set the parameters to represent the number of channels of the multi channel element
@@ -54,6 +50,19 @@ typedef ParamKeyIndexMap::value_type ParamKeyIndexMapEntry;
         VSCSParameter::Key dBKey = VSCSParameter::keyForChannelIndex(i, true);
 		paramKeyIndexMap.insert( ParamKeyIndexMapEntry(dBKey, i) );
 	}
+	
+}
+
+#pragma mark - Multi Channel Element C++ setter/getter
+
+-(VSCSoundMultiChannelElementPtr) getMultiChannelElement {
+	return multiChannelElement;
+}
+
+-(void) setMultiChannelElement:(VSCSoundMultiChannelElementPtr)_multiChannelElement {
+	
+	multiChannelElement = _multiChannelElement;
+	
 	
 	[self createParameterControlInterface];
 	

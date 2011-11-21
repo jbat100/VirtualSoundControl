@@ -13,6 +13,7 @@
 #include "VSCSound.h"
 #include <map>
 #include <string>
+#include <set>
 
 
 
@@ -29,6 +30,8 @@ public:
 		
 		DomainNone,
 		
+		DomainChannels,
+		
 		DomainSourceGenerator,
 		DomainSourceGroup,
 		DomainSourceFile,
@@ -36,7 +39,9 @@ public:
 		DomainSourceNoise,
 		DomainSourceSaw,
 		DomainSourceSine,
-		DomainSourceSquare
+		DomainSourceSquare,
+		
+		DomainFilterBiQuad
 	};
 	
 	/*-------------------------------------------------------------------------------------------
@@ -99,17 +104,25 @@ public:
 		// File 
 		KeyFileTime,
 		KeyFilePlaybackSpeed,
-		KeyFileLoopOffset,
-		KeyFileLoopDuration,
+		
+		// File loop
+		KeyFileLoopTime,
+		KeyFileLoopPlaybackSpeed,
+		KeyFileLoopStartTime,
+		KeyFileLoopEndTime,
 		KeyFileLoopCrossoverDuration,
 		
 		// BiQuad Filter
-		KeyBiQuadType,
 		KeyBiQuadFrequency,
 		KeyBiQuadQFactor,
 		KeyBiQuadLinearGain,
 		
 	};
+	
+	/*
+	 *	Get all parameter keys related to a specific domain
+	 */
+	static std::set<Key> keysForDomain(Domain dom);
 	
 	/*
 	 *	Channel volume/gain specific
@@ -121,8 +134,14 @@ public:
     static const unsigned int kMaxNumberOfChannels;
     static const unsigned int kChannelNotFound;
 	
+	/*
+	 *	Linear/dB amplitude/gain converions
+	 */
+	static VSCSFloat linearToDBGain(VSCSFloat linearGain);
+	static VSCSFloat dBToLinearGain(VSCSFloat dBGain);
+	
     /*
-     *
+     *	Labels and ranges
      */
 	static std::string getLabelForParameterWithKey(Key k);
 	static std::pair<double, double> getRangeForParameterWithKey(Key k);
@@ -137,6 +156,7 @@ private:
 	
 	static std::map<Key, std::string> parameterLabels;
 	static std::map<Key, std::pair<double, double> > parameterRanges;
+	static std::map<Domain, std::set<Key> > domainParameters;
 	
 	static std::pair<double, double> defaultLinearAmplitudeRange;
 	static std::pair<double, double> defaultDBAmplitudeRange;
@@ -146,13 +166,13 @@ private:
     static std::pair<double, double> defaultFrequencyRange;
     static std::pair<double, double> defaultHarmonicsRange;
 	
-	static bool generatedParameterLabels;
 	static void generateParameterLabels(void);
-	
-	static bool generatedParameterRanges;
 	static void generateParameterRanges(void);
+	static void generateDomainParameters(void);
     
 	
 };
+
+
 
 #endif

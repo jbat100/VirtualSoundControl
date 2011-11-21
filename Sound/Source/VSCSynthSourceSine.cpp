@@ -17,6 +17,48 @@ VSCSynthSourceSine::VSCSynthSourceSine() {
 	
 }
 
+double VSCSynthSourceSine::getValueForParameterWithKey(VSCSParameter::Key key) {
+	
+	if (key == VSCSParameter::KeySineFrequency) {
+		return this->getFrequency();
+	}
+	if (key == VSCSParameter::KeySinePhase) {
+		return this->getPhase();
+	}
+	
+	//VSCSynthSourceGenerator::getValueForParameterWithKey(key);
+	
+	/* 
+	 *	to save cycles call directly on VSCSoundMultiChannelElement which
+	 *	is the next base class up the hierarchy to do somthing useful, 
+	 *	this may change in future, so stay aware of this ...
+	 */
+	
+	VSCSoundMultiChannelElement::getValueForParameterWithKey(key);
+}
+
+void VSCSynthSourceSine::setValueForParameterWithKey(double value, VSCSParameter::Key key) {
+	
+	if (key == VSCSParameter::KeySineFrequency) {
+		return this->setFrequency((VSCSFloat)value);
+	}
+	if (key == VSCSParameter::KeySinePhase) {
+		return this->setPhase((VSCSFloat)value);
+	}
+	
+	//VSCSynthSourceGenerator::getValueForParameterWithKey(key);
+	
+	/* 
+	 *	to save cycles call directly on VSCSoundMultiChannelElement which
+	 *	is the next base class up the hierarchy to do somthing useful, 
+	 *	this may change in future, so stay aware of this ...
+	 */
+	
+	VSCSoundMultiChannelElement::setValueForParameterWithKey(value, key);
+	
+}
+
+
 stk::SineWave* VSCSynthSourceSine::getStkSineWave(void) {
     return &sineWave;
 }

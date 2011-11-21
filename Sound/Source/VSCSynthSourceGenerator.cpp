@@ -18,6 +18,15 @@ VSCSynthSourceGenerator::VSCSynthSourceGenerator(unsigned int numberOfChannels) 
 }
 
 
+VSCSFloat VSCSynthSourceGenerator::getValueForParameterWithKey(VSCSParameter::Key k) {
+	VSCSynthSourceElement::getValueForParameterWithKey(k);
+}
+
+void VSCSynthSourceGenerator::setValueForParameterWithKey(double val, VSCSParameter::Key k) {
+	VSCSynthSourceElement::setValueForParameterWithKey(val, k);
+}
+
+
 void VSCSynthSourceGenerator::checkComputationFrames(stk::StkFrames& frames) {
 	
 }

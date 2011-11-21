@@ -18,6 +18,7 @@
 
 #include <list>
 #include <vector>
+#include <set>
 #include <boost/shared_ptr.hpp>
 
 /*
@@ -38,55 +39,6 @@ class VSCSoundMultiChannelElement : public VSCSoundPropertizedElement , public V
 public:
     
     VSCSoundMultiChannelElement();
-    VSCSoundMultiChannelElement(unsigned int numberOfChannels);
-    
-    /*--------------------------------------------------------------*/
-    
-    /*
-     *  METHODS IN THIS SECTION CAN BE CALLED FROM THE CONSTRUCTOR AND SO SHOULD
-     *  NOT BE VIRTUAL
-     */
-    
-    void setNumberOfChannels(unsigned int numberOfChannels);
-    unsigned int getNumberOfChannels(void);
-	
-    /*
-     *  These methods set the gain equally for the channels.
-     */
-	/* value between 0 and 1 */
-	void setLinearGain(VSCSFloat g);
-	/* value between 0 and minus infinity */
-	void setDBGain(VSCSFloat g);	
-    
-    /*
-     *  Set/get individual gains for each channel.
-     */
-    void setLinearGains(std::vector<VSCSFloat>& channelGains);
-    void getLinearGains(std::vector<VSCSFloat>& channelGains) const;
-    void setDBGains(std::vector<VSCSFloat>& channelDBGains);
-    void getDBGains(std::vector<VSCSFloat>& channelDBGains) const;
-    
-    void setLinearGainAtChannel(VSCSFloat gain, unsigned int channel);
-    VSCSFloat getLinearGainAtChannel(unsigned int channel);
-	
-	/*
-	 *	Not sure why this would be useful outside, but don't see any reason to make it private...
-	 */
-	VSCSFloat averageLinearGain(void);
-    VSCSFloat averageDBGain(void);
-    
-    /*
-     *  Lock number of channels.
-     */
-    void lockChannels(bool _lock);
-    bool numberOfChannelsIsLocked(void);
-	
-	/*
-	 *	Don't actually think these are necessary, subclasses can see if they want the parameter,
-	 *	and pass it upwards if they don't
-	 */
-	//bool isMultiChannelElementParameterKey(VSCSParameter::Key k);
-	//bool isMultiChannelElementPropertyKey(VSCSProperty::Key k);
     
     /*--------------------------------------------------------------*/
 	
@@ -102,18 +54,19 @@ public:
 	
 	/*--------------------------------------------------------------*/
 	
-	
-protected:
-	
-    bool _lockNumberOfChannels;
-    std::vector<VSCSFloat> _channelLinearGains;
-    unsigned int _numberOfChannels;
+
 	
 private:
 	
-	void addMultiChannelParameters(void);
-	void addMultiChannelProperties(void);
+	bool _lockNumberOfChannels;
+    std::vector<VSCSFloat> _channelLinearGains;
+    unsigned int _numberOfChannels;
+	
     void resetMultiChannelParameters(void);
+	VSCSFloat VSCSoundMultiChannelElement::averageLinearGain(void);
+	VSCSFloat VSCSoundMultiChannelElement::averageDBGain(void);
+	void lockChannels(bool _lock);
+    bool numberOfChannelsIsLocked(void);
 	
 };
 

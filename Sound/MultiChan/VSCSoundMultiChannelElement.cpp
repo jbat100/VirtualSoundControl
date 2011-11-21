@@ -14,20 +14,11 @@
 
 VSCSoundMultiChannelElement::VSCSoundMultiChannelElement() {
     
-    // DO NOT CALL VIRTUAL METHODS IN CONSTRUCTOR !!!
-    this->setNumberOfChannels(1);
-    
-    
-    
+	_numberOfChannels = 0;
+	_lockNumberOfChannels = false;
 	
 }
 
-VSCSoundMultiChannelElement::VSCSoundMultiChannelElement(unsigned int numberOfChannels) {
-    
-    // DO NOT CALL VIRTUAL METHODS IN CONSTRUCTOR !!!
-    this->setNumberOfChannels(numberOfChannels);
-	
-}
 
 #pragma mark Number Of Channels Setter/Getter
 
@@ -36,15 +27,20 @@ void VSCSoundMultiChannelElement::setNumberOfChannels(unsigned int numberOfChann
     if (this->numberOfChannelsIsLocked())
         return;
     
-    assert(numberOfChannels < kVSCSMaxChannels);
+    assert(numberOfChannels <= kVSCSMaxChannels);
     if (numberOfChannels > kVSCSMaxChannels)
         numberOfChannels = kVSCSMaxChannels;
     _numberOfChannels = numberOfChannels;
     _channelLinearGains.resize(_numberOfChannels);
     
-    
-    for (int i = 0; i < _numberOfChannels; i++) {
-        //VSCSParameter::Key k = VSCSParameter::index
+    this->resetMultiChannelParameters();
+	
+	_parameterKeys.insert(VSCSParameter::KeyChannelAll);
+    _parameterKeys.insert(VSCSParameter::KeyChannelDBAll);
+	for (int i = 0; i < _numberOfChannels; i++) {
+		// insert keys for dB AND liner gain values
+        _parameterKeys.insert(VSCSParameter::keyForChannelIndex(i,true));
+		_parameterKeys.insert(VSCSParameter::keyForChannelIndex(i,false));
     }
     
     
@@ -54,47 +50,6 @@ void VSCSoundMultiChannelElement::setNumberOfChannels(unsigned int numberOfChann
 
 unsigned int VSCSoundMultiChannelElement::getNumberOfChannels(void) {
     return _numberOfChannels;
-}
-
-#pragma mark General Gain Setter
-
-void VSCSoundMultiChannelElement::setLinearGain(VSCSFloat g) {
-    std::vector<VSCSFloat> linearGains(_numberOfChannels, g);
-    this->setLinearGains(linearGains);
-}
-
-void VSCSoundMultiChannelElement::setDBGain(VSCSFloat g) {
-    std::vector<VSCSFloat> dBGains(_numberOfChannels, g);
-    this->setDBGains(dBGains);
-}
-
-#pragma mark Vector Gain Setter/Getters
-
-void VSCSoundMultiChannelElement::setLinearGains(std::vector<VSCSFloat>& channelGains) {
-    assert(channelGains.size() == _numberOfChannels);
-    assert(_channelLinearGains.size() == _numberOfChannels);
-    std::copy(channelGains.begin(), channelGains.end(), _channelLinearGains.begin());
-}
-
-void VSCSoundMultiChannelElement::getLinearGains(std::vector<VSCSFloat>& channelGains) const {
-    channelGains.resize(_numberOfChannels);
-    assert(_channelLinearGains.size() == _numberOfChannels);
-    std::copy(_channelLinearGains.begin(), _channelLinearGains.end(), channelGains.begin());
-}
-
-void VSCSoundMultiChannelElement::setDBGains(std::vector<VSCSFloat>& channelDBGains) {
-    assert(channelDBGains.size() == _numberOfChannels);
-    std::vector<VSCSFloat> channelGains(_numberOfChannels);
-    for (unsigned int i = 0; i < _numberOfChannels; i++) 
-        channelGains[i] = VSCSound::dBToLinearGain(channelDBGains[i]);
-    this->setLinearGains(channelGains);
-}
-
-void VSCSoundMultiChannelElement::getDBGains(std::vector<VSCSFloat>& channelDBGains) const {
-    channelDBGains.resize(_numberOfChannels);
-    assert(_channelLinearGains.size() == _numberOfChannels);
-    for (unsigned int i = 0; i < _numberOfChannels; i++) 
-        channelDBGains[i] = VSCSound::linearToDBGain(_channelLinearGains[i]);
 }
 
 #pragma mark Average Gains
@@ -156,7 +111,6 @@ double VSCSoundMultiChannelElement::getValueForParameterWithKey(VSCSParameter::K
 	/*
 	 *	If we have got to here (we should not), then pass upwards (which should throw)
 	 */
-
 	return VSCSoundParameterizedElement::getValueForParameterWithKey(key);
 }
 
@@ -192,15 +146,10 @@ void VSCSoundMultiChannelElement::setValueForParameterWithKey(double value, VSCS
 }
 
 
-double VSCSoundMultiChannelElement::getValueForPropertyWithKey(VSCSProperty::Key key) {
-	
-}
-
-void VSCSoundMultiChannelElement::setValueForPropertyWithKey(double value, VSCSProperty::Key key) {
-	
-}
-
 void VSCSoundMultiChannelElement::resetMultiChannelParameters(void) {
+	
+	std::set<VSCSParameter::Key> channelsKeys = VSCSParameter::keysForDomain(VSCSParameter::DomainChannels);
+	_parameterKeys.erase(channelsKeys.begin(), channelsKeys.end());
     
 }
 

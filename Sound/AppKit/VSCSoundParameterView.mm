@@ -58,6 +58,10 @@ typedef ParamKeyIndexBiMap::value_type ParamKeyIndexBiMapEntry;
 	[parameterControlView createInterfaceForParameterCount:[self numberOfParameters]];
 }
 
+-(void) updateParameterKeyIndexMap {
+	
+}
+
 -(void) reloadParameterLabels {
 	NSInteger numberOfParameters = [self numberOfParameters];
 	for (NSInteger i = 0; i < numberOfParameters; i++) {
@@ -124,6 +128,11 @@ typedef ParamKeyIndexBiMap::value_type ParamKeyIndexBiMapEntry;
 }
 
 -(double) doubleValueForParameterWithKey:(VSCSParameter::Key)key {
+	
+	NSInteger index = [self indexForParameterWithKey:key];
+	
+	NSAssert();
+	
 	return 0.0;
 }
 

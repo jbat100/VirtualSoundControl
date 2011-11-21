@@ -69,9 +69,6 @@ class VSCSound {
 	
 public:
 	
-	static VSCSFloat linearToDBGain(VSCSFloat linearGain);
-	static VSCSFloat dBToLinearGain(VSCSFloat dBGain);
-	
 	/*
 	 *	0.0 < midiNote < 127.0
 	 */

@@ -23,9 +23,8 @@ typedef std::pair<double, double> Range;
  */
 
 std::map<VSCSParameter::Key, std::string> VSCSParameter::parameterLabels;
-bool VSCSParameter::generatedParameterLabels = false;
 std::map<VSCSParameter::Key, std::pair<double, double> > VSCSParameter::parameterRanges;
-bool VSCSParameter::generatedParameterRanges = false;
+std::map<Domain, std::set<Key> > VSCSParameter::domainParameters;
 
 /*
  *	Default ranges
@@ -39,6 +38,12 @@ std::pair<double, double> VSCSParameter::defaultFrequencyRange(20.0, 20000.0);
 std::pair<double, double> VSCSParameter::defaultHarmonicsRange(0.0, 10.0);
 
 const unsigned int VSCSParameter::kMaxNumberOfChannels = 11;
+
+
+std::set<VSCSParameter::Key> VSCSParameter::keysForDomain(Domain dom) {
+	return domainParameters[dom];
+}
+
 
 
 /*
@@ -88,6 +93,17 @@ VSCSParameter::Key VSCSParameter::keyForChannelIndex(unsigned int i, bool dB) {
     throw VSCSBadParameterException();
 }
 
+/*
+ *	This should convert so that linear volume gain [0 : 1] becomes [-infinity : 0]
+ */
+VSCSFloat VSCSParameter::linearToDBGain(VSCSFloat linearGain) {
+	VSCSFloat dB = 10.0*std::log10(linearGain)
+    return  ;
+}
+
+VSCSFloat VSCSParameter::dBToLinearGain(VSCSFloat dBGain) {
+    return 0.1*std::pow(10.0, dBGain);
+}
 
 /*
  *	Parameter labels
@@ -178,6 +194,7 @@ std::pair<double, double> VSCSParameter::getRangeForParameterWithKey(Key k) {
 bool VSCSParameter::parameterIsLinearChannel(Key k) {
 	
 	switch (k) {
+		case KeyChannelAll:
 		case KeyChannelZero:
 		case KeyChannelOne: 
 		case KeyChannelTwo:  
@@ -202,6 +219,7 @@ bool VSCSParameter::parameterIsLinearChannel(Key k) {
 bool VSCSParameter::parameterIsDBChannel(Key k) {
 	
 	switch (k) {
+		case KeyChannelDBAll:
 		case KeyChannelDBZero:
 		case KeyChannelDBOne: 
 		case KeyChannelDBTwo:  
@@ -225,17 +243,23 @@ bool VSCSParameter::parameterIsDBChannel(Key k) {
 
 void VSCSParameter::generateParameterLabels(void) {
 	
-	parameterLabels.insert(KeyLabelPair (KeyFileTime, "File Time (s)"));
-	parameterLabels.insert(KeyLabelPair (KeyFilePlaybackSpeed, "Playback Speed"));
-	parameterLabels.insert(KeyLabelPair (KeyFileLoopOffset, "Loop Offset (s)"));
-	parameterLabels.insert(KeyLabelPair (KeyFileLoopDuration, "Loop Duration (s)"));
-	parameterLabels.insert(KeyLabelPair (KeyFileLoopCrossoverDuration, "Loop Crossover Duration (s)"));
+	static bool generatedParameterLabels = false;
 	
-	parameterLabels.insert(KeyLabelPair (KeyBiQuadFrequency, "Frequency (Hz)"));
-	parameterLabels.insert(KeyLabelPair (KeyBiQuadQFactor, "Q Factor"));
-	parameterLabels.insert(KeyLabelPair (KeyBiQuadLinearGain,   "Linear Gain"));
+	if (generatedParameterLabels == false) {
 	
-	generatedParameterLabels = true;
+		parameterLabels.insert(KeyLabelPair (KeyFileTime, "File Time (s)"));
+		parameterLabels.insert(KeyLabelPair (KeyFilePlaybackSpeed, "Playback Speed"));
+		parameterLabels.insert(KeyLabelPair (KeyFileLoopOffset, "Loop Offset (s)"));
+		parameterLabels.insert(KeyLabelPair (KeyFileLoopDuration, "Loop Duration (s)"));
+		parameterLabels.insert(KeyLabelPair (KeyFileLoopCrossoverDuration, "Loop Crossover Duration (s)"));
+		
+		parameterLabels.insert(KeyLabelPair (KeyBiQuadFrequency, "Frequency (Hz)"));
+		parameterLabels.insert(KeyLabelPair (KeyBiQuadQFactor, "Q Factor"));
+		parameterLabels.insert(KeyLabelPair (KeyBiQuadLinearGain,   "Linear Gain"));
+		
+		generatedParameterLabels = true;
+		
+	}
 }
 
 void VSCSParameter::generateParameterRanges(void) {
@@ -253,6 +277,89 @@ void VSCSParameter::generateParameterRanges(void) {
 	parameterRanges.insert(KeyRangePair (KeyBiQuadLinearGain, defaultLinearFilterGainRange));
 	
 	generatedParameterRanges = true;
+	
+}
+
+void VSCSParameter::generateDomainParameters(void) {
+	
+	/*
+	 *	Make sure this is run only once
+	 */
+	static bool generatesDomainParameters = false;
+	
+	if (generatesDomainParameters == false) {
+	
+		/*
+		 *	Channel related keys
+		 */
+		std::set<Key> channelKeys;
+		channelKeys.insert(KeyChannelAll);
+		channelKeys.insert(KeyChannelZero);
+		channelKeys.insert(KeyChannelOne);
+		channelKeys.insert(KeyChannelTwo);
+		channelKeys.insert(KeyChannelThree);
+		channelKeys.insert(KeyChannelFour);
+		channelKeys.insert(KeyChannelFive);
+		channelKeys.insert(KeyChannelSix);
+		channelKeys.insert(KeyChannelSeven);
+		channelKeys.insert(KeyChannelEight);
+		channelKeys.insert(KeyChannelNine);
+		channelKeys.insert(KeyChannelTen);
+		channelKeys.insert(KeyChannelDBAll);
+		channelKeys.insert(KeyChannelDBZero);
+		channelKeys.insert(KeyChannelDBOne);
+		channelKeys.insert(KeyChannelDBTwo);
+		channelKeys.insert(KeyChannelDBThree);
+		channelKeys.insert(KeyChannelDBFour);
+		channelKeys.insert(KeyChannelDBFive);
+		channelKeys.insert(KeyChannelDBSix);
+		channelKeys.insert(KeyChannelDBSeven);
+		channelKeys.insert(KeyChannelDBEight);
+		channelKeys.insert(KeyChannelDBNine);
+		channelKeys.insert(KeyChannelDBTen);
+		domainParameters[DomainChannels] = channelKeys;
+
+		std::set<Key> sourceFileKeys;
+		sourceFileKeys.insert(KeyFileTime);
+		sourceFileKeys.insert(KeyFilePlaybackSpeed);
+		domainParameters[DomainSourceFile] = sourceFileKeys;
+		
+		std::set<Key> sourceFileLoopKeys;
+		sourceFileLoopKeys.insert(KeyFileLoopTime);
+		sourceFileLoopKeys.insert(KeyFileLoopPlaybackSpeed);
+		sourceFileLoopKeys.insert(KeyFileLoopStartTime);
+		sourceFileLoopKeys.insert(KeyFileLoopEndTime);
+		sourceFileLoopKeys.insert(KeyFileLoopCrossoverDuration);
+		domainParameters[DomainSourceFileLoop] = sourceFileLoopKeys;
+		
+		std::set<Key> sourceSawKeys;
+		sourceSawKeys.insert(KeySawFrequency);
+		sourceSawKeys.insert(KeySawPhase);
+		sourceSawKeys.insert(KeySawHarmonics);
+		domainParameters[DomainSourceSaw] = sourceSawKeys;
+		
+		std::set<Key> sourceSquareKeys;
+		sourceSquareKeys.insert(KeySquareFrequency);
+		sourceSquareKeys.insert(KeySquarePhase);
+		sourceSquareKeys.insert(KeySquareHarmonics);
+		domainParameters[DomainSourceSquare] = sourceSquareKeys;
+		
+		std::set<Key> sourceSineKeys;
+		sourceSineKeys.insert(KeySawFrequency);
+		sourceSineKeys.insert(KeySawPhase);
+		domainParameters[DomainSourceSine] = sourceSineKeys;
+		
+		std::set<Key> filterBiquadKeys;
+		filterBiquadKeys.insert(KeyBiQuadFrequency);
+		filterBiquadKeys.insert(KeyBiQuadQFactor);
+		filterBiquadKeys.insert(KeyBiQuadLinearGain);
+		domainParameters[DomainFilterBiQuad] = filterBiquadKeys;
+
+		
+		generatesDomainParameters = true;
+
+	}
+	
 	
 }
 

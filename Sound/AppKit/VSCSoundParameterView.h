@@ -25,6 +25,15 @@
 
 @property (nonatomic, retain) VSCParameterControlView* parameterControlView;
 
+/*
+ *	Give a chance to the subclasses to react to changes to the element they 
+ *	represent (after having been inform of it by any objc based messaging mechanism)
+ */
+-(void) updateParameterKeyIndexMap;
+
+/*
+ *	Parameter label/range/value reloading
+ */
 -(void) reloadParameterLabels;
 -(void) reloadParameterRanges;
 -(void) reloadParameterValues;

@@ -85,6 +85,9 @@ public:
      */
 	virtual std::string sourceTypeString(void);
 	
+	virtual VSCSFloat getValueForParameterWithKey(VSCSParameter::Key k);
+	virtual void setValueForParameterWithKey(double val, VSCSParameter::Key k);
+	
 	
 protected:
 	

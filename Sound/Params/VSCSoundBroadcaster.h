@@ -7,3 +7,27 @@
  *
  */
 
+#ifndef _VSC_SOUND_BROADCASTER_H_
+#define _VSC_SOUND_BROADCASTER_H_
+
+#include "VSCSound.h"
+#include "VSCSoundParameters.h"
+#include "VSCSoundProperties.h"
+
+#include <map>
+#include <string>
+
+class VSCSoundBroadcaster {
+	
+public:
+	
+	
+	
+protected:
+	
+	std::set<> listeners;
+	
+	
+};
+
+#endif

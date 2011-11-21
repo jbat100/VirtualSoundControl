@@ -33,6 +33,13 @@ std::string VSCSynthSourceElement::sourceTypeString(void) {
 	return sourceType;
 }
 
+VSCSFloat getValueForParameterWithKey(VSCSParameter::Key k) {
+	VSCSoundMultiChannelElement::getValueForParameterWithKey(k);
+}
+
+void setValueForParameterWithKey(double val, VSCSParameter::Key k) {
+	VSCSoundMultiChannelElement::setValueForParameterWithKey(val, k);
+}
 
 
 /*

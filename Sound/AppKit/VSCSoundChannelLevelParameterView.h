@@ -15,10 +15,16 @@
 @interface VSCSoundChannelLevelParameterView : VSCSoundParameterView {
 	
 	VSCSoundMultiChannelElementPtr multiChannelElement;
+	
+	/*
+	 *	Keep track of the current number of channels 
+	 */
+	NSInteger currentNumberOfChannels;
 
 }
 
 -(VSCSoundMultiChannelElementPtr) getMultiChannelElement;
 -(void) setMultiChannelElement:(VSCSoundMultiChannelElementPtr)_multiChannelElement;
+
 
 @end
