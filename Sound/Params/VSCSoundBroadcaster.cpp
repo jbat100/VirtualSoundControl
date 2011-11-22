@@ -9,6 +9,12 @@
 
 #include "VSCSoundBroadcaster.h"
 
+typedef std::set<VSCSParameterListener*>::iterator ParameterListenerIter;
+typedef std::set<VSCSPropertyListener*>::iterator PropertyListenerIter;
+
+typedef std::map<VSCSParameterId, double>::iterator ParameterUpdateMapIter;
+typedef std::map<VSCSPropertyId, std::string>::iterator PropertyUpdateMapIter;
+
 #pragma mark - VSCSParameterListener
 
 void VSCSParameterListener::addParameterizedElement(VSCSoundParameterizedElement* element) {
@@ -35,13 +41,6 @@ std::set<VSCSParameter::Key> VSCSParameterListener::getParameterKeys(void) {
     return  _parameterKeys;
 }
 
-void VSCSParameterListener::setMinimumRate(VSCSFloat r) {
-    _minimumRate = r;
-}
-
-VSCSFloat VSCSParameterListener::getMinimumRate(void) {
-    return _minimumRate;
-}
 
 #pragma mark - VSCSPropertyListener
 
@@ -71,26 +70,68 @@ std::set<VSCSProperty::Key> VSCSPropertyListener::getPropertyKeys(void) {
 }
 
 
-void VSCSPropertyListener::setMinimumRate(VSCSFloat r) {
-    _minimumRate = r;
-}
-
-VSCSFloat VSCSPropertyListener::getMinimumRate(void) {
-    return _minimumRate;
-}
-
 #pragma mark - VSCSoundBroadcaster
 
-void VSCSoundBroadcaster::parameterChanged(VSCSoundParameterizedElement* element, VSCSParameter::Key, double value) {
+void VSCSoundBroadcaster::parameterChanged(VSCSoundParameterizedElement* element, VSCSParameter::Key k, double val) {
     
+	VSCSParameterId paramId = {element, k};
+	_parameterUpdates.erase(paramId);
+	_parameterUpdates.insert( std::pair<VSCSParameterId, double>(paramId, val) );
+	
 }
 
-void VSCSoundBroadcaster::propertyChanged(VSCSoundPropertizedElement* element, VSCSProperty::Key, std::string value) {
+void VSCSoundBroadcaster::propertyChanged(VSCSoundPropertizedElement* element, VSCSProperty::Key k, std::string val) {
     
+	VSCSPropertyId propId = {element, k};
+	_propertyUpdates.erase(propId);
+	_propertyUpdates.insert( std::pair<VSCSPropertyId, std::string>(propId, val) );
+	
 }
 
 VSCSoundBroadcastAppleRelay& VSCSoundBroadcaster::getAppleRelay(void) {
     return _appleRelay;
+}
+
+void VSCSoundBroadcaster::setBroadcastInterval(VSCSFloat interval) {
+	_broadcastInterval = interval;
+}
+
+VSCSFloat VSCSoundBroadcaster::getBroadcastInterval(void) {
+	return _broadcastInterval;
+}
+
+void VSCSoundBroadcaster::addParameterListener(VSCSParameterListener* listener) {
+	_parameterListeners.insert(listener);
+}
+
+void VSCSoundBroadcaster::removeParameterListener(VSCSParameterListener* listener) {
+	_parameterListeners.erase(listener);
+}
+
+void VSCSoundBroadcaster::addPropertyListener(VSCSPropertyListener* listener) {
+	_propertyListeners.insert(listener);
+}
+
+void VSCSoundBroadcaster::removePropertyListener(VSCSPropertyListener* listener) {
+	_propertyListeners.erase(listener);
+}
+
+void VSCSoundBroadcaster::startBroadcasting(void) {
+	
+}
+
+void VSCSoundBroadcaster::stopBroadcasting(void) {
+	
+}
+
+void VSCSoundBroadcaster::broadcast(void) {
+	
+	for (ParameterUpdateMapIter mapIt = _parameterUpdates.begin(); mapIt != _parameterUpdates.end(); mapIt++) {
+		for (ParameterListenerIter paramIt = _parameterListeners.begin(); paramIt != _parameterListeners.end(); paramIt++) {
+			
+		}
+	}
+	
 }
 
 

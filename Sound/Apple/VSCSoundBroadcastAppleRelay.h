@@ -17,11 +17,19 @@
 #import <string>
 
 @protocol VSCSParameterListener <NSObject>
--(void) parameterWithKey:(VSCSParameter::Key)key changedTo:(double)value forElement:(VSCSoundParameterizedElement*)element;
+
+-(void) parameterWithKey:(VSCSParameter::Key)key 
+			   changedTo:(double)value 
+			  forElement:(VSCSoundParameterizedElement*)element;
+
 @end
 
 @protocol VSCSPropertyListener <NSObject>
--(void) propertyWithKey:(VSCSProperty::Key)key changedTo:(std::string)value forElement:(VSCSoundPropertizedElement*)element;
+
+-(void) propertyWithKey:(VSCSProperty::Key)key 
+			  changedTo:(std::string)value 
+			 forElement:(VSCSoundPropertizedElement*)element;
+
 @end
 
 class VSCSoundBroadcastAppleRelay {
