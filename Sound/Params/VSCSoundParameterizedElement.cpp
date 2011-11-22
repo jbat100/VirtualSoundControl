@@ -33,3 +33,5 @@ double VSCSoundParameterizedElement::getValueForParameterWithKey(VSCSParameter::
 void VSCSoundParameterizedElement::setValueForParameterWithKey(double value, VSCSParameter::Key key) {
 	throw VSCSBadParameterException();
 }
+
+

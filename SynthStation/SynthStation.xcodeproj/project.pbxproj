@@ -43,6 +43,7 @@
 		1061AAEC1430A3B600C29FBB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1061AAEA1430A3B600C29FBB /* InfoPlist.strings */; };
 		1061AAEE1430A3B600C29FBB /* SynthStationTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 1061AAED1430A3B600C29FBB /* SynthStationTests.h */; };
 		1061AAF01430A3B600C29FBB /* SynthStationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1061AAEF1430A3B600C29FBB /* SynthStationTests.m */; };
+		10670FD5147BF36F007D3BD6 /* VSCSoundBroadcastAppleRelay.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10670FD4147BF36F007D3BD6 /* VSCSoundBroadcastAppleRelay.mm */; };
 		1067DB2514548C2600F0670E /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1067DB2214548C2600F0670E /* libboost_system.a */; };
 		1067DB2614548C2600F0670E /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1067DB2314548C2600F0670E /* libboost_filesystem.a */; };
 		1067DB2714548C2600F0670E /* libboost_serialization.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1067DB2414548C2600F0670E /* libboost_serialization.a */; };
@@ -163,6 +164,8 @@
 		1061AAEB1430A3B600C29FBB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1061AAED1430A3B600C29FBB /* SynthStationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SynthStationTests.h; sourceTree = "<group>"; };
 		1061AAEF1430A3B600C29FBB /* SynthStationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SynthStationTests.m; sourceTree = "<group>"; };
+		10670FD3147BF36F007D3BD6 /* VSCSoundBroadcastAppleRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundBroadcastAppleRelay.h; path = ../Sound/Apple/VSCSoundBroadcastAppleRelay.h; sourceTree = "<group>"; };
+		10670FD4147BF36F007D3BD6 /* VSCSoundBroadcastAppleRelay.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCSoundBroadcastAppleRelay.mm; path = ../Sound/Apple/VSCSoundBroadcastAppleRelay.mm; sourceTree = "<group>"; };
 		1067DB2214548C2600F0670E /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_system.a; sourceTree = BOOST_LIB; };
 		1067DB2314548C2600F0670E /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_filesystem.a; sourceTree = BOOST_LIB; };
 		1067DB2414548C2600F0670E /* libboost_serialization.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_serialization.a; sourceTree = BOOST_LIB; };
@@ -468,8 +471,7 @@
 				10516D7B1453261800109B4B /* VSCSound.cpp */,
 				10531F8414604B16004DC3A1 /* VSCSTKUtils.h */,
 				10531F8514604B16004DC3A1 /* VSCSTKUtils.cpp */,
-				106120A7146B39C20051A965 /* VSCSoundApple.h */,
-				106120A8146B39C20051A965 /* VSCSoundApple.mm */,
+				10670FD2147BF0ED007D3BD6 /* Apple */,
 				108642321473358E0017E1CC /* Params */,
 				108642471473362D0017E1CC /* MultiChan */,
 				10C5CA201464955F00849657 /* Instrument */,
@@ -478,6 +480,17 @@
 				105C47D4144B32760015AE8F /* Source */,
 			);
 			name = Sound;
+			sourceTree = "<group>";
+		};
+		10670FD2147BF0ED007D3BD6 /* Apple */ = {
+			isa = PBXGroup;
+			children = (
+				106120A7146B39C20051A965 /* VSCSoundApple.h */,
+				106120A8146B39C20051A965 /* VSCSoundApple.mm */,
+				10670FD3147BF36F007D3BD6 /* VSCSoundBroadcastAppleRelay.h */,
+				10670FD4147BF36F007D3BD6 /* VSCSoundBroadcastAppleRelay.mm */,
+			);
+			name = Apple;
 			sourceTree = "<group>";
 		};
 		1067DB2E14548C6700F0670E /* Generic */ = {
@@ -848,6 +861,7 @@
 				1049A6741474575400A7E608 /* VSCSoundParameterizedElement.cpp in Sources */,
 				1049A6771474578800A7E608 /* VSCSoundPropertizedElement.cpp in Sources */,
 				1049A67A147457D500A7E608 /* VSCSoundBroadcaster.cpp in Sources */,
+				10670FD5147BF36F007D3BD6 /* VSCSoundBroadcastAppleRelay.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

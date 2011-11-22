@@ -46,37 +46,7 @@ protected:
 	
 };
 
-/*
- *	Class used by the broadcaster, as interface for forwarding parameter changes
- */
 
-class VSCSParameterListener {
-	
-public:
-	
-	void addParameterizedElement(VSCSoundParameterizedElement* element);
-	void removeParameterizedElement(VSCSoundParameterizedElement* element);
-	std::set<VSCSoundParameterizedElement*> getParameterizedElements;
-	
-	void addParameterKey(VSCSParameter::Key k);
-	void removeParameterKey(VSCSParameter::Key k);
-	std::set<VSCSParameter::Key> getParameterKeys;
-	
-	void setMinimumRate(VSCSFloat r);
-	VSCSFloat getMinimumRate(void);
-	
-protected:
-	
-	/* The elements for which the listener wants to receive events */
-	std::set<VSCSoundParameterizedElement*> _parameterizedElements;
-	
-	/* The keys for which the listener wants to recieve events */
-	std::set<VSCSParameter::Key> _parameterKeys;
-	
-	/* The minimum rate at which the listener should receive updates */
-	VSCSFloat minimumRate;
-	
-};
 
 
 #endif
