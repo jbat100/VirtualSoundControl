@@ -63,6 +63,8 @@ public:
 	void addParameterKey(VSCSParameter::Key k);
 	void removeParameterKey(VSCSParameter::Key k);
 	std::set<VSCSParameter::Key> getParameterKeys(void);
+    
+    bool interestedInParameterId(VSCSParameterId paramId);
 	
 protected:
 	
@@ -97,6 +99,11 @@ public:
 	void addPropertyKey(VSCSProperty::Key k);
 	void removePropertyKey(VSCSProperty::Key k);
 	std::set<VSCSProperty::Key> getPropertyKeys(void);
+    
+    /*
+     *  Ask whether the listener is interested by a given combination of element/key
+     */
+    bool interestedInPropertyId(VSCSPropertyId propId);
 	
 protected:
 	

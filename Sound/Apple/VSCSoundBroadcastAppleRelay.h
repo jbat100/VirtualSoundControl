@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "VSCSound.h"
+#import "VSCSoundBroadcaster.h"
 #import "VSCSoundParameters.h"
 #import "VSCSoundProperties.h"
 #import "VSCSoundParameterizedElement.h"
@@ -18,6 +19,8 @@
 
 @protocol VSCSParameterListener <NSObject>
 
+-(void) interestedInParameterId:(VSCSParameterId)paramId;
+
 -(void) parameterWithKey:(VSCSParameter::Key)key 
 			   changedTo:(double)value 
 			  forElement:(VSCSoundParameterizedElement*)element;
@@ -25,6 +28,8 @@
 @end
 
 @protocol VSCSPropertyListener <NSObject>
+
+-(void) interestedInPropertyId:(VSCSPropertyId)propId;
 
 -(void) propertyWithKey:(VSCSProperty::Key)key 
 			  changedTo:(std::string)value 

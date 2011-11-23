@@ -41,6 +41,17 @@ std::set<VSCSParameter::Key> VSCSParameterListener::getParameterKeys(void) {
     return  _parameterKeys;
 }
 
+bool VSCSParameterListener::interestedInParameterId(VSCSParameterId paramId) {
+    
+    if (_parameterKeys.find(paramId.key) == _parameterKeys.end()) 
+        return false;
+    
+    if (_parameterizedElements.find(paramId.element) == _parameterizedElements.end())
+        return false;
+    
+    return true;
+    
+}
 
 #pragma mark - VSCSPropertyListener
 
@@ -67,6 +78,18 @@ void VSCSPropertyListener::removePropertyKey(VSCSProperty::Key k) {
 
 std::set<VSCSProperty::Key> VSCSPropertyListener::getPropertyKeys(void) {
     return _propertyKeys;
+}
+
+bool VSCSPropertyListener::interestedInPropertyId(VSCSPropertyId propId) {
+    
+    if (_propertyKeys.find(propId.key) == _propertyKeys.end()) 
+        return false;
+    
+    if (_propertizedElements.find(propId.element) == _propertizedElements.end())
+        return false;
+    
+    return true;
+    
 }
 
 
@@ -125,12 +148,46 @@ void VSCSoundBroadcaster::stopBroadcasting(void) {
 }
 
 void VSCSoundBroadcaster::broadcast(void) {
+    
+    for (PropertyUpdateMapIter mapIt = _propertyUpdates.begin(); mapIt != _propertyUpdates.end(); mapIt++) {
+        
+        std::pair<VSCSPropertyId, std::string> propUpdate = *mapIt;
+        VSCSPropertyId mapPropId = propUpdate.first;
+        std::string val = propUpdate.second;
+        
+		for (PropertyListenerIter propIt = _propertyListeners.begin(); propIt != _propertyListeners.end(); propIt++) {
+			VSCSPropertyListener* listener = *propIt;
+            if (listener->interestedInPropertyId(mapPropId)) {
+                listener->propertyChanged(mapPropId.element, mapPropId.key, val);
+            }
+		}
+        
+#ifdef __APPLE__
+        _appleRelay.propertyChanged(mapPropId.element, mapPropId.key, val);
+#endif
+        
+	}
 	
 	for (ParameterUpdateMapIter mapIt = _parameterUpdates.begin(); mapIt != _parameterUpdates.end(); mapIt++) {
+        
+        std::pair<VSCSParameterId, double> paramUpdate = *mapIt;
+        VSCSParameterId mapParamId = paramUpdate.first;
+        double val = paramUpdate.second;
+        
 		for (ParameterListenerIter paramIt = _parameterListeners.begin(); paramIt != _parameterListeners.end(); paramIt++) {
-			
+			VSCSParameterListener* listener = *paramIt;
+            if (listener->interestedInParameterId(mapParamId)) {
+                listener->parameterChanged(mapParamId.element, mapParamId.key, val);
+            }
 		}
+        
+#ifdef __APPLE__
+        _appleRelay.parameterChanged(mapParamId.element, mapParamId.key, val);
+#endif
+        
 	}
+    
+    
 	
 }
 
