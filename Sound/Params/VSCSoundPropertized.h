@@ -7,8 +7,8 @@
  *
  */
 
-#ifndef _VSC_SOUND_PROPERTIZED_ELEMENT_
-#define _VSC_SOUND_PROPERTIZED_ELEMENT_
+#ifndef _VSC_SOUND_PROPERTIZED_
+#define _VSC_SOUND_PROPERTIZED_
 
 #include "VSCSound.h"
 #include "VSCSoundProperties.h"
@@ -20,14 +20,14 @@
  *	Smart pointer and iterator convenience defines
  */
 
-#define VSCSoundPropertizedElementPtr    boost::shared_ptr<VSCSoundPropertizedElement>
+#define VSCSoundPropertizedPtr    boost::shared_ptr<VSCSoundPropertized>
 
 
 /*
  *	Root class for adding/removing setting/getting property values
  */
 
-class VSCSoundPropertizedElement {
+class VSCSoundPropertized {
 	
 	
 public:
@@ -36,8 +36,8 @@ public:
 	void removePropertyKey(VSCSProperty::Key k);
 	std::set<VSCSProperty::Key>& getPropertyKeys(void);
 	
-	virtual double getValueForPropertyWithKey(VSCSProperty::Key key) = 0;
-	virtual void setValueForPropertyWithKey(double value, VSCSProperty::Key key) = 0;
+	virtual double getValueForPropertyWithKey(VSCSProperty::Key key);
+	virtual void setValueForPropertyWithKey(double value, VSCSProperty::Key key);
 	
 private:
 	

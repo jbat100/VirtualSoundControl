@@ -15,9 +15,12 @@
  *	NSCell access and utility
  */
 
--(NSActionCell*) controllerCellAtIndex:(NSInteger)index;
--(NSCell*) labelCellAtIndex:(NSInteger)index;
--(NSCell*) numericCellAtIndex:(NSInteger)index;
+-(NSActionCell*) controllerCellForParameterWithKey:(VSCSParameter::Key k);
+-(NSCell*) numericCellForParameterWithKey:(VSCSParameter::Key k);
+-(NSCell*) labelCellForParameterWithKey:(VSCSParameter::Key k);
+
+-(void) updateParameterLabels;
+-(void) updateParameterRanges;
 
 /*
  *	Interface creation/destruction

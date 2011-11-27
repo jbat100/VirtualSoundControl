@@ -35,5 +35,13 @@ class VSCSBadParameterException : public VSCBaseException
     }
 };
 
+class VSCSBadPropertyException : public VSCBaseException
+{
+    virtual const char* what() const throw()
+    {
+        return "Bad Property";
+    }
+};
+
 
 #endif

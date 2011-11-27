@@ -10,6 +10,7 @@
 #define _VSC_SYNTH_SOURCE_ELEMENT_
 
 #include "VSCSound.h"
+#include "VSCSoundParameters.h"
 #include "VSCSoundMultiChannelElement.h"
 
 #include <string>

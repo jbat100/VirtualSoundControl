@@ -15,7 +15,7 @@
 
 @synthesize generatorParameterParentView, generatorParameterView;
 @synthesize channelLevelParameterView, channelLevelParameterParentView;
-@synthesize tickTableView, tickButton, tickDepth;
+@synthesize tickTableView, tickButton;
 @synthesize generatorTitleTextField, tickCountTextField;
 
 
@@ -34,8 +34,6 @@
 
 -(void) customInit {
 	
-	self.tickDepth = 10;
-	
 	[self createChannelLevelParameterView];
 	[self createGeneratorParameterView];
 	
@@ -46,6 +44,9 @@
 	NSAssert(channelLevelParameterParentView, @"Expected non nil channelLevelParameterParentView");
 	self.channelLevelParameterView = [[[VSCSoundChannelLevelParameterView alloc] 
 									initWithFrame:channelLevelParameterParentView.bounds] autorelease];
+	
+	channelLevelParameterView.delegate = self;
+	
 	[channelLevelParameterParentView addSubview:channelLevelParameterView];
 	
 	
@@ -53,14 +54,9 @@
 }
 
 -(void) createGeneratorParameterView {
-	
+	// to subclass ...
 }
 
--(void) setTickDepth:(NSInteger)depth {
-	
-	tickDepth = depth;
-	tickFrames.resize(tickDepth, tickFrames.channels());
-}
 
 /*
  *	C++ Setters/Getters
@@ -71,16 +67,67 @@
 
 -(void) setSourceGenerator:(VSCSynthSourceGeneratorPtr)_sourceGenerator {
 	sourceGenerator = _sourceGenerator;
-	tickFrames.resize(tickDepth, sourceGenerator->getNumberOfChannels);
+	tickFrames.resize((size_t)tickDepth, (unsigned int)sourceGenerator->getNumberOfChannels());
 }
 
-/*
- *	Get a copy of the current tickFrames
- */
--(stk::StkFrames) tickFramesCopy {
-	// make a copy of the frames (overloaded = operator)
-	stk::StkFrames newFrames = tickFrames;
-	return newFrames;
+
+
+
+#pragma mark - VSCSParameterAppleListener 
+
+-(BOOL) interestedInParameterId:(VSCSParameterId)paramId {
+	if (paramId.element == sourceGenerator.get()) {
+		return YES;
+	}
+	return NO;
 }
+
+-(void) parameterWithKey:(VSCSParameter::Key)key 
+			   changedTo:(double)value 
+			  forElement:(VSCSoundParameterizedElement*)element {
+	
+	if (element != sourceGenerator.get()) return;
+	
+	[channelLevelParameterView setDoubleValue:value forParameterAtIndex:]
+	
+}
+
+
+#pragma mark - VSCSPropertyAppleListener 
+
+-(BOOL) interestedInPropertyId:(VSCSPropertyId)propId {
+	if (propId.element == sourceGenerator.get()) {
+		return YES;
+	}
+}
+
+-(void) propertyWithKey:(VSCSProperty::Key)key 
+			  changedTo:(std::string)value 
+			 forElement:(VSCSoundPropertizedElement*)element {
+	
+	if (element != sourceGenerator.get()) return;
+	
+	[channelLevelParameterView ]
+	
+}
+
+
+#pragma mark - NSTableViewDelegate
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
+	
+	if (sourceGenerator && sourceGenerator->fillPastFrames) {
+		return sourceGenerator->numberOfPastFrames;
+	}
+	
+}
+
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn 
+			row:(NSInteger)rowIndex {
+	
+	
+	
+}
+
 
 @end

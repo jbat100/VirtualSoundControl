@@ -11,7 +11,7 @@
 
 #include "VSCSound.h"
 #include "VSCSoundParameters.h"
-#include "VSCSynthSourceElement.h"
+#include "VSCSoundMultiChannelElement.h"
 #include "VSCSTKUtils.h"
 
 #include <list>
@@ -31,14 +31,13 @@
 #define SynthSrcGenIter                 std::list<VSCSynthSourceGeneratorPtr>::iterator 
 #define RevSynthSrcGenIter              std::list<VSCSynthSourceGeneratorPtr>::reverse_iterator 
 
-class VSCSynthSourceGenerator : public VSCSynthSourceElement, public stk::Generator {
+class VSCSynthSourceGenerator : public VSCSoundMultiChannelElement, public stk::Generator {
     
     //class VSCSynthSourceGroup : public stk::Generator {
     
 public:
 	
 	VSCSynthSourceGenerator();
-	VSCSynthSourceGenerator(unsigned int numberOfChannels);
 	
     /*
      *  stk::Generator tick method which should be over-ridden.
@@ -53,17 +52,36 @@ public:
 	 *	belong to a group 
 	 */
 	VSCSynthSourceGenerator* getGroup(void);
+	void setGroup(VSCSynthSourceGenerator* g);
 	
 	/*
-	 *   VSCSynthSourceElement methods
+	 *   VSCSoundMultiChannelElement methods
 	 */
-	virtual void initialize(void);
-    virtual void updateSoundEngine(void);
-	
+	virtual void setNumberOfChannels(unsigned int c);
 	virtual VSCSFloat getValueForParameterWithKey(VSCSParameter::Key k);
 	virtual void setValueForParameterWithKey(double val, VSCSParameter::Key k);
 	
+	/*
+	 *	Sound engine methods
+	 */
+	virtual void initialize(void);
+    virtual void updateSoundEngine(void);
+	virtual void setIsOn(bool o);
+	bool isOn(void);
+	
+	
+	/*
+	 *	Used for debugging and tracing, no encapsulation ...
+	 */
+	stk::StkFrames _pastFrames;
+	unsigned int _numberOfPastFrames;
+	bool _fillPastFrames;
+	unsigned long long _tickCount;
+	
 protected:
+	
+	bool _isOn;
+	std::string generatorType;
 	
 	/* 
      *  Keep a seperate StkFrames so that it does not need to be created everytime the tick function is called
@@ -77,6 +95,7 @@ protected:
      *
      */
     stk::StkFrames _computationFrames;
+	unsigned int _numberOfChannelsNeededForComputationFrames;
     
     /*
      *  Keep a StkFrames object for averaging (used when multi-channel _computationFrames are generated and the number 
@@ -88,17 +107,13 @@ protected:
     /*
      * compute (call the tick method) mono frames, this is the actual computation of the samples 
      */
-    virtual void processComputationFrames(void);
-    /*
-     * check that the number of frames in _computationFrames is the same as in argument
-     */
-    virtual void checkComputationFrames(stk::StkFrames& frames);
+    virtual void processComputationFrames(unsigned int numberOfFrames);
 	
 	/*
 	 *	Backpointer to the group generator which possesses this as subgenerator, NULL if it does not
 	 *	belong to a group
 	 */
-	VSCSynthSourceGenerator* group;
+	VSCSynthSourceGenerator* _group;
 	
 };
 
@@ -114,54 +129,7 @@ inline stk::StkFloat VSCSynthSourceGenerator::tick(void) {
 }
  */
 
-inline stk::StkFrames& VSCSynthSourceGenerator::tick(stk::StkFrames& frames, unsigned int channel)
-{
-    //assert(frames.channels() == _numberOfChannels);
-    if(frames.channels() != _numberOfChannels)
-        frames.resize(frames.frames(), _numberOfChannels);
-    
-    /*
-     *  Process _computationFrames independantly of _numberOfChannels
-     */
-    checkComputationFrames(frames);
-    processComputationFrames();
-    
-    /*
-     *  If we have exactly the same number of channels the we just assign the data
-     *  the = operator is overloaded so that the data from _computationFrames is copied over
-     */
-    if (frames.channels() == _computationFrames.channels()) {
-        frames = _computationFrames;
-    }
-    
-    /*
-     *  If we have a different number of channels in the _computationFrames than _numberOfChannels
-     *  then we average the _computationFrames channels into a single channel and set all 
-     *  _numberOfChannels to this averaged frames
-     */
-    else {
-        assert(_computationFrames.channels() > 0);
-        if (_computationFrames.channels() > 1) {
-            stk::averageFramesChannels(_computationFrames, _averageFrames);
-            stk::setAllFramesChannelsWithMonoFrames(frames, _averageFrames);
-        }
-        else if (_computationFrames.channels() == 1) {
-            stk::setAllFramesChannelsWithMonoFrames(frames, _computationFrames);
-        }
-    }
-    
-    assert(_numberOfChannels == _channelLinearGains.size());
-    
-    /*
-     *  Scale the output channels as specified by _channelLinearGains
-     */
-    for (unsigned int i; i < _numberOfChannels; i++) {
-        stk::scaleFramesChannel(frames, i, (stk::StkFloat)_channelLinearGains[i]);
-    }
-    
-    lastFrame_ = frames;
-	return frames;
-}
+
 
 #endif // VSCS_USE_STK
 

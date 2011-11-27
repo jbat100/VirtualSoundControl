@@ -52,6 +52,8 @@ public:
 		
 		// BiQuad Filter
 		KeyBiQuadType,
+		
+		KeyAll
 
 	};
 	

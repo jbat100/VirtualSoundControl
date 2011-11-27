@@ -25,6 +25,7 @@ namespace stk {
     void zeroFrames(StkFrames& targetFrames);
 	void zeroFrame(StkFrames& targetFrames, unsigned int frameIndex);
 	void shiftFrames(StkFrames& frames, int shift);
+	void substituteFramesFromIndex(StkFrames& sourceFrames, StkFrames& targetFrames, unsigned int frameIndex);
     
 }
 

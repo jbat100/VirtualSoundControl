@@ -13,8 +13,7 @@
 #include "VSCSound.h"
 #include "VSCSoundParameters.h"
 #include "VSCSoundProperties.h"
-#include "VSCSoundParameterizedElement.h"
-#include "VSCSoundPropertizedElement.h"
+#include "VSCSoundElement.h"
 
 #include <list>
 #include <vector>
@@ -33,14 +32,25 @@
  *	changes in the C++ sound engine)
  */
 
-class VSCSoundMultiChannelElement : public VSCSoundPropertizedElement , public VSCSoundParameterizedElement {
+class VSCSoundMultiChannelElement : public VSCSoundElement {
 	
 	
 public:
     
     VSCSoundMultiChannelElement();
+	
+	bool numberOfChannelsIsLocked(void);
+	void lockChannels(bool _lock);
+	VSCSFloat averageLinearGain(void);
+	VSCSFloat averageDBGain(void);
     
     /*--------------------------------------------------------------*/
+	
+	/*
+	 *	Make setter method virtual to allow subclasses to automatically update their engines
+	 */
+	unsigned int getNumberOfChannels(void);
+	virtual void setNumberOfChannels(unsigned int c);
 	
 	/*
 	 * These functions are inherited from VSCSoundPropertizedElement and VSCSoundParameterizedElement
@@ -56,17 +66,14 @@ public:
 	
 
 	
-private:
+protected:
 	
 	bool _lockNumberOfChannels;
     std::vector<VSCSFloat> _channelLinearGains;
     unsigned int _numberOfChannels;
 	
     void resetMultiChannelParameters(void);
-	VSCSFloat VSCSoundMultiChannelElement::averageLinearGain(void);
-	VSCSFloat VSCSoundMultiChannelElement::averageDBGain(void);
-	void lockChannels(bool _lock);
-    bool numberOfChannelsIsLocked(void);
+    
 	
 };
 

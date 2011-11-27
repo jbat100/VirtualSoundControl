@@ -7,18 +7,18 @@
  *
  */
 
-#include "VSCSoundParameterizedElement.h"
+#include "VSCSoundParameterized.h"
 #include "VSCException.h"
 
-std::set<VSCSParameter::Key>& VSCSoundParameterizedElement::getParameterKeys(void) {
+std::set<VSCSParameter::Key>& VSCSoundParameterized::getParameterKeys(void) {
 	return _parameterKeys;
 }
 
-void VSCSoundParameterizedElement::addParameterKey(VSCSParameter::Key k) {
+void VSCSoundParameterized::addParameterKey(VSCSParameter::Key k) {
 	this->getParameterKeys().insert(k);	
 }
 
-void VSCSoundParameterizedElement::removeParameterKey(VSCSParameter::Key k) {
+void VSCSoundParameterized::removeParameterKey(VSCSParameter::Key k) {
     this->getParameterKeys().erase(k);	
 }
 
@@ -26,11 +26,11 @@ void VSCSoundParameterizedElement::removeParameterKey(VSCSParameter::Key k) {
  *	If this class gets these messages then all subclasses have failed to deal with it
  *	so throw...
  */
-double VSCSoundParameterizedElement::getValueForParameterWithKey(VSCSParameter::Key key) {
+double VSCSoundParameterized::getValueForParameterWithKey(VSCSParameter::Key key) {
 	throw VSCSBadParameterException();
 }
 
-void VSCSoundParameterizedElement::setValueForParameterWithKey(double value, VSCSParameter::Key key) {
+void VSCSoundParameterized::setValueForParameterWithKey(double value, VSCSParameter::Key key) {
 	throw VSCSBadParameterException();
 }
 

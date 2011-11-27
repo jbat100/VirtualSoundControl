@@ -16,12 +16,12 @@
 #include "VSCSoundParameterizedElement.h"
 #include "VSCSoundPropertizedElement.h"
 
-#ifdef __APPLE__
-#include "VSCSoundBroadcastAppleRelay.h"
-#endif
-
 #include <map>
+#include <stack>
+#include <set>
 #include <string>
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/thread.hpp>
 
 /*
  *	Identifier containing a parameter key and element
@@ -31,6 +31,10 @@ struct VSCSParameterId {
 	VSCSoundParameterizedElement* element;
 	VSCSParameter::Key key;
 	bool operator<(const VSCSParameterId& paramId) const { return element < paramId.element; }
+};
+struct VSCSParameterUpdate {
+	VSCSParameterId paramId;
+	double value;
 };
 
 /*
@@ -42,6 +46,10 @@ struct VSCSPropertyId {
 	VSCSProperty::Key key;
 	bool operator<(const VSCSPropertyId& propId) const { return element < propId.element; }
 };
+struct VSCSPropertyUpdate {
+	VSCSPropertyId propId;
+	std::string value;
+}
 
 
 
@@ -54,8 +62,6 @@ class VSCSParameterListener {
 	
 public:
 	
-	void parameterChanged(VSCSoundParameterizedElement* element, VSCSParameter::Key, double value);
-	
 	void addParameterizedElement(VSCSoundParameterizedElement* element);
 	void removeParameterizedElement(VSCSoundParameterizedElement* element);
 	std::set<VSCSoundParameterizedElement*> getParameterizedElements(void);
@@ -64,7 +70,9 @@ public:
 	void removeParameterKey(VSCSParameter::Key k);
 	std::set<VSCSParameter::Key> getParameterKeys(void);
     
-    bool interestedInParameterId(VSCSParameterId paramId);
+	
+    virtual bool interestedInParameterId(VSCSParameterId paramId);
+	virtual void parameterChanged(VSCSoundParameterizedElement* element, VSCSParameter::Key, double value);
 	
 protected:
 	
@@ -84,8 +92,6 @@ class VSCSPropertyListener {
 	
 public:
 	
-	void propertyChanged(VSCSoundPropertizedElement* element, VSCSProperty::Key, std::string value);
-	
 	/*
 	 *	Determine the elements for which the listener is interested 
 	 */
@@ -103,7 +109,8 @@ public:
     /*
      *  Ask whether the listener is interested by a given combination of element/key
      */
-    bool interestedInPropertyId(VSCSPropertyId propId);
+    virtual bool interestedInPropertyId(VSCSPropertyId propId);
+	virtual void propertyChanged(VSCSoundPropertizedElement* element, VSCSProperty::Key, std::string value);
 	
 protected:
 	
@@ -129,6 +136,9 @@ class VSCSoundBroadcaster {
 	
 public:
 	
+	VSCSoundBroadcaster();
+	~VSCSoundBroadcaster();
+	
     void parameterChanged(VSCSoundParameterizedElement* element, VSCSParameter::Key, double value);
     void propertyChanged(VSCSoundPropertizedElement* element, VSCSProperty::Key, std::string value);
    
@@ -144,25 +154,24 @@ public:
 	void startBroadcasting(void);
 	void stopBroadcasting(void);
 	
-#ifdef __APPLE__
-    VSCSoundBroadcastAppleRelay& getAppleRelay(void);
-#endif
-	
-protected:
+private:
 	
 	void broadcast(void);
-    
-#ifdef __APPLE__
-    VSCSoundBroadcastAppleRelay _appleRelay;
-#endif
 	
+	void cycleBroadcastAndSleepUntilStopped(void);
+	
+	boost::thread broadcastCycleThread;
+	
+	boost::mutex listenerMutex;
 	std::set<VSCSParameterListener*> _parameterListeners;
     std::set<VSCSPropertyListener*> _propertyListeners;
 	
+	boost::mutex intervalMutex;
 	VSCSFloat _broadcastInterval;
 	
-	std::map<VSCSParameterId, double> _parameterUpdates;
-	std::map<VSCSPropertyId, std::string> _propertyUpdates;
+	boost::mutex updateMutex;
+	std::map<VSCSParameterId, double> _parameterUpdateMap;
+	std::map<VSCSPropertyId, std::string> _propertyUpdateMap;
 	
 };
 

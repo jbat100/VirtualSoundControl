@@ -13,15 +13,15 @@ std::map<VSCSProperty::Key, std::string> VSCSProperty::propertyLabels;
 bool VSCSProperty::generatedPropertyLabels = false;
 
 
-std::string getLabelForPropertyWithKey(Key k) {
+std::string VSCSProperty::getLabelForPropertyWithKey(VSCSProperty::Key k) {
 	
 }
 
-void setLabelForPropertyWithKey(Key k) {
+void VSCSProperty::setLabelForPropertyWithKey(VSCSProperty::Key k) {
 	
 }
 
 
-void generatePropertyLabels(void) {
+void VSCSProperty::generatePropertyLabels(void) {
 
 }

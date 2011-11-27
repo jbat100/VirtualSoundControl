@@ -117,6 +117,8 @@ public:
 		KeyBiQuadQFactor,
 		KeyBiQuadLinearGain,
 		
+		KeyAll
+		
 	};
 	
 	/*
@@ -173,6 +175,12 @@ private:
 	
 };
 
+typedef std::set<VSCSParameter::Key>								VSCSParameterKeySet;
+typedef std::map<VSCSParameter::Key, std::string>					VSCSParameterLabelMap;
+typedef std::pair<double, double>									VSCSValueRange
+typedef std::map<VSCSParameter::Key, VSCSValueRange >				VSCSParameterRangeMap;
+typedef std::pair<VSCSParameter::Key, std::string>					VSCSKeyLabelPair;
+typedef std::pair<VSCSParameter::Key, VSCSValueRange >				VSCSKeyRangePair;
 
 
 #endif

@@ -33,26 +33,13 @@ std::string VSCSynthSourceElement::sourceTypeString(void) {
 	return sourceType;
 }
 
-VSCSFloat getValueForParameterWithKey(VSCSParameter::Key k) {
-	VSCSoundMultiChannelElement::getValueForParameterWithKey(k);
+VSCSFloat VSCSynthSourceElement::getValueForParameterWithKey(VSCSParameter::Key k) {
+	return VSCSoundMultiChannelElement::getValueForParameterWithKey(k);
 }
 
-void setValueForParameterWithKey(double val, VSCSParameter::Key k) {
+void VSCSynthSourceElement::setValueForParameterWithKey(double val, VSCSParameter::Key k) {
 	VSCSoundMultiChannelElement::setValueForParameterWithKey(val, k);
 }
 
 
-/*
- *  Perform initialization after constructor (seperate so that it can be virtual).
- */
-void VSCSynthSourceElement::initialize(void) {
-	
-}
 
-/*
- *  Perform necessary setup operations after:
- *      - a change in number of channels.
- */
-void VSCSynthSourceElement::updateSoundEngine(void) {
-	
-}

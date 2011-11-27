@@ -13,10 +13,9 @@
 
 -(NSSize) sizeWithFont:(NSFont*)font {
 	
-	NSFont* font = [cell font];
 	NSDictionary* attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
 	
-	return [s sizeWithAttributes:attributes];;
+	return [self sizeWithAttributes:attributes];;
 	
 }
 

@@ -9,18 +9,20 @@
 #import <Cocoa/Cocoa.h>
 
 #import "VSCParameterControlView.h"
-#import "VSCSoundParameters.h"
+#import "VSCSoundElement.h"
 
 #import <map>
-#import <boost/bimap.hpp>
 
+/*
+ * Change to control view to have a controllable element
+ */
 
-@interface VSCSoundParameterView : NSView <VSCParameterControlViewDelegate> {
+@interface VSCSoundElementView : NSView <VSCParameterControlViewDelegate> {
+	
+	VSCSoundElementPtr soundElement;
 	
 	VSCParameterControlView* parameterControlView;
 	
-	boost::bimap<VSCSParameter::Key, NSInteger> paramKeyIndexMap;
-
 }
 
 @property (nonatomic, retain) VSCParameterControlView* parameterControlView;
@@ -34,16 +36,8 @@
 /*
  *	Parameter label/range/value reloading
  */
--(void) reloadParameterLabels;
--(void) reloadParameterRanges;
 -(void) reloadParameterValues;
 -(void) reloadValueForParameterWithKey:(VSCSParameter::Key)key;
-
--(VSCSParameter::Key) keyForParameterAtIndex:(NSInteger)index;
--(NSInteger) indexForParameterWithKey:(VSCSParameter::Key)key;
--(NSString*) labelForParameterWithKey:(VSCSParameter::Key)key;
 -(double) doubleValueForParameterWithKey:(VSCSParameter::Key)key;
--(std::pair<double, double>) rangeForParameterWithKey:(VSCSParameter::Key)key;
--(NSInteger) numberOfParameters;
 
 @end

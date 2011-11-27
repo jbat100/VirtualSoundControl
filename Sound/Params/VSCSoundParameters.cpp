@@ -14,9 +14,6 @@
 #include <string>
 #include <boost/lexical_cast.hpp>
 
-typedef std::pair<VSCSParameter::Key,std::string> KeyLabelPair;
-typedef std::pair<VSCSParameter::Key,std::pair<double, double> > KeyRangePair;
-typedef std::pair<double, double> Range;
 
 /*
  *	Static member variables initialization
@@ -24,7 +21,7 @@ typedef std::pair<double, double> Range;
 
 std::map<VSCSParameter::Key, std::string> VSCSParameter::parameterLabels;
 std::map<VSCSParameter::Key, std::pair<double, double> > VSCSParameter::parameterRanges;
-std::map<Domain, std::set<Key> > VSCSParameter::domainParameters;
+std::map<VSCSParameter::Domain, std::set<VSCSParameter::Key> > VSCSParameter::domainParameters;
 
 /*
  *	Default ranges
@@ -38,6 +35,7 @@ std::pair<double, double> VSCSParameter::defaultFrequencyRange(20.0, 20000.0);
 std::pair<double, double> VSCSParameter::defaultHarmonicsRange(0.0, 10.0);
 
 const unsigned int VSCSParameter::kMaxNumberOfChannels = 11;
+const unsigned int VSCSParameter::kChannelNotFound = kVSCSVoidChannel;
 
 
 std::set<VSCSParameter::Key> VSCSParameter::keysForDomain(Domain dom) {
@@ -97,8 +95,8 @@ VSCSParameter::Key VSCSParameter::keyForChannelIndex(unsigned int i, bool dB) {
  *	This should convert so that linear volume gain [0 : 1] becomes [-infinity : 0]
  */
 VSCSFloat VSCSParameter::linearToDBGain(VSCSFloat linearGain) {
-	VSCSFloat dB = 10.0*std::log10(linearGain)
-    return  ;
+	VSCSFloat dB = 10.0*std::log10(linearGain);
+    return  dB;
 }
 
 VSCSFloat VSCSParameter::dBToLinearGain(VSCSFloat dBGain) {
@@ -111,8 +109,12 @@ VSCSFloat VSCSParameter::dBToLinearGain(VSCSFloat dBGain) {
 
 std::string VSCSParameter::getLabelForParameterWithKey(VSCSParameter::Key k) {
 	
-	if (generatedParameterLabels == false) 
+	static bool generatedParameterLabels = false;
+	
+	if (generatedParameterLabels == false) {
 		VSCSParameter::generateParameterLabels();
+		generatedParameterLabels = true;
+	}
 	
 	std::map<Key,std::string>::iterator labelIterator = parameterLabels.find(k);
 	
@@ -153,8 +155,12 @@ std::string VSCSParameter::getLabelForParameterWithKey(VSCSParameter::Key k) {
 
 std::pair<double, double> VSCSParameter::getRangeForParameterWithKey(Key k) {
 	
-	if (generatedParameterRanges == false) 
+	static bool generatedParameterRanges = false;
+	
+	if (generatedParameterRanges == false) {
 		VSCSParameter::generateParameterRanges();
+		generatedParameterRanges = true;
+	}
 	
 	std::map<Key, std::pair<double, double> >::iterator rangeIterator = parameterRanges.find(k);
 	
@@ -249,8 +255,8 @@ void VSCSParameter::generateParameterLabels(void) {
 	
 		parameterLabels.insert(KeyLabelPair (KeyFileTime, "File Time (s)"));
 		parameterLabels.insert(KeyLabelPair (KeyFilePlaybackSpeed, "Playback Speed"));
-		parameterLabels.insert(KeyLabelPair (KeyFileLoopOffset, "Loop Offset (s)"));
-		parameterLabels.insert(KeyLabelPair (KeyFileLoopDuration, "Loop Duration (s)"));
+		parameterLabels.insert(KeyLabelPair (KeyFileLoopStartTime, "Loop start time (s)"));
+		parameterLabels.insert(KeyLabelPair (KeyFileLoopEndTime, "Loop end time (s)"));
 		parameterLabels.insert(KeyLabelPair (KeyFileLoopCrossoverDuration, "Loop Crossover Duration (s)"));
 		
 		parameterLabels.insert(KeyLabelPair (KeyBiQuadFrequency, "Frequency (Hz)"));
@@ -264,19 +270,25 @@ void VSCSParameter::generateParameterLabels(void) {
 
 void VSCSParameter::generateParameterRanges(void) {
 	
-	parameterRanges.insert(KeyRangePair (KeyNone, Range(0.0, 0.0)));
+	static bool generatedParameterRanges = false;
 	
-	parameterRanges.insert(KeyRangePair (KeyFileTime, Range(0.0, 0.0)));
-	parameterRanges.insert(KeyRangePair (KeyFilePlaybackSpeed, Range(0.0, 50.0)));
-	parameterRanges.insert(KeyRangePair (KeyFileLoopOffset, Range(0.0, 0.0)));
-	parameterRanges.insert(KeyRangePair (KeyFileLoopDuration, Range(0.0, 0.0)));
-	parameterRanges.insert(KeyRangePair (KeyFileLoopCrossoverDuration, Range(0.0, 0.0)));
-	
-	parameterRanges.insert(KeyRangePair (KeyBiQuadFrequency, defaultFrequencyRange));
-	parameterRanges.insert(KeyRangePair (KeyBiQuadQFactor, Range(0.0, 20.0)));
-	parameterRanges.insert(KeyRangePair (KeyBiQuadLinearGain, defaultLinearFilterGainRange));
-	
-	generatedParameterRanges = true;
+	if (generatedParameterRanges == false) {
+		
+		parameterRanges.insert(KeyRangePair (KeyNone, Range(0.0, 0.0)));
+		
+		parameterRanges.insert(KeyRangePair (KeyFileTime, Range(0.0, 0.0)));
+		parameterRanges.insert(KeyRangePair (KeyFilePlaybackSpeed, Range(0.0, 50.0)));
+		parameterRanges.insert(KeyRangePair (KeyFileLoopStartTime, Range(0.0, 0.0)));
+		parameterRanges.insert(KeyRangePair (KeyFileLoopEndTime, Range(0.0, 0.0)));
+		parameterRanges.insert(KeyRangePair (KeyFileLoopCrossoverDuration, Range(0.0, 0.0)));
+		
+		parameterRanges.insert(KeyRangePair (KeyBiQuadFrequency, defaultFrequencyRange));
+		parameterRanges.insert(KeyRangePair (KeyBiQuadQFactor, Range(0.0, 20.0)));
+		parameterRanges.insert(KeyRangePair (KeyBiQuadLinearGain, defaultLinearFilterGainRange));
+		
+		generatedParameterRanges = true;
+		
+	}
 	
 }
 

@@ -45,10 +45,6 @@ public:
 	 */
 	void updateSoundEngine(void);
 	
-protected:
-    
-	stk::SineWave sineWave;
-	
 	/*
 	 *	Setters/Getters
 	 */
@@ -59,6 +55,10 @@ protected:
 	void setPhase(VSCSFloat f);
 	void addPhase(VSCSFloat f);
 	
+private:
+    
+	stk::SineWave sineWave;
+	
 	/*
 	 *	For some stupid reason the guys at STK have decided not to make it possible to know the 
 	 *	frequency and phase of the SineWave, so we store it here... WTF... why...
@@ -66,13 +66,11 @@ protected:
 	VSCSFloat _frequency;
 	VSCSFloat _phase;
     
-    void processComputationFrames(void);
+    void processComputationFrames(unsigned int numberOfFrames);
 	
 };
 
-inline void VSCSynthSourceSine::processComputationFrames(void) {
-	sineWave.tick(_computationFrames);
-}
+
 
 
 #endif

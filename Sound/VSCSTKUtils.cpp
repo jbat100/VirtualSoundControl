@@ -130,6 +130,19 @@ namespace stk {
 		}
 		
 	}
+	
+	void substituteFramesFromIndex(StkFrames& sourceFrames, StkFrames& targetFrames, unsigned int frameIndex) {
+		
+		assert(sourceFrames.channels() == targetFrames.channels());
+		assert(targetFrames.frames() > frameIndex);
+		
+		for (unsigned int i = frameIndex; i < targetFrames.frames(); i++) {
+			for (unsigned int channelIndex = 0; channelIndex < sourceFrames.channels(); channelIndex++) {
+				targetFrames(i, channelIndex) = sourceFrames(i-frameIndex, channelIndex);
+			}
+		}
+		
+	}
 
 }
 

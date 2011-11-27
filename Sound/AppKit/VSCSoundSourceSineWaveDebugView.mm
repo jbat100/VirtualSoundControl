@@ -35,7 +35,7 @@
 	
 	if (_sourceGenerator) {
 		// if we have a non NULL _sourceGenerator, attempt to cast it to a sine source
-		VSCSynthSourceSinePtr sourceSine = boost::dynamic_pointer_cast<VSCSynthSourceSine>(generator);
+		VSCSynthSourceSinePtr sourceSine = boost::dynamic_pointer_cast<VSCSynthSourceSine>(_sourceGenerator);
 		NSAssert(sourceSine, @"Could not cast generator to sine source");
 		if (!sourceSine) {
 			_sourceGenerator = VSCSynthSourceGeneratorPtr();

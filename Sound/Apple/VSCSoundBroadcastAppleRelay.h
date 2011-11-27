@@ -17,9 +17,9 @@
 
 #import <string>
 
-@protocol VSCSParameterListener <NSObject>
+@protocol VSCSParameterAppleListener <NSObject>
 
--(void) interestedInParameterId:(VSCSParameterId)paramId;
+-(BOOL) interestedInParameterId:(VSCSParameterId)paramId;
 
 -(void) parameterWithKey:(VSCSParameter::Key)key 
 			   changedTo:(double)value 
@@ -27,9 +27,9 @@
 
 @end
 
-@protocol VSCSPropertyListener <NSObject>
+@protocol VSCSPropertyAppleListener <NSObject>
 
--(void) interestedInPropertyId:(VSCSPropertyId)propId;
+-(BOOL) interestedInPropertyId:(VSCSPropertyId)propId;
 
 -(void) propertyWithKey:(VSCSProperty::Key)key 
 			  changedTo:(std::string)value 
@@ -37,19 +37,19 @@
 
 @end
 
-class VSCSoundBroadcastAppleRelay {
+class VSCSoundBroadcastAppleRelay : public VSCSParameterListener, public VSCSPropertyListener {
     
     VSCSoundBroadcastAppleRelay();
     ~VSCSoundBroadcastAppleRelay();
     
-    void parameterChanged(VSCSoundParameterizedElement* element, VSCSParameter::Key k, double value);
-    void propertyChanged(VSCSoundPropertizedElement* element, VSCSProperty::Key k, std::string value);
+    void addParameterAppleListener(id<VSCSParameterAppleListener> parameterListener);
+    void removeParameterAppleListener(id<VSCSParameterAppleListener> parameterListener);
     
-    void addParameterListener(id<VSCSParameterListener> parameterListener);
-    void removeParameterListener(id<VSCSParameterListener> parameterListener);
-    
-    void addPropertyListener(id<VSCSPropertyListener> propertyListener);
-    void removePropertyListener(id<VSCSPropertyListener> propertyListener);
+    void addPropertyAppleListener(id<VSCSPropertyAppleListener> propertyListener);
+    void removePropertyAppleListener(id<VSCSPropertyAppleListener> propertyListener);
+	
+	virtual void parameterChanged(VSCSoundParameterizedElement* element, VSCSParameter::Key, double value);
+	virtual void propertyChanged(VSCSoundPropertizedElement* element, VSCSProperty::Key, std::string value);
     
 protected:
     

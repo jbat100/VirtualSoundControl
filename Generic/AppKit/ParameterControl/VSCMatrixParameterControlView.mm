@@ -16,7 +16,7 @@
 @synthesize controllerMatrix, labelMatrix, numericMatrix;
 @synthesize controllerCellPrototype, labelCellPrototype;
 @synthesize centerSpacing;
-@synthesize delegate, dataSource;
+@synthesize delegate;
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -59,22 +59,8 @@
 
 #pragma mark - VSCParameterControlViewProtocol
 
--(void) createInterfaceForParameterCount:(NSUInteger)count {
-	
-	VSCParameterControlOptions defaultOptions = 
-	VSCParameterControlOptionDisplayLabel		| 
-	VSCParameterControlOptionDisplayNumeric		|	
-	VSCParameterControlOptionDisplaySliders;
-	
-	[self createInterfaceForParameterCount:count withOptions:defaultOptions];
-	
-}
 
--(void) createInterfaceForParameterCount:(NSUInteger)count 
-							 withOptions:(VSCParameterControlOptions)options {
-	
-	self.numberOfParameters = count;
-	self.parameterControlOptions = options;
+-(void) createInterface {
 	
     [self createMatrices];
 	
@@ -85,31 +71,14 @@
 	
 }
 
--(void) setLowerLimit:(double)low higherLimit:(double)high forParameterAtIndex:(NSUInteger)index {
-	NSActionCell* controllerCell = [self controllerCellAtIndex:index];
-	if ([controllerCell isKindOfClass:[NSSliderCell class]]) {
-		NSSliderCell* sliderCell = (NSSliderCell*)controllerCell;
-		[sliderCell setMinValue:low];
-		[sliderCell setMaxValue:high];
-	}
+
+
+-(std::set<VSCSParameter::Key>&) parameterKeys {
+	return parameterKeys;
 }
 
--(void) setDoubleValue:(double)f forParameterAtIndex:(NSUInteger)index {
-	NSActionCell* controllerCell = [self controllerCellAtIndex:index];
-	NSCell* numericCell = [self numericCellAtIndex:index];
-	[controllerCell setDoubleValue:f];
-	[numericCell setDoubleValue:f];
-	
-}
-
--(void) setLabel:(NSString*)l forParameterAtIndex:(NSUInteger)index {
-	NSCell* labelCell = [self labelCellAtIndex:index];
-	[labelCell setStringValue:l];
-}
-
--(double) getParameterAtIndex:(NSUInteger)index {
-	NSActionCell* controllerCell = [self controllerCellAtIndex:index];
-	double val = [controllerCell doubleValue];
+-(boost::bimap<VSCSParameter::Key, NSUInteger>&) parameterKeyIndexBimap {
+	return parameterKeyIndexBimap;
 }
 
 @end
@@ -127,12 +96,9 @@
 	self.controllerCellPrototype = [[[NSSliderCell alloc] init] autorelease];
 	self.labelCellPrototype = [[NSCell alloc] initTextCell:@"No Parameter"];
 	
-	self.numberOfParameters = 0;
-	self.parameterControlOptions = VSCParameterControlOptionNone;
-	
 }
 
-#pragma mark Interface Helpers
+#pragma mark Create/Destroy Matrices
 
 
 
@@ -140,11 +106,13 @@
 	
 	[self destroyMatrices];
 	
+	NSInteger numberOfParameters = parameterKeys.size();
+	
     CGRect labelMatrixFrame = NSMakeRect(0.0, 0.0, self.frame.size.width / 4.0, self.frame.size.height);
 	self.labelMatrix = [[[NSMatrix alloc] initWithFrame:labelMatrixFrame 
 												   mode:NSTrackModeMatrix 
 											  prototype:self.labelCellPrototype 
-										   numberOfRows:numberOfRows 
+										   numberOfRows:numberOfParameters 
 										numberOfColumns:1] autorelease];
 	[labelMatrix setAutoresizingMask: NSViewHeightSizable | NSViewWidthSizable];
 	[scrollView addSubview:labelMatrix];
@@ -155,7 +123,7 @@
 	self.controllerMatrix = [[[NSMatrix alloc] initWithFrame:controllerMatrixFrame 
 														mode:NSTrackModeMatrix 
 												   prototype:self.controllerCellPrototype 
-												numberOfRows:numeOfParameters 
+												numberOfRows:numberOfParameters 
 											 numberOfColumns:1] autorelease];	
 	[controllerMatrix setAutoresizingMask: NSViewHeightSizable | NSViewWidthSizable];
 	[scrollView addSubview:controllerMatrix];
@@ -166,7 +134,7 @@
 	self.numericMatrix = [[[NSMatrix alloc] initWithFrame:numericMatrixFrame 
 														mode:NSTrackModeMatrix 
 												   prototype:self.numericCellPrototype 
-												numberOfRows:numeOfParameters 
+												numberOfRows:numberOfParameters 
 											 numberOfColumns:1] autorelease];	
 	[controllerMatrix setAutoresizingMask: NSViewHeightSizable | NSViewWidthSizable];
 	[scrollView addSubview:numericMatrix];
@@ -193,22 +161,59 @@
 	
 }
 
+#pragma mark Parameter Labels/Values/Ranges
+
+-(void) updateParameterLabels {
+	NSInteger numberOfParameters = [self numberOfParameters];
+	for (NSInteger i = 0; i < numberOfParameters; i++) {
+		VSCSParameter::Key key = [self keyForParameterAtIndex:i];
+		NSString* label = [VSCSoundApple labelForParameterWithKey:key];
+		[parameterControlView setLabel:label forParameterAtIndex:i];
+	}
+}
+
+-(void) updateParameterRanges {
+	NSInteger numberOfParameters = [self numberOfParameters];
+	for (NSInteger i = 0; i < numberOfParameters; i++) {
+		VSCSParameter::Key key = [self keyForParameterAtIndex:i];
+		NSString* label = [VSCSoundApple labelForParameterWithKey:key];
+		[parameterControlView setLabel:label forParameterAtIndex:i];
+	}
+}
+
+#pragma mark Parameter Key/Index
+
+-(VSCSParameter::Key) keyForParameterAtIndex:(NSInteger)index {
+	ParamKeyIndexBiMap::right_const_iterator right_iter = paramKeyIndexMap.right.find(index);
+	// couldn't find the index in the bimap...
+	if (right_iter == paramKeyIndexMap.right.end()) 
+		return VSCSParameter::KeyNone;
+	return right_iter->second;	
+}
+
+-(NSInteger) indexForParameterWithKey:(VSCSParameter::Key)key {
+	ParamKeyIndexBiMap::left_const_iterator left_iter = paramKeyIndexMap.left.find(key);
+	// couldn't find the key in the bimap...
+	if (left_iter == paramKeyIndexMap.left.end()) 
+		return -1;
+	return left_iter->second;
+}
 
 #pragma mark NSCell Accessors and Utility 
 
--(NSCell*) controllerCellAtIndex:(NSInteger)index {
-	NSAssert([controllerMatrix numberOfRows] > index, @"Index out of bounds");
+-(NSCell*) controllerCellForParameterWithKey:(VSCSParameter::Key k) {
+	NSInteger index = [self indexForParameterWithKey:k];
 	return [controllerMatrix cellAtRow:index column:0];
 }
 
--(NSCell*) labelCellAtIndex:(NSInteger)index {
-	NSAssert([labelMatrix numberOfRows] > index, @"Index out of bounds");
-	return [labelMatrix cellAtRow:index column:0];
+-(NSCell*) numericCellForParameterWithKey:(VSCSParameter::Key k) {
+	NSInteger index = [self indexForParameterWithKey:k];
+	return [numericMatrix cellAtRow:index column:0];
 }
 
--(NSCell*) numericCellAtIndex:(NSInteger)index {
-	NSAssert([numericMatrix numberOfRows] > index, @"Index out of bounds");
-	return [numericMatrix cellAtRow:index column:0];
+-(NSCell*) labelCellForParameterWithKey:(VSCSParameter::Key k) {
+	NSInteger index = [self indexForParameterWithKey:k];
+	return [labelMatrix cellAtRow:index column:0];
 }
 
 

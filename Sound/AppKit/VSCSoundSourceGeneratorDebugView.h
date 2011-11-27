@@ -10,12 +10,17 @@
 
 #import "Stk.h"
 #import "VSCSynthSourceGenerator.h"
-#import "VSCSoundParameterViewProtocol.h"
+#import "VSCParameterControlViewProtocol.h"
 
 //@class VSCSoundParameterView;
 //@class VSCSoundChannelLevelParameterView;
 
-@interface VSCSoundSourceGeneratorDebugView : NSView {
+/*
+ *	I don't think this view should be subclassed as it is only a wrapper for a VSCSoundParameterView
+ *	
+ */
+
+@interface VSCSoundSourceGeneratorDebugView : NSView <VSCParameterControlViewDelegate, NSTableViewDataSource> {
 	
 	VSCSynthSourceGeneratorPtr sourceGenerator;
 	
@@ -28,15 +33,13 @@
 	 *	generator, the last tickDepth frames will be shown in the NSTableView
 	 */
 	NSTableView* tickTableView;
-	NSInteger tickDepth;
-	stk::StkFrames tickFrames;
 	
 	/*
 	 *	As for the generatorParameterView, the class of the channelLevelParameterView
 	 *  is left to be determined at runtime by subclasses for maximum flexibility.
 	 */
 	NSView* channelLevelParameterParentView;
-	NSView<VSCSoundParameterViewProtocol>* channelLevelParameterView;
+	NSView<VSCParameterControlViewProtocol>* channelLevelParameterView;
 	
 	/*
 	 *	In order to allow the configuration of the generator parameter view into any subclass
@@ -45,7 +48,7 @@
 	 *	created dynamically by subclasses of this class.
 	 */
 	NSView* generatorParameterParentView;
-	NSView<VSCSoundParameterViewProtocol>* generatorParameterView;
+	NSView<VSCParameterControlViewProtocol>* generatorParameterView;
 	
 
 }
@@ -61,8 +64,8 @@
 @property (nonatomic, retain) IBOutlet NSView* channelLevelParameterParentView;
 @property (nonatomic, retain) IBOutlet NSView* generatorParameterParentView;
 
-@property (nonatomic, retain) NSView<VSCSoundParameterViewProtocol>* channelLevelParameterView;
-@property (nonatomic, retain) NSView<VSCSoundParameterViewProtocol>* generatorParameterView;
+@property (nonatomic, retain) NSView<VSCParameterControlViewProtocol>* channelLevelParameterView;
+@property (nonatomic, retain) NSView<VSCParameterControlViewProtocol>* generatorParameterView;
 
 -(IBAction) tickButtonClicked:(id)sender;
 
@@ -72,7 +75,7 @@
  */
 -(void) customInit;
 -(void) createChannelLevelParameterView;
--(void) createGeneratorParameterView;
+-(void) createGeneratorParameterView; // to subclass
 
 /*
  *	C++ Setters/Getters
@@ -80,9 +83,5 @@
 -(VSCSynthSourceGeneratorPtr) getSourceGenerator;
 -(void) setSourceGenerator:(VSCSynthSourceGeneratorPtr)_sourceGenerator;
 
-/*
- *	Get a copy of the current tickFrames
- */
--(stk::StkFrames) tickFramesCopy;
 
 @end

@@ -31,6 +31,9 @@
  */
 
 
-+(NSString*) labelForKey:(VSCSParameter::Key)key;
++(NSString*) labelForParameterWithKey:(VSCSParameter::Key)key;
+
++(id) tableColumnIdentifierForChannelIndex:(unsigned int)channelIndex;
++(unsigned int) channelIndexForTableColumnIdentifier:(id)tableColumnIdentifier;
 
 @end

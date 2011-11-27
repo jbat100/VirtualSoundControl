@@ -9,6 +9,8 @@
 #import "VSCSoundBroadcastAppleRelay.h"
 
 VSCSoundBroadcastAppleRelay::VSCSoundBroadcastAppleRelay() {
+	this->addPropertyKey(VSCSProperty::KeyAll);
+	this->addParameterKey(VSCSParameter::KeyAll);
     parameterListeners = [[NSMutableSet alloc] initWithCapacity:10];
     propertyListeners = [[NSMutableSet alloc] initWithCapacity:10];
 }
@@ -19,29 +21,29 @@ VSCSoundBroadcastAppleRelay::~VSCSoundBroadcastAppleRelay() {
 }
 
 void VSCSoundBroadcastAppleRelay::parameterChanged(VSCSoundParameterizedElement* element, VSCSParameter::Key k, double value) {
-    for (id<VSCSParameterListener> listener in parameterListeners) {
+    for (id<VSCSParameterAppleListener> listener in parameterListeners) {
         [listener parameterWithKey:k changedTo:value forElement:element];
     }
 }
 
 void VSCSoundBroadcastAppleRelay::propertyChanged(VSCSoundPropertizedElement* element, VSCSProperty::Key k, std::string value) {
-    for (id<VSCSPropertyListener> listener in propertyListeners) {
+    for (id<VSCSPropertyAppleListener> listener in propertyListeners) {
         [listener propertyWithKey:k changedTo:value forElement:element];
     }
 }
 
-void VSCSoundBroadcastAppleRelay::addParameterListener(id<VSCSParameterListener> parameterListener) {
+void VSCSoundBroadcastAppleRelay::addParameterAppleListener(id<VSCSParameterAppleListener> parameterListener) {
     [parameterListeners addObject:parameterListener];
 }
 
-void VSCSoundBroadcastAppleRelay::removeParameterListener(id<VSCSParameterListener> parameterListener) {
+void VSCSoundBroadcastAppleRelay::removeParameterAppleListener(id<VSCSParameterAppleListener> parameterListener) {
     [parameterListeners removeObject:parameterListener];
 }
 
-void VSCSoundBroadcastAppleRelay::addPropertyListener(id<VSCSPropertyListener> propertyListener) {
+void VSCSoundBroadcastAppleRelay::addPropertyAppleListener(id<VSCSPropertyAppleListener> propertyListener) {
     [propertyListeners addObject:propertyListener];
 }
 
-void VSCSoundBroadcastAppleRelay::removePropertyListener(id<VSCSPropertyListener> propertyListener) {
+void VSCSoundBroadcastAppleRelay::removePropertyAppleListener(id<VSCSPropertyAppleListener> propertyListener) {
     [propertyListeners removeObject:propertyListener];
 }

@@ -8,8 +8,8 @@
  */
 
 
-#ifndef _VSC_SOUND_PARAMETERIZED_ELEMENT_
-#define _VSC_SOUND_PARAMETERIZED_ELEMENT_
+#ifndef _VSC_SOUND_PARAMETERIZED_
+#define _VSC_SOUND_PARAMETERIZED_
 
 #include "VSCSound.h"
 #include "VSCSoundParameters.h"
@@ -21,14 +21,14 @@
  *	Smart pointer and iterator convenience defines
  */
 
-#define VSCSoundParameterizedElementPtr    boost::shared_ptr<VSCSoundParameterizedElement>
+#define VSCSoundParameterizedPtr    boost::shared_ptr<VSCSoundParameterized>
 
 
 /*
  *	Root class for adding/removing setting/getting parameter values
  */
 
-class VSCSoundParameterizedElement {
+class VSCSoundParameterized {
 	
 	
 public:

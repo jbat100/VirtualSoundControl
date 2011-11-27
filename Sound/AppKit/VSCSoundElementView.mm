@@ -11,8 +11,7 @@
 #import "VSCParameterControlView.h"
 #import "VSCSoundApple.h"
 
-typedef boost::bimap<VSCSParameter::Key, NSInteger> ParamKeyIndexBiMap;
-typedef ParamKeyIndexBiMap::value_type ParamKeyIndexBiMapEntry;
+
 
 @implementation VSCSoundParameterView
 
@@ -43,9 +42,7 @@ typedef ParamKeyIndexBiMap::value_type ParamKeyIndexBiMapEntry;
  */
 
 -(void) customInit {
-	
 	[self createParameterControlView];
-	
 }
 
 -(void) createParameterControlView {
@@ -62,31 +59,7 @@ typedef ParamKeyIndexBiMap::value_type ParamKeyIndexBiMapEntry;
 	
 }
 
--(void) reloadParameterLabels {
-	NSInteger numberOfParameters = [self numberOfParameters];
-	for (NSInteger i = 0; i < numberOfParameters; i++) {
-		VSCSParameter::Key key = [self keyForParameterAtIndex:i];
-		NSString* label = [self labelForParameterWithKey:key];
-		[parameterControlView setLabel:label forParameterAtIndex:i];
-	}
-}
 
--(void) reloadParameterValues {
-	NSInteger numberOfParameters = [self numberOfParameters];
-	for (NSInteger i = 0; i < numberOfParameters; i++) {
-		VSCSParameter::Key key = [self keyForParameterAtIndex:i];
-		[self reloadValueForParameterWithKey:key];
-	}
-}
-
--(void) reloadParameterRanges {
-	NSInteger numberOfParameters = [self numberOfParameters];
-	for (NSInteger i = 0; i < numberOfParameters; i++) {
-		VSCSParameter::Key key = [self keyForParameterAtIndex:i];
-		NSString* label = [self labelForParameterWithKey:key];
-		[parameterControlView setLabel:label forParameterAtIndex:i];
-	}
-}
 
 -(void) reloadValueForParameterWithKey:(VSCSParameter::Key)key {
     NSInteger i = [self indexForParameterWithKey:key];
@@ -96,43 +69,7 @@ typedef ParamKeyIndexBiMap::value_type ParamKeyIndexBiMapEntry;
 
 #pragma mark VSCSoundParameterViewProtocol Methods
 
--(VSCSParameter::Key) keyForParameterAtIndex:(NSInteger)index {
-	
-	ParamKeyIndexBiMap::right_const_iterator right_iter = paramKeyIndexMap.right.find(index);
-	
-	// couldn't find the index in the bimap...
-	if (right_iter == paramKeyIndexMap.right.end()) 
-		return VSCSParameter::KeyNone;
-	
-	return right_iter->second;	
-}
-
--(NSInteger) indexForParameterWithKey:(VSCSParameter::Key)key {
-	
-	ParamKeyIndexBiMap::left_const_iterator left_iter = paramKeyIndexMap.left.find(key);
-	
-	// couldn't find the key in the bimap...
-	if (left_iter == paramKeyIndexMap.left.end()) 
-		return -1;
-	
-	return left_iter->second;
-	
-}
-
--(NSInteger) numberOfParameters {
-	return paramKeyIndexMap.size();
-}
-
--(NSString*) labelForParameterWithKey:(VSCSParameter::Key)key {
-	return [VSCSoundApple labelForKey:key];
-}
-
 -(double) doubleValueForParameterWithKey:(VSCSParameter::Key)key {
-	
-	NSInteger index = [self indexForParameterWithKey:key];
-	
-	NSAssert();
-	
 	return 0.0;
 }
 
@@ -144,7 +81,7 @@ typedef ParamKeyIndexBiMap::value_type ParamKeyIndexBiMapEntry;
 
 -(void) parameterControlView:(id<VSCParameterControlViewProtocol>)view 
 	 changedParameterAtIndex:(NSUInteger)index {
-	double val = [view getParameterAtIndex:index];
+	double val = [view getDoubleValueForParameterAtIndex:index];
 	NSLog(@"%@ received parameter change from %@, value is %f", self, view, val);
 }
 

@@ -12,9 +12,15 @@
 
 VSCSynthSourceSine::VSCSynthSourceSine() {
 	
+	this->_numberOfChannelsNeededForComputationFrames = 1;
+	
 	this->setFrequency(VSCSound::getReferenceAFrequency());
 	// this->setPhase(0.0); // no need to do that...
-	
+}
+
+void VSCSynthSourceSine::processComputationFrames(unsigned int numberOfFrames) {
+	VSCSynthSourceGenerator::processComputationFrames(numberOfFrames);
+	sineWave.tick(_computationFrames);
 }
 
 double VSCSynthSourceSine::getValueForParameterWithKey(VSCSParameter::Key key) {
@@ -26,15 +32,7 @@ double VSCSynthSourceSine::getValueForParameterWithKey(VSCSParameter::Key key) {
 		return this->getPhase();
 	}
 	
-	//VSCSynthSourceGenerator::getValueForParameterWithKey(key);
-	
-	/* 
-	 *	to save cycles call directly on VSCSoundMultiChannelElement which
-	 *	is the next base class up the hierarchy to do somthing useful, 
-	 *	this may change in future, so stay aware of this ...
-	 */
-	
-	VSCSoundMultiChannelElement::getValueForParameterWithKey(key);
+	VSCSynthSourceGenerator::getValueForParameterWithKey(key);
 }
 
 void VSCSynthSourceSine::setValueForParameterWithKey(double value, VSCSParameter::Key key) {
@@ -46,15 +44,7 @@ void VSCSynthSourceSine::setValueForParameterWithKey(double value, VSCSParameter
 		return this->setPhase((VSCSFloat)value);
 	}
 	
-	//VSCSynthSourceGenerator::getValueForParameterWithKey(key);
-	
-	/* 
-	 *	to save cycles call directly on VSCSoundMultiChannelElement which
-	 *	is the next base class up the hierarchy to do somthing useful, 
-	 *	this may change in future, so stay aware of this ...
-	 */
-	
-	VSCSoundMultiChannelElement::setValueForParameterWithKey(value, key);
+	VSCSynthSourceGenerator::setValueForParameterWithKey(value, key);
 	
 }
 
