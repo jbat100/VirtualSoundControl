@@ -8,20 +8,17 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "VSCParameterControlViewProtocol.h"
+#import "VSCParameterControlView.h"
 #import "VSCSound.h"
 #import "VSCSoundParameters.h"
 
 #import <set>
 #import <boost/bimap.hpp>
 
-typedef boost::bimap<VSCSParameter::Key, NSInteger>		VSCSParameterKeyIndexBimap;
-typedef ParamKeyIndexBiMap::value_type					VSCSParameterKeyIndexBimapEntry;
 
-
-@interface VSCMatrixParameterControlView : NSView <VSCParameterControlViewProtocol> {
+@interface VSCMatrixParameterControlView : VSCParameterControlView  {
 	
-	VSCSParameterKeyIndexBimap parameterKeyIndexBimap;
+	VSCSParameter::KeyIndexBimap parameterKeyIndexBimap;
 	
 	NSScrollView* scrollView;
 
@@ -59,9 +56,14 @@ typedef ParamKeyIndexBiMap::value_type					VSCSParameterKeyIndexBimapEntry;
 
 @property (nonatomic, assign) CGFloat spacing;
 
--(VSCSParameterKeyIndexBimap&) parameterKeyIndexBimap;
+-(void) setparameterKeyIndexBimap:(VSCSParameter::KeyIndexBimap)keyIndexBymap;
+-(const VSCSParameter::KeyIndexBimap&) parameterKeyIndexBimap;
 
 -(VSCSParameter::Key) keyForParameterAtIndex:(NSInteger)index;
 -(NSInteger) indexForParameterWithKey:(VSCSParameter::Key)key;
+
+-(NSActionCell*) controllerCellForParameterWithKey:(VSCSParameter::Key k);
+-(NSCell*) numericCellForParameterWithKey:(VSCSParameter::Key k);
+-(NSCell*) labelCellForParameterWithKey:(VSCSParameter::Key k);
 
 @end

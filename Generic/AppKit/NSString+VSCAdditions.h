@@ -8,9 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import <string>
 
 @interface NSString (VSCAdditions) 
 
++(NSString*) stringWithStdString:(std::string)s;
+
+-(std::string) stdString;
+
 -(NSSize) sizeWithFont:(NSFont*)font;
+
 
 @end

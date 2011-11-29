@@ -27,6 +27,14 @@ class VSCEnveloppeEmptyException : public VSCBaseException
     }
 };
 
+class VSCSInvalidArgumentException : public VSCBaseException
+{
+    virtual const char* what() const throw()
+    {
+        return "Invalid Argument";
+    }
+};
+
 class VSCSBadParameterException : public VSCBaseException
 {
     virtual const char* what() const throw()
@@ -40,6 +48,14 @@ class VSCSBadPropertyException : public VSCBaseException
     virtual const char* what() const throw()
     {
         return "Bad Property";
+    }
+};
+
+class VSCSCalledPureVirtualFunctionException : public VSCBaseException
+{
+    virtual const char* what() const throw()
+    {
+        return "Called Pure Virtual Function";
     }
 };
 

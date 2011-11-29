@@ -15,9 +15,9 @@
 
 @interface VSCParameterControlView : NSView <VSCParameterControlViewProtocol> {
 	
-	VSCSParameterKeySet parameterKeys;
-	VSCSParameterLabelMap parameterLabels;
-	VSCSParameterRangeMap parameterRanges;
+	VSCSParameter::KeySet keySet;
+	VSCSParameter::KeyLabelMap keyLabelMap;
+	VSCSParameter::KeyRangeMap keyRangeMap;
 	
 	id<VSCParameterControlViewDelegate> delegate;
 
@@ -25,8 +25,5 @@
 
 @property (assign) id<VSCParameterControlViewDelegate> delegate;
 
--(VSCSParameterKeySet&) parameterKeys;
--(VSCSParameterLabelMap&) parameterLabels;
--(VSCSParameterRangeMap&) parameterRanges;
 
 @end

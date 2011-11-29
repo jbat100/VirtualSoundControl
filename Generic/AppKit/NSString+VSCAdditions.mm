@@ -11,6 +11,15 @@
 
 @implementation NSString (VSCAdditions)
 
++(NSString*) stringWithStdString:(std::string)s {
+	return [NSString stringWithCString:s.c_str() encoding:[NSString defaultCStringEncoding]];
+}
+
+-(std::string) stdString {
+	std::string s([self UTF8String]);
+	return s;
+}
+
 -(NSSize) sizeWithFont:(NSFont*)font {
 	
 	NSDictionary* attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];

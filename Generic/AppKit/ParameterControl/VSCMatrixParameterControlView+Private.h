@@ -12,24 +12,11 @@
 @interface VSCParameterControlView (Private)
 
 /*
- *	NSCell access and utility
- */
-
--(NSActionCell*) controllerCellForParameterWithKey:(VSCSParameter::Key k);
--(NSCell*) numericCellForParameterWithKey:(VSCSParameter::Key k);
--(NSCell*) labelCellForParameterWithKey:(VSCSParameter::Key k);
-
--(void) updateParameterLabels;
--(void) updateParameterRanges;
-
-/*
  *	Interface creation/destruction
  */
 
 -(void) customInit;
 -(void) createMatrices;
 -(void) destroyMatrices;
-
-
 
 @end

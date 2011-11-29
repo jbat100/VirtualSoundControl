@@ -11,6 +11,7 @@
 		10117EC41456195600240467 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1061AAC41430A3B500C29FBB /* AppKit.framework */; };
 		10118007145619DF00240467 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10118005145619DF00240467 /* AppKit.framework */; };
 		10118008145619DF00240467 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10118006145619DF00240467 /* Foundation.framework */; };
+		1021CC00148428ED00EBDD5D /* VSCSoundInterfaceFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1021CBFF148428ED00EBDD5D /* VSCSoundInterfaceFactory.mm */; };
 		10328C771465481C0048559B /* Voicer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10328C761465481C0048559B /* Voicer.cpp */; };
 		103AD3C91481110400CF4072 /* libboost_thread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 103AD3C81481110400CF4072 /* libboost_thread.a */; };
 		1049A6741474575400A7E608 /* VSCSoundParameterized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1049A6721474575400A7E608 /* VSCSoundParameterized.cpp */; };
@@ -53,7 +54,7 @@
 		108642431473359E0017E1CC /* VSCSoundProperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108642401473359E0017E1CC /* VSCSoundProperties.cpp */; };
 		10864246147336280017E1CC /* VSCSoundMultiChannelElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10864244147336280017E1CC /* VSCSoundMultiChannelElement.cpp */; };
 		1091846C146FF0C0006B175E /* VSCSoundChannelLevelParameterView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1091846B146FF0C0006B175E /* VSCSoundChannelLevelParameterView.mm */; };
-		109AE6491471BA5D005CAC88 /* NSString+VSCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 109AE6481471BA5D005CAC88 /* NSString+VSCAdditions.m */; };
+		109AE6491471BA5D005CAC88 /* NSString+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109AE6481471BA5D005CAC88 /* NSString+VSCAdditions.mm */; };
 		109E60D81469964400879689 /* VSCSoundElementView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109E60D71469964400879689 /* VSCSoundElementView.mm */; };
 		109E60DC1469965A00879689 /* VSCSoundSourceGeneratorDebugView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109E60DA1469965A00879689 /* VSCSoundSourceGeneratorDebugView.mm */; };
 		109E60DD1469965A00879689 /* VSCSoundSourceGeneratorDebugView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109E60DB1469965A00879689 /* VSCSoundSourceGeneratorDebugView.xib */; };
@@ -96,6 +97,8 @@
 		10117E4214560E6900240467 /* VSCSynthStationDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSCSynthStationDocument.m; sourceTree = "<group>"; };
 		10118005145619DF00240467 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = ../../../System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		10118006145619DF00240467 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = ../../../System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1021CBFE148428ED00EBDD5D /* VSCSoundInterfaceFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundInterfaceFactory.h; path = ../Sound/AppKit/VSCSoundInterfaceFactory.h; sourceTree = SOURCE_ROOT; };
+		1021CBFF148428ED00EBDD5D /* VSCSoundInterfaceFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCSoundInterfaceFactory.mm; path = ../Sound/AppKit/VSCSoundInterfaceFactory.mm; sourceTree = SOURCE_ROOT; };
 		10328C75146548050048559B /* Voicer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voicer.h; sourceTree = STK_INCLUDE; };
 		10328C761465481C0048559B /* Voicer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Voicer.cpp; sourceTree = STK_SOURCE; };
 		103AD3C81481110400CF4072 /* libboost_thread.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_thread.a; sourceTree = BOOST_LIB; };
@@ -214,7 +217,7 @@
 		1091846A146FF0C0006B175E /* VSCSoundChannelLevelParameterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundChannelLevelParameterView.h; path = ../Sound/AppKit/VSCSoundChannelLevelParameterView.h; sourceTree = SOURCE_ROOT; };
 		1091846B146FF0C0006B175E /* VSCSoundChannelLevelParameterView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCSoundChannelLevelParameterView.mm; path = ../Sound/AppKit/VSCSoundChannelLevelParameterView.mm; sourceTree = SOURCE_ROOT; };
 		109AE6471471BA5D005CAC88 /* NSString+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+VSCAdditions.h"; sourceTree = "<group>"; };
-		109AE6481471BA5D005CAC88 /* NSString+VSCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+VSCAdditions.m"; sourceTree = "<group>"; };
+		109AE6481471BA5D005CAC88 /* NSString+VSCAdditions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSString+VSCAdditions.mm"; sourceTree = "<group>"; };
 		109AE64A1471BC8D005CAC88 /* VSCSoundElementView+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VSCSoundElementView+Private.h"; sourceTree = "<group>"; };
 		109E60D61469964400879689 /* VSCSoundElementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundElementView.h; path = ../../Sound/AppKit/VSCSoundElementView.h; sourceTree = "<group>"; };
 		109E60D71469964400879689 /* VSCSoundElementView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCSoundElementView.mm; path = ../../Sound/AppKit/VSCSoundElementView.mm; sourceTree = "<group>"; };
@@ -300,6 +303,15 @@
 			name = AppKit;
 			path = ../Generic/AppKit;
 			sourceTree = SOURCE_ROOT;
+		};
+		1021CBFD148428B600EBDD5D /* Interface Factory */ = {
+			isa = PBXGroup;
+			children = (
+				1021CBFE148428ED00EBDD5D /* VSCSoundInterfaceFactory.h */,
+				1021CBFF148428ED00EBDD5D /* VSCSoundInterfaceFactory.mm */,
+			);
+			name = "Interface Factory";
+			sourceTree = "<group>";
 		};
 		105C47CA144B32760015AE8F /* Enveloppe */ = {
 			isa = PBXGroup;
@@ -409,6 +421,7 @@
 		1061AAC71430A3B500C29FBB /* SynthStation */ = {
 			isa = PBXGroup;
 			children = (
+				1021CBFD148428B600EBDD5D /* Interface Factory */,
 				10A8442D1466A65600B8DB35 /* Synth Source Control Interface */,
 				10E0473814661EC7006AD53D /* Debug Interface */,
 				10E0473614661DB2006AD53D /* Synth Station Window Controller */,
@@ -481,7 +494,7 @@
 				10A282B71470710900C70799 /* NSFileManager+VSCAdditions.h */,
 				10A282B81470710900C70799 /* NSFileManager+VSCAdditions.m */,
 				109AE6471471BA5D005CAC88 /* NSString+VSCAdditions.h */,
-				109AE6481471BA5D005CAC88 /* NSString+VSCAdditions.m */,
+				109AE6481471BA5D005CAC88 /* NSString+VSCAdditions.mm */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -857,7 +870,7 @@
 				10A282E11470713800C70799 /* VSCException.cpp in Sources */,
 				10A282E21470713800C70799 /* VSCiOS.m in Sources */,
 				10A282E31470713800C70799 /* VSCMath.cpp in Sources */,
-				109AE6491471BA5D005CAC88 /* NSString+VSCAdditions.m in Sources */,
+				109AE6491471BA5D005CAC88 /* NSString+VSCAdditions.mm in Sources */,
 				108642421473359E0017E1CC /* VSCSoundParameters.cpp in Sources */,
 				108642431473359E0017E1CC /* VSCSoundProperties.cpp in Sources */,
 				10864246147336280017E1CC /* VSCSoundMultiChannelElement.cpp in Sources */,
@@ -868,6 +881,7 @@
 				10E8F52D14828CB3002DEEE3 /* VSCSoundElement.cpp in Sources */,
 				10653CC81482C5AA00CC57BE /* VSCMatrixParameterControlView.mm in Sources */,
 				10653CC91482C5AA00CC57BE /* VSCParameterControlView.mm in Sources */,
+				1021CC00148428ED00EBDD5D /* VSCSoundInterfaceFactory.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

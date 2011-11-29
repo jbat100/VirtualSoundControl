@@ -37,12 +37,26 @@
 -(void) setDoubleValue:(double)f forParameterWithKey:(VSCSParameter::Key)key;
 -(double) getDoubleValueForParameterWithKey:(VSCSParameter::Key)key;
 
+-(void) addParameterKey:(VSCSParameter::Key)k;
+-(void) removeParameterKey:(VSCSParameter::Key)k;
+
+-(void) setLabel:(NSString*)label forParameterKey:(VSCSParameter::Key)k;
+-(void) setDefaultLabelForParameterKey:(VSCSParameter::Key)k;
+-(void) setDefaultLabelForAllParameterKeys;
+
+-(void) setRange:(VSCSParameter::ValueRange)valueRange forParameterKey:(VSCSParameter::Key)k;
+-(void) setDefaultRangeForParameterKey:(VSCSParameter::Key)k;
+-(void) setDefaultLabelForAllParameterKeys;
+
+-(NSString*) getLabelForParameterKey:(VSCSParameter::Key)k;
+-(VSCSParameter::ValueRange) getRangeForParameterKey:(VSCSParameter::Key)k;
+
 /*
  *	Which parameters is the view meant to control, at what index
  */
--(VSCSParameterKeySet&) parameterKeys;
--(VSCSParameterLabelMap&) parameterLabels;
--(VSCSParameterRangeMap&) parameterRanges;
+-(const VSCSParameter::KeySet&) keySet;
+-(const VSCSParameter::KeyLabelMap&) keyLabelMap;
+-(const VSCSParameter::KeyRangeMap&) keyRangeMap;
 
 @end
 

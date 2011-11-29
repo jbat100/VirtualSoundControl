@@ -77,7 +77,11 @@
 	return parameterKeys;
 }
 
--(boost::bimap<VSCSParameter::Key, NSUInteger>&) parameterKeyIndexBimap {
+-(void) setparameterKeyIndexBimap:(VSCSParameter::KeyIndexBimap)keyIndexBymap {
+	parameterKeyIndexBimap = _keyIndexBymap;
+}
+
+-(const VSCSParameter::KeyIndexBimap&) parameterKeyIndexBimap {
 	return parameterKeyIndexBimap;
 }
 
@@ -139,6 +143,10 @@
 	[controllerMatrix setAutoresizingMask: NSViewHeightSizable | NSViewWidthSizable];
 	[scrollView addSubview:numericMatrix];
 	
+	/*
+	 *	Setup control tags so that the cells can be identified when sending messages
+	 */
+	
 }
 
 
@@ -163,21 +171,19 @@
 
 #pragma mark Parameter Labels/Values/Ranges
 
--(void) updateParameterLabels {
-	NSInteger numberOfParameters = [self numberOfParameters];
-	for (NSInteger i = 0; i < numberOfParameters; i++) {
-		VSCSParameter::Key key = [self keyForParameterAtIndex:i];
-		NSString* label = [VSCSoundApple labelForParameterWithKey:key];
-		[parameterControlView setLabel:label forParameterAtIndex:i];
-	}
+-(void) setLabel:(NSString*)label forParameterKey:(VSCSParameter::Key)k {
+	[super setLabel:label forParameterKey:k];
+	NSCell* labelCell = [self labelCellForParameterWithKey:k];
+	[labelCell setStringValue:label];
 }
 
--(void) updateParameterRanges {
-	NSInteger numberOfParameters = [self numberOfParameters];
-	for (NSInteger i = 0; i < numberOfParameters; i++) {
-		VSCSParameter::Key key = [self keyForParameterAtIndex:i];
-		NSString* label = [VSCSoundApple labelForParameterWithKey:key];
-		[parameterControlView setLabel:label forParameterAtIndex:i];
+-(void) setRange:(VSCSParameter::ValueRange)valueRange forParameterKey:(VSCSParameter::Key)k {
+	[super setRange:valueRange forParameterKey:k];
+	NSActionCell* controllerCell = [self controllerCellForParameterWithKey:k];
+	if ([controllerCell isKindOfClass:[NSSliderCell class]]) {
+		NSSliderCell* sliderCell = (NSSliderCell*)controllerCell;
+		[sliderCell setMinValue:valueRange.first];
+		[sliderCell setMaxValue:valueRange.second];
 	}
 }
 
@@ -187,7 +193,7 @@
 	ParamKeyIndexBiMap::right_const_iterator right_iter = paramKeyIndexMap.right.find(index);
 	// couldn't find the index in the bimap...
 	if (right_iter == paramKeyIndexMap.right.end()) 
-		return VSCSParameter::KeyNone;
+		throw VSCSInvalidArgumentException();
 	return right_iter->second;	
 }
 
@@ -195,13 +201,13 @@
 	ParamKeyIndexBiMap::left_const_iterator left_iter = paramKeyIndexMap.left.find(key);
 	// couldn't find the key in the bimap...
 	if (left_iter == paramKeyIndexMap.left.end()) 
-		return -1;
+		throw VSCSInvalidArgumentException();
 	return left_iter->second;
 }
 
 #pragma mark NSCell Accessors and Utility 
 
--(NSCell*) controllerCellForParameterWithKey:(VSCSParameter::Key k) {
+-(NSActionCell*) controllerCellForParameterWithKey:(VSCSParameter::Key k) {
 	NSInteger index = [self indexForParameterWithKey:k];
 	return [controllerMatrix cellAtRow:index column:0];
 }
@@ -216,6 +222,16 @@
 	return [labelMatrix cellAtRow:index column:0];
 }
 
+-(VSCSParameter::Key) parameterKeyForCell:(NSCell*)cell {
+	NSInteger tag = [cell tag];
+	return [self keyForParameterAtIndex:tag];
+}
 
+#pragma mark Controller Cell Callback 
+
+
+-(void) controllerCellCallback:(NSActionCell*)sender {
+	
+}
 
 @end

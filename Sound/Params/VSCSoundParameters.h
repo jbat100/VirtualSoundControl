@@ -11,9 +11,11 @@
 #define _VSCS_PARAMETER_H_
 
 #include "VSCSound.h"
+
 #include <map>
 #include <string>
 #include <set>
+#include <boost/bimap.hpp>
 
 
 
@@ -121,66 +123,90 @@ public:
 		
 	};
 	
+	typedef std::pair<double, double>						ValueRange
+	typedef std::pair<Key, std::string>						KeyLabelPair;
+	typedef std::pair<Key, VSCSValueRange >					KeyRangePair;
+	
+	typedef std::set<Key>									KeySet;
+	typedef std::map<Key, std::string>						KeyLabelMap;
+	typedef std::map<Key, ValueRange >						KeyRangeMap;
+	typedef std::map<Domain, KeySet >						DomainKeysMap;
+	
+	typedef boost::bimap<VSCSParameter::Key, int>			KeyIndexBimap;
+	typedef KeyIndexBimap::value_type						KeyIndexBimapEntry;
+	
+	static const unsigned int kChannelNotFound;
+	
+	/*
+	 *	Singleton instance
+	 */
+	static VSCSParameter& sharedInstance(void);
+
+	
+	/*
+	 *	Constructor/Destructor
+	 */
+	VSCSParameter();
+	~VSCSParameter();
+	
 	/*
 	 *	Get all parameter keys related to a specific domain
 	 */
-	static std::set<Key> keysForDomain(Domain dom);
+	KeySet keysForDomain(Domain dom);
 	
 	/*
 	 *	Channel volume/gain specific
 	 */
-	static unsigned int channelIndexForKey(Key k, bool* dB);
-	static Key keyForChannelIndex(unsigned int i, bool dB);
-	static bool parameterIsLinearChannel(Key k);
-	static bool parameterIsDBChannel(Key k);
-    static const unsigned int kMaxNumberOfChannels;
-    static const unsigned int kChannelNotFound;
+	KeySet channelKeys(void);
+	KeySet dBChannelKeys(void);
+	unsigned int channelIndexForKey(Key k, bool* dB);
+	Key keyForChannelIndex(unsigned int i, bool dB);
+	bool parameterIsLinearChannel(Key k);
+	bool parameterIsDBChannel(Key k);
 	
 	/*
 	 *	Linear/dB amplitude/gain converions
 	 */
-	static VSCSFloat linearToDBGain(VSCSFloat linearGain);
-	static VSCSFloat dBToLinearGain(VSCSFloat dBGain);
+	VSCSFloat linearToDBGain(VSCSFloat linearGain);
+	VSCSFloat dBToLinearGain(VSCSFloat dBGain);
 	
     /*
      *	Labels and ranges
      */
-	static std::string getLabelForParameterWithKey(Key k);
-	static std::pair<double, double> getRangeForParameterWithKey(Key k);
+	std::string getLabelForParameterWithKey(Key k);
+	void setLabelForParameterWithKey(std::string label, Key k);
+	ValueRange getRangeForParameterWithKey(Key k);
+	void setRangeForParameterWithKey(ValueRange valRange, Key k);
 	
 	/*
 	 *	Default values
 	 */
-	static std::pair<double, double> getDefaultLinearGainRange(void);
+	ValueRange getDefaultLinearGainRange(void);
+	
+	/*
+	 *	Fill VSCSParameterLabelMap and VSCSParameterRangeMap
+	 */
 	
 	
 private:
 	
-	static std::map<Key, std::string> parameterLabels;
-	static std::map<Key, std::pair<double, double> > parameterRanges;
-	static std::map<Domain, std::set<Key> > domainParameters;
+	KeyLabelMap parameterLabels;
+	KeyRangeMap parameterRanges;
 	
-	static std::pair<double, double> defaultLinearAmplitudeRange;
-	static std::pair<double, double> defaultDBAmplitudeRange;
-	static std::pair<double, double> defaultLinearFilterGainRange;
-	static std::pair<double, double> defaultDBFilterGainRange;
-    static std::pair<double, double> defaultPhaseRange;
-    static std::pair<double, double> defaultFrequencyRange;
-    static std::pair<double, double> defaultHarmonicsRange;
+	void generateDefaultParameterLabels(void);
+	void generateDefaultParameterRanges(void);
+	KeyLabelMap defaultParameterLabels;
+	KeyRangeMap defaultParameterRanges;
 	
-	static void generateParameterLabels(void);
-	static void generateParameterRanges(void);
-	static void generateDomainParameters(void);
+	void generateDomainParameters(void);
+	DomainKeysMap domainParameters;
+	
+	
+	unsigned int maxNumberOfChannels;
     
 	
 };
 
-typedef std::set<VSCSParameter::Key>								VSCSParameterKeySet;
-typedef std::map<VSCSParameter::Key, std::string>					VSCSParameterLabelMap;
-typedef std::pair<double, double>									VSCSValueRange
-typedef std::map<VSCSParameter::Key, VSCSValueRange >				VSCSParameterRangeMap;
-typedef std::pair<VSCSParameter::Key, std::string>					VSCSKeyLabelPair;
-typedef std::pair<VSCSParameter::Key, VSCSValueRange >				VSCSKeyRangePair;
 
 
 #endif
