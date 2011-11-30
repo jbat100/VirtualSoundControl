@@ -146,6 +146,9 @@
 	/*
 	 *	Setup control tags so that the cells can be identified when sending messages
 	 */
+	[controllerMatrix setTarget:self];
+	[controllerMatrix setAction:@selector(controllerCellCallback:)];
+
 	
 }
 
@@ -223,14 +226,37 @@
 }
 
 -(VSCSParameter::Key) parameterKeyForCell:(NSCell*)cell {
-	NSInteger tag = [cell tag];
-	return [self keyForParameterAtIndex:tag];
+	
+	NSInteger row, column;
+	BOOL success;
+	
+	success = [controllerMatrix getRow:&row column:&column ofCell:cell];
+	if (success)
+		return [self keyForParameterAtIndex:row];
+	
+	success = [numericMatrix getRow:&row column:&column ofCell:cell];
+	if (success)
+		return [self keyForParameterAtIndex:row];
+	
+	success = [labelMatrix getRow:&row column:&column ofCell:cell];
+	if (success)
+		return [self keyForParameterAtIndex:row];
+	
+	throw VSCSInvalidArgumentException();
+	
 }
 
 #pragma mark Controller Cell Callback 
 
 
 -(void) controllerCellCallback:(NSActionCell*)sender {
+	
+	VSCSParameter::Key k = [self parameterKeyForCell:sender];
+	
+	if ([cell isKindOfClass:[NSSliderCell class]]) {
+		double val = [(NSSliderCell*)cell doubleValue];
+		[delegate parameterControlView:self changedParameteWithKey:k to:val];
+	}
 	
 }
 

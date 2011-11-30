@@ -9,8 +9,6 @@
 
 @interface VSCSoundElementView (Private)
 
--(void) customInit;
--(void) createParameterControlView;
--(void) createParameterControlInterface;
+
 
 @end

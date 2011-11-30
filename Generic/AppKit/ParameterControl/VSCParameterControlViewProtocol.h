@@ -63,10 +63,11 @@
 
 @protocol VSCParameterControlViewDelegate
 
-@optional
+@required
 
 -(void) parameterControlView:(id<VSCParameterControlViewProtocol>)view 
-	 changedParameterWithKey:(VSCSParameter::Key)key;
+	 changedParameterWithKey:(VSCSParameter::Key)key
+						  to:(double)val;
 
 @end
 

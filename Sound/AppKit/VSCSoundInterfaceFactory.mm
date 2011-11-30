@@ -11,4 +11,35 @@
 
 @implementation VSCSoundInterfaceFactory
 
+@synthesize theme, options;
+
+static VSCSoundInterfaceFactory* defaultFactoryInstance = nil;
+
++(VSCSoundInterfaceFactory*) defaultFactory {
+	
+	if (!defaultFactoryInstance) {
+		@synchronized (self) {
+			defaultFactoryInstance = [[VSCSoundInterfaceFactory alloc] init];
+		}
+	}
+	
+	return defaultFactoryInstance;
+	
+}
+
+-(id) init {
+	
+	if ((self = [super init])) {
+		self.theme = VSCSoundInterfaceFactoryThemeDefault;
+		self.options = VSCSoundInterfaceFactoryOptionNone;
+	}
+	
+}
+
+-(VSCSoundElementView*) interfaceViewForSoundElement:(VSCSoundElementPtr)soundElement {
+	
+	
+	
+}
+
 @end

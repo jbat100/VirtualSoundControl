@@ -62,6 +62,8 @@
 -(VSCSParameter::Key) keyForParameterAtIndex:(NSInteger)index;
 -(NSInteger) indexForParameterWithKey:(VSCSParameter::Key)key;
 
+-(VSCSParameter::Key) parameterKeyForCell:(NSCell*)cell;
+
 -(NSActionCell*) controllerCellForParameterWithKey:(VSCSParameter::Key k);
 -(NSCell*) numericCellForParameterWithKey:(VSCSParameter::Key k);
 -(NSCell*) labelCellForParameterWithKey:(VSCSParameter::Key k);

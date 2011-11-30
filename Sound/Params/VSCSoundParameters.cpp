@@ -28,6 +28,10 @@ VSCSParameter::VSCSParameter() {
 	
 }
 
+VSCSParameter::~VSCSParameter() {
+	
+}
+
 VSCSParameter& VSCSParameter::sharedInstance(void) {
 	static VSCSParameter singletonInstance;
 	return singletonInstance;
@@ -121,7 +125,7 @@ VSCSFloat VSCSParameter::dBToLinearGain(VSCSFloat dBGain) {
 
 std::string VSCSParameter::getLabelForParameterWithKey(VSCSParameter::Key k) {
 	
-	LabelMap::iterator labelIterator = parameterLabels.find(k);
+	KeyLabelMap::iterator labelIterator = parameterLabels.find(k);
 	
 	if (labelIterator != parameterLabels.end()) 
 		return labelIterator->second;
@@ -130,9 +134,20 @@ std::string VSCSParameter::getLabelForParameterWithKey(VSCSParameter::Key k) {
 	
 }
 
+void VSCSParameter::setLabelForParameterWithKey(std::string label, Key k) {
+	
+	KeyLabelMap::iterator labelIterator = parameterLabels.find(k);
+	
+	if (labelIterator != parameterLabels.end()) 
+		parameterLabels.erase(k);
+	
+	parameterLabels.insert(KeyLabelPair (k,label));
+	
+}
+
 VSCSParameter::ValueRange VSCSParameter::getRangeForParameterWithKey(Key k) {
 	
-	std::map<Key, std::pair<double, double> >::iterator rangeIterator = parameterRanges.find(k);
+	KeyRangeMap::iterator rangeIterator = parameterRanges.find(k);
 	
 	if (rangeIterator != parameterRanges.end()) 
 		return rangeIterator->second;
@@ -140,6 +155,18 @@ VSCSParameter::ValueRange VSCSParameter::getRangeForParameterWithKey(Key k) {
 	throw VSCSBadParameterException();
 	
 }
+
+void VSCSParameter::setRangeForParameterWithKey(ValueRange valRange, Key k) {
+	
+	KeyRangeMap::iterator rangeIterator = parameterRanges.find(k);
+	
+	if (rangeIterator != parameterRanges.end()) 
+		parameterRanges.erase(k);
+	
+	parameterRanges.insert(KeyRangePair (k, valRange));
+	
+}
+
 
 bool VSCSParameter::parameterIsLinearChannel(Key k) {
 	
@@ -240,43 +267,38 @@ void VSCSParameter::generateDefaultParameterRanges(void) {
     ValueRange defaultPhaseRange = (-kVSC_PI, kVSC_PI);
     ValueRange defaultFrequencyRange (20.0, 20000.0);
     ValueRange defaultHarmonicsRange (0.0, 10.0);
-
 	
-	if (VSCSParameter::parameterIsLinearChannel(k)) 
-		return defaultLinearAmplitudeRange;
+	parameterRanges.insert(KeyRangePair (KeyNone, ValueRange(0.0, 0.0)));
 	
-	if (VSCSParameter::parameterIsDBChannel(k))
-		return defaultDBAmplitudeRange;
-	
-	switch (k) {
-		case KeySineFrequency:
-		case KeySawFrequency:
-		case KeySquareFrequency:
-			return defaultFrequencyRange;
-			break;
-		case KeySinePhase:
-		case KeySawPhase:
-		case KeySquarePhase:
-			return defaultPhaseRange;
-			break;
-		case KeySawHarmonics:
-		case KeySquareHarmonics:
-			return defaultHarmonicsRange;
-			break;
-		default:
-			break;
+	parameterRanges.insert(KeyLabelPair (KeyChannelAll, defaultLinearAmplitudeRange));
+	parameterRanges.insert(KeyLabelPair (KeyChannelDBAll, defaultDBAmplitudeRange));
+	for (unsigned int i = 0; i < maxNumberOfChannels; i++) {
+		Key k = keyForChannelIndex(i, false);
+		parameterLabels.insert(KeyLabelPair (k, defaultLinearAmplitudeRange));
+		Key dBK = keyForChannelIndex(i, true);
+		parameterLabels.insert(KeyLabelPair (dBK, defaultDBAmplitudeRange));
 	}
-		
-	parameterRanges.insert(KeyRangePair (KeyNone, Range(0.0, 0.0)));
+
+	parameterRanges.insert(KeyRangePair (KeySineFrequency, defaultFrequencyRange));
+	parameterRanges.insert(KeyRangePair (KeySinePhase, defaultPhaseRange));
 	
-	parameterRanges.insert(KeyRangePair (KeyFileTime, Range(0.0, 0.0)));
-	parameterRanges.insert(KeyRangePair (KeyFilePlaybackSpeed, Range(0.0, 50.0)));
-	parameterRanges.insert(KeyRangePair (KeyFileLoopStartTime, Range(0.0, 0.0)));
-	parameterRanges.insert(KeyRangePair (KeyFileLoopEndTime, Range(0.0, 0.0)));
-	parameterRanges.insert(KeyRangePair (KeyFileLoopCrossoverDuration, Range(0.0, 0.0)));
+	parameterRanges.insert(KeyRangePair (KeySawFrequency, defaultFrequencyRange));
+	parameterRanges.insert(KeyRangePair (KeySawPhase, defaultPhaseRange));
+	parameterRanges.insert(KeyRangePair (KeySawHarmonics, defaultHarmonicsRange));
+	
+	parameterRanges.insert(KeyRangePair (KeySquareFrequency, defaultFrequencyRange));
+	parameterRanges.insert(KeyRangePair (KeySquarePhase, defaultPhaseRange));
+	parameterRanges.insert(KeyRangePair (KeySquareHarmonics, defaultHarmonicsRange));
+	
+	
+	parameterRanges.insert(KeyRangePair (KeyFileTime, ValueRange(0.0, 0.0)));
+	parameterRanges.insert(KeyRangePair (KeyFilePlaybackSpeed, ValueRange(0.0, 50.0)));
+	parameterRanges.insert(KeyRangePair (KeyFileLoopStartTime, ValueRange(0.0, 0.0)));
+	parameterRanges.insert(KeyRangePair (KeyFileLoopEndTime, ValueRange(0.0, 0.0)));
+	parameterRanges.insert(KeyRangePair (KeyFileLoopCrossoverDuration, ValueRange(0.0, 0.0)));
 	
 	parameterRanges.insert(KeyRangePair (KeyBiQuadFrequency, defaultFrequencyRange));
-	parameterRanges.insert(KeyRangePair (KeyBiQuadQFactor, Range(0.0, 20.0)));
+	parameterRanges.insert(KeyRangePair (KeyBiQuadQFactor, ValueRange(0.0, 20.0)));
 	parameterRanges.insert(KeyRangePair (KeyBiQuadLinearGain, defaultLinearFilterGainRange));
 	
 }

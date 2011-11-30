@@ -21,17 +21,12 @@
 	
 	VSCSoundElementPtr soundElement;
 	
-	VSCParameterControlView* parameterControlView;
+	NSMutableArray* parameterControlViews;
 	
 }
 
-@property (nonatomic, retain) VSCParameterControlView* parameterControlView;
+@property (nonatomic, retain) NSMutableArray* parameterControlViews;
 
-/*
- *	Give a chance to the subclasses to react to changes to the element they 
- *	represent (after having been inform of it by any objc based messaging mechanism)
- */
--(void) updateParameterKeyIndexMap;
 
 /*
  *	Parameter label/range/value reloading

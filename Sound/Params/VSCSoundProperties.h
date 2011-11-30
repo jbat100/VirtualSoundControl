@@ -28,6 +28,11 @@ public:
 	
 	enum Domain {
 		DomainNone,
+		
+		DomainSoundElement,
+		
+		DomainMultiChannelElement,
+		
 		DomainSourceGenerator,
 		DomainSourceGroup,
 		DomainSourceFile,
@@ -44,6 +49,8 @@ public:
 		
 		KeyNone,
 		
+		KeySoundElementType,
+		
 		// multi chan		
 		KeyChannelSetup,
 		
@@ -57,17 +64,27 @@ public:
 
 	};
 	
+	typedef std::map<Key, std::string>		KeyLabelMap;
+	typedef std::pair<Key, std::string>		KeyLabelPair;
 	
-	static std::string getLabelForPropertyWithKey(Key k);
-	static void setLabelForPropertyWithKey(Key k);
+	/*
+	 *	Singleton instance
+	 */
+	static VSCSProperty& sharedInstance(void);
+	
+	VSCSProperty();
+	~VSCSProperty();
+	
+	
+	std::string getLabelForPropertyWithKey(Key k);
+	void setLabelForPropertyWithKey(std::string label, Key k);
 	
 	
 private:
 	
-	static std::map<Key, std::string> propertyLabels;
+	KeyLabelMap keyLabelMap;
 
-	static bool generatedPropertyLabels;
-	static void generatePropertyLabels(void);
+	void generatePropertyLabels(void);
 	
 };
 
