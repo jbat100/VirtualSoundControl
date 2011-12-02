@@ -35,12 +35,7 @@ public:
 	virtual double getValueForParameterWithKey(VSCSParameter::Key key);
 	virtual void setValueForParameterWithKey(double value, VSCSParameter::Key key);
     
-	/*
-	 *	STK engine (shouldn't use apart from debug...)
-	 */
-    stk::SineWave* getStkSineWave(void);
-	
-	/*
+    /*
 	 *	Call on change number of channels
 	 */
 	void updateSoundEngine(void);
@@ -54,6 +49,15 @@ public:
 	VSCSFloat getPhase(void);
 	void setPhase(VSCSFloat f);
 	void addPhase(VSCSFloat f);
+    
+	/*
+	 *	STK engine (shouldn't use apart from debug...)
+	 */
+    const stk::SineWave& getStkSineWave(void);
+    
+protected:
+    
+    virtual void processComputationFrames(unsigned int numberOfFrames);
 	
 private:
     
@@ -65,8 +69,6 @@ private:
 	 */
 	VSCSFloat _frequency;
 	VSCSFloat _phase;
-    
-    void processComputationFrames(unsigned int numberOfFrames);
 	
 };
 

@@ -34,11 +34,14 @@ static VSCSoundInterfaceFactory* defaultFactoryInstance = nil;
 		self.options = VSCSoundInterfaceFactoryOptionNone;
 	}
 	
+    return self;
 }
 
 -(VSCSoundElementView*) interfaceViewForSoundElement:(VSCSoundElementPtr)soundElement {
+    
+    std::string elementType = soundElement->getValueForPropertyWithKey(VSCSProperty::KeySoundElementType);
 	
-	
+	return nil;
 	
 }
 

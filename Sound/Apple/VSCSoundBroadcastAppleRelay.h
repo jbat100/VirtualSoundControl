@@ -12,8 +12,8 @@
 #import "VSCSoundBroadcaster.h"
 #import "VSCSoundParameters.h"
 #import "VSCSoundProperties.h"
-#import "VSCSoundParameterizedElement.h"
-#import "VSCSoundPropertizedElement.h"
+#import "VSCSoundParameterized.h"
+#import "VSCSoundPropertized.h"
 
 #import <string>
 
@@ -23,7 +23,7 @@
 
 -(void) parameterWithKey:(VSCSParameter::Key)key 
 			   changedTo:(double)value 
-			  forElement:(VSCSoundParameterizedElement*)element;
+			  forElement:(VSCSoundParameterized*)element;
 
 @end
 
@@ -33,7 +33,7 @@
 
 -(void) propertyWithKey:(VSCSProperty::Key)key 
 			  changedTo:(std::string)value 
-			 forElement:(VSCSoundPropertizedElement*)element;
+			 forElement:(VSCSoundPropertized*)element;
 
 @end
 
@@ -48,8 +48,8 @@ class VSCSoundBroadcastAppleRelay : public VSCSParameterListener, public VSCSPro
     void addPropertyAppleListener(id<VSCSPropertyAppleListener> propertyListener);
     void removePropertyAppleListener(id<VSCSPropertyAppleListener> propertyListener);
 	
-	virtual void parameterChanged(VSCSoundParameterizedElement* element, VSCSParameter::Key, double value);
-	virtual void propertyChanged(VSCSoundPropertizedElement* element, VSCSProperty::Key, std::string value);
+	virtual void parameterChanged(VSCSoundParameterized* element, VSCSParameter::Key, double value);
+	virtual void propertyChanged(VSCSoundPropertized* element, VSCSProperty::Key, std::string value);
     
 protected:
     

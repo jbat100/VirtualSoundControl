@@ -13,17 +13,17 @@
 
 unsigned int VSCSoundElement::elementCount = 0;
 
+const std::string VSCSoundElement::kSoundElementType = "VSCSoundElement";
+
 VSCSoundElement::VSCSoundElement() {
-	elementIdentifier = "VSCSElement_" + boost::lexical_cast<std::string>(VSCSoundElement::elementCount);
+    elementId = VSCSoundElement::elementCount;
 	VSCSoundElement::elementCount++;
 }
 
 std::string VSCSoundElement::getElementIdentifier(void) {
-	return elementIdentifier;
+	return 	this->getElementType() + "_" + boost::lexical_cast<std::string>(VSCSoundElement::elementCount);;
 }
 
 std::string VSCSoundElement::getElementType(void) {
-	static const std::string t("VSCSoundElement");
-	return t;
+	return VSCSoundElement::kSoundElementType;
 }
-

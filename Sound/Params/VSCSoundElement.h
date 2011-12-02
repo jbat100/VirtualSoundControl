@@ -31,19 +31,25 @@
 class VSCSoundElement : public VSCSoundPropertized, public VSCSoundParameterized {
 	
 public:
-	
+    
+    /*
+     *  Constructor
+     */
 	VSCSoundElement();
 	
 	/*
-	 *	Generator type/identifier (for easier interface, not requiring tones of casts)
+	 *	Generator type/identifier (for easier interface, not requiring tons of casts)
 	 */
-	std::string getElementIdentifier(void);
+	virtual std::string getElementIdentifier(void); 
 	virtual std::string getElementType(void);
 	
-protected:
+private:
+    
+    static const std::string kSoundElementType;
 	
 	static unsigned int elementCount;
-	std::string elementIdentifier;
+	
+    unsigned int elementId;
 	
 };
 

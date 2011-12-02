@@ -40,7 +40,8 @@ public:
 	VSCSynthSourceGenerator();
 	
     /*
-     *  stk::Generator tick method which should be over-ridden.
+     *  stk::Generator tick method which should not be over-ridden (the subclasses compute audio 
+     *  samples in processComputationFrames, to keep the number of channels independent).
      */
 	stk::StkFrames& tick(stk::StkFrames& frames, unsigned int channel = 0);
 	
@@ -69,19 +70,14 @@ public:
 	virtual void setIsOn(bool o);
 	bool isOn(void);
 	
-	
 	/*
-	 *	Used for debugging and tracing, no encapsulation ...
-	 */
-	stk::StkFrames _pastFrames;
-	unsigned int _numberOfPastFrames;
-	bool _fillPastFrames;
-	unsigned long long _tickCount;
+     *  Frame debugging
+     */
+    void tracePastFrames(unsigned int numberOfPastFrames);
+    const stk::StkFrames& getPastFrames(void);
+    unsigned long long getTickCount(void);
 	
 protected:
-	
-	bool _isOn;
-	std::string generatorType;
 	
 	/* 
      *  Keep a seperate StkFrames so that it does not need to be created everytime the tick function is called
@@ -93,27 +89,51 @@ protected:
      *  which stk class is used to compute the smaples (most generators would be mono, but file readers/loopers could be
      *  more i.e. stereo, 5.1 etc...)
      *
+     *  This is made protected for fast access by subclasses (performance crucial audio processing)
+     *
      */
     stk::StkFrames _computationFrames;
-	unsigned int _numberOfChannelsNeededForComputationFrames;
     
     /*
-     *  Keep a StkFrames object for averaging (used when multi-channel _computationFrames are generated and the number 
-     *  of channels does not correspond to _numberOfChannels) : the _computationFrames averaged over all channels are then assigned
-     *  to all frames channels.
-     */
-    stk::StkFrames _averageFrames;
-    
-    /*
-     * compute (call the tick method) mono frames, this is the actual computation of the samples 
+     *  compute (call the tick method) mono frames, this is the actual computation of the samples to be implemented 
+     *  by subclasses
      */
     virtual void processComputationFrames(unsigned int numberOfFrames);
-	
-	/*
+    void setNumberOfChannelsNeededForComputationFrames(unsigned int n);
+    unsigned int numberOfChannelsNeededForComputationFrames(void);
+    
+private:
+    
+    bool _isOn;
+    
+    /*
 	 *	Backpointer to the group generator which possesses this as subgenerator, NULL if it does not
 	 *	belong to a group
 	 */
 	VSCSynthSourceGenerator* _group;
+    
+    /*
+     *  determines the number of channels which _comutationFrames should be computed for
+     */
+    unsigned int _numberOfChannelsNeededForComputationFrames;
+    
+    /*
+     *  Keep a StkFrames object for averaging (used when multi-channel _computationFrames are generated and the number 
+     *  of channels does not correspond to _numberOfChannels) : the _computationFrames averaged over all channels are then assigned
+     *  to all frames channels. This is private as there is no need for any subclasses to access it (it purely for multi-channelizing
+     *  the computation frames)
+     */
+    stk::StkFrames _averageFrames;
+    
+    
+    /*
+	 *	Used for debugging and tracing, (does not affect any processing just logs values)
+	 */
+    void setupPastFrames(void);
+	stk::StkFrames _pastFrames;
+	unsigned int _numberOfPastFrames;
+	bool _fillPastFrames;
+	unsigned long long _tickCount;
 	
 };
 

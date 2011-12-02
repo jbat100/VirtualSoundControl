@@ -20,13 +20,13 @@ VSCSoundBroadcastAppleRelay::~VSCSoundBroadcastAppleRelay() {
     [propertyListeners release];
 }
 
-void VSCSoundBroadcastAppleRelay::parameterChanged(VSCSoundParameterizedElement* element, VSCSParameter::Key k, double value) {
+void VSCSoundBroadcastAppleRelay::parameterChanged(VSCSoundParameterized* element, VSCSParameter::Key k, double value) {
     for (id<VSCSParameterAppleListener> listener in parameterListeners) {
         [listener parameterWithKey:k changedTo:value forElement:element];
     }
 }
 
-void VSCSoundBroadcastAppleRelay::propertyChanged(VSCSoundPropertizedElement* element, VSCSProperty::Key k, std::string value) {
+void VSCSoundBroadcastAppleRelay::propertyChanged(VSCSoundPropertized* element, VSCSProperty::Key k, std::string value) {
     for (id<VSCSPropertyAppleListener> listener in propertyListeners) {
         [listener propertyWithKey:k changedTo:value forElement:element];
     }

@@ -25,10 +25,10 @@ void VSCSoundPropertized::removePropertyKey(VSCSProperty::Key k) {
 }
 
 
-double VSCSoundPropertized::getValueForPropertyWithKey(VSCSProperty::Key key) {
+std::string VSCSoundPropertized::getValueForPropertyWithKey(VSCSProperty::Key key) {
 	throw VSCSBadPropertyException();
 }
 
-void VSCSoundPropertized::setValueForPropertyWithKey(double value, VSCSProperty::Key key) {
+void VSCSoundPropertized::setValueForPropertyWithKey(std::string value, VSCSProperty::Key key) {
 	throw VSCSBadPropertyException();
 }

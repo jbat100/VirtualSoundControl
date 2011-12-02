@@ -12,14 +12,14 @@
 
 VSCSynthSourceSine::VSCSynthSourceSine() {
 	
-	this->_numberOfChannelsNeededForComputationFrames = 1;
-	
+	this->setNumberOfChannelsNeededForComputationFrames(1);
 	this->setFrequency(VSCSound::getReferenceAFrequency());
-	// this->setPhase(0.0); // no need to do that...
+	this->setPhase(0.0); // no need to do that...
+    
 }
 
 void VSCSynthSourceSine::processComputationFrames(unsigned int numberOfFrames) {
-	VSCSynthSourceGenerator::processComputationFrames(numberOfFrames);
+	//VSCSynthSourceGenerator::processComputationFrames(numberOfFrames);
 	sineWave.tick(_computationFrames);
 }
 
@@ -32,16 +32,18 @@ double VSCSynthSourceSine::getValueForParameterWithKey(VSCSParameter::Key key) {
 		return this->getPhase();
 	}
 	
-	VSCSynthSourceGenerator::getValueForParameterWithKey(key);
+	return VSCSynthSourceGenerator::getValueForParameterWithKey(key);
 }
 
 void VSCSynthSourceSine::setValueForParameterWithKey(double value, VSCSParameter::Key key) {
 	
 	if (key == VSCSParameter::KeySineFrequency) {
-		return this->setFrequency((VSCSFloat)value);
+		this->setFrequency((VSCSFloat)value);
+        return;
 	}
 	if (key == VSCSParameter::KeySinePhase) {
-		return this->setPhase((VSCSFloat)value);
+		this->setPhase((VSCSFloat)value);
+        return;
 	}
 	
 	VSCSynthSourceGenerator::setValueForParameterWithKey(value, key);
@@ -49,22 +51,14 @@ void VSCSynthSourceSine::setValueForParameterWithKey(double value, VSCSParameter
 }
 
 
-stk::SineWave* VSCSynthSourceSine::getStkSineWave(void) {
-    return &sineWave;
+const stk::SineWave& VSCSynthSourceSine::getStkSineWave(void) {
+    return sineWave;
 }
 
 void VSCSynthSourceSine::updateSoundEngine(void) {
 	
 	// call superclass implementation
 	VSCSynthSourceGenerator::updateSoundEngine();
-	
-	/*
-	 *	resize _computationFrames to have 1 channel (only need mono noise generation)
-	 *	which will get spread to the (possibly) multi-channel VSCSynthSourceGenerator
-	 */
-    if (_computationFrames.channels() != 1) {
-        _computationFrames.resize(_computationFrames.frames(), 1);
-    }
 	
 }
 

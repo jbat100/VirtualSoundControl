@@ -13,8 +13,8 @@
 #include "VSCSound.h"
 #include "VSCSoundParameters.h"
 #include "VSCSoundProperties.h"
-#include "VSCSoundParameterizedElement.h"
-#include "VSCSoundPropertizedElement.h"
+#include "VSCSoundParameterized.h"
+#include "VSCSoundPropertized.h"
 
 #include <map>
 #include <stack>
@@ -28,7 +28,7 @@
  *	overriden < operator to be able to use as key in std::map
  */
 struct VSCSParameterId {
-	VSCSoundParameterizedElement* element;
+	VSCSoundParameterized* element;
 	VSCSParameter::Key key;
 	bool operator<(const VSCSParameterId& paramId) const { return element < paramId.element; }
 };
@@ -42,7 +42,7 @@ struct VSCSParameterUpdate {
  *	overriden < operator to be able to use as key in std::map
  */
 struct VSCSPropertyId {
-	VSCSoundPropertizedElement* element;
+	VSCSoundPropertized* element;
 	VSCSProperty::Key key;
 	bool operator<(const VSCSPropertyId& propId) const { return element < propId.element; }
 };
@@ -62,9 +62,9 @@ class VSCSParameterListener {
 	
 public:
 	
-	void addParameterizedElement(VSCSoundParameterizedElement* element);
-	void removeParameterizedElement(VSCSoundParameterizedElement* element);
-	std::set<VSCSoundParameterizedElement*> getParameterizedElements(void);
+	void addParameterizedElement(VSCSoundParameterized* element);
+	void removeParameterizedElement(VSCSoundParameterized* element);
+	std::set<VSCSoundParameterized*> getParameterizedElements(void);
 	
 	void addParameterKey(VSCSParameter::Key k);
 	void removeParameterKey(VSCSParameter::Key k);
@@ -72,12 +72,12 @@ public:
     
 	
     virtual bool interestedInParameterId(VSCSParameterId paramId);
-	virtual void parameterChanged(VSCSoundParameterizedElement* element, VSCSParameter::Key, double value);
+	virtual void parameterChanged(VSCSoundParameterized* element, VSCSParameter::Key, double value);
 	
 protected:
 	
 	/* The elements for which the listener wants to receive events */
-	std::set<VSCSoundParameterizedElement*> _parameterizedElements;
+	std::set<VSCSoundParameterized*> _parameterizedElements;
 	
 	/* The keys for which the listener wants to recieve events */
 	std::set<VSCSParameter::Key> _parameterKeys;
@@ -95,9 +95,9 @@ public:
 	/*
 	 *	Determine the elements for which the listener is interested 
 	 */
-	void addPropertizedElement(VSCSoundPropertizedElement* element);
-	void removePropertizedElement(VSCSoundPropertizedElement* element);
-	std::set<VSCSoundPropertizedElement*> getPropertizedElements(void);
+	void addPropertizedElement(VSCSoundPropertized* element);
+	void removePropertizedElement(VSCSoundPropertized* element);
+	std::set<VSCSoundPropertized*> getPropertizedElements(void);
 	
 	/*
 	 *	Determine the keys for which the listener is interested
@@ -110,12 +110,12 @@ public:
      *  Ask whether the listener is interested by a given combination of element/key
      */
     virtual bool interestedInPropertyId(VSCSPropertyId propId);
-	virtual void propertyChanged(VSCSoundPropertizedElement* element, VSCSProperty::Key, std::string value);
+	virtual void propertyChanged(VSCSoundPropertized* element, VSCSProperty::Key, std::string value);
 	
 protected:
 	
 	/* The elements for which the listener wants to receive events */
-	std::set<VSCSoundPropertizedElement*> _propertizedElements;
+	std::set<VSCSoundPropertized*> _propertizedElements;
 	
 	/* The keys for which the listener wants to recieve events */
 	std::set<VSCSProperty::Key> _propertyKeys;
@@ -139,8 +139,8 @@ public:
 	VSCSoundBroadcaster();
 	~VSCSoundBroadcaster();
 	
-    void parameterChanged(VSCSoundParameterizedElement* element, VSCSParameter::Key, double value);
-    void propertyChanged(VSCSoundPropertizedElement* element, VSCSProperty::Key, std::string value);
+    void parameterChanged(VSCSoundParameterized* element, VSCSParameter::Key, double value);
+    void propertyChanged(VSCSoundPropertized* element, VSCSProperty::Key, std::string value);
    
 	void setBroadcastInterval(VSCSFloat interval);
 	VSCSFloat getBroadcastInterval(void);

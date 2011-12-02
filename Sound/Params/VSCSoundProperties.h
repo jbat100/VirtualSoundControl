@@ -12,6 +12,8 @@
 #define _VSCS_PROPERTY_H_
 
 #include "VSCSound.h"
+
+#include <set>
 #include <map>
 #include <string>
 
@@ -50,6 +52,7 @@ public:
 		KeyNone,
 		
 		KeySoundElementType,
+        KeySoundElementIdentifier,
 		
 		// multi chan		
 		KeyChannelSetup,
@@ -63,6 +66,8 @@ public:
 		KeyAll
 
 	};
+    
+    typedef std::set<Key>                   KeySet;
 	
 	typedef std::map<Key, std::string>		KeyLabelMap;
 	typedef std::pair<Key, std::string>		KeyLabelPair;
@@ -78,12 +83,15 @@ public:
 	
 	std::string getLabelForPropertyWithKey(Key k);
 	void setLabelForPropertyWithKey(std::string label, Key k);
+    
+    /*
+     *  
+     */
 	
 	
 private:
 	
 	KeyLabelMap keyLabelMap;
-
 	void generatePropertyLabels(void);
 	
 };

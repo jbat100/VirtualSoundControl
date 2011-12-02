@@ -35,15 +35,36 @@ public:
 	
 	void addParameterKey(VSCSParameter::Key k);
 	void removeParameterKey(VSCSParameter::Key k);
-	std::set<VSCSParameter::Key>& getParameterKeys(void);
+    
+    /*  Decided against maintaining a key map for performance (parameter set can occur on every single audio sample)
+     *  so traversing the entire class hierachy to get to this class seems a poor design choice, also some parameters
+     *  for example KeyChannelx and KeyChannelDBx control the same things and maintaining internal consistency would add
+     *  another layer of complexity on every cycle, subclasses should therefore store their own state in private variables
+     *  perhaps even protected as in the case of multichannel, surrender a bit of encapsulation for better performance
+     *  seems justified.
+     
+    const VSCSParameter::KeyValueMap& getKeyValueMap(void);
 	
+     */
+    
+    const VSCSParameter::KeySet& getKeySet(void); // const handle to internals, bad me
+    
+    /*
+     *  Make the setter virtual so that subclasses can 
+     */
 	virtual double getValueForParameterWithKey(VSCSParameter::Key key);
-	virtual void setValueForParameterWithKey(double value, VSCSParameter::Key key);
+    virtual void setValueForParameterWithKey(double value, VSCSParameter::Key key);
 	
-protected:
+private:
 	
-    std::set<VSCSParameter::Key> _parameterKeys;
-	
+    /*  Not used (see accessor comments above)
+    VSCSParameter::KeyValueMap _keyValueMap;
+	*/
+    
+    /*
+     *  Maintain a key set of the parameters the object can handle (fill in constructors)
+     */
+    VSCSParameter::KeySet _keySet;
 };
 
 

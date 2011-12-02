@@ -34,14 +34,14 @@ public:
 	
 	void addPropertyKey(VSCSProperty::Key k);
 	void removePropertyKey(VSCSProperty::Key k);
-	std::set<VSCSProperty::Key>& getPropertyKeys(void);
+	VSCSProperty::KeySet& getPropertyKeys(void);
 	
-	virtual double getValueForPropertyWithKey(VSCSProperty::Key key);
-	virtual void setValueForPropertyWithKey(double value, VSCSProperty::Key key);
+	virtual std::string getValueForPropertyWithKey(VSCSProperty::Key key);
+	virtual void setValueForPropertyWithKey(std::string, VSCSProperty::Key key);
 	
 private:
 	
-    std::set<VSCSProperty::Key> _propertyKeys;
+    VSCSProperty::KeySet _propertyKeys;
 	
 };
 

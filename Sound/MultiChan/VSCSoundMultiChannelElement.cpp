@@ -12,10 +12,12 @@
 
 #pragma mark Constructor/Destructor
 
+const std::string VSCSoundMultiChannelElement::kSoundMultiChannelType = "VSCSoundMultiChannelElement";
+
 VSCSoundMultiChannelElement::VSCSoundMultiChannelElement() {
     
-	this->_numberOfChannels = 0;
-	this->_lockNumberOfChannels = false;
+	_numberOfChannels = 0;
+	_lockNumberOfChannels = false;
 	
 }
 
@@ -35,12 +37,12 @@ void VSCSoundMultiChannelElement::setNumberOfChannels(unsigned int numberOfChann
     
     this->resetMultiChannelParameters();
 	
-	_parameterKeys.insert(VSCSParameter::KeyChannelAll);
-    _parameterKeys.insert(VSCSParameter::KeyChannelDBAll);
+	this->addParameterKey(VSCSParameter::KeyChannelAll);
+    this->addParameterKey(VSCSParameter::KeyChannelDBAll);
 	for (int i = 0; i < _numberOfChannels; i++) {
 		// insert keys for dB AND liner gain values
-        _parameterKeys.insert(VSCSParameter::keyForChannelIndex(i,true));
-		_parameterKeys.insert(VSCSParameter::keyForChannelIndex(i,false));
+        this->addParameterKey(VSCSParameter::sharedInstance().keyForChannelIndex(i,true));
+		this->addParameterKey(VSCSParameter::sharedInstance().keyForChannelIndex(i,false));
     }
     
     // DO NOT CALL VIRTUAL METHODS IN CONSTRUCTOR !!!
@@ -49,6 +51,10 @@ void VSCSoundMultiChannelElement::setNumberOfChannels(unsigned int numberOfChann
 
 unsigned int VSCSoundMultiChannelElement::getNumberOfChannels(void) {
     return _numberOfChannels;
+}
+
+const std::vector<VSCSFloat>& VSCSoundMultiChannelElement::getChannelLinearGains(void) {
+    return _channelLinearGains;
 }
 
 #pragma mark Average Gains
@@ -64,7 +70,7 @@ VSCSFloat VSCSoundMultiChannelElement::averageLinearGain(void) {
 VSCSFloat VSCSoundMultiChannelElement::averageDBGain(void) {
     VSCSFloat sum = 0.0;
 	for (int i = 0; i<_numberOfChannels; i++) {
-		sum += VSCSParameter::linearToDBGain(_channelLinearGains[i]);
+		sum += VSCSParameter::sharedInstance().linearToDBGain(_channelLinearGains[i]);
 	}
 	return sum/(VSCSFloat)_numberOfChannels;
 }
@@ -91,7 +97,7 @@ double VSCSoundMultiChannelElement::getValueForParameterWithKey(VSCSParameter::K
     }
     
     bool isDB = false;
-    int i = VSCSParameter::channelIndexForKey(key, &isDB);
+    int i = VSCSParameter::sharedInstance().channelIndexForKey(key, &isDB);
     
     if (i != VSCSParameter::kChannelNotFound) {
         
@@ -102,7 +108,7 @@ double VSCSoundMultiChannelElement::getValueForParameterWithKey(VSCSParameter::K
 			return _channelLinearGains[i];
 		}
         else {
-            return VSCSParameter::linearToDBGain(_channelLinearGains[i]);
+            return VSCSParameter::sharedInstance().linearToDBGain(_channelLinearGains[i]);
         }
         
     }
@@ -110,7 +116,7 @@ double VSCSoundMultiChannelElement::getValueForParameterWithKey(VSCSParameter::K
 	/*
 	 *	If we have got to here (we should not), then pass upwards (which should throw)
 	 */
-	return VSCSoundParameterizedElement::getValueForParameterWithKey(key);
+	return VSCSoundParameterized::getValueForParameterWithKey(key);
 }
 
 void VSCSoundMultiChannelElement::setValueForParameterWithKey(double value, VSCSParameter::Key key) {
@@ -118,7 +124,7 @@ void VSCSoundMultiChannelElement::setValueForParameterWithKey(double value, VSCS
 	if (key == VSCSParameter::KeyChannelAll || key == VSCSParameter::KeyChannelDBAll) {
 		VSCSFloat linearGain;
 		if (key == VSCSParameter::KeyChannelAll) linearGain = value;
-		else if (key == VSCSParameter::KeyChannelDBAll) linearGain = VSCSParameter::dBToLinearGain(value);
+		else if (key == VSCSParameter::KeyChannelDBAll) linearGain = VSCSParameter::sharedInstance().dBToLinearGain(value);
 		for (unsigned int i = 0; i < _numberOfChannels; i++) {
 			_channelLinearGains[i] = value;
 		}
@@ -126,13 +132,13 @@ void VSCSoundMultiChannelElement::setValueForParameterWithKey(double value, VSCS
 
     
     bool isDB = false;
-    int i = VSCSParameter::channelIndexForKey(key, &isDB);
+    int i = VSCSParameter::sharedInstance().channelIndexForKey(key, &isDB);
     
     if (i != VSCSParameter::kChannelNotFound) {
         assert(i < _numberOfChannels);
         assert(i < _channelLinearGains.size());
         if (isDB) {
-            _channelLinearGains[i] = VSCSParameter::dBToLinearGain(value);
+            _channelLinearGains[i] = VSCSParameter::sharedInstance().dBToLinearGain(value);
         }
         else {
             _channelLinearGains[i] = value;
@@ -142,23 +148,28 @@ void VSCSoundMultiChannelElement::setValueForParameterWithKey(double value, VSCS
 	/*
 	 *	If we have got to here (we should not), then pass upwards (which should throw)
 	 */
-	VSCSoundParameterizedElement::setValueForParameterWithKey(value, key);
+	VSCSoundParameterized::setValueForParameterWithKey(value, key);
 	
 }
 
 
 void VSCSoundMultiChannelElement::resetMultiChannelParameters(void) {
 	
-	std::set<VSCSParameter::Key> channelsKeys = VSCSParameter::keysForDomain(VSCSParameter::DomainChannels);
-	_parameterKeys.erase(channelsKeys.begin(), channelsKeys.end());
+	VSCSParameter::KeySet channelsKeys = VSCSParameter::sharedInstance().keysForDomain(VSCSParameter::DomainChannels);
+    
+    for (VSCSParameter::KeySet::iterator iter = channelsKeys.begin(); iter != channelsKeys.end(); iter++) {
+        this->removeParameterKey(*iter);
+    }
     
 }
 
 
-double VSCSoundMultiChannelElement::getValueForPropertyWithKey(VSCSProperty::Key key) {	
-	return VSCSoundPropertizedElement::getValueForPropertyWithKey(key);
+std::string VSCSoundMultiChannelElement::getValueForPropertyWithKey(VSCSProperty::Key key) {	
+	return VSCSoundPropertized::getValueForPropertyWithKey(key);
 }
 
-void VSCSoundMultiChannelElement::setValueForPropertyWithKey(double value, VSCSProperty::Key key) {
-	VSCSoundPropertizedElement::setValueForPropertyWithKey(value, key);
+void VSCSoundMultiChannelElement::setValueForPropertyWithKey(std::string value, VSCSProperty::Key key) {
+	VSCSoundPropertized::setValueForPropertyWithKey(value, key);
 }
+
+

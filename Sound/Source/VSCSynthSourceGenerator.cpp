@@ -10,13 +10,14 @@
 #include "VSCSynthSourceGenerator.h"
 
 VSCSynthSourceGenerator::VSCSynthSourceGenerator() {
-	this->_numberOfChannelsNeededForComputationFrames = 0;
-	this->_tickCount = 0
-	this->_group = NULL;
-	this->_isOn = true;
 	
-	unsigned int _numberOfPastFrames = 0;
-	bool _fillPastFrames = false;
+    _numberOfChannelsNeededForComputationFrames = 0;
+	_tickCount = 0;
+	_group = NULL;
+	_isOn = true;
+	
+	_numberOfPastFrames = 0;
+	_fillPastFrames = false;
 	
 }
 
@@ -36,6 +37,14 @@ void VSCSynthSourceGenerator::setValueForParameterWithKey(double val, VSCSParame
 
 #pragma mark - Sound Engine
 
+void VSCSynthSourceGenerator::setNumberOfChannelsNeededForComputationFrames(unsigned int n) {
+    _numberOfChannelsNeededForComputationFrames = n;
+}
+
+unsigned int VSCSynthSourceGenerator::numberOfChannelsNeededForComputationFrames(void) {
+    return _numberOfChannelsNeededForComputationFrames;
+}
+
 void VSCSynthSourceGenerator::processComputationFrames(unsigned int numberOfFrames) {
 	if (_computationFrames.frames() < numberOfFrames || 
 		_computationFrames.channels() != _numberOfChannelsNeededForComputationFrames)
@@ -53,23 +62,76 @@ void VSCSynthSourceGenerator::initialize(void) {
 }
 
 void VSCSynthSourceGenerator::updateSoundEngine(void) {
-
+    
+    /*
+	 *	resize _computationFrames to have 1 channel (only need mono noise generation)
+	 *	which will get spread to the (possibly) multi-channel VSCSynthSourceGenerator
+	 */
+    unsigned int n = this->numberOfChannelsNeededForComputationFrames();
+    if (_computationFrames.channels() != n) {
+        _computationFrames.resize(_computationFrames.frames(), n);
+    }
+    
+    
+    this->setupPastFrames();
 }
+
+/*
+ *  Frame debugging
+ */
+void VSCSynthSourceGenerator::tracePastFrames(unsigned int numberOfPastFrames) {
+    
+    _numberOfPastFrames = numberOfPastFrames;
+    
+    this->setupPastFrames();
+    
+}
+
+void VSCSynthSourceGenerator::setupPastFrames(void) {
+    
+    if (_numberOfPastFrames == 0) {
+        _fillPastFrames = false;
+        _pastFrames.resize(0,0);
+    }
+    
+    else {
+        
+        _fillPastFrames = true;
+        _pastFrames.resize(_numberOfPastFrames, this->getNumberOfChannels());
+    }
+    
+}
+
+const stk::StkFrames& VSCSynthSourceGenerator::getPastFrames(void) {
+    return _pastFrames;
+}
+
+unsigned long long VSCSynthSourceGenerator::getTickCount(void) {
+    return _tickCount;
+}
+
+/*
+ * TICK (CENTRAL PROCESSING METHOD)
+ */
 
 stk::StkFrames& VSCSynthSourceGenerator::tick(stk::StkFrames& frames, unsigned int channel)
 {
+    
+    _tickCount++;
 	
 	if (this->isOn() == false)
-		return;
+		return frames;
+    
+    unsigned int numberOfChannels = this->getNumberOfChannels();
 	
-    assert(frames.channels() == _numberOfChannels);
-    if(frames.channels() != _numberOfChannels)
-        frames.resize(frames.frames(), _numberOfChannels);
+    assert(frames.channels() == numberOfChannels);
+    if(frames.channels() != numberOfChannels)
+        frames.resize(frames.frames(), numberOfChannels);
     
     /*
      *  Process _computationFrames independantly of _numberOfChannels
      */
-    this->processComputationFrames();
+    this->processComputationFrames(frames.frames());
     
     /*
      *  If we have exactly the same number of channels the we just assign the data
@@ -95,18 +157,18 @@ stk::StkFrames& VSCSynthSourceGenerator::tick(stk::StkFrames& frames, unsigned i
         }
     }
     
-    assert(_numberOfChannels == _channelLinearGains.size());
+    const std::vector<VSCSFloat> channelLinearGains = this->getChannelLinearGains();
     
     /*
      *  Scale the output channels as specified by _channelLinearGains
      */
-    for (unsigned int i; i < _numberOfChannels; i++) {
-        stk::scaleFramesChannel(frames, i, (stk::StkFloat)_channelLinearGains[i]);
+    for (unsigned int i; i < numberOfChannels; i++) {
+        stk::scaleFramesChannel(frames, i, (stk::StkFloat)channelLinearGains[i]);
     }
 	
-	if (fillPastFrames) {
-		if (_pastFrames.channels() != _numberOfChannels || _pastFrames.frames() != _numberOfPastFrames)
-			_pastFrames.resize(_numberOfPastFrames, _numberOfChannels);
+	if (_fillPastFrames) {
+		if (_pastFrames.channels() != numberOfChannels || _pastFrames.frames() != _numberOfPastFrames)
+			_pastFrames.resize(_numberOfPastFrames, numberOfChannels);
 		stk::shiftFrames(_pastFrames, frames.frames());
 		stk::substituteFramesFromIndex(frames, _pastFrames, 0);
 	}
@@ -115,3 +177,4 @@ stk::StkFrames& VSCSynthSourceGenerator::tick(stk::StkFrames& frames, unsigned i
     lastFrame_ = frames;
 	return frames;
 }
+

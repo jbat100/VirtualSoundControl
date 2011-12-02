@@ -123,14 +123,19 @@ public:
 		
 	};
 	
-	typedef std::pair<double, double>						ValueRange
+    typedef std::set<Key>                                   KeySet;
+    
+	typedef std::pair<double, double>						ValueRange;
+    
+    typedef std::pair<Key, double>                          KeyValuePair;
 	typedef std::pair<Key, std::string>						KeyLabelPair;
-	typedef std::pair<Key, VSCSValueRange >					KeyRangePair;
-	
-	typedef std::set<Key>									KeySet;
+	typedef std::pair<Key, ValueRange >                     KeyRangePair;
+									
+    typedef std::map<Key, double>                           KeyValueMap;
 	typedef std::map<Key, std::string>						KeyLabelMap;
 	typedef std::map<Key, ValueRange >						KeyRangeMap;
-	typedef std::map<Domain, KeySet >						DomainKeysMap;
+	
+    typedef std::map<Domain, KeySet >						DomainKeysMap;
 	
 	typedef boost::bimap<VSCSParameter::Key, int>			KeyIndexBimap;
 	typedef KeyIndexBimap::value_type						KeyIndexBimapEntry;

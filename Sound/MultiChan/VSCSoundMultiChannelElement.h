@@ -59,8 +59,8 @@ public:
 	virtual double getValueForParameterWithKey(VSCSParameter::Key key);
 	virtual void setValueForParameterWithKey(double value, VSCSParameter::Key key);
 	
-	virtual double getValueForPropertyWithKey(VSCSProperty::Key key);
-	virtual void setValueForPropertyWithKey(double value, VSCSProperty::Key key);
+	virtual std::string getValueForPropertyWithKey(VSCSProperty::Key key);
+	virtual void setValueForPropertyWithKey(std::string value, VSCSProperty::Key key);
 	
 	/*--------------------------------------------------------------*/
 	
@@ -68,10 +68,18 @@ public:
 	
 protected:
 	
-	bool _lockNumberOfChannels;
+    /*
+     *  Provide const ref for fast access in subclasses for audio processing
+     */
+    const std::vector<VSCSFloat>& getChannelLinearGains(void);
+    
+private:
+
+    static const std::string kSoundMultiChannelType;
+    
     std::vector<VSCSFloat> _channelLinearGains;
     unsigned int _numberOfChannels;
-	
+    bool _lockNumberOfChannels;
     void resetMultiChannelParameters(void);
     
 	
