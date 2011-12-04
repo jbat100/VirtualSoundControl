@@ -51,6 +51,14 @@
 	keySet.erase(k);
 }
 
+-(void) addParameterKeys:(VSCSParameter::KeySet)kSet {
+	keySet.insert(kSet.begin(), kSet.end());
+}
+
+-(void) removeParameterKeys:(VSCSParameter::KeySet)kSet {
+	keySet.erase(kSet.begin(), kSet.end());
+}
+
 #pragma mark - Parameter Labels 
 
 -(NSString*) getLabelForParameterKey:(VSCSParameter::Key)k {

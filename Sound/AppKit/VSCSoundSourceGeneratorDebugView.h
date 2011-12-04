@@ -9,20 +9,16 @@
 #import <Cocoa/Cocoa.h>
 
 #import "Stk.h"
-#import "VSCSynthSourceGenerator.h"
-#import "VSCParameterControlViewProtocol.h"
+#import "VSCSoundGenerator.h"
+#import "VSCSoundElementView.h"
 
-//@class VSCSoundParameterView;
-//@class VSCSoundChannelLevelParameterView;
 
 /*
  *	I don't think this view should be subclassed as it is only a wrapper for a VSCSoundParameterView
  *	
  */
 
-@interface VSCSoundSourceGeneratorDebugView : NSView <VSCParameterControlViewDelegate, NSTableViewDataSource> {
-	
-	VSCSynthSourceGeneratorPtr sourceGenerator;
+@interface VSCSoundSourceGeneratorDebugView : VSCSoundElementView {
 	
 	NSTextField* generatorTitleTextField;
 	NSTextField* tickCountTextField;
@@ -33,23 +29,6 @@
 	 *	generator, the last tickDepth frames will be shown in the NSTableView
 	 */
 	NSTableView* tickTableView;
-	
-	/*
-	 *	As for the generatorParameterView, the class of the channelLevelParameterView
-	 *  is left to be determined at runtime by subclasses for maximum flexibility.
-	 */
-	NSView* channelLevelParameterParentView;
-	NSView<VSCParameterControlViewProtocol>* channelLevelParameterView;
-	
-	/*
-	 *	In order to allow the configuration of the generator parameter view into any subclass
-	 *	of VSCSoundParameter view, we have a generatorParameterParentView which is loaded
-	 *	from nib to which we add a parameter control view of some sort
-	 *	created dynamically by subclasses of this class.
-	 */
-	NSView* generatorParameterParentView;
-	NSView<VSCParameterControlViewProtocol>* generatorParameterView;
-	
 
 }
 
@@ -61,11 +40,10 @@
 @property (nonatomic, retain) IBOutlet NSButton* tickButton;
 @property (nonatomic, retain) IBOutlet NSTableView* tickTableView;
 
-@property (nonatomic, retain) IBOutlet NSView* channelLevelParameterParentView;
-@property (nonatomic, retain) IBOutlet NSView* generatorParameterParentView;
 
-@property (nonatomic, retain) NSView<VSCParameterControlViewProtocol>* channelLevelParameterView;
-@property (nonatomic, retain) NSView<VSCParameterControlViewProtocol>* generatorParameterView;
+-(void) setSynthSourceGenerator:(VSCSoundGeneratorPtr)generator;
+-(VSCSoundGeneratorPtr) getSoundElement;
+
 
 -(IBAction) tickButtonClicked:(id)sender;
 
@@ -74,14 +52,6 @@
  *	generatorControlParentView.
  */
 -(void) customInit;
--(void) createChannelLevelParameterView;
--(void) createGeneratorParameterView; // to subclass
-
-/*
- *	C++ Setters/Getters
- */
--(VSCSynthSourceGeneratorPtr) getSourceGenerator;
--(void) setSourceGenerator:(VSCSynthSourceGeneratorPtr)_sourceGenerator;
 
 
 @end

@@ -1,21 +1,21 @@
 //
-//  VSCSynthSourceGeneratorControlView.m
+//  VSCSoundGeneratorControlView.m
 //  SynthStation
 //
 //  Created by Jonathan Thorpe on 07/11/2011.
 //  Copyright 2011 NXP. All rights reserved.
 //
 
-#import "VSCSoundParameterView.h"
-#import "VSCSoundParameterView+Private.h"
+#import "VSCSoundElementView.h"
 #import "VSCParameterControlView.h"
+#import "VSCMatrixParameterControlView.h"
 #import "VSCSoundApple.h"
 
 
 
-@implementation VSCSoundParameterView
+@implementation VSCSoundElementView
 
-@synthesize parameterControlView;
+@synthesize parameterControlViews;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
 	self = [super initWithCoder:aDecoder];
@@ -42,29 +42,21 @@
  */
 
 -(void) customInit {
-	[self createParameterControlView];
-}
-
--(void) createParameterControlView {
-	self.parameterControlView = [[[VSCParameterControlView alloc] initWithFrame:self.bounds] autorelease];
-	[self addSubview:parameterControlView];
-	parameterControlView.delegate = self;
-}
-
--(void) createParameterControlInterface {
-	[parameterControlView createInterfaceForParameterCount:[self numberOfParameters]];
-}
-
--(void) updateParameterKeyIndexMap {
 	
 }
 
 
 
 -(void) reloadValueForParameterWithKey:(VSCSParameter::Key)key {
-    NSInteger i = [self indexForParameterWithKey:key];
-	double val = [self doubleValueForParameterWithKey:key];
-	[parameterControlView setDoubleValue:val forParameterAtIndex:i];
+
+}
+
+-(void) setSoundElement:(VSCSoundElementPtr)element {
+	soundElement = element;
+}
+
+-(VSCSoundElementPtr) getSoundElement {
+	return soundElement;
 }
 
 #pragma mark VSCSoundParameterViewProtocol Methods
@@ -73,18 +65,22 @@
 	return 0.0;
 }
 
--(std::pair<double, double>) rangeForParameterWithKey:(VSCSParameter::Key)key {
-    return VSCSParameter::getRangeForParameterWithKey(key);
-}
+
 
 #pragma mark - VSCParameterControlViewDelegate Methods
 
 -(void) parameterControlView:(id<VSCParameterControlViewProtocol>)view 
-	 changedParameterAtIndex:(NSUInteger)index {
-	double val = [view getDoubleValueForParameterAtIndex:index];
+	 changedParameterWithKey:(VSCSParameter::Key)key
+						  to:(double)val {
 	NSLog(@"%@ received parameter change from %@, value is %f", self, view, val);
 }
 
+-(BOOL) interestedInParameterId:(VSCSParameterId)paramId {
+	if (paramId.element == sourceGenerator.get()) {
+		return YES;
+	}
+	return NO;
+}
 
 
 @end

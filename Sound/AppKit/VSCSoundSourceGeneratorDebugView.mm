@@ -7,8 +7,11 @@
 //
 
 #import "VSCSoundSourceGeneratorDebugView.h"
-#import "VSCSynthSourceGenerator.h"
+#import "VSCSoundGenerator.h"
 #import "VSCSoundChannelLevelParameterView.h"
+#import "VSCSoundParameters.h"
+
+#import <boost/pointer_cast.hpp>
 
 
 @implementation VSCSoundSourceGeneratorDebugView
@@ -28,87 +31,45 @@
     return self;
 }
 
+/*
 - (void)drawRect:(NSRect)dirtyRect {
     // Drawing code here.
 }
+ */
 
 -(void) customInit {
 	
-	[self createChannelLevelParameterView];
-	[self createGeneratorParameterView];
 	
 }
-
--(void) createChannelLevelParameterView {
-	
-	NSAssert(channelLevelParameterParentView, @"Expected non nil channelLevelParameterParentView");
-	self.channelLevelParameterView = [[[VSCSoundChannelLevelParameterView alloc] 
-									initWithFrame:channelLevelParameterParentView.bounds] autorelease];
-	
-	channelLevelParameterView.delegate = self;
-	
-	[channelLevelParameterParentView addSubview:channelLevelParameterView];
-	
-	
-	
-}
-
--(void) createGeneratorParameterView {
-	// to subclass ...
-}
-
 
 /*
- *	C++ Setters/Getters
+ *	Which cast to use? See interesting discussion at:
+ *	http://stackoverflow.com/questions/28002/regular-cast-vs-static-cast-vs-dynamic-cast
+ *
+ *	Gist of it is:
+ *
+ *	- static_cast is used for cases where you basically want to reverse an implicit conversion, 
+ *	with a few restrictions and additions. static_cast performs no runtime checks. This should 
+ *	be used if you know that you refer to an object of a specific type, and thus a check would be 
+ *	unnecessary.
+ *
+ *	- dynamic_cast is used for cases where you don't know what the dynamic type of the object is. 
+ *	You cannot use dynamic_cast if you downcast and the argument type is not polymorphic. 
+ *	dynamic_cast returns a null pointer if the object referred to doesn't contain the type casted 
+ *	to as a base class (when you cast to a reference, a bad_cast exception is thrown in that case). 
+ *
+ *	In this case we do not know what the class will be...
  */
--(VSCSynthSourceGeneratorPtr) getSourceGenerator {
-	return sourceGenerator;
+
+-(void) setSynthSourceGenerator:(VSCSoundGeneratorPtr)generator {
+	VSCSoundElementPtr element = boost::dynamic_pointer_cast<VSCSoundElement>(generator);
+	if (generator && !element) 
+		throw VSCSInvalidArgumentException();
+	[self setSoundElement:element];
 }
 
--(void) setSourceGenerator:(VSCSynthSourceGeneratorPtr)_sourceGenerator {
-	sourceGenerator = _sourceGenerator;
-	tickFrames.resize((size_t)tickDepth, (unsigned int)sourceGenerator->getNumberOfChannels());
-}
-
-
-
-
-#pragma mark - VSCSParameterAppleListener 
-
--(BOOL) interestedInParameterId:(VSCSParameterId)paramId {
-	if (paramId.element == sourceGenerator.get()) {
-		return YES;
-	}
-	return NO;
-}
-
--(void) parameterWithKey:(VSCSParameter::Key)key 
-			   changedTo:(double)value 
-			  forElement:(VSCSoundParameterizedElement*)element {
-	
-	if (element != sourceGenerator.get()) return;
-	
-	[channelLevelParameterView setDoubleValue:value forParameterAtIndex:]
-	
-}
-
-
-#pragma mark - VSCSPropertyAppleListener 
-
--(BOOL) interestedInPropertyId:(VSCSPropertyId)propId {
-	if (propId.element == sourceGenerator.get()) {
-		return YES;
-	}
-}
-
--(void) propertyWithKey:(VSCSProperty::Key)key 
-			  changedTo:(std::string)value 
-			 forElement:(VSCSoundPropertizedElement*)element {
-	
-	if (element != sourceGenerator.get()) return;
-	
-	[channelLevelParameterView ]
-	
+-(VSCSoundGeneratorPtr) getSoundElement {
+	return boost::dynamic_pointer_cast<VSCSoundGenerator>(soundElement);
 }
 
 

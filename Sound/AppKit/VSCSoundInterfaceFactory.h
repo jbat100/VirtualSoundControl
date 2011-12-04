@@ -11,6 +11,8 @@
 #import "VSCSoundElement.h"
 #import "VSCSoundElementView.h"
 
+#import "VSCMatrixParameterControlView.h"
+
 typedef enum _VSCSoundInterfaceFactoryTheme {
 	VSCSoundInterfaceFactoryThemeNone,
 	VSCSoundInterfaceFactoryThemeDefault
@@ -32,6 +34,19 @@ typedef enum _VSCSoundInterfaceFactoryOptions {
 
 +(VSCSoundInterfaceFactory*) defaultFactory;
 
--(VSCSoundElementView*) interfaceViewForSoundElement:(VSCSoundElementPtr)soundElement;
+/*
+ *	Main sound element view builder functions
+ */
+-(VSCSoundElementView*) soundElementViewForSoundElement:(VSCSoundElementPtr)soundElement;
+-(void) configureSoundElementView:(VSCSoundElementView*)v 
+				  forSoundElement:(VSCSoundElementPtr)soundElement;
+
+/*
+ *	Intermediate helper functions
+ */
+-(VSCMatrixParameterControlView*) matrixParameterControlViewForParameterKeys:(VSCSParameter::KeySet)keys
+																   withFrame:(NSRect)f;
+-(VSCMatrixParameterControlView*) matrixParameterControlViewForParameterDomain:(VSCSParameter::Domain)domain
+																	 withFrame:(NSRect)frame;
 
 @end

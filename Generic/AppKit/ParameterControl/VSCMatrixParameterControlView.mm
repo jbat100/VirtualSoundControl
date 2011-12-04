@@ -6,17 +6,15 @@
 //  Copyright 2011 NXP. All rights reserved.
 //
 
-#import "VSCParameterControlView.h"
-#import "VSCParameterControlView+Private.h"
+#import "VSCMatrixParameterControlView.h"
+#import "VSCMatrixParameterControlView+Private.h"
 
-@implementation VSCParameterControlView
+@implementation VSCMatrixParameterControlView
 
-@synthesize numberOfParameters, parameterControlOptions;
 @synthesize scrollView;
 @synthesize controllerMatrix, labelMatrix, numericMatrix;
 @synthesize controllerCellPrototype, labelCellPrototype;
 @synthesize centerSpacing;
-@synthesize delegate;
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -73,10 +71,6 @@
 
 
 
--(std::set<VSCSParameter::Key>&) parameterKeys {
-	return parameterKeys;
-}
-
 -(void) setparameterKeyIndexBimap:(VSCSParameter::KeyIndexBimap)keyIndexBymap {
 	parameterKeyIndexBimap = _keyIndexBymap;
 }
@@ -85,10 +79,83 @@
 	return parameterKeyIndexBimap;
 }
 
+-(void) setLabel:(NSString*)label forParameterKey:(VSCSParameter::Key)k {
+	[super setLabel:label forParameterKey:k];
+	NSCell* labelCell = [self labelCellForParameterWithKey:k];
+	[labelCell setStringValue:label];
+}
+
+-(void) setRange:(VSCSParameter::ValueRange)valueRange forParameterKey:(VSCSParameter::Key)k {
+	[super setRange:valueRange forParameterKey:k];
+	NSActionCell* controllerCell = [self controllerCellForParameterWithKey:k];
+	if ([controllerCell isKindOfClass:[NSSliderCell class]]) {
+		NSSliderCell* sliderCell = (NSSliderCell*)controllerCell;
+		[sliderCell setMinValue:valueRange.first];
+		[sliderCell setMaxValue:valueRange.second];
+	}
+}
+
+#pragma mark Parameter Key/Index
+
+-(VSCSParameter::Key) keyForParameterAtIndex:(NSInteger)index {
+	ParamKeyIndexBiMap::right_const_iterator right_iter = paramKeyIndexMap.right.find(index);
+	// couldn't find the index in the bimap...
+	if (right_iter == paramKeyIndexMap.right.end()) 
+		throw VSCSInvalidArgumentException();
+	return right_iter->second;	
+}
+
+-(NSInteger) indexForParameterWithKey:(VSCSParameter::Key)key {
+	ParamKeyIndexBiMap::left_const_iterator left_iter = paramKeyIndexMap.left.find(key);
+	// couldn't find the key in the bimap...
+	if (left_iter == paramKeyIndexMap.left.end()) 
+		throw VSCSInvalidArgumentException();
+	return left_iter->second;
+}
+
+
+#pragma mark - NSCell Accessors and Utility 
+
+-(NSActionCell*) controllerCellForParameterWithKey:(VSCSParameter::Key k) {
+	NSInteger index = [self indexForParameterWithKey:k];
+	return [controllerMatrix cellAtRow:index column:0];
+}
+
+-(NSCell*) numericCellForParameterWithKey:(VSCSParameter::Key k) {
+	NSInteger index = [self indexForParameterWithKey:k];
+	return [numericMatrix cellAtRow:index column:0];
+}
+
+-(NSCell*) labelCellForParameterWithKey:(VSCSParameter::Key k) {
+	NSInteger index = [self indexForParameterWithKey:k];
+	return [labelMatrix cellAtRow:index column:0];
+}
+
+-(VSCSParameter::Key) parameterKeyForCell:(NSCell*)cell {
+	
+	NSInteger row, column;
+	BOOL success;
+	
+	success = [controllerMatrix getRow:&row column:&column ofCell:cell];
+	if (success)
+		return [self keyForParameterAtIndex:row];
+	
+	success = [numericMatrix getRow:&row column:&column ofCell:cell];
+	if (success)
+		return [self keyForParameterAtIndex:row];
+	
+	success = [labelMatrix getRow:&row column:&column ofCell:cell];
+	if (success)
+		return [self keyForParameterAtIndex:row];
+	
+	throw VSCSInvalidArgumentException();
+	
+}
+
 @end
 
 
-@implementation VSCParameterControlView (Private)
+@implementation VSCMatrixParameterControlView (Private)
 
 -(void) customInit {
 	
@@ -172,79 +239,8 @@
 	
 }
 
-#pragma mark Parameter Labels/Values/Ranges
 
--(void) setLabel:(NSString*)label forParameterKey:(VSCSParameter::Key)k {
-	[super setLabel:label forParameterKey:k];
-	NSCell* labelCell = [self labelCellForParameterWithKey:k];
-	[labelCell setStringValue:label];
-}
 
--(void) setRange:(VSCSParameter::ValueRange)valueRange forParameterKey:(VSCSParameter::Key)k {
-	[super setRange:valueRange forParameterKey:k];
-	NSActionCell* controllerCell = [self controllerCellForParameterWithKey:k];
-	if ([controllerCell isKindOfClass:[NSSliderCell class]]) {
-		NSSliderCell* sliderCell = (NSSliderCell*)controllerCell;
-		[sliderCell setMinValue:valueRange.first];
-		[sliderCell setMaxValue:valueRange.second];
-	}
-}
-
-#pragma mark Parameter Key/Index
-
--(VSCSParameter::Key) keyForParameterAtIndex:(NSInteger)index {
-	ParamKeyIndexBiMap::right_const_iterator right_iter = paramKeyIndexMap.right.find(index);
-	// couldn't find the index in the bimap...
-	if (right_iter == paramKeyIndexMap.right.end()) 
-		throw VSCSInvalidArgumentException();
-	return right_iter->second;	
-}
-
--(NSInteger) indexForParameterWithKey:(VSCSParameter::Key)key {
-	ParamKeyIndexBiMap::left_const_iterator left_iter = paramKeyIndexMap.left.find(key);
-	// couldn't find the key in the bimap...
-	if (left_iter == paramKeyIndexMap.left.end()) 
-		throw VSCSInvalidArgumentException();
-	return left_iter->second;
-}
-
-#pragma mark NSCell Accessors and Utility 
-
--(NSActionCell*) controllerCellForParameterWithKey:(VSCSParameter::Key k) {
-	NSInteger index = [self indexForParameterWithKey:k];
-	return [controllerMatrix cellAtRow:index column:0];
-}
-
--(NSCell*) numericCellForParameterWithKey:(VSCSParameter::Key k) {
-	NSInteger index = [self indexForParameterWithKey:k];
-	return [numericMatrix cellAtRow:index column:0];
-}
-
--(NSCell*) labelCellForParameterWithKey:(VSCSParameter::Key k) {
-	NSInteger index = [self indexForParameterWithKey:k];
-	return [labelMatrix cellAtRow:index column:0];
-}
-
--(VSCSParameter::Key) parameterKeyForCell:(NSCell*)cell {
-	
-	NSInteger row, column;
-	BOOL success;
-	
-	success = [controllerMatrix getRow:&row column:&column ofCell:cell];
-	if (success)
-		return [self keyForParameterAtIndex:row];
-	
-	success = [numericMatrix getRow:&row column:&column ofCell:cell];
-	if (success)
-		return [self keyForParameterAtIndex:row];
-	
-	success = [labelMatrix getRow:&row column:&column ofCell:cell];
-	if (success)
-		return [self keyForParameterAtIndex:row];
-	
-	throw VSCSInvalidArgumentException();
-	
-}
 
 #pragma mark Controller Cell Callback 
 

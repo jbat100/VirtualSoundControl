@@ -1,5 +1,5 @@
 /*
- *  VSCSynthSourceSine.h
+ *  VSCSoundSine.h
  *  SynthStation
  *
  *  Created by Jonathan Thorpe on 15/10/2011.
@@ -12,10 +12,10 @@
 #define _VSC_SYNTH_SOURCE_SINE_
 
 #include "VSCSound.h"
-#include "VSCSynthSourceGenerator.h"
+#include "VSCSoundGenerator.h"
 #include <boost/shared_ptr.hpp>
 
-#define VSCSynthSourceSinePtr      boost::shared_ptr<VSCSynthSourceSine>
+#define VSCSoundSinePtr      boost::shared_ptr<VSCSoundSine>
 
 #ifdef VSCS_USE_STK
 
@@ -23,14 +23,14 @@
 #include "SineWave.h"
 
 
-class VSCSynthSourceSine : public VSCSynthSourceGenerator {
+class VSCSoundSine : public VSCSoundGenerator {
 	
 public:
 	
 	/*
 	 *	Default constructor
 	 */
-	VSCSynthSourceSine();
+	VSCSoundSine();
 	
 	virtual double getValueForParameterWithKey(VSCSParameter::Key key);
 	virtual void setValueForParameterWithKey(double value, VSCSParameter::Key key);
@@ -38,7 +38,7 @@ public:
     /*
 	 *	Call on change number of channels
 	 */
-	void updateSoundEngine(void);
+	virtual void updateSoundEngine(void);
 	
 	/*
 	 *	Setters/Getters
@@ -60,6 +60,8 @@ protected:
     virtual void processComputationFrames(unsigned int numberOfFrames);
 	
 private:
+	
+	static const std::string kSynthSourceSineType;
     
 	stk::SineWave sineWave;
 	

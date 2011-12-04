@@ -39,6 +39,8 @@
 
 -(void) addParameterKey:(VSCSParameter::Key)k;
 -(void) removeParameterKey:(VSCSParameter::Key)k;
+-(void) addParameterKeys:(VSCSParameter::KeySet)keySet;
+-(void) removeParameterKeys:(VSCSParameter::KeySet)keySet;
 
 -(void) setLabel:(NSString*)label forParameterKey:(VSCSParameter::Key)k;
 -(void) setDefaultLabelForParameterKey:(VSCSParameter::Key)k;

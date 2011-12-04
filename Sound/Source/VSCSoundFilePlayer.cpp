@@ -1,5 +1,5 @@
 /*
- *  VSCSynthSourceSine.cpp
+ *  VSCSoundSine.cpp
  *  SynthStation
  *
  *  Created by Jonathan Thorpe on 15/10/2011.
@@ -7,10 +7,10 @@
  *
  */
 
-#include "VSCSynthSourceFile.h"
+#include "VSCSoundFilePlayer.h"
 
 
-stk::FileWvIn* VSCSynthSourceFile::getStkFileWvIn(void) {
+stk::FileWvIn* VSCSoundFilePlayer::getStkFileWvIn(void) {
     return &fileWvIn;
 }
 

@@ -1,5 +1,5 @@
 /*
- *  VSCSynthSourceSine.h
+ *  VSCSoundSine.h
  *  SynthStation
  *
  *  Created by Jonathan Thorpe on 15/10/2011.
@@ -12,17 +12,17 @@
 #define _VSC_SYNTH_SOURCE_NOISE_
 
 #include "VSCSound.h"
-#include "VSCSynthSourceGenerator.h"
+#include "VSCSoundGenerator.h"
 #include <boost/shared_ptr.hpp>
 
-#define VSCSynthSourceNoisePtr      boost::shared_ptr<VSCSynthSourceNoise>
+#define VSCSoundNoisePtr      boost::shared_ptr<VSCSoundNoise>
 
 #ifdef VSCS_USE_STK
 
 #include "Stk.h"
 #include "Noise.h"
 
-class VSCSynthSourceNoise : public VSCSynthSourceGenerator {
+class VSCSoundNoise : public VSCSoundGenerator {
 	
 public:
     
@@ -37,7 +37,7 @@ protected:
     
 };
 
-inline void VSCSynthSourceNoise::processComputationFrames(void) {
+inline void VSCSoundNoise::processComputationFrames(void) {
 	noise.tick(_computationFrames);
 }
 

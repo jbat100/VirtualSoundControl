@@ -1,5 +1,5 @@
 /*
- *  VSCSynthSourceSine.h
+ *  VSCSoundSine.h
  *  SynthStation
  *
  *  Created by Jonathan Thorpe on 15/10/2011.
@@ -12,17 +12,17 @@
 #define _VSC_SYNTH_SOURCE_FILE_
 
 #include "VSCSound.h"
-#include "VSCSynthSourceGenerator.h"
+#include "VSCSoundGenerator.h"
 #include <boost/shared_ptr.hpp>
 
-#define VSCSynthSourceFilePtr      boost::shared_ptr<VSCSynthSourceFile>
+#define VSCSoundFilePlayerPtr      boost::shared_ptr<VSCSoundFilePlayer>
 
 #ifdef VSCS_USE_STK
 
 #include "Stk.h"
 #include "FileWvIn.h"
 
-class VSCSynthSourceFile : public VSCSynthSourceGenerator {
+class VSCSoundFilePlayer : public VSCSoundGenerator {
 	
 public:
 	
@@ -36,7 +36,7 @@ protected:
 	
 };
 
-inline void VSCSynthSourceFile::processComputationFrames(void) {
+inline void VSCSoundFilePlayer::processComputationFrames(void) {
 	assert(_computationFrames.channels());
     fileWvIn.tick(_computationFrames);
 }

@@ -23,6 +23,9 @@ class VSCSParameter {
 	
 public:
 	
+	static const unsigned int kChannelNotFound;
+	static const unsigned int kIndexAll;
+	
 	/*-------------------------------------------------------------------------------------------
 	 *
 	 *	General sound parameter domain enum 
@@ -32,7 +35,8 @@ public:
 		
 		DomainNone,
 		
-		DomainChannels,
+		DomainChannel,
+		DomainSourceLocation,
 		
 		DomainSourceGenerator,
 		DomainSourceGroup,
@@ -43,7 +47,9 @@ public:
 		DomainSourceSine,
 		DomainSourceSquare,
 		
-		DomainFilterBiQuad
+		DomainFilterBiQuad,
+		
+		DomainAll
 	};
 	
 	/*-------------------------------------------------------------------------------------------
@@ -51,76 +57,46 @@ public:
 	 *	General sound parameter key enum 
 	 */	
 	
-	enum Key {
+	enum Code {
 		
-		KeyNone,
+		CodeNone,
 		
-		/*
-		 *	multi chan linear volume ...
-		 *	The order is IMPORTANT (used to calculate channel indeces)
-		 */
-		KeyChannelAll,
-		KeyChannelZero,
-		KeyChannelOne,
-		KeyChannelTwo,
-		KeyChannelThree,
-		KeyChannelFour,
-		KeyChannelFive,
-		KeyChannelSix,
-		KeyChannelSeven,
-		KeyChannelEight,
-		KeyChannelNine,
-		KeyChannelTen,
+		// channels 
+		CodeGain,
+		//CodeDBGain,
 		
-		/*
-		 *	multi chan dB volume ...
-		 *	The order is IMPORTANT (used to calculate channel indeces)
-		 */
-		KeyChannelDBAll,
-		KeyChannelDBZero,
-		KeyChannelDBOne,
-		KeyChannelDBTwo,
-		KeyChannelDBThree,
-		KeyChannelDBFour,
-		KeyChannelDBFive,
-		KeyChannelDBSix,
-		KeyChannelDBSeven,
-		KeyChannelDBEight,
-		KeyChannelDBNine,
-		KeyChannelDBTen,
+		// source location
+		CodeDistance,
+		CodeDegTheta,
+		CodeDegPhi,
+		CodePan, // special for 2 channel
 		
-		// Sine
-		KeySineFrequency,
-		KeySinePhase,
+		// sine, saw, square, pitched 
+		CodeFrequency,
+		//CodeLogFrequency,
+		//CodeDegPhase,
+		CodeRadPhase,
+		CodeHarmonics,
 		
-		// Square
-		KeySquareFrequency,
-		KeySquarePhase,
-		KeySquareHarmonics,
+		// filters
+		CodeQFactor,
 		
-		// Saw
-		KeySawFrequency,
-		KeySawPhase,
-		KeySawHarmonics,
+		// File and File loop
+		CodeCurrentTime,
+		CodePlaybackSpeed,
+		CodeStartTime,
+		CodeEndTime,
+		CodeCrossoverDuration,
 		
-		// File 
-		KeyFileTime,
-		KeyFilePlaybackSpeed,
+		CodeAll
 		
-		// File loop
-		KeyFileLoopTime,
-		KeyFileLoopPlaybackSpeed,
-		KeyFileLoopStartTime,
-		KeyFileLoopEndTime,
-		KeyFileLoopCrossoverDuration,
-		
-		// BiQuad Filter
-		KeyBiQuadFrequency,
-		KeyBiQuadQFactor,
-		KeyBiQuadLinearGain,
-		
-		KeyAll
-		
+	};
+	
+	struct Key {
+		Domain domain;
+		Code code;
+		bool operator<(const Key& otherKey) const;
+
 	};
 	
     typedef std::set<Key>                                   KeySet;
@@ -140,14 +116,12 @@ public:
 	typedef boost::bimap<VSCSParameter::Key, int>			KeyIndexBimap;
 	typedef KeyIndexBimap::value_type						KeyIndexBimapEntry;
 	
-	static const unsigned int kChannelNotFound;
 	
 	/*
 	 *	Singleton instance
 	 */
 	static VSCSParameter& sharedInstance(void);
 
-	
 	/*
 	 *	Constructor/Destructor
 	 */
@@ -155,60 +129,39 @@ public:
 	~VSCSParameter();
 	
 	/*
-	 *	Get all parameter keys related to a specific domain
-	 */
-	KeySet keysForDomain(Domain dom);
-	
-	/*
 	 *	Channel volume/gain specific
 	 */
-	KeySet channelKeys(void);
-	KeySet dBChannelKeys(void);
-	unsigned int channelIndexForKey(Key k, bool* dB);
-	Key keyForChannelIndex(unsigned int i, bool dB);
-	bool parameterIsLinearChannel(Key k);
-	bool parameterIsDBChannel(Key k);
+	KeySet singleChannelKeysUpToChannel(unsigned int chan);
+	KeySet singleChannelDBKeysUpToChannel(unsigned int chan);
 	
 	/*
 	 *	Linear/dB amplitude/gain converions
 	 */
-	VSCSFloat linearToDBGain(VSCSFloat linearGain);
-	VSCSFloat dBToLinearGain(VSCSFloat dBGain);
+	VSCSFloat linearToDB(VSCSFloat linear);
+	VSCSFloat dBToLinear(VSCSFloat dB);
 	
     /*
-     *	Labels and ranges
+     *	Labels and ranges (defaults if not set)
      */
 	std::string getLabelForParameterWithKey(Key k);
-	void setLabelForParameterWithKey(std::string label, Key k);
 	ValueRange getRangeForParameterWithKey(Key k);
-	void setRangeForParameterWithKey(ValueRange valRange, Key k);
-	
 	/*
-	 *	Default values
+	 *	Customize
 	 */
-	ValueRange getDefaultLinearGainRange(void);
-	
+	std::string setLabelForParameterWithKey(std::string label, Key k);
+	ValueRange setRangeForParameterWithKey(ValueRange range, Key k);
 	/*
-	 *	Fill VSCSParameterLabelMap and VSCSParameterRangeMap
+	 *	Revert to defaults
 	 */
+	std::string revertLabelForParameterWithKeyToDefault(Key k);
+	ValueRange revertRangeForParameterWithKeyToDefault(Key k);
+	
 	
 	
 private:
 	
-	KeyLabelMap parameterLabels;
-	KeyRangeMap parameterRanges;
-	
-	void generateDefaultParameterLabels(void);
-	void generateDefaultParameterRanges(void);
-	KeyLabelMap defaultParameterLabels;
-	KeyRangeMap defaultParameterRanges;
-	
-	void generateDomainParameters(void);
-	DomainKeysMap domainParameters;
-	
-	
-	unsigned int maxNumberOfChannels;
-    
+	KeyRangeMap customizedKeyRanges;
+	KeyLabelMap customizedKeyLabels;
 	
 };
 

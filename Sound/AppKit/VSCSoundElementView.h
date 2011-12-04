@@ -1,5 +1,5 @@
 //
-//  VSCSynthSourceGeneratorControlView.h
+//  VSCSoundGeneratorControlView.h
 //  SynthStation
 //
 //  Created by Jonathan Thorpe on 07/11/2011.
@@ -27,6 +27,8 @@
 
 @property (nonatomic, retain) NSMutableArray* parameterControlViews;
 
+-(void) setSoundElement:(VSCSoundElementPtr)element;
+-(VSCSoundElementPtr) getSoundElement;
 
 /*
  *	Parameter label/range/value reloading

@@ -37,12 +37,57 @@ static VSCSoundInterfaceFactory* defaultFactoryInstance = nil;
     return self;
 }
 
--(VSCSoundElementView*) interfaceViewForSoundElement:(VSCSoundElementPtr)soundElement {
-    
-    std::string elementType = soundElement->getValueForPropertyWithKey(VSCSProperty::KeySoundElementType);
+-(VSCSoundElementView*) soundElementViewForSoundElement:(VSCSoundElementPtr)soundElement withFrame:(NSRect)f {
 	
-	return nil;
+	VSCSoundElementView* v = [[VSCSoundElementView alloc] initWithFrame:f];
+	
+	[self configureSoundElementView:v ForSoundElement:soundElement];
+	
+	return [v autorelease];
 	
 }
+
+-(void) configureSoundElementView:(VSCSoundElementView*)view ForSoundElement:(VSCSoundElementPtr)soundElement {
+	
+	std::string elementType = soundElement->getElementType();
+	
+	/*
+	 *	Remove all parameter views
+	 */
+	NSArray* subviews = [view subviews];
+	for (NSView* v in subviews) {
+		if ([[view parameterControlViews] containsObject:v]) {
+			[v removeFromSuperview];
+		}
+	}
+	[[view parameterControlViews] removeAllObjects];
+	
+	/*
+	 *
+	 */
+	 
+	return nil;
+	
+	
+}
+
+
+-(VSCMatrixParameterControlView*) matrixParameterControlViewForParameterDomain:(VSCSParameter::Domain)domain
+																	 withFrame:(NSRect)f
+{
+	VSCSParameter::KeySet keySet = VSCSParameter::sharedInstance().keysForDomain(domain);
+	return [self matrixParameterControlViewForParameterKeys:keySet withFrame:f];	
+}
+
+-(VSCMatrixParameterControlView*) matrixParameterControlViewForParameterKeys:(VSCSParameter::KeySet)keys
+																   withFrame:(NSRect)f 
+{
+	VSCMatrixParameterControlView* paramView = [[VSCMatrixParameterControlView alloc] initWithFrame:f];
+	[paramView addParameterKeys:keySet];
+	[paramView createInterface];
+	return [paramView autorelease];
+	
+}
+
 
 @end

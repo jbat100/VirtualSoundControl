@@ -16,6 +16,8 @@
 
 #include <string>
 #include <boost/shared_ptr.hpp>
+#include <boost/enable_shared_from_this.hpp>
+
 
 /*
  *	Smart pointer and iterator convenience defines
@@ -25,10 +27,17 @@
 
 
 /*
- *	Root class for adding/removing setting/getting property values
+ *	Root class for all sound elements whether generators, controllers, processors or
+ *	multiplexers
+ *
+ *	boost::enable_shared_from_this multiple inheritance is not supported so we can't
+ *	have VSCSoundPropertized and VSCSoundParameterized both inheriting from 
+ *	boost::enable_shared_from_this, hence the decision to make VSCSoundElement
+ *	inherit from boost::enable_shared_from_this
  */
 
-class VSCSoundElement : public VSCSoundPropertized, public VSCSoundParameterized {
+class VSCSoundElement : public VSCSoundPropertized, public VSCSoundParameterized, 
+						public boost::enable_shared_from_this<VSCSoundElement> {
 	
 public:
     
@@ -46,9 +55,7 @@ public:
 private:
     
     static const std::string kSoundElementType;
-	
 	static unsigned int elementCount;
-	
     unsigned int elementId;
 	
 };

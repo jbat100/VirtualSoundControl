@@ -1,5 +1,5 @@
 /*
- *  VSCSynthSourceSine.h
+ *  VSCSoundSine.h
  *  SynthStation
  *
  *  Created by Jonathan Thorpe on 15/10/2011.
@@ -12,16 +12,16 @@
 #define _VSC_SYNTH_SOURCE_SAW_
 
 #include "VSCSound.h"
-#include "VSCSynthSourceGenerator.h"
+#include "VSCSoundGenerator.h"
 #include <boost/shared_ptr.hpp>
 
-#define VSCSynthSourceSawPtr      boost::shared_ptr<VSCSynthSourceSaw>
+#define VSCSoundSawPtr      boost::shared_ptr<VSCSoundSaw>
 
 #ifdef VSCS_USE_STK
 
 #include "BlitSaw.h"
 
-class VSCSynthSourceSaw : public VSCSynthSourceGenerator {
+class VSCSoundSaw : public VSCSoundGenerator {
 	
 public:
     
@@ -38,7 +38,7 @@ protected:
 	
 };
 
-inline void VSCSynthSourceSaw::processComputationFrames(void) {
+inline void VSCSoundSaw::processComputationFrames(void) {
 	blitSaw.tick(_computationFrames);
 }
 

@@ -10,17 +10,8 @@
 #include "VSCSoundParameterized.h"
 #include "VSCException.h"
 
-const VSCSParameter::KeySet& VSCSoundParameterized::getKeySet(void) {
-    return _keySet;
-}
-
-
-void VSCSoundParameterized::addParameterKey(VSCSParameter::Key k) {
-	_keySet.insert(k);	
-}
-
-void VSCSoundParameterized::removeParameterKey(VSCSParameter::Key k) {
-    _keySet.erase(k);	
+VSCSParameter::KeySet VSCSoundParameterized::getKeySet(void) {
+    return VSCSParameter::KeySet(); // return empty key set
 }
 
 /*
@@ -29,31 +20,18 @@ void VSCSoundParameterized::removeParameterKey(VSCSParameter::Key k) {
  */
 
 double VSCSoundParameterized::getValueForParameterWithKey(VSCSParameter::Key key) {
-    
-    /*
-    VSCSParameter::KeyValueMap::iterator iter = _keyValueMap.find(key);
-    
-    if (iter != _keyValueMap.end()) {
-        return (*iter).second;
-    }
-    */
-    
     throw VSCSBadParameterException();
-    
 }
 
 void VSCSoundParameterized::setValueForParameterWithKey(double value, VSCSParameter::Key key) {
-    
-    /*
-    VSCSParameter::KeyValueMap::iterator iter = _keyValueMap.find(key);
-    
-    if (iter != _keyValueMap.end()) {
-        (*iter).second = value;
-    }
-     &*/
-    
 	throw VSCSBadParameterException();
-
 }
 
+double VSCSoundParameterized::getValueForIndexedParameterWithKey(VSCSParameter::Key key, unsigned int ind) {
+	throw VSCSBadParameterException();
+}
+
+void VSCSoundParameterized::setValueForIndexedParameterWithKey(double value, VSCSParameter::Key key, unsigned int ind) {
+	throw VSCSBadParameterException();
+}
 

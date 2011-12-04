@@ -1,5 +1,5 @@
 /*
- *  VSCSynthSourceSine.h
+ *  VSCSoundSine.h
  *  SynthStation
  *
  *  Created by Jonathan Thorpe on 15/10/2011.
@@ -12,17 +12,17 @@
 #define _VSC_SYNTH_SOURCE_FILE_LOOP_
 
 #include "VSCSound.h"
-#include "VSCSynthSourceGenerator.h"
+#include "VSCSoundGenerator.h"
 #include <boost/shared_ptr.hpp>
 
-#define VSCSynthSourceFileLoopPtr      boost::shared_ptr<VSCSynthSourceFileLoop>
+#define VSCSoundFileLoopPlayerPtr      boost::shared_ptr<VSCSoundFileLoopPlayer>
 
 #ifdef VSCS_USE_STK
 
 #include "Stk.h"
 #include "FileLoop.h"
 
-class VSCSynthSourceFileLoop : public VSCSynthSourceGenerator {
+class VSCSoundFileLoopPlayer : public VSCSoundGenerator {
 	
 public:
     
@@ -37,7 +37,7 @@ protected:
 	
 };
 
-inline void VSCSynthSourceFileLoop::processComputationFrames(void) {
+inline void VSCSoundFileLoopPlayer::processComputationFrames(void) {
 	fileLoop.tick(_computationFrames);
 }
 

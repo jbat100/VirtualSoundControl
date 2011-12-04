@@ -20,6 +20,8 @@
 #include <stack>
 #include <set>
 #include <string>
+
+#include <boost/shared_ptr.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
 
@@ -28,13 +30,16 @@
  *	overriden < operator to be able to use as key in std::map
  */
 struct VSCSParameterId {
-	VSCSoundParameterized* element;
+	VSCSoundElementPtr element;
 	VSCSParameter::Key key;
-	bool operator<(const VSCSParameterId& paramId) const { return element < paramId.element; }
+	bool operator<(const VSCSParameterId& paramId) const;
 };
-struct VSCSParameterUpdate {
-	VSCSParameterId paramId;
-	double value;
+
+struct VSCSIndexedParameterId {
+	VSCSoundElementPtr element;
+	VSCSParameter::Key key;
+	unsigned int index;
+	bool operator<(const VSCSIndexedParameterId& paramId) const;
 };
 
 /*
@@ -42,85 +47,27 @@ struct VSCSParameterUpdate {
  *	overriden < operator to be able to use as key in std::map
  */
 struct VSCSPropertyId {
-	VSCSoundPropertized* element;
+	VSCSoundElementPtr element;
 	VSCSProperty::Key key;
 	bool operator<(const VSCSPropertyId& propId) const { return element < propId.element; }
 };
-struct VSCSPropertyUpdate {
-	VSCSPropertyId propId;
-	std::string value;
-}
-
-
-
 
 /*
  *	Class used by the broadcaster, as interface for forwarding parameter changes
  */
 
-class VSCSParameterListener {
+#define VSCSBroadcastListenerPtr    boost::shared_ptr<VSCSBroadcastListener>
+
+class VSCSBroadcastListener {
 	
 public:
 	
-	void addParameterizedElement(VSCSoundParameterized* element);
-	void removeParameterizedElement(VSCSoundParameterized* element);
-	std::set<VSCSoundParameterized*> getParameterizedElements(void);
-	
-	void addParameterKey(VSCSParameter::Key k);
-	void removeParameterKey(VSCSParameter::Key k);
-	std::set<VSCSParameter::Key> getParameterKeys(void);
-    
-	
-    virtual bool interestedInParameterId(VSCSParameterId paramId);
-	virtual void parameterChanged(VSCSoundParameterized* element, VSCSParameter::Key, double value);
-	
-protected:
-	
-	/* The elements for which the listener wants to receive events */
-	std::set<VSCSoundParameterized*> _parameterizedElements;
-	
-	/* The keys for which the listener wants to recieve events */
-	std::set<VSCSParameter::Key> _parameterKeys;
+	virtual void parameterChanged(VSCSParameterId paramId, double value);
+	virtual void indexedParameterChanged(VSCSIndexedParameterId paramId, double value);
+	virtual void propertyChanged(VSCSPropertyId, std::string value);
 	
 };
 
-/*
- *	Class used by the broadcaster, as interface for forwarding parameter changes
- */
-
-class VSCSPropertyListener {
-	
-public:
-	
-	/*
-	 *	Determine the elements for which the listener is interested 
-	 */
-	void addPropertizedElement(VSCSoundPropertized* element);
-	void removePropertizedElement(VSCSoundPropertized* element);
-	std::set<VSCSoundPropertized*> getPropertizedElements(void);
-	
-	/*
-	 *	Determine the keys for which the listener is interested
-	 */
-	void addPropertyKey(VSCSProperty::Key k);
-	void removePropertyKey(VSCSProperty::Key k);
-	std::set<VSCSProperty::Key> getPropertyKeys(void);
-    
-    /*
-     *  Ask whether the listener is interested by a given combination of element/key
-     */
-    virtual bool interestedInPropertyId(VSCSPropertyId propId);
-	virtual void propertyChanged(VSCSoundPropertized* element, VSCSProperty::Key, std::string value);
-	
-protected:
-	
-	/* The elements for which the listener wants to receive events */
-	std::set<VSCSoundPropertized*> _propertizedElements;
-	
-	/* The keys for which the listener wants to recieve events */
-	std::set<VSCSProperty::Key> _propertyKeys;
-	
-};
 
 /*
  *	This class aims to provide updates to interface elements at a rate far lower
@@ -139,17 +86,21 @@ public:
 	VSCSoundBroadcaster();
 	~VSCSoundBroadcaster();
 	
-    void parameterChanged(VSCSoundParameterized* element, VSCSParameter::Key, double value);
-    void propertyChanged(VSCSoundPropertized* element, VSCSProperty::Key, std::string value);
+	/*
+	 *	Singleton instance 
+	 */
+	VSCSoundBroadcaster& sharedBroadcaster(void);
+	
+    void parameterChanged(VSCSParameterId, double value);
+	void indexedParameterChanged(VSCSIndexedParameterId, double value);
+    void propertyChanged(VSCSPropertyId, std::string value);
    
 	void setBroadcastInterval(VSCSFloat interval);
 	VSCSFloat getBroadcastInterval(void);
 	
-	void addParameterListener(VSCSParameterListener* listener);
-	void removeParameterListener(VSCSParameterListener* listener);
-	
-	void addPropertyListener(VSCSPropertyListener* listener);
-	void removePropertyListener(VSCSPropertyListener* listener);
+	void addBroadcastListener(VSCSBroadcastListenerPtr listener);
+	void removeBroadcastListener(VSCSBroadcastListenerPtr listener);
+	const std::set<VSCSBroadcastListenerPtr>& broadcastListeners(void);
 	
 	void startBroadcasting(void);
 	void stopBroadcasting(void);
@@ -157,20 +108,19 @@ public:
 private:
 	
 	void broadcast(void);
-	
 	void cycleBroadcastAndSleepUntilStopped(void);
 	
 	boost::thread broadcastCycleThread;
 	
 	boost::mutex listenerMutex;
-	std::set<VSCSParameterListener*> _parameterListeners;
-    std::set<VSCSPropertyListener*> _propertyListeners;
+	std::set<VSCSBroadcastListenerPtr> _broadcastListeners;
 	
 	boost::mutex intervalMutex;
 	VSCSFloat _broadcastInterval;
 	
 	boost::mutex updateMutex;
 	std::map<VSCSParameterId, double> _parameterUpdateMap;
+	std::map<VSCSIndexedParameterId, double> _indexedParameterUpdateMap;
 	std::map<VSCSPropertyId, std::string> _propertyUpdateMap;
 	
 };

@@ -27,3 +27,17 @@ std::string VSCSoundElement::getElementIdentifier(void) {
 std::string VSCSoundElement::getElementType(void) {
 	return VSCSoundElement::kSoundElementType;
 }
+
+std::string VSCSoundElement::getValueForPropertyWithKey(VSCSProperty::Key key) {
+	
+	if (key.domain == VSCSProperty::DomainSoundElement) {
+		if (key.code == VSCSProperty::CodeSoundElementType) 
+			return this->getElementType();
+		if (key.code == VSCSProperty::CodeSoundElementIdentifier) 
+			return this->getElementIdentifier();
+	}
+	
+	return VSCSoundPropertized::getValueForPropertyWithKey(key);
+}
+
+

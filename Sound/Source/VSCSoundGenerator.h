@@ -1,5 +1,5 @@
 //
-//  VSCSynthSourceGenerator.h
+//  VSCSoundGenerator.h
 //  SynthStation
 //
 //  Created by Jonathan Thorpe on 11/2/11.
@@ -23,21 +23,21 @@
 #include "Stk.h"
 #include "Generator.h"
 
-#define VSCSynthSourceGeneratorPtr      boost::shared_ptr<VSCSynthSourceGenerator>
+#define VSCSoundGeneratorPtr      boost::shared_ptr<VSCSoundGenerator>
 
-#define ConstSynthSrcGenIter            std::list<VSCSynthSourceGeneratorPtr>::const_iterator 
-#define ConstRevSynthSrcGenIter         std::list<VSCSynthSourceGeneratorPtr>::const_reverse_iterator 
+#define ConstSynthSrcGenIter            std::list<VSCSoundGeneratorPtr>::const_iterator 
+#define ConstRevSynthSrcGenIter         std::list<VSCSoundGeneratorPtr>::const_reverse_iterator 
 
-#define SynthSrcGenIter                 std::list<VSCSynthSourceGeneratorPtr>::iterator 
-#define RevSynthSrcGenIter              std::list<VSCSynthSourceGeneratorPtr>::reverse_iterator 
+#define SynthSrcGenIter                 std::list<VSCSoundGeneratorPtr>::iterator 
+#define RevSynthSrcGenIter              std::list<VSCSoundGeneratorPtr>::reverse_iterator 
 
-class VSCSynthSourceGenerator : public VSCSoundMultiChannelElement, public stk::Generator {
+class VSCSoundGenerator : public VSCSoundMultiChannelElement, public stk::Generator {
     
-    //class VSCSynthSourceGroup : public stk::Generator {
+    //class VSCSoundGeneratorGroup : public stk::Generator {
     
 public:
 	
-	VSCSynthSourceGenerator();
+	VSCSoundGenerator();
 	
     /*
      *  stk::Generator tick method which should not be over-ridden (the subclasses compute audio 
@@ -52,8 +52,8 @@ public:
 	 *	Get the group generator to which this generator belongs, NULL if does not
 	 *	belong to a group 
 	 */
-	VSCSynthSourceGenerator* getGroup(void);
-	void setGroup(VSCSynthSourceGenerator* g);
+	VSCSoundGenerator* getGroup(void);
+	void setGroup(VSCSoundGenerator* g);
 	
 	/*
 	 *   VSCSoundMultiChannelElement methods
@@ -82,7 +82,7 @@ protected:
 	/* 
      *  Keep a seperate StkFrames so that it does not need to be created everytime the tick function is called
      *  this is used by the stk generators to compute samples independently of the number of channels of the, 
-     *  VSCSynthSourceGenerator. These computed channels are then propagated to the of the VSCSynthSourceGenerator
+     *  VSCSoundGenerator. These computed channels are then propagated to the of the VSCSoundGenerator
      *  channels according to specified levels.
      *
      *  The number of channels of _computationFrames should not be set in this class, it will be different depending on 
@@ -110,7 +110,7 @@ private:
 	 *	Backpointer to the group generator which possesses this as subgenerator, NULL if it does not
 	 *	belong to a group
 	 */
-	VSCSynthSourceGenerator* _group;
+	VSCSoundGenerator* _group;
     
     /*
      *  determines the number of channels which _comutationFrames should be computed for
@@ -143,7 +143,7 @@ private:
  *  and output 0 in release.
  */
 /*
-inline stk::StkFloat VSCSynthSourceGenerator::tick(void) {
+inline stk::StkFloat VSCSoundGenerator::tick(void) {
     assert(false);
     return 0.0;
 }

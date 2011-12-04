@@ -15,94 +15,40 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 
-typedef std::set<VSCSParameterListener*>::iterator ParameterListenerIter;
-typedef std::set<VSCSPropertyListener*>::iterator PropertyListenerIter;
-
+typedef std::set<VSCSBroadcastListenerPtr>::iterator BroadcastListenerIter;
 typedef std::map<VSCSParameterId, double>::iterator ParameterUpdateMapIter;
+typedef std::map<VSCSIndexedParameterId, double>::iterator IndexedParameterUpdateMapIter;
 typedef std::map<VSCSPropertyId, std::string>::iterator PropertyUpdateMapIter;
 
-#pragma mark - VSCSParameterListener
-
-void VSCSParameterListener::addParameterizedElement(VSCSoundParameterizedElement* element) {
-    _parameterizedElements.insert(element);
+bool VSCSParameterId::operator<(const VSCSParameterId& paramId) const { 
+	if (element < paramId.element)
+		return true; 
+	if (key < paramId.key)
+		return true; 
+	return false;
 }
 
-void VSCSParameterListener::removeParameterizedElement(VSCSoundParameterizedElement* element) {
-    _parameterizedElements.erase(element);
+bool VSCSIndexedParameterId::operator<(const VSCSIndexedParameterId& paramId) const { 
+	if (element < paramId.element)
+		return true; 
+	if (key < paramId.key)
+		return true; 
+	if (index < paramId.index)
+		return true;
+	return false;
 }
 
-std::set<VSCSoundParameterizedElement*> VSCSParameterListener::getParameterizedElements(void) {
-    return _parameterizedElements;
-}
+#pragma mark - VSCSBroadcastListener
 
-void VSCSParameterListener::addParameterKey(VSCSParameter::Key k) {
-    _parameterKeys.insert(k);
-}
-
-void VSCSParameterListener::removeParameterKey(VSCSParameter::Key k) {
-    _parameterKeys.erase(k);
-}
-
-std::set<VSCSParameter::Key> VSCSParameterListener::getParameterKeys(void) {
-    return  _parameterKeys;
-}
-
-bool VSCSParameterListener::interestedInParameterId(VSCSParameterId paramId) {
-    
-    if (paramId.key != VSCSParameter::KeyAll && _parameterKeys.find(paramId.key) == _parameterKeys.end()) 
-        return false;
-    
-    if (_parameterizedElements.find(paramId.element) == _parameterizedElements.end())
-        return false;
-    
-    return true;
-    
-}
-
-void VSCSParameterListener::parameterChanged(VSCSoundParameterizedElement* element, VSCSParameter::Key, double value) {
+void VSCSBroadcastListener::parameterChanged(VSCSParameterId id, double value) {
 	std::cout << "PARAMETER CHANGED" << std::endl;
 }
 
-#pragma mark - VSCSPropertyListener
-
-void VSCSPropertyListener::addPropertizedElement(VSCSoundPropertizedElement* element) {
-    _propertizedElements.insert(element);
+void VSCSBroadcastListener::indexedParameterChanged(VSCSIndexedParameterId id, double value) {
+	std::cout << "PARAMETER CHANGED" << std::endl;
 }
 
-void VSCSPropertyListener::removePropertizedElement(VSCSoundPropertizedElement* element) {
-    _propertizedElements.erase(element);
-}
-
-std::set<VSCSoundPropertizedElement*> VSCSPropertyListener::getPropertizedElements(void) {
-    return _propertizedElements;
-}
-
-
-void VSCSPropertyListener::addPropertyKey(VSCSProperty::Key k) {
-    _propertyKeys.insert(k);
-}
-
-void VSCSPropertyListener::removePropertyKey(VSCSProperty::Key k) {
-    _propertyKeys.erase(k);
-}
-
-std::set<VSCSProperty::Key> VSCSPropertyListener::getPropertyKeys(void) {
-    return _propertyKeys;
-}
-
-bool VSCSPropertyListener::interestedInPropertyId(VSCSPropertyId propId) {
-    
-    if (propId.key != VSCSProperty::KeyAll && _propertyKeys.find(propId.key) == _propertyKeys.end()) 
-        return false;
-    
-    if (_propertizedElements.find(propId.element) == _propertizedElements.end())
-        return false;
-    
-    return true;
-    
-}
-
-void VSCSPropertyListener::propertyChanged(VSCSoundPropertizedElement* element, VSCSProperty::Key, std::string value) {
+void VSCSBroadcastListener::propertyChanged(VSCSPropertyId, std::string value) {
 	std::cout << "PROPERTY CHANGED" << std::endl;
 }
 
@@ -117,22 +63,22 @@ VSCSoundBroadcaster::~VSCSoundBroadcaster() {
 	
 }
 
-void VSCSoundBroadcaster::parameterChanged(VSCSoundParameterizedElement* element, VSCSParameter::Key k, double val) {
-    
-	VSCSParameterId paramId = {element, k};
+void VSCSoundBroadcaster::parameterChanged(VSCSParameterId, double val) {
 	boost::mutex::scoped_lock updateLock(updateMutex);
 	_parameterUpdates.erase(paramId);
 	_parameterUpdates.insert( std::pair<VSCSParameterId, double>(paramId, val) );
-	
 }
 
-void VSCSoundBroadcaster::propertyChanged(VSCSoundPropertizedElement* element, VSCSProperty::Key k, std::string val) {
-    
-	VSCSPropertyId propId = {element, k};
+void VSCSoundBroadcaster::indexedParameterChanged(VSCSIndexedParameterId, double value) {
+	boost::mutex::scoped_lock updateLock(updateMutex);
+	_indexedParameterUpdateMap.erase(paramId);
+	_indexedParameterUpdateMap.insert( std::pair<VSCSIndexedParameterId, double>(paramId, val) );
+}
+
+void VSCSoundBroadcaster::propertyChanged(VSCSPropertyId propId, std::string val) {
 	boost::mutex::scoped_lock updateLock(updateMutex);
 	_propertyUpdates.erase(propId);
-	_propertyUpdates.insert( std::pair<VSCSPropertyId, std::string>(propId, val) );
-	
+	_propertyUpdates.insert( std::pair<VSCSPropertyId, std::string>(propId, val) );	
 }
 
 void VSCSoundBroadcaster::setBroadcastInterval(VSCSFloat interval) {
@@ -145,38 +91,23 @@ VSCSFloat VSCSoundBroadcaster::getBroadcastInterval(void) {
 	return _broadcastInterval;
 }
 
-void VSCSoundBroadcaster::addParameterListener(VSCSParameterListener* listener) {
+void VSCSoundBroadcaster::addBroadcastListener(VSCSBroadcastListenerPtr listener) {
 	boost::mutex::scoped_lock listenerLock(listenerMutex);
-	_parameterListeners.insert(listener);
+	_broadcastListeners.insert(listener);
 }
 
-void VSCSoundBroadcaster::removeParameterListener(VSCSParameterListener* listener) {
+void VSCSoundBroadcaster::removeBroadcastListener(VSCSBroadcastListenerPtr listener) {
 	boost::mutex::scoped_lock listenerLock(listenerMutex);
-	_parameterListeners.erase(listener);
-}
-
-void VSCSoundBroadcaster::addPropertyListener(VSCSPropertyListener* listener) {
-	boost::mutex::scoped_lock listenerLock(listenerMutex);
-	_propertyListeners.insert(listener);
-}
-
-void VSCSoundBroadcaster::removePropertyListener(VSCSPropertyListener* listener) {
-	boost::mutex::scoped_lock listenerLock(listenerMutex);
-	_propertyListeners.erase(listener);
+	_broadcastListeners.erase(listener);
 }
 
 void VSCSoundBroadcaster::startBroadcasting(void) {
-	
 	broadcastCycleThread.interrupt();
-	
-	broadcastCycleThread = boost::thread(boost::bind(&VSCSoundBroadcaster::cycleBroadcastAndSleepUntilStopped, this)); 
-	
+	broadcastCycleThread = boost::thread(boost::bind(&VSCSoundBroadcaster::cycleBroadcastAndSleepUntilStopped, this)); 	
 }
 
 void VSCSoundBroadcaster::stopBroadcasting(void) {
-	
 	broadcastCycleThread.interrupt();
-	
 }
 
 
@@ -200,55 +131,43 @@ void VSCSoundBroadcaster::broadcast(void) {
 	 */
 	
 	listenerMutex.lock();
-	std::set<VSCSPropertyListener*> propListenersCopy = _propertyListeners;
+	std::set<VSCSBroadcastListenerPtr> listenersCopy = _broadcastListeners;
 	listenerMutex.unlock();
 	
 	updateMutex.lock();
 	std::map<VSCSPropertyId, std::string> propUpdatesCopy = _propertyUpdates;
-	updateMutex.unlock();
-	
-    
-    for (PropertyUpdateMapIter mapIt = propUpdatesCopy.begin(); mapIt != propUpdatesCopy.end(); mapIt++) {
-        
-        std::pair<VSCSPropertyId, std::string> propUpdate = *mapIt;
-        VSCSPropertyId mapPropId = propUpdate.first;
-        std::string val = propUpdate.second;
-        
-		for (PropertyListenerIter propIt = propListenersCopy.begin(); propIt != propListenersCopy.end(); propIt++) {
-			VSCSPropertyListener* listener = *propIt;
-            if (listener->interestedInPropertyId(mapPropId)) {
-                listener->propertyChanged(mapPropId.element, mapPropId.key, val);
-            }
-		}
-        
-	}
-	
-	/*
-	 *	Make copies before broadcasting to minimze lock time
-	 */
-	
-	listenerMutex.lock();
-	std::set<VSCSParameterListener*> paramListenersCopy = _parameterListeners;
-    listenerMutex.unlock();
-	
-	updateMutex.lock();
 	std::map<VSCSParameterId, double> paramUpdatesCopy = _parameterUpdates;
 	updateMutex.unlock();
 	
-	for (ParameterUpdateMapIter mapIt = paramUpdatesCopy.begin(); mapIt != paramUpdatesCopy.end(); mapIt++) {
-        
-        std::pair<VSCSParameterId, double> paramUpdate = *mapIt;
-        VSCSParameterId mapParamId = paramUpdate.first;
-        double val = paramUpdate.second;
-        
-		for (ParameterListenerIter paramIt = paramListenersCopy.begin(); paramIt != paramListenersCopy.end(); paramIt++) {
-			VSCSParameterListener* listener = *paramIt;
-            if (listener->interestedInParameterId(mapParamId)) {
-                listener->parameterChanged(mapParamId.element, mapParamId.key, val);
-            }
+	for (BroadcastListenerIter lIt = paramListenersCopy.begin(); lIt != paramListenersCopy.end(); lIt++) {
+		
+		VSCSBroadcastListenerPtr* listener = *lIt;
+		
+		for (ParameterUpdateMapIter it = paramUpdatesCopy.begin(); it != paramUpdatesCopy.end(); it++) {
+			std::pair<VSCSParameterId, double> paramUpdate = *it;
+			VSCSParameterId mapParamId = paramUpdate.first;
+			double val = paramUpdate.second;
+			listener->parameterChanged(VSCSParameterId, val);
 		}
-
+		
+		for (IndexedParameterUpdateMapIter it = paramUpdatesCopy.begin(); it != paramUpdatesCopy.end(); it++) {
+			std::pair<VSCSIndexedParameterId, double> paramUpdate = *it;
+			VSCSIndexedParameterId mapParamId = paramUpdate.first;
+			double val = paramUpdate.second;
+			listener->indexedParameterChanged(VSCSIndexedParameterId, val);
+		}
+	
+		for (PropertyUpdateMapIter it = propUpdatesCopy.begin(); it != propUpdatesCopy.end(); it++) {
+			std::pair<VSCSPropertyId, std::string> propUpdate = *it;
+			VSCSPropertyId mapPropId = propUpdate.first;
+			std::string val = propUpdate.second;
+			listener->propertyChanged(VSCSPropertyId, val);
+		}
+	
 	}
+    
+
+
 	
 }
 

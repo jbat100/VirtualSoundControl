@@ -1,5 +1,5 @@
 /*
- *  VSCSynthSourceGroup.cpp
+ *  VSCSoundGeneratorGroup.cpp
  *  SynthStation
  *
  *  Created by Jonathan Thorpe on 01/11/2011.
@@ -7,24 +7,26 @@
  *
  */
 
-#include "VSCSynthSourceGroup.h"
+#include "VSCSoundGeneratorGroup.h"
 
 #include "VSCSTKUtils.h"
 #include <algorithm>
 
 
-void VSCSynthSourceGroup::addGenerator(VSCSynthSourceGeneratorPtr elem) {
+void VSCSoundGeneratorGroup::addGenerator(VSCSoundGeneratorPtr elem) {
 	
 	assert(elem);
 	
 	if (!elem)
 		return;
 	
-    assert(elem->getNumberOfChannels() == _numberOfChannels);
+	unsigned int numberOfChannels = this->getNumberOfChannels();
+	
+    assert(elem->getNumberOfChannels() == numberOfChannels);
     
-    if (elem->getNumberOfChannels() != _numberOfChannels) {
+    if (elem->getNumberOfChannels() != numberOfChannels) {
         assert(elem->numberOfChannelsIsLocked() == false);
-        elem->setNumberOfChannels(_numberOfChannels);
+        elem->setNumberOfChannels(numberOfChannels);
     }
     
 	ConstSynthSrcGenIter it = find (_generators.begin(), _generators.end(), elem);
@@ -37,7 +39,7 @@ void VSCSynthSourceGroup::addGenerator(VSCSynthSourceGeneratorPtr elem) {
 	
 }
 
-void VSCSynthSourceGroup::removeGenerator(VSCSynthSourceGeneratorPtr elem) {
+void VSCSoundGeneratorGroup::removeGenerator(VSCSoundGeneratorPtr elem) {
 	
 	assert(elem);
 	
@@ -54,43 +56,35 @@ void VSCSynthSourceGroup::removeGenerator(VSCSynthSourceGeneratorPtr elem) {
 	
 }
 
-SynthSrcGenIter VSCSynthSourceGroup::beginGeneratorsIterator(void) {
+SynthSrcGenIter VSCSoundGeneratorGroup::beginGeneratorsIterator(void) {
 	return _generators.begin();
 }
 
-SynthSrcGenIter VSCSynthSourceGroup::endGeneratorsIterator(void) {
+SynthSrcGenIter VSCSoundGeneratorGroup::endGeneratorsIterator(void) {
 	return _generators.end();
 }
 
-void VSCSynthSourceGroup::initialize(void) {
+void VSCSoundGeneratorGroup::initialize(void) {
 	
-	VSCSynthSourceGenerator::initialize();
+	VSCSoundGenerator::initialize();
 	
 	for (SynthSrcGenIter iter = _generators.begin(); iter != _generators.end(); iter++) {
         (*iter)->initialize();
     }
 }
 
-void VSCSynthSourceGroup::updateSoundEngine(void) {
+void VSCSoundGeneratorGroup::updateSoundEngine(void) {
 	
 	// call superclass implementation
-	VSCSynthSourceGenerator::updateSoundEngine();
+	VSCSoundGenerator::updateSoundEngine();
 	
-	/*
-	 *	resize _computationFrames and _tempFrames to have _numberOfChannels channels 
-	 */
-    if (_computationFrames.channels() != _numberOfChannels) {
-        _computationFrames.resize(_computationFrames.frames(), _numberOfChannels);
-    }
-    if (_tempFrames.channels() != _numberOfChannels) {
-        _tempFrames.resize(_tempFrames.frames(), _numberOfChannels);
-    }
+	unsigned int numberOfChannels = this->getNumberOfChannels();
 	
 	/*
 	 *	Synchronize the number of channels for all the generators, and update their soud engine 
 	 */
 	for (SynthSrcGenIter iter = _generators.begin(); iter != _generators.end(); iter++) {
-        (*iter)->setNumberOfChannels(_numberOfChannels);
+        (*iter)->setNumberOfChannels(numberOfChannels);
 		(*iter)->updateSoundEngine();
     }
 

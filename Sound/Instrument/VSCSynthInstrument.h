@@ -12,7 +12,7 @@
 
 #include "VSCSound.h"
 #include "VSCSoundMultiChannelElement.h"
-#include "VSCSynthSourceGroup.h"
+#include "VSCSoundGeneratorGroup.h"
 
 #include <list>
 #include <vector>
@@ -103,7 +103,7 @@ public:
 protected:
 	
 	bool _isOn;
-	VSCSynthSourceGroup* _sourceGroup;
+	VSCSoundGeneratorGroup* _sourceGroup;
 	
 	
 };
@@ -111,7 +111,7 @@ protected:
 inline stk::StkFrames& VSCSynthInstrument::tick(stk::StkFrames& frames, unsigned int channel)
 {
 	if (_sourceGroup != NULL) {
-		assert(_sourceGroup->getNumberOfChannels() == _numberOfChannels);
+		assert(_sourceGroup->getNumberOfChannels() == this->getNumberOfChannels());
 		_sourceGroup->tick(frames, kVSCSAllChannels);
 	}
 	

@@ -47,24 +47,30 @@ public:
 	 *	General sound parameter key enum 
 	 */	
 	
-	enum Key {
+	enum Code {
 		
-		KeyNone,
+		CodeNone,
 		
-		KeySoundElementType,
-        KeySoundElementIdentifier,
+		CodeSoundElementType,
+        CodeSoundElementIdentifier,
 		
 		// multi chan		
-		KeyChannelSetup,
+		CodeChannelSetup,
 		
 		// File 
-		KeyFilePath,
+		CodeFilePath,
 		
 		// BiQuad Filter
-		KeyBiQuadType,
+		CodeBiQuadType,
 		
-		KeyAll
+		CodeAll
 
+	};
+	
+	struct Key {
+		Domain domain;
+		Code code;
+		bool operator<(const Key& otherKey) const;
 	};
     
     typedef std::set<Key>                   KeySet;
@@ -80,19 +86,13 @@ public:
 	VSCSProperty();
 	~VSCSProperty();
 	
-	
 	std::string getLabelForPropertyWithKey(Key k);
 	void setLabelForPropertyWithKey(std::string label, Key k);
-    
-    /*
-     *  
-     */
 	
 	
 private:
 	
-	KeyLabelMap keyLabelMap;
-	void generatePropertyLabels(void);
+	KeyLabelMap customizedKeyLabels;
 	
 };
 

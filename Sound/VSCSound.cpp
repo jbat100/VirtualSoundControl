@@ -20,6 +20,15 @@ std::vector<VSCSFloat> VSCSound::midiNoteFrequencies;
 VSCSFloat VSCSound::referenceAFrequency = 440.0;
 bool VSCSound::midiNoteFrequenciesAreComputed = false;
 
+
+VSCSFloat VSCSound::logFrequencyToFrequency(VSCSFloat logFreq) {
+	return std::pow(10.0, logFreq);
+}
+
+VSCSFloat VSCSound::frequencyToLogFrequency(VSCSFloat freq) {
+	return std::log10(freq);
+}
+
 VSCSFloat VSCSound::frequencyForMidiNote(VSCSFloat midiNote) {
 	return VSCSound::frequencyForMidiNote((unsigned int)midiNote);
 }

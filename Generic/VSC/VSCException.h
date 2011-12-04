@@ -11,6 +11,11 @@
 
 #include <exception>
 
+
+/*------------------------------------------------------------------------------------
+ *	Base Exception 
+ */
+
 class VSCBaseException : public std::exception
 {
     virtual const char* what() const throw()
@@ -18,6 +23,11 @@ class VSCBaseException : public std::exception
         return "Base VSC Exception";
     }
 };
+
+
+/*------------------------------------------------------------------------------------
+ *	Envelope specific 
+ */
 
 class VSCEnveloppeEmptyException : public VSCBaseException
 {
@@ -27,11 +37,23 @@ class VSCEnveloppeEmptyException : public VSCBaseException
     }
 };
 
+/*------------------------------------------------------------------------------------
+ *	Generic parameter checking
+ */
+
 class VSCSInvalidArgumentException : public VSCBaseException
 {
     virtual const char* what() const throw()
     {
         return "Invalid Argument";
+    }
+};
+
+class VSCSOutOfBoundsException : public VSCBaseException
+{
+    virtual const char* what() const throw()
+    {
+        return "Out Of Bounds";
     }
 };
 
@@ -51,6 +73,9 @@ class VSCSBadPropertyException : public VSCBaseException
     }
 };
 
+/*------------------------------------------------------------------------------------
+ *	Used for objective c where pure virtual cannot actually be enforeced (like in C++)
+ */
 class VSCSCalledPureVirtualFunctionException : public VSCBaseException
 {
     virtual const char* what() const throw()

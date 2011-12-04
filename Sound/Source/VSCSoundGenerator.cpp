@@ -1,5 +1,5 @@
 //
-//  VSCSynthSourceGenerator.cpp
+//  VSCSoundGenerator.cpp
 //  SynthStation
 //
 //  Created by Jonathan Thorpe on 11/2/11.
@@ -7,9 +7,9 @@
 //
 
 #include <iostream>
-#include "VSCSynthSourceGenerator.h"
+#include "VSCSoundGenerator.h"
 
-VSCSynthSourceGenerator::VSCSynthSourceGenerator() {
+VSCSoundGenerator::VSCSoundGenerator() {
 	
     _numberOfChannelsNeededForComputationFrames = 0;
 	_tickCount = 0;
@@ -24,11 +24,11 @@ VSCSynthSourceGenerator::VSCSynthSourceGenerator() {
 #pragma mark - Parameter Setter/Getter 
 
 
-VSCSFloat VSCSynthSourceGenerator::getValueForParameterWithKey(VSCSParameter::Key k) {
+VSCSFloat VSCSoundGenerator::getValueForParameterWithKey(VSCSParameter::Key k) {
 	return VSCSoundMultiChannelElement::getValueForParameterWithKey(k);
 }
 
-void VSCSynthSourceGenerator::setValueForParameterWithKey(double val, VSCSParameter::Key k) {
+void VSCSoundGenerator::setValueForParameterWithKey(double val, VSCSParameter::Key k) {
 	VSCSoundMultiChannelElement::setValueForParameterWithKey(val, k);
 }
 
@@ -37,35 +37,35 @@ void VSCSynthSourceGenerator::setValueForParameterWithKey(double val, VSCSParame
 
 #pragma mark - Sound Engine
 
-void VSCSynthSourceGenerator::setNumberOfChannelsNeededForComputationFrames(unsigned int n) {
+void VSCSoundGenerator::setNumberOfChannelsNeededForComputationFrames(unsigned int n) {
     _numberOfChannelsNeededForComputationFrames = n;
 }
 
-unsigned int VSCSynthSourceGenerator::numberOfChannelsNeededForComputationFrames(void) {
+unsigned int VSCSoundGenerator::numberOfChannelsNeededForComputationFrames(void) {
     return _numberOfChannelsNeededForComputationFrames;
 }
 
-void VSCSynthSourceGenerator::processComputationFrames(unsigned int numberOfFrames) {
+void VSCSoundGenerator::processComputationFrames(unsigned int numberOfFrames) {
 	if (_computationFrames.frames() < numberOfFrames || 
 		_computationFrames.channels() != _numberOfChannelsNeededForComputationFrames)
 		_computationFrames.resize(numberOfFrames, _numberOfChannelsNeededForComputationFrames);
 }
 
 
-void VSCSynthSourceGenerator::setNumberOfChannels(unsigned int c) {
+void VSCSoundGenerator::setNumberOfChannels(unsigned int c) {
 	VSCSoundMultiChannelElement::setNumberOfChannels(c);
 	this->updateSoundEngine();
 }
 
-void VSCSynthSourceGenerator::initialize(void) {
+void VSCSoundGenerator::initialize(void) {
 	this->updateSoundEngine();
 }
 
-void VSCSynthSourceGenerator::updateSoundEngine(void) {
+void VSCSoundGenerator::updateSoundEngine(void) {
     
     /*
 	 *	resize _computationFrames to have 1 channel (only need mono noise generation)
-	 *	which will get spread to the (possibly) multi-channel VSCSynthSourceGenerator
+	 *	which will get spread to the (possibly) multi-channel VSCSoundGenerator
 	 */
     unsigned int n = this->numberOfChannelsNeededForComputationFrames();
     if (_computationFrames.channels() != n) {
@@ -79,7 +79,7 @@ void VSCSynthSourceGenerator::updateSoundEngine(void) {
 /*
  *  Frame debugging
  */
-void VSCSynthSourceGenerator::tracePastFrames(unsigned int numberOfPastFrames) {
+void VSCSoundGenerator::tracePastFrames(unsigned int numberOfPastFrames) {
     
     _numberOfPastFrames = numberOfPastFrames;
     
@@ -87,7 +87,7 @@ void VSCSynthSourceGenerator::tracePastFrames(unsigned int numberOfPastFrames) {
     
 }
 
-void VSCSynthSourceGenerator::setupPastFrames(void) {
+void VSCSoundGenerator::setupPastFrames(void) {
     
     if (_numberOfPastFrames == 0) {
         _fillPastFrames = false;
@@ -102,11 +102,11 @@ void VSCSynthSourceGenerator::setupPastFrames(void) {
     
 }
 
-const stk::StkFrames& VSCSynthSourceGenerator::getPastFrames(void) {
+const stk::StkFrames& VSCSoundGenerator::getPastFrames(void) {
     return _pastFrames;
 }
 
-unsigned long long VSCSynthSourceGenerator::getTickCount(void) {
+unsigned long long VSCSoundGenerator::getTickCount(void) {
     return _tickCount;
 }
 
@@ -114,7 +114,7 @@ unsigned long long VSCSynthSourceGenerator::getTickCount(void) {
  * TICK (CENTRAL PROCESSING METHOD)
  */
 
-stk::StkFrames& VSCSynthSourceGenerator::tick(stk::StkFrames& frames, unsigned int channel)
+stk::StkFrames& VSCSoundGenerator::tick(stk::StkFrames& frames, unsigned int channel)
 {
     
     _tickCount++;

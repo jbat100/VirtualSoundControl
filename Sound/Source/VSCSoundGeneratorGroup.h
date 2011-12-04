@@ -1,5 +1,5 @@
 /*
- *  VSCSynthSourceGroup.h
+ *  VSCSoundGeneratorGroup.h
  *  SynthStation
  *
  *  Created by Jonathan Thorpe on 01/11/2011.
@@ -11,25 +11,25 @@
 #define _VSC_SYNTH_SOURCE_GROUP_
 
 #include "VSCSound.h"
-#include "VSCSynthSourceGenerator.h"
+#include "VSCSoundGenerator.h"
 
 #include <list>
 #include <boost/foreach.hpp>
 #include <boost/shared_ptr.hpp>
 
-#define VSCSynthSourceGroupPtr      boost::shared_ptr<VSCSynthSourceGroup>
+#define VSCSoundGeneratorGroupPtr      boost::shared_ptr<VSCSoundGeneratorGroup>
 
 
 #ifdef VSCS_USE_STK
 
 #include "Stk.h"
 
-class VSCSynthSourceGroup : public VSCSynthSourceGenerator {
+class VSCSoundGeneratorGroup : public VSCSoundGenerator {
 			
 public:
 	
-	virtual void addGenerator(VSCSynthSourceGeneratorPtr elem);
-	virtual void removeGenerator(VSCSynthSourceGeneratorPtr elem);
+	virtual void addGenerator(VSCSoundGeneratorPtr elem);
+	virtual void removeGenerator(VSCSoundGeneratorPtr elem);
 	
 	SynthSrcGenIter beginGeneratorsIterator(void);
 	SynthSrcGenIter endGeneratorsIterator(void);
@@ -41,7 +41,7 @@ protected:
 	
 	void processComputationFrames(void);
 	
-	std::list<VSCSynthSourceGeneratorPtr> _generators;
+	std::list<VSCSoundGeneratorPtr> _generators;
     
     stk::StkFrames _tempFrames;
 	
@@ -49,7 +49,7 @@ protected:
 
 
 
-inline void VSCSynthSourceGroup::processComputationFrames(void)
+inline void VSCSoundGeneratorGroup::processComputationFrames(void)
 {  
     stk::zeroFrames(_computationFrames);
     

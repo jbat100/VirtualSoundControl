@@ -32,16 +32,10 @@ class VSCSoundPropertized {
 	
 public:
 	
-	void addPropertyKey(VSCSProperty::Key k);
-	void removePropertyKey(VSCSProperty::Key k);
-	VSCSProperty::KeySet& getPropertyKeys(void);
+	VSCSProperty::KeySet getPropertyKeys(void);
 	
 	virtual std::string getValueForPropertyWithKey(VSCSProperty::Key key);
 	virtual void setValueForPropertyWithKey(std::string, VSCSProperty::Key key);
-	
-private:
-	
-    VSCSProperty::KeySet _propertyKeys;
 	
 };
 

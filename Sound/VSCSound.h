@@ -42,14 +42,6 @@ const unsigned int kVSCSVoidChannel = UINT_MAX - 1;
 
 /*-------------------------------------------------------------------------------------------*/
 
-/*
- *	Just because I can't believe how stupid is not to standardize it...
- */
-
-const double kVSC_PI = 3.1415926535897932384626433832795028;
-
-/*-------------------------------------------------------------------------------------------*/
-
 #ifdef VSCS_USE_STK
 	#include "Stk.h"
 	//Define VSCSFloat (double or float or same as stk::StkFloat)
@@ -77,6 +69,9 @@ public:
 	
 	static void setReferenceAFrequency(VSCSFloat f);
 	static VSCSFloat getReferenceAFrequency(void);
+	
+	static VSCSFloat logFrequencyToFrequency(VSCSFloat logFreq);
+	static VSCSFloat frequencyToLogFrequency(VSCSFloat logFreq);
 	
 private:
 	

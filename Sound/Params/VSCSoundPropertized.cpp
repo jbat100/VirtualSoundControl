@@ -12,18 +12,9 @@
 #include "VSCException.h"
 
 
-std::set<VSCSProperty::Key>& VSCSoundPropertized::getPropertyKeys(void) {
-	return _propertyKeys;
+VSCSProperty::KeySet VSCSoundPropertized::getPropertyKeys(void) {
+	return VSCSProperty::KeySet();
 }
-
-void VSCSoundPropertized::addPropertyKey(VSCSProperty::Key k) {
-	this->getPropertyKeys().insert(k);	
-}
-
-void VSCSoundPropertized::removePropertyKey(VSCSProperty::Key k) {
-    this->getPropertyKeys().erase(k);	
-}
-
 
 std::string VSCSoundPropertized::getValueForPropertyWithKey(VSCSProperty::Key key) {
 	throw VSCSBadPropertyException();

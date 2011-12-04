@@ -1,5 +1,5 @@
 /*
- *  VSCSynthSourceSine.cpp
+ *  VSCSoundSine.cpp
  *  SynthStation
  *
  *  Created by Jonathan Thorpe on 15/10/2011.
@@ -7,21 +7,21 @@
  *
  */
 
-#include "VSCSynthSourceSquare.h"
+#include "VSCSoundSaw.h"
 
 
-stk::BlitSquare* VSCSynthSourceSquare::getStkBlitSquare(void) {
-    return &blitSquare;
+stk::BlitSaw* VSCSoundSaw::getStkBlitSaw(void) {
+    return &blitSaw;
 }
 
-void VSCSynthSourceSquare::updateSoundEngine(void) {
+void VSCSoundSaw::updateSoundEngine(void) {
 	
 	// call superclass implementation
-	VSCSynthSourceGenerator::updateSoundEngine();
+	VSCSoundGenerator::updateSoundEngine();
 	
 	/*
 	 *	resize _computationFrames to have 1 channel (only need mono noise generation)
-	 *	which will get spread to the (possibly) multi-channel VSCSynthSourceGenerator
+	 *	which will get spread to the (possibly) multi-channel VSCSoundGenerator
 	 */
     if (_computationFrames.channels() != 1) {
         _computationFrames.resize(_computationFrames.frames(), 1);

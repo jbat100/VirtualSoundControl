@@ -1,5 +1,5 @@
 /*
- *  VSCSynthSourceSine.cpp
+ *  VSCSoundSine.cpp
  *  SynthStation
  *
  *  Created by Jonathan Thorpe on 15/10/2011.
@@ -7,9 +7,9 @@
  *
  */
 
-#include "VSCSynthSourceFileLoop.h"
+#include "VSCSoundFileLoopPlayer.h"
 #include "VSCSound.h"
 
-stk::FileLoop* VSCSynthSourceFileLoop::getStkFileLoop(void) {
+stk::FileLoop* VSCSoundFileLoopPlayer::getStkFileLoop(void) {
     return &fileLoop;
 }

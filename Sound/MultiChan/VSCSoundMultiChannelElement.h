@@ -41,6 +41,7 @@ public:
 	
 	bool numberOfChannelsIsLocked(void);
 	void lockChannels(bool _lock);
+	
 	VSCSFloat averageLinearGain(void);
 	VSCSFloat averageDBGain(void);
     
@@ -59,12 +60,13 @@ public:
 	virtual double getValueForParameterWithKey(VSCSParameter::Key key);
 	virtual void setValueForParameterWithKey(double value, VSCSParameter::Key key);
 	
+	virtual double getValueForIndexedParameterWithKey(VSCSParameter::Key key, unsigned int ind);
+    virtual void setValueForIndexedParameterWithKey(double value, VSCSParameter::Key key, unsigned int ind);
+	
 	virtual std::string getValueForPropertyWithKey(VSCSProperty::Key key);
 	virtual void setValueForPropertyWithKey(std::string value, VSCSProperty::Key key);
 	
 	/*--------------------------------------------------------------*/
-	
-
 	
 protected:
 	
@@ -80,8 +82,6 @@ private:
     std::vector<VSCSFloat> _channelLinearGains;
     unsigned int _numberOfChannels;
     bool _lockNumberOfChannels;
-    void resetMultiChannelParameters(void);
-    
 	
 };
 

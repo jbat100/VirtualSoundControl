@@ -8,10 +8,18 @@
  */
 
 #include "VSCSoundProperties.h"
+#include "VSCException.h"
+
+bool VSCSProperty::Key::operator<(const Key& otherKey) const {
+	if (domain < otherKey.domain)
+		return true;
+	if (code < otherKey.code)
+		return true;
+	return false;
+}
+
 
 VSCSProperty::VSCSProperty() {
-	
-	this->generatePropertyLabels();
 	
 }
 
@@ -27,10 +35,28 @@ VSCSProperty& VSCSProperty::sharedInstance(void) {
 
 std::string VSCSProperty::getLabelForPropertyWithKey(VSCSProperty::Key k) {
 	
-	KeyLabelMap::iterator labelIterator = keyLabelMap.find(k);
-	
-	if (labelIterator != keyLabelMap.end()) 
+	KeyLabelMap::iterator labelIterator = customizedKeyLabels.find(k);
+	if (labelIterator != customizedKeyLabels.end()) 
 		return labelIterator->second;
+	
+	switch (k.code) {
+		case CodeNone:
+			return "No Code";
+		case CodeSoundElementType:
+			return "Element Type";
+		case CodeSoundElementIdentifier:
+			return "Element Identifier";
+		case CodeChannelSetup:
+			return "Channel Setup";
+		case CodeFilePath:
+			return "File Path";
+		case CodeBiQuadType:
+			return "BiQuad Type";
+		case CodeAll:
+			return "All Codes";
+		default:
+			break;
+	}
 	
 	throw VSCSBadPropertyException();
 	
@@ -38,24 +64,12 @@ std::string VSCSProperty::getLabelForPropertyWithKey(VSCSProperty::Key k) {
 
 void VSCSProperty::setLabelForPropertyWithKey(std::string label, VSCSProperty::Key k) {
 	
-	KeyLabelMap::iterator labelIterator = keyLabelMap.find(k);
+	KeyLabelMap::iterator labelIterator = customizedKeyLabels.find(k);
 	
-	if (labelIterator != keyLabelMap.end()) {
-		keyLabelMap.erase(k);
+	if (labelIterator != customizedKeyLabels.end()) {
+		customizedKeyLabels.erase(k);
 	}
 		
-	keyLabelMap.insert(KeyLabelPair (k, label));
+	customizedKeyLabels.insert(KeyLabelPair (k, label));
 	
-}
-
-
-void VSCSProperty::generatePropertyLabels(void) {
-	
-	keyLabelMap.insert(KeyLabelPair (KeyNone, "No Property"));
-	keyLabelMap.insert(KeyLabelPair (KeySoundElementType, "Sound Element Type"));
-	keyLabelMap.insert(KeyLabelPair (KeyChannelSetup, "Channel Setup"));
-	keyLabelMap.insert(KeyLabelPair (KeyFilePath, "File Path"));
-	keyLabelMap.insert(KeyLabelPair (KeyBiQuadType, "BiQuad Filter Type"));
-	keyLabelMap.insert(KeyLabelPair (KeyAll, "All Properties"));
-
 }

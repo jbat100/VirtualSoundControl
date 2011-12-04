@@ -19,4 +19,9 @@
 -(void) createMatrices;
 -(void) destroyMatrices;
 
+/*
+ *	Controller cell callback
+ */
+-(void) controllerCellCallback:(NSActionCell*)sender;
+
 @end
