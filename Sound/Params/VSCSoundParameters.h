@@ -148,8 +148,8 @@ public:
 	/*
 	 *	Customize
 	 */
-	std::string setLabelForParameterWithKey(std::string label, Key k);
-	ValueRange setRangeForParameterWithKey(ValueRange range, Key k);
+	void setLabelForParameterWithKey(std::string label, Key k);
+	void setRangeForParameterWithKey(ValueRange range, Key k);
 	/*
 	 *	Revert to defaults
 	 */

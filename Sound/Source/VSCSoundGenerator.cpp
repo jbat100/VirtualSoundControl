@@ -80,11 +80,12 @@ void VSCSoundGenerator::updateSoundEngine(void) {
  *  Frame debugging
  */
 void VSCSoundGenerator::tracePastFrames(unsigned int numberOfPastFrames) {
-    
     _numberOfPastFrames = numberOfPastFrames;
-    
     this->setupPastFrames();
-    
+}
+
+unsigned int VSCSoundGenerator::pastFramesTraceSize(void) {
+	return _numberOfPastFrames;
 }
 
 void VSCSoundGenerator::setupPastFrames(void) {
@@ -95,7 +96,6 @@ void VSCSoundGenerator::setupPastFrames(void) {
     }
     
     else {
-        
         _fillPastFrames = true;
         _pastFrames.resize(_numberOfPastFrames, this->getNumberOfChannels());
     }

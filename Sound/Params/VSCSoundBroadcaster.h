@@ -15,6 +15,7 @@
 #include "VSCSoundProperties.h"
 #include "VSCSoundParameterized.h"
 #include "VSCSoundPropertized.h"
+#include "VSCSoundElement.h"
 
 #include <map>
 #include <stack>

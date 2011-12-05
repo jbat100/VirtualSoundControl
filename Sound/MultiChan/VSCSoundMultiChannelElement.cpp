@@ -8,6 +8,7 @@
  */
 
 #include "VSCSoundMultiChannelElement.h"
+#include "VSCException.h"
 #include <cassert>
 
 #pragma mark Constructor/Destructor
@@ -62,7 +63,7 @@ VSCSFloat VSCSoundMultiChannelElement::averageLinearGain(void) {
 VSCSFloat VSCSoundMultiChannelElement::averageDBGain(void) {
     VSCSFloat sum = 0.0;
 	for (int i = 0; i<_numberOfChannels; i++) {
-		sum += VSCSParameter::sharedInstance().linearToDBGain(_channelLinearGains[i]);
+		sum += VSCSParameter::sharedInstance().linearToDB(_channelLinearGains[i]);
 	}
 	return sum/(VSCSFloat)_numberOfChannels;
 }

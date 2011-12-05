@@ -63,22 +63,22 @@ VSCSoundBroadcaster::~VSCSoundBroadcaster() {
 	
 }
 
-void VSCSoundBroadcaster::parameterChanged(VSCSParameterId, double val) {
+void VSCSoundBroadcaster::parameterChanged(VSCSParameterId paramId, double val) {
 	boost::mutex::scoped_lock updateLock(updateMutex);
-	_parameterUpdates.erase(paramId);
-	_parameterUpdates.insert( std::pair<VSCSParameterId, double>(paramId, val) );
+	_parameterUpdateMap.erase(paramId);
+	_parameterUpdateMap.insert( std::pair<VSCSParameterId, double>(paramId, val) );
 }
 
-void VSCSoundBroadcaster::indexedParameterChanged(VSCSIndexedParameterId, double value) {
+void VSCSoundBroadcaster::indexedParameterChanged(VSCSIndexedParameterId paramId, double value) {
 	boost::mutex::scoped_lock updateLock(updateMutex);
 	_indexedParameterUpdateMap.erase(paramId);
-	_indexedParameterUpdateMap.insert( std::pair<VSCSIndexedParameterId, double>(paramId, val) );
+	_indexedParameterUpdateMap.insert( std::pair<VSCSIndexedParameterId, double>(paramId, value) );
 }
 
 void VSCSoundBroadcaster::propertyChanged(VSCSPropertyId propId, std::string val) {
 	boost::mutex::scoped_lock updateLock(updateMutex);
-	_propertyUpdates.erase(propId);
-	_propertyUpdates.insert( std::pair<VSCSPropertyId, std::string>(propId, val) );	
+	_propertyUpdateMap.erase(propId);
+	_propertyUpdateMap.insert( std::pair<VSCSPropertyId, std::string>(propId, val) );	
 }
 
 void VSCSoundBroadcaster::setBroadcastInterval(VSCSFloat interval) {
@@ -135,26 +135,26 @@ void VSCSoundBroadcaster::broadcast(void) {
 	listenerMutex.unlock();
 	
 	updateMutex.lock();
-	std::map<VSCSPropertyId, std::string> propUpdatesCopy = _propertyUpdates;
-	std::map<VSCSParameterId, double> paramUpdatesCopy = _parameterUpdates;
+	std::map<VSCSPropertyId, std::string> propUpdatesCopy = _propertyUpdateMap;
+	std::map<VSCSParameterId, double> paramUpdatesCopy = _parameterUpdateMap;
 	updateMutex.unlock();
 	
-	for (BroadcastListenerIter lIt = paramListenersCopy.begin(); lIt != paramListenersCopy.end(); lIt++) {
+	for (BroadcastListenerIter lIt = listenersCopy.begin(); lIt != listenersCopy.end(); lIt++) {
 		
-		VSCSBroadcastListenerPtr* listener = *lIt;
+		VSCSBroadcastListenerPtr listener = *lIt;
 		
 		for (ParameterUpdateMapIter it = paramUpdatesCopy.begin(); it != paramUpdatesCopy.end(); it++) {
 			std::pair<VSCSParameterId, double> paramUpdate = *it;
 			VSCSParameterId mapParamId = paramUpdate.first;
 			double val = paramUpdate.second;
-			listener->parameterChanged(VSCSParameterId, val);
+			listener->parameterChanged(mapParamId, val);
 		}
 		
 		for (IndexedParameterUpdateMapIter it = paramUpdatesCopy.begin(); it != paramUpdatesCopy.end(); it++) {
 			std::pair<VSCSIndexedParameterId, double> paramUpdate = *it;
 			VSCSIndexedParameterId mapParamId = paramUpdate.first;
 			double val = paramUpdate.second;
-			listener->indexedParameterChanged(VSCSIndexedParameterId, val);
+			listener->indexedParameterChanged(mapParamId, val);
 		}
 	
 		for (PropertyUpdateMapIter it = propUpdatesCopy.begin(); it != propUpdatesCopy.end(); it++) {

@@ -9,6 +9,7 @@
 
 #include "VSCSoundParameters.h"
 #include "VSCException.h"
+#include "VSCMath.h"
 
 #include <map>
 #include <string>
@@ -51,6 +52,7 @@ VSCSFloat VSCSParameter::dBToLinear(VSCSFloat dB) {
     return 0.1*std::pow(10.0, dB);
 }
 
+
 /*
  *	Parameter labels
  */
@@ -66,14 +68,14 @@ std::string VSCSParameter::getLabelForParameterWithKey(VSCSParameter::Key k) {
 	switch (k.code) {
 		case CodeGain:
 			return "Gain (Lin)";
-		case CodeDBGain:
-			return "Gain (dB)";
+//		case CodeDBGain:
+//			return "Gain (dB)";
 		case CodeFrequency:
 			return "Freq (Hz)";
-		case CodeLogFrequency:
-			return "Freq (Log Hz)";
-		case CodeDegPhase:
-			return "Phase (deg)";
+//		case CodeLogFrequency:
+//			return "Freq (Log Hz)";
+//		case CodeDegPhase:
+//			return "Phase (deg)";
 		case CodeRadPhase:
 			return "Phase (rad)";
 		case CodeHarmonics:
@@ -115,21 +117,22 @@ VSCSParameter::ValueRange VSCSParameter::getRangeForParameterWithKey(Key k) {
 	switch (k.code) {
 		case CodeGain:
 			return ValueRange (0.0, 1.0);
-		case CodeDBGain:
-			return ValueRange (-30.0, 0.0);
+//		case CodeDBGain:
+//			return ValueRange (-30.0, 0.0);
 		case CodeFrequency:
 			return ValueRange (20.0, 20000.0);
-		case CodeLogFrequency:
-			return ValueRange (std::log10(20.0), std::log10(20000.0));
-		case CodeDegPhase:
-			return ValueRange (-180.0, 180.0);
+//		case CodeLogFrequency:
+//			return ValueRange (std::log10(20.0), std::log10(20000.0));
+//		case CodeDegPhase:
+//			return ValueRange (-180.0, 180.0);
 		case CodeRadPhase:
-			return ValueRange (-kVSC_PI, kVSC_PI);
+			return ValueRange (-vsc::kPI, vsc::kPI);
 		case CodeHarmonics:
 			return ValueRange (0.0, 10.0);
 		default:
-			return "";
+			return ValueRange (0.0, 0.0);
 			break;
+	}
 	
 	throw VSCSBadParameterException();
 	
@@ -139,17 +142,17 @@ void VSCSParameter::setRangeForParameterWithKey(ValueRange valRange, Key k) {
 	
 	KeyRangeMap::iterator rangeIterator = customizedKeyRanges.find(k);
 	if (rangeIterator != customizedKeyRanges.end()) 
-		parameterRanges.erase(k);
+		customizedKeyRanges.erase(k);
 	
 	customizedKeyRanges.insert(KeyRangePair (k, valRange));
 	
 }
 
-ValueRange VSCSParameter::revertRangeForParameterWithKeyToDefault(Key k) {
+VSCSParameter::ValueRange VSCSParameter::revertRangeForParameterWithKeyToDefault(Key k) {
 	
 	KeyRangeMap::iterator rangeIterator = customizedKeyRanges.find(k);
 	if (rangeIterator != customizedKeyRanges.end()) 
-		parameterRanges.erase(k);
+		customizedKeyRanges.erase(k);
 	
 }
 

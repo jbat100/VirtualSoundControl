@@ -8,16 +8,14 @@
 
 #import "VSCSoundSourceGeneratorDebugView.h"
 #import "VSCSoundGenerator.h"
-#import "VSCSoundChannelLevelParameterView.h"
 #import "VSCSoundParameters.h"
+#import "VSCException.h"
 
 #import <boost/pointer_cast.hpp>
 
 
 @implementation VSCSoundSourceGeneratorDebugView
 
-@synthesize generatorParameterParentView, generatorParameterView;
-@synthesize channelLevelParameterView, channelLevelParameterParentView;
 @synthesize tickTableView, tickButton;
 @synthesize generatorTitleTextField, tickCountTextField;
 
@@ -61,14 +59,14 @@
  *	In this case we do not know what the class will be...
  */
 
--(void) setSynthSourceGenerator:(VSCSoundGeneratorPtr)generator {
+-(void) setSoundGenerator:(VSCSoundGeneratorPtr)generator {
 	VSCSoundElementPtr element = boost::dynamic_pointer_cast<VSCSoundElement>(generator);
 	if (generator && !element) 
 		throw VSCSInvalidArgumentException();
 	[self setSoundElement:element];
 }
 
--(VSCSoundGeneratorPtr) getSoundElement {
+-(VSCSoundGeneratorPtr) getSoundGenerator {
 	return boost::dynamic_pointer_cast<VSCSoundGenerator>(soundElement);
 }
 
@@ -77,9 +75,13 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
 	
-	if (sourceGenerator && sourceGenerator->fillPastFrames) {
-		return sourceGenerator->numberOfPastFrames;
+	VSCSoundGeneratorPtr sourceGenerator = [self getSoundGenerator]; 
+	
+	if (sourceGenerator) {
+		return sourceGenerator->pastFramesTraceSize();
 	}
+	
+	return 0;
 	
 }
 

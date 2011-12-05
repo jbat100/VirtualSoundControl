@@ -51,7 +51,8 @@ public:
 	 */
 	virtual std::string getElementIdentifier(void); 
 	virtual std::string getElementType(void);
-	
+	virtual std::string getValueForPropertyWithKey(VSCSProperty::Key key);
+							
 private:
     
     static const std::string kSoundElementType;

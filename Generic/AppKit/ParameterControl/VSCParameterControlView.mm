@@ -7,8 +7,8 @@
 //
 
 #import "VSCParameterControlView.h"
-
 #import "NSString+VSCAdditions.h"
+#import "VSCException.h"
 
 @implementation VSCParameterControlView
 
@@ -86,7 +86,7 @@
 #pragma mark - Parameter Ranges
 
 -(void) setRange:(VSCSParameter::ValueRange)valueRange forParameterKey:(VSCSParameter::Key)k {
-	keyRangeMap.insert(VSVSParameter::KeyRangePaire (k, valueRange));
+	keyRangeMap.insert(VSCSParameter::KeyRangePair (k, valueRange));
 }
 
 -(void) setDefaultRangeForParameterKey:(VSCSParameter::Key)k {
@@ -94,7 +94,7 @@
 	[self setRange:r forParameterKey:k];
 }
 
--(void) setDefaultLabelForAllParameterKeys {
+-(void) setDefaultRangeForAllParameterKeys {
 	for (VSCSParameter::KeySet::iterator iter = keySet.begin(); iter != keySet.end(); iter++) {
 		[self setDefaultRangeForParameterKey:(*iter)];
 	}

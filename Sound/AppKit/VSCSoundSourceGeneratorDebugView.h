@@ -32,8 +32,6 @@
 
 }
 
-@property (nonatomic, assign) NSInteger tickDepth;
-
 @property (nonatomic, retain) IBOutlet NSTextField* generatorTitleTextField;
 @property (nonatomic, retain) IBOutlet NSTextField* tickCountTextField;
 
@@ -41,8 +39,8 @@
 @property (nonatomic, retain) IBOutlet NSTableView* tickTableView;
 
 
--(void) setSynthSourceGenerator:(VSCSoundGeneratorPtr)generator;
--(VSCSoundGeneratorPtr) getSoundElement;
+-(void) setSoundGenerator:(VSCSoundGeneratorPtr)generator;
+-(VSCSoundGeneratorPtr) getSoundGenerator;
 
 
 -(IBAction) tickButtonClicked:(id)sender;

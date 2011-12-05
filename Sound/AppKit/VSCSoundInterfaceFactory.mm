@@ -66,7 +66,7 @@ static VSCSoundInterfaceFactory* defaultFactoryInstance = nil;
 	 *
 	 */
 	 
-	return nil;
+	return;
 	
 	
 }
@@ -83,7 +83,7 @@ static VSCSoundInterfaceFactory* defaultFactoryInstance = nil;
 																   withFrame:(NSRect)f 
 {
 	VSCMatrixParameterControlView* paramView = [[VSCMatrixParameterControlView alloc] initWithFrame:f];
-	[paramView addParameterKeys:keySet];
+	[paramView addParameterKeys:keys];
 	[paramView createInterface];
 	return [paramView autorelease];
 	

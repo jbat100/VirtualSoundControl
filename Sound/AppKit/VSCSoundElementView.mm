@@ -75,12 +75,5 @@
 	NSLog(@"%@ received parameter change from %@, value is %f", self, view, val);
 }
 
--(BOOL) interestedInParameterId:(VSCSParameterId)paramId {
-	if (paramId.element == sourceGenerator.get()) {
-		return YES;
-	}
-	return NO;
-}
-
 
 @end

@@ -7,13 +7,12 @@
 //
 
 #import "VSCSoundApple.h"
-#import "VSCSynthSourceElement.h"
 
 @implementation VSCSoundApple
 
 
 +(NSString*) labelForParameterWithKey:(VSCSParameter::Key)key {
-	std::string label = VSCSParameter::getLabelForParameterWithKey(key);
+	std::string label = VSCSParameter::sharedInstance().getLabelForParameterWithKey(key);
 	return [NSString stringWithCString:label.c_str() encoding:[NSString defaultCStringEncoding]];
 }
 

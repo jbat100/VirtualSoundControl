@@ -74,6 +74,7 @@ public:
      *  Frame debugging
      */
     void tracePastFrames(unsigned int numberOfPastFrames);
+	unsigned int pastFramesTraceSize(void);
     const stk::StkFrames& getPastFrames(void);
     unsigned long long getTickCount(void);
 	

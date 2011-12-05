@@ -17,43 +17,29 @@
 
 #import <string>
 
-@protocol VSCSParameterAppleListener <NSObject>
+@protocol VSCSBroadcastAppleListener <NSObject>
 
--(BOOL) interestedInParameterId:(VSCSParameterId)paramId;
-
--(void) parameterWithKey:(VSCSParameter::Key)key 
-			   changedTo:(double)value 
-			  forElement:(VSCSoundParameterized*)element;
+-(void) parameterId:(VSCSParameterId)paramId changedTo:(double)value;
+-(void) indexedParameterId:(VSCSIndexedParameterId)paramId changedTo:(double)value;
+-(void) propertyId:(VSCSPropertyId)propId changedTo:(NSString*)value;
 
 @end
 
-@protocol VSCSPropertyAppleListener <NSObject>
 
--(BOOL) interestedInPropertyId:(VSCSPropertyId)propId;
-
--(void) propertyWithKey:(VSCSProperty::Key)key 
-			  changedTo:(std::string)value 
-			 forElement:(VSCSoundPropertized*)element;
-
-@end
-
-class VSCSoundBroadcastAppleRelay : public VSCSParameterListener, public VSCSPropertyListener {
+class VSCSoundBroadcastAppleRelay : public VSCSBroadcastListener {
     
     VSCSoundBroadcastAppleRelay();
     ~VSCSoundBroadcastAppleRelay();
     
-    void addParameterAppleListener(id<VSCSParameterAppleListener> parameterListener);
-    void removeParameterAppleListener(id<VSCSParameterAppleListener> parameterListener);
-    
-    void addPropertyAppleListener(id<VSCSPropertyAppleListener> propertyListener);
-    void removePropertyAppleListener(id<VSCSPropertyAppleListener> propertyListener);
+    void addBroadcastAppleListener(id<VSCSParameterAppleListener> parameterListener);
+    void removeBroadcastAppleListener(id<VSCSParameterAppleListener> parameterListener);
 	
-	virtual void parameterChanged(VSCSoundParameterized* element, VSCSParameter::Key, double value);
-	virtual void propertyChanged(VSCSoundPropertized* element, VSCSProperty::Key, std::string value);
+	virtual void parameterChanged(VSCSParameterId paramId, double value);
+	virtual void indexedParameterChanged(VSCSIndexedParameterId paramId, double value);
+	virtual void propertyChanged(VSCSPropertyId propId, std::string value);
     
 protected:
     
-    NSMutableSet* parameterListeners;
-    NSMutableSet* propertyListeners;
+    NSMutableSet* broadcastListeners;
 
 };
