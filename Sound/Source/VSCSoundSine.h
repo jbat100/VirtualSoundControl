@@ -34,11 +34,6 @@ public:
 	
 	virtual double getValueForParameterWithKey(VSCSParameter::Key key);
 	virtual void setValueForParameterWithKey(double value, VSCSParameter::Key key);
-    
-    /*
-	 *	Call on change number of channels
-	 */
-	virtual void updateSoundEngine(void);
 	
 	/*
 	 *	Setters/Getters

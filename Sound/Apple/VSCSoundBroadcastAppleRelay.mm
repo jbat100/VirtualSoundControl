@@ -8,42 +8,41 @@
 
 #import "VSCSoundBroadcastAppleRelay.h"
 
+#import "NSString+VSCAdditions.h"
+
 VSCSoundBroadcastAppleRelay::VSCSoundBroadcastAppleRelay() {
-	this->addPropertyKey(VSCSProperty::KeyAll);
-	this->addParameterKey(VSCSParameter::KeyAll);
-    parameterListeners = [[NSMutableSet alloc] initWithCapacity:10];
-    propertyListeners = [[NSMutableSet alloc] initWithCapacity:10];
+    broadcastListeners = [[NSMutableSet alloc] initWithCapacity:10];
 }
 
 VSCSoundBroadcastAppleRelay::~VSCSoundBroadcastAppleRelay() {
-    [parameterListeners release];
-    [propertyListeners release];
+    [broadcastListeners release];
 }
 
-void VSCSoundBroadcastAppleRelay::parameterChanged(VSCSoundParameterized* element, VSCSParameter::Key k, double value) {
-    for (id<VSCSParameterAppleListener> listener in parameterListeners) {
-        [listener parameterWithKey:k changedTo:value forElement:element];
+void VSCSoundBroadcastAppleRelay::parameterChanged(VSCSParameterId paramId, double value) {
+    for (id<VSCSBroadcastAppleListener> listener in broadcastListeners) {
+        [listener parameterId:paramId changedTo:value];
     }
 }
 
-void VSCSoundBroadcastAppleRelay::propertyChanged(VSCSoundPropertized* element, VSCSProperty::Key k, std::string value) {
-    for (id<VSCSPropertyAppleListener> listener in propertyListeners) {
-        [listener propertyWithKey:k changedTo:value forElement:element];
+void VSCSoundBroadcastAppleRelay::indexedParameterChanged(VSCSIndexedParameterId paramId, double value) {
+    for (id<VSCSBroadcastAppleListener> listener in broadcastListeners) {
+        [listener indexedParameterId:paramId changedTo:value];
     }
 }
 
-void VSCSoundBroadcastAppleRelay::addParameterAppleListener(id<VSCSParameterAppleListener> parameterListener) {
-    [parameterListeners addObject:parameterListener];
+
+void VSCSoundBroadcastAppleRelay::propertyChanged(VSCSPropertyId propId, std::string value) {
+    for (id<VSCSBroadcastAppleListener> listener in broadcastListeners) {
+		NSString* nsString = [NSString stringWithStdString:value];
+        [listener propertyId:propId changedTo:nsString];
+    }
 }
 
-void VSCSoundBroadcastAppleRelay::removeParameterAppleListener(id<VSCSParameterAppleListener> parameterListener) {
-    [parameterListeners removeObject:parameterListener];
+void VSCSoundBroadcastAppleRelay::addBroadcastAppleListener(id<VSCSBroadcastAppleListener> broadcastListener) {
+    [broadcastListeners addObject:broadcastListener];
 }
 
-void VSCSoundBroadcastAppleRelay::addPropertyAppleListener(id<VSCSPropertyAppleListener> propertyListener) {
-    [propertyListeners addObject:propertyListener];
+void VSCSoundBroadcastAppleRelay::removeBroadcastAppleListener(id<VSCSBroadcastAppleListener> broadcastListener) {
+    [broadcastListeners removeObject:broadcastListener];
 }
 
-void VSCSoundBroadcastAppleRelay::removePropertyAppleListener(id<VSCSPropertyAppleListener> propertyListener) {
-    [propertyListeners removeObject:propertyListener];
-}

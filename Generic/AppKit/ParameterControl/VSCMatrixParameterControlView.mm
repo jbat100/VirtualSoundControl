@@ -8,13 +8,14 @@
 
 #import "VSCMatrixParameterControlView.h"
 #import "VSCMatrixParameterControlView+Private.h"
+#import "VSCException.h"
 
 @implementation VSCMatrixParameterControlView
 
 @synthesize scrollView;
 @synthesize controllerMatrix, labelMatrix, numericMatrix;
-@synthesize controllerCellPrototype, labelCellPrototype;
-@synthesize centerSpacing;
+@synthesize controllerCellPrototype, labelCellPrototype, numericCellPrototype;
+@synthesize spacing;
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -72,7 +73,7 @@
 
 
 -(void) setparameterKeyIndexBimap:(VSCSParameter::KeyIndexBimap)keyIndexBymap {
-	parameterKeyIndexBimap = _keyIndexBymap;
+	parameterKeyIndexBimap = keyIndexBymap;
 }
 
 -(const VSCSParameter::KeyIndexBimap&) parameterKeyIndexBimap {
@@ -98,17 +99,17 @@
 #pragma mark Parameter Key/Index
 
 -(VSCSParameter::Key) keyForParameterAtIndex:(NSInteger)index {
-	ParamKeyIndexBiMap::right_const_iterator right_iter = paramKeyIndexMap.right.find(index);
+	VSCSParameter::KeyIndexBimap::right_const_iterator right_iter = parameterKeyIndexBimap.right.find(index);
 	// couldn't find the index in the bimap...
-	if (right_iter == paramKeyIndexMap.right.end()) 
+	if (right_iter == parameterKeyIndexBimap.right.end()) 
 		throw VSCSInvalidArgumentException();
 	return right_iter->second;	
 }
 
 -(NSInteger) indexForParameterWithKey:(VSCSParameter::Key)key {
-	ParamKeyIndexBiMap::left_const_iterator left_iter = paramKeyIndexMap.left.find(key);
+	VSCSParameter::KeyIndexBimap::left_const_iterator left_iter = parameterKeyIndexBimap.left.find(key);
 	// couldn't find the key in the bimap...
-	if (left_iter == paramKeyIndexMap.left.end()) 
+	if (left_iter == parameterKeyIndexBimap.left.end()) 
 		throw VSCSInvalidArgumentException();
 	return left_iter->second;
 }
@@ -116,17 +117,17 @@
 
 #pragma mark - NSCell Accessors and Utility 
 
--(NSActionCell*) controllerCellForParameterWithKey:(VSCSParameter::Key k) {
+-(NSActionCell*) controllerCellForParameterWithKey:(VSCSParameter::Key)k {
 	NSInteger index = [self indexForParameterWithKey:k];
 	return [controllerMatrix cellAtRow:index column:0];
 }
 
--(NSCell*) numericCellForParameterWithKey:(VSCSParameter::Key k) {
+-(NSCell*) numericCellForParameterWithKey:(VSCSParameter::Key)k {
 	NSInteger index = [self indexForParameterWithKey:k];
 	return [numericMatrix cellAtRow:index column:0];
 }
 
--(NSCell*) labelCellForParameterWithKey:(VSCSParameter::Key k) {
+-(NSCell*) labelCellForParameterWithKey:(VSCSParameter::Key)k {
 	NSInteger index = [self indexForParameterWithKey:k];
 	return [labelMatrix cellAtRow:index column:0];
 }
@@ -159,7 +160,7 @@
 
 -(void) customInit {
 	
-	self.centerSpacing = 10.0;
+	self.spacing = 10.0;
 	
 	self.scrollView = [[[NSScrollView alloc] initWithFrame:self.bounds] autorelease];
 	[self addSubview:scrollView];
@@ -177,7 +178,7 @@
 	
 	[self destroyMatrices];
 	
-	NSInteger numberOfParameters = parameterKeys.size();
+	NSInteger numberOfParameters = keySet.size();
 	
     CGRect labelMatrixFrame = NSMakeRect(0.0, 0.0, self.frame.size.width / 4.0, self.frame.size.height);
 	self.labelMatrix = [[[NSMatrix alloc] initWithFrame:labelMatrixFrame 
@@ -249,9 +250,9 @@
 	
 	VSCSParameter::Key k = [self parameterKeyForCell:sender];
 	
-	if ([cell isKindOfClass:[NSSliderCell class]]) {
-		double val = [(NSSliderCell*)cell doubleValue];
-		[delegate parameterControlView:self changedParameteWithKey:k to:val];
+	if ([sender isKindOfClass:[NSSliderCell class]]) {
+		double val = [(NSSliderCell*)sender doubleValue];
+		[delegate parameterControlView:self changedParameterWithKey:k to:val];
 	}
 	
 }

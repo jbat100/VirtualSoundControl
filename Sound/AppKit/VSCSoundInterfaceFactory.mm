@@ -75,7 +75,7 @@ static VSCSoundInterfaceFactory* defaultFactoryInstance = nil;
 -(VSCMatrixParameterControlView*) matrixParameterControlViewForParameterDomain:(VSCSParameter::Domain)domain
 																	 withFrame:(NSRect)f
 {
-	VSCSParameter::KeySet keySet = VSCSParameter::sharedInstance().keysForDomain(domain);
+	VSCSParameter::KeySet keySet;
 	return [self matrixParameterControlViewForParameterKeys:keySet withFrame:f];	
 }
 

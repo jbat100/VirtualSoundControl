@@ -21,6 +21,14 @@ VSCSoundGenerator::VSCSoundGenerator() {
 	
 }
 
+void VSCSoundGenerator::setIsOn(bool o) {
+	_isOn = o;
+}
+
+bool VSCSoundGenerator::isOn(void) {
+	return _isOn;
+}
+
 #pragma mark - Parameter Setter/Getter 
 
 

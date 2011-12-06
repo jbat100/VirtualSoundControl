@@ -29,8 +29,6 @@ public:
     
     stk::BlitSquare& getStkBlitSquare(void);
 	
-	void updateSoundEngine(void);
-	
 protected:
     
 	stk::BlitSquare blitSquare;
@@ -38,10 +36,6 @@ protected:
     void processComputationFrames(void);
 	
 };
-
-inline void VSCSoundSquare::processComputationFrames(void) {
-	
-}
 
 #endif
 

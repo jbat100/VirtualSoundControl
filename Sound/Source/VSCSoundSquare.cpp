@@ -18,3 +18,6 @@ stk::BlitSquare& VSCSoundSquare::getStkBlitSquare(void) {
     return blitSquare;
 }
 
+void VSCSoundSquare::processComputationFrames(void) {
+	
+}

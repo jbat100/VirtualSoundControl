@@ -31,8 +31,8 @@ class VSCSoundBroadcastAppleRelay : public VSCSBroadcastListener {
     VSCSoundBroadcastAppleRelay();
     ~VSCSoundBroadcastAppleRelay();
     
-    void addBroadcastAppleListener(id<VSCSParameterAppleListener> parameterListener);
-    void removeBroadcastAppleListener(id<VSCSParameterAppleListener> parameterListener);
+    void addBroadcastAppleListener(id<VSCSBroadcastAppleListener> parameterListener);
+    void removeBroadcastAppleListener(id<VSCSBroadcastAppleListener> parameterListener);
 	
 	virtual void parameterChanged(VSCSParameterId paramId, double value);
 	virtual void indexedParameterChanged(VSCSIndexedParameterId paramId, double value);
