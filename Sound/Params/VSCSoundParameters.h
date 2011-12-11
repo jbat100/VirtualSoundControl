@@ -63,7 +63,7 @@ public:
 		
 		// channels 
 		CodeGain,
-		//CodeDBGain,
+		CodeDBGain,
 		
 		// source location
 		CodeDistance,
@@ -73,7 +73,7 @@ public:
 		
 		// sine, saw, square, pitched 
 		CodeFrequency,
-		//CodeLogFrequency,
+		CodeLogFrequency,
 		//CodeDegPhase,
 		CodeRadPhase,
 		CodeHarmonics,
@@ -95,6 +95,7 @@ public:
 	struct Key {
 		Domain domain;
 		Code code;
+		unsigned int index;
 		bool operator<(const Key& otherKey) const;
 
 	};

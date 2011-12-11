@@ -36,12 +36,16 @@ struct VSCSParameterId {
 	bool operator<(const VSCSParameterId& paramId) const;
 };
 
+/* 
+ *	Gave up on seperate index parameters ...
+ */
 struct VSCSIndexedParameterId {
 	VSCSoundElementPtr element;
 	VSCSParameter::Key key;
 	unsigned int index;
 	bool operator<(const VSCSIndexedParameterId& paramId) const;
 };
+ 
 
 /*
  *	Identifier containing a property key and element

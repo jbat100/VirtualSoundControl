@@ -68,12 +68,12 @@ std::string VSCSParameter::getLabelForParameterWithKey(VSCSParameter::Key k) {
 	switch (k.code) {
 		case CodeGain:
 			return "Gain (Lin)";
-//		case CodeDBGain:
-//			return "Gain (dB)";
+		case CodeDBGain:
+			return "Gain (dB)";
 		case CodeFrequency:
 			return "Freq (Hz)";
-//		case CodeLogFrequency:
-//			return "Freq (Log Hz)";
+		case CodeLogFrequency:
+			return "Freq (Log Hz)";
 //		case CodeDegPhase:
 //			return "Phase (deg)";
 		case CodeRadPhase:
@@ -117,12 +117,12 @@ VSCSParameter::ValueRange VSCSParameter::getRangeForParameterWithKey(Key k) {
 	switch (k.code) {
 		case CodeGain:
 			return ValueRange (0.0, 1.0);
-//		case CodeDBGain:
-//			return ValueRange (-30.0, 0.0);
+		case CodeDBGain:
+			return ValueRange (-30.0, 0.0);
 		case CodeFrequency:
 			return ValueRange (20.0, 20000.0);
-//		case CodeLogFrequency:
-//			return ValueRange (std::log10(20.0), std::log10(20000.0));
+		case CodeLogFrequency:
+			return ValueRange (std::log10(20.0), std::log10(20000.0));
 //		case CodeDegPhase:
 //			return ValueRange (-180.0, 180.0);
 		case CodeRadPhase:

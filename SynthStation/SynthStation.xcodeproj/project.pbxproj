@@ -11,6 +11,9 @@
 		10117EC41456195600240467 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1061AAC41430A3B500C29FBB /* AppKit.framework */; };
 		10118007145619DF00240467 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10118005145619DF00240467 /* AppKit.framework */; };
 		10118008145619DF00240467 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10118006145619DF00240467 /* Foundation.framework */; };
+		1021C25314938FBD00027954 /* VSCSingleParameterControlView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1021C25214938FBD00027954 /* VSCSingleParameterControlView.mm */; };
+		1021C257149392AB00027954 /* VSCSingleParameterSliderControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1021C256149392AB00027954 /* VSCSingleParameterSliderControlView.m */; };
+		1021C25B1493950900027954 /* VSCSingleParameterSliderControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1021C25A1493950900027954 /* VSCSingleParameterSliderControlView.xib */; };
 		1021CC00148428ED00EBDD5D /* VSCSoundInterfaceFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1021CBFF148428ED00EBDD5D /* VSCSoundInterfaceFactory.mm */; };
 		10328C771465481C0048559B /* Voicer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10328C761465481C0048559B /* Voicer.cpp */; };
 		103AD3C91481110400CF4072 /* libboost_thread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 103AD3C81481110400CF4072 /* libboost_thread.a */; };
@@ -43,7 +46,7 @@
 		1061AAEC1430A3B600C29FBB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1061AAEA1430A3B600C29FBB /* InfoPlist.strings */; };
 		1061AAEE1430A3B600C29FBB /* SynthStationTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 1061AAED1430A3B600C29FBB /* SynthStationTests.h */; };
 		1061AAF01430A3B600C29FBB /* SynthStationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1061AAEF1430A3B600C29FBB /* SynthStationTests.m */; };
-		10653CC81482C5AA00CC57BE /* VSCMatrixParameterControlView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10653CC31482C5AA00CC57BE /* VSCMatrixParameterControlView.mm */; };
+		10653CC81482C5AA00CC57BE /* VSCParameterSliderControlView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10653CC31482C5AA00CC57BE /* VSCParameterSliderControlView.mm */; };
 		10653CC91482C5AA00CC57BE /* VSCParameterControlView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10653CC61482C5AA00CC57BE /* VSCParameterControlView.mm */; };
 		10670FD5147BF36F007D3BD6 /* VSCSoundBroadcastAppleRelay.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10670FD4147BF36F007D3BD6 /* VSCSoundBroadcastAppleRelay.mm */; };
 		1067DB2514548C2600F0670E /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1067DB2214548C2600F0670E /* libboost_system.a */; };
@@ -95,6 +98,12 @@
 		10117E4214560E6900240467 /* VSCSynthStationDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSCSynthStationDocument.m; sourceTree = "<group>"; };
 		10118005145619DF00240467 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = ../../../System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		10118006145619DF00240467 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = ../../../System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1021C25114938FBD00027954 /* VSCSingleParameterControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSingleParameterControlView.h; path = ParameterControl/VSCSingleParameterControlView.h; sourceTree = "<group>"; };
+		1021C25214938FBD00027954 /* VSCSingleParameterControlView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCSingleParameterControlView.mm; path = ParameterControl/VSCSingleParameterControlView.mm; sourceTree = "<group>"; };
+		1021C2541493909900027954 /* VSCParameterListenerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCParameterListenerProtocol.h; path = ParameterControl/VSCParameterListenerProtocol.h; sourceTree = "<group>"; };
+		1021C255149392AB00027954 /* VSCSingleParameterSliderControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSingleParameterSliderControlView.h; path = ParameterControl/VSCSingleParameterSliderControlView.h; sourceTree = "<group>"; };
+		1021C256149392AB00027954 /* VSCSingleParameterSliderControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSCSingleParameterSliderControlView.m; path = ParameterControl/VSCSingleParameterSliderControlView.m; sourceTree = "<group>"; };
+		1021C25A1493950900027954 /* VSCSingleParameterSliderControlView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = VSCSingleParameterSliderControlView.xib; path = ParameterControl/VSCSingleParameterSliderControlView.xib; sourceTree = "<group>"; };
 		1021CBFE148428ED00EBDD5D /* VSCSoundInterfaceFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundInterfaceFactory.h; path = ../Sound/AppKit/VSCSoundInterfaceFactory.h; sourceTree = SOURCE_ROOT; };
 		1021CBFF148428ED00EBDD5D /* VSCSoundInterfaceFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCSoundInterfaceFactory.mm; path = ../Sound/AppKit/VSCSoundInterfaceFactory.mm; sourceTree = SOURCE_ROOT; };
 		10328C75146548050048559B /* Voicer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voicer.h; sourceTree = STK_INCLUDE; };
@@ -162,12 +171,12 @@
 		1061AAEB1430A3B600C29FBB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1061AAED1430A3B600C29FBB /* SynthStationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SynthStationTests.h; sourceTree = "<group>"; };
 		1061AAEF1430A3B600C29FBB /* SynthStationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SynthStationTests.m; sourceTree = "<group>"; };
-		10653CC21482C5AA00CC57BE /* VSCMatrixParameterControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMatrixParameterControlView.h; path = ../Generic/AppKit/ParameterControl/VSCMatrixParameterControlView.h; sourceTree = SOURCE_ROOT; };
-		10653CC31482C5AA00CC57BE /* VSCMatrixParameterControlView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCMatrixParameterControlView.mm; path = ../Generic/AppKit/ParameterControl/VSCMatrixParameterControlView.mm; sourceTree = SOURCE_ROOT; };
-		10653CC41482C5AA00CC57BE /* VSCMatrixParameterControlView+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VSCMatrixParameterControlView+Private.h"; path = "../Generic/AppKit/ParameterControl/VSCMatrixParameterControlView+Private.h"; sourceTree = SOURCE_ROOT; };
-		10653CC51482C5AA00CC57BE /* VSCParameterControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCParameterControlView.h; path = ../Generic/AppKit/ParameterControl/VSCParameterControlView.h; sourceTree = SOURCE_ROOT; };
-		10653CC61482C5AA00CC57BE /* VSCParameterControlView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCParameterControlView.mm; path = ../Generic/AppKit/ParameterControl/VSCParameterControlView.mm; sourceTree = SOURCE_ROOT; };
-		10653CC71482C5AA00CC57BE /* VSCParameterControlViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCParameterControlViewProtocol.h; path = ../Generic/AppKit/ParameterControl/VSCParameterControlViewProtocol.h; sourceTree = SOURCE_ROOT; };
+		10653CC21482C5AA00CC57BE /* VSCParameterSliderControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCParameterSliderControlView.h; path = ParameterControl/VSCParameterSliderControlView.h; sourceTree = "<group>"; };
+		10653CC31482C5AA00CC57BE /* VSCParameterSliderControlView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCParameterSliderControlView.mm; path = ParameterControl/VSCParameterSliderControlView.mm; sourceTree = "<group>"; };
+		10653CC41482C5AA00CC57BE /* VSCMatrixParameterControlView+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VSCMatrixParameterControlView+Private.h"; path = "ParameterControl/VSCMatrixParameterControlView+Private.h"; sourceTree = "<group>"; };
+		10653CC51482C5AA00CC57BE /* VSCParameterControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCParameterControlView.h; path = ParameterControl/VSCParameterControlView.h; sourceTree = "<group>"; };
+		10653CC61482C5AA00CC57BE /* VSCParameterControlView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCParameterControlView.mm; path = ParameterControl/VSCParameterControlView.mm; sourceTree = "<group>"; };
+		10653CC71482C5AA00CC57BE /* VSCParameterControlViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCParameterControlViewProtocol.h; path = ParameterControl/VSCParameterControlViewProtocol.h; sourceTree = "<group>"; };
 		10670FD3147BF36F007D3BD6 /* VSCSoundBroadcastAppleRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundBroadcastAppleRelay.h; path = ../Sound/Apple/VSCSoundBroadcastAppleRelay.h; sourceTree = "<group>"; };
 		10670FD4147BF36F007D3BD6 /* VSCSoundBroadcastAppleRelay.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCSoundBroadcastAppleRelay.mm; path = ../Sound/Apple/VSCSoundBroadcastAppleRelay.mm; sourceTree = "<group>"; };
 		1067DB2214548C2600F0670E /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_system.a; sourceTree = BOOST_LIB; };
@@ -297,6 +306,31 @@
 			name = AppKit;
 			path = ../Generic/AppKit;
 			sourceTree = SOURCE_ROOT;
+		};
+		1021C24F14938F4700027954 /* Grouped */ = {
+			isa = PBXGroup;
+			children = (
+				10653CC71482C5AA00CC57BE /* VSCParameterControlViewProtocol.h */,
+				10653CC51482C5AA00CC57BE /* VSCParameterControlView.h */,
+				10653CC61482C5AA00CC57BE /* VSCParameterControlView.mm */,
+				10653CC21482C5AA00CC57BE /* VSCParameterSliderControlView.h */,
+				10653CC31482C5AA00CC57BE /* VSCParameterSliderControlView.mm */,
+				10653CC41482C5AA00CC57BE /* VSCMatrixParameterControlView+Private.h */,
+			);
+			name = Grouped;
+			sourceTree = "<group>";
+		};
+		1021C25014938F5900027954 /* Single */ = {
+			isa = PBXGroup;
+			children = (
+				1021C25114938FBD00027954 /* VSCSingleParameterControlView.h */,
+				1021C25214938FBD00027954 /* VSCSingleParameterControlView.mm */,
+				1021C255149392AB00027954 /* VSCSingleParameterSliderControlView.h */,
+				1021C256149392AB00027954 /* VSCSingleParameterSliderControlView.m */,
+				1021C25A1493950900027954 /* VSCSingleParameterSliderControlView.xib */,
+			);
+			name = Single;
+			sourceTree = "<group>";
 		};
 		1021CBFD148428B600EBDD5D /* Interface Factory */ = {
 			isa = PBXGroup;
@@ -496,12 +530,9 @@
 		10653CB21482C59100CC57BE /* Parameter Control */ = {
 			isa = PBXGroup;
 			children = (
-				10653CC71482C5AA00CC57BE /* VSCParameterControlViewProtocol.h */,
-				10653CC51482C5AA00CC57BE /* VSCParameterControlView.h */,
-				10653CC61482C5AA00CC57BE /* VSCParameterControlView.mm */,
-				10653CC21482C5AA00CC57BE /* VSCMatrixParameterControlView.h */,
-				10653CC31482C5AA00CC57BE /* VSCMatrixParameterControlView.mm */,
-				10653CC41482C5AA00CC57BE /* VSCMatrixParameterControlView+Private.h */,
+				1021C2541493909900027954 /* VSCParameterListenerProtocol.h */,
+				1021C25014938F5900027954 /* Single */,
+				1021C24F14938F4700027954 /* Grouped */,
 			);
 			name = "Parameter Control";
 			sourceTree = "<group>";
@@ -785,6 +816,7 @@
 				109E60DD1469965A00879689 /* VSCSoundSourceGeneratorDebugView.xib in Resources */,
 				109E60E71469967A00879689 /* VSCSynthInstrumentDebugWindowController.xib in Resources */,
 				109E60EC1469969C00879689 /* VSCSynthStationWindowController.xib in Resources */,
+				1021C25B1493950900027954 /* VSCSingleParameterSliderControlView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -867,9 +899,11 @@
 				1049A67A147457D500A7E608 /* VSCSoundBroadcaster.cpp in Sources */,
 				10670FD5147BF36F007D3BD6 /* VSCSoundBroadcastAppleRelay.mm in Sources */,
 				10E8F52D14828CB3002DEEE3 /* VSCSoundElement.cpp in Sources */,
-				10653CC81482C5AA00CC57BE /* VSCMatrixParameterControlView.mm in Sources */,
+				10653CC81482C5AA00CC57BE /* VSCParameterSliderControlView.mm in Sources */,
 				10653CC91482C5AA00CC57BE /* VSCParameterControlView.mm in Sources */,
 				1021CC00148428ED00EBDD5D /* VSCSoundInterfaceFactory.mm in Sources */,
+				1021C25314938FBD00027954 /* VSCSingleParameterControlView.mm in Sources */,
+				1021C257149392AB00027954 /* VSCSingleParameterSliderControlView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

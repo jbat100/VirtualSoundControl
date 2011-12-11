@@ -10,12 +10,14 @@
 #import "VSCMatrixParameterControlView+Private.h"
 #import "VSCException.h"
 
-@implementation VSCMatrixParameterControlView
+@interface VSCParameterSliderControlView ()
 
-@synthesize scrollView;
-@synthesize controllerMatrix, labelMatrix, numericMatrix;
-@synthesize controllerCellPrototype, labelCellPrototype, numericCellPrototype;
-@synthesize spacing;
+-(VSCSingleParameterSliderControlView*) singleParameterSliderControlViewForKey:(VSCSParameter::Key)key;
+
+@end
+
+
+@implementation VSCMatrixParameterControlView
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -38,11 +40,6 @@
 
 -(void) dealloc {
 	
-	[scrollView release];
-	[controllerMatrix release];
-	[labelMatrix release];
-	[controllerCellPrototype release];
-	[labelCellPrototype release];
 	
 	[super dealloc];
 }
@@ -69,7 +66,6 @@
     [self setNeedsDisplay:YES];
 	
 }
-
 
 
 -(void) setparameterKeyIndexBimap:(VSCSParameter::KeyIndexBimap)keyIndexBymap {
@@ -160,10 +156,10 @@
 
 -(void) customInit {
 	
-	self.spacing = 10.0;
-	
-	self.scrollView = [[[NSScrollView alloc] initWithFrame:self.bounds] autorelease];
-	[self addSubview:scrollView];
+	self.horizontalSpacing = 10.0;
+	self.labelWidth = 200.0;
+	self.controllerWidth = 400.0;
+	self.numericWidth = 100.0
 	
 	self.controllerCellPrototype = [[[NSSliderCell alloc] init] autorelease];
 	self.labelCellPrototype = [[NSCell alloc] initTextCell:@"No Parameter"];
@@ -180,7 +176,11 @@
 	
 	NSInteger numberOfParameters = keySet.size();
 	
-    CGRect labelMatrixFrame = NSMakeRect(0.0, 0.0, self.frame.size.width / 4.0, self.frame.size.height);
+	CGFloat h = rowHeight*numberOfParameters;
+	CGFloat vericalMargin = 10.0;
+	CGFloat horizontalOffset = horizontalSpacing;
+	
+    CGRect labelMatrixFrame = NSMakeRect(horizontalOffset, 0.0, labelWidth, h);
 	self.labelMatrix = [[[NSMatrix alloc] initWithFrame:labelMatrixFrame 
 												   mode:NSTrackModeMatrix 
 											  prototype:self.labelCellPrototype 
@@ -189,9 +189,8 @@
 	[labelMatrix setAutoresizingMask: NSViewHeightSizable | NSViewWidthSizable];
 	[scrollView addSubview:labelMatrix];
 	
-	
-	CGRect controllerMatrixFrame = NSMakeRect(self.frame.size.width / 4.0, 0.0, 
-											  self.frame.size.width / 2.0, self.frame.size.height);	
+	horizontalOffset += (labelWidth+horizontalSpacing);
+	CGRect controllerMatrixFrame = NSMakeRect(horizontalOffset, 0.0, controllerWidth, h);	
 	self.controllerMatrix = [[[NSMatrix alloc] initWithFrame:controllerMatrixFrame 
 														mode:NSTrackModeMatrix 
 												   prototype:self.controllerCellPrototype 

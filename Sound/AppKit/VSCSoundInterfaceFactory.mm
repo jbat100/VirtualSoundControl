@@ -8,6 +8,11 @@
 
 #import "VSCSoundInterfaceFactory.h"
 
+#import "VSCSoundMultiChannelElement.h"
+#import "VSCSoundSine.h"
+
+#import <boost/pointer_cast.hpp>
+
 
 @implementation VSCSoundInterfaceFactory
 
@@ -62,9 +67,26 @@ static VSCSoundInterfaceFactory* defaultFactoryInstance = nil;
 	}
 	[[view parameterControlViews] removeAllObjects];
 	
-	/*
-	 *
-	 */
+	
+	VSCSoundMultiChannelElementPtr multiChannelPtr = 
+	boost::dynamic_pointer_cast<VSCSoundMultiChannelElement> (soundElement);
+	
+	if (multiChannelPtr) {
+		VSCSParameter::KeySet parameterKeys;
+		VSCSParameter::KeyIndexBimap parameterIndexBimap;
+		unsigned int numberOfChannels = multiChannelPtr->getNumberOfChannels();
+		for (unsigned int i = 0; i < numberOfChannels; i++) {
+			VSCSParameter::Key key = {VSCSParameter::DomainChannel, VSCSParameter::CodeDBGain, i};
+			parameterKeys.insert(key);
+			VSCSParameter::KeyIndexBimapEntry entry (i,i);
+			parameterIndexBimap.insert(entry);
+		}
+		NSRect f = view.frame;
+		VSCMatrixParameterControlView* controlView = [self matrixParameterControlViewForParameterKeys:parameterKeys 
+																					withKeyIndexBimap:parameterIndexBimap 
+																							withFrame:f];
+
+	}
 	 
 	return;
 	
@@ -72,20 +94,17 @@ static VSCSoundInterfaceFactory* defaultFactoryInstance = nil;
 }
 
 
--(VSCMatrixParameterControlView*) matrixParameterControlViewForParameterDomain:(VSCSParameter::Domain)domain
-																	 withFrame:(NSRect)f
-{
-	VSCSParameter::KeySet keySet;
-	return [self matrixParameterControlViewForParameterKeys:keySet withFrame:f];	
-}
+
 
 -(VSCMatrixParameterControlView*) matrixParameterControlViewForParameterKeys:(VSCSParameter::KeySet)keys
+														   withKeyIndexBimap:(VSCSParameter::KeyIndexBimap)map
 																   withFrame:(NSRect)f 
 {
-	VSCMatrixParameterControlView* paramView = [[VSCMatrixParameterControlView alloc] initWithFrame:f];
-	[paramView addParameterKeys:keys];
-	[paramView createInterface];
-	return [paramView autorelease];
+	VSCMatrixParameterControlView* matrixControlView = [[VSCMatrixParameterControlView alloc] initWithFrame:f];
+	[matrixControlView addParameterKeys:parameterKeys];
+	[matrixControlView setparameterKeyIndexBimap:parameterIndexBimap];
+	[matrixControlView createInterface];
+	return [matrixControlView autorelease];
 	
 }
 

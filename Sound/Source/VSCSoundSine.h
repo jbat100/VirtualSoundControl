@@ -31,6 +31,7 @@ public:
 	 *	Default constructor
 	 */
 	VSCSoundSine();
+	static const std::string kSynthSourceSineType;
 	
 	virtual double getValueForParameterWithKey(VSCSParameter::Key key);
 	virtual void setValueForParameterWithKey(double value, VSCSParameter::Key key);
@@ -55,8 +56,6 @@ protected:
     virtual void processComputationFrames(unsigned int numberOfFrames);
 	
 private:
-	
-	static const std::string kSynthSourceSineType;
     
 	stk::SineWave sineWave;
 	
