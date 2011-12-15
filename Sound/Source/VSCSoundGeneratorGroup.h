@@ -20,9 +20,6 @@
 #define VSCSoundGeneratorGroupPtr      boost::shared_ptr<VSCSoundGeneratorGroup>
 
 
-#ifdef VSCS_USE_STK
-
-#include "Stk.h"
 
 class VSCSoundGeneratorGroup : public VSCSoundGenerator {
 			
@@ -31,39 +28,17 @@ public:
 	virtual void addGenerator(VSCSoundGeneratorPtr elem);
 	virtual void removeGenerator(VSCSoundGeneratorPtr elem);
 	
-	SynthSrcGenIter beginGeneratorsIterator(void);
-	SynthSrcGenIter endGeneratorsIterator(void);
+	const std::list<VSCSoundGeneratorPtr>& generators(void);
     
     virtual void initialize(void);
-    virtual void updateSoundEngine(void);
 	
 protected:
 	
-	void processComputationFrames(void);
-	
 	std::list<VSCSoundGeneratorPtr> _generators;
-    
-    stk::StkFrames _tempFrames;
 	
 };
 
 
-
-inline void VSCSoundGeneratorGroup::processComputationFrames(void)
-{  
-    stk::zeroFrames(_computationFrames);
-    
-    if (_computationFrames.frames() != _tempFrames.frames() || _computationFrames.channels() != _tempFrames.channels()) 
-        _tempFrames.resize(_computationFrames.frames(), _computationFrames.channels());
-    
-    for (SynthSrcGenIter iter = _generators.begin(); iter != _generators.end(); iter++) {
-        (*iter)->tick(_tempFrames, kVSCSAllChannels);
-        _computationFrames += _tempFrames;
-    }
-
-}
-
-#endif // VSCS_USE_STK
 
 
 #endif // _VSC_SYNTH_SOURCE_GROUP_

@@ -10,7 +10,6 @@
 #include "VSCSoundSquare.h"
 
 VSCSoundSquare::VSCSoundSquare () {
-	this->setNumberOfChannelsNeededForComputationFrames(1);
 }
 
 
@@ -18,6 +17,3 @@ stk::BlitSquare& VSCSoundSquare::getStkBlitSquare(void) {
     return blitSquare;
 }
 
-void VSCSoundSquare::processComputationFrames(void) {
-	
-}

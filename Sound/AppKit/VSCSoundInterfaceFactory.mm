@@ -85,7 +85,6 @@ static VSCSoundInterfaceFactory* defaultFactoryInstance = nil;
 		VSCMatrixParameterControlView* controlView = [self matrixParameterControlViewForParameterKeys:parameterKeys 
 																					withKeyIndexBimap:parameterIndexBimap 
 																							withFrame:f];
-
 	}
 	 
 	return;

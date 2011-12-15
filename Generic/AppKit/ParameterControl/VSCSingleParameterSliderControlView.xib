@@ -30,7 +30,7 @@
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="1000">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSCustomObject" id="1001">
-				<string key="NSClassName">VSCSingleParameterSliderControlView</string>
+				<string key="NSClassName">NSObject</string>
 			</object>
 			<object class="NSCustomObject" id="1003">
 				<string key="NSClassName">FirstResponder</string>
@@ -118,7 +118,7 @@
 					<object class="NSTextField" id="815511058">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{-3, -11}, {136, 46}}</string>
+						<string key="NSFrame">{{-3, 3}, {136, 30}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="655222691">
@@ -155,7 +155,7 @@
 				</object>
 				<string key="NSFrameSize">{571, 37}</string>
 				<reference key="NSSuperview"/>
-				<string key="NSClassName">NSView</string>
+				<string key="NSClassName">VSCSingleParameterSliderControlView</string>
 			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -164,42 +164,50 @@
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">controlSlider</string>
-						<reference key="source" ref="1001"/>
+						<reference key="source" ref="1005"/>
 						<reference key="destination" ref="759206414"/>
 					</object>
-					<int key="connectionID">16</int>
+					<int key="connectionID">22</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">labelTextField</string>
-						<reference key="source" ref="1001"/>
+						<reference key="source" ref="1005"/>
 						<reference key="destination" ref="815511058"/>
 					</object>
-					<int key="connectionID">17</int>
+					<int key="connectionID">23</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">maxTextField</string>
-						<reference key="source" ref="1001"/>
+						<reference key="source" ref="1005"/>
 						<reference key="destination" ref="943073654"/>
 					</object>
-					<int key="connectionID">18</int>
+					<int key="connectionID">24</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">minTextField</string>
-						<reference key="source" ref="1001"/>
+						<reference key="source" ref="1005"/>
 						<reference key="destination" ref="54361024"/>
 					</object>
-					<int key="connectionID">19</int>
+					<int key="connectionID">25</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">numericTextField</string>
-						<reference key="source" ref="1001"/>
+						<reference key="source" ref="1005"/>
 						<reference key="destination" ref="360635880"/>
 					</object>
-					<int key="connectionID">20</int>
+					<int key="connectionID">26</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">controlSliderChanged:</string>
+						<reference key="source" ref="1005"/>
+						<reference key="destination" ref="759206414"/>
+					</object>
+					<int key="connectionID">27</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -234,11 +242,11 @@
 						<reference key="object" ref="1005"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="815511058"/>
 							<reference ref="759206414"/>
 							<reference ref="54361024"/>
 							<reference ref="943073654"/>
 							<reference ref="360635880"/>
+							<reference ref="815511058"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -334,6 +342,7 @@
 					<string>4.IBViewBoundsToFrameTransform</string>
 					<string>5.IBPluginDependency</string>
 					<string>8.IBPluginDependency</string>
+					<string>8.IBViewBoundsToFrameTransform</string>
 					<string>9.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
@@ -360,6 +369,9 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAADAQAAAwYgAAA</bytes>
+					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
@@ -379,7 +391,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">20</int>
+			<int key="maxID">27</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -402,6 +414,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">VSCSingleParameterSliderControlView</string>
 					<string key="superclassName">VSCSingleParameterControlView</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">controlSliderChanged:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">controlSliderChanged:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">controlSliderChanged:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">

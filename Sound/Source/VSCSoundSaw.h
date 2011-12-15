@@ -25,21 +25,16 @@ class VSCSoundSaw : public VSCSoundGenerator {
 	
 public:
     
-
-    stk::BlitSaw* getStkBlitSaw(void);
+    stk::BlitSaw& getStkBlitSaw(void);
 	
-	void updateSoundEngine(void);
-	
-protected:
+private:
     
 	stk::BlitSaw blitSaw;
-    
-    void processComputationFrames(void);
 	
 };
 
-inline void VSCSoundSaw::processComputationFrames(void) {
-	blitSaw.tick(_computationFrames);
+inline VSCSFloat VSCSoundSaw::tick(void) {
+	return blitSaw.tick(_computationFrames);
 }
 
 #endif

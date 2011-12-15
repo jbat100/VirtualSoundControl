@@ -50,10 +50,11 @@ public:
 	 *	STK engine (shouldn't use apart from debug...)
 	 */
     const stk::SineWave& getStkSineWave(void);
-    
-protected:
-    
-    virtual void processComputationFrames(unsigned int numberOfFrames);
+	
+	/*
+	 *	Tick
+	 */
+	virtual VSCSFloat tick(void); 
 	
 private:
     

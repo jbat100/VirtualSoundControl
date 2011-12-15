@@ -26,19 +26,16 @@ class VSCSoundNoise : public VSCSoundGenerator {
 	
 public:
     
-    stk::Noise* getStkNoise(void);
+    stk::Noise& getStkNoise(void);
 	
-	void updateSoundEngine(void);
-	
-protected:
+private:
 
 	stk::Noise noise;
-    void processComputationFrames(void);
     
 };
 
-inline void VSCSoundNoise::processComputationFrames(void) {
-	noise.tick(_computationFrames);
+inline VSCSFloat VSCSoundNoise::tick(void) {
+	return noise.tick(_computationFrames);
 }
 
 #endif

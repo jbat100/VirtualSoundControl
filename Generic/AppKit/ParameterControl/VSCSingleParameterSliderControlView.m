@@ -29,6 +29,15 @@
     // Drawing code here.
 }
 
+-(void) updateInterface {
+	[self.controlSlider setDoubleValue:doubleValue];
+	[self.controlSlider setMinValue:valueRange.first];
+	[self.controlSlider setMaxValue:valueRange.second];
+	[self.minTextField setStringValue:[NSString stringWithFormat:@"%f.2", valRange.first]];
+	[self.maxTextField setStringValue:[NSString stringWithFormat:@"%f.2", valRange.second]];
+	[self.labelTextField setStringValue:label];
+}
+
 -(IBAction) controlSliderChanged:(id)sender {
 	NSSlider* slider = (NSSlider*)sender;
 	doubleValue = [slider doubleValue];
@@ -44,6 +53,8 @@
 	valueRange = valRange;
 	[self.controlSlider setMinValue:valRange.first];
 	[self.controlSlider setMaxValue:valRange.second];
+	[self.minTextField setStringValue:[NSString stringWithFormat:@"%f.2", valRange.first]];
+	[self.maxTextField setStringValue:[NSString stringWithFormat:@"%f.2", valRange.second]];
 }
 
 -(void) setLabel:(NSString *)lab {

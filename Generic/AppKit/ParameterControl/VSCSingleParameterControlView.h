@@ -27,4 +27,6 @@
 
 @property (assign) id<VSCParameterListenerProtocol> listener;
 
+-(void) updateInterface;
+
 @end

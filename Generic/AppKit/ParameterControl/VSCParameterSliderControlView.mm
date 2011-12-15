@@ -6,11 +6,21 @@
 //  Copyright 2011 NXP. All rights reserved.
 //
 
-#import "VSCMatrixParameterControlView.h"
-#import "VSCMatrixParameterControlView+Private.h"
+#import "VSCParameterSliderControlView.h"
+#import "VSCSingleParameterSliderControlView.h"
 #import "VSCException.h"
 
-@interface VSCParameterSliderControlView ()
+@interface VSCParameterSliderControlView () {
+	
+	NSNib* singleParameterSliderControlViewNib;
+	
+	NSMutableArray* singleParameterSliderControlViews;
+	
+}
+
+@property (nonatomic, retain) NSNib* singleParameterSliderControlViewNib;
+
+@property (nonatomic, retain) NSMutableArray* singleParameterSliderControlViews;
 
 -(VSCSingleParameterSliderControlView*) singleParameterSliderControlViewForKey:(VSCSParameter::Key)key;
 
@@ -18,6 +28,10 @@
 
 
 @implementation VSCMatrixParameterControlView
+
+@synthesize singleParameterSliderControlViewNib;
+@synthesize horizontalMargin;
+@synthesize verticalMargin;
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -58,10 +72,14 @@
 
 -(void) createInterface {
 	
-    [self createMatrices];
+	self.singleParameterSliderControlViewNib = 
+	[[NSNib alloc] initWithNibNamed:self.singleParameterSliderControlViewNibName bundle:nil];
 	
-    [controllerMatrix sizeToCells];
-    [labelMatrix sizeToCells];
+	VSCSParameter::KeyIndexBimap::right_const_iterator it;
+	
+	for (it = parameterKeyIndexBimap.right.begin(); it != parameterKeyIndexBimap.right.(); it++) {
+		
+	}
 	
     [self setNeedsDisplay:YES];
 	
@@ -78,18 +96,12 @@
 
 -(void) setLabel:(NSString*)label forParameterKey:(VSCSParameter::Key)k {
 	[super setLabel:label forParameterKey:k];
-	NSCell* labelCell = [self labelCellForParameterWithKey:k];
-	[labelCell setStringValue:label];
+	[[self singleParameterSliderControlViewForKey:k] setLabel:label];
 }
 
 -(void) setRange:(VSCSParameter::ValueRange)valueRange forParameterKey:(VSCSParameter::Key)k {
 	[super setRange:valueRange forParameterKey:k];
-	NSActionCell* controllerCell = [self controllerCellForParameterWithKey:k];
-	if ([controllerCell isKindOfClass:[NSSliderCell class]]) {
-		NSSliderCell* sliderCell = (NSSliderCell*)controllerCell;
-		[sliderCell setMinValue:valueRange.first];
-		[sliderCell setMaxValue:valueRange.second];
-	}
+	[[self singleParameterSliderControlViewForKey:k] setValueRange:valueRange];
 }
 
 #pragma mark Parameter Key/Index
@@ -111,135 +123,31 @@
 }
 
 
-#pragma mark - NSCell Accessors and Utility 
-
--(NSActionCell*) controllerCellForParameterWithKey:(VSCSParameter::Key)k {
-	NSInteger index = [self indexForParameterWithKey:k];
-	return [controllerMatrix cellAtRow:index column:0];
-}
-
--(NSCell*) numericCellForParameterWithKey:(VSCSParameter::Key)k {
-	NSInteger index = [self indexForParameterWithKey:k];
-	return [numericMatrix cellAtRow:index column:0];
-}
-
--(NSCell*) labelCellForParameterWithKey:(VSCSParameter::Key)k {
-	NSInteger index = [self indexForParameterWithKey:k];
-	return [labelMatrix cellAtRow:index column:0];
-}
-
--(VSCSParameter::Key) parameterKeyForCell:(NSCell*)cell {
-	
-	NSInteger row, column;
-	BOOL success;
-	
-	success = [controllerMatrix getRow:&row column:&column ofCell:cell];
-	if (success)
-		return [self keyForParameterAtIndex:row];
-	
-	success = [numericMatrix getRow:&row column:&column ofCell:cell];
-	if (success)
-		return [self keyForParameterAtIndex:row];
-	
-	success = [labelMatrix getRow:&row column:&column ofCell:cell];
-	if (success)
-		return [self keyForParameterAtIndex:row];
-	
-	throw VSCSInvalidArgumentException();
-	
-}
-
-@end
-
-
-@implementation VSCMatrixParameterControlView (Private)
 
 -(void) customInit {
 	
-	self.horizontalSpacing = 10.0;
-	self.labelWidth = 200.0;
-	self.controllerWidth = 400.0;
-	self.numericWidth = 100.0
+	self.horizontalMargin = 10.0;
+	self.verticalMargin = 10.0;
 	
-	self.controllerCellPrototype = [[[NSSliderCell alloc] init] autorelease];
-	self.labelCellPrototype = [[NSCell alloc] initTextCell:@"No Parameter"];
+	self.singleParameterSliderControlViews = [NSMutableArray array];
+	
+	self.singleParameterSliderControlViewNibName = @"VSCParameterSliderControlView";
 	
 }
 
 #pragma mark Create/Destroy Matrices
 
-
-
--(void) createMatrices {
-	
-	[self destroyMatrices];
-	
-	NSInteger numberOfParameters = keySet.size();
-	
-	CGFloat h = rowHeight*numberOfParameters;
-	CGFloat vericalMargin = 10.0;
-	CGFloat horizontalOffset = horizontalSpacing;
-	
-    CGRect labelMatrixFrame = NSMakeRect(horizontalOffset, 0.0, labelWidth, h);
-	self.labelMatrix = [[[NSMatrix alloc] initWithFrame:labelMatrixFrame 
-												   mode:NSTrackModeMatrix 
-											  prototype:self.labelCellPrototype 
-										   numberOfRows:numberOfParameters 
-										numberOfColumns:1] autorelease];
-	[labelMatrix setAutoresizingMask: NSViewHeightSizable | NSViewWidthSizable];
-	[scrollView addSubview:labelMatrix];
-	
-	horizontalOffset += (labelWidth+horizontalSpacing);
-	CGRect controllerMatrixFrame = NSMakeRect(horizontalOffset, 0.0, controllerWidth, h);	
-	self.controllerMatrix = [[[NSMatrix alloc] initWithFrame:controllerMatrixFrame 
-														mode:NSTrackModeMatrix 
-												   prototype:self.controllerCellPrototype 
-												numberOfRows:numberOfParameters 
-											 numberOfColumns:1] autorelease];	
-	[controllerMatrix setAutoresizingMask: NSViewHeightSizable | NSViewWidthSizable];
-	[scrollView addSubview:controllerMatrix];
-	
-	CGRect numericMatrixFrame = NSMakeRect(self.frame.size.width * (3.0 / 4.0), 0.0, 
-											  self.frame.size.width / 4.0, self.frame.size.height);	
-	
-	self.numericMatrix = [[[NSMatrix alloc] initWithFrame:numericMatrixFrame 
-														mode:NSTrackModeMatrix 
-												   prototype:self.numericCellPrototype 
-												numberOfRows:numberOfParameters 
-											 numberOfColumns:1] autorelease];	
-	[controllerMatrix setAutoresizingMask: NSViewHeightSizable | NSViewWidthSizable];
-	[scrollView addSubview:numericMatrix];
-	
-	/*
-	 *	Setup control tags so that the cells can be identified when sending messages
-	 */
-	[controllerMatrix setTarget:self];
-	[controllerMatrix setAction:@selector(controllerCellCallback:)];
-
-	
+-(VSCSingleParameterSliderControlView*) singleParameterSliderControlViewForKey:(VSCSParameter::Key)key {
+	assert(keySet.find(key) != keySet.end())
+	if (keySet.find(key) == keySet.end()) return nil;
+	NSInteger viewIndex = [self indexForParameterWithKey:key];
+	assert([singleParameterSliderControlViews count] > viewIndex);
+	if ([singleParameterSliderControlViews count] <= viewIndex) return nil;
+	VSCSingleParameterSliderControlView* v = [singleParameterSliderControlViews objectAtIndex:viewIndex];
+	assert(v.key == key)
+	if (v.key != key) return nil;
+	return v;
 }
-
-
--(void) destroyMatrices {
-	
-	if (self.controllerMatrix) {
-		[controllerMatrix removeFromSuperview];
-		self.controllerMatrix = nil;
-	}
-	
-	if (self.labelMatrix) {
-		[labelMatrix removeFromSuperview];
-		self.labelMatrix = nil;
-	}
-	
-	if (self.numericMatrix) {
-		[numericMatrix removeFromSuperview];
-		self.numericMatrix = nil;
-	}
-	
-}
-
-
 
 
 #pragma mark Controller Cell Callback 

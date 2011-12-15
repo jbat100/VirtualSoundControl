@@ -69,11 +69,17 @@ unsigned long long VSCSoundGenerator::getTickCount(void) {
 
 void VSCSoundGenerator::trace(VSCSFloat f) {
 	
+	_tickCount++;
+	
+	if (_traceSampleSize > 0) {
+		_pastSamples.push_back(f);
+	}
+	while (_traceSampleSize.size() > _traceSampleSize) {
+		_traceSampleSize.pop_front();
+	}
+	
 }
 
-VSCSFloat VSCSoundGenerator::tick(void) {
-    return 0.0;
-}
 
 
 

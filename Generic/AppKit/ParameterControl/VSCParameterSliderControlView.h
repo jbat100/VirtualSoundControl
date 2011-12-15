@@ -23,7 +23,6 @@
 	
 	NSString* singleParameterSliderControlViewNibName;
 	
-	CGFloat rowHeight;
 	CGFloat horizontalMargin;
 	CGFloat verticalMargin;
 
@@ -31,7 +30,6 @@
 
 @property (nonatomic, copy) NSString* singleParameterSliderControlViewNibName;
 
-@property (nonatomic, assign) CGFloat rowHeight;
 @property (nonatomic, assign) CGFloat horizontalMargin;
 @property (nonatomic, assign) CGFloat verticalMargin;
 

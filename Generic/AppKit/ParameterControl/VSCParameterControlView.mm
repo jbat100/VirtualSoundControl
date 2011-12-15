@@ -12,6 +12,8 @@
 
 @implementation VSCParameterControlView
 
+@synthesize listener;
+
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {

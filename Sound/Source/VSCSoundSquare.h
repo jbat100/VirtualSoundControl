@@ -32,8 +32,6 @@ public:
 protected:
     
 	stk::BlitSquare blitSquare;
-    
-    void processComputationFrames(void);
 	
 };
 

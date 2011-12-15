@@ -14,6 +14,8 @@
 @synthesize label, key, listener, doubleValue;
 
 -(void) updateInterface {
+	
+	
 
 }
 

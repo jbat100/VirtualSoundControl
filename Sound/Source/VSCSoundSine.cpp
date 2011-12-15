@@ -15,19 +15,16 @@ const std::string VSCSoundSine::kSynthSourceSineType = "VSCSoundSine";
 
 VSCSoundSine::VSCSoundSine() {
 	
-	this->setNumberOfChannelsNeededForComputationFrames(1);
 	this->setFrequency(VSCSound::getReferenceAFrequency());
 	this->setPhase(0.0); // no need to do that...
     
 }
 
-void VSCSoundSine::processComputationFrames(unsigned int numberOfFrames) {
-	//VSCSoundGenerator::processComputationFrames(numberOfFrames);
-	sineWave.tick(_computationFrames);
+void VSCSoundSine::processComputationFrames(void) {
+	return sineWave.tick(_computationFrames);
 }
 
 double VSCSoundSine::getValueForParameterWithKey(VSCSParameter::Key key) {
-	
 	if (key.domain == VSCSParameter::DomainSourceSine) {
 		if (key.code == VSCSParameter::CodeFrequency) {
 			return this->getFrequency();
@@ -36,12 +33,10 @@ double VSCSoundSine::getValueForParameterWithKey(VSCSParameter::Key key) {
 			return this->getPhase();
 		}
 	}
-	
 	return VSCSoundGenerator::getValueForParameterWithKey(key);
 }
 
 void VSCSoundSine::setValueForParameterWithKey(double value, VSCSParameter::Key key) {
-	
 	if (key.domain == VSCSParameter::DomainSourceSine) {
 		if (key.code == VSCSParameter::CodeFrequency) {
 			this->setFrequency((VSCSFloat)value);
@@ -52,9 +47,7 @@ void VSCSoundSine::setValueForParameterWithKey(double value, VSCSParameter::Key 
 			return;
 		}
 	}
-	
 	VSCSoundGenerator::setValueForParameterWithKey(value, key);
-	
 }
 
 

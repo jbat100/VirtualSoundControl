@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "VSCParameterControlViewProtocol.h"
+#import "VSCParameterListenerProtocol.h"
 #import "VSCSoundParameters.h"
 
 #import <map>
@@ -19,11 +20,11 @@
 	VSCSParameter::KeyLabelMap keyLabelMap;
 	VSCSParameter::KeyRangeMap keyRangeMap;
 	
-	id<VSCParameterControlViewDelegate> delegate;
+	id<VSCParameterListenerProtocol> listener;
 
 }
 
-@property (assign) id<VSCParameterControlViewDelegate> delegate;
+@property (assign) id<VSCParameterListenerProtocol> listener;
 
 
 @end

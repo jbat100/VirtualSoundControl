@@ -36,7 +36,7 @@ public:
 	
 	VSCSoundGenerator();
 	
-	virtual VSCSFloat tick(void); 
+	virtual VSCSFloat tick(void) = 0; 
 	
 	/*
 	 *	Get the group generator to which this generator belongs, NULL if does not
