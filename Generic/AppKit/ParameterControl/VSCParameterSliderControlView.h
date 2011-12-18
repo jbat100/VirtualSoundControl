@@ -19,8 +19,6 @@
 
 @interface VSCParameterSliderControlView : VSCParameterControlView  {
 	
-	VSCSParameter::KeyIndexBimap parameterKeyIndexBimap;
-	
 	NSString* singleParameterSliderControlViewNibName;
 	
 	CGFloat horizontalMargin;
@@ -33,10 +31,6 @@
 @property (nonatomic, assign) CGFloat horizontalMargin;
 @property (nonatomic, assign) CGFloat verticalMargin;
 
--(void) setparameterKeyIndexBimap:(VSCSParameter::KeyIndexBimap)keyIndexBymap;
--(const VSCSParameter::KeyIndexBimap&) parameterKeyIndexBimap;
-
--(VSCSParameter::Key) keyForParameterAtIndex:(NSInteger)index;
--(NSInteger) indexForParameterWithKey:(VSCSParameter::Key)key;
+-(VSCSingleParameterSliderControlView*) singleParameterSliderControlViewForKey:(VSCSParameter::Key)key;
 
 @end

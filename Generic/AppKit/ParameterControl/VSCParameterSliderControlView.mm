@@ -8,14 +8,12 @@
 
 #import "VSCParameterSliderControlView.h"
 #import "VSCSingleParameterSliderControlView.h"
+#import "NSString+VSCAdditions.h"
 #import "VSCException.h"
 
 @interface VSCParameterSliderControlView () {
-	
 	NSNib* singleParameterSliderControlViewNib;
-	
 	NSMutableArray* singleParameterSliderControlViews;
-	
 }
 
 @property (nonatomic, retain) NSNib* singleParameterSliderControlViewNib;
@@ -53,8 +51,8 @@
 
 
 -(void) dealloc {
-	
-	
+	self.singleParameterSliderControlViewNib = nil;
+	self.singleParameterSliderControlViews = nil;
 	[super dealloc];
 }
 
@@ -71,27 +69,23 @@
 
 
 -(void) createInterface {
-	
 	self.singleParameterSliderControlViewNib = 
 	[[NSNib alloc] initWithNibNamed:self.singleParameterSliderControlViewNibName bundle:nil];
-	
-	VSCSParameter::KeyIndexBimap::right_const_iterator it;
-	
-	for (it = parameterKeyIndexBimap.right.begin(); it != parameterKeyIndexBimap.right.(); it++) {
-		
+	[singleParameterSliderControlViewNib instantiateNibWithOwner:self topLevelObjects:&topLevelObjects];
+	VSCSingleParameterSliderControlView* v = [topLevelObjects objectAtIndex:0];
+	NSSize s = v.frame.size;
+	NSRect f = NSMakeRect(0.0, 0.0, s.width, s.height * keyList.size());
+	self.bounds = f;
+	for (VSCSParameter::KeyList::iterator it = keyList.begin(); it != keyList.right.(); it++) {
+		NSArray* topLevelObjects = nil;
+		[singleParameterSliderControlViewNib instantiateNibWithOwner:self topLevelObjects:&topLevelObjects];
+		v = [topLevelObjects objectAtIndex:0];
+		VSCSParameter::Key k = *it;
+		v.key = k;
+		v.valueRange = VSCSParameter::sharedInstance().getRangeForParameterWithKey(k);
+		v.label = [NSString stringWithStdString:VSCSParameter::sharedInstance().getLabelForParameterWithKey(k)];
 	}
-	
     [self setNeedsDisplay:YES];
-	
-}
-
-
--(void) setparameterKeyIndexBimap:(VSCSParameter::KeyIndexBimap)keyIndexBymap {
-	parameterKeyIndexBimap = keyIndexBymap;
-}
-
--(const VSCSParameter::KeyIndexBimap&) parameterKeyIndexBimap {
-	return parameterKeyIndexBimap;
 }
 
 -(void) setLabel:(NSString*)label forParameterKey:(VSCSParameter::Key)k {
@@ -106,62 +100,31 @@
 
 #pragma mark Parameter Key/Index
 
--(VSCSParameter::Key) keyForParameterAtIndex:(NSInteger)index {
-	VSCSParameter::KeyIndexBimap::right_const_iterator right_iter = parameterKeyIndexBimap.right.find(index);
-	// couldn't find the index in the bimap...
-	if (right_iter == parameterKeyIndexBimap.right.end()) 
-		throw VSCSInvalidArgumentException();
-	return right_iter->second;	
-}
-
--(NSInteger) indexForParameterWithKey:(VSCSParameter::Key)key {
-	VSCSParameter::KeyIndexBimap::left_const_iterator left_iter = parameterKeyIndexBimap.left.find(key);
-	// couldn't find the key in the bimap...
-	if (left_iter == parameterKeyIndexBimap.left.end()) 
-		throw VSCSInvalidArgumentException();
-	return left_iter->second;
-}
-
-
-
 -(void) customInit {
-	
 	self.horizontalMargin = 10.0;
 	self.verticalMargin = 10.0;
-	
 	self.singleParameterSliderControlViews = [NSMutableArray array];
-	
 	self.singleParameterSliderControlViewNibName = @"VSCParameterSliderControlView";
-	
 }
 
 #pragma mark Create/Destroy Matrices
 
 -(VSCSingleParameterSliderControlView*) singleParameterSliderControlViewForKey:(VSCSParameter::Key)key {
-	assert(keySet.find(key) != keySet.end())
-	if (keySet.find(key) == keySet.end()) return nil;
-	NSInteger viewIndex = [self indexForParameterWithKey:key];
-	assert([singleParameterSliderControlViews count] > viewIndex);
-	if ([singleParameterSliderControlViews count] <= viewIndex) return nil;
-	VSCSingleParameterSliderControlView* v = [singleParameterSliderControlViews objectAtIndex:viewIndex];
-	assert(v.key == key)
-	if (v.key != key) return nil;
-	return v;
+	assert(find(keyList.begin(), keyList.end(), key) != keyList.end())
+	if (find(keyList.begin(), keyList.end(), key) == keyList.end()) return nil;
+	for (VSCSingleParameterSliderControlView* v in singleParameterSliderControlViews) {
+		if (v.key == key) return v;
+	}
+	return nil;
 }
 
 
 #pragma mark Controller Cell Callback 
 
-
--(void) controllerCellCallback:(NSActionCell*)sender {
-	
-	VSCSParameter::Key k = [self parameterKeyForCell:sender];
-	
-	if ([sender isKindOfClass:[NSSliderCell class]]) {
-		double val = [(NSSliderCell*)sender doubleValue];
-		[delegate parameterControlView:self changedParameterWithKey:k to:val];
-	}
-	
+-(void) object:(id)sender changedParameterWithKey:(VSCSParameter::Key)key to:(double)val {
+	VSCSingleParameterSliderControlView* v = (VSCSingleParameterSliderControlView*)sender;
+	[listener object:self changedParameterWithKey:key to:val];
 }
+
 
 @end

@@ -44,8 +44,6 @@ typedef enum _VSCSoundInterfaceFactoryOptions {
 /*
  *	Intermediate helper functions
  */
--(VSCMatrixParameterControlView*) matrixParameterControlViewForParameterKeys:(VSCSParameter::KeySet)keys
-														   withKeyIndexBimap:(VSCSParameter::KeyIndexBimap)map
-																   withFrame:(NSRect)f;
+-(VSCMatrixParameterControlView*) matrixParameterControlViewForParameterKeys:(VSCSParameter::KeySet)keys;
 
 @end

@@ -36,6 +36,14 @@ class VSCSoundMultiChannelElement : public VSCSoundElement {
 	
 	
 public:
+	
+	enum Setup {
+		SetupNone,
+		SetupMono,
+		SetupStereo,
+		SetupSurround_5_1,
+		SetupSurround_7_1
+	}
     
     VSCSoundMultiChannelElement();
 	
@@ -59,9 +67,6 @@ public:
 	
 	virtual double getValueForParameterWithKey(VSCSParameter::Key key);
 	virtual void setValueForParameterWithKey(double value, VSCSParameter::Key key);
-	
-	virtual double getValueForIndexedParameterWithKey(VSCSParameter::Key key, unsigned int ind);
-    virtual void setValueForIndexedParameterWithKey(double value, VSCSParameter::Key key, unsigned int ind);
 	
 	virtual std::string getValueForPropertyWithKey(VSCSProperty::Key key);
 	virtual void setValueForPropertyWithKey(std::string value, VSCSProperty::Key key);

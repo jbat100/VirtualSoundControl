@@ -12,11 +12,11 @@
 #import "VSCSoundParameters.h"
 
 #import <map>
-#import <set>
+#import <list>
 
 @interface VSCParameterControlView : NSView <VSCParameterControlViewProtocol> {
 	
-	VSCSParameter::KeySet keySet;
+	VSCSParameter::KeyList keyList;
 	VSCSParameter::KeyLabelMap keyLabelMap;
 	VSCSParameter::KeyRangeMap keyRangeMap;
 	

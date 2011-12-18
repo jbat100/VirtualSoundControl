@@ -95,16 +95,13 @@ static VSCSoundInterfaceFactory* defaultFactoryInstance = nil;
 
 
 
--(VSCMatrixParameterControlView*) matrixParameterControlViewForParameterKeys:(VSCSParameter::KeySet)keys
-														   withKeyIndexBimap:(VSCSParameter::KeyIndexBimap)map
-																   withFrame:(NSRect)f 
+-(VSCMatrixParameterControlView*) matrixParameterControlViewForParameterKeys:(VSCSParameter::KeyList)keys;
 {
+	NSRect f = NSZeroRect;
 	VSCMatrixParameterControlView* matrixControlView = [[VSCMatrixParameterControlView alloc] initWithFrame:f];
 	[matrixControlView addParameterKeys:parameterKeys];
-	[matrixControlView setparameterKeyIndexBimap:parameterIndexBimap];
 	[matrixControlView createInterface];
 	return [matrixControlView autorelease];
-	
 }
 
 

@@ -46,19 +46,27 @@
 #pragma mark - Add/Remove Parameter Key
 
 -(void) addParameterKey:(VSCSParameter::Key)k {
-	keySet.insert(k);
+	if (find(keyList.begin(), keyList.end(), k) == keyList.end()) {
+		keyList.push_back(k);
+	}
 }
 
 -(void) removeParameterKey:(VSCSParameter::Key)k {
-	keySet.erase(k);
+	if (find(keyList.begin(), keyList.end(), k) == keyList.end()) {
+		keyList.erase(find(keyList.begin(), keyList.end(), k));
+	}
 }
 
--(void) addParameterKeys:(VSCSParameter::KeySet)kSet {
-	keySet.insert(kSet.begin(), kSet.end());
+-(void) addParameterKeys:(VSCSParameter::KeyList)kList {
+	for (VSCSParameter::KeyList::iterator it = kList.begin(); it != kList.end(); it++) {
+		this->addParameterKey(*it);
+	}
 }
 
--(void) removeParameterKeys:(VSCSParameter::KeySet)kSet {
-	keySet.erase(kSet.begin(), kSet.end());
+-(void) removeParameterKeys:(VSCSParameter::KeyList)kList {
+	for (VSCSParameter::KeyList::iterator it = kList.begin(); it != kList.end(); it++) {
+		this->removeParameterKey(*it);
+	}
 }
 
 #pragma mark - Parameter Labels 
@@ -112,8 +120,8 @@
 
 #pragma mark - Const References For Outer Operations
 
--(const VSCSParameter::KeySet&) keySet {
-	return keySet;
+-(const VSCSParameter::KeyList&) keyList {
+	return keyList;
 }
 
 -(const VSCSParameter::KeyLabelMap&) keyLabelMap {

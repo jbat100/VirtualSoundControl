@@ -14,14 +14,19 @@
 const std::string VSCSoundSine::kSynthSourceSineType = "VSCSoundSine";
 
 VSCSoundSine::VSCSoundSine() {
-	
 	this->setFrequency(VSCSound::getReferenceAFrequency());
 	this->setPhase(0.0); // no need to do that...
-    
 }
 
-void VSCSoundSine::processComputationFrames(void) {
-	return sineWave.tick(_computationFrames);
+void VSCSoundSine::tick(void) {
+	VSCSFloat val;
+#ifdef VSCS_USE_STK
+	VSCSFloat val = sineWave.tick(_computationFrames);
+#endif
+#ifdef VSVS_DEBUG
+	this->trace(val);
+#endif
+	return val;
 }
 
 double VSCSoundSine::getValueForParameterWithKey(VSCSParameter::Key key) {

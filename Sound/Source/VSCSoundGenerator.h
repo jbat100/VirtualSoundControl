@@ -30,8 +30,6 @@
 
 class VSCSoundGenerator : public VSCSoundElement {
     
-    //class VSCSoundGeneratorGroup : public stk::Generator {
-    
 public:
 	
 	VSCSoundGenerator();
@@ -51,6 +49,11 @@ public:
 	virtual double getValueForParameterWithKey(VSCSParameter::Key k);
 	virtual void setValueForParameterWithKey(double val, VSCSParameter::Key k);
 	
+	void setLinearGain(VSCSFloat lG);
+	VSCSFloat getLinearGain(void);
+	void setDBGain(VSCSFloat dBG);
+	VSCSFloat getDBGain(void);
+	
 	/*
 	 *	Sound engine methods
 	 */
@@ -58,6 +61,8 @@ public:
 	virtual void setIsOn(bool o);
 	bool isOn(void);
 	
+	
+#ifdef VSCS_DEBUG
 	/*
      *  Frame debugging
      */
@@ -65,14 +70,18 @@ public:
 	unsigned int traceSampleSize(void);
     const std::deque<VSCSFloat>& getPastSamples(void);
     unsigned long long getTickCount(void);
+#endif
 	
 protected:
 	
+#ifdef VSCS_DEBUG
 	void trace(VSCSFloat f);
+#endif
     
 private:
     
     bool _isOn;
+	VSCSFloat linearGain;
     
     /*
 	 *	Backpointer to the group generator which possesses this as subgenerator, NULL if it does not
@@ -80,12 +89,15 @@ private:
 	 */
 	VSCSoundGenerator* _group;
     
+	
+#ifdef VSCS_DEBUG
     /*
 	 *	Used for debugging and tracing, (does not affect any processing just logs values)
 	 */
 	std::deque<VSCSFloat> _pastSamples;
 	unsigned int _traceSampleSize;
 	unsigned long long _tickCount;
+#endif
 	
 };
 

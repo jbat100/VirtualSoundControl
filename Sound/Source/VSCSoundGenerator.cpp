@@ -10,12 +10,10 @@
 #include "VSCSoundGenerator.h"
 
 VSCSoundGenerator::VSCSoundGenerator() {
-	
 	_tickCount = 0;
 	_group = NULL;
 	_isOn = true;
 	_traceSampleSize = 0;
-	
 }
 
 void VSCSoundGenerator::setIsOn(bool o) {
@@ -37,49 +35,38 @@ void VSCSoundGenerator::setValueForParameterWithKey(double val, VSCSParameter::K
 	VSCSoundElement::setValueForParameterWithKey(val, k);
 }
 
-#pragma mark - Property Setter/Getter 
+#pragma mark - Audio Engine
 
 void VSCSoundGenerator::initialize(void) {
 	
 }
 
-#pragma mark - Property Setter/Getter 
-
+#ifdef VSCS_DEBUG
 /*
  *  Frame debugging
  */
 void VSCSoundGenerator::tracePastFrames(unsigned int n) {
     _traceSampleSize = n;
 }
-
 unsigned int VSCSoundGenerator::traceSampleSize(void) {
 	return _traceSampleSize;
 }
-
 const std::deque<stk::VSCSFloat>& VSCSoundGenerator::getPastSamples(void)(void) {
     return _pastSamples;
 }
-
 unsigned long long VSCSoundGenerator::getTickCount(void) {
     return _tickCount;
 }
-
-
-#pragma mark - Tick
-
 void VSCSoundGenerator::trace(VSCSFloat f) {
-	
 	_tickCount++;
-	
 	if (_traceSampleSize > 0) {
 		_pastSamples.push_back(f);
 	}
 	while (_traceSampleSize.size() > _traceSampleSize) {
 		_traceSampleSize.pop_front();
 	}
-	
 }
-
+#endif // VSCS_DEBUG
 
 
 

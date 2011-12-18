@@ -15,6 +15,7 @@
 #include <map>
 #include <string>
 #include <set>
+#include <list>
 #include <boost/bimap.hpp>
 
 
@@ -101,6 +102,7 @@ public:
 	};
 	
     typedef std::set<Key>                                   KeySet;
+	typedef std::list<Key>                                  KeyList;
     
 	typedef std::pair<double, double>						ValueRange;
     
@@ -156,8 +158,6 @@ public:
 	 */
 	std::string revertLabelForParameterWithKeyToDefault(Key k);
 	ValueRange revertRangeForParameterWithKeyToDefault(Key k);
-	
-	
 	
 private:
 	

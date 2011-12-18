@@ -18,9 +18,9 @@
 #define VSCSoundSinePtr      boost::shared_ptr<VSCSoundSine>
 
 #ifdef VSCS_USE_STK
-
 #include "Stk.h"
 #include "SineWave.h"
+#endif
 
 
 class VSCSoundSine : public VSCSoundGenerator {
@@ -58,7 +58,9 @@ public:
 	
 private:
     
+#ifdef VSCS_USE_STK
 	stk::SineWave sineWave;
+#endif
 	
 	/*
 	 *	For some stupid reason the guys at STK have decided not to make it possible to know the 
@@ -69,9 +71,5 @@ private:
 	
 };
 
-
-
-
-#endif
 
 #endif
