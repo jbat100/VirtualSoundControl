@@ -33,7 +33,7 @@ class VSCSoundParameterized {
 	
 public:
     
-    virtual VSCSParameter::KeySet getKeySet(void); 
+    virtual VSCSParameter::KeyList getInterfaceKeyList(void);
     
     /*
      *  Make the setter virtual so that subclasses can 

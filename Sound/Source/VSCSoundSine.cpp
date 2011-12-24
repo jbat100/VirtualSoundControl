@@ -18,10 +18,17 @@ VSCSoundSine::VSCSoundSine() {
 	this->setPhase(0.0); // no need to do that...
 }
 
-void VSCSoundSine::tick(void) {
+VSCSParameter::KeyList VSCSoundSine::getInterfaceKeyList(void) {
+	VSCSParameter::KeyList keyList = VSCSoundGenerator::getInterfaceKeyList();
+	keyList.push_back((VSCSParameter::Key){VSCSParameter::DomainSourceSine, VSCSParameter::CodeLogFrequency, 0});
+	keyList.push_back((VSCSParameter::Key){VSCSParameter::DomainSourceSine, VSCSParameter::CodeRadPhase, 0});
+	return keyList;
+}
+
+VSCSFloat VSCSoundSine::tick(void) {
 	VSCSFloat val;
 #ifdef VSCS_USE_STK
-	VSCSFloat val = sineWave.tick(_computationFrames);
+	val = sineWave.tick();
 #endif
 #ifdef VSVS_DEBUG
 	this->trace(val);

@@ -23,6 +23,10 @@
 	
 	CGFloat horizontalMargin;
 	CGFloat verticalMargin;
+	
+	// private...
+	NSNib* singleParameterSliderControlViewNib;
+	NSMutableArray* singleParameterSliderControlViews;
 
 }
 

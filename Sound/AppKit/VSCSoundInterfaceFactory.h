@@ -8,10 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "VSCSoundParameters.h"
 #import "VSCSoundElement.h"
 #import "VSCSoundElementView.h"
 
-#import "VSCMatrixParameterControlView.h"
+@class VSCParameterSliderControlView;
 
 typedef enum _VSCSoundInterfaceFactoryTheme {
 	VSCSoundInterfaceFactoryThemeNone,
@@ -34,16 +35,6 @@ typedef enum _VSCSoundInterfaceFactoryOptions {
 
 +(VSCSoundInterfaceFactory*) defaultFactory;
 
-/*
- *	Main sound element view builder functions
- */
--(VSCSoundElementView*) soundElementViewForSoundElement:(VSCSoundElementPtr)soundElement;
--(void) configureSoundElementView:(VSCSoundElementView*)v 
-				  forSoundElement:(VSCSoundElementPtr)soundElement;
-
-/*
- *	Intermediate helper functions
- */
--(VSCMatrixParameterControlView*) matrixParameterControlViewForParameterKeys:(VSCSParameter::KeySet)keys;
+-(VSCParameterSliderControlView*) parameterSliderControlViewForParameterKeys:(VSCSParameter::KeyList)keys;
 
 @end

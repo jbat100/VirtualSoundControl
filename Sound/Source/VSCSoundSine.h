@@ -33,6 +33,8 @@ public:
 	VSCSoundSine();
 	static const std::string kSynthSourceSineType;
 	
+	virtual VSCSParameter::KeyList getInterfaceKeyList(void);
+	
 	virtual double getValueForParameterWithKey(VSCSParameter::Key key);
 	virtual void setValueForParameterWithKey(double value, VSCSParameter::Key key);
 	

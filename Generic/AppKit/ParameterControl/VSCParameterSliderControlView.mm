@@ -11,13 +11,9 @@
 #import "NSString+VSCAdditions.h"
 #import "VSCException.h"
 
-@interface VSCParameterSliderControlView () {
-	NSNib* singleParameterSliderControlViewNib;
-	NSMutableArray* singleParameterSliderControlViews;
-}
+@interface VSCParameterSliderControlView () 
 
 @property (nonatomic, retain) NSNib* singleParameterSliderControlViewNib;
-
 @property (nonatomic, retain) NSMutableArray* singleParameterSliderControlViews;
 
 -(VSCSingleParameterSliderControlView*) singleParameterSliderControlViewForKey:(VSCSParameter::Key)key;
@@ -25,7 +21,7 @@
 @end
 
 
-@implementation VSCMatrixParameterControlView
+@implementation VSCParameterSliderControlView
 
 @synthesize singleParameterSliderControlViewNib;
 @synthesize horizontalMargin;
@@ -69,23 +65,31 @@
 
 
 -(void) createInterface {
+	
+	NSArray* topLevelObjects = nil;
+	
 	self.singleParameterSliderControlViewNib = 
 	[[NSNib alloc] initWithNibNamed:self.singleParameterSliderControlViewNibName bundle:nil];
 	[singleParameterSliderControlViewNib instantiateNibWithOwner:self topLevelObjects:&topLevelObjects];
+	
 	VSCSingleParameterSliderControlView* v = [topLevelObjects objectAtIndex:0];
+	
 	NSSize s = v.frame.size;
 	NSRect f = NSMakeRect(0.0, 0.0, s.width, s.height * keyList.size());
 	self.bounds = f;
-	for (VSCSParameter::KeyList::iterator it = keyList.begin(); it != keyList.right.(); it++) {
+	
+	for (VSCSParameter::KeyList::iterator it = keyList.begin(); it != keyList.end(); it++) {
 		NSArray* topLevelObjects = nil;
 		[singleParameterSliderControlViewNib instantiateNibWithOwner:self topLevelObjects:&topLevelObjects];
 		v = [topLevelObjects objectAtIndex:0];
 		VSCSParameter::Key k = *it;
 		v.key = k;
-		v.valueRange = VSCSParameter::sharedInstance().getRangeForParameterWithKey(k);
+		VSCSParameter::ValueRange r = VSCSParameter::sharedInstance().getRangeForParameterWithKey(k);
+		v.valueRange = r;
 		v.label = [NSString stringWithStdString:VSCSParameter::sharedInstance().getLabelForParameterWithKey(k)];
 	}
-    [self setNeedsDisplay:YES];
+    
+	[self setNeedsDisplay:YES];
 }
 
 -(void) setLabel:(NSString*)label forParameterKey:(VSCSParameter::Key)k {
@@ -110,10 +114,11 @@
 #pragma mark Create/Destroy Matrices
 
 -(VSCSingleParameterSliderControlView*) singleParameterSliderControlViewForKey:(VSCSParameter::Key)key {
-	assert(find(keyList.begin(), keyList.end(), key) != keyList.end())
+	assert(find(keyList.begin(), keyList.end(), key) != keyList.end());
 	if (find(keyList.begin(), keyList.end(), key) == keyList.end()) return nil;
 	for (VSCSingleParameterSliderControlView* v in singleParameterSliderControlViews) {
-		if (v.key == key) return v;
+		VSCSParameter::Key vk = v.key;
+		if (vk == key) return v;
 	}
 	return nil;
 }

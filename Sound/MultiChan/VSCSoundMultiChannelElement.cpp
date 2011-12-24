@@ -80,34 +80,34 @@ bool VSCSoundMultiChannelElement::numberOfChannelsIsLocked(void) {
 
 #pragma mark Parameters
 
-double VSCSoundMultiChannelElement::getValueForParameterWithKey(VSCSParameter::Key key) {
-    
-	if (key.domain == VSCSParameter::DomainChannel) {
-		if (key.code == VSCSParameter::CodeGain) {
-			return this->averageLinearGain();
-		}
-		if (key.code == VSCSParameter::CodeDBGain) {
-			return this->averageDBGain();
-		}
-	}
-	
-	return VSCSoundElement::getValueForParameterWithKey(key);
-	
-}
+
 
 void VSCSoundMultiChannelElement::setValueForParameterWithKey(double value, VSCSParameter::Key key) {
 	
 	if (key.domain == VSCSParameter::DomainChannel) {
-		if (key.code == VSCSParameter::CodeGain) {
-			for (unsigned int i = 0; i < _numberOfChannels; i++) {
-				_channelLinearGains[i] = value;
+		if (key.index = kVSCSAllChannels) {
+			if (key.code == VSCSParameter::CodeGain) {
+				for (unsigned int i = 0; i < _numberOfChannels; i++) {
+					_channelLinearGains[i] = value;
+				}
+			}
+			else if (key.code == VSCSParameter::CodeDBGain) {
+				VSCSFloat g = VSCSParameter::sharedInstance().dBToLinear(value);
+				for (unsigned int i = 0; i < _numberOfChannels; i++) {
+					_channelLinearGains[i] = g;
+				}
 			}
 		}
-		else if (key.code == VSCSParameter::CodeDBGain) {
-			VSCSFloat dbGain = VSCSParameter::sharedInstance().dbToLinear(value);
-			for (unsigned int i = 0; i < _numberOfChannels; i++) {
-				_channelLinearGains[i] = dbGain;
-			}
+		else if (key.index  < this->getNumberOfChannels()) {
+			if (key.code == VSCSParameter::CodeGain) 
+				_channelLinearGains[key.index ] = value;
+			if (key.code == VSCSParameter::CodeDBGain) 
+				_channelLinearGains[key.index ] = VSCSParameter::sharedInstance().linearToDB(value);
+			else 
+				throw VSCSBadParameterException();
+		}
+		else {
+			throw VSCSOutOfBoundsException();
 		}
 	}
 	
@@ -115,14 +115,22 @@ void VSCSoundMultiChannelElement::setValueForParameterWithKey(double value, VSCS
 	
 }
 
-double VSCSoundMultiChannelElement::getValueForIndexedParameterWithKey(VSCSParameter::Key key, unsigned int ind) {
+double VSCSoundMultiChannelElement::getValueForParameterWithKey(VSCSParameter::Key key) {
 	
 	if (key.domain == VSCSParameter::DomainChannel) {
-		if (ind < this->getNumberOfChannels()) {
+		if (key.index = kVSCSAllChannels) {
+			if (key.code == VSCSParameter::CodeGain) {
+				return this->averageLinearGain();
+			}
+			if (key.code == VSCSParameter::CodeDBGain) {
+				return this->averageDBGain();
+			}
+		}
+		else if (key.index < this->getNumberOfChannels()) {
 			if (key.code == VSCSParameter::CodeGain) 
-				return this->getChannelLinearGains()[ind];
+				return this->getChannelLinearGains()[key.index];
 			else if (key.code == VSCSParameter::CodeDBGain) 
-				return VSCSParameter::sharedInstance().linearToDB(this->getChannelLinearGains()[ind]);
+				return VSCSParameter::sharedInstance().linearToDB(this->getChannelLinearGains()[key.index]);
 			else 
 				throw VSCSBadParameterException();
 		}
@@ -131,31 +139,9 @@ double VSCSoundMultiChannelElement::getValueForIndexedParameterWithKey(VSCSParam
 		}
 	}
 	
-	return VSCSoundElement::getValueForIndexedParameterWithKey(key, ind);
+	return VSCSoundElement::getValueForParameterWithKey(key);
 	
 }
-
-void VSCSoundMultiChannelElement::setValueForIndexedParameterWithKey(double value, VSCSParameter::Key key, unsigned int ind) {
-	
-	if (key.domain == VSCSParameter::DomainChannel) {
-		if (ind < this->getNumberOfChannels()) {
-			if (key.code == VSCSParameter::CodeGain) 
-				_channelLinearGains[ind] = value;
-			if (key.code == VSCSParameter::CodeDBGain) 
-				_channelLinearGains[ind] = VSCSParameter::sharedInstance().linearToDB(value);
-			else 
-				throw VSCSBadParameterException();
-		}
-		else {
-			throw VSCSOutOfBoundsException();
-		}
-	}
-	
-	VSCSoundElement::getValueForIndexedParameterWithKey(key, ind);
-	
-}
-
-
 
 std::string VSCSoundMultiChannelElement::getValueForPropertyWithKey(VSCSProperty::Key key) {	
 	return VSCSoundPropertized::getValueForPropertyWithKey(key);

@@ -10,8 +10,8 @@
 #include "VSCSoundParameterized.h"
 #include "VSCException.h"
 
-VSCSParameter::KeySet VSCSoundParameterized::getKeySet(void) {
-    return VSCSParameter::KeySet(); // return empty key set
+VSCSParameter::KeyList VSCSoundParameterized::getInterfaceKeyList(void) {
+    return VSCSParameter::KeyList(); // return empty key set
 }
 
 /*

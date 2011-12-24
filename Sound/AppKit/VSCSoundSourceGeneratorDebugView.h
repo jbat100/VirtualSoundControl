@@ -14,11 +14,14 @@
 
 
 /*
- *	I don't think this view should be subclassed as it is only a wrapper for a VSCSoundParameterView
- *	
+ *	I don't think this view should be subclassed, the sound element contained in the
+ *	soundElementView determines the interface and behaviour (accessed by setSoundGenerator)
+ *	and getSoundGenerator
  */
 
-@interface VSCSoundSourceGeneratorDebugView : VSCSoundElementView {
+@interface VSCSoundSourceGeneratorDebugView : NSView  {
+	
+	VSCSoundElementView* soundElementView;
 	
 	NSTextField* generatorTitleTextField;
 	NSTextField* tickCountTextField;
@@ -32,16 +35,16 @@
 
 }
 
+@property (nonatomic, retain) IBOutlet VSCSoundElementView* soundElementView;
+
 @property (nonatomic, retain) IBOutlet NSTextField* generatorTitleTextField;
 @property (nonatomic, retain) IBOutlet NSTextField* tickCountTextField;
 
 @property (nonatomic, retain) IBOutlet NSButton* tickButton;
 @property (nonatomic, retain) IBOutlet NSTableView* tickTableView;
 
-
 -(void) setSoundGenerator:(VSCSoundGeneratorPtr)generator;
 -(VSCSoundGeneratorPtr) getSoundGenerator;
-
 
 -(IBAction) tickButtonClicked:(id)sender;
 

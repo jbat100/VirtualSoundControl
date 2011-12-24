@@ -9,7 +9,15 @@
 #import <Cocoa/Cocoa.h>
 #import "VSCSingleParameterControlView.h"
 
-@interface VSCSingleParameterSliderControlView : VSCSingleParameterControlView 
+@interface VSCSingleParameterSliderControlView : VSCSingleParameterControlView {
+	
+	NSTextField* labelTextField;
+	NSTextField* minTextField;
+	NSTextField* maxTextField;
+	NSTextField* numericTextField;
+	NSSlider* controlSlider;
+
+}
 
 @property (nonatomic, retain) IBOutlet NSTextField* labelTextField;
 @property (nonatomic, retain) IBOutlet NSTextField* minTextField;

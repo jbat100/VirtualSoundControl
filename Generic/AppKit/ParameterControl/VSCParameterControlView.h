@@ -15,13 +15,10 @@
 #import <list>
 
 @interface VSCParameterControlView : NSView <VSCParameterControlViewProtocol> {
-	
 	VSCSParameter::KeyList keyList;
 	VSCSParameter::KeyLabelMap keyLabelMap;
 	VSCSParameter::KeyRangeMap keyRangeMap;
-	
 	id<VSCParameterListenerProtocol> listener;
-
 }
 
 @property (assign) id<VSCParameterListenerProtocol> listener;

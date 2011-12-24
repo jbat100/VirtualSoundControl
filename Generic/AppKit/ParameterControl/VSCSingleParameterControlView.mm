@@ -11,7 +11,7 @@
 
 @implementation VSCSingleParameterControlView
 
-@synthesize label, key, listener, doubleValue;
+@synthesize label, key, listener, doubleValue, valueRange;
 
 -(void) updateInterface {
 	

@@ -17,15 +17,15 @@
  * Change to control view to have a controllable element
  */
 
-@interface VSCSoundElementView : NSView <VSCParameterControlViewDelegate> {
-	
+@interface VSCSoundElementView : NSView <VSCParameterListenerProtocol> {
 	VSCSoundElementPtr soundElement;
-	
 	NSMutableArray* parameterControlViews;
-	
 }
 
 @property (nonatomic, retain) NSMutableArray* parameterControlViews;
+
+-(void) customInit;
+-(void) createDefaultInterface;
 
 -(void) setSoundElement:(VSCSoundElementPtr)element;
 -(VSCSoundElementPtr) getSoundElement;

@@ -25,6 +25,8 @@
 class VSCSoundNoise : public VSCSoundGenerator {
 	
 public:
+	
+	virtual VSCSFloat tick(void);
     
     stk::Noise& getStkNoise(void);
 	
@@ -35,7 +37,7 @@ private:
 };
 
 inline VSCSFloat VSCSoundNoise::tick(void) {
-	return noise.tick(_computationFrames);
+	return noise.tick();
 }
 
 #endif

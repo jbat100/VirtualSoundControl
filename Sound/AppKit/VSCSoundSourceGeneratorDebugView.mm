@@ -16,6 +16,7 @@
 
 @implementation VSCSoundSourceGeneratorDebugView
 
+@synthesize soundElementView;
 @synthesize tickTableView, tickButton;
 @synthesize generatorTitleTextField, tickCountTextField;
 
@@ -36,8 +37,7 @@
  */
 
 -(void) customInit {
-	
-	
+	[super customInit];
 }
 
 /*
@@ -60,36 +60,41 @@
  */
 
 -(void) setSoundGenerator:(VSCSoundGeneratorPtr)generator {
+	NSAssert(soundElementView, @"soundElementView should not be nil");
 	VSCSoundElementPtr element = boost::dynamic_pointer_cast<VSCSoundElement>(generator);
-	if (generator && !element) 
-		throw VSCSInvalidArgumentException();
-	[self setSoundElement:element];
+	[soundElementView setSoundElement:element];
 }
 
 -(VSCSoundGeneratorPtr) getSoundGenerator {
-	return boost::dynamic_pointer_cast<VSCSoundGenerator>(soundElement);
+	NSAssert(soundElementView, @"soundElementView should not be nil");
+	VSCSoundElementPtr element = [soundElementView getSoundElement];
+	return boost::dynamic_pointer_cast<VSCSoundGenerator>(element);
 }
 
 
 #pragma mark - NSTableViewDelegate
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
-	
-	VSCSoundGeneratorPtr sourceGenerator = [self getSoundGenerator]; 
-	
-	if (sourceGenerator) {
-		return sourceGenerator->pastFramesTraceSize();
+	VSCSoundGeneratorPtr generator = [self getSoundGenerator];
+	if (generator) {
+		return generator->getPastSamples().size();
 	}
-	
 	return 0;
-	
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn 
 			row:(NSInteger)rowIndex {
-	
-	
-	
+	VSCSoundGeneratorPtr generator = [self getSoundGenerator];
+	if (generator) {
+		int ticks = generator->getPastSamples().size();
+		return [NSNumber numberWithDouble:generator->getPastSamples()[ticks - rowIndex]];
+	}
+}
+
+-(IBAction) tickButtonClicked:(id)sender {
+	VSCSoundGeneratorPtr generator = [self getSoundGenerator];
+	if (generator) generator->tick();
+	[tickTableView reloadData];
 }
 
 

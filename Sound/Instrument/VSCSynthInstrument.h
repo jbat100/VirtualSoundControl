@@ -11,8 +11,6 @@
 #define _VSC_SYNTH_INSTRUMENT_
 
 #include "VSCSound.h"
-#include "VSCSoundMultiChannelElement.h"
-#include "VSCSoundGeneratorGroup.h"
 
 #include <list>
 #include <vector>
@@ -27,31 +25,12 @@
 #define RevSynthSynthInstrmntIter	std::list<VSCSynthInstrumentPtr>::reverse_iterator 
 
 
-
-#ifdef VSCS_USE_STK
-
-#include "Generator.h"
-
-class VSCSynthInstrument : public VSCSoundMultiChannelElement, public stk::Generator {
+class VSCSynthInstrument {
 	
 	
 public:
     
     VSCSynthInstrument();
-    VSCSynthInstrument(unsigned int numberOfChannels);
-    
-    /*--------------------------------------------------------------*/
-    
-    /*
-     *  METHODS IN THIS SECTION CAN BE CALLED FROM THE CONSTRUCTOR AND SO SHOULD
-     *  NOT BE VIRTUAL
-     */
-	
-    /*
-     *  Turns off all processing.
-     */
-	void setOn(bool on);
-	bool isOn(void) const;
 	
 	/*--------------------------------------------------------------*/
 	
@@ -67,18 +46,9 @@ public:
 	virtual void noteOff(VSCSFloat amplitude); // stk::Instrmnt method (amplitude is used for decay time)
 	
 	//! Set instrument parameters for a particular frequency.
-	virtual void setFrequency(stk::StkFloat frequency);
-	
-	//! Perform the control change specified by \e number and \e value (0.0 - 128.0).
-	virtual void controlChange(int number, stk::StkFloat value);
-	
-	stk::StkFrames& tick( stk::StkFrames& frames, unsigned int channel = 0 );
-
-	// THIS METHOD IS NOT DECLARED AS VIRTUAL IN INSTRMNT, IT APPARENTLY SHOULD NOT BE SUBCLASSED
-	// StkFrames& tick( StkFrames& frames, unsigned int channel = 0 );
-	
-	// StkFloat tick( void ); // This method is not actually declared in stk::Generator
-    
+	virtual void setFrequency(VSCSFloat freq);
+	VSCSFloat getFrequency(void);
+	    
     /*--------------------------------------------------------------*/
     
     /*
@@ -100,24 +70,11 @@ public:
 	/*--------------------------------------------------------------*/
 	
 	
-protected:
+private:
 	
 	bool _isOn;
-	VSCSoundGeneratorGroup* _sourceGroup;
-	
+	VSCSFloat _frequency;
 	
 };
-
-inline stk::StkFrames& VSCSynthInstrument::tick(stk::StkFrames& frames, unsigned int channel)
-{
-	if (_sourceGroup != NULL) {
-		assert(_sourceGroup->getNumberOfChannels() == this->getNumberOfChannels());
-		_sourceGroup->tick(frames, kVSCSAllChannels);
-	}
-	
-	return frames;
-}
-
-#endif // VSCS_USE_STK
 
 #endif

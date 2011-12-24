@@ -20,6 +20,10 @@ VSCSoundElement::VSCSoundElement() {
 	VSCSoundElement::elementCount++;
 }
 
+VSCSParameter::KeyList VSCSoundElement::getInterfaceKeyList(void) {
+    return VSCSParameter::KeyList(); // return empty key set
+}
+
 std::string VSCSoundElement::getElementIdentifier(void) {
 	return 	this->getElementType() + "_" + boost::lexical_cast<std::string>(VSCSoundElement::elementCount);;
 }

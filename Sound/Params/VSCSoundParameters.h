@@ -36,6 +36,7 @@ public:
 		
 		DomainNone,
 		
+		DomainGain,
 		DomainChannel,
 		DomainSourceLocation,
 		
@@ -98,7 +99,7 @@ public:
 		Code code;
 		unsigned int index;
 		bool operator<(const Key& otherKey) const;
-
+		bool operator==(const Key& otherKey) const;
 	};
 	
     typedef std::set<Key>                                   KeySet;
@@ -156,8 +157,8 @@ public:
 	/*
 	 *	Revert to defaults
 	 */
-	std::string revertLabelForParameterWithKeyToDefault(Key k);
-	ValueRange revertRangeForParameterWithKeyToDefault(Key k);
+	void revertLabelForParameterWithKeyToDefault(Key k);
+	void revertRangeForParameterWithKeyToDefault(Key k);
 	
 private:
 	

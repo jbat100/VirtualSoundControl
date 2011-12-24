@@ -26,7 +26,7 @@
     // Drawing code here.
 }
 
--(void) createInterface {
+-(void) createDefaultInterface {
 	throw VSCSCalledPureVirtualFunctionException();
 }
 
@@ -59,13 +59,13 @@
 
 -(void) addParameterKeys:(VSCSParameter::KeyList)kList {
 	for (VSCSParameter::KeyList::iterator it = kList.begin(); it != kList.end(); it++) {
-		this->addParameterKey(*it);
+		[self addParameterKey:(*it)];
 	}
 }
 
 -(void) removeParameterKeys:(VSCSParameter::KeyList)kList {
 	for (VSCSParameter::KeyList::iterator it = kList.begin(); it != kList.end(); it++) {
-		this->removeParameterKey(*it);
+		[self removeParameterKey:(*it)];
 	}
 }
 
@@ -88,12 +88,19 @@
 }
 
 -(void) setDefaultLabelForAllParameterKeys {
-	for (VSCSParameter::KeySet::iterator iter = keySet.begin(); iter != keySet.end(); iter++) {
+	for (VSCSParameter::KeyList::iterator iter = keyList.begin(); iter != keyList.end(); iter++) {
 		[self setDefaultLabelForParameterKey:(*iter)];
 	}
 }
 
 #pragma mark - Parameter Ranges
+
+-(VSCSParameter::ValueRange) getRangeForParameterKey:(VSCSParameter::Key)k {
+	VSCSParameter::KeyRangeMap::iterator rangeIterator = keyRangeMap.find(k);
+	if (rangeIterator != keyRangeMap.end()) 
+		return rangeIterator->second;
+	throw VSCSBadParameterException();
+}
 
 -(void) setRange:(VSCSParameter::ValueRange)valueRange forParameterKey:(VSCSParameter::Key)k {
 	keyRangeMap.insert(VSCSParameter::KeyRangePair (k, valueRange));
@@ -105,17 +112,9 @@
 }
 
 -(void) setDefaultRangeForAllParameterKeys {
-	for (VSCSParameter::KeySet::iterator iter = keySet.begin(); iter != keySet.end(); iter++) {
+	for (VSCSParameter::KeyList::iterator iter = keyList.begin(); iter != keyList.end(); iter++) {
 		[self setDefaultRangeForParameterKey:(*iter)];
 	}
-}
-
-
--(VSCSParameter::ValueRange) getRangeForParameterKey:(VSCSParameter::Key)k {
-	VSCSParameter::KeyRangeMap::iterator rangeIterator = keyRangeMap.find(k);
-	if (rangeIterator != keyRangeMap.end()) 
-		return rangeIterator->second;
-	throw VSCSBadParameterException();
 }
 
 #pragma mark - Const References For Outer Operations

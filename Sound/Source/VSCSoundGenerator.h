@@ -34,6 +34,8 @@ public:
 	
 	VSCSoundGenerator();
 	
+	virtual VSCSParameter::KeyList getInterfaceKeyList(void);
+	
 	virtual VSCSFloat tick(void) = 0; 
 	
 	/*

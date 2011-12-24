@@ -9,3 +9,34 @@
 
 #include "VSCSynthInstrument.h"
 
+VSCSynthInstrument::VSCSynthInstrument() {
+	
+}
+
+void VSCSynthInstrument::noteOn(VSCSFloat note, VSCSFloat amplitude) {
+	
+}
+
+void VSCSynthInstrument::noteOff(VSCSFloat amplitude) {
+	
+}
+
+VSCSFloat VSCSynthInstrument::getFrequency(void) {
+	
+}
+
+void VSCSynthInstrument::setFrequency(VSCSFloat frequency) {
+	
+}
+
+void VSCSynthInstrument::initialize(void) {
+	
+}
+
+void VSCSynthInstrument::updateSoundEngine(void) {
+	
+}
+
+std::string VSCSynthInstrument::intrumentTypeString(void) {
+
+}

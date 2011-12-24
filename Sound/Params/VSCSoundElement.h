@@ -45,6 +45,8 @@ public:
      *  Constructor
      */
 	VSCSoundElement();
+							
+	virtual VSCSParameter::KeyList getInterfaceKeyList(void);
 	
 	/*
 	 *	Generator type/identifier (for easier interface, not requiring tons of casts)

@@ -16,6 +16,12 @@ VSCSoundGenerator::VSCSoundGenerator() {
 	_traceSampleSize = 0;
 }
 
+VSCSParameter::KeyList VSCSoundGenerator::getInterfaceKeyList(void) {
+	VSCSParameter::KeyList keyList = VSCSoundElement::getInterfaceKeyList();
+	VSCSParameter::Key k = {VSCSParameter::DomainGain, VSCSParameter::CodeDBGain, 0};
+	keyList.push_back(k);
+}
+
 void VSCSoundGenerator::setIsOn(bool o) {
 	_isOn = o;
 }
@@ -45,13 +51,13 @@ void VSCSoundGenerator::initialize(void) {
 /*
  *  Frame debugging
  */
-void VSCSoundGenerator::tracePastFrames(unsigned int n) {
+void VSCSoundGenerator::tracePastSamples(unsigned int n) {
     _traceSampleSize = n;
 }
 unsigned int VSCSoundGenerator::traceSampleSize(void) {
 	return _traceSampleSize;
 }
-const std::deque<stk::VSCSFloat>& VSCSoundGenerator::getPastSamples(void)(void) {
+const std::deque<VSCSFloat>& VSCSoundGenerator::getPastSamples(void) {
     return _pastSamples;
 }
 unsigned long long VSCSoundGenerator::getTickCount(void) {
@@ -62,8 +68,8 @@ void VSCSoundGenerator::trace(VSCSFloat f) {
 	if (_traceSampleSize > 0) {
 		_pastSamples.push_back(f);
 	}
-	while (_traceSampleSize.size() > _traceSampleSize) {
-		_traceSampleSize.pop_front();
+	while (_pastSamples.size() > _traceSampleSize) {
+		_pastSamples.pop_front();
 	}
 }
 #endif // VSCS_DEBUG

@@ -7,11 +7,10 @@
 //
 
 #import "VSCSoundElementView.h"
-#import "VSCParameterControlView.h"
-#import "VSCMatrixParameterControlView.h"
+#import "VSCParameterSliderControlView.h"
 #import "VSCSoundApple.h"
 
-
+#import "VSCSoundInterfaceFactory.h"
 
 @implementation VSCSoundElementView
 
@@ -45,10 +44,24 @@
 	
 }
 
+-(void) createDefaultInterface {
+	
+	VSCSParameter::KeyList keyList = soundElement->getInterfaceKeyList();
+	
+	VSCParameterSliderControlView* v = nil;
+	v = [[VSCSoundInterfaceFactory defaultFactory] parameterSliderControlViewForParameterKeys:keyList];
+	
+	[v setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+	
+	NSRect vBounds = v.bounds;
+	NSRect selfBounds = self.bounds;
+	
+	selfBounds.size.height = vBounds.size.height;
+	selfBounds.size.width = vBounds.size.width;
 
-
--(void) reloadValueForParameterWithKey:(VSCSParameter::Key)key {
-
+	self.bounds = selfBounds;
+	
+	[self addSubview:v];
 }
 
 -(void) setSoundElement:(VSCSoundElementPtr)element {
@@ -61,18 +74,21 @@
 
 #pragma mark VSCSoundParameterViewProtocol Methods
 
+-(void) reloadParameterValues {
+	// get parameter list from soundElement
+}
+
 -(double) doubleValueForParameterWithKey:(VSCSParameter::Key)key {
+	
+	for (id<VSCParameterControlViewProtocol> v in parameterControlViews) {
+
+	}
+	
 	return 0.0;
 }
 
-
-
-#pragma mark - VSCParameterControlViewDelegate Methods
-
--(void) parameterControlView:(id<VSCParameterControlViewProtocol>)view 
-	 changedParameterWithKey:(VSCSParameter::Key)key
-						  to:(double)val {
-	NSLog(@"%@ received parameter change from %@, value is %f", self, view, val);
+-(void) reloadValueForParameterWithKey:(VSCSParameter::Key)key {
+	
 }
 
 

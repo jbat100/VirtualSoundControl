@@ -20,11 +20,19 @@ const unsigned int VSCSParameter::kIndexAll = UINT_MAX;
 
 
 bool VSCSParameter::Key::operator<(const Key& otherKey) const {
-	if (domain < otherKey.domain)
-		return true;
-	if (code < otherKey.code)
-		return true;
+	if (domain < otherKey.domain) return true;
+	else return false;
+	if (code < otherKey.code) return true;
+	else return false;
+	if (index < otherKey.index) return true;
 	return false;
+}
+
+bool VSCSParameter::Key::operator==(const Key& otherKey) const {
+	if (domain != otherKey.domain) return false;
+	if (code != otherKey.code) return false;
+	if (index != otherKey.index) return false;
+	return true;
 }
 
 VSCSParameter::VSCSParameter() {
@@ -99,7 +107,7 @@ void VSCSParameter::setLabelForParameterWithKey(std::string label, Key k) {
 	
 }
 
-std::string VSCSParameter::revertLabelForParameterWithKeyToDefault(Key k) {
+void VSCSParameter::revertLabelForParameterWithKeyToDefault(Key k) {
 	
 	KeyLabelMap::iterator labelIterator = customizedKeyLabels.find(k);
 	if (labelIterator != customizedKeyLabels.end()) 
@@ -148,7 +156,7 @@ void VSCSParameter::setRangeForParameterWithKey(ValueRange valRange, Key k) {
 	
 }
 
-VSCSParameter::ValueRange VSCSParameter::revertRangeForParameterWithKeyToDefault(Key k) {
+void VSCSParameter::revertRangeForParameterWithKeyToDefault(Key k) {
 	
 	KeyRangeMap::iterator rangeIterator = customizedKeyRanges.find(k);
 	if (rangeIterator != customizedKeyRanges.end()) 

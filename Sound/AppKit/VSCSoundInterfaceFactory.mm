@@ -8,8 +8,9 @@
 
 #import "VSCSoundInterfaceFactory.h"
 
-#import "VSCSoundMultiChannelElement.h"
+#import "VSCSoundElement.h"
 #import "VSCSoundSine.h"
+#import "VSCParameterSliderControlView.h"
 
 #import <boost/pointer_cast.hpp>
 
@@ -42,66 +43,13 @@ static VSCSoundInterfaceFactory* defaultFactoryInstance = nil;
     return self;
 }
 
--(VSCSoundElementView*) soundElementViewForSoundElement:(VSCSoundElementPtr)soundElement withFrame:(NSRect)f {
-	
-	VSCSoundElementView* v = [[VSCSoundElementView alloc] initWithFrame:f];
-	
-	[self configureSoundElementView:v ForSoundElement:soundElement];
-	
-	return [v autorelease];
-	
-}
-
--(void) configureSoundElementView:(VSCSoundElementView*)view ForSoundElement:(VSCSoundElementPtr)soundElement {
-	
-	std::string elementType = soundElement->getElementType();
-	
-	/*
-	 *	Remove all parameter views
-	 */
-	NSArray* subviews = [view subviews];
-	for (NSView* v in subviews) {
-		if ([[view parameterControlViews] containsObject:v]) {
-			[v removeFromSuperview];
-		}
-	}
-	[[view parameterControlViews] removeAllObjects];
-	
-	
-	VSCSoundMultiChannelElementPtr multiChannelPtr = 
-	boost::dynamic_pointer_cast<VSCSoundMultiChannelElement> (soundElement);
-	
-	if (multiChannelPtr) {
-		VSCSParameter::KeySet parameterKeys;
-		VSCSParameter::KeyIndexBimap parameterIndexBimap;
-		unsigned int numberOfChannels = multiChannelPtr->getNumberOfChannels();
-		for (unsigned int i = 0; i < numberOfChannels; i++) {
-			VSCSParameter::Key key = {VSCSParameter::DomainChannel, VSCSParameter::CodeDBGain, i};
-			parameterKeys.insert(key);
-			VSCSParameter::KeyIndexBimapEntry entry (i,i);
-			parameterIndexBimap.insert(entry);
-		}
-		NSRect f = view.frame;
-		VSCMatrixParameterControlView* controlView = [self matrixParameterControlViewForParameterKeys:parameterKeys 
-																					withKeyIndexBimap:parameterIndexBimap 
-																							withFrame:f];
-	}
-	 
-	return;
-	
-	
-}
-
-
-
-
--(VSCMatrixParameterControlView*) matrixParameterControlViewForParameterKeys:(VSCSParameter::KeyList)keys;
+-(VSCParameterSliderControlView*) parameterSliderControlViewForParameterKeys:(VSCSParameter::KeyList)keys;
 {
 	NSRect f = NSZeroRect;
-	VSCMatrixParameterControlView* matrixControlView = [[VSCMatrixParameterControlView alloc] initWithFrame:f];
-	[matrixControlView addParameterKeys:parameterKeys];
-	[matrixControlView createInterface];
-	return [matrixControlView autorelease];
+	VSCParameterSliderControlView* controlView = [[VSCParameterSliderControlView alloc] initWithFrame:f];
+	[controlView addParameterKeys:keys];
+	[controlView createInterface];
+	return [controlView autorelease];
 }
 
 

@@ -12,7 +12,7 @@
 		10118007145619DF00240467 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10118005145619DF00240467 /* AppKit.framework */; };
 		10118008145619DF00240467 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10118006145619DF00240467 /* Foundation.framework */; };
 		1021C25314938FBD00027954 /* VSCSingleParameterControlView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1021C25214938FBD00027954 /* VSCSingleParameterControlView.mm */; };
-		1021C257149392AB00027954 /* VSCSingleParameterSliderControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1021C256149392AB00027954 /* VSCSingleParameterSliderControlView.m */; };
+		1021C257149392AB00027954 /* VSCSingleParameterSliderControlView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1021C256149392AB00027954 /* VSCSingleParameterSliderControlView.mm */; };
 		1021C25B1493950900027954 /* VSCSingleParameterSliderControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1021C25A1493950900027954 /* VSCSingleParameterSliderControlView.xib */; };
 		1021CC00148428ED00EBDD5D /* VSCSoundInterfaceFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1021CBFF148428ED00EBDD5D /* VSCSoundInterfaceFactory.mm */; };
 		10328C771465481C0048559B /* Voicer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10328C761465481C0048559B /* Voicer.cpp */; };
@@ -100,7 +100,7 @@
 		1021C25214938FBD00027954 /* VSCSingleParameterControlView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCSingleParameterControlView.mm; path = ParameterControl/VSCSingleParameterControlView.mm; sourceTree = "<group>"; };
 		1021C2541493909900027954 /* VSCParameterListenerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCParameterListenerProtocol.h; path = ParameterControl/VSCParameterListenerProtocol.h; sourceTree = "<group>"; };
 		1021C255149392AB00027954 /* VSCSingleParameterSliderControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSingleParameterSliderControlView.h; path = ParameterControl/VSCSingleParameterSliderControlView.h; sourceTree = "<group>"; };
-		1021C256149392AB00027954 /* VSCSingleParameterSliderControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSCSingleParameterSliderControlView.m; path = ParameterControl/VSCSingleParameterSliderControlView.m; sourceTree = "<group>"; };
+		1021C256149392AB00027954 /* VSCSingleParameterSliderControlView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCSingleParameterSliderControlView.mm; path = ParameterControl/VSCSingleParameterSliderControlView.mm; sourceTree = "<group>"; };
 		1021C25A1493950900027954 /* VSCSingleParameterSliderControlView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = VSCSingleParameterSliderControlView.xib; path = ParameterControl/VSCSingleParameterSliderControlView.xib; sourceTree = "<group>"; };
 		1021CBFE148428ED00EBDD5D /* VSCSoundInterfaceFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundInterfaceFactory.h; path = ../Sound/AppKit/VSCSoundInterfaceFactory.h; sourceTree = SOURCE_ROOT; };
 		1021CBFF148428ED00EBDD5D /* VSCSoundInterfaceFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCSoundInterfaceFactory.mm; path = ../Sound/AppKit/VSCSoundInterfaceFactory.mm; sourceTree = SOURCE_ROOT; };
@@ -115,7 +115,7 @@
 		1049A679147457D500A7E608 /* VSCSoundBroadcaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundBroadcaster.h; path = ../Sound/Params/VSCSoundBroadcaster.h; sourceTree = SOURCE_ROOT; };
 		10516D771453247B00109B4B /* VSCFrequencyPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCFrequencyPoint.h; sourceTree = "<group>"; };
 		10516D781453247B00109B4B /* VSCFrequencyPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCFrequencyPoint.cpp; sourceTree = "<group>"; };
-		10516D7A1453261800109B4B /* VSCSound.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = VSCSound.h; path = ../Sound/VSCSound.h; sourceTree = SOURCE_ROOT; };
+		10516D7A1453261800109B4B /* VSCSound.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = VSCSound.h; path = ../Sound/VSCSound.h; sourceTree = SOURCE_ROOT; };
 		10516D7B1453261800109B4B /* VSCSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCSound.cpp; path = ../Sound/VSCSound.cpp; sourceTree = SOURCE_ROOT; };
 		10531F6F14602C57004DC3A1 /* VSCSoundGeneratorGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSoundGeneratorGroup.h; sourceTree = "<group>"; };
 		10531F7014602C57004DC3A1 /* VSCSoundGeneratorGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSoundGeneratorGroup.cpp; sourceTree = "<group>"; };
@@ -260,6 +260,7 @@
 		10E8F52B14828CB3002DEEE3 /* VSCSoundElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundElement.h; path = ../Sound/Params/VSCSoundElement.h; sourceTree = SOURCE_ROOT; };
 		10E8F52C14828CB3002DEEE3 /* VSCSoundElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCSoundElement.cpp; path = ../Sound/Params/VSCSoundElement.cpp; sourceTree = SOURCE_ROOT; };
 		10F32D141450C0990051DDAC /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		10FDCB5314A4076E00804378 /* VSCSingleParameterControlViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSingleParameterControlViewProtocol.h; path = ParameterControl/VSCSingleParameterControlViewProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -315,10 +316,11 @@
 		1021C25014938F5900027954 /* Single */ = {
 			isa = PBXGroup;
 			children = (
+				10FDCB5314A4076E00804378 /* VSCSingleParameterControlViewProtocol.h */,
 				1021C25114938FBD00027954 /* VSCSingleParameterControlView.h */,
 				1021C25214938FBD00027954 /* VSCSingleParameterControlView.mm */,
 				1021C255149392AB00027954 /* VSCSingleParameterSliderControlView.h */,
-				1021C256149392AB00027954 /* VSCSingleParameterSliderControlView.m */,
+				1021C256149392AB00027954 /* VSCSingleParameterSliderControlView.mm */,
 				1021C25A1493950900027954 /* VSCSingleParameterSliderControlView.xib */,
 			);
 			name = Single;
@@ -889,7 +891,7 @@
 				10653CC91482C5AA00CC57BE /* VSCParameterControlView.mm in Sources */,
 				1021CC00148428ED00EBDD5D /* VSCSoundInterfaceFactory.mm in Sources */,
 				1021C25314938FBD00027954 /* VSCSingleParameterControlView.mm in Sources */,
-				1021C257149392AB00027954 /* VSCSingleParameterSliderControlView.m in Sources */,
+				1021C257149392AB00027954 /* VSCSingleParameterSliderControlView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

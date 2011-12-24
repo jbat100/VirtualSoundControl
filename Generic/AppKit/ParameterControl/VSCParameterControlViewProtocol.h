@@ -18,7 +18,9 @@
 /*
  *  VSCParameterControlViewProtocol
  *
- *	This protocol defines an interface for a control view 
+ *	This protocol defines an interface for a control view which could be comprised of 
+ *	multiple instances of single parameter control views or simultaneous multiple parameter
+ *	control views (for example pads and manipulatable 3d shapes)
  *
  */
 
@@ -42,16 +44,15 @@
 -(void) addParameterKeys:(VSCSParameter::KeyList)keyList;
 -(void) removeParameterKeys:(VSCSParameter::KeyList)keyList;
 
+-(NSString*) getLabelForParameterKey:(VSCSParameter::Key)k;
 -(void) setLabel:(NSString*)label forParameterKey:(VSCSParameter::Key)k;
 -(void) setDefaultLabelForParameterKey:(VSCSParameter::Key)k;
 -(void) setDefaultLabelForAllParameterKeys;
 
+-(VSCSParameter::ValueRange) getRangeForParameterKey:(VSCSParameter::Key)k;
 -(void) setRange:(VSCSParameter::ValueRange)valueRange forParameterKey:(VSCSParameter::Key)k;
 -(void) setDefaultRangeForParameterKey:(VSCSParameter::Key)k;
 -(void) setDefaultLabelForAllParameterKeys;
-
--(NSString*) getLabelForParameterKey:(VSCSParameter::Key)k;
--(VSCSParameter::ValueRange) getRangeForParameterKey:(VSCSParameter::Key)k;
 
 /*
  *	Which parameters is the view meant to control, at what index

@@ -24,6 +24,8 @@
 class VSCSoundSaw : public VSCSoundGenerator {
 	
 public:
+	
+	virtual VSCSFloat tick(void);
     
     stk::BlitSaw& getStkBlitSaw(void);
 	
@@ -34,7 +36,7 @@ private:
 };
 
 inline VSCSFloat VSCSoundSaw::tick(void) {
-	return blitSaw.tick(_computationFrames);
+	return blitSaw.tick();
 }
 
 #endif

@@ -11,11 +11,11 @@
 
 @implementation VSCSingleParameterSliderControlView
 
-@synthesize labelTextField = _labelTextField;
-@synthesize minTextField = _minTextField;
-@synthesize maxTextField = _maxTextField;
-@synthesize numericTextField = _numericTextField;
-@synthesize controlSlider = _controlSlider;
+@synthesize labelTextField;
+@synthesize minTextField;
+@synthesize maxTextField;
+@synthesize numericTextField;
+@synthesize controlSlider;
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -30,29 +30,29 @@
 }
 
 -(void) updateInterface {
-	[self.controlSlider setDoubleValue:doubleValue];
-	[self.controlSlider setMinValue:valueRange.first];
-	[self.controlSlider setMaxValue:valueRange.second];
-	[self.minTextField setStringValue:[NSString stringWithFormat:@"%f.2", valRange.first]];
-	[self.maxTextField setStringValue:[NSString stringWithFormat:@"%f.2", valRange.second]];
+	[self.controlSlider setDoubleValue:self.doubleValue];
+	[self.controlSlider setMinValue:self.valueRange.first];
+	[self.controlSlider setMaxValue:self.valueRange.second];
+	[self.minTextField setStringValue:[NSString stringWithFormat:@"%f.2", self.valueRange.first]];
+	[self.maxTextField setStringValue:[NSString stringWithFormat:@"%f.2", self.valueRange.second]];
 	[self.labelTextField setStringValue:label];
 }
 
 -(IBAction) controlSliderChanged:(id)sender {
 	NSSlider* slider = (NSSlider*)sender;
-	doubleValue = [slider doubleValue];
+	self.doubleValue = [slider doubleValue];
 	[listener object:self changedParameterWithKey:self.key to:doubleValue];
 }
 
 -(void) setDoubleValue:(double)val {
-	doubleValue = val;
+	self.doubleValue = val;
 	[self.controlSlider setDoubleValue:val];
 }
 
 -(void) setValueRange:(VSCSParameter::ValueRange)valRange {
-	valueRange = valRange;
-	[self.controlSlider setMinValue:valRange.first];
-	[self.controlSlider setMaxValue:valRange.second];
+	self.valueRange = valRange;
+	[self.controlSlider setMinValue:self.valueRange.first];
+	[self.controlSlider setMaxValue:self.valueRange.second];
 	[self.minTextField setStringValue:[NSString stringWithFormat:@"%f.2", valRange.first]];
 	[self.maxTextField setStringValue:[NSString stringWithFormat:@"%f.2", valRange.second]];
 }

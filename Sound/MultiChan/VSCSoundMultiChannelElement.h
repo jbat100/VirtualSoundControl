@@ -43,7 +43,7 @@ public:
 		SetupStereo,
 		SetupSurround_5_1,
 		SetupSurround_7_1
-	}
+	};
     
     VSCSoundMultiChannelElement();
 	
