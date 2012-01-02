@@ -8,14 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class VSCSoundSourceGeneratorDebugView;
 
 @interface VSCSynthStationWindowController : NSWindowController {
-	
-	NSButton* testButton;
+    
+    NSButton* testButton;
+    NSView* mainParentView;
+    VSCSoundSourceGeneratorDebugView *generatorDebugView;
 
 }
 
 @property (nonatomic, retain) IBOutlet NSButton* testButton;
+@property (nonatomic, retain) IBOutlet NSView* mainParentView;
+@property (nonatomic, retain) VSCSoundSourceGeneratorDebugView *generatorDebugView;
 
 -(IBAction) testButtonClicked:(id)sender;
 

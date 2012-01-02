@@ -19,9 +19,10 @@ VSCSoundSine::VSCSoundSine() {
 }
 
 VSCSParameter::KeyList VSCSoundSine::getInterfaceKeyList(void) {
-	VSCSParameter::KeyList keyList = VSCSoundGenerator::getInterfaceKeyList();
+	VSCSParameter::KeyList keyList; // = VSCSoundGenerator::getInterfaceKeyList();
 	keyList.push_back((VSCSParameter::Key){VSCSParameter::DomainSourceSine, VSCSParameter::CodeLogFrequency, 0});
 	keyList.push_back((VSCSParameter::Key){VSCSParameter::DomainSourceSine, VSCSParameter::CodeRadPhase, 0});
+    std::cout << "\nCreated list with " << keyList.size( ) << " elements" << std::endl; 
 	return keyList;
 }
 

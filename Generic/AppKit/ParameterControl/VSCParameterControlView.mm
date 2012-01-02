@@ -119,6 +119,16 @@
 
 #pragma mark - Const References For Outer Operations
 
+-(BOOL) controlsParameterWithKey:(VSCSParameter::Key)key {
+    
+    if (std::find(keyList.begin(), keyList.end(), key) != keyList.end()) {
+        return YES;
+    }
+    
+    return NO;
+    
+}
+
 -(const VSCSParameter::KeyList&) keyList {
 	return keyList;
 }

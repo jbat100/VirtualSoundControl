@@ -15,6 +15,7 @@
 		1021C257149392AB00027954 /* VSCSingleParameterSliderControlView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1021C256149392AB00027954 /* VSCSingleParameterSliderControlView.mm */; };
 		1021C25B1493950900027954 /* VSCSingleParameterSliderControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1021C25A1493950900027954 /* VSCSingleParameterSliderControlView.xib */; };
 		1021CC00148428ED00EBDD5D /* VSCSoundInterfaceFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1021CBFF148428ED00EBDD5D /* VSCSoundInterfaceFactory.mm */; };
+		1025442014AB2BFC003DFFE4 /* libstk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1025441F14AB2BFC003DFFE4 /* libstk.a */; };
 		10328C771465481C0048559B /* Voicer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10328C761465481C0048559B /* Voicer.cpp */; };
 		103AD3C91481110400CF4072 /* libboost_thread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 103AD3C81481110400CF4072 /* libboost_thread.a */; };
 		1049A6741474575400A7E608 /* VSCSoundParameterized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1049A6721474575400A7E608 /* VSCSoundParameterized.cpp */; };
@@ -50,7 +51,6 @@
 		1067DB2514548C2600F0670E /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1067DB2214548C2600F0670E /* libboost_system.a */; };
 		1067DB2614548C2600F0670E /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1067DB2314548C2600F0670E /* libboost_filesystem.a */; };
 		1067DB2714548C2600F0670E /* libboost_serialization.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1067DB2414548C2600F0670E /* libboost_serialization.a */; };
-		1067DB2914548C3C00F0670E /* libstk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1067DB2814548C3C00F0670E /* libstk.a */; };
 		108642421473359E0017E1CC /* VSCSoundParameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1086423E1473359E0017E1CC /* VSCSoundParameters.cpp */; };
 		108642431473359E0017E1CC /* VSCSoundProperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108642401473359E0017E1CC /* VSCSoundProperties.cpp */; };
 		10864246147336280017E1CC /* VSCSoundMultiChannelElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10864244147336280017E1CC /* VSCSoundMultiChannelElement.cpp */; };
@@ -60,7 +60,7 @@
 		109E60DD1469965A00879689 /* VSCSoundSourceGeneratorDebugView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109E60DB1469965A00879689 /* VSCSoundSourceGeneratorDebugView.xib */; };
 		109E60E61469967A00879689 /* VSCSynthInstrumentDebugWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109E60E41469967A00879689 /* VSCSynthInstrumentDebugWindowController.mm */; };
 		109E60E71469967A00879689 /* VSCSynthInstrumentDebugWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109E60E51469967A00879689 /* VSCSynthInstrumentDebugWindowController.xib */; };
-		109E60EB1469969C00879689 /* VSCSynthStationWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 109E60E91469969C00879689 /* VSCSynthStationWindowController.m */; };
+		109E60EB1469969C00879689 /* VSCSynthStationWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109E60E91469969C00879689 /* VSCSynthStationWindowController.mm */; };
 		109E60EC1469969C00879689 /* VSCSynthStationWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109E60EA1469969C00879689 /* VSCSynthStationWindowController.xib */; };
 		10A0CD29146172E700070291 /* VSCSoundGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A0CD28146172E600070291 /* VSCSoundGenerator.cpp */; };
 		10A0CD2F14619D6800070291 /* Stk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A0CD2E14619D6800070291 /* Stk.cpp */; };
@@ -104,6 +104,7 @@
 		1021C25A1493950900027954 /* VSCSingleParameterSliderControlView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = VSCSingleParameterSliderControlView.xib; path = ParameterControl/VSCSingleParameterSliderControlView.xib; sourceTree = "<group>"; };
 		1021CBFE148428ED00EBDD5D /* VSCSoundInterfaceFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSoundInterfaceFactory.h; path = ../Sound/AppKit/VSCSoundInterfaceFactory.h; sourceTree = SOURCE_ROOT; };
 		1021CBFF148428ED00EBDD5D /* VSCSoundInterfaceFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCSoundInterfaceFactory.mm; path = ../Sound/AppKit/VSCSoundInterfaceFactory.mm; sourceTree = SOURCE_ROOT; };
+		1025441F14AB2BFC003DFFE4 /* libstk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libstk.a; sourceTree = STK_LIB; };
 		10328C75146548050048559B /* Voicer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voicer.h; sourceTree = STK_INCLUDE; };
 		10328C761465481C0048559B /* Voicer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Voicer.cpp; sourceTree = STK_SOURCE; };
 		103AD3C81481110400CF4072 /* libboost_thread.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_thread.a; sourceTree = BOOST_LIB; };
@@ -175,7 +176,6 @@
 		1067DB2214548C2600F0670E /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_system.a; sourceTree = BOOST_LIB; };
 		1067DB2314548C2600F0670E /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_filesystem.a; sourceTree = BOOST_LIB; };
 		1067DB2414548C2600F0670E /* libboost_serialization.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_serialization.a; sourceTree = BOOST_LIB; };
-		1067DB2814548C3C00F0670E /* libstk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libstk.a; sourceTree = STK_LIB; };
 		107DA831144A487200D5ACA9 /* FileLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileLoop.h; sourceTree = STK_INCLUDE; };
 		107DA832144A487200D5ACA9 /* FileWvIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileWvIn.h; sourceTree = STK_INCLUDE; };
 		107DA833144A488900D5ACA9 /* FileLoop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileLoop.cpp; sourceTree = STK_SOURCE; };
@@ -226,7 +226,7 @@
 		109E60E41469967A00879689 /* VSCSynthInstrumentDebugWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCSynthInstrumentDebugWindowController.mm; path = ../../Sound/AppKit/VSCSynthInstrumentDebugWindowController.mm; sourceTree = "<group>"; };
 		109E60E51469967A00879689 /* VSCSynthInstrumentDebugWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCSynthInstrumentDebugWindowController.xib; path = ../../Sound/AppKit/VSCSynthInstrumentDebugWindowController.xib; sourceTree = "<group>"; };
 		109E60E81469969C00879689 /* VSCSynthStationWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSynthStationWindowController.h; path = ../../Sound/AppKit/VSCSynthStationWindowController.h; sourceTree = "<group>"; };
-		109E60E91469969C00879689 /* VSCSynthStationWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSCSynthStationWindowController.m; path = ../../Sound/AppKit/VSCSynthStationWindowController.m; sourceTree = "<group>"; };
+		109E60E91469969C00879689 /* VSCSynthStationWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCSynthStationWindowController.mm; path = ../../Sound/AppKit/VSCSynthStationWindowController.mm; sourceTree = "<group>"; };
 		109E60EA1469969C00879689 /* VSCSynthStationWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCSynthStationWindowController.xib; path = ../../Sound/AppKit/VSCSynthStationWindowController.xib; sourceTree = "<group>"; };
 		10A0CD28146172E600070291 /* VSCSoundGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCSoundGenerator.cpp; sourceTree = "<group>"; };
 		10A0CD2A1461730600070291 /* VSCSoundGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCSoundGenerator.h; sourceTree = "<group>"; };
@@ -272,11 +272,11 @@
 				1067DB2514548C2600F0670E /* libboost_system.a in Frameworks */,
 				1067DB2614548C2600F0670E /* libboost_filesystem.a in Frameworks */,
 				1067DB2714548C2600F0670E /* libboost_serialization.a in Frameworks */,
-				1067DB2914548C3C00F0670E /* libstk.a in Frameworks */,
+				103AD3C91481110400CF4072 /* libboost_thread.a in Frameworks */,
 				10117EC41456195600240467 /* AppKit.framework in Frameworks */,
 				10118007145619DF00240467 /* AppKit.framework in Frameworks */,
 				10118008145619DF00240467 /* Foundation.framework in Frameworks */,
-				103AD3C91481110400CF4072 /* libboost_thread.a in Frameworks */,
+				1025442014AB2BFC003DFFE4 /* libstk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,11 +414,11 @@
 			children = (
 				10118005145619DF00240467 /* AppKit.framework */,
 				10118006145619DF00240467 /* Foundation.framework */,
-				1067DB2814548C3C00F0670E /* libstk.a */,
 				103AD3C81481110400CF4072 /* libboost_thread.a */,
 				1067DB2214548C2600F0670E /* libboost_system.a */,
 				1067DB2314548C2600F0670E /* libboost_filesystem.a */,
 				1067DB2414548C2600F0670E /* libboost_serialization.a */,
+				1025441F14AB2BFC003DFFE4 /* libstk.a */,
 				1061AAE21430A3B600C29FBB /* SenTestingKit.framework */,
 				1061AAC31430A3B500C29FBB /* Other Frameworks */,
 				10F32D141450C0990051DDAC /* Accelerate.framework */,
@@ -693,7 +693,7 @@
 			isa = PBXGroup;
 			children = (
 				109E60E81469969C00879689 /* VSCSynthStationWindowController.h */,
-				109E60E91469969C00879689 /* VSCSynthStationWindowController.m */,
+				109E60E91469969C00879689 /* VSCSynthStationWindowController.mm */,
 				109E60EA1469969C00879689 /* VSCSynthStationWindowController.xib */,
 			);
 			name = "Synth Station Window Controller";
@@ -866,7 +866,7 @@
 				109E60D81469964400879689 /* VSCSoundElementView.mm in Sources */,
 				109E60DC1469965A00879689 /* VSCSoundSourceGeneratorDebugView.mm in Sources */,
 				109E60E61469967A00879689 /* VSCSynthInstrumentDebugWindowController.mm in Sources */,
-				109E60EB1469969C00879689 /* VSCSynthStationWindowController.m in Sources */,
+				109E60EB1469969C00879689 /* VSCSynthStationWindowController.mm in Sources */,
 				106120A9146B39C20051A965 /* VSCSoundApple.mm in Sources */,
 				10A282BF1470710900C70799 /* CGColor+VSCAdditions.mm in Sources */,
 				10A282C01470710900C70799 /* NS+VSCGeomOperations.mm in Sources */,
@@ -974,7 +974,10 @@
 					"$(STK_INCLUDE)",
 					"$(BOOST_INCLUDE)",
 				);
-				LIBRARY_SEARCH_PATHS = "$(BOOST_LIB)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(BOOST_LIB)",
+					"$(STK_LIB)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -995,6 +998,10 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(BOOST_LIB)",
+					"$(STK_LIB)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
@@ -1012,7 +1019,7 @@
 				INFOPLIST_FILE = "SynthStation/SynthStation-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../Libraries/STK/bin\"",
+					"\"$(SRCROOT)/../../../Libraries/stk-4.4.3\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -1031,7 +1038,7 @@
 				INFOPLIST_FILE = "SynthStation/SynthStation-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../Libraries/STK/bin\"",
+					"\"$(SRCROOT)/../../../Libraries/stk-4.4.3\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

@@ -37,7 +37,7 @@
  */
 
 -(void) customInit {
-	[super customInit];
+	
 }
 
 /*
@@ -63,6 +63,7 @@
 	NSAssert(soundElementView, @"soundElementView should not be nil");
 	VSCSoundElementPtr element = boost::dynamic_pointer_cast<VSCSoundElement>(generator);
 	[soundElementView setSoundElement:element];
+    [tickTableView reloadData];
 }
 
 -(VSCSoundGeneratorPtr) getSoundGenerator {
@@ -86,7 +87,7 @@
 			row:(NSInteger)rowIndex {
 	VSCSoundGeneratorPtr generator = [self getSoundGenerator];
 	if (generator) {
-		int ticks = generator->getPastSamples().size();
+		NSInteger ticks = (NSInteger)generator->getPastSamples().size();
 		return [NSNumber numberWithDouble:generator->getPastSamples()[ticks - rowIndex]];
 	}
 }

@@ -55,9 +55,10 @@
 -(void) setDefaultLabelForAllParameterKeys;
 
 /*
- *	Which parameters is the view meant to control, at what index
+ *	Which parameters is the view meant to control
  */
 -(const VSCSParameter::KeyList&) keyList;
+-(BOOL) controlsParameterWithKey:(VSCSParameter::Key)key;
 -(const VSCSParameter::KeyLabelMap&) keyLabelMap;
 -(const VSCSParameter::KeyRangeMap&) keyRangeMap;
 

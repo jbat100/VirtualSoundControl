@@ -16,6 +16,7 @@
 @property (nonatomic, retain) NSNib* singleParameterSliderControlViewNib;
 @property (nonatomic, retain) NSMutableArray* singleParameterSliderControlViews;
 
+-(void) customInit;
 -(VSCSingleParameterSliderControlView*) singleParameterSliderControlViewForKey:(VSCSParameter::Key)key;
 
 @end
@@ -23,7 +24,9 @@
 
 @implementation VSCParameterSliderControlView
 
+@synthesize singleParameterSliderControlViewNibName;
 @synthesize singleParameterSliderControlViewNib;
+@synthesize singleParameterSliderControlViews;
 @synthesize horizontalMargin;
 @synthesize verticalMargin;
 
@@ -43,6 +46,13 @@
 		[self customInit];
     }
     return self;
+}
+
+-(void) customInit {
+	self.horizontalMargin = 10.0;
+	self.verticalMargin = 10.0;
+	self.singleParameterSliderControlViews = [NSMutableArray array];
+	self.singleParameterSliderControlViewNibName = @"VSCSingleParameterSliderControlView";
 }
 
 
@@ -71,6 +81,8 @@
 	self.singleParameterSliderControlViewNib = 
 	[[NSNib alloc] initWithNibNamed:self.singleParameterSliderControlViewNibName bundle:nil];
 	[singleParameterSliderControlViewNib instantiateNibWithOwner:self topLevelObjects:&topLevelObjects];
+    
+    NSLog(@"Top level objects: %@", topLevelObjects);
 	
 	VSCSingleParameterSliderControlView* v = [topLevelObjects objectAtIndex:0];
 	
@@ -102,14 +114,7 @@
 	[[self singleParameterSliderControlViewForKey:k] setValueRange:valueRange];
 }
 
-#pragma mark Parameter Key/Index
 
--(void) customInit {
-	self.horizontalMargin = 10.0;
-	self.verticalMargin = 10.0;
-	self.singleParameterSliderControlViews = [NSMutableArray array];
-	self.singleParameterSliderControlViewNibName = @"VSCParameterSliderControlView";
-}
 
 #pragma mark Create/Destroy Matrices
 
@@ -127,7 +132,7 @@
 #pragma mark Controller Cell Callback 
 
 -(void) object:(id)sender changedParameterWithKey:(VSCSParameter::Key)key to:(double)val {
-	VSCSingleParameterSliderControlView* v = (VSCSingleParameterSliderControlView*)sender;
+	//VSCSingleParameterSliderControlView* v = (VSCSingleParameterSliderControlView*)sender;
 	[listener object:self changedParameterWithKey:key to:val];
 }
 

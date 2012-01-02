@@ -20,6 +20,7 @@ VSCSParameter::KeyList VSCSoundGenerator::getInterfaceKeyList(void) {
 	VSCSParameter::KeyList keyList = VSCSoundElement::getInterfaceKeyList();
 	VSCSParameter::Key k = {VSCSParameter::DomainGain, VSCSParameter::CodeDBGain, 0};
 	keyList.push_back(k);
+    return keyList;
 }
 
 void VSCSoundGenerator::setIsOn(bool o) {

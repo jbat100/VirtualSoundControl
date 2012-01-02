@@ -7,11 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "VSCSynthSourceGroup.h"
 
 @interface VSCSoundSourceGroupDebugView : NSView {
 
-	VSCSynthSourceGroupPtr  sourceGroup;
 	
 }
 
