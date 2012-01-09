@@ -29,7 +29,11 @@
         if ([o isKindOfClass:[VSCSoundSourceGeneratorDebugView class]]) self.generatorDebugView = o;
     }
     NSAssert(generatorDebugView, @"Bad top object class");
-    generatorDebugView.bounds = mainParentView.bounds;
+    generatorDebugView.frame = mainParentView.bounds;
+    
+    NSLog(@"generatorDebugView: %@, frame: %@ bounds: %@", generatorDebugView, NSStringFromRect(generatorDebugView.frame), NSStringFromRect(generatorDebugView.bounds));
+    NSLog(@"mainParentView: %@, frame: %@ bounds: %@", mainParentView, NSStringFromRect(mainParentView.frame), NSStringFromRect(mainParentView.bounds));
+    
     [mainParentView addSubview:generatorDebugView];
 
 }

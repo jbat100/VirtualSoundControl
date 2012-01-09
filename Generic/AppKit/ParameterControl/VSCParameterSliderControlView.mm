@@ -75,30 +75,62 @@
 
 
 -(void) createInterface {
-	
+    
+    // First, clear all the old single parameter slider control view
+    NSArray* subviews = [self subviews];
+    for (NSView* subview in subviews) {
+        if ([subview isKindOfClass:[VSCSingleParameterSliderControlView class]]) {
+            [subview removeFromSuperview];
+        }
+    }
+    
 	NSArray* topLevelObjects = nil;
-	
 	self.singleParameterSliderControlViewNib = 
 	[[NSNib alloc] initWithNibNamed:self.singleParameterSliderControlViewNibName bundle:nil];
 	[singleParameterSliderControlViewNib instantiateNibWithOwner:self topLevelObjects:&topLevelObjects];
     
     NSLog(@"Top level objects: %@", topLevelObjects);
 	
-	VSCSingleParameterSliderControlView* v = [topLevelObjects objectAtIndex:0];
+	VSCSingleParameterSliderControlView* v = nil;
+    for (NSObject* o in topLevelObjects) {
+        if ([o isKindOfClass:[VSCSingleParameterSliderControlView class]]) {
+            v = (VSCSingleParameterSliderControlView*)o;
+        }
+    }
+    
+    NSAssert(v, @"Could not load interface from nib");
 	
 	NSSize s = v.frame.size;
 	NSRect f = NSMakeRect(0.0, 0.0, s.width, s.height * keyList.size());
 	self.bounds = f;
 	
+    CGFloat currentVerticalOffset = 0.0;
 	for (VSCSParameter::KeyList::iterator it = keyList.begin(); it != keyList.end(); it++) {
+        
+        NSLog(@"Making slider view for ");
+        std::cout << VSCSParameter::sharedInstance().getLabelForParameterWithKey(*it) << std::endl;
+        
+        // build single slider view from nib 
 		NSArray* topLevelObjects = nil;
 		[singleParameterSliderControlViewNib instantiateNibWithOwner:self topLevelObjects:&topLevelObjects];
-		v = [topLevelObjects objectAtIndex:0];
+        for (NSObject* o in topLevelObjects) {
+            if ([o isKindOfClass:[VSCSingleParameterSliderControlView class]]) {
+                v = (VSCSingleParameterSliderControlView*)o;
+            }
+        }
+        NSAssert(v, @"Could not load interface from nib");
+        
 		VSCSParameter::Key k = *it;
 		v.key = k;
 		VSCSParameter::ValueRange r = VSCSParameter::sharedInstance().getRangeForParameterWithKey(k);
 		v.valueRange = r;
 		v.label = [NSString stringWithStdString:VSCSParameter::sharedInstance().getLabelForParameterWithKey(k)];
+        
+        f = NSMakeRect(0.0, currentVerticalOffset, s.width, s.height);
+        currentVerticalOffset += s.height;
+        v.frame = f;
+        
+        [self addSubview:v];
 	}
     
 	[self setNeedsDisplay:YES];
@@ -114,9 +146,6 @@
 	[[self singleParameterSliderControlViewForKey:k] setValueRange:valueRange];
 }
 
-
-
-#pragma mark Create/Destroy Matrices
 
 -(VSCSingleParameterSliderControlView*) singleParameterSliderControlViewForKey:(VSCSParameter::Key)key {
 	assert(find(keyList.begin(), keyList.end(), key) != keyList.end());

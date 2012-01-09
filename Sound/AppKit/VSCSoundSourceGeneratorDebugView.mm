@@ -90,6 +90,7 @@
 		NSInteger ticks = (NSInteger)generator->getPastSamples().size();
 		return [NSNumber numberWithDouble:generator->getPastSamples()[ticks - rowIndex]];
 	}
+    return @"Error";
 }
 
 -(IBAction) tickButtonClicked:(id)sender {

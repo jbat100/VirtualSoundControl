@@ -45,12 +45,12 @@
 }
 
 -(void) setDoubleValue:(double)val {
-	self.doubleValue = val;
+	doubleValue = val;
 	[self.controlSlider setDoubleValue:val];
 }
 
 -(void) setValueRange:(VSCSParameter::ValueRange)valRange {
-	self.valueRange = valRange;
+	valueRange = valRange;
 	[self.controlSlider setMinValue:self.valueRange.first];
 	[self.controlSlider setMaxValue:self.valueRange.second];
 	[self.minTextField setStringValue:[NSString stringWithFormat:@"%f.2", valRange.first]];

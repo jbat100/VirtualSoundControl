@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11C2002</string>
+		<string key="IBDocument.SystemVersion">11C74</string>
 		<string key="IBDocument.InterfaceBuilderVersion">1938</string>
 		<string key="IBDocument.AppKitVersion">1138.23</string>
 		<string key="IBDocument.HIToolboxVersion">567.00</string>
@@ -118,7 +118,7 @@
 					<object class="NSButton" id="321672937">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">295</int>
-						<string key="NSFrame">{{383, 123}, {111, 27}}</string>
+						<string key="NSFrame">{{382, 123}, {111, 27}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<bool key="NSEnabled">YES</bool>
@@ -165,10 +165,12 @@
 											<reference key="NSWindow"/>
 											<reference key="NSTableView" ref="319118105"/>
 										</object>
-										<object class="_NSCornerView" key="NSCornerView">
-											<nil key="NSNextResponder"/>
+										<object class="_NSCornerView" key="NSCornerView" id="29409669">
+											<reference key="NSNextResponder" ref="305599242"/>
 											<int key="NSvFlags">-2147483392</int>
 											<string key="NSFrame">{{224, 0}, {16, 17}}</string>
+											<reference key="NSSuperview" ref="305599242"/>
+											<reference key="NSWindow"/>
 										</object>
 										<object class="NSMutableArray" key="NSTableColumns">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -296,6 +298,7 @@
 								<reference key="NSBGColor" ref="876816276"/>
 								<int key="NScvFlags">4</int>
 							</object>
+							<reference ref="29409669"/>
 						</object>
 						<string key="NSFrame">{{17, 20}, {841, 100}}</string>
 						<reference key="NSSuperview" ref="1005"/>
@@ -306,11 +309,12 @@
 						<reference key="NSHScroller" ref="219963963"/>
 						<reference key="NSContentView" ref="172056731"/>
 						<reference key="NSHeaderClipView" ref="454829942"/>
+						<reference key="NSCornerView" ref="29409669"/>
 						<bytes key="NSScrollAmts">QSAAAEEgAABBmAAAQZgAAA</bytes>
 					</object>
 					<object class="NSTextField" id="146057341">
 						<reference key="NSNextResponder" ref="1005"/>
-						<int key="NSvFlags">266</int>
+						<int key="NSvFlags">271</int>
 						<string key="NSFrame">{{17, 369}, {844, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
@@ -422,9 +426,9 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="305599242"/>
-							<reference ref="321672937"/>
 							<reference ref="146057341"/>
 							<reference ref="141267005"/>
+							<reference ref="321672937"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>

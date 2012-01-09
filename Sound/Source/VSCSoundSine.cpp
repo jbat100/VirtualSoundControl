@@ -42,6 +42,9 @@ double VSCSoundSine::getValueForParameterWithKey(VSCSParameter::Key key) {
 		if (key.code == VSCSParameter::CodeFrequency) {
 			return this->getFrequency();
 		}
+        if (key.code == VSCSParameter::CodeLogFrequency) {
+			return VSCSound::frequencyToLogFrequency(this->getFrequency());
+		}
 		else if (key.code == VSCSParameter::CodeRadPhase) {
 			return this->getPhase();
 		}
