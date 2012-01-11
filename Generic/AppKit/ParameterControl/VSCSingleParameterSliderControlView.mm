@@ -47,14 +47,15 @@
 -(void) setDoubleValue:(double)val {
 	doubleValue = val;
 	[self.controlSlider setDoubleValue:val];
+    [numericTextField setStringValue:[NSString stringWithFormat:@"%.2f", val]];
 }
 
 -(void) setValueRange:(VSCSParameter::ValueRange)valRange {
 	valueRange = valRange;
-	[self.controlSlider setMinValue:self.valueRange.first];
-	[self.controlSlider setMaxValue:self.valueRange.second];
-	[self.minTextField setStringValue:[NSString stringWithFormat:@"%f.2", valRange.first]];
-	[self.maxTextField setStringValue:[NSString stringWithFormat:@"%f.2", valRange.second]];
+	[controlSlider setMinValue:self.valueRange.first];
+	[controlSlider setMaxValue:self.valueRange.second];
+	[minTextField setStringValue:[NSString stringWithFormat:@"%.2f", valRange.first]];
+	[maxTextField setStringValue:[NSString stringWithFormat:@"%.2f", valRange.second]];
 }
 
 -(void) setLabel:(NSString *)lab {

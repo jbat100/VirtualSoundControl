@@ -22,6 +22,8 @@
 @interface VSCSoundSourceGeneratorDebugView : NSView  {
 	
 	VSCSoundElementView* soundElementView;
+    
+    NSScrollView* soundElementScrollView;
 	
 	NSTextField* generatorTitleTextField;
 	NSTextField* tickCountTextField;
@@ -36,6 +38,8 @@
 }
 
 @property (nonatomic, retain) IBOutlet VSCSoundElementView* soundElementView;
+
+@property (nonatomic, retain) IBOutlet NSScrollView* soundElementScrollView;
 
 @property (nonatomic, retain) IBOutlet NSTextField* generatorTitleTextField;
 @property (nonatomic, retain) IBOutlet NSTextField* tickCountTextField;

@@ -17,6 +17,7 @@
 @implementation VSCSoundSourceGeneratorDebugView
 
 @synthesize soundElementView;
+@synthesize soundElementScrollView;
 @synthesize tickTableView, tickButton;
 @synthesize generatorTitleTextField, tickCountTextField;
 
@@ -63,6 +64,7 @@
 	NSAssert(soundElementView, @"soundElementView should not be nil");
 	VSCSoundElementPtr element = boost::dynamic_pointer_cast<VSCSoundElement>(generator);
 	[soundElementView setSoundElement:element];
+    [soundElementScrollView scrollPoint:NSMakePoint(0.0, 0.0)];
     [tickTableView reloadData];
 }
 

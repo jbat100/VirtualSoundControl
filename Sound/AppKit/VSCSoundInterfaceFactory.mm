@@ -43,9 +43,8 @@ static VSCSoundInterfaceFactory* defaultFactoryInstance = nil;
     return self;
 }
 
--(VSCParameterSliderControlView*) parameterSliderControlViewForParameterKeys:(VSCSParameter::KeyList)keys;
+-(VSCParameterSliderControlView*) parameterSliderControlViewForParameterKeys:(VSCSParameter::KeyList)keys withFrame:(NSRect)f
 {
-	NSRect f = NSZeroRect;
 	VSCParameterSliderControlView* controlView = [[VSCParameterSliderControlView alloc] initWithFrame:f];
 	[controlView addParameterKeys:keys];
 	[controlView createInterface];

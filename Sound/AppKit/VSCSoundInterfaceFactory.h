@@ -35,6 +35,6 @@ typedef enum _VSCSoundInterfaceFactoryOptions {
 
 +(VSCSoundInterfaceFactory*) defaultFactory;
 
--(VSCParameterSliderControlView*) parameterSliderControlViewForParameterKeys:(VSCSParameter::KeyList)keys;
+-(VSCParameterSliderControlView*) parameterSliderControlViewForParameterKeys:(VSCSParameter::KeyList)keys withFrame:(NSRect)frame;
 
 @end

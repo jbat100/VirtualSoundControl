@@ -63,13 +63,12 @@
     std::cout << std::endl;
     
 	VSCParameterSliderControlView* v = nil;
-	v = [[VSCSoundInterfaceFactory defaultFactory] parameterSliderControlViewForParameterKeys:keyList];
+    NSRect f = self.bounds;
+    f.origin = NSMakePoint(0.0, 0.0);
+	v = [[VSCSoundInterfaceFactory defaultFactory] parameterSliderControlViewForParameterKeys:keyList withFrame:f];
 	[v setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	NSRect vBounds = v.bounds;
-	NSRect selfBounds = self.bounds;
-	selfBounds.size.height = vBounds.size.height;
-	selfBounds.size.width = vBounds.size.width;
-	self.bounds = selfBounds;
+    
+    NSLog(@"Created parameter slider control view %@ (frame %@) with subviews %@", v, NSStringFromRect(v.frame), [v subviews]);
 	
 	[self addSubview:v];
 }

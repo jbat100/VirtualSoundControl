@@ -31,7 +31,7 @@ VSCSFloat VSCSoundSine::tick(void) {
 #ifdef VSCS_USE_STK
 	val = sineWave.tick();
 #endif
-#ifdef VSVS_DEBUG
+#ifdef VSCS_DEBUG
 	this->trace(val);
 #endif
 	return val;
