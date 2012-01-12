@@ -34,7 +34,7 @@ public:
 	
 	VSCSoundGenerator();
 	
-	virtual VSCSParameter::KeyList getInterfaceKeyList(void);
+	virtual VSCSParameter::KeyList getInterfaceKeyList(void) const;
 	
 	virtual VSCSFloat tick(void) = 0; 
 	
@@ -48,13 +48,13 @@ public:
 	/*
 	 *   VSCSoundMultiChannelElement methods
 	 */
-	virtual double getValueForParameterWithKey(VSCSParameter::Key k);
+	virtual double getValueForParameterWithKey(VSCSParameter::Key k) const;
 	virtual void setValueForParameterWithKey(double val, VSCSParameter::Key k);
 	
 	void setLinearGain(VSCSFloat lG);
-	VSCSFloat getLinearGain(void);
+	VSCSFloat getLinearGain(void) const;
 	void setDBGain(VSCSFloat dBG);
-	VSCSFloat getDBGain(void);
+	VSCSFloat getDBGain(void) const;
 	
 	/*
 	 *	Sound engine methods

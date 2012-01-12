@@ -104,7 +104,7 @@
 	
 	//NSSize s = self.frame.size;
 	
-    CGFloat currentVerticalOffset = 0.0;
+    CGFloat currentVerticalOffset = self.frame.size.height - v.frame.size.height - 20;// 0.0;
 	for (VSCSParameter::KeyList::iterator it = keyList.begin(); it != keyList.end(); it++) {
         
         NSLog(@"Making slider view for ");
@@ -134,7 +134,9 @@
         
         [self addSubview:v];
         
-        currentVerticalOffset += v.frame.size.height;
+        [[self singleParameterSliderControlViews] addObject:v];
+        
+        currentVerticalOffset -= v.frame.size.height;
 	}
     
     
@@ -171,5 +173,24 @@
 	[listener object:self changedParameterWithKey:key to:val];
 }
 
+
+#pragma mark Set/Get Parameters
+
+
+-(void) setDoubleValue:(double)val forParameterWithKey:(VSCSParameter::Key)key {
+    VSCSingleParameterSliderControlView* v = [self singleParameterSliderControlViewForKey:key];
+    if (!v) {
+        NSLog(@"ERRORRRR");
+    }
+    NSAssert(v, @"Expected non nil v");
+	[v setDoubleValue:val];
+}
+
+
+-(double) getDoubleValueForParameterWithKey:(VSCSParameter::Key)key {
+	VSCSingleParameterSliderControlView* v = [self singleParameterSliderControlViewForKey:key];
+    NSAssert(v, @"Expected non nil v");
+    return [v doubleValue];
+}
 
 @end

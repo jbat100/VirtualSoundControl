@@ -19,19 +19,23 @@ VSCSParameter::KeyList VSCSoundParameterized::getInterfaceKeyList(void) {
  *	so throw...
  */
 
-double VSCSoundParameterized::getValueForParameterWithKey(VSCSParameter::Key key) {
+double VSCSoundParameterized::getValueForParameterWithKey(VSCSParameter::Key key) const {
+    std::cout << "BAD PARAMETER KEY " << VSCSParameter::sharedInstance().getLabelForParameterWithKey(key) << std::endl;
     throw VSCSBadParameterException();
 }
 
 void VSCSoundParameterized::setValueForParameterWithKey(double value, VSCSParameter::Key key) {
+    std::cout << "BAD PARAMETER KEY " << VSCSParameter::sharedInstance().getLabelForParameterWithKey(key) << std::endl;
 	throw VSCSBadParameterException();
 }
 
-double VSCSoundParameterized::getValueForIndexedParameterWithKey(VSCSParameter::Key key, unsigned int ind) {
+double VSCSoundParameterized::getValueForIndexedParameterWithKey(VSCSParameter::Key key, unsigned int ind) const {
+    std::cout << "BAD PARAMETER KEY " << VSCSParameter::sharedInstance().getLabelForParameterWithKey(key) << std::endl;
 	throw VSCSBadParameterException();
 }
 
 void VSCSoundParameterized::setValueForIndexedParameterWithKey(double value, VSCSParameter::Key key, unsigned int ind) {
+    std::cout << "BAD PARAMETER KEY " << VSCSParameter::sharedInstance().getLabelForParameterWithKey(key) << std::endl;
 	throw VSCSBadParameterException();
 }
 

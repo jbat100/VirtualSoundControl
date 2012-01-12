@@ -30,12 +30,12 @@
 }
 
 -(void) updateInterface {
-	[self.controlSlider setDoubleValue:self.doubleValue];
-	[self.controlSlider setMinValue:self.valueRange.first];
-	[self.controlSlider setMaxValue:self.valueRange.second];
-	[self.minTextField setStringValue:[NSString stringWithFormat:@"%f.2", self.valueRange.first]];
-	[self.maxTextField setStringValue:[NSString stringWithFormat:@"%f.2", self.valueRange.second]];
-	[self.labelTextField setStringValue:label];
+	[controlSlider setDoubleValue:self.doubleValue];
+	[controlSlider setMinValue:self.valueRange.first];
+	[controlSlider setMaxValue:self.valueRange.second];
+	[minTextField setStringValue:[NSString stringWithFormat:@"%f.2", self.valueRange.first]];
+	[maxTextField setStringValue:[NSString stringWithFormat:@"%f.2", self.valueRange.second]];
+	[labelTextField setStringValue:label];
 }
 
 -(IBAction) controlSliderChanged:(id)sender {

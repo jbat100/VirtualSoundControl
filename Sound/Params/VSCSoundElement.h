@@ -41,19 +41,21 @@ class VSCSoundElement : public VSCSoundPropertized, public VSCSoundParameterized
 	
 public:
     
+    friend std::ostream& operator<<(std::ostream& output, const VSCSoundElement& p);
+    
     /*
      *  Constructor
      */
 	VSCSoundElement();
 							
-	virtual VSCSParameter::KeyList getInterfaceKeyList(void);
+	virtual VSCSParameter::KeyList getInterfaceKeyList(void) const;
 	
 	/*
 	 *	Generator type/identifier (for easier interface, not requiring tons of casts)
 	 */
-	virtual std::string getElementIdentifier(void); 
-	virtual std::string getElementType(void);
-	virtual std::string getValueForPropertyWithKey(VSCSProperty::Key key);
+	virtual std::string getElementIdentifier(void) const; 
+	virtual std::string getElementType(void) const;
+	virtual std::string getValueForPropertyWithKey(VSCSProperty::Key key) const;
 							
 private:
     

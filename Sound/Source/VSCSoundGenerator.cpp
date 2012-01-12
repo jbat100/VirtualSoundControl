@@ -16,7 +16,7 @@ VSCSoundGenerator::VSCSoundGenerator() {
 	_traceSampleSize = 0;
 }
 
-VSCSParameter::KeyList VSCSoundGenerator::getInterfaceKeyList(void) {
+VSCSParameter::KeyList VSCSoundGenerator::getInterfaceKeyList(void) const {
 	VSCSParameter::KeyList keyList = VSCSoundElement::getInterfaceKeyList();
 	VSCSParameter::Key k = {VSCSParameter::DomainGain, VSCSParameter::CodeDBGain, 0};
 	keyList.push_back(k);
@@ -31,14 +31,46 @@ bool VSCSoundGenerator::isOn(void) {
 	return _isOn;
 }
 
+void VSCSoundGenerator::setLinearGain(VSCSFloat lG) {
+    linearGain = lG;
+}
+
+VSCSFloat VSCSoundGenerator::getLinearGain(void) const {
+    return linearGain;
+}
+
+void VSCSoundGenerator::setDBGain(VSCSFloat dBG) {
+    linearGain = VSCSParameter::sharedInstance().dBToLinear(dBG);
+}
+
+VSCSFloat VSCSoundGenerator::getDBGain(void) const {
+    return VSCSParameter::sharedInstance().linearToDB(linearGain);
+}
+
 #pragma mark - Parameter Setter/Getter 
 
 
-VSCSFloat VSCSoundGenerator::getValueForParameterWithKey(VSCSParameter::Key k) {
+VSCSFloat VSCSoundGenerator::getValueForParameterWithKey(VSCSParameter::Key k) const {
+    if (k.domain == VSCSParameter::DomainGain) {
+        if (k.code == VSCSParameter::CodeDBGain) {
+            return this->getDBGain();
+        }
+        else if (k.code == VSCSParameter::CodeGain) {
+            return this->getLinearGain();
+        }
+    }
 	return VSCSoundElement::getValueForParameterWithKey(k);
 }
 
 void VSCSoundGenerator::setValueForParameterWithKey(double val, VSCSParameter::Key k) {
+    if (k.domain == VSCSParameter::DomainGain) {
+        if (k.code == VSCSParameter::CodeDBGain) {
+            this->setDBGain(val);
+        }
+        else if (k.code == VSCSParameter::CodeGain) {
+            this->setLinearGain(val);
+        }
+    }
 	VSCSoundElement::setValueForParameterWithKey(val, k);
 }
 

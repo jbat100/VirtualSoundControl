@@ -38,10 +38,10 @@ public:
     /*
      *  Make the setter virtual so that subclasses can 
      */
-	virtual double getValueForParameterWithKey(VSCSParameter::Key key);
+	virtual double getValueForParameterWithKey(VSCSParameter::Key key) const;
     virtual void setValueForParameterWithKey(double value, VSCSParameter::Key key);
 	
-	virtual double getValueForIndexedParameterWithKey(VSCSParameter::Key key, unsigned int ind);
+	virtual double getValueForIndexedParameterWithKey(VSCSParameter::Key key, unsigned int ind) const;
     virtual void setValueForIndexedParameterWithKey(double value, VSCSParameter::Key key, unsigned int ind);
 	
 };

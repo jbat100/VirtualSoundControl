@@ -18,8 +18,8 @@ VSCSoundSine::VSCSoundSine() {
 	this->setPhase(0.0); // no need to do that...
 }
 
-VSCSParameter::KeyList VSCSoundSine::getInterfaceKeyList(void) {
-	VSCSParameter::KeyList keyList; // = VSCSoundGenerator::getInterfaceKeyList();
+VSCSParameter::KeyList VSCSoundSine::getInterfaceKeyList(void) const {
+	VSCSParameter::KeyList keyList = VSCSoundGenerator::getInterfaceKeyList();
 	keyList.push_back((VSCSParameter::Key){VSCSParameter::DomainSourceSine, VSCSParameter::CodeLogFrequency, 0});
 	keyList.push_back((VSCSParameter::Key){VSCSParameter::DomainSourceSine, VSCSParameter::CodeRadPhase, 0});
     std::cout << "\nCreated list with " << keyList.size( ) << " elements" << std::endl; 
@@ -37,7 +37,7 @@ VSCSFloat VSCSoundSine::tick(void) {
 	return val;
 }
 
-double VSCSoundSine::getValueForParameterWithKey(VSCSParameter::Key key) {
+double VSCSoundSine::getValueForParameterWithKey(VSCSParameter::Key key) const {
 	if (key.domain == VSCSParameter::DomainSourceSine) {
 		if (key.code == VSCSParameter::CodeFrequency) {
 			return this->getFrequency();
@@ -71,7 +71,7 @@ const stk::SineWave& VSCSoundSine::getStkSineWave(void) {
     return sineWave;
 }
 
-VSCSFloat VSCSoundSine::getFrequency(void) {
+VSCSFloat VSCSoundSine::getFrequency(void) const {
 	return _frequency;
 }
 
@@ -80,7 +80,7 @@ void VSCSoundSine::setFrequency(VSCSFloat f) {
 	_frequency = f;
 }
 
-VSCSFloat VSCSoundSine::getPhase(void) {
+VSCSFloat VSCSoundSine::getPhase(void) const {
 	return _phase;
 }
 

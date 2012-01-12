@@ -33,18 +33,18 @@ public:
 	VSCSoundSine();
 	static const std::string kSynthSourceSineType;
 	
-	virtual VSCSParameter::KeyList getInterfaceKeyList(void);
+	virtual VSCSParameter::KeyList getInterfaceKeyList(void) const;
 	
-	virtual double getValueForParameterWithKey(VSCSParameter::Key key);
+	virtual double getValueForParameterWithKey(VSCSParameter::Key key) const;
 	virtual void setValueForParameterWithKey(double value, VSCSParameter::Key key);
 	
 	/*
 	 *	Setters/Getters
 	 */
-	VSCSFloat getFrequency(void);
+	VSCSFloat getFrequency(void) const;
 	void setFrequency(VSCSFloat f);
 	
-	VSCSFloat getPhase(void);
+	VSCSFloat getPhase(void) const;
 	void setPhase(VSCSFloat f);
 	void addPhase(VSCSFloat f);
     

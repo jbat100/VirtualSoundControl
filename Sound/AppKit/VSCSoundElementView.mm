@@ -41,6 +41,8 @@
  */
 
 -(void) customInit {
+    
+    self.parameterControlViews = [NSMutableArray arrayWithCapacity:3];
 	
 }
 
@@ -49,8 +51,7 @@
     /*
      *  Clear previous interface
      */
-    NSArray* subviews = [NSArray arrayWithArray:[self subviews]];
-    for (NSView* v in subviews) {
+    for (NSView* v in parameterControlViews) {
         if ([v isKindOfClass:[VSCParameterSliderControlView class]]) [v removeFromSuperview];
     }
 	VSCSParameter::KeyList keyList = soundElement->getInterfaceKeyList();
@@ -71,6 +72,10 @@
     NSLog(@"Created parameter slider control view %@ (frame %@) with subviews %@", v, NSStringFromRect(v.frame), [v subviews]);
 	
 	[self addSubview:v];
+    
+    [[self parameterControlViews] addObject:v];
+    
+    [self reloadParameterValues];
 }
 
 -(void) setSoundElement:(VSCSoundElementPtr)element {
@@ -100,7 +105,7 @@
 -(void) reloadValueForParameterWithKey:(VSCSParameter::Key)key {
     
     NSLog(@"Reloading value for for parameter with key:");
-    std::cout << VSCSParameter::sharedInstance().getLabelForParameterWithKey(key);
+    std::cout << VSCSParameter::sharedInstance().getLabelForParameterWithKey(key) << std::endl;
     double val = [self doubleValueForParameterWithKey:key];
     for (id<VSCParameterControlViewProtocol> v in self.parameterControlViews) {
         [v setDoubleValue:val forParameterWithKey:key];

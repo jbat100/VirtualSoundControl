@@ -16,7 +16,7 @@ VSCSProperty::KeySet VSCSoundPropertized::getPropertyKeys(void) {
 	return VSCSProperty::KeySet();
 }
 
-std::string VSCSoundPropertized::getValueForPropertyWithKey(VSCSProperty::Key key) {
+std::string VSCSoundPropertized::getValueForPropertyWithKey(VSCSProperty::Key key) const {
 	throw VSCSBadPropertyException();
 }
 

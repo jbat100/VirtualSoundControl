@@ -34,7 +34,7 @@ public:
 	
 	VSCSProperty::KeySet getPropertyKeys(void);
 	
-	virtual std::string getValueForPropertyWithKey(VSCSProperty::Key key);
+	virtual std::string getValueForPropertyWithKey(VSCSProperty::Key key) const;
 	virtual void setValueForPropertyWithKey(std::string, VSCSProperty::Key key);
 	
 };
