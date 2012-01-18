@@ -28,7 +28,7 @@ class VSCEnveloppeCoordinate {
 public:
 	
 	/* Constructors / Destructors */
-    VSCEnveloppeCoordinate(void);
+    VSCEnveloppeCoordinate();
 	VSCEnveloppeCoordinate(const VSCEnveloppeCoordinate& c);
 	VSCEnveloppeCoordinate(VSCSFloat value, VSCSFloat time);
 	~VSCEnveloppeCoordinate(void);

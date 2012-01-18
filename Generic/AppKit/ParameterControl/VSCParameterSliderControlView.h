@@ -36,5 +36,6 @@
 @property (nonatomic, assign) CGFloat verticalMargin;
 
 -(VSCSingleParameterSliderControlView*) singleParameterSliderControlViewForKey:(VSCSParameter::Key)key;
+-(VSCSingleParameterSliderControlView*) newSingleParameterSliderControlView;
 
 @end

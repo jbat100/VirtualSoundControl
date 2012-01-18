@@ -11,6 +11,7 @@
 #import "VSCSoundParameters.h"
 #import "VSCException.h"
 
+
 #import <boost/pointer_cast.hpp>
 
 
@@ -31,6 +32,16 @@
     return self;
 }
 
+-(id) initWithCoder:(NSCoder *)aDecoder {
+    
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self customInit];
+    }
+    return self;
+    
+}
+
 /*
 - (void)drawRect:(NSRect)dirtyRect {
     // Drawing code here.
@@ -38,6 +49,9 @@
  */
 
 -(void) customInit {
+    
+    //tickTableView.delegate = self;
+    //tickTableView.dataSource = self;
 	
 }
 
@@ -90,14 +104,26 @@
 	VSCSoundGeneratorPtr generator = [self getSoundGenerator];
 	if (generator) {
 		NSInteger ticks = (NSInteger)generator->getPastSamples().size();
-		return [NSNumber numberWithDouble:generator->getPastSamples()[ticks - rowIndex]];
+		return [NSNumber numberWithDouble:generator->getPastSamples()[ticks - rowIndex - 1]];
 	}
     return @"Error";
 }
 
 -(IBAction) tickButtonClicked:(id)sender {
+    
+    //NSLog(@"tickTableView is %@, delegate %@, datasource %@", tickTableView, tickTableView.delegate, tickTableView.dataSource);
+    
+    
 	VSCSoundGeneratorPtr generator = [self getSoundGenerator];
-	if (generator) generator->tick();
+	if (generator) {
+        generator->tick();
+        const std::deque<VSCSFloat> pastSamples = generator->getPastSamples();
+        std::cout << "Tick button clicked, " << pastSamples.size() << " past samples: ";
+        for (std::deque<VSCSFloat>::const_iterator it = pastSamples.begin(); it != pastSamples.end(); it++) {
+            std::cout << *it << " "; 
+        }
+        std::cout << std::endl;
+    }
 	[tickTableView reloadData];
 }
 

@@ -20,7 +20,7 @@ bool compareEnveloppeCoordinateTimes (VSCEnveloppeCoordinate* firstPoint, VSCEnv
 	return firstPoint->getTime() < secondPoint->getTime();
 }
 
-VSCEnveloppeCoordinate::VSCEnveloppeCoordinate(void) {
+VSCEnveloppeCoordinate::VSCEnveloppeCoordinate() {
     setTime(0.0);
     setValue(0.0);
 }

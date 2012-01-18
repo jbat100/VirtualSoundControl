@@ -19,7 +19,7 @@
  *	and getSoundGenerator
  */
 
-@interface VSCSoundSourceGeneratorDebugView : NSView  {
+@interface VSCSoundSourceGeneratorDebugView : NSView <NSTableViewDelegate, NSTableViewDataSource> {
 	
 	VSCSoundElementView* soundElementView;
     

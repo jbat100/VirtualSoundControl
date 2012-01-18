@@ -73,24 +73,13 @@
 
 #pragma mark - VSCParameterControlViewProtocol
 
-
--(void) createInterface {
+-(VSCSingleParameterSliderControlView*) newSingleParameterSliderControlView {
     
-    // First, clear all the old single parameter slider control view
-    NSArray* subviews = [self subviews];
-    for (NSView* subview in subviews) {
-        if ([subview isKindOfClass:[VSCSingleParameterSliderControlView class]]) {
-            [subview removeFromSuperview];
-        }
-    }
-    
-	NSArray* topLevelObjects = nil;
+    NSArray* topLevelObjects = nil;
 	self.singleParameterSliderControlViewNib = 
 	[[NSNib alloc] initWithNibNamed:self.singleParameterSliderControlViewNibName bundle:nil];
 	[singleParameterSliderControlViewNib instantiateNibWithOwner:self topLevelObjects:&topLevelObjects];
-    
     NSLog(@"Top level objects: %@", topLevelObjects);
-	
 	VSCSingleParameterSliderControlView* v = nil;
     for (NSObject* o in topLevelObjects) {
         if ([o isKindOfClass:[VSCSingleParameterSliderControlView class]]) {
@@ -99,6 +88,23 @@
     }
     
     NSAssert(v, @"Could not load interface from nib");
+    
+    return v;
+    
+}
+
+
+-(void) createInterface {
+    
+    // First, clear all the old single parameter slider control view
+    for (NSView* subview in [self singleParameterSliderControlViews]) {
+        if ([subview isKindOfClass:[VSCSingleParameterSliderControlView class]]) {
+            [subview removeFromSuperview];
+        }
+    }
+    [[self singleParameterSliderControlViews] removeAllObjects];
+    
+	VSCSingleParameterSliderControlView* v = [self newSingleParameterSliderControlView];
     
     NSLog(@"Loaded %@ with frame %@", v, NSStringFromRect(v.frame));
 	
@@ -110,15 +116,7 @@
         NSLog(@"Making slider view for ");
         std::cout << VSCSParameter::sharedInstance().getLabelForParameterWithKey(*it) << std::endl;
         
-        // build single slider view from nib 
-		NSArray* topLevelObjects = nil;
-		[singleParameterSliderControlViewNib instantiateNibWithOwner:self topLevelObjects:&topLevelObjects];
-        for (NSObject* o in topLevelObjects) {
-            if ([o isKindOfClass:[VSCSingleParameterSliderControlView class]]) {
-                v = (VSCSingleParameterSliderControlView*)o;
-            }
-        }
-        NSAssert(v, @"Could not load interface from nib");
+        v = [self newSingleParameterSliderControlView];
         
 		VSCSParameter::Key k = *it;
 		v.key = k;

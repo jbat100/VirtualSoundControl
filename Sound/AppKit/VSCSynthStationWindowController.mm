@@ -45,6 +45,7 @@
 -(IBAction) testButtonClicked:(id)sender {
 	NSLog(@"Test button clicked");
     VSCSoundSinePtr sinePtr = VSCSoundSinePtr(new VSCSoundSine());
+    sinePtr->tracePastSamples(10);
     [[self generatorDebugView] setSoundGenerator:sinePtr];
 }
 
