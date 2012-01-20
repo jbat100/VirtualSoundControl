@@ -57,7 +57,7 @@ VSCSFloat VSCSParameter::linearToDB(VSCSFloat linear) {
 }
 
 VSCSFloat VSCSParameter::dBToLinear(VSCSFloat dB) {
-    return 0.1*std::pow(10.0, dB);
+    return std::pow(10.0, 0.1*dB);
 }
 
 

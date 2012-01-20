@@ -70,6 +70,8 @@
 	[v setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     
     NSLog(@"Created parameter slider control view %@ (frame %@) with subviews %@", v, NSStringFromRect(v.frame), [v subviews]);
+    
+    v.listener = self;
 	
 	[self addSubview:v];
     
@@ -113,6 +115,13 @@
 	
 }
 
+#pragma mark - VSCParameterListenerProtocol
+
+-(void) object:(id)sender changedParameterWithKey:(VSCSParameter::Key)key to:(double)val {
+	if (soundElement) {
+        soundElement->setValueForParameterWithKey(val, key);
+    }
+}
 
 @end
 

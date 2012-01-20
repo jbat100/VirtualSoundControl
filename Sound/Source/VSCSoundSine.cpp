@@ -29,7 +29,7 @@ VSCSParameter::KeyList VSCSoundSine::getInterfaceKeyList(void) const {
 VSCSFloat VSCSoundSine::tick(void) {
 	VSCSFloat val;
 #ifdef VSCS_USE_STK
-	val = sineWave.tick();
+	val = sineWave.tick() * this->getLinearGain();
 #endif
 #ifdef VSCS_DEBUG
 	this->trace(val);
@@ -58,6 +58,10 @@ void VSCSoundSine::setValueForParameterWithKey(double value, VSCSParameter::Key 
 			this->setFrequency((VSCSFloat)value);
 			return;
 		}
+        if (key.code == VSCSParameter::CodeLogFrequency) {
+            this->setFrequency(VSCSound::logFrequencyToFrequency(value));
+            return;
+        }
 		if (key.code == VSCSParameter::CodeRadPhase) {
 			this->setPhase((VSCSFloat)value);
 			return;
@@ -76,6 +80,7 @@ VSCSFloat VSCSoundSine::getFrequency(void) const {
 }
 
 void VSCSoundSine::setFrequency(VSCSFloat f) {
+    std::cout << "Setting frequency to " << f << std::endl;
 	sineWave.setFrequency(f);
 	_frequency = f;
 }

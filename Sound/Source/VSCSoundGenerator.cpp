@@ -14,6 +14,7 @@ VSCSoundGenerator::VSCSoundGenerator() {
 	_group = NULL;
 	_isOn = true;
 	_traceSampleSize = 0;
+    linearGain = 1.0;
 }
 
 VSCSParameter::KeyList VSCSoundGenerator::getInterfaceKeyList(void) const {
@@ -33,6 +34,7 @@ bool VSCSoundGenerator::isOn(void) {
 
 void VSCSoundGenerator::setLinearGain(VSCSFloat lG) {
     linearGain = lG;
+    std::cout << "Setting linear gain to " << linearGain << std::endl;
 }
 
 VSCSFloat VSCSoundGenerator::getLinearGain(void) const {
@@ -41,6 +43,7 @@ VSCSFloat VSCSoundGenerator::getLinearGain(void) const {
 
 void VSCSoundGenerator::setDBGain(VSCSFloat dBG) {
     linearGain = VSCSParameter::sharedInstance().dBToLinear(dBG);
+    std::cout << "Setting linear gain to " << linearGain << std::endl;
 }
 
 VSCSFloat VSCSoundGenerator::getDBGain(void) const {
@@ -66,9 +69,11 @@ void VSCSoundGenerator::setValueForParameterWithKey(double val, VSCSParameter::K
     if (k.domain == VSCSParameter::DomainGain) {
         if (k.code == VSCSParameter::CodeDBGain) {
             this->setDBGain(val);
+            return;
         }
         else if (k.code == VSCSParameter::CodeGain) {
             this->setLinearGain(val);
+            return;
         }
     }
 	VSCSoundElement::setValueForParameterWithKey(val, k);

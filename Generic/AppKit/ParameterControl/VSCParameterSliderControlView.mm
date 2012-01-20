@@ -123,6 +123,7 @@
 		VSCSParameter::ValueRange r = VSCSParameter::sharedInstance().getRangeForParameterWithKey(k);
 		v.valueRange = r;
 		v.label = [NSString stringWithStdString:VSCSParameter::sharedInstance().getLabelForParameterWithKey(k)];
+        v.listener = self;
         
         NSRect f = NSMakeRect(0.0, currentVerticalOffset, v.frame.size.width, v.frame.size.height);
         v.frame = f;

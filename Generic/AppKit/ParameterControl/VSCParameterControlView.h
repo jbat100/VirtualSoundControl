@@ -14,7 +14,7 @@
 #import <map>
 #import <list>
 
-@interface VSCParameterControlView : NSView <VSCParameterControlViewProtocol> {
+@interface VSCParameterControlView : NSView <VSCParameterControlViewProtocol, VSCParameterListenerProtocol> {
 	VSCSParameter::KeyList keyList;
 	VSCSParameter::KeyLabelMap keyLabelMap;
 	VSCSParameter::KeyRangeMap keyRangeMap;
