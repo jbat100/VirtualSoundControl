@@ -30,8 +30,8 @@
 		10A5A59914CEF925002B24E7 /* NSApplication+VSCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A5A59214CEF925002B24E7 /* NSApplication+VSCAdditions.m */; };
 		10A5A59A14CEF925002B24E7 /* NSFileManager+VSCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A5A59414CEF925002B24E7 /* NSFileManager+VSCAdditions.m */; };
 		10A5A59B14CEF925002B24E7 /* NSString+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10A5A59614CEF925002B24E7 /* NSString+VSCAdditions.mm */; };
-		10A5A59E14CEFC8B002B24E7 /* VSCStaticEnveloppePoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A5A59D14CEFC8B002B24E7 /* VSCStaticEnveloppePoint.cpp */; };
 		10AC2B581454BC0C002DE480 /* VSCSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10AC2B561454BC0C002DE480 /* VSCSound.cpp */; };
+		10AC7CDE14D002FB00A4D877 /* VSCStaticEnveloppePoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10AC7CDD14D002FB00A4D877 /* VSCStaticEnveloppePoint.cpp */; };
 		10DE92361413EDE600CC602A /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE92351413EDE600CC602A /* libboost_filesystem.a */; };
 		10DE923E1413EEB200CC602A /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE923D1413EEB200CC602A /* libboost_system.a */; };
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
@@ -93,10 +93,10 @@
 		10A5A59514CEF925002B24E7 /* NSString+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+VSCAdditions.h"; path = "../Generic/AppKit/NSString+VSCAdditions.h"; sourceTree = "<group>"; };
 		10A5A59614CEF925002B24E7 /* NSString+VSCAdditions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSString+VSCAdditions.mm"; path = "../Generic/AppKit/NSString+VSCAdditions.mm"; sourceTree = "<group>"; };
 		10A5A59C14CEFC72002B24E7 /* VSCStaticEnveloppePoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCStaticEnveloppePoint.h; path = ../Sound/Enveloppe/VSCStaticEnveloppePoint.h; sourceTree = "<group>"; };
-		10A5A59D14CEFC8B002B24E7 /* VSCStaticEnveloppePoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCStaticEnveloppePoint.cpp; sourceTree = "<group>"; };
 		10ABFCC8142E2FFC00EB8C37 /* SineWave.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SineWave.cpp; sourceTree = STK_SOURCE; };
 		10AC2B561454BC0C002DE480 /* VSCSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCSound.cpp; path = ../Sound/VSCSound.cpp; sourceTree = SOURCE_ROOT; };
 		10AC2B571454BC0C002DE480 /* VSCSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSound.h; path = ../Sound/VSCSound.h; sourceTree = SOURCE_ROOT; };
+		10AC7CDD14D002FB00A4D877 /* VSCStaticEnveloppePoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCStaticEnveloppePoint.cpp; path = ../Sound/Enveloppe/VSCStaticEnveloppePoint.cpp; sourceTree = "<group>"; };
 		10DE92351413EDE600CC602A /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = /usr/local/lib/libboost_filesystem.a; sourceTree = "<absolute>"; };
 		10DE923D1413EEB200CC602A /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = /usr/local/lib/libboost_system.a; sourceTree = "<absolute>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -224,7 +224,7 @@
 				105C4805144B32B00015AE8F /* VSCSTKEnveloppe.cpp */,
 				105C4806144B32B00015AE8F /* VSCSTKEnveloppe.h */,
 				10A5A59C14CEFC72002B24E7 /* VSCStaticEnveloppePoint.h */,
-				10A5A59D14CEFC8B002B24E7 /* VSCStaticEnveloppePoint.cpp */,
+				10AC7CDD14D002FB00A4D877 /* VSCStaticEnveloppePoint.cpp */,
 			);
 			name = Enveloppe;
 			sourceTree = "<group>";
@@ -389,7 +389,7 @@
 				10A5A59914CEF925002B24E7 /* NSApplication+VSCAdditions.m in Sources */,
 				10A5A59A14CEF925002B24E7 /* NSFileManager+VSCAdditions.m in Sources */,
 				10A5A59B14CEF925002B24E7 /* NSString+VSCAdditions.mm in Sources */,
-				10A5A59E14CEFC8B002B24E7 /* VSCStaticEnveloppePoint.cpp in Sources */,
+				10AC7CDE14D002FB00A4D877 /* VSCStaticEnveloppePoint.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
