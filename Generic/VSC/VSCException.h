@@ -36,6 +36,17 @@ class VSCNotImplementedException : public VSCBaseException
     }
 };
 
+/*------------------------------------------------------------------------------------
+ *	Used when unexpected internal states arise
+ */
+class VSCInternalInconsistencyException : public VSCBaseException
+{
+    virtual const char* what() const throw()
+    {
+        return "Called Pure Virtual Function";
+    }
+};
+
 
 /*------------------------------------------------------------------------------------
  *	Envelope specific 
@@ -95,6 +106,7 @@ class VSCSCalledPureVirtualFunctionException : public VSCBaseException
         return "Called Pure Virtual Function";
     }
 };
+
 
 
 #endif

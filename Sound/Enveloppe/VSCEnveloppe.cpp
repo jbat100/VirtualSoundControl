@@ -51,6 +51,8 @@ VSCEnveloppe::VSCEnveloppe(void) {
 	_minimumTimeStep = 0.01;
     _curveType = CurveTypeLinear;
     _pointDisplacementConflictResolution = PointDisplacementConflictResolutionClear;
+    _allowedTimeRange = TimeRange(0.0, 10.0);
+    _allowedValueRange = ValueRange(0.0, 1.0);
 }
 
 VSCEnveloppe::~VSCEnveloppe(void) {
@@ -97,6 +99,23 @@ void VSCEnveloppe::setMinimumTimeStep(VSCSFloat minimumTimeStep) {
 
 VSCSFloat VSCEnveloppe::getMinimumTimeStep(void) const {
 	return _minimumTimeStep;
+}
+
+
+void VSCEnveloppe::setAllowedTimeRange(TimeRange range) {
+    _allowedTimeRange = range;
+}
+
+VSCEnveloppe::TimeRange VSCEnveloppe::getAllowedTimeRange(void) {
+    return _allowedTimeRange;
+}
+
+void VSCEnveloppe::setAllowedValueRange(ValueRange range) {
+    _allowedValueRange = range;
+}
+
+VSCEnveloppe::ValueRange VSCEnveloppe::getAllowedValueRange(void) {
+    return _allowedValueRange;
 }
 
 bool VSCEnveloppe::isSortedByTime(void) const {
@@ -254,28 +273,19 @@ VSCEnveloppe::ConstPointIterator VSCEnveloppe::getPointEndConstIterator(void) co
 
 VSCEnveloppePointPtr VSCEnveloppe::getPointClosestToTime(VSCSFloat time) const {
 	
-	if (_points.size() == 0) 
-		return VSCEnveloppePointPtr();
-	
-	ConstPointIterator it = _points.begin();
-	ConstPointIterator closestIt = _points.begin();
-	
-	VSCSFloat minimumTimeDifference = std::abs((*it)->getTime() - time);
-	
-	it++;
-	
-	for (; it != _points.end(); it++) {
+	VSCEnveloppePointPtr closestPointBefore = this->getFirstPointBeforeTime();
+    VSCEnveloppePointPtr closestPointAfter = this->getFirstPointAfterTime();
+    
+    if (!closestPointAfter && !closestPointBefore) return VSCEnveloppePointPtr(); // return NULL pointer
+    if (!closestPointBefore) return closestPointAfter;
+    if (!closestPointAfter) return closestPointBefore;
+    
+    VSCSFloat beforeInterval = std::abs( closestPointBefore->getTime() - time );
+    VSCSFloat afterInterval = std::abs( closestPointAfter->getTime() - time );
+    
+    if (beforeInterval > afterInterval) return closestPointAfter;
 		
-		VSCSFloat timeDifference = std::abs((*it)->getTime() - time);
-		
-		if (timeDifference < minimumTimeDifference) {
-			minimumTimeDifference = timeDifference;
-			closestIt = it;
-		}
-		
-	}
-		
-	return (*closestIt);
+	return closestPointBefore;
 	
 }
 
@@ -311,8 +321,8 @@ VSCEnveloppePointPtr VSCEnveloppe::getFirstPointBeforeTime(VSCSFloat time) const
 
 void VSCEnveloppe::getPointsInTimeRange(PointList& l, TimeRange range) const {
 	
-	for (ConstEnvPntIter it = _points.begin(); it != _points.end(); it++) {
-		if ((*it)->getTime() > range.first && (*it)->getTime() < range.second) {
+	for (ConstPointIterator it = _points.begin(); it != _points.end(); it++) {
+		if ((*it)->getTime() > range.first && (*it)->getTime() < range.first+ range.second) {
 			l.push_back(*it);
 		}
 	}
@@ -334,15 +344,22 @@ int VSCEnveloppe::numberOfPoints(void) const {
 // this method is necessary in order to validate that all displacements are possible when displacePoints is performed
 bool canDisplacePoint(VSCEnveloppePointPtr point, VSCSFloat deltaTime, VSCSFloat deltaValue) const {
     
-    if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionNone) {
-        return true;
-    }
+    /*
+     *  Check allowed time and value limits 
+     */
+    if (deltaTime > 0 && point->getTime() + deltaTime > _allowedTimeRange.first + _allowedTimeRange.second) return false;
+    if (deltaTime < 0 && point->getTime() + deltaTime < _allowedTimeRange.first) return false;
+    if (deltaValue > 0 && point->getValue() + deltaValue > _allowedValueRange.first + _allowedValueRange.second) return false;
+    if (deltaValue < 0 && point->getValue() + deltaValue > _allowedValueRange.first) return false;
     
-    else if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionClear) {
-        return true;
-    }
+    /*
+     *  Check point collision according to resolution method
+     */
+    if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionNone) return true;
+    if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionClear) return true;
+    if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionMix) return true;
     
-    else if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionBlock) {
+    if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionBlock) {
         
         throw VSCNotImplementedException();
         
@@ -358,18 +375,38 @@ bool canDisplacePoint(VSCEnveloppePointPtr point, VSCSFloat deltaTime, VSCSFloat
             nextIt++;
         }
         
-
-        
         */
     }
     
-    throw VSCSInvalidArgumentException();
+    throw VSCInternalInconsistencyException();
     
 }
 
+// this iterator must be an iterator into _points
 bool VSCEnveloppe::displacePoint(PointIterator pointIt, VSCSFloat deltaTime, VSCSFloat deltaValue) {
 	
-
+    VSCEnveloppePointPtr point = pointIt;
+    
+#ifdef VSC_DEBUG
+    PointIterator selfPointIt = std::find(_points.begin(), _points.end(), point);
+    assert(selfPointIt != _points.end);
+#endif
+    
+    if (this->canDisplacePoint(*point, deltaTime, deltaValue)) {
+        
+        if (deltaTime > 0 && _pointDisplacementConflictResolution == PointDisplacementConflictResolutionClear) {
+            this->removePointsInTimeRange(TimeRange(point->getTime(), deltaTime + _minimumTimeStep))
+        }
+        
+        if (deltaTime < 0 && _pointDisplacementConflictResolution == PointDisplacementConflictResolutionClear) {
+            this->removePointsInTimeRange(TimeRange(point->getTime() - deltaTime - _minimumTimeStep, deltaTime + _minimumTimeStep));
+        }
+        
+        
+        
+    }
+    
+    return false;
 	
 }
 
@@ -436,9 +473,7 @@ VSCSFloat VSCEnveloppe::getValueAtTime(VSCSFloat time) const {
 /* sorting */
 
 void VSCEnveloppe::sortPointsByTime(void) {
-	
-	//_points.sort(compareEnveloppePointTimes);
-	
+	_points.sort(compareEnveloppePointTimes);
 }
 
 #pragma mark - Enveloppe Extremes
@@ -496,4 +531,10 @@ std::ostream& operator<<(std::ostream& output, VSCEnveloppe& p) {
 	}
 	return output;
 }
+
+void sortEnveloppePointListByTime(VSCEnveloppe::PointList& points) {
+    points.sort(compareEnveloppePointTimes);
+}
+
+
 

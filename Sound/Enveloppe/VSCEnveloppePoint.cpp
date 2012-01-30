@@ -76,3 +76,10 @@ std::ostream& operator<<(std::ostream& output, const VSCEnveloppePoint& p) {
 	output << ")";
     return output;  
 }
+
+bool compareEnveloppePointTimes(const VSCEnveloppePoint& point1, const VSCEnveloppePoint& point2) {
+    if (point1.getTime() < point2.getTime()) {
+        return true;
+    }
+    return false;
+}

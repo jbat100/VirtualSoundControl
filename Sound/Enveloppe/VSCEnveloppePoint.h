@@ -85,4 +85,6 @@ protected:
 BOOST_CLASS_VERSION(VSCEnveloppePoint, 1)
 //BOOST_SERIALIZATION_SHARED_PTR(VSCEnveloppePoint)
 
+void compareEnveloppePointTimes(const VSCEnveloppePoint& point1, const VSCEnveloppePoint& point2);
+
 #endif

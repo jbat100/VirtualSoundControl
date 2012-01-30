@@ -48,7 +48,8 @@ public:
 	enum PointDisplacementConflictResolution {
 		PointDisplacementConflictResolutionNone = 0,
 		PointDisplacementConflictResolutionBlock,
-		PointDisplacementConflictResolutionClear
+		PointDisplacementConflictResolutionClear,
+        PointDisplacementConflictResolutionMix
 	};
 	
     typedef std::list<VSCEnveloppePointPtr>                             PointList;
@@ -56,8 +57,8 @@ public:
     typedef std::list<VSCEnveloppePointPtr>::const_iterator             ConstPointIterator;
     typedef std::list<VSCEnveloppePointPtr>::reverse_iterator           ReversePointIterator;
     typedef std::list<VSCEnveloppePointPtr>::const_reverse_iterator     ConstReversePointIterator;
-    typedef std::pair<VSCSFloat>                                        ValueRange;
-    typedef std::pair<VSCSFloat>                                        TimeRange;
+    typedef std::pair<VSCSFloat>                                        ValueRange; // value range is origin + offset
+    typedef std::pair<VSCSFloat>                                        TimeRange; // time range is origin + offset
     
 	VSCEnveloppe(void);
 	// VSCEnveloppe copy construct and file construct
@@ -74,8 +75,14 @@ public:
 	std::string getFilePath(void) const;
 	std::string getName(void) const; /* Get the last component of the file path */
 	
+    /* enveloppe limitations */
+    
 	void setMinimumTimeStep(VSCSFloat minimumTimeStep);
 	VSCSFloat getMinimumTimeStep(void) const;
+    void setAllowedTimeRange(TimeRange range);
+    TimeRange getAllowedTimeRange(void);
+    void setAllowedValueRange(ValueRange range);
+    ValueRange getAllowedValueRange(void);
 	
 	/* edit points */
 	
@@ -147,6 +154,8 @@ private:
 	 *	it's neighbourghs which are closer than this time step will be removed from the enveloppe
 	 */
     VSCSFloat _minimumTimeStep;
+    TimeRange _allowedTimeRange;
+    ValueRange _allowedValueRange;
 	
 	/*
 	 *	VSC project data directories will have an enveloppe sub-directory which will serve as bas for the 
@@ -206,6 +215,12 @@ private:
  */
 void saveVSCEnveloppeToXML(const VSCEnveloppe &s, const char * filepath);
 void loadVSCEnveloppeFromXML(VSCEnveloppe &s, const char * filepath);
+
+/*
+ *  Helpers
+ */
+
+void sortPointListByTime(VSCEnveloppe::PointList& points);
 
 #endif
 
