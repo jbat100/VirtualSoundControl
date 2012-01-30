@@ -24,6 +24,18 @@ class VSCBaseException : public std::exception
     }
 };
 
+/*------------------------------------------------------------------------------------
+ *	Implementation
+ */
+
+class VSCNotImplementedException : public VSCBaseException
+{
+    virtual const char* what() const throw()
+    {
+        return "Functionality is not implemented";
+    }
+};
+
 
 /*------------------------------------------------------------------------------------
  *	Envelope specific 

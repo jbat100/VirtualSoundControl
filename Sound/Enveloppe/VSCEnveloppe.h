@@ -11,6 +11,7 @@
 #define _VSC_ENVELOPPE_H_
 
 #include <list>
+#include <map>
 #include <string>
 
 #include <boost/shared_ptr.hpp>
@@ -44,102 +45,70 @@ public:
 		CurveTypeBezierCubic
 	};
 	
-	/*
-	 *	Scale Type
-	 */
-	enum ScaleType {
-		ScaleTypeNone = 0,
-		ScaleTypeLinear = 1,
-		ScaleTypeLinearDB
-	};
-	
-	/*
-	 *	State
-	 */
-	enum State {
-		StateNone = 0,
-		StateOff = 1,
-		StateScheduled,
-		StateStarted,
-		StateEnded
-	};
-	
 	enum PointDisplacementConflictResolution {
 		PointDisplacementConflictResolutionNone = 0,
 		PointDisplacementConflictResolutionBlock,
 		PointDisplacementConflictResolutionClear
 	};
 	
+    typedef std::list<VSCEnveloppePointPtr>                             PointList;
+    typedef std::list<VSCEnveloppePointPtr>::iterator                   PointIterator;
+    typedef std::list<VSCEnveloppePointPtr>::const_iterator             ConstPointIterator;
+    typedef std::list<VSCEnveloppePointPtr>::reverse_iterator           ReversePointIterator;
+    typedef std::list<VSCEnveloppePointPtr>::const_reverse_iterator     ConstReversePointIterator;
+    typedef std::pair<VSCSFloat>                                        ValueRange;
+    typedef std::pair<VSCSFloat>                                        TimeRange;
+    
 	VSCEnveloppe(void);
 	// VSCEnveloppe copy construct and file construct
 	~VSCEnveloppe(void);
 	
-	void setToDefault(void);
-	
-	/* FIRE !!! */
-	virtual void fire(void);
-	virtual void fireAfterInterval(VSCSFloat intervalTime);
-	virtual void setCurrentTime(VSCSFloat currentTime);
-	
 	/* getters / setters */
 	
-	void setScaleType(ScaleType scaleType);
-	ScaleType getScaleType(void) const;
 	void setCurveType(CurveType curveType);
 	CurveType getCurveType(void) const;
-	void setState(State state);
-	State getState(void) const;
 	void setPointDisplacementConflictResolution(PointDisplacementConflictResolution pointDisplacementConflictResolution);
 	PointDisplacementConflictResolution getPointDisplacementConflictResolution(void) const;
 	
-	void setRelativePath(std::string relativePath);
-	std::string getRelativePath(void) const;
+	void setFilePath(std::string relativePath);
+	std::string getFilePath(void) const;
 	std::string getName(void) const; /* Get the last component of the file path */
 	
-	void setChannel(int channel);
-	int getChannel(void) const;
 	void setMinimumTimeStep(VSCSFloat minimumTimeStep);
 	VSCSFloat getMinimumTimeStep(void) const;
 	
 	/* edit points */
 	
 	void addPoint(VSCEnveloppePointPtr point);
-	void addPoints(std::list<VSCEnveloppePointPtr>& points); 
+	void addPoints(PointList& points); 
 	
 	void removePoint(VSCEnveloppePointPtr point);
-	void removePoints(std::list<VSCEnveloppePointPtr>& points); 
-	void removePointsInTimeRange(VSCSFloat lowerTime, VSCSFloat upperTime);
+	void removePoints(PointList& points); 
+	void removePointsInTimeRange(TimeRange range);
 	void removeAllPoints(void);
 	
 	/* get points iter */
 	
-	EnvPntIter getPointBeginIterator(void);
-	EnvPntIter getPointEndIterator(void);
-	ConstEnvPntIter getPointBeginConstIterator(void) const;
-	ConstEnvPntIter getPointEndConstIterator(void) const;
+	PointIterator getPointBeginIterator(void);
+	PointIterator getPointEndIterator(void);
+	ConstPointIterator getPointBeginConstIterator(void) const;
+	ConstPointIterator getPointEndConstIterator(void) const;
 	
 	/* get points */
 	
 	VSCEnveloppePointPtr getPointClosestToTime(VSCSFloat time) const;
-	VSCEnveloppePointPtr getPointClosestToTime(VSCSFloat time, bool copy) const;
 	VSCEnveloppePointPtr getFirstPointAfterTime(VSCSFloat time) const;
-	VSCEnveloppePointPtr getFirstPointAfterTime(VSCSFloat time, bool copy) const;
 	VSCEnveloppePointPtr getFirstPointBeforeTime(VSCSFloat time) const;
-	VSCEnveloppePointPtr getFirstPointBeforeTime(VSCSFloat time, bool copy) const;
 	
-	void getPointsInTimeRange(std::list<VSCEnveloppePointPtr>& pts, VSCSFloat lowerTime, VSCSFloat upperTime) const;
-	void getPointsInTimeRange(std::list<VSCEnveloppePointPtr>& pts, VSCSFloat lowerTime, VSCSFloat upperTime, bool copy) const;
-	void getAllPoints(std::list<VSCEnveloppePointPtr>& pts) const;
-	void getAllPoints(std::list<VSCEnveloppePointPtr>& pts, bool copy) const;
+	void getPointsInTimeRange(PointList& pts, TimeRange range) const;
+    void getPointsInValueRange(PointList& pts, ValueRange range) const;
 	
 	int numberOfPoints(void) const;
 	
 	/* move points (disallow manggling...) */
-	bool canDisplacePointTime(ConstEnvPntIter pointIt, VSCSFloat deltaTime);
-	bool canDisplacePointValue(ConstEnvPntIter pointIt, VSCSFloat deltaValue);
-	void displacePoint(VSCEnveloppePointPtr point, VSCSFloat deltaTime, VSCSFloat deltaValue);
-	void displacePoint(ConstEnvPntIter pointIt, VSCSFloat deltaTime, VSCSFloat deltaValue);
-	void displacePoints(std::list<VSCEnveloppePointPtr>& pts, VSCSFloat deltaTime, VSCSFloat deltaValue);
+	bool displacePoint(VSCEnveloppePointPtr point, VSCSFloat deltaTime, VSCSFloat deltaValue);
+    bool displacePoint(PointIterator pointIt, VSCSFloat deltaTime, VSCSFloat deltaValue)
+	bool displacePoints(PointList& pts, VSCSFloat deltaTime, VSCSFloat deltaValue);
 	
 	/* values */
 	
@@ -153,66 +122,19 @@ public:
     VSCSFloat minValue(void) const;
     VSCSFloat maxValue(void) const;
 	
+    const PointList& getPoints(void);
+    
 private:
-	/*
-	 *	Print out and serialization (private)
-	 */
-	
-	friend std::ostream& operator<<(std::ostream& output, VSCEnveloppe& p);
-	
-	friend class boost::serialization::access;
-    template<class Archive>
-    void save(Archive & ar, const unsigned int version) const
-    {
-		using boost::serialization::make_nvp;
-        // note, version is always the latest when saving
-		ar  & make_nvp("points", _points);
-		ar  & make_nvp("scale_type", _scaleType);
-		ar  & make_nvp("curve_type", _curveType);
-		ar  & make_nvp("state", _state);
-		ar  & make_nvp("point_displacement_conflict_resolution", _pointDisplacementConflictResolution);
-		ar  & make_nvp("minimum_time_step", _minimumTimeStep);
-		ar  & make_nvp("relative_path", _relativePath);
-		ar  & make_nvp("channel", _channel);
-    }
-    template<class Archive>
-    void load(Archive & ar, const unsigned int version)
-    {
-		using boost::serialization::make_nvp;
-		ar  & make_nvp("points", _points);
-		ar  & make_nvp("scale_type", _scaleType);
-		ar  & make_nvp("curve_type", _curveType);
-		ar  & make_nvp("state", _state);
-		ar  & make_nvp("point_displacement_conflict_resolution", _pointDisplacementConflictResolution);
-		ar  & make_nvp("minimum_time_step", _minimumTimeStep);
-		ar  & make_nvp("relative_path", _relativePath);
-		ar  & make_nvp("channel", _channel);
-    }
-	
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-	
-protected:
 	
 	/*
 	 *	Contains all the enveloppe points
 	 */
-	std::list<VSCEnveloppePointPtr> _points;
-	
-	/*
-	 *	The scale type determines the scaling undergone by generated enveloppe points during firing
-	 *	(if linear then no scaling, if DB then 0.1pow(v,10))
-	 */
-	ScaleType _scaleType;
+	PointList _points;
 	
 	/*
 	 *	The interpolation type determine how values between two enveloppe points are calculated
 	 */
     CurveType _curveType;
-	
-	/*
-	 *	State (defines the fire state during audio computations)
-	 */
-    State _state;
 	
 	/*
 	 *	When points are being displaced so that they overlap neighboring points this determines
@@ -230,34 +152,60 @@ protected:
 	 *	VSC project data directories will have an enveloppe sub-directory which will serve as bas for the 
 	 *	enveloppe's relative path
 	 */
-	std::string _relativePath;
-	
-	/*
-	 *	The enveloppe has an associated int channel which can be used to define where update signals are sent 
-	 *	when the enveloppe is fired (consider also adding observers)
-	 */
-	int _channel;
+	std::string _filePath;
 	
     
     bool isSortedByTime(void) const;
+    bool canDisplacePoint(VSCEnveloppePointPtr point, VSCSFloat deltaTime, VSCSFloat deltaValue) const;
     
     /* sorting */
 	void sortPointsByTime(void);
-	
-	/*
+    
+    /*
 	 *	Enveloppe changes calls (mostly for subclasses to update cache tables)
 	 */
+    virtual void enveloppeChangedBetweenEnveloppePoints(ConstPointIterator begin, ConstPointIterator end);
 	virtual void enveloppeChangedBetweenEnveloppePoints(VSCEnveloppePointPtr begin, VSCEnveloppePointPtr end);
 	virtual void enveloppeChangedBetweenEnveloppePointAndNext(VSCEnveloppePointPtr point);
 	virtual void enveloppeChanged(void);
+    
+    /*
+	 *	Print out and serialization (private)
+	 */
+	
+	friend std::ostream& operator<<(std::ostream& output, VSCEnveloppe& p);
+	
+	friend class boost::serialization::access;
+    template<class Archive>
+    void save(Archive & ar, const unsigned int version) const
+    {
+		using boost::serialization::make_nvp;
+        // note, version is always the latest when saving
+		ar  & make_nvp("points", _points);
+		ar  & make_nvp("curve_type", _curveType);
+		ar  & make_nvp("point_displacement_conflict_resolution", _pointDisplacementConflictResolution);
+		ar  & make_nvp("minimum_time_step", _minimumTimeStep);
+		ar  & make_nvp("channel", _channel);
+    }
+    template<class Archive>
+    void load(Archive & ar, const unsigned int version)
+    {
+		using boost::serialization::make_nvp;
+		ar  & make_nvp("points", _points);
+		ar  & make_nvp("curve_type", _curveType);
+		ar  & make_nvp("point_displacement_conflict_resolution", _pointDisplacementConflictResolution);
+		ar  & make_nvp("minimum_time_step", _minimumTimeStep);
+    }
+	
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
 		
 };
 
 /*
  *	Save/Load Enveloppes from XML
  */
-void saveVSCEnveloppeToXML(const VSCEnveloppe &s, const char * filename);
-void loadVSCEnveloppeFromXML(VSCEnveloppe &s, const char * filename);
+void saveVSCEnveloppeToXML(const VSCEnveloppe &s, const char * filepath);
+void loadVSCEnveloppeFromXML(VSCEnveloppe &s, const char * filepath);
 
 #endif
 
