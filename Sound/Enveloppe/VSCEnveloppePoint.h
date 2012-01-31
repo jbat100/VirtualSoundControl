@@ -25,11 +25,6 @@
 
 #define VSCEnveloppePointPtr    boost::shared_ptr<VSCEnveloppePoint>
 
-#define EnvPntIter				std::list<VSCEnveloppePointPtr>::iterator 
-#define RevEnvPntIter			std::list<VSCEnveloppePointPtr>::reverse_iterator 
-#define ConstEnvPntIter         std::list<VSCEnveloppePointPtr>::const_iterator 
-#define ConstRevEnvPntIter      std::list<VSCEnveloppePointPtr>::const_reverse_iterator 
-
 class VSCEnveloppePoint : public VSCEnveloppeCoordinate {
 	
 public:
@@ -48,6 +43,9 @@ public:
 	
 private:
 	
+    VSCEnveloppeCoordinatePtr _leftControlCoordinate;
+    VSCEnveloppeCoordinatePtr _rightControlCoordinate;
+    
 	/*
 	 *	Print out and serialization (private)
 	 */
@@ -73,11 +71,7 @@ private:
     }
 	
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-	
-protected:
     
-    VSCEnveloppeCoordinatePtr _leftControlCoordinate;
-    VSCEnveloppeCoordinatePtr _rightControlCoordinate;
     
 
 };
@@ -85,6 +79,6 @@ protected:
 BOOST_CLASS_VERSION(VSCEnveloppePoint, 1)
 //BOOST_SERIALIZATION_SHARED_PTR(VSCEnveloppePoint)
 
-void compareEnveloppePointTimes(const VSCEnveloppePoint& point1, const VSCEnveloppePoint& point2);
+bool compareEnveloppePointTimes(const VSCEnveloppePointPtr& point1, const VSCEnveloppePointPtr& point2);
 
 #endif

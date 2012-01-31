@@ -10,11 +10,13 @@
 #ifndef _VSC_ENVELOPPE_H_
 #define _VSC_ENVELOPPE_H_
 
+#include <set>
 #include <list>
 #include <map>
 #include <string>
 
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 #include <boost/serialization/list.hpp>
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/version.hpp>
@@ -26,8 +28,10 @@
 #include "VSCEnveloppePoint.h"
 
 #define ENVELOPPE_FILE_EXTENSION			"vscxenv"
-#define VSCEnveloppePtr						boost::shared_ptr<VSCEnveloppe>
 
+#define VSCEnveloppePtr						boost::shared_ptr<VSCEnveloppe>
+// the weak pointer is used for VSCEnveloppePoint instances to point back to their enveloppes
+#define VSCEnveloppeWeakPtr					boost::weak_ptr<VSCEnveloppe> 
 
 class VSCEnveloppe {
 	
@@ -52,13 +56,16 @@ public:
         PointDisplacementConflictResolutionMix
 	};
 	
+    // set shorthand
+    typedef std::set<VSCEnveloppePointPtr>                              PointSet;
+    // list shorthand and list iterators (as we use them all the time)
     typedef std::list<VSCEnveloppePointPtr>                             PointList;
-    typedef std::list<VSCEnveloppePointPtr>::iterator                   PointIterator;
-    typedef std::list<VSCEnveloppePointPtr>::const_iterator             ConstPointIterator;
-    typedef std::list<VSCEnveloppePointPtr>::reverse_iterator           ReversePointIterator;
-    typedef std::list<VSCEnveloppePointPtr>::const_reverse_iterator     ConstReversePointIterator;
-    typedef std::pair<VSCSFloat>                                        ValueRange; // value range is origin + offset
-    typedef std::pair<VSCSFloat>                                        TimeRange; // time range is origin + offset
+    typedef PointList::iterator                                         PointIterator;
+    typedef PointList::const_iterator                                   ConstPointIterator;
+    typedef PointList::reverse_iterator                                 ReversePointIterator;
+    typedef PointList::const_reverse_iterator                           ConstReversePointIterator;
+    typedef std::pair<VSCSFloat, VSCSFloat>                             ValueRange; // value range is origin + offset
+    typedef std::pair<VSCSFloat, VSCSFloat>                             TimeRange; // time range is origin + offset
     
 	VSCEnveloppe(void);
 	// VSCEnveloppe copy construct and file construct
@@ -114,8 +121,9 @@ public:
 	
 	/* move points (disallow manggling...) */
 	bool displacePoint(VSCEnveloppePointPtr point, VSCSFloat deltaTime, VSCSFloat deltaValue);
-    bool displacePoint(PointIterator pointIt, VSCSFloat deltaTime, VSCSFloat deltaValue)
-	bool displacePoints(PointList& pts, VSCSFloat deltaTime, VSCSFloat deltaValue);
+    bool displacePoint(PointIterator pointIt, VSCSFloat deltaTime, VSCSFloat deltaValue);
+    // display groups of points simultanuously, one block stops all displacement
+	bool displacePoints(PointList& pts, VSCSFloat deltaTime, VSCSFloat deltaValue); 
 	
 	/* values */
 	
@@ -129,7 +137,7 @@ public:
     VSCSFloat minValue(void) const;
     VSCSFloat maxValue(void) const;
 	
-    const PointList& getPoints(void);
+    const PointList& getPoints(void) const;
     
 private:
 	
@@ -194,7 +202,6 @@ private:
 		ar  & make_nvp("curve_type", _curveType);
 		ar  & make_nvp("point_displacement_conflict_resolution", _pointDisplacementConflictResolution);
 		ar  & make_nvp("minimum_time_step", _minimumTimeStep);
-		ar  & make_nvp("channel", _channel);
     }
     template<class Archive>
     void load(Archive & ar, const unsigned int version)

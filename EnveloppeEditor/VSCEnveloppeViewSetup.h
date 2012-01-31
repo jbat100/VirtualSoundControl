@@ -68,8 +68,18 @@ public:
 	void setLineWidth(float lineWidth);
 	VSCColour getLineColour(void) const;
 	void setLineColour(VSCColour colour);
+    
+    /*
+	 *	Enveloppe point calculations
+	 */
 	
-	/*
+	int pixelForTime(VSCSFloat t, int widthInPixels);
+	int pixelForValue(VSCSFloat t, int heightInPixels);
+	VSCSFloat timeForPixel(int pixel, int widthInPixels);
+	VSCSFloat valueForPixel(int pixel, int widthInPixels);
+	
+	/*-------------------------------------------------------------------
+     *  Grid stuff not implemented 
 	 *	Grid setters / getters
 	 */
 	
@@ -109,16 +119,8 @@ public:
 	int getTimeGridPointsAndPixels(std::list< std::pair<VSCSFloat,int> >& pps, int widthInPixels);
 	int getValueGridPointsAndPixels(std::list< std::pair<VSCSFloat,int> >& pps, int heightInPixels);
 	
-	/*
-	 *	Enveloppe point calculations
-	 */
 	
-	int pixelForTime(VSCSFloat t, int widthInPixels);
-	int pixelForValue(VSCSFloat t, int heightInPixels);
-	VSCSFloat timeForPixel(int pixel, int widthInPixels);
-	VSCSFloat valueForPixel(int pixel, int widthInPixels);
-	
-protected:
+private:
 	
 	/*
 	 *	View range

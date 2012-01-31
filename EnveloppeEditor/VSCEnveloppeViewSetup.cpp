@@ -24,7 +24,7 @@ void VSCEnveloppeViewSetup::setToDefault(void) {
 	
 	setMinTime(0.0);
 	setMaxTime(5.0);
-	setMinValue(-1.0);
+	setMinValue(0.0);
 	setMaxValue(1.0);
 	
 	setDisplayType(VSCEnveloppeDisplayTypeDefault);

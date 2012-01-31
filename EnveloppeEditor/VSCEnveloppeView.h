@@ -59,9 +59,11 @@ typedef enum _VSCEnveloppeViewMouseAction {
 	
     /*
      *  Keeps track of the currently selected points for group operations (move for example)
+     *  A set is more appropriate than a list as we don't care about ordering and adding
+     *  without needing to check for presence (sets cannot have duplicates) is an advantage
      */
-	std::set<VSCEnveloppePointPtr> _currentlySelectedPoints;
-	std::set<VSCEnveloppePointPtr> _pointsInCurrentSelectionRect;
+    VSCEnveloppe::PointSet _currentlySelectedPoints;
+	VSCEnveloppe::PointSet _pointsInCurrentSelectionRect;
 	
     /*
      *  Keeps track of the current mouse action
@@ -90,8 +92,9 @@ typedef enum _VSCEnveloppeViewMouseAction {
 /* 
  *  Point C++ setters / getters *
  */
--(void)getCurrentlySelectedPoints:(std::set<VSCEnveloppePointPtr>&)points;
--(void)setCurrentlySelectedPoints:(std::set<VSCEnveloppePointPtr>&)points;
+-(VSCEnveloppe::PointSet&)getCurrentlySelectedPoints; // passing back by reference is less expensive
+-(void)getCurrentlySelectedPoints:(VSCEnveloppe::PointSet&)points; // copying into new set is more expensice
+-(void)setCurrentlySelectedPoints:(VSCEnveloppe::PointSet&)points;
 
 /* 
  * View/Enveloppe space conversion and manipulation tools 
@@ -103,7 +106,7 @@ typedef enum _VSCEnveloppeViewMouseAction {
 -(NSPoint) pointForEnveloppePoint:(VSCEnveloppePointPtr)controlPoint;
 -(void) setEnveloppePoint:(VSCEnveloppePointPtr)point withPoint:(NSPoint)p;
 -(VSCEnveloppePointPtr) enveloppePointUnderPoint:(NSPoint)point;
--(void) getEnveloppePoints:(std::list<VSCEnveloppePointPtr>&)points InRect:(NSRect)rect; 
+-(void) getEnveloppePoints:(VSCEnveloppe::PointList&)points InRect:(NSRect)rect; 
 /* 
  * Automatic View Setup
  */

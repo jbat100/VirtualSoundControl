@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "VSCColour.h";
+#import "VSCColour.h"
 
 /*
  *	These functions follow the same convention as native CG functions

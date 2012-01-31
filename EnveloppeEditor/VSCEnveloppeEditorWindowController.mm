@@ -177,7 +177,7 @@
         if ([filesToOpen count] == 1) {
 			VSCEnveloppePtr newEnveloppe = VSCEnveloppePtr(new VSCEnveloppe());
 			loadVSCEnveloppeFromXML(*newEnveloppe, [[filesToOpen objectAtIndex:0] UTF8String]);
-			newEnveloppe->setRelativePath([[filesToOpen objectAtIndex:0] UTF8String]);
+			newEnveloppe->setFilePath([[filesToOpen objectAtIndex:0] UTF8String]);
 			[self setCurrentEnveloppe:newEnveloppe];
 		}
     }
@@ -190,7 +190,7 @@
 	
 	NSAssert(currentEnveloppe, @"Should't receive save as command when currentEnveloppe is nil");
 	
-	NSString* filePath = [NSString stringWithCString:(currentEnveloppe->getRelativePath()).c_str() encoding:NSUTF8StringEncoding];
+	NSString* filePath = [NSString stringWithCString:(currentEnveloppe->getFilePath()).c_str() encoding:NSUTF8StringEncoding];
 	
 	if ([filePath length] == 0) {
 		[self saveEnveloppeAs:sender];

@@ -77,8 +77,8 @@ std::ostream& operator<<(std::ostream& output, const VSCEnveloppePoint& p) {
     return output;  
 }
 
-bool compareEnveloppePointTimes(const VSCEnveloppePoint& point1, const VSCEnveloppePoint& point2) {
-    if (point1.getTime() < point2.getTime()) {
+bool compareEnveloppePointTimes(const VSCEnveloppePointPtr& point1, const VSCEnveloppePointPtr& point2) {
+    if (point1->getTime() < point2->getTime()) {
         return true;
     }
     return false;
