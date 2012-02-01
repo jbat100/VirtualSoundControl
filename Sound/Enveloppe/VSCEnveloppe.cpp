@@ -75,6 +75,15 @@ VSCEnveloppe::CurveType VSCEnveloppe::getCurveType(void) const {
 
 
 void VSCEnveloppe::setPointDisplacementConflictResolution(VSCEnveloppe::PointDisplacementConflictResolution r) {
+    
+    if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionClear ||
+        _pointDisplacementConflictResolution == PointDisplacementConflictResolutionBlock) {
+        
+        throw VSCNotImplementedException();
+        
+    }
+    
+    
 	_pointDisplacementConflictResolution = r;
 }
 
@@ -207,7 +216,7 @@ void VSCEnveloppe::addPoint(VSCEnveloppePointPtr point) {
 
 void VSCEnveloppe::removePoint(VSCEnveloppePointPtr point) {
 	assert(point);
-	//std::cout << "In removePoint: " << *(point.get()) << "\n";
+	std::cout << "In removePoint: " << *point << std::endl;
 	_points.remove(point);
     assert(isSortedByTime());
 }
@@ -227,11 +236,13 @@ void VSCEnveloppe::removePoints(PointList& pnts) {
 	for (PointIterator it = pnts.begin(); it != pnts.end(); it++) {
 		this->removePoint(*it);
 	}
-    assert(isSortedByTime());
+    this->sortPointsByTime();
+    //assert(isSortedByTime());
 }
 
 void VSCEnveloppe::removePointsInTimeRange(TimeRange range){
 	PointList l;
+    std::cout << "Removing points in time range " << range.first << " - " << range.second << std::endl;
 	this->getPointsInTimeRange(l, range);
 	this->removePoints(l);
     assert(isSortedByTime());
@@ -356,17 +367,37 @@ bool VSCEnveloppe::canDisplacePoint(VSCEnveloppePointPtr point, VSCSFloat deltaT
     /*
      *  Check allowed time and value limits 
      */
-    if (deltaTime > 0 && point->getTime() + deltaTime > _allowedTimeRange.first + _allowedTimeRange.second) return false;
-    if (deltaTime < 0 && point->getTime() + deltaTime < _allowedTimeRange.first) return false;
-    if (deltaValue > 0 && point->getValue() + deltaValue > _allowedValueRange.first + _allowedValueRange.second) return false;
-    if (deltaValue < 0 && point->getValue() + deltaValue > _allowedValueRange.first) return false;
-    
+    if (deltaTime > 0 && point->getTime() + deltaTime > _allowedTimeRange.first + _allowedTimeRange.second) {
+        std::cout << "Cannot move point " << *point << " by time " << deltaTime  << "allowed range ( ";
+        std::cout << _allowedTimeRange.first << " " << _allowedTimeRange.first + _allowedTimeRange.second << ")" << std::endl; 
+        return false;
+    }
+    if (deltaTime < 0 && point->getTime() + deltaTime < _allowedTimeRange.first)  {
+        std::cout << "Cannot move point " << *point << " by time " << deltaTime  << "allowed range ( ";
+        std::cout << _allowedTimeRange.first << " " << _allowedTimeRange.first + _allowedTimeRange.second << ")" << std::endl; 
+        return false;
+    }
+    if (deltaValue > 0 && point->getValue() + deltaValue > _allowedValueRange.first + _allowedValueRange.second) {
+        std::cout << "Cannot move point " << *point << " by value " << deltaValue  << "allowed range ( ";
+        std::cout << _allowedValueRange.first << " " << _allowedValueRange.first + _allowedValueRange.second << ")" << std::endl; 
+        return false;
+    }
+    if (deltaValue < 0 && point->getValue() + deltaValue < _allowedValueRange.first) {
+        std::cout << "Cannot move point " << *point << " by value " << deltaValue  << "allowed range ( ";
+        std::cout << _allowedValueRange.first << " " << _allowedValueRange.first + _allowedValueRange.second << ")" << std::endl;
+        return false;
+    }
     /*
      *  Check point collision according to resolution method
      */
     if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionNone) return true;
-    if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionClear) return true;
     if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionMix) return true;
+    
+    if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionClear) {
+        
+        throw VSCNotImplementedException();
+        
+    }
     
     if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionBlock) {
         
@@ -407,10 +438,10 @@ bool VSCEnveloppe::displacePoint(PointIterator pointIt, VSCSFloat deltaTime, VSC
         if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionClear) 
         {
             if (deltaTime > 0) {
-                this->removePointsInTimeRange(TimeRange(point->getTime(), deltaTime + _minimumTimeStep));
+                //this->removePointsInTimeRange(TimeRange(point->getTime(), deltaTime + _minimumTimeStep));
             }
             if (deltaTime < 0) {
-                this->removePointsInTimeRange(TimeRange(point->getTime() - deltaTime - _minimumTimeStep, deltaTime + _minimumTimeStep));
+                //this->removePointsInTimeRange(TimeRange(point->getTime() + deltaTime - _minimumTimeStep, - deltaTime + _minimumTimeStep));
             }
         }
         
@@ -419,7 +450,7 @@ bool VSCEnveloppe::displacePoint(PointIterator pointIt, VSCSFloat deltaTime, VSC
         
     }
     
-    return false;
+    return true;
 	
 }
 
@@ -451,6 +482,8 @@ bool VSCEnveloppe::displacePoints(PointList& pts, VSCSFloat deltaTime, VSCSFloat
             throw VSCInternalInconsistencyException();
         }
     }
+    
+    this->sortPointsByTime();
     
     return true;
     

@@ -119,10 +119,9 @@ public:
 	
 	int numberOfPoints(void) const;
 	
-	/* move points (disallow manggling...) */
-	bool displacePoint(VSCEnveloppePointPtr point, VSCSFloat deltaTime, VSCSFloat deltaValue);
-    bool displacePoint(PointIterator pointIt, VSCSFloat deltaTime, VSCSFloat deltaValue);
-    // display groups of points simultanuously, one block stops all displacement
+    // display groups of points simultanuously, one block stops all displacement (single point displace is private)
+    // this is because the enveloppe is checked for time order and this should be done once all the points in a group 
+    // have been moved
 	bool displacePoints(PointList& pts, VSCSFloat deltaTime, VSCSFloat deltaValue); 
 	
 	/* values */
@@ -177,6 +176,10 @@ private:
     
     /* sorting */
 	void sortPointsByTime(void);
+    
+    /* move points (disallow manggling...) */
+	bool displacePoint(VSCEnveloppePointPtr point, VSCSFloat deltaTime, VSCSFloat deltaValue);
+    bool displacePoint(PointIterator pointIt, VSCSFloat deltaTime, VSCSFloat deltaValue);
     
     /*
 	 *	Enveloppe changes calls (mostly for subclasses to update cache tables)

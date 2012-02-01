@@ -21,6 +21,7 @@
 
 @interface VSCEnveloppeView ()
 
+-(void) purgeCurrentlySelectedPoints;
 -(void) addPointsInRect:(NSRect)rect toPointSet:(std::set<VSCEnveloppePointPtr>&)pointSet;
 
 @end
@@ -165,6 +166,35 @@
 		drawRectOutline(ctx, currentSelectionRect, 1, CGColorCreateFromRGBNSColor([NSColor grayColor]));
 	}
 	
+}
+
+#pragma mark - Helper Methods
+
+-(void) purgeCurrentlySelectedPoints {
+    
+    /*
+     *  This checks that all the points in the currently selected sets are still in the enveloppe points 
+     *  (points can be removed from the enveloppe after add/displace points)
+     */
+    
+    for (VSCEnveloppe::PointSet::iterator setIt = _currentlySelectedPoints.begin(); setIt != _currentlySelectedPoints.end(); setIt++) {
+        VSCEnveloppe::ConstPointIterator beginEnvPntIt = _enveloppe->getPointBeginConstIterator();
+        VSCEnveloppe::ConstPointIterator endEnvPntIt = _enveloppe->getPointEndConstIterator();
+        VSCEnveloppe::ConstPointIterator envPntIt = std::find(beginEnvPntIt, endEnvPntIt, *setIt);
+        if (envPntIt == endEnvPntIt) {
+            _currentlySelectedPoints.erase(setIt);
+        }
+    }
+    
+    for (VSCEnveloppe::PointSet::iterator setIt = _pointsInCurrentSelectionRect.begin(); setIt != _pointsInCurrentSelectionRect.end(); setIt++) {
+        VSCEnveloppe::ConstPointIterator beginEnvPntIt = _enveloppe->getPointBeginConstIterator();
+        VSCEnveloppe::ConstPointIterator endEnvPntIt = _enveloppe->getPointEndConstIterator();
+        VSCEnveloppe::ConstPointIterator envPntIt = std::find(beginEnvPntIt, endEnvPntIt, *setIt);
+        if (envPntIt == endEnvPntIt) {
+            _pointsInCurrentSelectionRect.erase(setIt);
+        }
+    }
+    
 }
 
 #pragma mark - Auto Adjust View Setup
@@ -579,6 +609,8 @@
 	
 	currentMouseAction = VSCEnveloppeViewMouseActionNone;
 	movedSinceMouseDown = NO;
+    
+    [self purgeCurrentlySelectedPoints];
 	
 	[self setNeedsDisplay:YES];
 	
@@ -643,15 +675,24 @@
 		currentMouseAction = VSCEnveloppeViewMouseActionMove;
 		
 		VSCEnveloppe::PointSet::iterator it;
+        
+        VSCSFloat valueDelta = [self valueDeltaForPointYDelta:deltaY];
+        VSCSFloat timeDelta = [self timeDeltaForPointXDelta:deltaX];
 		
+        VSCEnveloppe::PointList moveList;
 		for (it = _currentlySelectedPoints.begin(); it != _currentlySelectedPoints.end(); it++) {
-			NSPoint p = [self pointForEnveloppePoint:(*it)];
-			p.x += deltaX;
-			p.y += deltaY;
-			[self setEnveloppePoint:(*it) withPoint:p];
+			//NSPoint p = [self pointForEnveloppePoint:(*it)];
+			//p.x += deltaX;
+			//p.y += deltaY;
+			//[self setEnveloppePoint:(*it) withPoint:p];
+            moveList.push_back(*it);
 		}
+        
+        _enveloppe->displacePoints(moveList, timeDelta, valueDelta);
 		
 	}
+    
+    [self purgeCurrentlySelectedPoints];
 	
 	[self setNeedsDisplay:YES];
 	
