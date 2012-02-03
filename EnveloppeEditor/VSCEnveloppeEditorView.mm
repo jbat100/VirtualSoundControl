@@ -8,12 +8,13 @@
 
 #import "VSCEnveloppeEditorView.h"
 
-#import "CPTGraphHostingView.h"
-
 @interface VSCEnveloppeEditorView ()
 
 @property (nonatomic, retain, readwrite) CPTGraphHostingView* graphHost;
 @property (nonatomic, retain, readwrite) CPTXYGraph* graph;
+@property (nonatomic, retain, readwrite) VSCEnveloppeView* mainEnveloppeView;
+
+-(NSRect) requiredEnveloppeViewFrame;
 
 @end
 
@@ -21,6 +22,10 @@
 @implementation VSCEnveloppeEditorView
 
 @synthesize mainEnveloppeView, graph, graphHost;
+
+// @synthesize graphParentView;
+
+@synthesize valueZoomSlider, timeZoomSlider;
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -30,21 +35,38 @@
     return self;
 }
 
+-(id) initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        // Initialization code here.
+    }
+    return self;
+}
 
+-(void) dealloc {
+    
+    [self teardownGraph];
+    
+    [super dealloc];
+    
+}
 
 -(void)setupGraph 
 {    
     
+    NSAssert(self.graphHost != nil, @"Expected graphHost");
+    
     //NSAssert(self.mainEnveloppeView, @"Expected mainEnveloppeView");
-    
     NSAssert(self.graph == nil, @"Expected nil graph");
-    NSAssert(self.graphHost == nil, @"Expected nil graphHost");
     
-	self.graph = [[[CPTXYGraph alloc] initWithFrame:CGRectZero] autorelease];
+    NSRect f = self.graphHost.frame;
+    f.origin.x = f.origin.y = 0;
+    
+	self.graph = [[[CPTXYGraph alloc] initWithFrame:f] autorelease];
 	CPTTheme *theme = [CPTTheme themeNamed:kCPTStocksTheme];
 	[graph applyTheme:theme];
     
-	graph.frame = mainEnveloppeView.bounds;
+	//graph.frame = mainEnveloppeView.bounds;
     
 	graph.paddingRight = 50.0f;
     graph.paddingLeft = 50.0f;
@@ -90,6 +112,7 @@
     dataSourceLinePlot.areaFill2 = areaGradientFill;
     dataSourceLinePlot.areaBaseValue2 = CPTDecimalFromDouble(400.0);
     
+    /*
     // OHLC plot
     CPTMutableLineStyle *whiteLineStyle = [CPTMutableLineStyle lineStyle];
     whiteLineStyle.lineColor = [CPTColor whiteColor];
@@ -106,6 +129,8 @@
     ohlcPlot.dataSource = self;
     ohlcPlot.plotStyle = CPTTradingRangePlotStyleOHLC;
     [graph addPlot:ohlcPlot];
+     */
+    
     
 	// Add plot space for horizontal bar charts
     CPTXYPlotSpace *volumePlotSpace = [[CPTXYPlotSpace alloc] init];
@@ -125,79 +150,93 @@
 	volumePlot.barWidth = CPTDecimalFromFloat(1.0f);
     volumePlot.identifier = @"Volume Plot";
     [graph addPlot:volumePlot toPlotSpace:volumePlotSpace];
-	
-    // Data puller
-    NSDate *start = [NSDate dateWithTimeIntervalSinceNow:-60.0 * 60.0 * 24.0 * 7.0 * 12.0]; // 12 weeks ago
-    NSDate *end = [NSDate date];
-    APYahooDataPuller *dp = [[APYahooDataPuller alloc] initWithTargetSymbol:@"AAPL" targetStartDate:start targetEndDate:end];
-    [self setDatapuller:dp];
-    [dp setDelegate:self];
-    [dp release];
     
-    [super viewDidLoad];
+    [graph reloadData];
+    
+    self.mainEnveloppeView = [[VSCEnveloppeView alloc] initWithFrame:[self requiredEnveloppeViewFrame]];
+    [graphHost addSubview:mainEnveloppeView];
+    [graphHost setNeedsDisplay:YES];
+    [mainEnveloppeView setNeedsDisplay:YES];
+    
+    CALayer *viewLayer = [CALayer layer];
+    
+    [viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0, 0.0, 0.0, 0.0)]; //RGB plus Alpha Channel
+    [viewLayer setDelegate:mainEnveloppeView];
+    
+    /*
+     * We don't want to call [self setWantsLayer:YES]; BEFORE setLayer as we want a layer hosting view, not a layer backed view
+     
+     APPLE DOC:
+     
+     A layer-backed view is a view that is backed by a Core Animation layer. 
+     Any drawing done by the view is cached in the backing layer. You configure a layer-backed view by invoking setWantsLayer: 
+     with a value of YES. The view class automatically creates a backing layer for you (using makeBackingLayer if overridden), and 
+     you must use the view class’s drawing mechanisms. When using layer-backed views you should never interact directly with the layer. 
+     Instead you must use the standard view programming practices.
+     
+     */
+    
+    //[self setWantsLayer:YES]; // view's backing store is using a Core Animation Layer
+    
+    
+    [mainEnveloppeView setLayer:viewLayer];
+    
+    /*
+     * We DO want to call [self setWantsLayer:YES]; AFTER setLayer
+     *
+     
+     APPLE DOC:
+     
+     A layer-hosting view is a view that contains a Core Animation layer that you intend to manipulate directly. 
+     You create a layer-hosting view by instantiating a Core Animation layer class and supplying that layer to the 
+     view’s setLayer: method. After doing so, you then invoke setWantsLayer: with a value of YES. This method order 
+     is crucial. When using a layer-hosting view you should not rely on the view for drawing, nor should you add 
+     subviews to the layer-hosting view. The root layer (the layer set using setLayer:) should be treated as the 
+     root layer of the layer tree and you should only use Core Animation drawing and animation methods. You still 
+     use the view for handling mouse and keyboard events, but any resulting drawing must be handled by Core Animation.
+     
+     */
+    
+    [mainEnveloppeView setWantsLayer:YES];
+	
+    [viewLayer setNeedsDisplay];
+    
 }
 
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-        
-    }
-    return self;
+-(void) teardownGraph {
+    
 }
 
-#pragma mark -
-#pragma mark Plot Data Source Methods
+-(void) reajustGraph {
+    
+}
+
+-(NSRect) requiredEnveloppeViewFrame {
+    return graph.plotAreaFrame.frame;
+}
+
+/*
+- (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize {
+    [super resizeSubviewsWithOldSize:oldBoundsSize];
+    self.mainEnveloppeView.frame = [self requiredEnveloppeViewFrame];
+}
+ */
+
+
+-(void) layoutEnveloppeView {
+    self.mainEnveloppeView.frame = [self requiredEnveloppeViewFrame];
+    [self.mainEnveloppeView redrawEnveloppeLayer];
+}
+ 
+
+#pragma mark - Plot Data Source Methods
 
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
-    return self.datapuller.financialData.count;;
+    return 10;
 }
 
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index {
     NSDecimalNumber *num = [NSDecimalNumber zero];
-    if ( [plot.identifier isEqual:@"Data Source Plot"] ) {
-        if (fieldEnum == CPTScatterPlotFieldX) {
-            num = (NSDecimalNumber *) [NSDecimalNumber numberWithInt:index + 1];
-        }
-        else if (fieldEnum == CPTScatterPlotFieldY) {
-            NSArray *financialData = self.datapuller.financialData;
-            
-            NSDictionary *fData = (NSDictionary *)[financialData objectAtIndex:[financialData count] - index - 1];
-            num = [fData objectForKey:@"close"];
-            NSAssert(nil != num, @"grrr");
-        }
-    }
-	else if ( [plot.identifier isEqual:@"Volume Plot"] ) {
-        if (fieldEnum == CPTBarPlotFieldBarLocation) {
-            num = (NSDecimalNumber *) [NSDecimalNumber numberWithInt:index + 1];
-        }
-        else if (fieldEnum == CPTBarPlotFieldBarTip ) {
-            NSArray *financialData = self.datapuller.financialData;
-            
-            NSDictionary *fData = (NSDictionary *)[financialData objectAtIndex:[financialData count] - index - 1];
-            num = [fData objectForKey:@"volume"];
-            NSAssert(nil != num, @"grrr");
-        }
-    }
-    else {
-        NSArray *financialData = self.datapuller.financialData;
-        NSDictionary *fData = (NSDictionary *)[financialData objectAtIndex:[financialData count] - index - 1];
-        switch ( fieldEnum ) {
-            case CPTTradingRangePlotFieldX:
-                num = (NSDecimalNumber *) [NSDecimalNumber numberWithInt:index + 1];
-                break;
-            case CPTTradingRangePlotFieldClose:
-            	num = [fData objectForKey:@"close"];
-                break;
-            case CPTTradingRangePlotFieldHigh:
-            	num = [fData objectForKey:@"high"];
-                break;            
-            case CPTTradingRangePlotFieldLow:
-            	num = [fData objectForKey:@"low"];
-                break;
-            case CPTTradingRangePlotFieldOpen:
-            	num = [fData objectForKey:@"open"];
-                break;
-        }
-    }
     return num;
 }
 
@@ -211,58 +250,6 @@
 	else {
 		return nil; // Use default label style
 	}
-}
-
--(void)dataPullerDidFinishFetch:(APYahooDataPuller *)dp;
-{
-	CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
-    CPTXYPlotSpace *volumePlotSpace = (CPTXYPlotSpace *)[self.graph plotSpaceWithIdentifier:@"Volume Plot Space"];
-	
-    NSDecimalNumber *high = [datapuller overallHigh];
-    NSDecimalNumber *low = [datapuller overallLow];
-    NSDecimalNumber *length = [high decimalNumberBySubtracting:low];
-    NSLog(@"high = %@, low = %@, length = %@", high, low, length);
-	NSDecimalNumber *pricePlotSpaceDisplacementPercent = [NSDecimalNumber decimalNumberWithMantissa:33
-																						   exponent:-2
-																						 isNegative:NO];
-	
-	NSDecimalNumber *lengthDisplacementValue = [length decimalNumberByMultiplyingBy:pricePlotSpaceDisplacementPercent];
-	NSDecimalNumber *lowDisplayLocation = [low decimalNumberBySubtracting:lengthDisplacementValue];
-	NSDecimalNumber *lengthDisplayLocation = [length decimalNumberByAdding:lengthDisplacementValue];
-	
-    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(1.0f) length:CPTDecimalFromInteger([datapuller.financialData count])];
-    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:[lowDisplayLocation decimalValue] length:[lengthDisplayLocation decimalValue]];
-    // Axes
-	CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
-	
-	NSDecimalNumber *overallVolumeHigh		= [datapuller overallVolumeHigh];
-    NSDecimalNumber *overallVolumeLow		= [datapuller overallVolumeLow];
-	NSDecimalNumber *volumeLength			= [overallVolumeHigh decimalNumberBySubtracting:overallVolumeLow];
-    
-	// make the length aka height for y 3 times more so that we get a 1/3 area covered by volume
-	NSDecimalNumber *volumePlotSpaceDisplacementPercent = [NSDecimalNumber decimalNumberWithMantissa:3
-																							exponent:0
-																						  isNegative:NO];
-	
-	NSDecimalNumber *volumeLengthDisplacementValue = [volumeLength decimalNumberByMultiplyingBy:volumePlotSpaceDisplacementPercent];
-	NSDecimalNumber *volumeLowDisplayLocation = overallVolumeLow;
-	NSDecimalNumber *volumeLengthDisplayLocation = [volumeLength decimalNumberByAdding:volumeLengthDisplacementValue];
-	
-	volumePlotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(1.0) length:CPTDecimalFromInteger([datapuller.financialData count])];
-	volumePlotSpace.yRange = [CPTPlotRange plotRangeWithLocation:[volumeLowDisplayLocation decimalValue]length:[volumeLengthDisplayLocation decimalValue]];
-    
-    axisSet.xAxis.orthogonalCoordinateDecimal = [low decimalValue];
-    
-    axisSet.yAxis.majorIntervalLength = CPTDecimalFromString(@"50.0");
-    axisSet.yAxis.minorTicksPerInterval = 4;
-    axisSet.yAxis.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1.0");
-	NSArray *exclusionRanges  = [NSArray arrayWithObjects:
-								 [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0) length:[low decimalValue]],
-								 nil];
-	
-	axisSet.yAxis.labelExclusionRanges = exclusionRanges;
-	
-    [graph reloadData];
 }
 
 

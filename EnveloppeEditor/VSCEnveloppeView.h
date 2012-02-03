@@ -40,6 +40,8 @@ typedef enum _VSCEnveloppeViewMouseAction {
 
 
 @interface VSCEnveloppeView : NSView {
+    
+    CALayer* enveloppeLayer;
 	
     /*
      *  The enveloppe that the view is representing
@@ -81,6 +83,9 @@ typedef enum _VSCEnveloppeViewMouseAction {
 	NSPoint currentSelectionOrigin;
 
 }
+
+-(void) setupEnveloppeLayer;
+-(void) redrawEnveloppeLayer;
 
 /* 
  *  Basic C++ setters / getters *

@@ -8,13 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "VSCEnveloppeEditorView.h"
 #import "VSCEnveloppeView.h"
 #import "VSCEnveloppe.h"
 
 
-@interface VSCEnveloppeEditorWindowController : NSWindowController {
+@interface VSCEnveloppeEditorWindowController : NSWindowController <NSWindowDelegate>  {
 	
-	VSCEnveloppeView* enveloppeView;
+	//VSCEnveloppeView* enveloppeView;
+    VSCEnveloppeEditorView* enveloppeEditorView;
 	
 	NSTextField* loadedTextField;
 	NSButton* testButton;
@@ -27,7 +29,9 @@
 
 }
 
-@property (nonatomic, retain) IBOutlet VSCEnveloppeView* enveloppeView;
+//@property (nonatomic, retain) IBOutlet VSCEnveloppeView* enveloppeView;
+@property (nonatomic, retain) IBOutlet VSCEnveloppeEditorView* enveloppeEditorView;
+
 @property (nonatomic, retain) IBOutlet NSTextField* loadedTextField;
 @property (nonatomic, retain) IBOutlet NSButton* testButton;
 @property (nonatomic, retain) IBOutlet NSPopUpButton* enveloppePopUpButton;

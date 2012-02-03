@@ -11,30 +11,37 @@
 #import "VSCEnveloppeView.h"
 #import "VSCEnveloppeViewSetup.h"
 #import "VSCSound.h"
-#import "CorePlot.h"
+
+#import <CorePlot/CorePlot.h>
 
 @class CPTGraphHostingView;
 @class CPTXYGraph;
 
-@interface VSCEnveloppeEditorView : NSView {
+@interface VSCEnveloppeEditorView : NSView <CPTPlotDataSource> {
 	
-    NSView* graphParentView;
+    NSSlider* valueZoomSlider;
+    NSSlider* timeZoomSlider;
     
+    //NSView* graphParentView;
 	VSCEnveloppeView* mainEnveloppeView;
     CPTGraphHostingView* graphHost;
     CPTXYGraph* graph;
 
 }
 
-@property (nonatomic, retain) IBOutlet NSView* graphParentView;
+@property (nonatomic, retain) IBOutlet NSSlider* valueZoomSlider;
+@property (nonatomic, retain) IBOutlet NSSlider* timeZoomSlider;
+//@property (nonatomic, retain) IBOutlet NSView* graphParentView;
+
+@property (nonatomic, retain, readonly) IBOutlet CPTGraphHostingView* graphHost;
 
 @property (nonatomic, retain, readonly) VSCEnveloppeView* mainEnveloppeView;
-@property (nonatomic, retain, readonly) CPTGraphHostingView* graphHost;
 @property (nonatomic, retain, readonly) CPTXYGraph* graph;
 
 -(void) setupGraph;
 -(void) teardownGraph;
 -(void) reajustGraph;
 
+-(void) layoutEnveloppeView;
 
 @end

@@ -51,7 +51,7 @@ void loadVSCEnveloppeFromXML(VSCEnveloppe &s, const char * filepath) {
 VSCEnveloppe::VSCEnveloppe(void) {
 	_minimumTimeStep = 0.01;
     _curveType = CurveTypeLinear;
-    _pointDisplacementConflictResolution = PointDisplacementConflictResolutionClear;
+    _pointDisplacementConflictResolution = PointDisplacementConflictResolutionMix;
     _allowedTimeRange = TimeRange(0.0, 10.0);
     _allowedValueRange = ValueRange(0.0, 1.0);
 }

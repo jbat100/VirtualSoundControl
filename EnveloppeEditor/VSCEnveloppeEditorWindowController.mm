@@ -34,18 +34,84 @@
 
 @implementation VSCEnveloppeEditorWindowController
 
-@synthesize enveloppeView, loadedTextField, enveloppePopUpButton, testButton, fileMenu, fileTitleMenuItem;
+//@synthesize enveloppeView, enveloppeEditorView;
+@synthesize enveloppeEditorView;
+@synthesize loadedTextField, enveloppePopUpButton, testButton, fileMenu, fileTitleMenuItem;
 
 #pragma mark - NSWindowController Window Callbacks
 
 -(void) windowDidLoad {
 	NSLog(@"%@ window did load", self);
-	[self updateEnveloppePopUpMenu];
+    
+    [self.window setDelegate:self];
+    
+    /*
+    CALayer *viewLayer = [CALayer layer];
+    [viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0, 0.5, 0.0, 0.4)]; //RGB plus Alpha Channel
+    [viewLayer setDelegate:enveloppeView];
+    */
+     
+    /*
+     * We don't want to call [self setWantsLayer:YES]; BEFORE setLayer as we want a layer hosting view, not a layer backed view
+     
+     APPLE DOC:
+     
+     A layer-backed view is a view that is backed by a Core Animation layer. 
+     Any drawing done by the view is cached in the backing layer. You configure a layer-backed view by invoking setWantsLayer: 
+     with a value of YES. The view class automatically creates a backing layer for you (using makeBackingLayer if overridden), and 
+     you must use the view class’s drawing mechanisms. When using layer-backed views you should never interact directly with the layer. 
+     Instead you must use the standard view programming practices.
+     
+     */
+    
+    //[self setWantsLayer:YES]; // view's backing store is using a Core Animation Layer
+    
+    
+    //[enveloppeView setLayer:viewLayer];
+    
+    /*
+     * We DO want to call [self setWantsLayer:YES]; AFTER setLayer
+     *
+     
+     APPLE DOC:
+     
+     A layer-hosting view is a view that contains a Core Animation layer that you intend to manipulate directly. 
+     You create a layer-hosting view by instantiating a Core Animation layer class and supplying that layer to the 
+     view’s setLayer: method. After doing so, you then invoke setWantsLayer: with a value of YES. This method order 
+     is crucial. When using a layer-hosting view you should not rely on the view for drawing, nor should you add 
+     subviews to the layer-hosting view. The root layer (the layer set using setLayer:) should be treated as the 
+     root layer of the layer tree and you should only use Core Animation drawing and animation methods. You still 
+     use the view for handling mouse and keyboard events, but any resulting drawing must be handled by Core Animation.
+     
+     */
+    
+    //[enveloppeView setWantsLayer:YES];
+    //[enveloppeView setupEnveloppeLayer];
+    //[viewLayer setNeedsDisplay];
+    
+    
+	
+    [self updateEnveloppePopUpMenu];
 	[self checkInterface];
+    
+    assert(enveloppeEditorView);
+    
+    [enveloppeEditorView setupGraph];
+    
 }
 
 -(void) windowWillLoad {
 	NSLog(@"%@ window will load", self);
+}
+
+- (void)windowDidResize:(NSNotification *)notification {
+    
+    NSLog(@"windowDidResize %@", notification);
+    
+    [self.enveloppeEditorView layoutEnveloppeView];
+    
+    //[self.enveloppeView redrawEnveloppeLayer];
+    
 }
 
 #pragma mark - C++ Setters / Getters
@@ -60,8 +126,10 @@
 		std::cout << "Current enveloppe set to " << *currentEnveloppe;
 	else 
 		std::cout << "Current enveloppe set none";
-	[enveloppeView setEnveloppe:enveloppe];
-	
+    
+	//[enveloppeView setEnveloppe:enveloppe];
+	[enveloppeEditorView.mainEnveloppeView setEnveloppe:enveloppe];
+    
 	[self checkInterface];
 }
 
@@ -84,7 +152,8 @@
 	
 	[enveloppePopUpButton selectItem:fileTitleMenuItem];
 	
-	[enveloppeView setNeedsDisplay:YES];
+	//[enveloppeView setNeedsDisplay:YES];
+    [enveloppeEditorView setNeedsDisplay:YES];
 	
 }
 
@@ -92,7 +161,11 @@
 
 -(IBAction) testButtonClicked:(id)sender {
 	NSLog(@"%@ window test button clicked", self);
+    
 	[self setCurrentEnveloppe:[[self enveloppeEditorDocument] defaultEnveloppe]];
+    
+    
+    
 }
 
 #pragma mark - Interface Update 
@@ -230,7 +303,10 @@
 	
 	/* set up new attributes */
 	//[sp setAccessoryView:newView];
-	[sp setRequiredFileType:[NSString stringWithCString:ENVELOPPE_FILE_EXTENSION encoding:NSUTF8StringEncoding]];
+	
+    //[sp setRequiredFileType:[NSString stringWithCString:ENVELOPPE_FILE_EXTENSION encoding:NSUTF8StringEncoding]];
+    
+    sp.allowedFileTypes = [NSArray arrayWithObject:[NSString stringWithCString:ENVELOPPE_FILE_EXTENSION encoding:NSUTF8StringEncoding]];
 	
 	NSString* defaultFilePath = @"";
 	
@@ -240,13 +316,16 @@
 		defaultFilePath = [[self enveloppeEditorDocument] enveloppeBaseFilePath];
 		//NSString* envPath = [dirPath stringByAppendingPathComponent:@"Enveloppe.vscxenv"];
 	}
+    
+    sp.directoryURL = [NSURL fileURLWithPath:@""];
+    sp.nameFieldStringValue = @"Enveloppe";
 	
 	/* display the NSSavePanel */
-	int runResult = [sp runModalForDirectory:defaultFilePath file:@"Enveloppe"];
+	int runResult = [sp runModal];
 	
 	/* if successful, save file under designated name */
 	if (runResult == NSOKButton) {
-		saveVSCEnveloppeToXML(*currentEnveloppe, (const char *)[[sp filename] UTF8String]);
+		saveVSCEnveloppeToXML(*currentEnveloppe, (const char *)[[[sp directoryURL] path] UTF8String]);
 	}
 	
 }

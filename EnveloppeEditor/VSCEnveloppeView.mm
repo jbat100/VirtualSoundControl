@@ -16,10 +16,14 @@
 #import "CGColor+VSCAdditions.h"
 #import "NS+VSCGeomOperations.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 #import <cmath>
 #import <assert.h>
 
 @interface VSCEnveloppeView ()
+
+@property (nonatomic, retain) CALayer* enveloppeLayer;
 
 -(void) purgeCurrentlySelectedPoints;
 -(void) addPointsInRect:(NSRect)rect toPointSet:(std::set<VSCEnveloppePointPtr>&)pointSet;
@@ -30,16 +34,52 @@
 
 @implementation VSCEnveloppeView
 
+@synthesize enveloppeLayer;
+
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
 		_enveloppe = VSCEnveloppePtr(); 
 		_enveloppeViewSetup = VSCEnveloppeViewSetupPtr(new VSCEnveloppeViewSetup());
-		[self setNeedsDisplay:YES];
     }
     return self;
 }
+
+-(void) dealloc {
+    
+    [enveloppeLayer release];
+    
+    [super dealloc];
+    
+}
+
+-(void) setupEnveloppeLayer {
+    
+    if (self.enveloppeLayer) {
+        [self.enveloppeLayer removeFromSuperlayer];
+    }
+    
+    NSRect f = self.frame;
+    f.origin.x = f.origin.y = 0.0;
+    
+    self.enveloppeLayer = [CALayer layer];
+    self.enveloppeLayer.frame = f;
+    self.enveloppeLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+    self.enveloppeLayer.delegate = self;
+    self.enveloppeLayer.needsDisplayOnBoundsChange = YES;
+    
+    NSLog(@"Adding layer %@ to view layer %@", self.enveloppeLayer, self.layer);
+    
+    [self.layer addSublayer:self.enveloppeLayer];
+    
+}
+
+-(void) redrawEnveloppeLayer {
+    [self.layer setNeedsDisplay];
+}
+
+#if 0
 
 - (void)drawRect:(NSRect)dirtyRect {
     // Drawing code here.
@@ -168,6 +208,141 @@
 	
 }
 
+#endif
+
+- (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx {
+    
+    
+	if (!_enveloppe) {
+		// draw whatever is needed to show that no enveloppe is associated with the view
+		return;
+	}
+    
+    if (layer != self.enveloppeLayer) {
+        NSLog(@"Not enveloppe layer");
+    }
+    
+    NSLog(@"Drawind Enveloppe layer!!!");
+	
+	//NSDrawLog(@"-------------- In %@ drawRect ----------------", self);
+	
+	//CGSize size = self.bounds.size;
+	
+	//NSGraphicsContext * nsGraphicsContext = [NSGraphicsContext currentContext]; 
+	//CGContextRef ctx = (CGContextRef) [nsGraphicsContext graphicsPort];
+	
+	/*
+	 *	Draw background
+	 */
+	drawRectFill(ctx, layer.bounds, CGColorCreateFromRGBNSColor([NSColor clearColor]));
+	
+	/*
+	 *	Draw enveloppe
+	 */
+	
+	
+	
+	/*
+	 *	Draw enveloppe
+	 */
+	
+	CGFloat radius = (CGFloat)(_enveloppeViewSetup->getControlPointRadius());
+	CGColorRef cgSelectedColourRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getControlPointSelectedColour());
+	CGColorRef cgUnselectedColourRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getControlPointUnselectedColour());
+	CGColorRef cgLineColorRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getLineColour());
+	
+    VSCEnveloppe::ConstPointIterator nextIt;
+	VSCEnveloppe::ConstPointIterator endIt = _enveloppe->getPointEndIterator();
+	
+	//NSDrawLog(@"Drawing enveloppe lines, frame is %@", NSStringFromRect([self frame]));
+	
+	for (VSCEnveloppe::ConstPointIterator it = _enveloppe->getPointBeginIterator(); it !=endIt; it++) {
+		
+		nextIt = it;
+		nextIt++;
+		
+		if (nextIt != endIt) {
+			
+			VSCEnveloppePointPtr currentPoint = *it;
+			VSCEnveloppePointPtr nextPoint = *nextIt;
+			
+#ifdef VSC_DEBUG_COCOA_DRAW
+			//std::cout << "Drawing path between " << *currentPoint << " and " << *nextPoint << "\n";
+#endif
+			
+			// draw line between this point and next
+			
+			NSPoint point1 = [self pointForEnveloppePoint:currentPoint];
+			NSPoint point2 = [self pointForEnveloppePoint:nextPoint];
+			
+			//NSDrawLog(@"Converted points to %@ and %@", NSStringFromPoint(point1), NSStringFromPoint(point2));
+			
+			// Background
+			CGMutablePathRef linePath = CGPathCreateMutable(); 
+			CGPathMoveToPoint(linePath, NULL, point1.x, point1.y);
+			CGPathAddLineToPoint(linePath, NULL, point2.x, point2.y); 
+			CGContextSetLineWidth(ctx, 2);
+			CGContextSetStrokeColorWithColor(ctx, cgLineColorRef);
+			CGContextAddPath(ctx, linePath);
+			CGContextStrokePath(ctx);
+			CGPathRelease(linePath);
+			
+		}
+		
+	}
+	
+	//NSDrawLog(@"Drawing enveloppe points, frame is %@", NSStringFromRect([self frame]));
+	
+	for (VSCEnveloppe::ConstPointIterator it = _enveloppe->getPointBeginIterator(); it !=endIt; it++) {
+		
+		VSCEnveloppePointPtr currentPoint = *it;
+		
+#ifdef VSC_DEBUG_COCOA_DRAW
+		//std::cout << "Drawing point for " << *currentPoint;
+#endif
+		
+		// draw control circle for point
+		
+		NSPoint p = [self pointForEnveloppePoint:currentPoint];
+		
+		//NSDrawLog(@"Converted points to %@", NSStringFromPoint(p));
+		
+		CGColorRef cgColor = NULL;
+		
+		/*
+		 *	Make a set containing the currently selected point plus the points in the current selection rect
+		 */
+		
+		BOOL isSelected = NO;
+		
+		if (_currentlySelectedPoints.find(currentPoint) != _currentlySelectedPoints.end()) 
+			isSelected = YES;
+		else if (_pointsInCurrentSelectionRect.find(currentPoint) != _pointsInCurrentSelectionRect.end())
+			isSelected = YES;
+		
+		if (isSelected) 
+			cgColor = cgSelectedColourRef;
+		else 
+			cgColor = cgUnselectedColourRef;
+		
+		CGMutablePathRef dotPath = CGPathCreateMutable(); 
+		CGPathAddEllipseInRect(dotPath, NULL, CGRectMake(p.x - radius, p.y - radius, 2.0*radius, 2.0*radius));
+		CGContextSetFillColorWithColor(ctx, cgColor);  
+		CGContextSetLineWidth(ctx, 1);
+		CGContextAddPath(ctx, dotPath);
+		CGContextFillPath(ctx);
+		CGPathRelease(dotPath);
+		
+	}
+	
+	//NSDrawLog(@"-------------- End %@ drawRect ----------------", self);
+	
+	if (!CGRectIsNull(currentSelectionRect) && !CGRectIsEmpty(currentSelectionRect)) {
+		drawRectOutline(ctx, currentSelectionRect, 1, CGColorCreateFromRGBNSColor([NSColor grayColor]));
+	}
+    
+}
+
 #pragma mark - Helper Methods
 
 -(void) purgeCurrentlySelectedPoints {
@@ -250,7 +425,8 @@
 	_currentlySelectedPoints.clear();
 	_pointsInCurrentSelectionRect.clear();
     _enveloppe = enveloppe;
-	[self setNeedsDisplay:YES];
+	//[self setNeedsDisplay:YES];
+    [self.layer setNeedsDisplay];
 }
 
 -(VSCEnveloppeViewSetupPtr) getEnveloppeViewSetup {
@@ -518,9 +694,10 @@
 		currentSelectionOrigin = NSMakePoint(locationInView.x, locationInView.y);
 	}
 	
-	[self setNeedsDisplay:YES];
+	//[self setNeedsDisplay:YES];
+    //[self.enveloppeLayer setNeedsDisplay];
 	
-	
+    [self.layer setNeedsDisplay];
 }
 
 -(void) mouseUp:(NSEvent *)event {
@@ -612,7 +789,10 @@
     
     [self purgeCurrentlySelectedPoints];
 	
-	[self setNeedsDisplay:YES];
+	//[self setNeedsDisplay:YES];
+    //[self.enveloppeLayer setNeedsDisplay];
+    
+    [self.layer setNeedsDisplay];
 	
 }
 
@@ -694,8 +874,11 @@
     
     [self purgeCurrentlySelectedPoints];
 	
-	[self setNeedsDisplay:YES];
+	//[self setNeedsDisplay:YES];
+    //[self.enveloppeLayer setNeedsDisplay];
 	
+    [self.layer setNeedsDisplay];
+    
 }
 
 @end

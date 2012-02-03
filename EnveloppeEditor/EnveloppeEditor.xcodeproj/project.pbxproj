@@ -19,6 +19,7 @@
 		107A78FE132ADE3700C4B1FE /* VSCEnveloppeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */; };
 		109FCFE414D949A40088DCD5 /* libstk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 109FCFE314D949A40088DCD5 /* libstk.a */; };
 		109FD00214D98A8F0088DCD5 /* CorePlot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 109FD00114D98A8F0088DCD5 /* CorePlot.framework */; };
+		10A168EB14DAEBFC00413E58 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10A168EA14DAEBFC00413E58 /* QuartzCore.framework */; };
 		10A5A58714CEF90B002B24E7 /* VSCBoost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A5A57B14CEF90B002B24E7 /* VSCBoost.cpp */; };
 		10A5A58814CEF90B002B24E7 /* VSCColour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A5A57D14CEF90B002B24E7 /* VSCColour.cpp */; };
 		10A5A58914CEF90B002B24E7 /* VSCCoreGraphicsExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A5A58014CEF90B002B24E7 /* VSCCoreGraphicsExtensions.m */; };
@@ -81,6 +82,7 @@
 		109FCFE314D949A40088DCD5 /* libstk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libstk.a; path = lib/libstk.a; sourceTree = STK_ROOT; };
 		109FD00114D98A8F0088DCD5 /* CorePlot.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CorePlot.framework; path = "../../../../Library/Developer/Xcode/DerivedData/EnveloppeEditor-ezlqbgktjzfuevbngsdockiipooi/Build/Products/Debug/CorePlot.framework"; sourceTree = "<group>"; };
 		109FD00C14D98BBE0088DCD5 /* CorePlot.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CorePlot.xcodeproj; path = ../../../Libraries/CorePlot_0.9/Source/framework/CorePlot.xcodeproj; sourceTree = "<group>"; };
+		10A168EA14DAEBFC00413E58 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		10A5A57B14CEF90B002B24E7 /* VSCBoost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCBoost.cpp; path = ../Generic/VSC/VSCBoost.cpp; sourceTree = "<group>"; };
 		10A5A57C14CEF90B002B24E7 /* VSCBoost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCBoost.h; path = ../Generic/VSC/VSCBoost.h; sourceTree = "<group>"; };
 		10A5A57D14CEF90B002B24E7 /* VSCColour.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCColour.cpp; path = ../Generic/VSC/VSCColour.cpp; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10A168EB14DAEBFC00413E58 /* QuartzCore.framework in Frameworks */,
 				109FD00214D98A8F0088DCD5 /* CorePlot.framework in Frameworks */,
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
 				10DE92361413EDE600CC602A /* libboost_filesystem.a in Frameworks */,
@@ -257,6 +260,7 @@
 		2A37F4AAFDCFA73011CA2CEA /* EnveloppeEditor */ = {
 			isa = PBXGroup;
 			children = (
+				10A168EA14DAEBFC00413E58 /* QuartzCore.framework */,
 				109FD00C14D98BBE0088DCD5 /* CorePlot.xcodeproj */,
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
@@ -463,6 +467,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = EnveloppeEditor_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(BOOST_ROOT)/include/",
+					"$(STK_ROOT)/include/",
+				);
 				INFOPLIST_FILE = "EnveloppeEditor-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
@@ -486,6 +494,10 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = EnveloppeEditor_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(BOOST_ROOT)/include/",
+					"$(STK_ROOT)/include/",
+				);
 				INFOPLIST_FILE = "EnveloppeEditor-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
@@ -513,6 +525,7 @@
 					"$(BOOST_ROOT)/include/",
 					"$(STK_ROOT)/include/",
 					"$(CORE_PLOT_ROOT)/Source/framework",
+					"$(CORE_PLOT_ROOT)/Source/framework/MacOnly",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(BOOST_LIB)",
@@ -537,6 +550,7 @@
 					"$(BOOST_ROOT)/include/",
 					"$(STK_ROOT)/include/",
 					"$(CORE_PLOT_ROOT)/Source/framework",
+					"$(CORE_PLOT_ROOT)/Source/framework/MacOnly",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(BOOST_LIB)",
