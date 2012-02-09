@@ -17,6 +17,7 @@
 		1063E13614439A3400BD55ED /* VSCEnveloppeEditorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1063E13514439A3300BD55ED /* VSCEnveloppeEditorView.mm */; };
 		106A54C5143D097B00455BC2 /* libboost_serialization.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106A54C4143D097B00455BC2 /* libboost_serialization.a */; };
 		107A78FE132ADE3700C4B1FE /* VSCEnveloppeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */; };
+		109EFA9614E3CDDC00EC7AD6 /* VSCMIDI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109EFA9414E3CDDC00EC7AD6 /* VSCMIDI.cpp */; };
 		109FCFE414D949A40088DCD5 /* libstk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 109FCFE314D949A40088DCD5 /* libstk.a */; };
 		109FD00214D98A8F0088DCD5 /* CorePlot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 109FD00114D98A8F0088DCD5 /* CorePlot.framework */; };
 		10A12B4714DFE00800B302BC /* VSCEnveloppeDisplaySetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A12B4614DFE00800B302BC /* VSCEnveloppeDisplaySetup.cpp */; };
@@ -82,6 +83,10 @@
 		106A54C4143D097B00455BC2 /* libboost_serialization.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_serialization.a; path = lib/libboost_serialization.a; sourceTree = BOOST_ROOT; };
 		107A78FC132ADE3700C4B1FE /* VSCEnveloppeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeView.h; sourceTree = "<group>"; };
 		107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCEnveloppeView.mm; sourceTree = "<group>"; };
+		109EFA9214E3C96B00EC7AD6 /* RtError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RtError.h; path = include/RtError.h; sourceTree = STK_ROOT; };
+		109EFA9314E3C96B00EC7AD6 /* RtMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RtMidi.h; path = include/RtMidi.h; sourceTree = STK_ROOT; };
+		109EFA9414E3CDDC00EC7AD6 /* VSCMIDI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDI.cpp; path = ../MIDI/VSCMIDI.cpp; sourceTree = "<group>"; };
+		109EFA9514E3CDDC00EC7AD6 /* VSCMIDI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDI.h; path = ../MIDI/VSCMIDI.h; sourceTree = "<group>"; };
 		109FCFE314D949A40088DCD5 /* libstk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libstk.a; path = lib/libstk.a; sourceTree = STK_ROOT; };
 		109FD00114D98A8F0088DCD5 /* CorePlot.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CorePlot.framework; path = "../../../../Library/Developer/Xcode/DerivedData/EnveloppeEditor-ezlqbgktjzfuevbngsdockiipooi/Build/Products/Debug/CorePlot.framework"; sourceTree = "<group>"; };
 		109FD00C14D98BBE0088DCD5 /* CorePlot.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CorePlot.xcodeproj; path = ../../../Libraries/CorePlot_0.9/Source/framework/CorePlot.xcodeproj; sourceTree = "<group>"; };
@@ -251,6 +256,15 @@
 			name = "Enveloppe View";
 			sourceTree = "<group>";
 		};
+		109EFA9114E3C90500EC7AD6 /* STK */ = {
+			isa = PBXGroup;
+			children = (
+				109EFA9214E3C96B00EC7AD6 /* RtError.h */,
+				109EFA9314E3C96B00EC7AD6 /* RtMidi.h */,
+			);
+			name = STK;
+			sourceTree = "<group>";
+		};
 		109FD00D14D98BBE0088DCD5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -263,6 +277,8 @@
 		10A12B4814DFE97C00B302BC /* MIDI */ = {
 			isa = PBXGroup;
 			children = (
+				109EFA9414E3CDDC00EC7AD6 /* VSCMIDI.cpp */,
+				109EFA9514E3CDDC00EC7AD6 /* VSCMIDI.h */,
 				10A12B4914DFE98F00B302BC /* VSCMIDIControlCenter.cpp */,
 				10A12B4A14DFE98F00B302BC /* VSCMIDIControlCenter.h */,
 				10A12B4B14DFE98F00B302BC /* VSCMIDIController.cpp */,
@@ -296,6 +312,7 @@
 		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				109EFA9114E3C90500EC7AD6 /* STK */,
 				10A12B4814DFE97C00B302BC /* MIDI */,
 				1017811F132BF9BF001C6A96 /* Generic */,
 				107A7903132ADF1500C4B1FE /* Enveloppe */,
@@ -445,6 +462,7 @@
 				10A12B4714DFE00800B302BC /* VSCEnveloppeDisplaySetup.cpp in Sources */,
 				10A12B4D14DFE98F00B302BC /* VSCMIDIControlCenter.cpp in Sources */,
 				10A12B4E14DFE98F00B302BC /* VSCMIDIController.cpp in Sources */,
+				109EFA9614E3CDDC00EC7AD6 /* VSCMIDI.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,6 +16,13 @@ VSCEnveloppeDisplaySetup::VSCEnveloppeDisplaySetup() {
     this->setLineColour((VSCColour){0.0, 0.0, 0.0, 1.0});
 }
 
+VSCEnveloppeDisplaySetup::VSCEnveloppeDisplaySetup(const VSCEnveloppeDisplaySetup& setup) {
+    _controlPointRadius = setup._controlPointRadius;
+    _lineWidth = setup._lineWidth;
+    _lineColour = setup._lineColour;
+    _controlPointSelectedColour = setup._controlPointSelectedColour;
+    _controlPointUnselectedColour = setup._controlPointUnselectedColour;
+}
 
 #pragma mark Control Points setters / getters
 

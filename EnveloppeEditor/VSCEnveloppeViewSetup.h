@@ -39,9 +39,9 @@ public:
 	 *	View range setters / getters
 	 */
     VSCEnveloppe::TimeRange getTimeRange(void) const;
-	void setTimeRange(VSCEnveloppe::TimeRange timeRange);
+	void setTimeRange(const VSCEnveloppe::TimeRange timeRange);
 	VSCEnveloppe::ValueRange getValueRange(void) const;
-	void setValueRange(VSCEnveloppe::ValueRange valueRange);
+	void setValueRange(const VSCEnveloppe::ValueRange valueRange);
     
     /*
 	 *	Allowed range setters / getters
@@ -55,20 +55,24 @@ public:
 	 *	Display type setters / getters
 	 */
 	VSCEnveloppeDisplayType getDisplayType(void) const;
-	void setDisplayType(VSCEnveloppeDisplayType displayType);
+	void setDisplayType(const VSCEnveloppeDisplayType displayType);
 	
+    /*
+	 *	Enveloppe display setups
+	 */
+    VSCEnveloppeDisplaySetup& getActiveDisplaySetup();
+	VSCEnveloppeDisplaySetup& getInactiveDisplaySetup();
+    
     
     /*
 	 *	Enveloppe point calculations
 	 */
 	
-	int pixelForTime(VSCSFloat t, int widthInPixels) const;
-	int pixelForValue(VSCSFloat t, int heightInPixels) const;
-	VSCSFloat timeForPixel(int pixel, int widthInPixels) const;
-	VSCSFloat valueForPixel(int pixel, int widthInPixels) const;
+	int pixelForTime(const VSCSFloat t, const int widthInPixels) const;
+	int pixelForValue(const VSCSFloat t, const int heightInPixels) const;
+	VSCSFloat timeForPixel(const int pixel, const int widthInPixels) const;
+	VSCSFloat valueForPixel(const int pixel, const int widthInPixels) const;
 	
-    VSCEnveloppeDisplaySetup& getActiveDisplaySetup();
-	VSCEnveloppeDisplaySetup& getInactiveDisplaySetup();
 	
 	
 private:
@@ -89,6 +93,12 @@ private:
 	 *	Display type
 	 */
 	VSCEnveloppeDisplayType _displayType;
+    
+    /*
+     *  Enveloppe display setups
+     */
+    VSCEnveloppeDisplaySetup _activeDisplaySetup;
+	VSCEnveloppeDisplaySetup _inactiveDisplaySetup;
 
 };
 

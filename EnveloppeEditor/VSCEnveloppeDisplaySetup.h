@@ -14,10 +14,10 @@
 
 class VSCEnveloppeDisplaySetup {
     
-    
 public:
     
     VSCEnveloppeDisplaySetup();
+    VSCEnveloppeDisplaySetup(const VSCEnveloppeDisplaySetup& setup);
     
     /*
 	 *	Control Points setters / getters
