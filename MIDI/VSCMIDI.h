@@ -12,16 +12,41 @@
 
 #include <list>
 #include <string>
+#include <vector>
 
+#include <boost/shared_ptr.hpp>
+#include "RtMidi.h"
 
-struct VSCMidiOutputPort {
+typedef  boost::shared_ptr<RtMidiIn>    RtMidiInPtr;
+typedef  boost::shared_ptr<RtMidiOut>   RtMidiOutPtr;
+
+struct VSCMIDIOutputPort {
     unsigned int number;
     std::string name;
+    bool isVirtual;
+    bool operator!=(const VSCMIDIOutputPort& p);
+    bool operator==(const VSCMIDIOutputPort& p);
 };
 
-struct VSCMidiInputPort {
+struct VSCMIDIInputPort {
     unsigned int number;
     std::string name;
+    bool isVirtual;
+    bool operator!=(const VSCMIDIInputPort& p);
+    bool operator==(const VSCMIDIInputPort& p);
+};
+
+extern const VSCMIDIOutputPort VSCMIDIOutputPortVoid;
+extern const VSCMIDIInputPort VSCMIDIInputPortVoid;
+
+class VSCMIDI {
+    
+    typedef std::vector<unsigned char> Message;
+    
+public:
+    
+    static Message messageForNote(unsigned int channel, unsigned int pitch, bool on);
+    
 };
 
 #endif

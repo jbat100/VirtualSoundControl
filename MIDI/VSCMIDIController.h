@@ -10,29 +10,42 @@
 #ifndef _VSC_MIDI_CONTROLLER_H_
 #define _VSC_MIDI_CONTROLLER_H_
 
-#include <VSCSound>
 #include <boost/shared_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
+
+#include "VSCSound.h"
+#include "VSCMIDI.h"
+#include "VSCController.h"
+
+#include "RtMidi.h"
+
+/*
+ *  A detailed table of midi messages can be found here http://www.midi.org/techspecs/midimessages.php
+ *
+ *  A bit of background information from wiki of MIDI messages http://en.wikipedia.org/wiki/MIDI_1.0
+ * 
+ */
+
 
 class VSCMIDIController {
     
 public:
     
-    enum State {
-        StateNone,
-        StateStopped,
-        StateRunning,
-        StatePaused,
-        StateEnded
-    };
+    VSCMIDIController(void);
     
-    VSCSFloat getCurrentValue(void) const;
-    State getState(void) const;
+    VSCMIDIOutputPort getOutputPort(void);
+    void setOutputPort(VSCMIDIOutputPort port);     // throws if the output port could not be established
+    
+    void setController(VSCControllerPtr c);
+    VSCControllerPtr getController(void);
+    
+    void sendMIDIStateIfRequired(void);
     
 private:
     
-    State _state;
-    VSCSFloat _currentTime;
+    VSCMIDIOutputPort _outputPort;
+    RtMidiOutPtr _midiOut;
+    VSCControllerPtr _controller;
     
 };
 

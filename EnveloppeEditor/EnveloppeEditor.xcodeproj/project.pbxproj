@@ -11,6 +11,8 @@
 		102C2146141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 102C2145141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm */; };
 		102C2156141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 102C2155141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib */; };
 		1030EFE3132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1030EFE2132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm */; };
+		104636F214E9587500C7AAD9 /* VSCController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104636F014E9587500C7AAD9 /* VSCController.cpp */; };
+		104636F514E9631300C7AAD9 /* VSCTriggeredController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104636F314E9631300C7AAD9 /* VSCTriggeredController.cpp */; };
 		105C4807144B32B00015AE8F /* VSCEnveloppe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47FF144B32B00015AE8F /* VSCEnveloppe.cpp */; };
 		105C4808144B32B00015AE8F /* VSCEnveloppeCoordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C4801144B32B00015AE8F /* VSCEnveloppeCoordinate.cpp */; };
 		105C4809144B32B00015AE8F /* VSCEnveloppePoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C4803144B32B00015AE8F /* VSCEnveloppePoint.cpp */; };
@@ -71,6 +73,10 @@
 		102C2155141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSCEnveloppeEditorWindowController.xib; sourceTree = "<group>"; };
 		1030EFE1132985C300E4BCA1 /* VSCEnveloppeEditorDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeEditorDocument.h; sourceTree = "<group>"; };
 		1030EFE2132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCEnveloppeEditorDocument.mm; sourceTree = "<group>"; };
+		104636F014E9587500C7AAD9 /* VSCController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCController.cpp; path = ../Sound/Controller/VSCController.cpp; sourceTree = "<group>"; };
+		104636F114E9587500C7AAD9 /* VSCController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCController.h; path = ../Sound/Controller/VSCController.h; sourceTree = "<group>"; };
+		104636F314E9631300C7AAD9 /* VSCTriggeredController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCTriggeredController.cpp; path = ../Sound/Controller/VSCTriggeredController.cpp; sourceTree = "<group>"; };
+		104636F414E9631300C7AAD9 /* VSCTriggeredController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCTriggeredController.h; path = ../Sound/Controller/VSCTriggeredController.h; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		105C47FF144B32B00015AE8F /* VSCEnveloppe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCEnveloppe.cpp; path = ../Sound/Enveloppe/VSCEnveloppe.cpp; sourceTree = SOURCE_ROOT; };
 		105C4800144B32B00015AE8F /* VSCEnveloppe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCEnveloppe.h; path = ../Sound/Enveloppe/VSCEnveloppe.h; sourceTree = SOURCE_ROOT; };
@@ -190,6 +196,17 @@
 				1DDD582A0DA1D0D100B32029 /* MainMenu.xib */,
 			);
 			name = Nibs;
+			sourceTree = "<group>";
+		};
+		104636EF14E9578400C7AAD9 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				104636F314E9631300C7AAD9 /* VSCTriggeredController.cpp */,
+				104636F414E9631300C7AAD9 /* VSCTriggeredController.h */,
+				104636F014E9587500C7AAD9 /* VSCController.cpp */,
+				104636F114E9587500C7AAD9 /* VSCController.h */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
@@ -312,6 +329,7 @@
 		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				104636EF14E9578400C7AAD9 /* Controller */,
 				109EFA9114E3C90500EC7AD6 /* STK */,
 				10A12B4814DFE97C00B302BC /* MIDI */,
 				1017811F132BF9BF001C6A96 /* Generic */,
@@ -463,6 +481,8 @@
 				10A12B4D14DFE98F00B302BC /* VSCMIDIControlCenter.cpp in Sources */,
 				10A12B4E14DFE98F00B302BC /* VSCMIDIController.cpp in Sources */,
 				109EFA9614E3CDDC00EC7AD6 /* VSCMIDI.cpp in Sources */,
+				104636F214E9587500C7AAD9 /* VSCController.cpp in Sources */,
+				104636F514E9631300C7AAD9 /* VSCTriggeredController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
