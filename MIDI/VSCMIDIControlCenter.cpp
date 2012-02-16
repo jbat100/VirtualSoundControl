@@ -12,11 +12,6 @@
 
 VSCMidiControlCenter::VSCMidiControlCenter(void) {
     
-}
-
-
-void VSCMidiControlCenter::createMidiOut(void) {
-
     // RtMidiOut constructor
     try {
         _midiOut = RtMidiOutPtr(new RtMidiOut());
@@ -25,10 +20,12 @@ void VSCMidiControlCenter::createMidiOut(void) {
         error.printMessage();
         exit( EXIT_FAILURE );
     }
-
+    
 }
 
-void VSCMidiControlCenter::getOuputPorts(std::list<VSCMidiOutputPort>& portList) {
+void VSCMidiControlCenter::refreshOutputPorts(void) {
+    
+    _outputPorts.clear();
     
     // Check outputs.
     unsigned int nPorts = _midiOut->getPortCount();
@@ -37,8 +34,8 @@ void VSCMidiControlCenter::getOuputPorts(std::list<VSCMidiOutputPort>& portList)
     for ( unsigned int i=0; i<nPorts; i++ ) {
         try {
             portName = _midiOut->getPortName(i);
-            VSCMidiOutputPort p = {i, portName};
-            portList.push_back(p);
+            VSCMIDIOutputPort p = {i, portName};
+            _outputPorts.push_back(p);
             std::cout << "  Output Port #" << i+1 << ": " << portName << '\n';
         }
         catch (RtError &error) {
@@ -49,7 +46,9 @@ void VSCMidiControlCenter::getOuputPorts(std::list<VSCMidiOutputPort>& portList)
     
 }
 
-void VSCMidiControlCenter::getInputPorts(std::list<VSCMidiInputPort>& portList) {
+void VSCMidiControlCenter::refreshInputPorts(void) {
+    
+    _inputPorts.clear();
     
     // Check inputs.
     unsigned int nPorts = _midiIn->getPortCount();
@@ -58,6 +57,8 @@ void VSCMidiControlCenter::getInputPorts(std::list<VSCMidiInputPort>& portList) 
     for ( unsigned int i=0; i<nPorts; i++ ) {
         try {
             portName = _midiIn->getPortName(i);
+            VSCMIDIInputPort p = {i, portName};
+            _inputPorts.push_back(p);
             std::cout << "  Input Port #" << i+1 << ": " << portName << '\n';
         }
         catch ( RtError &error ) {
@@ -65,6 +66,14 @@ void VSCMidiControlCenter::getInputPorts(std::list<VSCMidiInputPort>& portList) 
         }
     }
     
+}
+
+const std::list<VSCMIDIOutputPort>& VSCMidiControlCenter::getOuputPorts(void) {
+    return _outputPorts;
+}
+
+const std::list<VSCMIDIInputPort>& VSCMidiControlCenter::getInputPorts(void) {
+    return _inputPorts;
 }
 
 

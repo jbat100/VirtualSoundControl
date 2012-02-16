@@ -14,30 +14,32 @@
 #include <boost/shared_ptr.hpp>
 
 #include "VSCMIDI.h"
+#include "VSCMIDIController.h"
 #include "RtMidi.h"
 
-typedef  boost::shared_ptr<RtMidiIn>    RtMidiInPtr;
-typedef  boost::shared_ptr<RtMidiOut>   RtMidiOutPtr;
 
 class VSCMidiControlCenter {
     
     
 public:
     
-    typedef std::list<>
+    typedef std::list<VSCMIDIControllerPtr> ControllerList;
     
     VSCMidiControlCenter(void);
     VSCMidiControlCenter& defaultCenter();
     
-    void getOuputPorts(std::list<VSCMidiOutputPort>& portList);
-    void getInputPorts(std::list<VSCMidiInputPort>& portList);
+    void refreshInputPorts(void);
+    void refreshOutputPorts(void);
+    const std::list<VSCMIDIOutputPort>& getOuputPorts(void);
+    const std::list<VSCMIDIInputPort>& getInputPorts(void);
     
 private:
     
     RtMidiInPtr     _midiIn;
     RtMidiOutPtr    _midiOut;
     
-    void createMidiOut(void);
+    std::list<VSCMIDIInputPort> _inputPorts;
+    std::list<VSCMIDIOutputPort> _outputPorts;
     
 };
 

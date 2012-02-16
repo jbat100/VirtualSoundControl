@@ -7,4 +7,6 @@
 //
 
 #include "VSCException.h"
-#include <iostream>
+
+const std::string VSCBaseExceptionAdditionalInfoKey = "VSCBaseExceptionAdditionalInfoKey";
+const std::string VSCBaseExceptionRecoveryInfoKey = "VSCBaseExceptionRecoveryInfoKey";
