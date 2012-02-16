@@ -19,9 +19,9 @@
 		1063E13614439A3400BD55ED /* VSCEnveloppeEditorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1063E13514439A3300BD55ED /* VSCEnveloppeEditorView.mm */; };
 		106A54C5143D097B00455BC2 /* libboost_serialization.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106A54C4143D097B00455BC2 /* libboost_serialization.a */; };
 		107A78FE132ADE3700C4B1FE /* VSCEnveloppeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */; };
+		108BBC6414EDB669008CE413 /* CorePlot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 109FD01614D98BBE0088DCD5 /* CorePlot.framework */; };
 		109EFA9614E3CDDC00EC7AD6 /* VSCMIDI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109EFA9414E3CDDC00EC7AD6 /* VSCMIDI.cpp */; };
 		109FCFE414D949A40088DCD5 /* libstk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 109FCFE314D949A40088DCD5 /* libstk.a */; };
-		109FD00214D98A8F0088DCD5 /* CorePlot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 109FD00114D98A8F0088DCD5 /* CorePlot.framework */; };
 		10A12B4714DFE00800B302BC /* VSCEnveloppeDisplaySetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A12B4614DFE00800B302BC /* VSCEnveloppeDisplaySetup.cpp */; };
 		10A12B4D14DFE98F00B302BC /* VSCMIDIControlCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A12B4914DFE98F00B302BC /* VSCMIDIControlCenter.cpp */; };
 		10A12B4E14DFE98F00B302BC /* VSCMIDIController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A12B4B14DFE98F00B302BC /* VSCMIDIController.cpp */; };
@@ -48,6 +48,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		108BBC6214EDB653008CE413 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 109FD00C14D98BBE0088DCD5 /* CorePlot.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = CorePlot;
+		};
 		109FD01514D98BBE0088DCD5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 109FD00C14D98BBE0088DCD5 /* CorePlot.xcodeproj */;
@@ -89,12 +96,11 @@
 		106A54C4143D097B00455BC2 /* libboost_serialization.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_serialization.a; path = lib/libboost_serialization.a; sourceTree = BOOST_ROOT; };
 		107A78FC132ADE3700C4B1FE /* VSCEnveloppeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeView.h; sourceTree = "<group>"; };
 		107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCEnveloppeView.mm; sourceTree = "<group>"; };
-		109EFA9214E3C96B00EC7AD6 /* RtError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RtError.h; path = include/RtError.h; sourceTree = STK_ROOT; };
-		109EFA9314E3C96B00EC7AD6 /* RtMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RtMidi.h; path = include/RtMidi.h; sourceTree = STK_ROOT; };
+		109EFA9214E3C96B00EC7AD6 /* RtError.h */ = {isa = PBXFileReference; fileEncoding = 4; name = RtError.h; path = include/RtError.h; sourceTree = STK_ROOT; };
+		109EFA9314E3C96B00EC7AD6 /* RtMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; name = RtMidi.h; path = include/RtMidi.h; sourceTree = STK_ROOT; };
 		109EFA9414E3CDDC00EC7AD6 /* VSCMIDI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDI.cpp; path = ../MIDI/VSCMIDI.cpp; sourceTree = "<group>"; };
 		109EFA9514E3CDDC00EC7AD6 /* VSCMIDI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDI.h; path = ../MIDI/VSCMIDI.h; sourceTree = "<group>"; };
 		109FCFE314D949A40088DCD5 /* libstk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libstk.a; path = lib/libstk.a; sourceTree = STK_ROOT; };
-		109FD00114D98A8F0088DCD5 /* CorePlot.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CorePlot.framework; path = "../../../../Library/Developer/Xcode/DerivedData/EnveloppeEditor-ezlqbgktjzfuevbngsdockiipooi/Build/Products/Debug/CorePlot.framework"; sourceTree = "<group>"; };
 		109FD00C14D98BBE0088DCD5 /* CorePlot.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CorePlot.xcodeproj; path = ../../../Libraries/CorePlot_0.9/Source/framework/CorePlot.xcodeproj; sourceTree = "<group>"; };
 		10A12B4514DFDFCA00B302BC /* VSCEnveloppeDisplaySetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeDisplaySetup.h; sourceTree = "<group>"; };
 		10A12B4614DFE00800B302BC /* VSCEnveloppeDisplaySetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppeDisplaySetup.cpp; sourceTree = "<group>"; };
@@ -146,8 +152,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				108BBC6414EDB669008CE413 /* CorePlot.framework in Frameworks */,
 				10A168EB14DAEBFC00413E58 /* QuartzCore.framework in Frameworks */,
-				109FD00214D98A8F0088DCD5 /* CorePlot.framework in Frameworks */,
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
 				10DE92361413EDE600CC602A /* libboost_filesystem.a in Frameworks */,
 				10DE923E1413EEB200CC602A /* libboost_system.a in Frameworks */,
@@ -224,7 +230,6 @@
 				10DE923D1413EEB200CC602A /* libboost_system.a */,
 				10DE92351413EDE600CC602A /* libboost_filesystem.a */,
 				106A54C4143D097B00455BC2 /* libboost_serialization.a */,
-				109FD00114D98A8F0088DCD5 /* CorePlot.framework */,
 				2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */,
 				13E42FBA07B3F13500E4EEF1 /* CoreData.framework */,
 				2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */,
@@ -383,6 +388,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				108BBC6314EDB653008CE413 /* PBXTargetDependency */,
 			);
 			name = EnveloppeEditor;
 			productInstallPath = "$(HOME)/Applications";
@@ -487,6 +493,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		108BBC6314EDB653008CE413 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CorePlot;
+			targetProxy = 108BBC6214EDB653008CE413 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		089C165FFE840EACC02AAC07 /* InfoPlist.strings */ = {

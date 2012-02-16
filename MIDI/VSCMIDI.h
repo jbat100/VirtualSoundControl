@@ -45,7 +45,7 @@ class VSCMIDI {
     
 public:
     
-    static Message messageForNote(unsigned int channel, unsigned int pitch, bool on);
+    static Message messageForNote(unsigned int channel, unsigned int pitch, unsigned int velocity, bool on);
     
 };
 

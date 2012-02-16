@@ -46,7 +46,12 @@ class VSCBaseException : public boost::exception, public std::exception
      
 public:
     
-    typedef std::map<std::string, std::string> InfoMap;
+    typedef std::map<std::string, std::string>      InfoMap;
+    typedef std::pair<std::string, std::string>     InfoKeyValuePair;
+    
+    VSCBaseException();
+    VSCBaseException(std::string additionalInfo);
+    VSCBaseException(std::string additionalInfo, std::string recoveryInfo);
     
     virtual ~VSCBaseException() throw() {}
     
@@ -115,13 +120,15 @@ class VSCEnveloppeEmptyException : public VSCBaseException
  *	Generic parameter checking
  */
 
-class VSCSInvalidArgumentException : public VSCBaseException
+class VSCInvalidArgumentException : public VSCBaseException
 {
     virtual const char* what() const throw()
     {
         return "Invalid Argument";
     }
 };
+
+typedef VSCInvalidArgumentException VSCSInvalidArgumentException;
 
 #pragma mark Out Of Bounds Exception
 
@@ -135,7 +142,7 @@ class VSCSOutOfBoundsException : public VSCBaseException
 
 #pragma mark Property/Parameter Exception
 
-class VSCSBadParameterException : public VSCBaseException
+class VSCBadParameterException : public VSCBaseException
 {
     virtual const char* what() const throw()
     {
@@ -143,13 +150,16 @@ class VSCSBadParameterException : public VSCBaseException
     }
 };
 
-class VSCSBadPropertyException : public VSCBaseException
+class VSCBadPropertyException : public VSCBaseException
 {
     virtual const char* what() const throw()
     {
         return "Bad Property";
     }
 };
+
+typedef VSCBadParameterException VSCSBadParameterException;
+typedef VSCBadPropertyException VSCSBadPropertyException;
 
 #pragma mark Virtual Function Exception (Used For Obj-C)
 
