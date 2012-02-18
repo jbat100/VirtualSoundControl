@@ -1,0 +1,593 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		10A3F6E014EF0E8D00B296D2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10A3F6DF14EF0E8D00B296D2 /* UIKit.framework */; };
+		10A3F6E214EF0E8D00B296D2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10A3F6E114EF0E8D00B296D2 /* Foundation.framework */; };
+		10A3F6E414EF0E8D00B296D2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10A3F6E314EF0E8D00B296D2 /* CoreGraphics.framework */; };
+		10A3F6EA14EF0E8D00B296D2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 10A3F6E814EF0E8D00B296D2 /* InfoPlist.strings */; };
+		10A3F6EC14EF0E8D00B296D2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A3F6EB14EF0E8D00B296D2 /* main.m */; };
+		10A3F6F014EF0E8D00B296D2 /* BlindHelperAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A3F6EF14EF0E8D00B296D2 /* BlindHelperAppDelegate.m */; };
+		10A3F6F314EF0E8D00B296D2 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10A3F6F114EF0E8D00B296D2 /* MainStoryboard_iPhone.storyboard */; };
+		10A3F6F614EF0E8D00B296D2 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10A3F6F414EF0E8D00B296D2 /* MainStoryboard_iPad.storyboard */; };
+		10A3F70C14EF0E8D00B296D2 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10A3F70B14EF0E8D00B296D2 /* SenTestingKit.framework */; };
+		10A3F70D14EF0E8D00B296D2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10A3F6DF14EF0E8D00B296D2 /* UIKit.framework */; };
+		10A3F70E14EF0E8D00B296D2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10A3F6E114EF0E8D00B296D2 /* Foundation.framework */; };
+		10A3F71614EF0E8D00B296D2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 10A3F71414EF0E8D00B296D2 /* InfoPlist.strings */; };
+		10A3F71914EF0E8D00B296D2 /* BlindHelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A3F71814EF0E8D00B296D2 /* BlindHelperTests.m */; };
+		10A3F72514EF106400B296D2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10A3F72414EF106400B296D2 /* QuartzCore.framework */; };
+		10A3F72814EF126900B296D2 /* BHPlanarSoundSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A3F72714EF126900B296D2 /* BHPlanarSoundSource.m */; };
+		10A3F73514EF20D700B296D2 /* BH3DSoundTestingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A3F73314EF20D700B296D2 /* BH3DSoundTestingViewController.m */; };
+		10A3F73614EF20D700B296D2 /* BH3DSoundTestingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10A3F73414EF20D700B296D2 /* BH3DSoundTestingViewController.xib */; };
+		10A3F74314EF22BC00B296D2 /* listener.png in Resources */ = {isa = PBXBuildFile; fileRef = 10A3F73D14EF22BC00B296D2 /* listener.png */; };
+		10A3F74414EF22BC00B296D2 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 10A3F73E14EF22BC00B296D2 /* pause.png */; };
+		10A3F74514EF22BC00B296D2 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 10A3F73F14EF22BC00B296D2 /* play.png */; };
+		10A3F74614EF22BC00B296D2 /* speaker_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 10A3F74014EF22BC00B296D2 /* speaker_off.png */; };
+		10A3F74714EF22BC00B296D2 /* speaker_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 10A3F74114EF22BC00B296D2 /* speaker_on.png */; };
+		10A3F74814EF22BC00B296D2 /* stagebg.png in Resources */ = {isa = PBXBuildFile; fileRef = 10A3F74214EF22BC00B296D2 /* stagebg.png */; };
+		10A3F74D14EF23D700B296D2 /* BHOpenALSupport.c in Sources */ = {isa = PBXBuildFile; fileRef = 10A3F74914EF23D700B296D2 /* BHOpenALSupport.c */; };
+		10A3F74E14EF23D700B296D2 /* BHOpenALPlayback.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A3F74C14EF23D700B296D2 /* BHOpenALPlayback.m */; };
+		10A3F75214EF242B00B296D2 /* background.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 10A3F75014EF242B00B296D2 /* background.m4a */; };
+		10A3F75314EF242B00B296D2 /* sound.caf in Resources */ = {isa = PBXBuildFile; fileRef = 10A3F75114EF242B00B296D2 /* sound.caf */; };
+		10A3F75614EF254B00B296D2 /* BHHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A3F75514EF254B00B296D2 /* BHHomeViewController.m */; };
+		10A3F75914EF255300B296D2 /* BHSightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A3F75814EF255300B296D2 /* BHSightViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		10A3F70F14EF0E8D00B296D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 10A3F6D214EF0E8D00B296D2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 10A3F6DA14EF0E8D00B296D2;
+			remoteInfo = BlindHelper;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		10A3F6DB14EF0E8D00B296D2 /* BlindHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlindHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		10A3F6DF14EF0E8D00B296D2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		10A3F6E114EF0E8D00B296D2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		10A3F6E314EF0E8D00B296D2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		10A3F6E714EF0E8D00B296D2 /* BlindHelper-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BlindHelper-Info.plist"; sourceTree = "<group>"; };
+		10A3F6E914EF0E8D00B296D2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		10A3F6EB14EF0E8D00B296D2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		10A3F6ED14EF0E8D00B296D2 /* BlindHelper-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BlindHelper-Prefix.pch"; sourceTree = "<group>"; };
+		10A3F6EE14EF0E8D00B296D2 /* BlindHelperAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlindHelperAppDelegate.h; sourceTree = "<group>"; };
+		10A3F6EF14EF0E8D00B296D2 /* BlindHelperAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlindHelperAppDelegate.m; sourceTree = "<group>"; };
+		10A3F6F214EF0E8D00B296D2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		10A3F6F514EF0E8D00B296D2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		10A3F70A14EF0E8D00B296D2 /* BlindHelperTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlindHelperTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		10A3F70B14EF0E8D00B296D2 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		10A3F71314EF0E8D00B296D2 /* BlindHelperTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BlindHelperTests-Info.plist"; sourceTree = "<group>"; };
+		10A3F71514EF0E8D00B296D2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		10A3F71714EF0E8D00B296D2 /* BlindHelperTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlindHelperTests.h; sourceTree = "<group>"; };
+		10A3F71814EF0E8D00B296D2 /* BlindHelperTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlindHelperTests.m; sourceTree = "<group>"; };
+		10A3F72414EF106400B296D2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		10A3F72614EF126900B296D2 /* BHPlanarSoundSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BHPlanarSoundSource.h; path = Classes/Sound/BHPlanarSoundSource.h; sourceTree = "<group>"; };
+		10A3F72714EF126900B296D2 /* BHPlanarSoundSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BHPlanarSoundSource.m; path = Classes/Sound/BHPlanarSoundSource.m; sourceTree = "<group>"; };
+		10A3F73214EF20D700B296D2 /* BH3DSoundTestingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BH3DSoundTestingViewController.h; path = Classes/ViewControllers/BH3DSoundTestingViewController.h; sourceTree = "<group>"; };
+		10A3F73314EF20D700B296D2 /* BH3DSoundTestingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BH3DSoundTestingViewController.m; path = Classes/ViewControllers/BH3DSoundTestingViewController.m; sourceTree = "<group>"; };
+		10A3F73414EF20D700B296D2 /* BH3DSoundTestingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BH3DSoundTestingViewController.xib; path = Classes/ViewControllers/BH3DSoundTestingViewController.xib; sourceTree = "<group>"; };
+		10A3F73D14EF22BC00B296D2 /* listener.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = listener.png; path = Ressources/3DSoundTesting/listener.png; sourceTree = "<group>"; };
+		10A3F73E14EF22BC00B296D2 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = Ressources/3DSoundTesting/pause.png; sourceTree = "<group>"; };
+		10A3F73F14EF22BC00B296D2 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = Ressources/3DSoundTesting/play.png; sourceTree = "<group>"; };
+		10A3F74014EF22BC00B296D2 /* speaker_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = speaker_off.png; path = Ressources/3DSoundTesting/speaker_off.png; sourceTree = "<group>"; };
+		10A3F74114EF22BC00B296D2 /* speaker_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = speaker_on.png; path = Ressources/3DSoundTesting/speaker_on.png; sourceTree = "<group>"; };
+		10A3F74214EF22BC00B296D2 /* stagebg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stagebg.png; path = Ressources/3DSoundTesting/stagebg.png; sourceTree = "<group>"; };
+		10A3F74914EF23D700B296D2 /* BHOpenALSupport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = BHOpenALSupport.c; path = Classes/Sound/BHOpenALSupport.c; sourceTree = "<group>"; };
+		10A3F74A14EF23D700B296D2 /* BHOpenALSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BHOpenALSupport.h; path = Classes/Sound/BHOpenALSupport.h; sourceTree = "<group>"; };
+		10A3F74B14EF23D700B296D2 /* BHOpenALPlayback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BHOpenALPlayback.h; path = Classes/Sound/BHOpenALPlayback.h; sourceTree = "<group>"; };
+		10A3F74C14EF23D700B296D2 /* BHOpenALPlayback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BHOpenALPlayback.m; path = Classes/Sound/BHOpenALPlayback.m; sourceTree = "<group>"; };
+		10A3F75014EF242B00B296D2 /* background.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.m4a; path = Ressources/3DSoundTesting/background.m4a; sourceTree = "<group>"; };
+		10A3F75114EF242B00B296D2 /* sound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = sound.caf; path = Ressources/3DSoundTesting/sound.caf; sourceTree = "<group>"; };
+		10A3F75414EF254B00B296D2 /* BHHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BHHomeViewController.h; path = Classes/ViewControllers/BHHomeViewController.h; sourceTree = "<group>"; };
+		10A3F75514EF254B00B296D2 /* BHHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BHHomeViewController.m; path = Classes/ViewControllers/BHHomeViewController.m; sourceTree = "<group>"; };
+		10A3F75714EF255300B296D2 /* BHSightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BHSightViewController.h; path = Classes/ViewControllers/BHSightViewController.h; sourceTree = "<group>"; };
+		10A3F75814EF255300B296D2 /* BHSightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BHSightViewController.m; path = Classes/ViewControllers/BHSightViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		10A3F6D814EF0E8D00B296D2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10A3F72514EF106400B296D2 /* QuartzCore.framework in Frameworks */,
+				10A3F6E014EF0E8D00B296D2 /* UIKit.framework in Frameworks */,
+				10A3F6E214EF0E8D00B296D2 /* Foundation.framework in Frameworks */,
+				10A3F6E414EF0E8D00B296D2 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		10A3F70614EF0E8D00B296D2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10A3F70C14EF0E8D00B296D2 /* SenTestingKit.framework in Frameworks */,
+				10A3F70D14EF0E8D00B296D2 /* UIKit.framework in Frameworks */,
+				10A3F70E14EF0E8D00B296D2 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		10A3F6D014EF0E8D00B296D2 = {
+			isa = PBXGroup;
+			children = (
+				10A3F6E514EF0E8D00B296D2 /* BlindHelper */,
+				10A3F71114EF0E8D00B296D2 /* BlindHelperTests */,
+				10A3F6DE14EF0E8D00B296D2 /* Frameworks */,
+				10A3F6DC14EF0E8D00B296D2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		10A3F6DC14EF0E8D00B296D2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				10A3F6DB14EF0E8D00B296D2 /* BlindHelper.app */,
+				10A3F70A14EF0E8D00B296D2 /* BlindHelperTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		10A3F6DE14EF0E8D00B296D2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				10A3F72414EF106400B296D2 /* QuartzCore.framework */,
+				10A3F6DF14EF0E8D00B296D2 /* UIKit.framework */,
+				10A3F6E114EF0E8D00B296D2 /* Foundation.framework */,
+				10A3F6E314EF0E8D00B296D2 /* CoreGraphics.framework */,
+				10A3F70B14EF0E8D00B296D2 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		10A3F6E514EF0E8D00B296D2 /* BlindHelper */ = {
+			isa = PBXGroup;
+			children = (
+				10A3F6EE14EF0E8D00B296D2 /* BlindHelperAppDelegate.h */,
+				10A3F6EF14EF0E8D00B296D2 /* BlindHelperAppDelegate.m */,
+				10A3F73B14EF226100B296D2 /* Resources */,
+				10A3F6E614EF0E8D00B296D2 /* Supporting Files */,
+				10A3F72914EF127B00B296D2 /* Sound */,
+				10A3F73714EF20E600B296D2 /* Interface */,
+			);
+			path = BlindHelper;
+			sourceTree = "<group>";
+		};
+		10A3F6E614EF0E8D00B296D2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				10A3F6E714EF0E8D00B296D2 /* BlindHelper-Info.plist */,
+				10A3F6E814EF0E8D00B296D2 /* InfoPlist.strings */,
+				10A3F6EB14EF0E8D00B296D2 /* main.m */,
+				10A3F6ED14EF0E8D00B296D2 /* BlindHelper-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		10A3F71114EF0E8D00B296D2 /* BlindHelperTests */ = {
+			isa = PBXGroup;
+			children = (
+				10A3F71714EF0E8D00B296D2 /* BlindHelperTests.h */,
+				10A3F71814EF0E8D00B296D2 /* BlindHelperTests.m */,
+				10A3F71214EF0E8D00B296D2 /* Supporting Files */,
+			);
+			path = BlindHelperTests;
+			sourceTree = "<group>";
+		};
+		10A3F71214EF0E8D00B296D2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				10A3F71314EF0E8D00B296D2 /* BlindHelperTests-Info.plist */,
+				10A3F71414EF0E8D00B296D2 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		10A3F72914EF127B00B296D2 /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				10A3F72614EF126900B296D2 /* BHPlanarSoundSource.h */,
+				10A3F72714EF126900B296D2 /* BHPlanarSoundSource.m */,
+				10A3F74F14EF23E400B296D2 /* OpenAL */,
+			);
+			name = Sound;
+			sourceTree = "<group>";
+		};
+		10A3F73714EF20E600B296D2 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				10A3F6F114EF0E8D00B296D2 /* MainStoryboard_iPhone.storyboard */,
+				10A3F6F414EF0E8D00B296D2 /* MainStoryboard_iPad.storyboard */,
+				10A3F73A14EF21F200B296D2 /* Sight */,
+				10A3F73914EF21DC00B296D2 /* Home */,
+				10A3F73814EF211800B296D2 /* 3D Sound Testing */,
+			);
+			name = Interface;
+			sourceTree = "<group>";
+		};
+		10A3F73814EF211800B296D2 /* 3D Sound Testing */ = {
+			isa = PBXGroup;
+			children = (
+				10A3F73214EF20D700B296D2 /* BH3DSoundTestingViewController.h */,
+				10A3F73314EF20D700B296D2 /* BH3DSoundTestingViewController.m */,
+				10A3F73414EF20D700B296D2 /* BH3DSoundTestingViewController.xib */,
+			);
+			name = "3D Sound Testing";
+			sourceTree = "<group>";
+		};
+		10A3F73914EF21DC00B296D2 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				10A3F75414EF254B00B296D2 /* BHHomeViewController.h */,
+				10A3F75514EF254B00B296D2 /* BHHomeViewController.m */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
+		10A3F73A14EF21F200B296D2 /* Sight */ = {
+			isa = PBXGroup;
+			children = (
+				10A3F75714EF255300B296D2 /* BHSightViewController.h */,
+				10A3F75814EF255300B296D2 /* BHSightViewController.m */,
+			);
+			name = Sight;
+			sourceTree = "<group>";
+		};
+		10A3F73B14EF226100B296D2 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				10A3F73C14EF227100B296D2 /* 3D Sound Testing */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		10A3F73C14EF227100B296D2 /* 3D Sound Testing */ = {
+			isa = PBXGroup;
+			children = (
+				10A3F75014EF242B00B296D2 /* background.m4a */,
+				10A3F75114EF242B00B296D2 /* sound.caf */,
+				10A3F73D14EF22BC00B296D2 /* listener.png */,
+				10A3F73E14EF22BC00B296D2 /* pause.png */,
+				10A3F73F14EF22BC00B296D2 /* play.png */,
+				10A3F74014EF22BC00B296D2 /* speaker_off.png */,
+				10A3F74114EF22BC00B296D2 /* speaker_on.png */,
+				10A3F74214EF22BC00B296D2 /* stagebg.png */,
+			);
+			name = "3D Sound Testing";
+			sourceTree = "<group>";
+		};
+		10A3F74F14EF23E400B296D2 /* OpenAL */ = {
+			isa = PBXGroup;
+			children = (
+				10A3F74914EF23D700B296D2 /* BHOpenALSupport.c */,
+				10A3F74A14EF23D700B296D2 /* BHOpenALSupport.h */,
+				10A3F74B14EF23D700B296D2 /* BHOpenALPlayback.h */,
+				10A3F74C14EF23D700B296D2 /* BHOpenALPlayback.m */,
+			);
+			name = OpenAL;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		10A3F6DA14EF0E8D00B296D2 /* BlindHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 10A3F71C14EF0E8D00B296D2 /* Build configuration list for PBXNativeTarget "BlindHelper" */;
+			buildPhases = (
+				10A3F6D714EF0E8D00B296D2 /* Sources */,
+				10A3F6D814EF0E8D00B296D2 /* Frameworks */,
+				10A3F6D914EF0E8D00B296D2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BlindHelper;
+			productName = BlindHelper;
+			productReference = 10A3F6DB14EF0E8D00B296D2 /* BlindHelper.app */;
+			productType = "com.apple.product-type.application";
+		};
+		10A3F70914EF0E8D00B296D2 /* BlindHelperTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 10A3F71F14EF0E8D00B296D2 /* Build configuration list for PBXNativeTarget "BlindHelperTests" */;
+			buildPhases = (
+				10A3F70514EF0E8D00B296D2 /* Sources */,
+				10A3F70614EF0E8D00B296D2 /* Frameworks */,
+				10A3F70714EF0E8D00B296D2 /* Resources */,
+				10A3F70814EF0E8D00B296D2 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				10A3F71014EF0E8D00B296D2 /* PBXTargetDependency */,
+			);
+			name = BlindHelperTests;
+			productName = BlindHelperTests;
+			productReference = 10A3F70A14EF0E8D00B296D2 /* BlindHelperTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		10A3F6D214EF0E8D00B296D2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = JBAT;
+			};
+			buildConfigurationList = 10A3F6D514EF0E8D00B296D2 /* Build configuration list for PBXProject "BlindHelper" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 10A3F6D014EF0E8D00B296D2;
+			productRefGroup = 10A3F6DC14EF0E8D00B296D2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				10A3F6DA14EF0E8D00B296D2 /* BlindHelper */,
+				10A3F70914EF0E8D00B296D2 /* BlindHelperTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		10A3F6D914EF0E8D00B296D2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10A3F6EA14EF0E8D00B296D2 /* InfoPlist.strings in Resources */,
+				10A3F6F314EF0E8D00B296D2 /* MainStoryboard_iPhone.storyboard in Resources */,
+				10A3F6F614EF0E8D00B296D2 /* MainStoryboard_iPad.storyboard in Resources */,
+				10A3F73614EF20D700B296D2 /* BH3DSoundTestingViewController.xib in Resources */,
+				10A3F74314EF22BC00B296D2 /* listener.png in Resources */,
+				10A3F74414EF22BC00B296D2 /* pause.png in Resources */,
+				10A3F74514EF22BC00B296D2 /* play.png in Resources */,
+				10A3F74614EF22BC00B296D2 /* speaker_off.png in Resources */,
+				10A3F74714EF22BC00B296D2 /* speaker_on.png in Resources */,
+				10A3F74814EF22BC00B296D2 /* stagebg.png in Resources */,
+				10A3F75214EF242B00B296D2 /* background.m4a in Resources */,
+				10A3F75314EF242B00B296D2 /* sound.caf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		10A3F70714EF0E8D00B296D2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10A3F71614EF0E8D00B296D2 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		10A3F70814EF0E8D00B296D2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		10A3F6D714EF0E8D00B296D2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10A3F6EC14EF0E8D00B296D2 /* main.m in Sources */,
+				10A3F6F014EF0E8D00B296D2 /* BlindHelperAppDelegate.m in Sources */,
+				10A3F72814EF126900B296D2 /* BHPlanarSoundSource.m in Sources */,
+				10A3F73514EF20D700B296D2 /* BH3DSoundTestingViewController.m in Sources */,
+				10A3F74D14EF23D700B296D2 /* BHOpenALSupport.c in Sources */,
+				10A3F74E14EF23D700B296D2 /* BHOpenALPlayback.m in Sources */,
+				10A3F75614EF254B00B296D2 /* BHHomeViewController.m in Sources */,
+				10A3F75914EF255300B296D2 /* BHSightViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		10A3F70514EF0E8D00B296D2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10A3F71914EF0E8D00B296D2 /* BlindHelperTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		10A3F71014EF0E8D00B296D2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 10A3F6DA14EF0E8D00B296D2 /* BlindHelper */;
+			targetProxy = 10A3F70F14EF0E8D00B296D2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		10A3F6E814EF0E8D00B296D2 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				10A3F6E914EF0E8D00B296D2 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		10A3F6F114EF0E8D00B296D2 /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				10A3F6F214EF0E8D00B296D2 /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		10A3F6F414EF0E8D00B296D2 /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				10A3F6F514EF0E8D00B296D2 /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		10A3F71414EF0E8D00B296D2 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				10A3F71514EF0E8D00B296D2 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		10A3F71A14EF0E8D00B296D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		10A3F71B14EF0E8D00B296D2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		10A3F71D14EF0E8D00B296D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BlindHelper/BlindHelper-Prefix.pch";
+				INFOPLIST_FILE = "BlindHelper/BlindHelper-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		10A3F71E14EF0E8D00B296D2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BlindHelper/BlindHelper-Prefix.pch";
+				INFOPLIST_FILE = "BlindHelper/BlindHelper-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		10A3F72014EF0E8D00B296D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/BlindHelper.app/BlindHelper";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BlindHelper/BlindHelper-Prefix.pch";
+				INFOPLIST_FILE = "BlindHelperTests/BlindHelperTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		10A3F72114EF0E8D00B296D2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/BlindHelper.app/BlindHelper";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BlindHelper/BlindHelper-Prefix.pch";
+				INFOPLIST_FILE = "BlindHelperTests/BlindHelperTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		10A3F6D514EF0E8D00B296D2 /* Build configuration list for PBXProject "BlindHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				10A3F71A14EF0E8D00B296D2 /* Debug */,
+				10A3F71B14EF0E8D00B296D2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		10A3F71C14EF0E8D00B296D2 /* Build configuration list for PBXNativeTarget "BlindHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				10A3F71D14EF0E8D00B296D2 /* Debug */,
+				10A3F71E14EF0E8D00B296D2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		10A3F71F14EF0E8D00B296D2 /* Build configuration list for PBXNativeTarget "BlindHelperTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				10A3F72014EF0E8D00B296D2 /* Debug */,
+				10A3F72114EF0E8D00B296D2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 10A3F6D214EF0E8D00B296D2 /* Project object */;
+}
