@@ -48,11 +48,20 @@ Copyright (C) 2010 Apple Inc. All Rights Reserved.
 */
 
 #import "BHOpenALPlayback.h"
-#import "MyOpenALSupport.h"
+#import "BHOpenALSupport.h"
+
+@interface BHOpenALPlayback ()
+
+void interruptionListener(void*	inClientData, UInt32 inInterruptionState);
+
+void routeChangeListener(void* inClientData, AudioSessionPropertyID	inID, UInt32 inDataSize, const void* inData);
+
+@end
 
 
 @implementation BHOpenALPlayback
 
+@synthesize usingMusic;
 @synthesize isPlaying;
 @synthesize wasInterrupted;
 @synthesize listenerRotation;
@@ -62,7 +71,7 @@ Copyright (C) 2010 Apple Inc. All Rights Reserved.
 void interruptionListener(	void *	inClientData,
 							UInt32	inInterruptionState)
 {
-	BHOpenALPlayback* THIS = (BHOpenALPlayback*)inClientData;
+	BHOpenALPlayback* THIS = (__bridge BHOpenALPlayback*)inClientData;
 	if (inInterruptionState == kAudioSessionBeginInterruption)
 	{
 			alcMakeContextCurrent(NULL);		
@@ -73,7 +82,7 @@ void interruptionListener(	void *	inClientData,
 	else if (inInterruptionState == kAudioSessionEndInterruption)
 	{
 		OSStatus result = AudioSessionSetActive(true);
-		if (result) NSLog(@"Error setting audio session active! %d\n", result);
+		if (result) NSLog(@"Error setting audio session active! %ld\n", result);
 
 		alcMakeContextCurrent(THIS->context);
 
@@ -85,7 +94,7 @@ void interruptionListener(	void *	inClientData,
 	}
 }
 
-void RouteChangeListener(	void *                  inClientData,
+void routeChangeListener(	void *                  inClientData,
 							AudioSessionPropertyID	inID,
 							UInt32                  inDataSize,
 							const void *            inData)
@@ -99,7 +108,7 @@ void RouteChangeListener(	void *                  inClientData,
 	CFStringRef newRoute;
 	OSStatus result = AudioSessionGetProperty(kAudioSessionProperty_AudioRoute, &size, &newRoute);
 
-	NSLog(@"result: %d Route changed from %@ to %@", result, oldRoute, newRoute);
+	NSLog(@"result: %ld Route changed from %@ to %@", result, oldRoute, newRoute);
 }
 								
 - (id)init
@@ -115,26 +124,26 @@ void RouteChangeListener(	void *                  inClientData,
 		listenerRotation = 0.;
 		
 		// setup our audio session
-		OSStatus result = AudioSessionInitialize(NULL, NULL, interruptionListener, self);
-		if (result) NSLog(@"Error initializing audio session! %d\n", result);
+		OSStatus result = AudioSessionInitialize(NULL, NULL, interruptionListener, (__bridge void*)self);
+		if (result) NSLog(@"Error initializing audio session! %ld\n", result);
 		else {
 			// if there is other audio playing, we don't want to play the background music
 			UInt32 size = sizeof(iPodIsPlaying);
 			result = AudioSessionGetProperty(kAudioSessionProperty_OtherAudioIsPlaying, &size, &iPodIsPlaying);
-			if (result) NSLog(@"Error getting other audio playing property! %d", result);
+			if (result) NSLog(@"Error getting other audio playing property! %ld", result);
 
 			// if the iPod is playing, use the ambient category to mix with it
 			// otherwise, use solo ambient to get the hardware for playing the app background track
 			UInt32 category = (iPodIsPlaying) ? kAudioSessionCategory_AmbientSound : kAudioSessionCategory_SoloAmbientSound;
 						
 			result = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(category), &category);
-			if (result) NSLog(@"Error setting audio session category! %d\n", result);
+			if (result) NSLog(@"Error setting audio session category! %ld\n", result);
 
-			result = AudioSessionAddPropertyListener(kAudioSessionProperty_AudioRouteChange, RouteChangeListener, self);
-			if (result) NSLog(@"Couldn't add listener: %d", result);
+			result = AudioSessionAddPropertyListener(kAudioSessionProperty_AudioRouteChange, routeChangeListener, (__bridge void*)self);
+			if (result) NSLog(@"Couldn't add listener: %ld", result);
 
 			result = AudioSessionSetActive(true);
-			if (result) NSLog(@"Error setting audio session active! %d\n", result);
+			if (result) NSLog(@"Error setting audio session active! %ld\n", result);
 		}
 
 		bgURL = [[NSURL alloc] initFileURLWithPath: [[NSBundle mainBundle] pathForResource:@"background" ofType:@"m4a"]];
@@ -149,35 +158,22 @@ void RouteChangeListener(	void *                  inClientData,
 	return self;
 }
 
-- (void)checkForMusic
-{
-	if (iPodIsPlaying) {
-		//the iPod is playing, so we should disable the background music switch
-		NSLog(@"Disabling background music, iPod is active");
-		musicSwitch.enabled = NO;
-	}
-	else {
-		musicSwitch.enabled = YES;
-	}
-}
 
 - (void)dealloc
 {
-	[super dealloc];
-
 	[self teardownOpenAL];
-	[bgURL release];
-	[bgPlayer release];
 }
 
-#pragma mark AVAudioPlayer
+#pragma mark Custom Setters
 
-- (IBAction)toggleMusic:(UISwitch*)sender {
-	NSLog(@"togging music %s", sender.on ? "on" : "off");
+- (void) setUsingMusic:(BOOL)_usingMusic 
+{
+	NSLog(@"togging music %s", _usingMusic ? "on" : "off");
+    
+    usingMusic = _usingMusic;
 	
 	if (bgPlayer) {
-	
-		if (sender.on) {
+		if (usingMusic) {
 			[bgPlayer play];
 		}
 		else {
@@ -198,7 +194,7 @@ void RouteChangeListener(	void *                  inClientData,
 	NSBundle*				bundle = [NSBundle mainBundle];
 	
 	// get some audio data from a wave file
-	CFURLRef fileURL = (CFURLRef)[[NSURL fileURLWithPath:[bundle pathForResource:@"sound" ofType:@"caf"]] retain];
+	CFURLRef fileURL = (__bridge CFURLRef)[NSURL fileURLWithPath:[bundle pathForResource:@"sound" ofType:@"caf"]];
 	
 	if (fileURL)
 	{	
@@ -339,9 +335,9 @@ void RouteChangeListener(	void *                  inClientData,
 	return sourcePos;
 }
 
-- (void)setSourcePos:(CGPoint)SOURCEPOS
+- (void)setSourcePos:(CGPoint)_sourcePos
 {
-	sourcePos = SOURCEPOS;
+	sourcePos = _sourcePos;
 	float sourcePosAL[] = {sourcePos.x, kDefaultDistance, sourcePos.y};
 	// Move our audio source coordinates
 	alSourcefv(source, AL_POSITION, sourcePosAL);
@@ -354,9 +350,9 @@ void RouteChangeListener(	void *                  inClientData,
 	return listenerPos;
 }
 
-- (void)setListenerPos:(CGPoint)LISTENERPOS
+- (void)setListenerPos:(CGPoint)_listenerPos
 {
-	listenerPos = LISTENERPOS;
+	listenerPos = _listenerPos;
 	float listenerPosAL[] = {listenerPos.x, 0., listenerPos.y};
 	// Move our listener coordinates
 	alListenerfv(AL_POSITION, listenerPosAL);

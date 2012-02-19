@@ -47,9 +47,10 @@ Copyright (C) 2010 Apple Inc. All Rights Reserved.
 
 */
 
-#import "oalSpatialView.h"
+#import "BH3DTestingSpatialView.h"
+#import "BHOpenALPlayback.h"
 
-#import "oalPlayback.h"
+CGPathRef CreateRoundedRectPath(CGRect RECT, CGFloat cornerRadius);
 
 CGPathRef CreateRoundedRectPath(CGRect RECT, CGFloat cornerRadius)
 {
@@ -85,7 +86,7 @@ CGPathRef CreateRoundedRectPath(CGRect RECT, CGFloat cornerRadius)
 	return ret;
 }
 
-@implementation oalSpatialView
+@implementation BH3DTestingSpatialView
 
 #pragma mark Object Init / Maintenance
 
@@ -106,8 +107,7 @@ CGPathRef CreateRoundedRectPath(CGRect RECT, CGFloat cornerRadius)
 	
 	CGImageRelease(_speaker_off);
 	CGImageRelease(_speaker_on);
-	
-	[super dealloc];
+    
 }
 
 - (void)awakeFromNib
@@ -119,7 +119,6 @@ CGPathRef CreateRoundedRectPath(CGRect RECT, CGFloat cornerRadius)
 	[playback addObserver:self forKeyPath:@"listenerPos" options:NSKeyValueObservingOptionNew context:NULL];
 	[playback addObserver:self forKeyPath:@"listenerRotation" options:NSKeyValueObservingOptionNew context:NULL];
 
-	[playback checkForMusic];
 	[self layoutContents];
 }
 
@@ -138,9 +137,9 @@ CGPathRef CreateRoundedRectPath(CGRect RECT, CGFloat cornerRadius)
 	else if ( (object == playback) && [keyPath isEqualToString:@"isPlaying"] ) {
 		[self layoutContents];
 		if (playback.isPlaying)
-			_speakerLayer.contents = (id)_speaker_on;
+			_speakerLayer.contents = (__bridge id)_speaker_on;
 		else 
-			_speakerLayer.contents = (id)_speaker_off;
+			_speakerLayer.contents = (__bridge id)_speaker_off;
 	} 
 	else if ( (object == playback) && ([keyPath isEqualToString:@"listenerPos"]) ) {
 		[self layoutContents];
@@ -170,19 +169,19 @@ CGPathRef CreateRoundedRectPath(CGRect RECT, CGFloat cornerRadius)
 	// Set up the CALayer which shows the speaker
 	_speakerLayer = [CALayer layer];
 	_speakerLayer.frame = CGRectMake(0., 0., CGImageGetWidth(_speaker_off), CGImageGetHeight(_speaker_off));
-	_speakerLayer.contents = (id)_speaker_off;
+	_speakerLayer.contents = (__bridge id)_speaker_off;
 	
 	// Set up the CALayer which shows the listener
 	_listenerLayer = [CALayer layer];
 	_listenerLayer.frame = CGRectMake(0., 0., CGImageGetWidth(listenerImg), CGImageGetHeight(listenerImg));
-	_listenerLayer.contents = (id)listenerImg;
+	_listenerLayer.contents = (__bridge id)listenerImg;
 	_listenerLayer.anchorPoint = CGPointMake(0.5, 0.57);
 	
 	// Set up the CALayer which shows the instructions
 	_instructionsLayer = [CALayer layer];
 	_instructionsLayer.frame = CGRectMake(0., 0., CGImageGetWidth(instructionsImg), CGImageGetHeight(instructionsImg));
 	_instructionsLayer.position = CGPointMake(0., -140.);
-	_instructionsLayer.contents = (id)instructionsImg;
+	_instructionsLayer.contents = (__bridge id)instructionsImg;
 	
 	// Set a sublayerTransform on our view's layer. This causes (0,0) to be in the center of the view. This transform 
 	// is useful because now our view's coordinates map precisely to our oalPlayback sound environment's coordinates.
@@ -191,7 +190,7 @@ CGPathRef CreateRoundedRectPath(CGRect RECT, CGFloat cornerRadius)
 	
 	// Set the background image for the sound stage
 	CGImageRef bgImg = [[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"stagebg" ofType:@"png"]] CGImage];
-	self.layer.contents = (id)bgImg;
+	self.layer.contents = (__bridge id)bgImg;
 
 	// Add our sublayers
 	[self.layer insertSublayer:_speakerLayer above:self.layer];

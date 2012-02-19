@@ -44,8 +44,88 @@ VSCMIDI::Message VSCMIDI::messageForNote(unsigned int channel, unsigned int pitc
     
     Message message (3, 0);
     
+    unsigned int status;
     
+    if (on) status = 127;
+    else status = 143;
     
+    status += channel;
     
+    message[0] = status;
+    message[1] = pitch;
+    message[2] = velocity;
+    
+    return message;
     
 }
+
+VSCMIDI::Message VSCMIDI::messageForPolyphonicAftertouch(unsigned int channel, unsigned int pitch, unsigned int pressure) {
+    
+    if (channel > 16 || channel < 1) 
+        throw VSCInvalidArgumentException("Channel must be > 0 and < 17");
+    if (pitch > 127) 
+        throw VSCInvalidArgumentException("Pitch must < 128");
+    if (pressure > 127) 
+        throw VSCInvalidArgumentException("Pressure must < 128");
+    
+    Message message (3, 0);
+    
+    unsigned int status = 159;
+    
+    status += channel;
+    
+    message[0] = status;
+    message[1] = pitch;
+    message[2] = pressure;
+    
+    return message;
+    
+}
+
+VSCMIDI::Message VSCMIDI::messageForChannelAftertouch(unsigned int channel, unsigned int pitch, unsigned int pressure) {
+    
+    if (channel > 16 || channel < 1) 
+        throw VSCInvalidArgumentException("Channel must be > 0 and < 17");
+    if (pitch > 127) 
+        throw VSCInvalidArgumentException("Pitch must < 128");
+    if (pressure > 127) 
+        throw VSCInvalidArgumentException("Pressure must < 128");
+    
+    Message message (3, 0);
+    
+    unsigned int status = 207;
+    
+    status += channel;
+    
+    message[0] = status;
+    message[1] = pitch;
+    message[2] = pressure;
+    
+    return message;
+    
+}
+
+VSCMIDI::Message VSCMIDI::messageForControl(unsigned int channel, unsigned int control, unsigned int value) {
+    
+    if (channel > 16 || channel < 1) 
+        throw VSCInvalidArgumentException("Channel must be > 0 and < 17");
+    if (pitch > 127) 
+        throw VSCInvalidArgumentException("Pitch must < 128");
+    if (control > 127) 
+        throw VSCInvalidArgumentException("Pressure must < 128");
+    
+    Message message (3, 0);
+    
+    unsigned int status = 175;
+    
+    status += channel;
+    
+    message[0] = status;
+    message[1] = control;
+    message[2] = value;
+    
+    return message;
+    
+}
+
+

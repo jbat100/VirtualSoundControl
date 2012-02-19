@@ -17,3 +17,15 @@ VSCSFloat VSCController::getCurrentControlValue(void) const {
 VSCController::State VSCController::getState(void) const {
     return _state;
 }
+
+void VSCController::setState(State state) {
+    _state = state;
+}
+
+VSCController::ValueRange VSCController::getValueRange(void) {
+    return _valueRange;
+}
+
+void VSCController::setValueRange(ValueRange valueRange) {
+    _valueRange = valueRange;
+}

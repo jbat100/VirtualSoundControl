@@ -65,12 +65,12 @@ static inline CGPoint CGPointWithinBounds(CGPoint point, CGRect bounds)
 	return ret;
 }
 
-@class oalPlayback;
+@class BHOpenALPlayback;
 
-@interface oalSpatialView : UIView
+@interface BH3DTestingSpatialView : UIView
 {
 	// Reference to our playback object, wired up in IB
-	IBOutlet oalPlayback		*playback;
+	IBOutlet BHOpenALPlayback		*playback;
 	
 	// Images for the speaker in its on and off state
 	CGImageRef					_speaker_off;

@@ -63,7 +63,6 @@ Copyright (C) 2010 Apple Inc. All Rights Reserved.
 
 @interface BHOpenALPlayback : NSObject
 {
-	IBOutlet	UISwitch*	musicSwitch;
 
 	ALuint					source;
 	ALuint					buffer;
@@ -85,14 +84,12 @@ Copyright (C) 2010 Apple Inc. All Rights Reserved.
 }
 
 @property (nonatomic, assign)	BOOL		isPlaying;			// Whether the sound is playing or stopped
+@property (nonatomic, assign)   BOOL        usingMusic;
 @property (nonatomic, assign)	UInt32		iPodIsPlaying;		// Whether the iPod is playing
 @property (nonatomic, assign)	BOOL		wasInterrupted;		// Whether playback was interrupted by the system
 @property (nonatomic, assign)	CGPoint		sourcePos;			// The coordinates of the sound source
 @property (nonatomic, assign)	CGPoint		listenerPos;		// The coordinates of the listener
 @property (nonatomic, assign)	CGFloat		listenerRotation;	// The rotation angle of the listener in radians
-
-- (IBAction)toggleMusic:(UISwitch*)sender;
-- (void)checkForMusic;
 
 - (void)initOpenAL;
 - (void)teardownOpenAL;

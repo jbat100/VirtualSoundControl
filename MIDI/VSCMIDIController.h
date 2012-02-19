@@ -10,6 +10,7 @@
 #ifndef _VSC_MIDI_CONTROLLER_H_
 #define _VSC_MIDI_CONTROLLER_H_
 
+#include <set>
 #include <boost/shared_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
 
@@ -31,6 +32,8 @@ class VSCMIDIController {
     
 public:
     
+    typedef std::set<unsigned int> ControlIdentifiers;
+    
     VSCMIDIController(void);
     
     VSCMIDIOutputPort getOutputPort(void);
@@ -39,7 +42,17 @@ public:
     void setController(VSCControllerPtr c);
     VSCControllerPtr getController(void);
     
+    void setChannel(unsigned int chan);
+    unsigned int getChannel(void);
+    
+    void setNormalizeToMIDIRange(bool norm);
+    bool getNormalizeToMIDIRange(void);
+    
     void sendMIDIStateIfRequired(void);
+    
+    void addControlIdentifier(unsigned int identifier);
+    void removeContorlIdentifier(unsigned int identifier);
+    const ControlIdentifiers& getControlIdentifiers(void);
     
 private:
     
@@ -47,8 +60,15 @@ private:
     RtMidiOutPtr _midiOut;
     VSCControllerPtr _controller;
     
+    bool _normalizeToMIDIRange;
+    
+    ControlIdentifiers _midiControlIdentifiers;
+    unsigned int channel;
+    
 };
 
 typedef boost::shared_ptr<VSCMIDIController> VSCMIDIControllerPtr;
 
 #endif
+
+

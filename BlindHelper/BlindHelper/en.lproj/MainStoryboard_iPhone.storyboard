@@ -35,6 +35,85 @@
             </objects>
             <point key="canvasLocation" x="797" y="-456"/>
         </scene>
+        <scene sceneID="bpu-A3-CND">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Oj4-Do-FOo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="Ost-12-17R" customClass="BH3DSoundTestingViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4BR-9b-NRr">
+                        <rect key="frame" x="0.0" y="20" width="320" height="411"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0Og-QJ-WBk">
+                                <rect key="frame" x="20" y="344" width="53" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="22"/>
+                                <state key="normal" image="play.png">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="disabled" image="play.png">
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="pause.png">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="play.png">
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="playPause:" destination="Ost-12-17R" eventType="valueChanged" id="ceS-DK-WVG"/>
+                                </connections>
+                            </button>
+                            <switch opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="YqN-YD-GGp">
+                                <rect key="frame" x="221" y="364" width="79" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <action selector="tiltSwitchValueChanged:" destination="Ost-12-17R" eventType="valueChanged" id="XRD-f0-YTG"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Tilt Listener" lineBreakMode="tailTruncation" minimumFontSize="10" id="iV0-xv-Dah">
+                                <rect key="frame" x="209" y="336" width="94" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="N0x-zD-DMb">
+                                <rect key="frame" x="113" y="364" width="79" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="musicSwitchValueChanged:" destination="Ost-12-17R" eventType="valueChanged" id="9dI-gU-cSX"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Music" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="az2-OA-97f">
+                                <rect key="frame" x="98" y="335" width="94" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="iT8-D3-rTt" customClass="oalSpatialView">
+                                <rect key="frame" x="20" y="20" width="280" height="307"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.42225713315217395" green="0.42225713315217395" blue="0.42225713315217395" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="aGU-hd-W6N"/>
+                    <connections>
+                        <outlet property="musicSwitch" destination="N0x-zD-DMb" id="S7l-jM-Y5g"/>
+                        <outlet property="playPauseButton" destination="0Og-QJ-WBk" id="KY3-Gg-65g"/>
+                        <outlet property="playback" destination="5ez-vq-FJ8" id="3Eh-as-Hae"/>
+                        <outlet property="tiltListenerSwitch" destination="YqN-YD-GGp" id="Dhm-Xn-vjc"/>
+                    </connections>
+                </viewController>
+                <customObject id="5ez-vq-FJ8" customClass="BHOpenALPlayback"/>
+            </objects>
+            <point key="canvasLocation" x="797" y="763"/>
+        </scene>
         <scene sceneID="13">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="12" sceneMemberID="firstResponder"/>
@@ -78,6 +157,7 @@
                     <connections>
                         <segue destination="2" kind="relationship" relationship="viewControllers" id="26"/>
                         <segue destination="3" kind="relationship" relationship="viewControllers" id="27"/>
+                        <segue destination="Ost-12-17R" kind="relationship" relationship="viewControllers" id="x2l-1B-qzX"/>
                     </connections>
                 </tabBarController>
             </objects>
@@ -86,11 +166,34 @@
     </scenes>
     <resources>
         <image name="first" width="16" height="16"/>
+        <image name="pause.png" width="20" height="26"/>
+        <image name="play.png" width="20" height="26"/>
         <image name="second" width="16" height="16"/>
     </resources>
     <classes>
+        <class className="BH3DSoundTestingViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BH3DSoundTestingViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="musicSwitchValueChanged:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="tiltSwitchValueChanged:" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="musicSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="playPauseButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="playback" candidateClass="BHOpenALPlayback"/>
+                <relationship kind="outlet" name="spatialView" candidateClass="BH3DTestingSpatialView"/>
+                <relationship kind="outlet" name="tiltListenerSwitch" candidateClass="UISwitch"/>
+            </relationships>
+        </class>
+        <class className="BH3DTestingSpatialView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BH3DTestingSpatialView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="playback" candidateClass="BHOpenALPlayback"/>
+            </relationships>
+        </class>
         <class className="BHHomeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BHHomeViewController.h"/>
+        </class>
+        <class className="BHOpenALPlayback" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BHOpenALPlayback.h"/>
         </class>
         <class className="BHSightViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BHSightViewController.h"/>

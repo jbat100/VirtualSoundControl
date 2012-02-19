@@ -46,6 +46,11 @@ class VSCMIDI {
 public:
     
     static Message messageForNote(unsigned int channel, unsigned int pitch, unsigned int velocity, bool on);
+    static Message messageForPolyphonicAftertouch(unsigned int channel, unsigned int pitch, unsigned int pressure);
+    static Message messageForChannelAftertouch(unsigned int channel, unsigned int pitch, unsigned int pressure);
+    static Message messageForControl(unsigned int channel, unsigned int control, unsigned int value);
+    
+    static unsigned int genericControlIdentifier(unsigned int index); // returns free control number
     
 };
 

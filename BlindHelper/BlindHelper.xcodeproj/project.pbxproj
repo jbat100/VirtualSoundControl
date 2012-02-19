@@ -36,6 +36,7 @@
 		10A3F75314EF242B00B296D2 /* sound.caf in Resources */ = {isa = PBXBuildFile; fileRef = 10A3F75114EF242B00B296D2 /* sound.caf */; };
 		10A3F75614EF254B00B296D2 /* BHHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A3F75514EF254B00B296D2 /* BHHomeViewController.m */; };
 		10A3F75914EF255300B296D2 /* BHSightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A3F75814EF255300B296D2 /* BHSightViewController.m */; };
+		10F9A21214EFEA4900E7DB14 /* BH3DTestingSpatialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F9A21114EFEA4900E7DB14 /* BH3DTestingSpatialView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,8 @@
 		10A3F75514EF254B00B296D2 /* BHHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BHHomeViewController.m; path = Classes/ViewControllers/BHHomeViewController.m; sourceTree = "<group>"; };
 		10A3F75714EF255300B296D2 /* BHSightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BHSightViewController.h; path = Classes/ViewControllers/BHSightViewController.h; sourceTree = "<group>"; };
 		10A3F75814EF255300B296D2 /* BHSightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BHSightViewController.m; path = Classes/ViewControllers/BHSightViewController.m; sourceTree = "<group>"; };
+		10F9A21014EFEA4900E7DB14 /* BH3DTestingSpatialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BH3DTestingSpatialView.h; path = Classes/Views/BH3DTestingSpatialView.h; sourceTree = "<group>"; };
+		10F9A21114EFEA4900E7DB14 /* BH3DTestingSpatialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BH3DTestingSpatialView.m; path = Classes/Views/BH3DTestingSpatialView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +218,8 @@
 		10A3F73814EF211800B296D2 /* 3D Sound Testing */ = {
 			isa = PBXGroup;
 			children = (
+				10F9A21014EFEA4900E7DB14 /* BH3DTestingSpatialView.h */,
+				10F9A21114EFEA4900E7DB14 /* BH3DTestingSpatialView.m */,
 				10A3F73214EF20D700B296D2 /* BH3DSoundTestingViewController.h */,
 				10A3F73314EF20D700B296D2 /* BH3DSoundTestingViewController.m */,
 				10A3F73414EF20D700B296D2 /* BH3DSoundTestingViewController.xib */,
@@ -399,6 +404,7 @@
 				10A3F74E14EF23D700B296D2 /* BHOpenALPlayback.m in Sources */,
 				10A3F75614EF254B00B296D2 /* BHHomeViewController.m in Sources */,
 				10A3F75914EF255300B296D2 /* BHSightViewController.m in Sources */,
+				10F9A21214EFEA4900E7DB14 /* BH3DTestingSpatialView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,6 +584,7 @@
 				10A3F71E14EF0E8D00B296D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		10A3F71F14EF0E8D00B296D2 /* Build configuration list for PBXNativeTarget "BlindHelperTests" */ = {
 			isa = XCConfigurationList;
@@ -586,6 +593,7 @@
 				10A3F72114EF0E8D00B296D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

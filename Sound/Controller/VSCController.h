@@ -10,6 +10,7 @@
 #ifndef _VSC_CONTROLLER_H_
 #define _VSC_CONTROLLER_H_
 
+#include <map>
 #include <boost/chrono.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 
@@ -26,12 +27,20 @@ public:
         StateEnded
     };
     
-    VSCSFloat getCurrentControlValue(void) const;
+    typedef std::pair<VSCSFloat, VSCSFloat> ValueRange;
+    
+    virtual VSCSFloat getCurrentControlValue(void) const;
+    
     State getState(void) const;
+    void setState(const State state); 
+    
+    ValueRange getValueRange(void);
+    void setValueRange(ValueRange valueRange);
     
 private:
     
     State _state;
+    ValueRange _valueRange;
     
 };
 
