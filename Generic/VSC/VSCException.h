@@ -98,22 +98,6 @@ class VSCInternalInconsistencyException : public VSCBaseException
     }
 };
 
-#pragma mark Enveloppe Specific Exception
-
-#pragma mark Enveloppe Specific Exception
-
-/*------------------------------------------------------------------------------------
- *	Envelope specific 
- */
-
-class VSCEnveloppeEmptyException : public VSCBaseException
-{
-    virtual const char* what() const throw()
-    {
-        return "Operation requires non-empty VSCEnveloppe";
-    }
-};
-
 #pragma mark Argument Exception
 
 /*------------------------------------------------------------------------------------
@@ -122,6 +106,11 @@ class VSCEnveloppeEmptyException : public VSCBaseException
 
 class VSCInvalidArgumentException : public VSCBaseException
 {
+    
+public:
+    
+    VSCInvalidArgumentException(std::string additionalInfo) : VSCBaseException(additionalInfo) {}
+    
     virtual const char* what() const throw()
     {
         return "Invalid Argument";
@@ -174,6 +163,35 @@ class VSCSCalledPureVirtualFunctionException : public VSCBaseException
     }
 };
 
+
+#pragma mark MIDI Specific Exceptions
+
+class VSCMIDIException : public VSCBaseException
+{
+    
+public:
+    
+    VSCMIDIException(std::string additionalInfo) : VSCBaseException(additionalInfo) {}
+    
+    virtual const char* what() const throw()
+    {
+        return "Operation requires non-empty VSCEnveloppe";
+    }
+};
+
+#pragma mark Enveloppe Specific Exceptions
+
+/*------------------------------------------------------------------------------------
+ *	Envelope specific 
+ */
+
+class VSCEnveloppeEmptyException : public VSCBaseException
+{
+    virtual const char* what() const throw()
+    {
+        return "Operation requires non-empty VSCEnveloppe";
+    }
+};
 
 
 #endif

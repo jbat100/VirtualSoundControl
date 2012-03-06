@@ -8,6 +8,7 @@
  */
 
 #include "VSCMIDIController.h"
+#include "VSCException.h"
 
 #include <iostream>
 
@@ -24,12 +25,25 @@ VSCMIDIController::VSCMIDIController(void) {
     
 }
 
-void VSCMIDIController::setChannel(unsigned int chan) {
+VSCMIDIController::VSCMIDIController(VSCMIDIOutputPort outputPort) {
+    
+    bool success = this->setOutputPort(outputPort);
+    
+    if (success == false) {
+        // Throwing an exception makes sure we do not leak memory http://www.parashift.com/c++-faq-lite/exceptions.html#faq-17.8 
+        std::stringstream errStream;
+        errStream << "Could not open " << outputPort;
+        throw VSCMIDIException(errStream.str());
+    }
     
 }
 
-unsigned int VSCMIDIController::getChannel(void) {
-    
+void VSCMIDIController::setChannel(unsigned int chan) {
+    _channel = chan;
+}
+
+unsigned int VSCMIDIController::getChannel(void) const {
+    return _channel;
 }
 
 void VSCMIDIController::setNormalizeToMIDIRange(bool norm) {
@@ -40,11 +54,11 @@ bool VSCMIDIController::getNormalizeToMIDIRange(void) {
     return _normalizeToMIDIRange;
 }
 
-VSCMIDIOutputPort VSCMIDIController::getOutputPort(void) {
+VSCMIDIOutputPort VSCMIDIController::getOutputPort(void) const {
     return _outputPort;
 }
 
-void VSCMIDIController::setOutputPort(VSCMIDIOutputPort port) {
+bool VSCMIDIController::setOutputPort(VSCMIDIOutputPort port) {
     
     if (port != VSCMIDIOutputPortVoid && _midiOut) {
         
@@ -56,10 +70,11 @@ void VSCMIDIController::setOutputPort(VSCMIDIOutputPort port) {
             } catch (RtError &error) {
                 error.printMessage();
                 _outputPort = VSCMIDIOutputPortVoid;
-                return;
+                return false;
             }
             _outputPort = port;
             std::cout << "Successfully opened " << port << std::endl;
+            return true;
         }
         
         else {
@@ -69,20 +84,34 @@ void VSCMIDIController::setOutputPort(VSCMIDIOutputPort port) {
             } catch (RtError &error) {
                 error.printMessage();
                 _outputPort = VSCMIDIOutputPortVoid;
-                return;
+                return false;
             }
             _outputPort = port;
+            std::cout << "Successfully opened " << port << std::endl;
+            return true;
         }
         
     }
     
     else {
-        _outputPort = VSCMIDIOutputPortVoid;
+        
+        if (_midiOut) {
+            _outputPort = VSCMIDIOutputPortVoid;
+            _midiOut->closePort();
+            return true;
+        }
+        
+        else {
+            _outputPort = VSCMIDIOutputPortVoid;
+            return false;
+        }
     }
+    
+    return false;
     
 }
 
-void VSCMIDIController::addMidiControlIdentifier(unsigned int identifier) {
+void VSCMIDIController::addControlIdentifier(unsigned int identifier) {
     _midiControlIdentifiers.insert(identifier);
 }
 
@@ -98,7 +127,7 @@ void VSCMIDIController::sendMIDIStateIfRequired(void) {
     
     if (!_midiOut) return;
     if (!_controller) return;
-    if (controller->getState() != VSCController::StateRunning) return;
+    if (_controller->getState() != VSCController::StateRunning) return;
     
     VSCSFloat value = _controller->getCurrentControlValue();
     
@@ -106,8 +135,8 @@ void VSCMIDIController::sendMIDIStateIfRequired(void) {
     
     if (_normalizeToMIDIRange) {
         VSCController::ValueRange range = _controller->getValueRange();
-        VSCSFloat mult = 127.0 / range.second();
-        VSCSFloat result = range.first() + (value*mult);
+        VSCSFloat mult = 127.0 / range.second;
+        VSCSFloat result = range.first + (value*mult);
         midiValue = (unsigned int)result;
     }
     else {
@@ -116,8 +145,8 @@ void VSCMIDIController::sendMIDIStateIfRequired(void) {
     
     for (ControlIdentifiers::iterator it = _midiControlIdentifiers.begin(); it != _midiControlIdentifiers.end(); it++) {
         unsigned int controlIdentifier = *it;
-        VSCMIDI::Message message = VSCMIDI::messageForControl(<#unsigned int channel#>, <#unsigned int control#>, <#unsigned int value#>)
-        _midiOut->sendMessage(<#std::vector<unsigned char> *message#>)
+        VSCMIDI::Message message = VSCMIDI::messageForControl(_channel, controlIdentifier, midiValue);
+        _midiOut->sendMessage(&message);
     }
     
 }

@@ -10,7 +10,7 @@
 #include "VSCMIDIControlCenter.h"
 //#include "VSCBoost.h"
 
-VSCMidiControlCenter::VSCMidiControlCenter(void) {
+VSCMIDIControlCenter::VSCMIDIControlCenter(void) {
     
     // RtMidiOut constructor
     try {
@@ -23,7 +23,7 @@ VSCMidiControlCenter::VSCMidiControlCenter(void) {
     
 }
 
-void VSCMidiControlCenter::refreshOutputPorts(void) {
+void VSCMIDIControlCenter::refreshOutputPorts(void) {
     
     _outputPorts.clear();
     
@@ -46,7 +46,7 @@ void VSCMidiControlCenter::refreshOutputPorts(void) {
     
 }
 
-void VSCMidiControlCenter::refreshInputPorts(void) {
+void VSCMIDIControlCenter::refreshInputPorts(void) {
     
     _inputPorts.clear();
     
@@ -68,12 +68,30 @@ void VSCMidiControlCenter::refreshInputPorts(void) {
     
 }
 
-const std::list<VSCMIDIOutputPort>& VSCMidiControlCenter::getOuputPorts(void) {
+const std::list<VSCMIDIOutputPort>& VSCMIDIControlCenter::getOuputPorts(void) const {
     return _outputPorts;
 }
 
-const std::list<VSCMIDIInputPort>& VSCMidiControlCenter::getInputPorts(void) {
+const std::list<VSCMIDIInputPort>& VSCMIDIControlCenter::getInputPorts(void) const {
     return _inputPorts;
+}
+
+void VSCMIDIControlCenter::addController(VSCMIDIControllerPtr controller) {
+    ControllerList::iterator it = std::find(_controllerList.begin(), _controllerList.end(), controller);
+    if (it == _controllerList.end()) {
+        _controllerList.push_back(controller);
+    }
+}
+
+void VSCMIDIControlCenter::removeController(VSCMIDIControllerPtr controller) {
+    ControllerList::iterator it = std::find(_controllerList.begin(), _controllerList.end(), controller);
+    if (it != _controllerList.end()) {
+        _controllerList.erase(it);
+    }
+}
+
+const VSCMIDIControlCenter::ControllerList& VSCMIDIControlCenter::getControllerList(void) const {
+    return _controllerList;
 }
 
 

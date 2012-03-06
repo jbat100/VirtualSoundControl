@@ -35,15 +35,16 @@ public:
     typedef std::set<unsigned int> ControlIdentifiers;
     
     VSCMIDIController(void);
+    VSCMIDIController(VSCMIDIOutputPort outputPort);
     
-    VSCMIDIOutputPort getOutputPort(void);
-    void setOutputPort(VSCMIDIOutputPort port);     // throws if the output port could not be established
+    VSCMIDIOutputPort getOutputPort(void) const;
+    bool setOutputPort(VSCMIDIOutputPort port);     // throws if the output port could not be established
     
     void setController(VSCControllerPtr c);
     VSCControllerPtr getController(void);
     
     void setChannel(unsigned int chan);
-    unsigned int getChannel(void);
+    unsigned int getChannel(void) const;
     
     void setNormalizeToMIDIRange(bool norm);
     bool getNormalizeToMIDIRange(void);
@@ -63,7 +64,7 @@ private:
     bool _normalizeToMIDIRange;
     
     ControlIdentifiers _midiControlIdentifiers;
-    unsigned int channel;
+    unsigned int _channel;
     
 };
 

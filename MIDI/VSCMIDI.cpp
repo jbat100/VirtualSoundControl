@@ -14,6 +14,16 @@
 const VSCMIDIOutputPort     VSCMIDIOutputPortVoid   = {std::numeric_limits<unsigned int>::max(), "", false};
 const VSCMIDIInputPort      VSCMIDIInputPortVoid    = {std::numeric_limits<unsigned int>::max(), "", false};
 
+std::ostream& operator<<(std::ostream& output, const VSCMIDIOutputPort& p) {
+    output << "VSCMIDIOutputPort {" << p.number << "; " << p.name << "; " << (p.isVirtual ? "virtual" : "non-virtual") << "}";
+    return output;
+}
+
+std::ostream& operator<<(std::ostream& output, const VSCMIDIInputPort& p) {
+    output << "VSCMIDIInputPort {" << p.number << "; " << p.name << "; " << (p.isVirtual ? "virtual" : "non-virtual") << "}";
+    return output;
+}
+
 
 bool VSCMIDIOutputPort::operator!=(const VSCMIDIOutputPort& p) {
     return !(*this == p);
@@ -109,7 +119,7 @@ VSCMIDI::Message VSCMIDI::messageForControl(unsigned int channel, unsigned int c
     
     if (channel > 16 || channel < 1) 
         throw VSCInvalidArgumentException("Channel must be > 0 and < 17");
-    if (pitch > 127) 
+    if (control > 127) 
         throw VSCInvalidArgumentException("Pitch must < 128");
     if (control > 127) 
         throw VSCInvalidArgumentException("Pressure must < 128");

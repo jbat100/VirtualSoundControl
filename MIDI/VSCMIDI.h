@@ -28,6 +28,8 @@ struct VSCMIDIOutputPort {
     bool operator==(const VSCMIDIOutputPort& p);
 };
 
+std::ostream& operator<<(std::ostream& output, const VSCMIDIOutputPort& p);
+
 struct VSCMIDIInputPort {
     unsigned int number;
     std::string name;
@@ -36,14 +38,16 @@ struct VSCMIDIInputPort {
     bool operator==(const VSCMIDIInputPort& p);
 };
 
+std::ostream& operator<<(std::ostream& output, const VSCMIDIInputPort& p);
+
 extern const VSCMIDIOutputPort VSCMIDIOutputPortVoid;
 extern const VSCMIDIInputPort VSCMIDIInputPortVoid;
 
 class VSCMIDI {
     
-    typedef std::vector<unsigned char> Message;
-    
 public:
+    
+    typedef std::vector<unsigned char> Message;
     
     static Message messageForNote(unsigned int channel, unsigned int pitch, unsigned int velocity, bool on);
     static Message messageForPolyphonicAftertouch(unsigned int channel, unsigned int pitch, unsigned int pressure);

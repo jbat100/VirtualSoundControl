@@ -18,20 +18,25 @@
 #include "RtMidi.h"
 
 
-class VSCMidiControlCenter {
+class VSCMIDIControlCenter {
     
     
 public:
     
     typedef std::list<VSCMIDIControllerPtr> ControllerList;
     
-    VSCMidiControlCenter(void);
-    VSCMidiControlCenter& defaultCenter();
+    VSCMIDIControlCenter(void);
+    VSCMIDIControlCenter& defaultCenter();
     
     void refreshInputPorts(void);
     void refreshOutputPorts(void);
-    const std::list<VSCMIDIOutputPort>& getOuputPorts(void);
-    const std::list<VSCMIDIInputPort>& getInputPorts(void);
+    
+    const std::list<VSCMIDIOutputPort>& getOuputPorts(void) const;
+    const std::list<VSCMIDIInputPort>& getInputPorts(void) const;
+    
+    void addController(VSCMIDIControllerPtr controller);
+    void removeController(VSCMIDIControllerPtr controller);
+    const ControllerList& getControllerList(void) const;
     
 private:
     
@@ -40,6 +45,8 @@ private:
     
     std::list<VSCMIDIInputPort> _inputPorts;
     std::list<VSCMIDIOutputPort> _outputPorts;
+    
+    ControllerList _controllerList;
     
 };
 
