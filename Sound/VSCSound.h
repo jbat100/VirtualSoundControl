@@ -50,6 +50,12 @@ const unsigned int kVSCSVoidChannel = UINT_MAX - 1;
 	typedef double VSCSFloat;
 #endif
 
+/*-------------------------------------------------------------------------------------------*/
+
+typedef VSCSFloat VSCSTime;             // absolute time (seconds)
+typedef VSCSFloat VSCSTimeInterval;     // absolute time interval (seconds)
+typedef VSCSFloat VSCSControlValue;     // VSC sound control value (for MIDI, OSC ...)
+
 
 /*-------------------------------------------------------------------------------------------
  *

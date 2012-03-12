@@ -8,7 +8,12 @@
  */
 
 #include "VSCMIDIControlCenter.h"
+#include "VSCException.h"
 //#include "VSCBoost.h"
+
+#include "RtError.h"
+
+#pragma mark - Constructor/Destructor
 
 VSCMIDIControlCenter::VSCMIDIControlCenter(void) {
     
@@ -17,11 +22,20 @@ VSCMIDIControlCenter::VSCMIDIControlCenter(void) {
         _midiOut = RtMidiOutPtr(new RtMidiOut());
     }
     catch ( RtError &error ) {
-        error.printMessage();
-        exit( EXIT_FAILURE );
+        //error.printMessage();
+        throw VSCMIDIException(error.getMessage());
+        //throw VSCMIDIException("test message");
     }
     
 }
+
+VSCMIDIControlCenter::~VSCMIDIControlCenter(void) {
+    
+    // using smart pointer for _midiOut so no need to delete
+    
+}
+
+#pragma mark - Input and Output ports 
 
 void VSCMIDIControlCenter::refreshOutputPorts(void) {
     
@@ -76,6 +90,8 @@ const std::list<VSCMIDIInputPort>& VSCMIDIControlCenter::getInputPorts(void) con
     return _inputPorts;
 }
 
+#pragma mark - MIDI Controllers 
+
 void VSCMIDIControlCenter::addController(VSCMIDIControllerPtr controller) {
     ControllerList::iterator it = std::find(_controllerList.begin(), _controllerList.end(), controller);
     if (it == _controllerList.end()) {
@@ -94,5 +110,26 @@ const VSCMIDIControlCenter::ControllerList& VSCMIDIControlCenter::getControllerL
     return _controllerList;
 }
 
+#pragma mark - Broadcasting 
+
+VSCSTimeInterval VSCMIDIControlCenter::getBroadcastInterval(void) const {
+    return _broadcastInterval;
+}
+
+void VSCMIDIControlCenter::setBroadcastInterval(const VSCSTimeInterval interval) {
+    _broadcastInterval = interval;
+}
+
+void VSCMIDIControlCenter::broadcastNow(void) {
+    
+}
+
+void VSCMIDIControlCenter::startPeriodicBroadcasting(void) {
+    
+}
+
+void VSCMIDIControlCenter::stopPeriodicBroadcasting(void) {
+    
+}
 
 

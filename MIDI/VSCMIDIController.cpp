@@ -103,6 +103,7 @@ bool VSCMIDIController::setOutputPort(VSCMIDIOutputPort port) {
         
         else {
             _outputPort = VSCMIDIOutputPortVoid;
+            std::cerr << "Expected non nil _midiOut { " << __FILE__ << ":" << __LINE__ << "}" << std::endl;  
             return false;
         }
     }

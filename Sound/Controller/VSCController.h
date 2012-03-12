@@ -11,6 +11,8 @@
 #define _VSC_CONTROLLER_H_
 
 #include <map>
+
+#include <boost/shared_ptr.hpp>
 #include <boost/chrono.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 
@@ -29,13 +31,20 @@ public:
     
     typedef std::pair<VSCSFloat, VSCSFloat> ValueRange;
     
+    VSCController(void);
+    
     virtual VSCSFloat getCurrentControlValue(void) const;
     
     State getState(void) const;
-    void setState(const State state); 
     
-    ValueRange getValueRange(void);
+    ValueRange getValueRange(void) const;
     void setValueRange(ValueRange valueRange);
+    
+    bool valueIsValid(const VSCSFloat val) const;
+    
+protected:
+    
+    void setState(const State state); 
     
 private:
     

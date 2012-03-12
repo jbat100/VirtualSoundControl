@@ -38,6 +38,7 @@
 		10A5A59A14CEF925002B24E7 /* NSFileManager+VSCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A5A59414CEF925002B24E7 /* NSFileManager+VSCAdditions.m */; };
 		10A5A59B14CEF925002B24E7 /* NSString+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10A5A59614CEF925002B24E7 /* NSString+VSCAdditions.mm */; };
 		10AC2B581454BC0C002DE480 /* VSCSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10AC2B561454BC0C002DE480 /* VSCSound.cpp */; };
+		10DDE643150A5B1F009CFFB2 /* VSCMIDITestView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10DDE642150A5B1F009CFFB2 /* VSCMIDITestView.mm */; };
 		10DE92361413EDE600CC602A /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE92351413EDE600CC602A /* libboost_filesystem.a */; };
 		10DE923E1413EEB200CC602A /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE923D1413EEB200CC602A /* libboost_system.a */; };
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
@@ -134,6 +135,10 @@
 		10AC2B561454BC0C002DE480 /* VSCSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCSound.cpp; path = ../Sound/VSCSound.cpp; sourceTree = SOURCE_ROOT; };
 		10AC2B571454BC0C002DE480 /* VSCSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSound.h; path = ../Sound/VSCSound.h; sourceTree = SOURCE_ROOT; };
 		10BA6B3B14D830D0007EF8F9 /* NSLog+VSCDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSLog+VSCDefinitions.h"; path = "../Generic/Apple/NSLog+VSCDefinitions.h"; sourceTree = "<group>"; };
+		10DDE63E150A4997009CFFB2 /* VSCManualController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCManualController.cpp; path = ../Sound/Controller/VSCManualController.cpp; sourceTree = "<group>"; };
+		10DDE63F150A4997009CFFB2 /* VSCManualController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCManualController.h; path = ../Sound/Controller/VSCManualController.h; sourceTree = "<group>"; };
+		10DDE641150A5B1F009CFFB2 /* VSCMIDITestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDITestView.h; path = ../MIDI/AppKit/VSCMIDITestView.h; sourceTree = "<group>"; };
+		10DDE642150A5B1F009CFFB2 /* VSCMIDITestView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCMIDITestView.mm; path = ../MIDI/AppKit/VSCMIDITestView.mm; sourceTree = "<group>"; };
 		10DE92351413EDE600CC602A /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = lib/libboost_filesystem.a; sourceTree = BOOST_ROOT; };
 		10DE923D1413EEB200CC602A /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = lib/libboost_system.a; sourceTree = BOOST_ROOT; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -209,6 +214,8 @@
 			children = (
 				104636F314E9631300C7AAD9 /* VSCTriggeredController.cpp */,
 				104636F414E9631300C7AAD9 /* VSCTriggeredController.h */,
+				10DDE63E150A4997009CFFB2 /* VSCManualController.cpp */,
+				10DDE63F150A4997009CFFB2 /* VSCManualController.h */,
 				104636F014E9587500C7AAD9 /* VSCController.cpp */,
 				104636F114E9587500C7AAD9 /* VSCController.h */,
 			);
@@ -309,6 +316,15 @@
 			name = MIDI;
 			sourceTree = "<group>";
 		};
+		10DDE640150A5A6A009CFFB2 /* MIDI View */ = {
+			isa = PBXGroup;
+			children = (
+				10DDE641150A5B1F009CFFB2 /* VSCMIDITestView.h */,
+				10DDE642150A5B1F009CFFB2 /* VSCMIDITestView.mm */,
+			);
+			name = "MIDI View";
+			sourceTree = "<group>";
+		};
 		19C28FB0FE9D524F11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -339,6 +355,7 @@
 				10A12B4814DFE97C00B302BC /* MIDI */,
 				1017811F132BF9BF001C6A96 /* Generic */,
 				107A7903132ADF1500C4B1FE /* Enveloppe */,
+				10DDE640150A5A6A009CFFB2 /* MIDI View */,
 				107A7904132ADF2000C4B1FE /* Enveloppe View */,
 				107A7902132ADF0500C4B1FE /* Enveloppe Document */,
 			);
@@ -489,6 +506,7 @@
 				109EFA9614E3CDDC00EC7AD6 /* VSCMIDI.cpp in Sources */,
 				104636F214E9587500C7AAD9 /* VSCController.cpp in Sources */,
 				104636F514E9631300C7AAD9 /* VSCTriggeredController.cpp in Sources */,
+				10DDE643150A5B1F009CFFB2 /* VSCMIDITestView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
