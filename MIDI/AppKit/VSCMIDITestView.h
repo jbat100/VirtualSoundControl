@@ -8,12 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "VSCMIDIControlCenter.h"
+#include "VSCMIDI.h"
+#include "VSCMIDIOutput.h"
 
 @interface VSCMIDITestView : NSView <NSTableViewDelegate, NSTableViewDataSource> {
     
-    VSCMIDIControlCenterPtr _midiControlCenter;
-    VSCMIDIControllerPtr _currentMidiController;
+    @private
+    
+    VSCMIDIPtr _midi;
+    VSCMIDIOutputPtr _midiOutput;
     
     unsigned int midiChannel;
     unsigned int controlChannel;
@@ -41,17 +44,17 @@
 
 -(IBAction) refreshInputs:(id)sender;
 -(IBAction) refreshOutputs:(id)sender;
--(IBAction) createMidiOutput:(id)sender;
+-(IBAction) setMidiControllerWithCurrentMIDIOutputRowSelection:(id)sender;
 
 -(IBAction) sendMidiControlMessage:(id)sender;
 -(IBAction) sendMidiNoteOnMessage:(id)sender;
 -(IBAction) sendMidiNoteOffMessage:(id)sender;
 
--(VSCMIDIControlCenterPtr) getMidiControlCenter;
--(void) setMidiControlCenter:(VSCMIDIControlCenterPtr)center;
+-(VSCMIDIPtr) getMidi;
+-(void) setMidi:(VSCMIDIPtr)midi;
 
--(VSCMIDIControllerPtr) getCurrentMidiController;
-
+-(VSCMIDIOutputPtr) getMidiOutput;
+-(void) getMidiOutput:(VSCMIDIOutputPtr);
 
 
 @end

@@ -12,6 +12,8 @@
 
 #include <list>
 #include <boost/shared_ptr.hpp>
+#include <boost/thread/mutex.hpp>
+
 
 #include "RtMidi.h"
 
@@ -19,6 +21,9 @@
 #include "VSCMIDI.h"
 #include "VSCMIDIController.h"
 
+class VSCMIDIControlCenter;
+
+typedef boost::shared_ptr<VSCMIDIControlCenter> VSCMIDIControlCenterPtr;
 
 /**
  *  VSCMIDIControlCenter should be used for:
@@ -42,13 +47,7 @@ public:
     VSCMIDIControlCenter(void);
     ~VSCMIDIControlCenter(void);
     
-    VSCMIDIControlCenter& defaultCenter();
-    
-    void refreshInputPorts(void);
-    void refreshOutputPorts(void);
-    
-    const std::list<VSCMIDIOutputPort>& getOuputPorts(void) const;
-    const std::list<VSCMIDIInputPort>& getInputPorts(void) const;
+    static VSCMIDIControlCenterPtr defaultCenter(void);
     
     void addController(VSCMIDIControllerPtr controller);
     void removeController(VSCMIDIControllerPtr controller);
@@ -69,19 +68,15 @@ protected:
     
 private:
     
-    RtMidiInPtr     _midiIn;
-    RtMidiOutPtr    _midiOut;
-    
-    std::list<VSCMIDIInputPort> _inputPorts;
-    std::list<VSCMIDIOutputPort> _outputPorts;
-    
     ControllerList _controllerList;
     
     State _state;
     VSCSTimeInterval _broadcastInterval;
     
+    static boost::mutex _singletonMutex;
+
+    
 };
 
-typedef boost::shared_ptr<VSCMIDIControlCenter> VSCMIDIControlCenterPtr;
 
 #endif

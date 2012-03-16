@@ -141,6 +141,8 @@
 		10DDE642150A5B1F009CFFB2 /* VSCMIDITestView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCMIDITestView.mm; path = ../MIDI/AppKit/VSCMIDITestView.mm; sourceTree = "<group>"; };
 		10DE92351413EDE600CC602A /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = lib/libboost_filesystem.a; sourceTree = BOOST_ROOT; };
 		10DE923D1413EEB200CC602A /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = lib/libboost_system.a; sourceTree = BOOST_ROOT; };
+		10F9E1E8151251F300525CF8 /* VSCMIDIOutput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDIOutput.cpp; path = ../MIDI/VSCMIDIOutput.cpp; sourceTree = "<group>"; };
+		10F9E1E9151251F400525CF8 /* VSCMIDIOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCMIDIOutput.h; path = ../MIDI/VSCMIDIOutput.h; sourceTree = "<group>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD582B0DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2564AD2C0F5327BB00F57823 /* EnveloppeEditor_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnveloppeEditor_Prefix.pch; sourceTree = "<group>"; };
@@ -312,6 +314,8 @@
 				10A12B4A14DFE98F00B302BC /* VSCMIDIControlCenter.h */,
 				10A12B4B14DFE98F00B302BC /* VSCMIDIController.cpp */,
 				10A12B4C14DFE98F00B302BC /* VSCMIDIController.h */,
+				10F9E1E8151251F300525CF8 /* VSCMIDIOutput.cpp */,
+				10F9E1E9151251F400525CF8 /* VSCMIDIOutput.h */,
 			);
 			name = MIDI;
 			sourceTree = "<group>";

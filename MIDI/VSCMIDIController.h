@@ -16,6 +16,7 @@
 
 #include "VSCSound.h"
 #include "VSCMIDI.h"
+#include "VSCMIDIOutput.h"
 #include "VSCController.h"
 
 #include "RtMidi.h"
@@ -35,36 +36,29 @@ public:
     typedef std::set<unsigned int> ControlIdentifiers;
     
     VSCMIDIController(void);
-    VSCMIDIController(VSCMIDIOutputPort outputPort);
-    
-    VSCMIDIOutputPort getOutputPort(void) const;
-    bool setOutputPort(VSCMIDIOutputPort port);     // throws if the output port could not be established
-    
+
     void setController(VSCControllerPtr c);
     VSCControllerPtr getController(void);
     
-    void setChannel(unsigned int chan);
-    unsigned int getChannel(void) const;
+    void setMIDIOutput(VSCMIDIOutputPtr o);
+    VSCMIDIOutputPtr getMIDIOutput(void);
     
-    void setNormalizeToMIDIRange(bool norm);
-    bool getNormalizeToMIDIRange(void);
+    void setMIDIChannel(const unsigned int chan);
+    unsigned int getMIDIChannel(void) const;
     
-    void sendMIDIStateIfRequired(void);
+    void setControlChannel(const unsigned int chan);
+    unsigned int getControlChannel(void) const;
     
-    void addControlIdentifier(unsigned int identifier);
-    void removeContorlIdentifier(unsigned int identifier);
-    const ControlIdentifiers& getControlIdentifiers(void);
+    bool sendControllerValue(void);
+    bool sendValue(unsigned int val);
     
 private:
     
-    VSCMIDIOutputPort _outputPort;
-    RtMidiOutPtr _midiOut;
+    VSCMIDIOutputPtr _midiOutput;
     VSCControllerPtr _controller;
-    
-    bool _normalizeToMIDIRange;
-    
-    ControlIdentifiers _midiControlIdentifiers;
-    unsigned int _channel;
+
+    unsigned int _midiChannel;
+    unsigned int _controlChannel;
     
 };
 

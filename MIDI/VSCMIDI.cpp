@@ -139,3 +139,59 @@ VSCMIDI::Message VSCMIDI::messageForControl(unsigned int channel, unsigned int c
 }
 
 
+#pragma mark - Input and Output ports 
+
+void VSCMIDI::refreshOutputPorts(void) {
+    
+    _outputPorts.clear();
+    
+    // Check outputs.
+    unsigned int nPorts = _midiOut->getPortCount();
+    std::string portName;
+    std::cout << "\nThere are " << nPorts << " MIDI output ports available.\n";
+    for ( unsigned int i=0; i<nPorts; i++ ) {
+        try {
+            portName = _midiOut->getPortName(i);
+            VSCMIDIOutputPort p = {i, portName};
+            _outputPorts.push_back(p);
+            std::cout << "  Output Port #" << i+1 << ": " << portName << '\n';
+        }
+        catch (RtError &error) {
+            throw VSCMIDIException(error.getMessage());
+        }
+    }
+    std::cout << std::endl;
+    
+}
+
+void VSCMIDI::refreshInputPorts(void) {
+    
+    _inputPorts.clear();
+    
+    // Check inputs.
+    unsigned int nPorts = _midiIn->getPortCount();
+    std::cout << "\nThere are " << nPorts << " MIDI input sources available.\n";
+    std::string portName;
+    for ( unsigned int i=0; i<nPorts; i++ ) {
+        try {
+            portName = _midiIn->getPortName(i);
+            VSCMIDIInputPort p = {i, portName};
+            _inputPorts.push_back(p);
+            std::cout << "  Input Port #" << i+1 << ": " << portName << '\n';
+        }
+        catch ( RtError &error ) {
+            throw VSCMIDIException(error.getMessage());
+        }
+    }
+    
+}
+
+const std::list<VSCMIDIOutputPort>& VSCMIDI::getOutputPorts(void) const {
+    return _outputPorts;
+}
+
+const std::list<VSCMIDIInputPort>& VSCMIDI::getInputPorts(void) const {
+    return _inputPorts;
+}
+
+

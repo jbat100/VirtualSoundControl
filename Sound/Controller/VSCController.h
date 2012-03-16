@@ -18,6 +18,10 @@
 
 #include "VSCSound.h"
 
+class VSCController;
+
+typedef boost::shared_ptr<VSCController> VSCControllerPtr;
+
 class VSCController {
     
 public:
@@ -53,7 +57,6 @@ private:
     
 };
 
-typedef boost::shared_ptr<VSCController> VSCControllerPtr;
 
 #endif
 

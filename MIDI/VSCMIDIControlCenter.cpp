@@ -17,15 +17,7 @@
 
 VSCMIDIControlCenter::VSCMIDIControlCenter(void) {
     
-    // RtMidiOut constructor
-    try {
-        _midiOut = RtMidiOutPtr(new RtMidiOut());
-    }
-    catch ( RtError &error ) {
-        //error.printMessage();
-        throw VSCMIDIException(error.getMessage());
-        //throw VSCMIDIException("test message");
-    }
+
     
 }
 
@@ -35,60 +27,21 @@ VSCMIDIControlCenter::~VSCMIDIControlCenter(void) {
     
 }
 
-#pragma mark - Input and Output ports 
-
-void VSCMIDIControlCenter::refreshOutputPorts(void) {
+VSCMIDIControlCenterPtr VSCMIDIControlCenter::defaultCenter(void) {
     
-    _outputPorts.clear();
+    static VSCMIDIControlCenterPtr sharedInstancePtr = VSCMIDIControlCenterPtr();
     
-    // Check outputs.
-    unsigned int nPorts = _midiOut->getPortCount();
-    std::string portName;
-    std::cout << "\nThere are " << nPorts << " MIDI output ports available.\n";
-    for ( unsigned int i=0; i<nPorts; i++ ) {
-        try {
-            portName = _midiOut->getPortName(i);
-            VSCMIDIOutputPort p = {i, portName};
-            _outputPorts.push_back(p);
-            std::cout << "  Output Port #" << i+1 << ": " << portName << '\n';
-        }
-        catch (RtError &error) {
-            error.printMessage();
-        }
-    }
-    std::cout << std::endl;
-    
-}
-
-void VSCMIDIControlCenter::refreshInputPorts(void) {
-    
-    _inputPorts.clear();
-    
-    // Check inputs.
-    unsigned int nPorts = _midiIn->getPortCount();
-    std::cout << "\nThere are " << nPorts << " MIDI input sources available.\n";
-    std::string portName;
-    for ( unsigned int i=0; i<nPorts; i++ ) {
-        try {
-            portName = _midiIn->getPortName(i);
-            VSCMIDIInputPort p = {i, portName};
-            _inputPorts.push_back(p);
-            std::cout << "  Input Port #" << i+1 << ": " << portName << '\n';
-        }
-        catch ( RtError &error ) {
-            error.printMessage();
+    if (!sharedInstancePtr) {
+        boost::mutex::scoped_lock lock(_singletonMutex);
+        if (!sharedInstancePtr) {
+            sharedInstancePtr = VSCMIDIControlCenterPtr(new VSCMIDIControlCenter());
         }
     }
     
+    return sharedInstancePtr;
+    
 }
 
-const std::list<VSCMIDIOutputPort>& VSCMIDIControlCenter::getOuputPorts(void) const {
-    return _outputPorts;
-}
-
-const std::list<VSCMIDIInputPort>& VSCMIDIControlCenter::getInputPorts(void) const {
-    return _inputPorts;
-}
 
 #pragma mark - MIDI Controllers 
 

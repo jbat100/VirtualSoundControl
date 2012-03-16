@@ -7,14 +7,24 @@
 //
 
 #import "VSCMIDITestView.h"
+#import "NSString+VSCAdditions.h"
 
+#include <list>
+#include <iterator>
 #include "VSCMIDI.h"
+
+
+NSString* const VSCMIDIPortNameColumnIdentifier         = @"MIDIPortName";
+NSString* const VSCMIDIPortNumberColumnIdentifier       = @"MIDIPortNumber";
+NSString* const VSCMIDIPortVirtualColumnIdentifier      = @"MIDIPortVirtual";
+NSString* const VSCMIDIPortSelectedColumnIdentifier     = @"MIDIPortSelected";
 
 @interface VSCMIDITestView () {
     
 }
 
 -(void) customInit;
+-(void) setMidiController:(VSCMIDIControllerPtr)controller;
 
 @end
 
@@ -66,7 +76,6 @@
     pitchValue = 80;
     velocityValue = 80;
     
-    
     [self setMidiControlCenter:VSCMIDIControlCenterPtr()];
 }
 
@@ -83,14 +92,12 @@
     _midiControlCenter = center;
 }
 
--(VSCMIDIControllerPtr) getCurrentMidiController {
-    return _currentMidiController;
+-(void) setMidiController:(VSCMIDIControllerPtr)controller {
+    _midiController = controller;
 }
 
-#pragma mark - MIDI Handling
-
--(BOOL) createMidiOutputWithPort:(VSCMIDIOutputPort)port {
-    return NO;
+-(VSCMIDIControllerPtr) getMidiController {
+    return _midiController;
 }
 
 #pragma mark - NSButton Callbacks
@@ -109,11 +116,26 @@
     }
 }
 
--(IBAction) createMidiOutput:(id)sender {
+-(IBAction) setMidiControllerWithCurrentMIDIOutputRowSelection:(id)sender {
     NSAssert(_midiControlCenter, @"_midiControlCenter is NULL");
+    
     if (_midiControlCenter) {
         
+        NSInteger rowIndex = [self.midiOutputsTable selectedRow];
+        
+        const std::list<VSCMIDIOutputPort> portList = _midiControlCenter->getOutputPorts();
+        std::list<VSCMIDIOutputPort>::const_iterator portIt = _midiControlCenter->getOutputPorts().begin();
+        std::advance(portIt, rowIndex);
+        VSCMIDIOutputPort outputPort = *portIt;
+        
+        VSCMIDIControllerPtr controller = _midiControlCenter->controllerForOutputPort(outputPort);
+        
+        if (controller) {
+            [self setMidiController:controller];
+        }
+        
     }
+    
 }
 
 -(IBAction) sendMidiControlMessage:(id)sender {
@@ -131,16 +153,69 @@
 #pragma mark - NSTableView Delegate/Datasource
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
+    
+    if (aTableView == _midiInputsTable) {
+        return _midiControlCenter->getInputPorts().size();
+    }
+    
+    else if (aTableView == _midiOutputsTable) {
+        return _midiControlCenter->getOutputPorts().size();
+    }
+    
     return 0;
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex {
+    
+    NSString* columnIdentifier = [aTableColumn identifier];
+    
+    if (aTableView == _midiInputsTable) {
+        
+        const std::list<VSCMIDIInputPort> portList = _midiControlCenter->getInputPorts();
+        std::list<VSCMIDIInputPort>::const_iterator portIt = _midiControlCenter->getInputPorts().begin();
+        std::advance(portIt, rowIndex);
+        
+        if ([columnIdentifier isEqualToString:VSCMIDIPortNameColumnIdentifier]) {
+            return [NSString stringWithStdString:portIt->name];
+        }
+        else if ([columnIdentifier isEqualToString:VSCMIDIPortNumberColumnIdentifier]) {
+            return [NSNumber numberWithUnsignedInt:portIt->number];
+        }
+        else if ([columnIdentifier isEqualToString:VSCMIDIPortVirtualColumnIdentifier]) {
+            return portIt->isVirtual ? @"Yes" : @"No";
+        }
+        else if ([columnIdentifier isEqualToString:VSCMIDIPortSelectedColumnIdentifier]) {
+            return @"No";
+        }
+        
+    }
+    
+    if (aTableView == _midiOutputsTable) {
+        
+        const std::list<VSCMIDIOutputPort> portList = _midiControlCenter->getOutputPorts();
+        std::list<VSCMIDIOutputPort>::const_iterator portIt = _midiControlCenter->getOutputPorts().begin();
+        std::advance(portIt, rowIndex);
+        
+        if ([columnIdentifier isEqualToString:VSCMIDIPortNameColumnIdentifier]) {
+            return [NSString stringWithStdString:portIt->name];
+        }
+        else if ([columnIdentifier isEqualToString:VSCMIDIPortNumberColumnIdentifier]) {
+            return [NSNumber numberWithUnsignedInt:portIt->number];
+        }
+        else if ([columnIdentifier isEqualToString:VSCMIDIPortVirtualColumnIdentifier]) {
+            return portIt->isVirtual ? @"Yes" : @"No";
+        }
+        else if ([columnIdentifier isEqualToString:VSCMIDIPortSelectedColumnIdentifier]) {
+            return @"No";
+        }
+        
+    }
+    
+    
     return @"";
 }
 
-- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    return nil;
-}
+    
 
 
 @end
