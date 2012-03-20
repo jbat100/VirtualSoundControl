@@ -64,16 +64,20 @@ static NSString* enveloppeBaseFilePath = nil;
 	
 	NSLog(@"%@ makeWindowControllers", self);
 	
+#if 0
 	enveloppeEditorWindowController = [[VSCEnveloppeEditorWindowController alloc] 
 									   initWithWindowNibName:@"VSCEnveloppeEditorWindowController"];
-	
 	[self addWindowController:enveloppeEditorWindowController];
-	
 	NSLog(@"%@ added window controller %@", self, enveloppeEditorWindowController);
-	
 	[enveloppeEditorWindowController release];
-	
 	[enveloppeEditorWindowController.loadedTextField setStringValue:@"LOADED WITHOUT CALLBACKS"];
+#endif
+    
+    midiTestWindowController = [[VSCMIDITestWindowController alloc] 
+                                initWithWindowNibName:@"VSCMIDITestWindowController"];
+    [self addWindowController:midiTestWindowController];
+	NSLog(@"%@ added window controller %@", self, midiTestWindowController);
+	[midiTestWindowController release];
 	
 	NSLog(@"%@ windowControllers are %@", self, [self windowControllers]);
 	

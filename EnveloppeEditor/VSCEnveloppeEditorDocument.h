@@ -16,6 +16,7 @@
 #include "VSCEnveloppePoint.h"
 
 #import "VSCEnveloppeEditorWindowController.h"
+#import "VSCMIDITestWindowController.h"
 
 #define DEFAULT_ENVELOPPE_RELATIVE_PATH		@"Default"
 
@@ -29,6 +30,8 @@
 	std::list<VSCEnveloppePtr> _mainEnveloppeList;
 	
 	VSCEnveloppeEditorWindowController* enveloppeEditorWindowController;
+    
+    VSCMIDITestWindowController* midiTestWindowController;
 
 }
 

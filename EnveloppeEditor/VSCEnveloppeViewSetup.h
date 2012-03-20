@@ -38,18 +38,18 @@ public:
 	/*
 	 *	View range setters / getters
 	 */
-    VSCEnveloppe::TimeRange getTimeRange(void) const;
+    const VSCEnveloppe::TimeRange& getTimeRange(void) const;
 	void setTimeRange(const VSCEnveloppe::TimeRange timeRange);
-	VSCEnveloppe::ValueRange getValueRange(void) const;
+	const VSCEnveloppe::ValueRange& getValueRange(void) const;
 	void setValueRange(const VSCEnveloppe::ValueRange valueRange);
     
     /*
 	 *	Allowed range setters / getters
 	 */
-    VSCEnveloppe::TimeRange getAllowedTimeRange(void) const;
-	void setAllowedTimeRange(VSCEnveloppe::TimeRange timeRange);
-	VSCEnveloppe::ValueRange getAllowedValueRange(void) const;
-	void setAllowedValueRange(VSCEnveloppe::ValueRange valueRange);
+    const VSCEnveloppe::TimeRange& getAllowedTimeRange(void) const;
+	void setAllowedTimeRange(const VSCEnveloppe::TimeRange timeRange);
+	const VSCEnveloppe::ValueRange& getAllowedValueRange(void) const;
+	void setAllowedValueRange(const VSCEnveloppe::ValueRange valueRange);
 	
 	/*
 	 *	Display type setters / getters

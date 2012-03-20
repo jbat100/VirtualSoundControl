@@ -54,7 +54,7 @@ VSCSFloat VSCEnveloppeViewSetup::valueForPixel(const int pixel, int const widthI
 /*
  *	View range setters / getters
  */
-VSCEnveloppe::TimeRange VSCEnveloppeViewSetup::getTimeRange(void) const {
+const VSCEnveloppe::TimeRange& VSCEnveloppeViewSetup::getTimeRange(void) const {
     return _timeRange;
 }
 
@@ -62,7 +62,7 @@ void VSCEnveloppeViewSetup::setTimeRange(const VSCEnveloppe::TimeRange timeRange
     _timeRange = timeRange;
 }
 
-VSCEnveloppe::ValueRange VSCEnveloppeViewSetup::getValueRange(void) const {
+const VSCEnveloppe::ValueRange& VSCEnveloppeViewSetup::getValueRange(void) const {
     return _valueRange;
 }
 
@@ -74,7 +74,7 @@ void VSCEnveloppeViewSetup::setValueRange(const VSCEnveloppe::ValueRange valueRa
  *	Allowed range setters / getters
  */
 
-VSCEnveloppe::TimeRange VSCEnveloppeViewSetup::getAllowedTimeRange(void) const {
+const VSCEnveloppe::TimeRange& VSCEnveloppeViewSetup::getAllowedTimeRange(void) const {
     return _allowedTimeRange;
 }
 
@@ -82,7 +82,7 @@ void VSCEnveloppeViewSetup::setAllowedTimeRange(const VSCEnveloppe::TimeRange ti
     _allowedTimeRange = timeRange;
 }
 
-VSCEnveloppe::ValueRange VSCEnveloppeViewSetup::getAllowedValueRange(void) const {
+const VSCEnveloppe::ValueRange& VSCEnveloppeViewSetup::getAllowedValueRange(void) const {
     return _allowedValueRange;
 }
 

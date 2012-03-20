@@ -245,11 +245,13 @@
 	/*
 	 *	Draw enveloppe
 	 */
+    
+    
 	
-	CGFloat radius = (CGFloat)(_enveloppeViewSetup->getControlPointRadius());
-	CGColorRef cgSelectedColourRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getControlPointSelectedColour());
-	CGColorRef cgUnselectedColourRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getControlPointUnselectedColour());
-	CGColorRef cgLineColorRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getLineColour());
+	CGFloat radius = (CGFloat)(_enveloppeViewSetup->getActiveDisplaySetup().getControlPointRadius());
+	CGColorRef cgSelectedColourRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getActiveDisplaySetup().getControlPointSelectedColour());
+	CGColorRef cgUnselectedColourRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getActiveDisplaySetup().getControlPointUnselectedColour());
+	CGColorRef cgLineColorRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getActiveDisplaySetup().getLineColour());
 	
     VSCEnveloppe::ConstPointIterator nextIt;
 	VSCEnveloppe::ConstPointIterator endIt = _enveloppe->getPointEndIterator();
@@ -407,10 +409,8 @@
     }
     
     if (_enveloppeViewSetup) {
-        _enveloppeViewSetup->setMinTime(minTime);
-        _enveloppeViewSetup->setMaxTime(maxTime);
-        _enveloppeViewSetup->setMinValue(minValue);
-        _enveloppeViewSetup->setMaxValue(maxValue);
+        _enveloppeViewSetup->setTimeRange(VSCEnveloppe::TimeRange(minTime, maxTime-minTime));
+        _enveloppeViewSetup->setValueRange(VSCEnveloppe::ValueRange(minTime, maxValue-minValue));
     }
     
 }
@@ -459,12 +459,12 @@
 #pragma mark - View to enveloppe conversion tools
 
 -(VSCSFloat) valueDeltaForPointYDelta:(VSCSFloat)pointYDelta {
-	VSCSFloat range = _enveloppeViewSetup->getMaxValue() - _enveloppeViewSetup->getMinValue(); 
+	VSCSFloat range = _enveloppeViewSetup->getValueRange().second; 
 	return (pointYDelta / (VSCSFloat)self.frame.size.height) * range;
 }
 
 -(VSCSFloat) timeDeltaForPointXDelta:(VSCSFloat)pointXDelta {
-	VSCSFloat range = _enveloppeViewSetup->getMaxTime() - _enveloppeViewSetup->getMinTime(); 
+	VSCSFloat range = _enveloppeViewSetup->getTimeRange().second; 
 	return (pointXDelta / (VSCSFloat)self.frame.size.width) * range;
 }
 
@@ -475,8 +475,8 @@
 	if (!_enveloppeViewSetup)
 		return 0.0;
 	VSCSFloat normalisedY = (point.y / (VSCSFloat)self.frame.size.height);
-	VSCSFloat range = _enveloppeViewSetup->getMaxValue() - _enveloppeViewSetup->getMinValue(); 
-	VSCSFloat adjustedY = _enveloppeViewSetup->getMinValue() + (normalisedY*range);
+	VSCSFloat range = _enveloppeViewSetup->getValueRange().second; 
+	VSCSFloat adjustedY = _enveloppeViewSetup->getValueRange().first;  + (normalisedY*range);
 	
 	return adjustedY;
 	
@@ -489,8 +489,8 @@
 	if (!_enveloppeViewSetup)
 		return 0.0;
 	VSCSFloat normalisedX = (point.x / (VSCSFloat)self.frame.size.width);
-	VSCSFloat range = _enveloppeViewSetup->getMaxTime() - _enveloppeViewSetup->getMinTime(); 
-	return (NSTimeInterval)(_enveloppeViewSetup->getMinTime() + (normalisedX*range));
+	VSCSFloat range = _enveloppeViewSetup->getTimeRange().second; 
+	return (NSTimeInterval)(_enveloppeViewSetup->getValueRange().first  + (normalisedX*range));
 	
 }
 
@@ -500,13 +500,13 @@
 
 -(NSPoint) pointForTime:(NSTimeInterval)time value:(VSCSFloat)value {
 	
-	VSCSFloat timeRange = _enveloppeViewSetup->getMaxTime() - _enveloppeViewSetup->getMinTime(); 
+	VSCSFloat timeRange = _enveloppeViewSetup->getTimeRange().second; 
 	VSCSFloat timePerPixel = timeRange / self.frame.size.width; 
-	VSCSFloat x = (time - _enveloppeViewSetup->getMinTime()) / timePerPixel;
+	VSCSFloat x = (time - _enveloppeViewSetup->getValueRange().first) / timePerPixel;
 	
-	VSCSFloat valueRange = _enveloppeViewSetup->getMaxValue() - _enveloppeViewSetup->getMinValue(); 
+	VSCSFloat valueRange = _enveloppeViewSetup->getValueRange().second;  
 	VSCSFloat valuePerPixel = valueRange / self.frame.size.height; 
-	VSCSFloat y = (value - _enveloppeViewSetup->getMinValue()) / valuePerPixel;
+	VSCSFloat y = (value - _enveloppeViewSetup->getValueRange().first) / valuePerPixel;
 	
 	return NSMakePoint(x, y);
 }
@@ -515,7 +515,7 @@
 	
 	assert(_enveloppeViewSetup);
 	
-	float radius = _enveloppeViewSetup->getControlPointRadius();
+	float radius = _enveloppeViewSetup->getActiveDisplaySetup().getControlPointRadius();
 	
 	/* First do a simple sqaure test to discard faster */
 	NSPoint envP = [self pointForEnveloppePoint:enveloppePoint];

@@ -8,29 +8,22 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "VSCMIDI.h"
-#include "VSCMIDIOutput.h"
+@class VSCMIDITest;
 
-@interface VSCMIDITestView : NSView <NSTableViewDelegate, NSTableViewDataSource> {
+@interface VSCMIDITestView : NSView <NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate> {
     
-    @private
-    
-    VSCMIDIPtr _midi;
-    VSCMIDIOutputPtr _midiOutput;
-    
-    unsigned int midiChannel;
-    unsigned int controlChannel;
-    unsigned int controlValue;
-    unsigned int pitchValue;
-    unsigned int velocityValue;
     
 }
+
+@property (nonatomic, weak) VSCMIDITest* midiTest;
 
 @property (nonatomic, strong) IBOutlet NSTableView* midiInputsTable;
 @property (nonatomic, strong) IBOutlet NSTableView* midiOutputsTable;
 @property (nonatomic, strong) IBOutlet NSButton* refreshInputsButton;
 @property (nonatomic, strong) IBOutlet NSButton* refreshOutputsButton;
 @property (nonatomic, strong) IBOutlet NSButton* createMidiOutputButton;
+
+@property (nonatomic, strong) IBOutlet NSTextField* midiOutputTextField;
 
 @property (nonatomic, strong) IBOutlet NSTextField* midiChannelTextField;
 @property (nonatomic, strong) IBOutlet NSTextField* controlChannelTextField;
@@ -42,19 +35,16 @@
 @property (nonatomic, strong) IBOutlet NSButton* sendMidiNoteOnButton;
 @property (nonatomic, strong) IBOutlet NSButton* sendMidiNoteOffButton;
 
+
+-(void) refreshInterface;
+
 -(IBAction) refreshInputs:(id)sender;
 -(IBAction) refreshOutputs:(id)sender;
--(IBAction) setMidiControllerWithCurrentMIDIOutputRowSelection:(id)sender;
+-(IBAction) setMidiOutputWithRowSelection:(id)sender;
 
 -(IBAction) sendMidiControlMessage:(id)sender;
 -(IBAction) sendMidiNoteOnMessage:(id)sender;
 -(IBAction) sendMidiNoteOffMessage:(id)sender;
-
--(VSCMIDIPtr) getMidi;
--(void) setMidi:(VSCMIDIPtr)midi;
-
--(VSCMIDIOutputPtr) getMidiOutput;
--(void) getMidiOutput:(VSCMIDIOutputPtr);
 
 
 @end

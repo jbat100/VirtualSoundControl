@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1003F7B31517475C00D681DD /* VSCMIDITestWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1003F7B11517475C00D681DD /* VSCMIDITestWindowController.m */; };
+		1003F7B41517475C00D681DD /* VSCMIDITestWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1003F7B21517475C00D681DD /* VSCMIDITestWindowController.xib */; };
 		1023D46513E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1023D46413E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp */; };
 		102C2146141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 102C2145141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm */; };
 		102C2156141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 102C2155141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib */; };
@@ -16,6 +18,7 @@
 		105C4807144B32B00015AE8F /* VSCEnveloppe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47FF144B32B00015AE8F /* VSCEnveloppe.cpp */; };
 		105C4808144B32B00015AE8F /* VSCEnveloppeCoordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C4801144B32B00015AE8F /* VSCEnveloppeCoordinate.cpp */; };
 		105C4809144B32B00015AE8F /* VSCEnveloppePoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C4803144B32B00015AE8F /* VSCEnveloppePoint.cpp */; };
+		1060DE5A1518D55100E8F1B9 /* VSCMIDITest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1060DE591518D55100E8F1B9 /* VSCMIDITest.mm */; };
 		1063E13614439A3400BD55ED /* VSCEnveloppeEditorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1063E13514439A3300BD55ED /* VSCEnveloppeEditorView.mm */; };
 		106A54C5143D097B00455BC2 /* libboost_serialization.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106A54C4143D097B00455BC2 /* libboost_serialization.a */; };
 		107A78FE132ADE3700C4B1FE /* VSCEnveloppeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */; };
@@ -74,6 +77,9 @@
 
 /* Begin PBXFileReference section */
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1003F7B01517475C00D681DD /* VSCMIDITestWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDITestWindowController.h; path = ../MIDI/AppKit/VSCMIDITestWindowController.h; sourceTree = "<group>"; };
+		1003F7B11517475C00D681DD /* VSCMIDITestWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSCMIDITestWindowController.m; path = ../MIDI/AppKit/VSCMIDITestWindowController.m; sourceTree = "<group>"; };
+		1003F7B21517475C00D681DD /* VSCMIDITestWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCMIDITestWindowController.xib; path = ../MIDI/AppKit/VSCMIDITestWindowController.xib; sourceTree = "<group>"; };
 		1023D46313E8A58700BB9080 /* VSCEnveloppeViewSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeViewSetup.h; sourceTree = "<group>"; };
 		1023D46413E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppeViewSetup.cpp; sourceTree = "<group>"; };
 		102C2144141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeEditorWindowController.h; sourceTree = "<group>"; };
@@ -92,6 +98,8 @@
 		105C4802144B32B00015AE8F /* VSCEnveloppeCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCEnveloppeCoordinate.h; path = ../Sound/Enveloppe/VSCEnveloppeCoordinate.h; sourceTree = SOURCE_ROOT; };
 		105C4803144B32B00015AE8F /* VSCEnveloppePoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCEnveloppePoint.cpp; path = ../Sound/Enveloppe/VSCEnveloppePoint.cpp; sourceTree = SOURCE_ROOT; };
 		105C4804144B32B00015AE8F /* VSCEnveloppePoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCEnveloppePoint.h; path = ../Sound/Enveloppe/VSCEnveloppePoint.h; sourceTree = SOURCE_ROOT; };
+		1060DE581518D55100E8F1B9 /* VSCMIDITest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDITest.h; path = ../MIDI/AppKit/VSCMIDITest.h; sourceTree = "<group>"; };
+		1060DE591518D55100E8F1B9 /* VSCMIDITest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCMIDITest.mm; path = ../MIDI/AppKit/VSCMIDITest.mm; sourceTree = "<group>"; };
 		1063E13414439A3300BD55ED /* VSCEnveloppeEditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeEditorView.h; sourceTree = "<group>"; };
 		1063E13514439A3300BD55ED /* VSCEnveloppeEditorView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCEnveloppeEditorView.mm; sourceTree = "<group>"; };
 		106A54C4143D097B00455BC2 /* libboost_serialization.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_serialization.a; path = lib/libboost_serialization.a; sourceTree = BOOST_ROOT; };
@@ -172,6 +180,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1003F7AF1517466400D681DD /* Window Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				102C2144141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.h */,
+				102C2145141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm */,
+				1003F7B01517475C00D681DD /* VSCMIDITestWindowController.h */,
+				1003F7B11517475C00D681DD /* VSCMIDITestWindowController.m */,
+				1003F7B21517475C00D681DD /* VSCMIDITestWindowController.xib */,
+			);
+			name = "Window Controllers";
+			sourceTree = "<group>";
+		};
 		1017811F132BF9BF001C6A96 /* Generic */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,8 +271,6 @@
 			children = (
 				1030EFE1132985C300E4BCA1 /* VSCEnveloppeEditorDocument.h */,
 				1030EFE2132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm */,
-				102C2144141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.h */,
-				102C2145141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm */,
 			);
 			name = "Enveloppe Document";
 			sourceTree = "<group>";
@@ -325,6 +343,8 @@
 			children = (
 				10DDE641150A5B1F009CFFB2 /* VSCMIDITestView.h */,
 				10DDE642150A5B1F009CFFB2 /* VSCMIDITestView.mm */,
+				1060DE581518D55100E8F1B9 /* VSCMIDITest.h */,
+				1060DE591518D55100E8F1B9 /* VSCMIDITest.mm */,
 			);
 			name = "MIDI View";
 			sourceTree = "<group>";
@@ -361,6 +381,7 @@
 				107A7903132ADF1500C4B1FE /* Enveloppe */,
 				10DDE640150A5A6A009CFFB2 /* MIDI View */,
 				107A7904132ADF2000C4B1FE /* Enveloppe View */,
+				1003F7AF1517466400D681DD /* Window Controllers */,
 				107A7902132ADF0500C4B1FE /* Enveloppe Document */,
 			);
 			name = Classes;
@@ -473,6 +494,7 @@
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */,
 				102C2156141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib in Resources */,
+				1003F7B41517475C00D681DD /* VSCMIDITestWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,6 +533,8 @@
 				104636F214E9587500C7AAD9 /* VSCController.cpp in Sources */,
 				104636F514E9631300C7AAD9 /* VSCTriggeredController.cpp in Sources */,
 				10DDE643150A5B1F009CFFB2 /* VSCMIDITestView.mm in Sources */,
+				1003F7B31517475C00D681DD /* VSCMIDITestWindowController.m in Sources */,
+				1060DE5A1518D55100E8F1B9 /* VSCMIDITest.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -613,6 +637,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -642,6 +667,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
