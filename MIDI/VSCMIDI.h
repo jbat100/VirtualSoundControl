@@ -24,8 +24,8 @@ struct VSCMIDIOutputPort {
     unsigned int number;
     std::string name;
     bool isVirtual;
-    bool operator!=(const VSCMIDIOutputPort& p);
-    bool operator==(const VSCMIDIOutputPort& p);
+    bool operator!=(const VSCMIDIOutputPort& p) const;
+    bool operator==(const VSCMIDIOutputPort& p) const;
 };
 
 std::ostream& operator<<(std::ostream& output, const VSCMIDIOutputPort& p);
@@ -34,8 +34,8 @@ struct VSCMIDIInputPort {
     unsigned int number;
     std::string name;
     bool isVirtual;
-    bool operator!=(const VSCMIDIInputPort& p);
-    bool operator==(const VSCMIDIInputPort& p);
+    bool operator!=(const VSCMIDIInputPort& p) const;
+    bool operator==(const VSCMIDIInputPort& p) const;
 };
 
 std::ostream& operator<<(std::ostream& output, const VSCMIDIInputPort& p);
@@ -60,6 +60,7 @@ public:
     static Message messageForControl(unsigned int channel, unsigned int control, unsigned int value);
     
     VSCMIDI(void);
+    ~VSCMIDI(void); // no need to make the destructor virtual if not subclassed, it might slow things down
     
     void refreshInputPorts(void);
     void refreshOutputPorts(void);

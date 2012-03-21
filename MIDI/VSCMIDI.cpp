@@ -10,6 +10,7 @@
 #include "VSCMIDI.h"
 #include "VSCException.h"
 #include <limits>
+#include <assert.h>
 
 const VSCMIDIOutputPort     VSCMIDIOutputPortVoid   = {std::numeric_limits<unsigned int>::max(), "", false};
 const VSCMIDIInputPort      VSCMIDIInputPortVoid    = {std::numeric_limits<unsigned int>::max(), "", false};
@@ -25,22 +26,49 @@ std::ostream& operator<<(std::ostream& output, const VSCMIDIInputPort& p) {
 }
 
 
-bool VSCMIDIOutputPort::operator!=(const VSCMIDIOutputPort& p) {
+bool VSCMIDIOutputPort::operator!=(const VSCMIDIOutputPort& p) const {
     return !(*this == p);
 }
 
-bool VSCMIDIOutputPort::operator==(const VSCMIDIOutputPort& p) {
+bool VSCMIDIOutputPort::operator==(const VSCMIDIOutputPort& p) const {
     if (p.isVirtual != isVirtual || p.number != number || p.name.compare(name) != 0) return false;
     return true;
 }
 
-bool VSCMIDIInputPort::operator!=(const VSCMIDIInputPort& p) {
+bool VSCMIDIInputPort::operator!=(const VSCMIDIInputPort& p) const {
     return !(*this == p);
 }
 
-bool VSCMIDIInputPort::operator==(const VSCMIDIInputPort& p) {
+bool VSCMIDIInputPort::operator==(const VSCMIDIInputPort& p) const {
     if (p.isVirtual != isVirtual || p.number != number || p.name.compare(name) != 0) return false;
     return true;
+}
+
+VSCMIDI::VSCMIDI(void) {
+    
+    // RtMidiOut constructor
+    try {
+        _midiOut = RtMidiOutPtr(new RtMidiOut());
+    }
+    catch ( RtError &error ) {
+        error.printMessage();
+    }
+    
+    // RtMidiIn constructor
+    try {
+        _midiIn = RtMidiInPtr(new RtMidiIn());
+    }
+    catch (RtError &error) {
+        // Handle the exception here
+        error.printMessage();
+    }
+    
+}
+
+VSCMIDI::~VSCMIDI(void) {
+    
+    // no need (WE MUST NOT!) to delete the rtmidi in/out, we are using smart pointers :)
+    
 }
 
 VSCMIDI::Message VSCMIDI::messageForNote(unsigned int channel, unsigned int pitch, unsigned int velocity, bool on) {
@@ -142,6 +170,8 @@ VSCMIDI::Message VSCMIDI::messageForControl(unsigned int channel, unsigned int c
 #pragma mark - Input and Output ports 
 
 void VSCMIDI::refreshOutputPorts(void) {
+    
+    assert(_midiOut);
     
     _outputPorts.clear();
     

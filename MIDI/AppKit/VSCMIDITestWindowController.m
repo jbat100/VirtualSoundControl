@@ -8,8 +8,7 @@
 
 #import "VSCMIDITestWindowController.h"
 
-#import "VSCMIDITestView.h"
-#import "VSCMIDITest.h"
+#import "VSCMIDITestController.h"
 
 @interface VSCMIDITestWindowController ()
 
@@ -17,8 +16,7 @@
 
 @implementation VSCMIDITestWindowController
 
-@synthesize midiTestView = _midiTestView;
-@synthesize midiTest = _midiTest;
+@synthesize midiTestController = _midiTestController;
 
 - (id)initWithWindow:(NSWindow *)window
 {
@@ -34,21 +32,10 @@
 {
     [super windowDidLoad];
     
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+    [self.midiTestController setupView];
     
     
 }
 
--(IBAction) sendMidiControlMessage:(id)sender {
-    [self.midiTest sendMidiControlMessage];
-}
-
--(IBAction) sendMidiNoteOnMessage:(id)sender {
-    [self.midiTest sendMidiNoteOnMessage];
-}
-
--(IBAction) sendMidiNoteOffMessage:(id)sender {
-    [self.midiTest sendMidiNoteOffMessage];
-}
 
 @end

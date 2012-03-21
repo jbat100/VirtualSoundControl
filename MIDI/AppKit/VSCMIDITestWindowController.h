@@ -8,14 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class VSCMIDITestView;
-@class VSCMIDITest;
+@class VSCMIDITestController;
 
-@interface VSCMIDITestWindowController : NSWindowController {
-    
-}
+@interface VSCMIDITestWindowController : NSWindowController 
 
-@property (nonatomic, strong) IBOutlet VSCMIDITest* midiTest;
-@property (nonatomic, strong) IBOutlet VSCMIDITestView* midiTestView;
+@property (nonatomic, strong) IBOutlet VSCMIDITestController* midiTestController;
+
 
 @end

@@ -36,15 +36,5 @@
 @property (nonatomic, strong) IBOutlet NSButton* sendMidiNoteOffButton;
 
 
--(void) refreshInterface;
-
--(IBAction) refreshInputs:(id)sender;
--(IBAction) refreshOutputs:(id)sender;
--(IBAction) setMidiOutputWithRowSelection:(id)sender;
-
--(IBAction) sendMidiControlMessage:(id)sender;
--(IBAction) sendMidiNoteOnMessage:(id)sender;
--(IBAction) sendMidiNoteOffMessage:(id)sender;
-
 
 @end

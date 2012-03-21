@@ -7,18 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1003F7B31517475C00D681DD /* VSCMIDITestWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1003F7B11517475C00D681DD /* VSCMIDITestWindowController.m */; };
+		1003F7B31517475C00D681DD /* VSCMIDITestWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1003F7B11517475C00D681DD /* VSCMIDITestWindowController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		1003F7B41517475C00D681DD /* VSCMIDITestWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1003F7B21517475C00D681DD /* VSCMIDITestWindowController.xib */; };
 		1023D46513E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1023D46413E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp */; };
 		102C2146141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 102C2145141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm */; };
 		102C2156141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 102C2155141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib */; };
 		1030EFE3132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1030EFE2132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm */; };
+		104225BF151A1D4600E1F68D /* VSCMIDITestController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 104225BE151A1D4600E1F68D /* VSCMIDITestController.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		104225C0151A30B600E1F68D /* VSCMIDIOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F9E1E8151251F300525CF8 /* VSCMIDIOutput.cpp */; };
+		104225C2151A335B00E1F68D /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 104225C1151A335B00E1F68D /* CoreMIDI.framework */; };
+		104225C4151A343C00E1F68D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 104225C3151A343C00E1F68D /* CoreFoundation.framework */; };
+		104225C6151A344D00E1F68D /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 104225C5151A344D00E1F68D /* CoreAudio.framework */; };
 		104636F214E9587500C7AAD9 /* VSCController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104636F014E9587500C7AAD9 /* VSCController.cpp */; };
 		104636F514E9631300C7AAD9 /* VSCTriggeredController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104636F314E9631300C7AAD9 /* VSCTriggeredController.cpp */; };
 		105C4807144B32B00015AE8F /* VSCEnveloppe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C47FF144B32B00015AE8F /* VSCEnveloppe.cpp */; };
 		105C4808144B32B00015AE8F /* VSCEnveloppeCoordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C4801144B32B00015AE8F /* VSCEnveloppeCoordinate.cpp */; };
 		105C4809144B32B00015AE8F /* VSCEnveloppePoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105C4803144B32B00015AE8F /* VSCEnveloppePoint.cpp */; };
-		1060DE5A1518D55100E8F1B9 /* VSCMIDITest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1060DE591518D55100E8F1B9 /* VSCMIDITest.mm */; };
+		1060DE5A1518D55100E8F1B9 /* VSCMIDITest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1060DE591518D55100E8F1B9 /* VSCMIDITest.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		1063E13614439A3400BD55ED /* VSCEnveloppeEditorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1063E13514439A3300BD55ED /* VSCEnveloppeEditorView.mm */; };
 		106A54C5143D097B00455BC2 /* libboost_serialization.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106A54C4143D097B00455BC2 /* libboost_serialization.a */; };
 		107A78FE132ADE3700C4B1FE /* VSCEnveloppeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */; };
@@ -41,7 +46,7 @@
 		10A5A59A14CEF925002B24E7 /* NSFileManager+VSCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A5A59414CEF925002B24E7 /* NSFileManager+VSCAdditions.m */; };
 		10A5A59B14CEF925002B24E7 /* NSString+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10A5A59614CEF925002B24E7 /* NSString+VSCAdditions.mm */; };
 		10AC2B581454BC0C002DE480 /* VSCSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10AC2B561454BC0C002DE480 /* VSCSound.cpp */; };
-		10DDE643150A5B1F009CFFB2 /* VSCMIDITestView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10DDE642150A5B1F009CFFB2 /* VSCMIDITestView.mm */; };
+		10DDE643150A5B1F009CFFB2 /* VSCMIDITestView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10DDE642150A5B1F009CFFB2 /* VSCMIDITestView.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		10DE92361413EDE600CC602A /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE92351413EDE600CC602A /* libboost_filesystem.a */; };
 		10DE923E1413EEB200CC602A /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE923D1413EEB200CC602A /* libboost_system.a */; };
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
@@ -87,6 +92,11 @@
 		102C2155141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSCEnveloppeEditorWindowController.xib; sourceTree = "<group>"; };
 		1030EFE1132985C300E4BCA1 /* VSCEnveloppeEditorDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeEditorDocument.h; sourceTree = "<group>"; };
 		1030EFE2132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCEnveloppeEditorDocument.mm; sourceTree = "<group>"; };
+		104225BD151A1D4600E1F68D /* VSCMIDITestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDITestController.h; path = ../MIDI/AppKit/VSCMIDITestController.h; sourceTree = "<group>"; };
+		104225BE151A1D4600E1F68D /* VSCMIDITestController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCMIDITestController.mm; path = ../MIDI/AppKit/VSCMIDITestController.mm; sourceTree = "<group>"; };
+		104225C1151A335B00E1F68D /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		104225C3151A343C00E1F68D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		104225C5151A344D00E1F68D /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		104636F014E9587500C7AAD9 /* VSCController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCController.cpp; path = ../Sound/Controller/VSCController.cpp; sourceTree = "<group>"; };
 		104636F114E9587500C7AAD9 /* VSCController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCController.h; path = ../Sound/Controller/VSCController.h; sourceTree = "<group>"; };
 		104636F314E9631300C7AAD9 /* VSCTriggeredController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCTriggeredController.cpp; path = ../Sound/Controller/VSCTriggeredController.cpp; sourceTree = "<group>"; };
@@ -167,6 +177,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				104225C6151A344D00E1F68D /* CoreAudio.framework in Frameworks */,
+				104225C4151A343C00E1F68D /* CoreFoundation.framework in Frameworks */,
+				104225C2151A335B00E1F68D /* CoreMIDI.framework in Frameworks */,
 				108BBC6414EDB669008CE413 /* CorePlot.framework in Frameworks */,
 				10A168EB14DAEBFC00413E58 /* QuartzCore.framework in Frameworks */,
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
@@ -247,7 +260,12 @@
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */,
+				13E42FBA07B3F13500E4EEF1 /* CoreData.framework */,
+				2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */,
 				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
+				104225C1151A335B00E1F68D /* CoreMIDI.framework */,
+				10A168EA14DAEBFC00413E58 /* QuartzCore.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -259,9 +277,6 @@
 				10DE923D1413EEB200CC602A /* libboost_system.a */,
 				10DE92351413EDE600CC602A /* libboost_filesystem.a */,
 				106A54C4143D097B00455BC2 /* libboost_serialization.a */,
-				2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */,
-				13E42FBA07B3F13500E4EEF1 /* CoreData.framework */,
-				2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
 			sourceTree = "<group>";
@@ -345,6 +360,8 @@
 				10DDE642150A5B1F009CFFB2 /* VSCMIDITestView.mm */,
 				1060DE581518D55100E8F1B9 /* VSCMIDITest.h */,
 				1060DE591518D55100E8F1B9 /* VSCMIDITest.mm */,
+				104225BD151A1D4600E1F68D /* VSCMIDITestController.h */,
+				104225BE151A1D4600E1F68D /* VSCMIDITestController.mm */,
 			);
 			name = "MIDI View";
 			sourceTree = "<group>";
@@ -360,7 +377,8 @@
 		2A37F4AAFDCFA73011CA2CEA /* EnveloppeEditor */ = {
 			isa = PBXGroup;
 			children = (
-				10A168EA14DAEBFC00413E58 /* QuartzCore.framework */,
+				104225C5151A344D00E1F68D /* CoreAudio.framework */,
+				104225C3151A343C00E1F68D /* CoreFoundation.framework */,
 				109FD00C14D98BBE0088DCD5 /* CorePlot.xcodeproj */,
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
@@ -535,6 +553,8 @@
 				10DDE643150A5B1F009CFFB2 /* VSCMIDITestView.mm in Sources */,
 				1003F7B31517475C00D681DD /* VSCMIDITestWindowController.m in Sources */,
 				1060DE5A1518D55100E8F1B9 /* VSCMIDITest.mm in Sources */,
+				104225BF151A1D4600E1F68D /* VSCMIDITestController.mm in Sources */,
+				104225C0151A30B600E1F68D /* VSCMIDIOutput.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

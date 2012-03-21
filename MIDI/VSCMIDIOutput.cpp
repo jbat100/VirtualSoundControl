@@ -27,7 +27,7 @@ VSCMIDIOutput::VSCMIDIOutput(void) {
 
 VSCMIDIOutput::VSCMIDIOutput(VSCMIDIOutputPort outputPort) {
     
-    bool success = this->setOutputPort(outputPort);
+    this->setOutputPort(outputPort); // will throw if does not succeed
     
 }
 
@@ -48,7 +48,7 @@ void VSCMIDIOutput::setOutputPort(VSCMIDIOutputPort const& port) {
             } catch (RtError &error) {
                 error.printMessage();
                 _outputPort = VSCMIDIOutputPortVoid;
-                throw VSCMIDIException(error.message());
+                throw VSCMIDIException(error.getMessage());
             }
             _outputPort = port;
             std::cout << "Successfully opened " << port << std::endl;
@@ -62,11 +62,10 @@ void VSCMIDIOutput::setOutputPort(VSCMIDIOutputPort const& port) {
             } catch (RtError &error) {
                 error.printMessage();
                 _outputPort = VSCMIDIOutputPortVoid;
-                throw VSCMIDIException(error.message());
+                throw VSCMIDIException(error.getMessage());
             }
             _outputPort = port;
             std::cout << "Successfully opened " << port << std::endl;
-            return true;
         }
         
     }
@@ -76,7 +75,6 @@ void VSCMIDIOutput::setOutputPort(VSCMIDIOutputPort const& port) {
         if (_midiOut) {
             _outputPort = VSCMIDIOutputPortVoid;
             _midiOut->closePort();
-            return true;
         }
         
         else {
@@ -85,14 +83,13 @@ void VSCMIDIOutput::setOutputPort(VSCMIDIOutputPort const& port) {
         }
     }
     
-    return false;
     
 }
 
-bool VSCMIDIOutput::sendMessage(VSCMIDI::Message const& m) {
+bool VSCMIDIOutput::sendMessage(VSCMIDI::Message& m) {
     
     if (_midiOut && _outputPort != VSCMIDIOutputPortVoid) {
-        _midiOut->sendMessage(m);
+        _midiOut->sendMessage(&m);
     }
     
     return false;

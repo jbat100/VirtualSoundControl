@@ -11,6 +11,10 @@
 const std::string VSCBaseExceptionAdditionalInfoKey = "VSCBaseExceptionAdditionalInfoKey";
 const std::string VSCBaseExceptionRecoveryInfoKey = "VSCBaseExceptionRecoveryInfoKey";
 
+VSCBaseException::VSCBaseException() {
+    
+}
+
 VSCBaseException::VSCBaseException(std::string additionalInfo) {
     _userInfo.insert(InfoKeyValuePair(VSCBaseExceptionAdditionalInfoKey, additionalInfo));
 }

@@ -38,7 +38,8 @@ public:
     VSCMIDIOutputPort getOutputPort(void) const;
     void setOutputPort(VSCMIDIOutputPort const& port);     // throws if the output port could not be established
     
-    bool sendMessage(VSCMIDI::Message const& m);
+    // cannot send const (because RtMidi takes not const so would need to be copied)
+    bool sendMessage(VSCMIDI::Message& m); 
     
 private:
     

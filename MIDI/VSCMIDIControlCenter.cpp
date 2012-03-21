@@ -13,6 +13,8 @@
 
 #include "RtError.h"
 
+boost::mutex VSCMIDIControlCenter::_singletonMutex;
+
 #pragma mark - Constructor/Destructor
 
 VSCMIDIControlCenter::VSCMIDIControlCenter(void) {
