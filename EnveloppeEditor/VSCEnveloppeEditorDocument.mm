@@ -18,7 +18,7 @@ static NSString* enveloppeBaseFilePath = nil;
 -(id) init {
 	
 	if ((self = [super init])) {
-		[self createDefaultEnveloppe];
+		//[self createDefaultEnveloppe];
 	}
 	
 	return self;

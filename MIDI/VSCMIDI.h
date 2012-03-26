@@ -50,7 +50,9 @@ class VSCMIDI {
     
 public:
     
-    typedef std::vector<unsigned char> Message;
+    typedef std::vector<unsigned char>      Message;
+    typedef std::list<VSCMIDIOutputPort>    OutputPortList;
+    typedef std::list<VSCMIDIInputPort>     InputPortList;
     
     //static VSCMIDIPtr sharedInstance(void);
     
@@ -58,6 +60,7 @@ public:
     static Message messageForPolyphonicAftertouch(unsigned int channel, unsigned int pitch, unsigned int pressure);
     static Message messageForChannelAftertouch(unsigned int channel, unsigned int pitch, unsigned int pressure);
     static Message messageForControl(unsigned int channel, unsigned int control, unsigned int value);
+    static std::string messageDescription(const Message& m);
     
     VSCMIDI(void);
     ~VSCMIDI(void); // no need to make the destructor virtual if not subclassed, it might slow things down
@@ -65,8 +68,10 @@ public:
     void refreshInputPorts(void);
     void refreshOutputPorts(void);
     
-    const std::list<VSCMIDIOutputPort>& getOutputPorts(void) const;
-    const std::list<VSCMIDIInputPort>& getInputPorts(void) const;
+    const OutputPortList& getOutputPorts(void) const;
+    const InputPortList& getInputPorts(void) const;
+    
+    const std::string outputPortDescription(void) const;
     
     const std::vector<unsigned int>& controlChannels(void);
     
@@ -75,8 +80,8 @@ private:
     RtMidiInPtr     _midiIn;
     RtMidiOutPtr    _midiOut;
     
-    std::list<VSCMIDIInputPort> _inputPorts;
-    std::list<VSCMIDIOutputPort> _outputPorts;
+    InputPortList _inputPorts;
+    OutputPortList _outputPorts;
     
     std::vector<unsigned int> _controlChannels;
     

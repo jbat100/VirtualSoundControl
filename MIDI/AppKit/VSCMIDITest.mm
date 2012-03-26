@@ -58,6 +58,7 @@
 -(void) sendMidiControlMessage {
     VSCMIDI::Message m = VSCMIDI::messageForControl(self.midiChannel, self.controlChannel, self.controlValue);
     if (_midiOutput) {
+        //std::cout << "Sending " << VSCMIDI::messageDescription(m) << std::endl;
         _midiOutput->sendMessage(m);
     }
 }
@@ -65,6 +66,7 @@
 -(void) sendMidiNoteOnMessage {
     VSCMIDI::Message m = VSCMIDI::messageForNote(self.midiChannel, self.pitchValue, self.velocityValue, true);
     if (_midiOutput) {
+        //std::cout << "Sending " << VSCMIDI::messageDescription(m) << std::endl;
         _midiOutput->sendMessage(m);
     }
 }
@@ -72,6 +74,7 @@
 -(void) sendMidiNoteOffMessage {
     VSCMIDI::Message m = VSCMIDI::messageForNote(self.midiChannel, self.pitchValue, self.velocityValue, false);
     if (_midiOutput) {
+        //std::cout << "Sending " << VSCMIDI::messageDescription(m) << std::endl;
         _midiOutput->sendMessage(m);
     }
 }

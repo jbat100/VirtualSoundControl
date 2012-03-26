@@ -37,6 +37,8 @@
 @synthesize sendMidiNoteOnButton = _sendMidiNoteOnButton;
 @synthesize sendMidiNoteOffButton = _sendMidiNoteOffButton;
 
+@synthesize controlSlider = _controlSlider;
+
 
 
 - (id)initWithFrame:(NSRect)frame

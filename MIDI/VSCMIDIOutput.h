@@ -46,7 +46,11 @@ private:
     VSCMIDIOutputPort _outputPort;
     RtMidiOutPtr _midiOut;
     
+    void createRtMidiOut(void);
+    
 };
+
+std::ostream& operator<<(std::ostream& output, const VSCMIDIOutput& p);
 
 typedef boost::shared_ptr<VSCMIDIOutput> VSCMIDIOutputPtr;
 

@@ -260,6 +260,8 @@
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				104225C5151A344D00E1F68D /* CoreAudio.framework */,
+				104225C3151A343C00E1F68D /* CoreFoundation.framework */,
 				2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */,
 				13E42FBA07B3F13500E4EEF1 /* CoreData.framework */,
 				2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */,
@@ -353,7 +355,7 @@
 			name = MIDI;
 			sourceTree = "<group>";
 		};
-		10DDE640150A5A6A009CFFB2 /* MIDI View */ = {
+		10DDE640150A5A6A009CFFB2 /* MIDI View And Test */ = {
 			isa = PBXGroup;
 			children = (
 				10DDE641150A5B1F009CFFB2 /* VSCMIDITestView.h */,
@@ -363,7 +365,7 @@
 				104225BD151A1D4600E1F68D /* VSCMIDITestController.h */,
 				104225BE151A1D4600E1F68D /* VSCMIDITestController.mm */,
 			);
-			name = "MIDI View";
+			name = "MIDI View And Test";
 			sourceTree = "<group>";
 		};
 		19C28FB0FE9D524F11CA2CBB /* Products */ = {
@@ -377,8 +379,6 @@
 		2A37F4AAFDCFA73011CA2CEA /* EnveloppeEditor */ = {
 			isa = PBXGroup;
 			children = (
-				104225C5151A344D00E1F68D /* CoreAudio.framework */,
-				104225C3151A343C00E1F68D /* CoreFoundation.framework */,
 				109FD00C14D98BBE0088DCD5 /* CorePlot.xcodeproj */,
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
@@ -397,7 +397,7 @@
 				10A12B4814DFE97C00B302BC /* MIDI */,
 				1017811F132BF9BF001C6A96 /* Generic */,
 				107A7903132ADF1500C4B1FE /* Enveloppe */,
-				10DDE640150A5A6A009CFFB2 /* MIDI View */,
+				10DDE640150A5A6A009CFFB2 /* MIDI View And Test */,
 				107A7904132ADF2000C4B1FE /* Enveloppe View */,
 				1003F7AF1517466400D681DD /* Window Controllers */,
 				107A7902132ADF0500C4B1FE /* Enveloppe Document */,

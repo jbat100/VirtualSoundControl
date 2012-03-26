@@ -26,4 +26,6 @@
 -(IBAction) sendMidiNoteOnMessage:(id)sender;
 -(IBAction) sendMidiNoteOffMessage:(id)sender;
 
+-(IBAction) controlSliderChangedValue:(id)sender;
+
 @end

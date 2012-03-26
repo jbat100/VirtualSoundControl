@@ -35,6 +35,8 @@
 @property (nonatomic, strong) IBOutlet NSButton* sendMidiNoteOnButton;
 @property (nonatomic, strong) IBOutlet NSButton* sendMidiNoteOffButton;
 
+@property (nonatomic, strong) IBOutlet NSSlider* controlSlider;
+
 
 
 @end

@@ -48,6 +48,14 @@ NSString* const VSCMIDIPortSelectedColumnIdentifier     = @"MIDIPortSelected";
         
     }
     
+    [self updateMidiOutputTextField];
+    
+    [self.midiTest getMidi]->refreshInputPorts();
+    [self.midiTest getMidi]->refreshOutputPorts();
+    
+    [self.midiTestView.midiInputsTable reloadData];
+    [self.midiTestView.midiOutputsTable reloadData];
+    
 }
 
 -(void) updateMidiOutputTextField {
@@ -90,6 +98,8 @@ NSString* const VSCMIDIPortSelectedColumnIdentifier     = @"MIDIPortSelected";
     //NSAssert(midiTest, @"_midi is NULL");
     if ([self.midiTest getMidi]) {
         [self.midiTest getMidi]->refreshInputPorts();
+        //const VSCMIDI::OutputPortList l = [self.midiTest getMidi]->getOutputPorts();
+        std::cout << [self.midiTest getMidi]->outputPortDescription() << std::endl;
     }
     [self.midiTestView.midiInputsTable reloadData];
 }
@@ -98,6 +108,7 @@ NSString* const VSCMIDIPortSelectedColumnIdentifier     = @"MIDIPortSelected";
     NSAssert([self.midiTest getMidi], @"_midi is NULL");
     if ([self.midiTest getMidi]) {
         [self.midiTest getMidi]->refreshOutputPorts();
+        std::cout << [self.midiTest getMidi]->outputPortDescription();
     }
     [self.midiTestView.midiOutputsTable reloadData];
 }
@@ -105,12 +116,37 @@ NSString* const VSCMIDIPortSelectedColumnIdentifier     = @"MIDIPortSelected";
 -(IBAction) setMidiOutputWithRowSelection:(id)sender {
     NSAssert([self.midiTest getMidi], @"_midi is NULL");
     if ([self.midiTest getMidi]) {
+        
         NSInteger rowIndex = [self.midiTestView.midiOutputsTable selectedRow];
+        
+        if (rowIndex < 0) {
+            return;
+        }
+        
         const std::list<VSCMIDIOutputPort> portList = [self.midiTest getMidi]->getOutputPorts();
         std::list<VSCMIDIOutputPort>::const_iterator portIt = [self.midiTest getMidi]->getOutputPorts().begin();
         std::advance(portIt, rowIndex);
         VSCMIDIOutputPort outputPort = *portIt;
         [self.midiTest setMidiOutput:VSCMIDIOutputPtr(new VSCMIDIOutput(outputPort))];
+    
+        [self updateMidiOutputTextField];
+        [self.midiTestView.midiOutputsTable reloadData];
+        
+    }
+    
+}
+
+-(IBAction) controlSliderChangedValue:(id)sender {
+    
+    if (sender == self.midiTestView.controlSlider) {
+        int val = (unsigned int)[(NSSlider*)self.midiTestView.controlSlider intValue];
+        if (val >= 0 && val <= 127) {
+            unsigned int uval = (unsigned int)val;
+            if ([self.midiTest getMidiOutput]) {
+                VSCMIDI::Message m = VSCMIDI::messageForControl(self.midiTest.midiChannel, self.midiTest.controlChannel, val);
+                
+            }
+        }
     }
     
 }
@@ -169,10 +205,14 @@ NSString* const VSCMIDIPortSelectedColumnIdentifier     = @"MIDIPortSelected";
             return [NSNumber numberWithUnsignedInt:portIt->number];
         }
         else if ([columnIdentifier isEqualToString:VSCMIDIPortVirtualColumnIdentifier]) {
-            return portIt->isVirtual ? @"Yes" : @"No";
+            //return portIt->isVirtual ? @"Yes" : @"No";
         }
         else if ([columnIdentifier isEqualToString:VSCMIDIPortSelectedColumnIdentifier]) {
-            return @"No";
+            //return @"No";
+            if ([self.midiTest getMidiOutput]) {
+                if ([self.midiTest getMidiOutput]->getOutputPort() == (*portIt)) return [NSNumber numberWithBool:YES];
+                else return [NSNumber numberWithBool:NO];
+            }
         }
         
     }
