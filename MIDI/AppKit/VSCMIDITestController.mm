@@ -14,16 +14,94 @@
 
 #include "VSCMIDI.h"
 #include "VSCMIDIOutput.h"
+#include "VSCException.h"
 
 NSString* const VSCMIDIPortNameColumnIdentifier         = @"MIDIPortName";
 NSString* const VSCMIDIPortNumberColumnIdentifier       = @"MIDIPortNumber";
 NSString* const VSCMIDIPortVirtualColumnIdentifier      = @"MIDIPortVirtual";
 NSString* const VSCMIDIPortSelectedColumnIdentifier     = @"MIDIPortSelected";
 
+/*
+ *  A detailed table of midi messages can be found here http://www.midi.org/techspecs/midimessages.php
+ *  Based on table 3, the first general purpose controler chan is 16
+ */
+
+const unsigned int VSCDefaultGenericControlNumber = 16;
+NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
+
 @implementation VSCMIDITestController
 
 @synthesize midiTestView = _midiTestView;
 @synthesize midiTest = _midiTest;
+
+@synthesize controlChannels = _controlChannels;
+
+-(id) init {
+    
+    if ((self = [super init])) {
+        
+        self.controlChannels = [NSArray arrayWithObjects:
+                                [NSNumber numberWithInt:(int)VSCMIDI::ControlBankSelect],
+                                [NSNumber numberWithInt:(int)VSCMIDI::ControlModulationWheel],
+                                [NSNumber numberWithInt:(int)VSCMIDI::ControlBreath],
+                                [NSNumber numberWithInt:(int)VSCMIDI::ControlFoot],
+                                [NSNumber numberWithInt:(int)VSCMIDI::ControlChannelVolume],
+                                [NSNumber numberWithInt:(int)VSCMIDI::ControlBalance],
+                                [NSNumber numberWithInt:(int)VSCMIDI::ControlPan], 
+                                [NSNumber numberWithInt:(int)VSCMIDI::ControlExpression], 
+                                [NSNumber numberWithInt:(int)-1], nil]; // -1 -> other
+        
+    }
+    
+    return self;
+    
+}
+
+#pragma mark - KVO
+
+-(void) setMidiTest:(VSCMIDITest *)midiTest {
+    
+    [_midiTest removeObserver:self forKeyPath:@"controlChannel"];
+    _midiTest = midiTest;
+    [_midiTest addObserver:self forKeyPath:@"controlChannel" options:NSKeyValueObservingOptionNew  context:NULL];
+    
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqual:@"controlChannel"] && object == self.midiTest) {
+        
+        BOOL isOtherControlChannel = YES;
+        
+        NSNumber* number = nil;
+        
+        for (number in self.controlChannels) {
+            int controlChannel = [number intValue];
+            if (self.midiTest.controlChannel == controlChannel) {
+                isOtherControlChannel = NO;
+                break;
+            }
+        }
+        
+        if (isOtherControlChannel) {
+            //NSInteger index = [self.midiTestView.rtControlChannelComboBox indexOfSelectedItem];
+            NSString* selectedItemString = (NSString*)[self.midiTestView.rtControlChannelComboBox objectValueOfSelectedItem];
+            //NSString *selectedItemString = [self comboBox:self.midiTestView.rtControlChannelComboBox objectValueForItemAtIndex:index];
+            if ([selectedItemString isEqualToString:VSCMIDIOtherControlChannelDescriptorString] == NO) {
+                [self.midiTestView.rtControlChannelComboBox selectItemWithObjectValue:VSCMIDIOtherControlChannelDescriptorString];
+            }
+        }
+        
+        else {
+            NSInteger index = [self.controlChannels indexOfObject:number];
+            [self.midiTestView.rtControlChannelComboBox selectItemAtIndex:index];
+        }
+        
+    }
+
+}
+
+#pragma mark - Interface Helpers
 
 -(void) setupView {
     
@@ -55,6 +133,23 @@ NSString* const VSCMIDIPortSelectedColumnIdentifier     = @"MIDIPortSelected";
     
     [self.midiTestView.midiInputsTable reloadData];
     [self.midiTestView.midiOutputsTable reloadData];
+    
+    
+    for (NSNumber* number in self.controlChannels) {
+        int controlNumber = [number intValue];
+        try {
+            std::string controlString = [self.midiTest getMidi]->controlNumberString((VSCMIDI::ControlNumber)controlNumber);
+            [self.midiTestView.rtControlChannelComboBox addItemWithObjectValue:[NSString stringWithStdString:controlString]]; 
+        } catch (VSCMIDIException& exception) {
+            [self.midiTestView.rtControlChannelComboBox addItemWithObjectValue:VSCMIDIOtherControlChannelDescriptorString]; 
+        }
+    }
+    
+    
+    //[self.midiTestView.rtControlChannelComboBox setUsesDataSource:YES];
+    [self.midiTestView.rtControlChannelComboBox setHasVerticalScroller:YES];
+    [self.midiTestView.rtControlChannelComboBox setNumberOfVisibleItems:10];
+    //[self.midiTestView.rtControlChannelComboBox reloadData];
     
 }
 
@@ -138,18 +233,70 @@ NSString* const VSCMIDIPortSelectedColumnIdentifier     = @"MIDIPortSelected";
 
 -(IBAction) controlSliderChangedValue:(id)sender {
     
-    if (sender == self.midiTestView.controlSlider) {
-        int val = (unsigned int)[(NSSlider*)self.midiTestView.controlSlider intValue];
+    if (sender == self.midiTestView.rtControlSlider) {
+        int val = (unsigned int)[(NSSlider*)self.midiTestView.rtControlSlider intValue];
         if (val >= 0 && val <= 127) {
             unsigned int uval = (unsigned int)val;
             if ([self.midiTest getMidiOutput]) {
-                VSCMIDI::Message m = VSCMIDI::messageForControl(self.midiTest.midiChannel, self.midiTest.controlChannel, val);
-                
+                VSCMIDI::Message m = VSCMIDI::messageForControl(self.midiTest.midiChannel, self.midiTest.controlChannel, uval);
+                [self.midiTest getMidiOutput]->sendMessage(m);
             }
         }
     }
     
 }
+
+#pragma mark - NSComboBox Delegate/DataSource
+
+-(void)comboBoxSelectionDidChange:(NSNotification *)notification {
+    
+    if ([notification object] == self.midiTestView.rtControlChannelComboBox) {
+        NSInteger index = [self.midiTestView.rtControlChannelComboBox indexOfSelectedItem];
+        
+        int controlChannel = [(NSNumber*)[self.controlChannels objectAtIndex:index] intValue];
+        
+        if (controlChannel < 0) {
+            if (self.midiTest.controlChannel != VSCDefaultGenericControlNumber) {
+                self.midiTest.controlChannel = VSCDefaultGenericControlNumber;
+            }
+        }
+        
+        else {
+            VSCMIDI::ControlNumber num = (VSCMIDI::ControlNumber)[[self.controlChannels objectAtIndex:index] intValue];
+            self.midiTest.controlChannel = (unsigned int)num;
+        }
+        
+    }
+    
+}
+
+/*
+ *  We should not use dataSource for NSComboBox because it sucks. You can't do anything and I have proof:
+ 
+ 2012-03-28 17:38:47.911 EnveloppeEditor[6956:207] *** -[NSComboBoxCell selectItemWithObjectValue:] should not be called when usesDataSource is set to YES
+ 2012-03-28 17:38:47.911 EnveloppeEditor[6956:207] *** -[NSComboBoxCell indexOfItemWithObjectValue:] should not be called when usesDataSource is set to YES
+ 
+ */
+
+/*
+- (NSInteger)numberOfItemsInComboBox:(NSComboBox *)aComboBox {
+    return [self.controlChannels count];
+}
+
+- (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index {
+    
+    int controlChannel = [(NSNumber*)[self.controlChannels objectAtIndex:index] intValue];
+    
+    if (controlChannel < 0) {
+        return @"Other";
+    }
+    
+    std::string s = [self.midiTest getMidi]->controlNumberString((VSCMIDI::ControlNumber)controlChannel);
+    
+    return [NSString stringWithStdString:s];
+}
+ 
+ */
 
 
 #pragma mark - NSTableView Delegate/Datasource

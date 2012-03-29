@@ -22,7 +22,6 @@
 @property (nonatomic, strong) IBOutlet NSButton* refreshInputsButton;
 @property (nonatomic, strong) IBOutlet NSButton* refreshOutputsButton;
 @property (nonatomic, strong) IBOutlet NSButton* createMidiOutputButton;
-
 @property (nonatomic, strong) IBOutlet NSTextField* midiOutputTextField;
 
 @property (nonatomic, strong) IBOutlet NSTextField* midiChannelTextField;
@@ -30,13 +29,14 @@
 @property (nonatomic, strong) IBOutlet NSTextField* controlValueTextField;
 @property (nonatomic, strong) IBOutlet NSTextField* notePitchTextField;
 @property (nonatomic, strong) IBOutlet NSTextField* noteVelocityTextField;
-
 @property (nonatomic, strong) IBOutlet NSButton* sendMidiControlButton;
 @property (nonatomic, strong) IBOutlet NSButton* sendMidiNoteOnButton;
 @property (nonatomic, strong) IBOutlet NSButton* sendMidiNoteOffButton;
 
-@property (nonatomic, strong) IBOutlet NSSlider* controlSlider;
-
-
+@property (nonatomic, strong) IBOutlet NSSlider* rtControlSlider;
+@property (nonatomic, strong) IBOutlet NSComboBox* rtControlChannelComboBox;
+@property (nonatomic, strong) IBOutlet NSButton* rtSendControlMessageButton;
+@property (nonatomic, strong) IBOutlet NSTextField* rtControlValueTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* rtControlChannelTextField;
 
 @end

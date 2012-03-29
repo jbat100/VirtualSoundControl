@@ -13,6 +13,7 @@
 #include <list>
 #include <string>
 #include <vector>
+#include <map>
 
 #include <boost/shared_ptr.hpp>
 #include "RtMidi.h"
@@ -46,9 +47,28 @@ extern const VSCMIDIInputPort VSCMIDIInputPortVoid;
 class VSCMIDI;
 typedef boost::shared_ptr<VSCMIDI> VSCMIDIPtr;
 
+/*
+ *  A detailed table of midi messages can be found here http://www.midi.org/techspecs/midimessages.php
+ *
+ *  A bit of background information from wiki of MIDI messages http://en.wikipedia.org/wiki/MIDI_1.0
+ * 
+ */
+
 class VSCMIDI {
     
 public:
+    
+    enum ControlNumber {
+        ControlBankSelect           = 0,
+        ControlModulationWheel      = 1,
+        ControlBreath               = 2,
+        ControlFoot                 = 4,
+        ControlChannelVolume        = 7,
+        ControlBalance              = 8,
+        ControlPan                  = 10,
+        ControlExpression           = 11,
+        ControlGeneric              = 0xFFFF
+    };
     
     typedef std::vector<unsigned char>      Message;
     typedef std::list<VSCMIDIOutputPort>    OutputPortList;
@@ -75,15 +95,23 @@ public:
     
     const std::vector<unsigned int>& controlChannels(void);
     
+    std::string controlNumberString(ControlNumber num);
+    
 private:
     
-    RtMidiInPtr     _midiIn;
-    RtMidiOutPtr    _midiOut;
+    typedef std::map<ControlNumber, std::string>    ControlNumberStringMap;
+    typedef std::pair<ControlNumber, std::string>   ControlNumberStringPair;
     
-    InputPortList _inputPorts;
-    OutputPortList _outputPorts;
+    RtMidiInPtr         _midiIn;
+    RtMidiOutPtr        _midiOut;
     
-    std::vector<unsigned int> _controlChannels;
+    InputPortList       _inputPorts;
+    OutputPortList      _outputPorts;
+    
+    std::vector<unsigned int>               _controlChannels;
+    std::map<ControlNumber, std::string>    _controlNumberStringMap;
+    
+    static void fillControlNumberStringMap(ControlNumberStringMap& map);
     
 };
 

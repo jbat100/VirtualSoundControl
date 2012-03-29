@@ -49,6 +49,7 @@
 		10DDE643150A5B1F009CFFB2 /* VSCMIDITestView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10DDE642150A5B1F009CFFB2 /* VSCMIDITestView.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		10DE92361413EDE600CC602A /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE92351413EDE600CC602A /* libboost_filesystem.a */; };
 		10DE923E1413EEB200CC602A /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE923D1413EEB200CC602A /* libboost_system.a */; };
+		10E0AEB21524A692007462D1 /* VSCMIDIValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E0AEB11524A692007462D1 /* VSCMIDIValueTransformer.m */; };
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
@@ -159,6 +160,8 @@
 		10DDE642150A5B1F009CFFB2 /* VSCMIDITestView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCMIDITestView.mm; path = ../MIDI/AppKit/VSCMIDITestView.mm; sourceTree = "<group>"; };
 		10DE92351413EDE600CC602A /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = lib/libboost_filesystem.a; sourceTree = BOOST_ROOT; };
 		10DE923D1413EEB200CC602A /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = lib/libboost_system.a; sourceTree = BOOST_ROOT; };
+		10E0AEB01524A692007462D1 /* VSCMIDIValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDIValueTransformer.h; path = ../MIDI/AppKit/VSCMIDIValueTransformer.h; sourceTree = "<group>"; };
+		10E0AEB11524A692007462D1 /* VSCMIDIValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSCMIDIValueTransformer.m; path = ../MIDI/AppKit/VSCMIDIValueTransformer.m; sourceTree = "<group>"; };
 		10F9E1E8151251F300525CF8 /* VSCMIDIOutput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDIOutput.cpp; path = ../MIDI/VSCMIDIOutput.cpp; sourceTree = "<group>"; };
 		10F9E1E9151251F400525CF8 /* VSCMIDIOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCMIDIOutput.h; path = ../MIDI/VSCMIDIOutput.h; sourceTree = "<group>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -364,6 +367,8 @@
 				1060DE591518D55100E8F1B9 /* VSCMIDITest.mm */,
 				104225BD151A1D4600E1F68D /* VSCMIDITestController.h */,
 				104225BE151A1D4600E1F68D /* VSCMIDITestController.mm */,
+				10E0AEB01524A692007462D1 /* VSCMIDIValueTransformer.h */,
+				10E0AEB11524A692007462D1 /* VSCMIDIValueTransformer.m */,
 			);
 			name = "MIDI View And Test";
 			sourceTree = "<group>";
@@ -555,6 +560,7 @@
 				1060DE5A1518D55100E8F1B9 /* VSCMIDITest.mm in Sources */,
 				104225BF151A1D4600E1F68D /* VSCMIDITestController.mm in Sources */,
 				104225C0151A30B600E1F68D /* VSCMIDIOutput.cpp in Sources */,
+				10E0AEB21524A692007462D1 /* VSCMIDIValueTransformer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,6 +12,8 @@
 #include <limits>
 #include <assert.h>
 
+#pragma mark - MIDI Ports
+
 const VSCMIDIOutputPort     VSCMIDIOutputPortVoid   = {std::numeric_limits<unsigned int>::max(), "", false};
 const VSCMIDIInputPort      VSCMIDIInputPortVoid    = {std::numeric_limits<unsigned int>::max(), "", false};
 
@@ -44,6 +46,8 @@ bool VSCMIDIInputPort::operator==(const VSCMIDIInputPort& p) const {
     return true;
 }
 
+#pragma mark - Constructor/Destructor
+
 VSCMIDI::VSCMIDI(void) {
     
     // RtMidiOut constructor
@@ -63,6 +67,8 @@ VSCMIDI::VSCMIDI(void) {
         error.printMessage();
     }
     
+    VSCMIDI::fillControlNumberStringMap(_controlNumberStringMap);
+    
 }
 
 VSCMIDI::~VSCMIDI(void) {
@@ -70,6 +76,8 @@ VSCMIDI::~VSCMIDI(void) {
     // no need (WE MUST NOT!) to delete the rtmidi in/out, we are using smart pointers :)
     
 }
+
+#pragma mark - MIDI Messages
 
 std::string VSCMIDI::messageDescription(const Message& m) {
     
@@ -266,4 +274,32 @@ const std::string VSCMIDI::outputPortDescription(void) const {
     return s.str();
 }
 
+#pragma mark - MIDI Control
+
+void VSCMIDI::fillControlNumberStringMap(ControlNumberStringMap& map) {
+    
+    map.insert(ControlNumberStringPair(ControlBankSelect,       "Bank Select"));
+    map.insert(ControlNumberStringPair(ControlModulationWheel,  "Modulation Wheel"));
+    map.insert(ControlNumberStringPair(ControlBreath,           "Breath"));
+    map.insert(ControlNumberStringPair(ControlFoot,             "Foot"));
+    map.insert(ControlNumberStringPair(ControlChannelVolume,    "Channel Volume"));
+    map.insert(ControlNumberStringPair(ControlBalance,          "Balance"));
+    map.insert(ControlNumberStringPair(ControlPan,              "Pan"));
+    map.insert(ControlNumberStringPair(ControlExpression,       "Expression"));
+    map.insert(ControlNumberStringPair(ControlGeneric,          "Generic"));
+    
+}
+
+std::string VSCMIDI::controlNumberString(ControlNumber num) {
+    
+    ControlNumberStringMap::iterator it = _controlNumberStringMap.find(num);
+    
+    if (it == _controlNumberStringMap.end()) {
+        std::cerr << "Unknown control number " << (int)num << std::endl;
+        throw VSCMIDIException("Unknown control number");
+    }
+    
+    return (*it).second;
+    
+}
 

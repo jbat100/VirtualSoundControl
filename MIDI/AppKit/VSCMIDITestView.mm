@@ -24,7 +24,6 @@
 @synthesize refreshInputsButton = _refreshInputsButton;
 @synthesize refreshOutputsButton = _refreshOutputsButton;
 @synthesize createMidiOutputButton = _createMidiOutputButton;
-
 @synthesize midiOutputTextField = _midiOutputTextField;
 
 @synthesize midiChannelTextField = _midiChannelTextField;
@@ -32,12 +31,15 @@
 @synthesize controlValueTextField = _controlValueTextField;
 @synthesize notePitchTextField = _notePitchTextField;
 @synthesize noteVelocityTextField = _noteVelocityTextField;
-
 @synthesize sendMidiControlButton = _sendMidiControlButton;
 @synthesize sendMidiNoteOnButton = _sendMidiNoteOnButton;
 @synthesize sendMidiNoteOffButton = _sendMidiNoteOffButton;
 
-@synthesize controlSlider = _controlSlider;
+@synthesize rtControlSlider = _rtControlSlider;
+@synthesize rtControlChannelComboBox = _rtControlChannelComboBox;
+@synthesize rtSendControlMessageButton = _rtSendControlMessageButton;
+@synthesize rtControlValueTextField = _rtControlValueTextField;
+@synthesize rtControlChannelTextField = _rtControlChannelTextField;
 
 
 

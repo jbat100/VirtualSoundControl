@@ -11,10 +11,12 @@
 @class VSCMIDITestView;
 @class VSCMIDITest;
 
-@interface VSCMIDITestController : NSObject
+@interface VSCMIDITestController : NSObject <NSTableViewDelegate, NSTableViewDataSource, NSComboBoxDelegate, NSComboBoxDataSource>
 
 @property (nonatomic, strong) IBOutlet VSCMIDITest* midiTest;
 @property (nonatomic, strong) IBOutlet VSCMIDITestView* midiTestView;
+
+@property (nonatomic, strong) NSArray* controlChannels; 
 
 -(void) setupView;
 
