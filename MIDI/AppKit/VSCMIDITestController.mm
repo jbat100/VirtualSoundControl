@@ -8,6 +8,7 @@
 
 #import "VSCMIDITestController.h"
 
+#import "VSCEnveloppeEditorWindowController.h"
 #import "VSCMIDITest.h"
 #import "VSCMIDITestView.h"
 #import "NSString+VSCAdditions.h"
@@ -33,6 +34,8 @@ NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
 
 @synthesize midiTestView = _midiTestView;
 @synthesize midiTest = _midiTest;
+
+@synthesize enveloppeEditorWindowController = _enveloppeEditorWindowController;
 
 @synthesize controlChannels = _controlChannels;
 
@@ -246,6 +249,17 @@ NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
     
 }
 
+-(IBAction) showEnveloppeEditor:(id)sender {
+    
+    if (self.enveloppeEditorWindowController == nil) {
+        self.enveloppeEditorWindowController = [[VSCEnveloppeEditorWindowController alloc] 
+                                                initWithWindowNibName:@"VSCEnveloppeEditorWindowController"];
+    }
+    
+    //[self.enveloppeEditorWindowController showWindow];
+    
+}
+
 #pragma mark - NSComboBox Delegate/DataSource
 
 -(void)comboBoxSelectionDidChange:(NSNotification *)notification {
@@ -269,34 +283,6 @@ NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
     }
     
 }
-
-/*
- *  We should not use dataSource for NSComboBox because it sucks. You can't do anything and I have proof:
- 
- 2012-03-28 17:38:47.911 EnveloppeEditor[6956:207] *** -[NSComboBoxCell selectItemWithObjectValue:] should not be called when usesDataSource is set to YES
- 2012-03-28 17:38:47.911 EnveloppeEditor[6956:207] *** -[NSComboBoxCell indexOfItemWithObjectValue:] should not be called when usesDataSource is set to YES
- 
- */
-
-/*
-- (NSInteger)numberOfItemsInComboBox:(NSComboBox *)aComboBox {
-    return [self.controlChannels count];
-}
-
-- (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index {
-    
-    int controlChannel = [(NSNumber*)[self.controlChannels objectAtIndex:index] intValue];
-    
-    if (controlChannel < 0) {
-        return @"Other";
-    }
-    
-    std::string s = [self.midiTest getMidi]->controlNumberString((VSCMIDI::ControlNumber)controlChannel);
-    
-    return [NSString stringWithStdString:s];
-}
- 
- */
 
 
 #pragma mark - NSTableView Delegate/Datasource

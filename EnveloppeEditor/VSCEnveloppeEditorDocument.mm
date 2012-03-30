@@ -77,7 +77,6 @@ static NSString* enveloppeBaseFilePath = nil;
                                 initWithWindowNibName:@"VSCMIDITestWindowController"];
     [self addWindowController:midiTestWindowController];
 	NSLog(@"%@ added window controller %@", self, midiTestWindowController);
-	[midiTestWindowController release];
 	
 	NSLog(@"%@ windowControllers are %@", self, [self windowControllers]);
 	
@@ -105,8 +104,8 @@ static NSString* enveloppeBaseFilePath = nil;
 	
 	if (!baseFilePath) {
 		@synchronized(self) {
-			baseFilePath = [[[[NSApplication sharedApplication] applicationLibraryDirectory] 
-							 stringByAppendingPathComponent:@"VSC"] retain];
+			baseFilePath = [[[NSApplication sharedApplication] applicationLibraryDirectory] 
+							 stringByAppendingPathComponent:@"VSC"];
 		}
 	}
 	
@@ -122,7 +121,7 @@ static NSString* enveloppeBaseFilePath = nil;
 	
 	if (!enveloppeBaseFilePath) {
 		@synchronized(self) {
-			enveloppeBaseFilePath = [[[self baseFilePath] stringByAppendingPathComponent:@"Enveloppes"] retain];
+			enveloppeBaseFilePath = [[self baseFilePath] stringByAppendingPathComponent:@"Enveloppes"];
 		}
 	}
 	

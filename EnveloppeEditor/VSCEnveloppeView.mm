@@ -23,7 +23,7 @@
 
 @interface VSCEnveloppeView ()
 
-@property (nonatomic, retain) CALayer* enveloppeLayer;
+@property (nonatomic) CALayer* enveloppeLayer;
 
 -(void) purgeCurrentlySelectedPoints;
 -(void) addPointsInRect:(NSRect)rect toPointSet:(std::set<VSCEnveloppePointPtr>&)pointSet;
@@ -46,13 +46,6 @@
     return self;
 }
 
--(void) dealloc {
-    
-    [enveloppeLayer release];
-    
-    [super dealloc];
-    
-}
 
 -(void) setupEnveloppeLayer {
     
@@ -222,14 +215,7 @@
         NSLog(@"Not enveloppe layer");
     }
     
-    NSLog(@"Drawind Enveloppe layer!!!");
-	
-	//NSDrawLog(@"-------------- In %@ drawRect ----------------", self);
-	
-	//CGSize size = self.bounds.size;
-	
-	//NSGraphicsContext * nsGraphicsContext = [NSGraphicsContext currentContext]; 
-	//CGContextRef ctx = (CGContextRef) [nsGraphicsContext graphicsPort];
+    NSLog(@"Drawind Enveloppe in %@", layer);
 	
 	/*
 	 *	Draw background
@@ -239,14 +225,6 @@
 	/*
 	 *	Draw enveloppe
 	 */
-	
-	
-	
-	/*
-	 *	Draw enveloppe
-	 */
-    
-    
 	
 	CGFloat radius = (CGFloat)(_enveloppeViewSetup->getActiveDisplaySetup().getControlPointRadius());
 	CGColorRef cgSelectedColourRef = CGColorCreateFromVSCColour(_enveloppeViewSetup->getActiveDisplaySetup().getControlPointSelectedColour());
@@ -476,7 +454,7 @@
 		return 0.0;
 	VSCSFloat normalisedY = (point.y / (VSCSFloat)self.frame.size.height);
 	VSCSFloat range = _enveloppeViewSetup->getValueRange().second; 
-	VSCSFloat adjustedY = _enveloppeViewSetup->getValueRange().first;  + (normalisedY*range);
+	VSCSFloat adjustedY = _enveloppeViewSetup->getValueRange().first  + (normalisedY*range);
 	
 	return adjustedY;
 	

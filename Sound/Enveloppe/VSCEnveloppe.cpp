@@ -46,6 +46,61 @@ void loadVSCEnveloppeFromXML(VSCEnveloppe &s, const char * filepath) {
     ia >> boost::serialization::make_nvp("enveloppe", s);
 }
 
+#pragma mark - Static Factory Methods
+
+VSCEnveloppePtr VSCEnveloppe::createFlatEnveloppe(VSCSFloat duration, unsigned int numberOfPoints, VSCSFloat value) {
+
+    VSCEnveloppePtr envPtr = VSCEnveloppePtr(new VSCEnveloppe());
+    
+    VSCSFloat step = duration / (VSCSFloat)(numberOfPoints-1);
+    VSCSFloat currentTime = 0.0;
+    
+    for (unsigned int i = 0; i < numberOfPoints; ++i) {
+        VSCEnveloppePointPtr pntPtr = VSCEnveloppePointPtr(new VSCEnveloppePoint(value, currentTime));
+        envPtr->addPoint(pntPtr);
+        currentTime += step;
+    }
+    
+    return envPtr;
+    
+}
+
+VSCEnveloppePtr VSCEnveloppe::createADSREnveloppe(VSCSFloat attack, VSCSFloat decay, VSCSFloat sustain, VSCSFloat release, VSCSFloat sustainValue) {
+    
+    VSCEnveloppePtr envPtr = VSCEnveloppePtr(new VSCEnveloppe());
+        
+    VSCEnveloppePointPtr pntPtr = VSCEnveloppePointPtr(new VSCEnveloppePoint(0.0, 0.0));
+    envPtr->addPoint(pntPtr);
+    pntPtr.reset();
+    
+    pntPtr = VSCEnveloppePointPtr(new VSCEnveloppePoint(attack, 1.0));
+    envPtr->addPoint(pntPtr);
+    pntPtr.reset();
+    
+    pntPtr = VSCEnveloppePointPtr(new VSCEnveloppePoint(attack+decay, sustainValue));
+    envPtr->addPoint(pntPtr);
+    pntPtr.reset();
+    
+    pntPtr = VSCEnveloppePointPtr(new VSCEnveloppePoint(attack+decay+sustain, sustainValue));
+    envPtr->addPoint(pntPtr);
+    pntPtr.reset();
+    
+    pntPtr = VSCEnveloppePointPtr(new VSCEnveloppePoint(attack+decay+sustain+release, 0.0));
+    envPtr->addPoint(pntPtr);
+    pntPtr.reset();
+    
+    return envPtr;
+    
+}
+
+VSCEnveloppePtr VSCEnveloppe::createEmptyEnveloppe(void) {
+    
+    VSCEnveloppePtr envPtr = VSCEnveloppePtr(new VSCEnveloppe());
+    
+    return envPtr;
+    
+}
+
 #pragma mark - Constructor/Destructor/Defaults
 
 VSCEnveloppe::VSCEnveloppe(void) {
@@ -59,7 +114,6 @@ VSCEnveloppe::VSCEnveloppe(void) {
 VSCEnveloppe::~VSCEnveloppe(void) {
 	std::cout << "Destroying Enveloppe!" << std::endl;
 }
-
 
 
 #pragma mark - General Setters/Getters
@@ -78,11 +132,8 @@ void VSCEnveloppe::setPointDisplacementConflictResolution(VSCEnveloppe::PointDis
     
     if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionClear ||
         _pointDisplacementConflictResolution == PointDisplacementConflictResolutionBlock) {
-        
         throw VSCNotImplementedException();
-        
     }
-    
     
 	_pointDisplacementConflictResolution = r;
 }

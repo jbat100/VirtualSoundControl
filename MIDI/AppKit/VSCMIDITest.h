@@ -26,6 +26,8 @@
 @property (nonatomic, assign) unsigned int pitchValue;
 @property (nonatomic, assign) unsigned int velocityValue;
 
+@property (nonatomic, assign) float autoControlUpdateFrequency;
+
 -(VSCMIDIPtr) getMidi;
 
 -(VSCMIDIOutputPtr) getMidiOutput;

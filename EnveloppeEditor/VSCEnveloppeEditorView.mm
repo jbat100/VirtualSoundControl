@@ -10,9 +10,9 @@
 
 @interface VSCEnveloppeEditorView ()
 
-@property (nonatomic, retain, readwrite) CPTGraphHostingView* graphHost;
-@property (nonatomic, retain, readwrite) CPTXYGraph* graph;
-@property (nonatomic, retain, readwrite) VSCEnveloppeView* mainEnveloppeView;
+//@property (nonatomic, retain, readwrite) CPTGraphHostingView* graphHost;
+//@property (nonatomic, retain, readwrite) CPTXYGraph* graph;
+@property (nonatomic, readwrite) VSCEnveloppeView* mainEnveloppeView;
 
 -(NSRect) requiredEnveloppeViewFrame;
 
@@ -21,8 +21,9 @@
 
 @implementation VSCEnveloppeEditorView
 
-@synthesize mainEnveloppeView, graph, graphHost;
+@synthesize mainEnveloppeView;
 
+//@synthesize graph, graphHost;
 // @synthesize graphParentView;
 
 @synthesize valueZoomSlider, timeZoomSlider;
@@ -47,12 +48,12 @@
     
     [self teardownGraph];
     
-    [super dealloc];
-    
 }
 
 -(void)setupGraph 
 {    
+    
+    /*
     
     NSAssert(self.graphHost != nil, @"Expected graphHost");
     
@@ -111,6 +112,8 @@
 	areaGradientFill = [CPTFill fillWithGradient:areaGradient];
     dataSourceLinePlot.areaFill2 = areaGradientFill;
     dataSourceLinePlot.areaBaseValue2 = CPTDecimalFromDouble(400.0);
+     
+     */
     
     /*
     // OHLC plot
@@ -131,6 +134,8 @@
     [graph addPlot:ohlcPlot];
      */
     
+    
+    /*
     
 	// Add plot space for horizontal bar charts
     CPTXYPlotSpace *volumePlotSpace = [[CPTXYPlotSpace alloc] init];
@@ -162,6 +167,8 @@
     
     [viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0, 0.0, 0.0, 0.0)]; //RGB plus Alpha Channel
     [viewLayer setDelegate:mainEnveloppeView];
+     
+     */
     
     /*
      * We don't want to call [self setWantsLayer:YES]; BEFORE setLayer as we want a layer hosting view, not a layer backed view
@@ -178,8 +185,7 @@
     
     //[self setWantsLayer:YES]; // view's backing store is using a Core Animation Layer
     
-    
-    [mainEnveloppeView setLayer:viewLayer];
+    //[mainEnveloppeView setLayer:viewLayer];
     
     /*
      * We DO want to call [self setWantsLayer:YES]; AFTER setLayer
@@ -197,9 +203,9 @@
      
      */
     
-    [mainEnveloppeView setWantsLayer:YES];
+    //[mainEnveloppeView setWantsLayer:YES];
 	
-    [viewLayer setNeedsDisplay];
+    //[viewLayer setNeedsDisplay];
     
 }
 
@@ -211,25 +217,27 @@
     
 }
 
+/*
 -(NSRect) requiredEnveloppeViewFrame {
     return graph.plotAreaFrame.frame;
 }
 
-/*
 - (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize {
     [super resizeSubviewsWithOldSize:oldBoundsSize];
     self.mainEnveloppeView.frame = [self requiredEnveloppeViewFrame];
 }
- */
-
 
 -(void) layoutEnveloppeView {
     self.mainEnveloppeView.frame = [self requiredEnveloppeViewFrame];
     [self.mainEnveloppeView redrawEnveloppeLayer];
 }
  
+  */
+ 
 
 #pragma mark - Plot Data Source Methods
+
+/*
 
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
     return 10;
@@ -251,6 +259,8 @@
 		return nil; // Use default label style
 	}
 }
+ 
+ */
 
 
 @end

@@ -30,11 +30,11 @@
 }
 
 //@property (nonatomic, retain) IBOutlet VSCEnveloppeView* enveloppeView;
-@property (nonatomic, retain) IBOutlet VSCEnveloppeEditorView* enveloppeEditorView;
+@property (nonatomic, strong) IBOutlet VSCEnveloppeEditorView* enveloppeEditorView;
 
-@property (nonatomic, retain) IBOutlet NSTextField* loadedTextField;
-@property (nonatomic, retain) IBOutlet NSButton* testButton;
-@property (nonatomic, retain) IBOutlet NSPopUpButton* enveloppePopUpButton;
+@property (nonatomic, strong) IBOutlet NSTextField* loadedTextField;
+@property (nonatomic, strong) IBOutlet NSButton* testButton;
+@property (nonatomic, strong) IBOutlet NSPopUpButton* enveloppePopUpButton;
 
 /*
  *	C++ Setters/Getters

@@ -25,7 +25,7 @@
 	
 	if (isDirectory) {
 		
-		item = [[NSMenu alloc] initWithTitle:[path lastPathComponent] action:NULL keyEquivalent:@""];
+		item = [[NSMenuItem alloc] initWithTitle:[path lastPathComponent] action:NULL keyEquivalent:@""];
 		
 		NSMenu* subMenu = [[NSMenu alloc] initWithTitle:[path lastPathComponent]];
 		
@@ -45,7 +45,7 @@
 		item = [[NSMenuItem alloc] initWithTitle:path action:NULL keyEquivalent:@""];
 	}
 	
-	return [item autorelease];
+	return item;
 }
 
 @end

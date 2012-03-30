@@ -39,4 +39,7 @@
 @property (nonatomic, strong) IBOutlet NSTextField* rtControlValueTextField;
 @property (nonatomic, strong) IBOutlet NSTextField* rtControlChannelTextField;
 
+@property (nonatomic, strong) IBOutlet NSButton* envFireButton;
+@property (nonatomic, strong) IBOutlet NSTextField* envUpdateFrequencyTextField;
+
 @end

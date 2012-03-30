@@ -18,12 +18,16 @@ const VSCMIDIOutputPort     VSCMIDIOutputPortVoid   = {std::numeric_limits<unsig
 const VSCMIDIInputPort      VSCMIDIInputPortVoid    = {std::numeric_limits<unsigned int>::max(), "", false};
 
 std::ostream& operator<<(std::ostream& output, const VSCMIDIOutputPort& p) {
-    output << "VSCMIDIOutputPort {" << p.number << "; " << p.name << "; " << (p.isVirtual ? "virtual" : "non-virtual") << "}";
+    output << "VSCMIDIOutputPort {" << p.number << "; " << p.name;
+    if (p.isVirtual) output << "; virtual";
+    output << "}";
     return output;
 }
 
 std::ostream& operator<<(std::ostream& output, const VSCMIDIInputPort& p) {
-    output << "VSCMIDIInputPort {" << p.number << "; " << p.name << "; " << (p.isVirtual ? "virtual" : "non-virtual") << "}";
+    output << "VSCMIDIInputPort {" << p.number << "; " << p.name;
+    if (p.isVirtual) output << "; virtual";
+    output << "}";
     return output;
 }
 

@@ -29,9 +29,10 @@
 
 #define ENVELOPPE_FILE_EXTENSION			"vscxenv"
 
-#define VSCEnveloppePtr						boost::shared_ptr<VSCEnveloppe>
-// the weak pointer is used for VSCEnveloppePoint instances to point back to their enveloppes
-#define VSCEnveloppeWeakPtr					boost::weak_ptr<VSCEnveloppe> 
+class VSCEnveloppe;
+
+typedef boost::shared_ptr<VSCEnveloppe>     VSCEnveloppePtr;
+typedef boost::weak_ptr<VSCEnveloppe>       VSCEnveloppeWeakPtr;
 
 class VSCEnveloppe {
 	
@@ -70,6 +71,12 @@ public:
 	VSCEnveloppe(void);
 	// VSCEnveloppe copy construct and file construct
 	~VSCEnveloppe(void);
+    
+    /* Factory */
+    
+    static VSCEnveloppePtr createFlatEnveloppe(VSCSFloat duration, unsigned int numberOfPoints, VSCSFloat value = 0.0);
+    static VSCEnveloppePtr createADSREnveloppe(VSCSFloat attack, VSCSFloat decay, VSCSFloat sustain, VSCSFloat release, VSCSFloat sustainValue = 0.5);
+    static VSCEnveloppePtr createEmptyEnveloppe(void);
 	
 	/* getters / setters */
 	

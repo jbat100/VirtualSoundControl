@@ -17,7 +17,7 @@
 
 @implementation VSCMIDITestView
 
-@synthesize midiTest = _midiTest;
+@synthesize midiTest;
 
 @synthesize midiInputsTable = _midiInputsTable;
 @synthesize midiOutputsTable = _midiOutputsTable;

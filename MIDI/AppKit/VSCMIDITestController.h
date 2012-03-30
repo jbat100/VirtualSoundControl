@@ -10,11 +10,16 @@
 
 @class VSCMIDITestView;
 @class VSCMIDITest;
+//@class VSCEnveloppeEditorWindowController;
+
+#import "VSCEnveloppeEditorWindowController.h"
 
 @interface VSCMIDITestController : NSObject <NSTableViewDelegate, NSTableViewDataSource, NSComboBoxDelegate, NSComboBoxDataSource>
 
 @property (nonatomic, strong) IBOutlet VSCMIDITest* midiTest;
 @property (nonatomic, strong) IBOutlet VSCMIDITestView* midiTestView;
+
+@property (nonatomic, strong) VSCEnveloppeEditorWindowController* enveloppeEditorWindowController;
 
 @property (nonatomic, strong) NSArray* controlChannels; 
 
@@ -29,5 +34,8 @@
 -(IBAction) sendMidiNoteOffMessage:(id)sender;
 
 -(IBAction) controlSliderChangedValue:(id)sender;
+
+-(IBAction) showEnveloppeEditor:(id)sender;
+-(IBAction) fireEnveloppe:(id)sender;
 
 @end

@@ -21,6 +21,7 @@
 @synthesize controlValue = _controlValue;
 @synthesize pitchValue = _pitchValue;
 @synthesize velocityValue = _velocityValue;
+@synthesize autoControlUpdateFrequency = _autoControlUpdateFrequency;
 
 -(id) init {
     

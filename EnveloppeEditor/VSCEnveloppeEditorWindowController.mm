@@ -21,8 +21,8 @@
 
 @interface VSCEnveloppeEditorWindowController ()
 
-@property (nonatomic, retain) NSMenu* fileMenu;
-@property (nonatomic, retain) NSMenuItem* fileTitleMenuItem;
+@property (nonatomic) NSMenu* fileMenu;
+@property (nonatomic) NSMenuItem* fileTitleMenuItem;
 
 -(void) updateEnveloppePopUpMenu;
 -(void) checkInterface;
@@ -41,9 +41,16 @@
 #pragma mark - NSWindowController Window Callbacks
 
 -(void) windowDidLoad {
+    
 	NSLog(@"%@ window did load", self);
     
     [self.window setDelegate:self];
+    
+    if (![self getCurrentEnveloppe]) {
+        
+        [self setCurrentEnveloppe:VSCEnveloppe::createADSREnveloppe(0.5, 0.5, 1.0, 1.0)];
+        
+    }
     
     /*
     CALayer *viewLayer = [CALayer layer];
@@ -89,14 +96,14 @@
     //[enveloppeView setupEnveloppeLayer];
     //[viewLayer setNeedsDisplay];
     
-    
-	
     [self updateEnveloppePopUpMenu];
 	[self checkInterface];
     
     assert(enveloppeEditorView);
     
     [enveloppeEditorView setupGraph];
+    
+    [self.enveloppeEditorView.mainEnveloppeView setEnveloppe:[self getCurrentEnveloppe]];
     
 }
 
@@ -172,24 +179,22 @@
 
 -(void) updateEnveloppePopUpMenu {
 	
-	self.fileMenu = [[[NSMenu alloc] initWithTitle:FILE_MENU_TITLE] autorelease];
+	self.fileMenu = [[NSMenu alloc] initWithTitle:FILE_MENU_TITLE];
 	
-	self.fileTitleMenuItem = [[[NSMenuItem alloc] initWithTitle:FILE_MENU_TITLE
+	self.fileTitleMenuItem = [[NSMenuItem alloc] initWithTitle:FILE_MENU_TITLE
 														action:NULL 
-												 keyEquivalent:@""] autorelease];
+												 keyEquivalent:@""];
 	[fileMenu addItem:fileTitleMenuItem];
 	
 	NSMenuItem* loadItem = [[NSMenuItem alloc] initWithTitle:LOAD_ENVELOPPE_MENU_ITEM_TITLE
 													  action:@selector(loadEnveloppe:) 
 											   keyEquivalent:@""];
 	[fileMenu addItem:loadItem];
-	[loadItem release];
 	
 	NSMenuItem* loadRecentItem = [[NSMenuItem alloc] initWithTitle:LOAD_RECENT_ENVELOPPE_MENU_ITEM_TITLE
 													  action:nil
 											   keyEquivalent:@""];
 	[fileMenu addItem:loadRecentItem];
-	[loadRecentItem release];
 	
 	
 	[fileMenu addItem:[NSMenuItem separatorItem]];
@@ -199,14 +204,12 @@
 											   keyEquivalent:@""];
 	
 	[fileMenu addItem:saveItem];
-	[saveItem release];
 	
 	NSMenuItem* saveAsItem = [[NSMenuItem alloc] initWithTitle:SAVE_ENVELOPPE_AS_MENU_ITEM_TITLE
 													  action:@selector(saveEnveloppeAs:) 
 											   keyEquivalent:@""];
 	
 	[fileMenu addItem:saveAsItem];
-	[saveAsItem release];
 	
 	[enveloppePopUpButton setMenu:fileMenu];
 	
