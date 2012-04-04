@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1023D46513E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1023D46413E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp */; };
 		102C2146141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 102C2145141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		102C2156141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 102C2155141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib */; };
 		1030EFE3132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1030EFE2132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -20,7 +19,6 @@
 		107A78FE132ADE3700C4B1FE /* VSCEnveloppeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		10946E4E1526050B002B9F66 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		109FCFE414D949A40088DCD5 /* libstk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 109FCFE314D949A40088DCD5 /* libstk.a */; };
-		10A12B4714DFE00800B302BC /* VSCEnveloppeDisplaySetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A12B4614DFE00800B302BC /* VSCEnveloppeDisplaySetup.cpp */; };
 		10A168EB14DAEBFC00413E58 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10A168EA14DAEBFC00413E58 /* QuartzCore.framework */; };
 		10DCC6841529F19900DEF66F /* VSCEnveloppeController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10DCC6831529F19900DEF66F /* VSCEnveloppeController.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		10DE92361413EDE600CC602A /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE92351413EDE600CC602A /* libboost_filesystem.a */; };
@@ -44,8 +42,6 @@
 
 /* Begin PBXFileReference section */
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1023D46313E8A58700BB9080 /* VSCEnveloppeViewSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeViewSetup.h; sourceTree = "<group>"; };
-		1023D46413E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppeViewSetup.cpp; sourceTree = "<group>"; };
 		102C2144141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeEditorWindowController.h; sourceTree = "<group>"; };
 		102C2145141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCEnveloppeEditorWindowController.mm; sourceTree = "<group>"; };
 		102C2155141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSCEnveloppeEditorWindowController.xib; sourceTree = "<group>"; };
@@ -65,8 +61,6 @@
 		109EFA9214E3C96B00EC7AD6 /* RtError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RtError.h; path = include/RtError.h; sourceTree = STK_ROOT; };
 		109EFA9314E3C96B00EC7AD6 /* RtMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RtMidi.h; path = include/RtMidi.h; sourceTree = STK_ROOT; };
 		109FCFE314D949A40088DCD5 /* libstk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libstk.a; path = lib/libstk.a; sourceTree = STK_ROOT; };
-		10A12B4514DFDFCA00B302BC /* VSCEnveloppeDisplaySetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeDisplaySetup.h; sourceTree = "<group>"; };
-		10A12B4614DFE00800B302BC /* VSCEnveloppeDisplaySetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCEnveloppeDisplaySetup.cpp; sourceTree = "<group>"; };
 		10A168EA14DAEBFC00413E58 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		10DCC6821529F19900DEF66F /* VSCEnveloppeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeController.h; sourceTree = "<group>"; };
 		10DCC6831529F19900DEF66F /* VSCEnveloppeController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCEnveloppeController.mm; sourceTree = "<group>"; };
@@ -119,6 +113,8 @@
 		10E55E9B152C82D100DB553F /* VSCMIDITestWindowController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCMIDITestWindowController.mm; path = ../../MIDI/VSCMIDITestWindowController.mm; sourceTree = "<group>"; };
 		10E55E9C152C82D100DB553F /* VSCMIDITestWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = VSCMIDITestWindowController.xib; path = ../../MIDI/VSCMIDITestWindowController.xib; sourceTree = "<group>"; };
 		10E55E9D152C82F500DB553F /* VSCMIDITestWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCMIDITestWindowController.h; path = ../../MIDI/VSCMIDITestWindowController.h; sourceTree = "<group>"; };
+		10E55E9E152C907300DB553F /* VSCEnveloppeGUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCEnveloppeGUI.cpp; path = ../../../../Enveloppe/VSCEnveloppeGUI.cpp; sourceTree = "<group>"; };
+		10E55E9F152C907300DB553F /* VSCEnveloppeGUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCEnveloppeGUI.h; path = ../../../../Enveloppe/VSCEnveloppeGUI.h; sourceTree = "<group>"; };
 		10F47DF2152AE90D002662A7 /* VSCEnveloppeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeLayer.h; sourceTree = "<group>"; };
 		10F47DF3152AE90D002662A7 /* VSCEnveloppeLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSCEnveloppeLayer.m; sourceTree = "<group>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -240,10 +236,8 @@
 				10E55E90152C82A300DB553F /* VSCEnveloppeCoordinate.h */,
 				10E55E91152C82A300DB553F /* VSCEnveloppePoint.cpp */,
 				10E55E92152C82A300DB553F /* VSCEnveloppePoint.h */,
-				1023D46313E8A58700BB9080 /* VSCEnveloppeViewSetup.h */,
-				1023D46413E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp */,
-				10A12B4514DFDFCA00B302BC /* VSCEnveloppeDisplaySetup.h */,
-				10A12B4614DFE00800B302BC /* VSCEnveloppeDisplaySetup.cpp */,
+				10E55E9E152C907300DB553F /* VSCEnveloppeGUI.cpp */,
+				10E55E9F152C907300DB553F /* VSCEnveloppeGUI.h */,
 			);
 			name = Enveloppe;
 			sourceTree = "<group>";
@@ -467,8 +461,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1023D46513E8A58700BB9080 /* VSCEnveloppeViewSetup.cpp in Sources */,
-				10A12B4714DFE00800B302BC /* VSCEnveloppeDisplaySetup.cpp in Sources */,
 				104636F214E9587500C7AAD9 /* VSCController.cpp in Sources */,
 				104636F514E9631300C7AAD9 /* VSCTriggeredController.cpp in Sources */,
 				10946E4E1526050B002B9F66 /* main.m in Sources */,

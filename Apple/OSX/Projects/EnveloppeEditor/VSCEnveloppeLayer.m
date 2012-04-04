@@ -13,13 +13,21 @@
 
 - (void)drawInContext:(CGContextRef)ctx {
     
+    drawRectFill(ctx, self.bounds, CGColorCreateFromRGBNSColor([NSColor lightGrayColor]));
     
     
+    for (VSCEnveloppe::List::const_iterator it = _enveloppeList.begin(); it != _enveloppeList.end(); ++it) {
+        
+        VSCEnveloppePtr enveloppe = (*it);
+        
+        
+        
+    }
     
     
 }
 
-#pragma
+#if 0
 
 - (void)drawRect:(NSRect)dirtyRect {
     // Drawing code here.
@@ -71,10 +79,6 @@
 			VSCEnveloppePointPtr currentPoint = *it;
 			VSCEnveloppePointPtr nextPoint = *nextIt;
 			
-#ifdef VSC_DEBUG_COCOA_DRAW
-			//std::cout << "Drawing path between " << *currentPoint << " and " << *nextPoint << "\n";
-#endif
-			
 			// draw line between this point and next
 			
 			NSPoint point1 = [self pointForEnveloppePoint:currentPoint];
@@ -101,10 +105,6 @@
 	for (VSCEnveloppe::ConstPointIterator it = _enveloppe->getPointBeginIterator(); it !=endIt; it++) {
 		
 		VSCEnveloppePointPtr currentPoint = *it;
-		
-#ifdef VSC_DEBUG_COCOA_DRAW
-		//std::cout << "Drawing point for " << *currentPoint;
-#endif
 		
 		// draw control circle for point
 		
@@ -147,6 +147,8 @@
 	}
 	
 }
+
+#endif
 
 
 @end
