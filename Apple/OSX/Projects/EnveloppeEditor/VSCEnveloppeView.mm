@@ -23,6 +23,9 @@
 
 @interface VSCEnveloppeView ()
 
+@property (nonatomic, assign, readwrite) NSRect currentSelectionRect;
+@property (nonatomic, assign, readwrite) NSPoint currentSelectionOrigin;
+
 -(void) purgeCurrentlySelectedPoints;
 -(void) addPointsInRect:(NSRect)rect toPointSet:(std::set<VSCEnveloppePointPtr>&)pointSet;
 
@@ -41,7 +44,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         _enveloppe = VSCEnveloppePtr();
-		_enveloppeViewSetup = VSCEnveloppeViewSetupPtr(new VSCEnveloppeViewSetup());
+		_enveloppeViewSetup = VSCEnveloppeEditorGUIConfigPtr(new VSCEnveloppeEditorGUIConfig());
     }
     return self;
 }
@@ -70,7 +73,7 @@
 
 
 
-#pragma mark - Helper Methods
+#pragma mark - VSCEnveloppeEditor Methods And Point Selection Management
 
 -(void) purgeCurrentlySelectedPoints {
     
@@ -101,6 +104,38 @@
             _pointsInCurrentSelectionRect.erase(setIt);
         }
     }
+    
+}
+
+-(BOOL) enveloppeIsEditable:(VSCEnveloppePtr)enveloppe {
+    
+    if (enveloppe == _enveloppe) {
+        return YES;
+    }
+    
+    return NO;
+    
+}
+
+-(BOOL) pointIsSelected:(VSCEnveloppePointPtr)enveloppePoint {
+    
+    VSCEnveloppe::PointSet::const_iterator pointIt = _pointsInCurrentSelectionRect.find(enveloppePoint);
+    
+    if (pointIt != _pointsInCurrentSelectionRect.end()) {
+        return YES;
+    }
+    
+    return NO;
+    
+}
+
+-(NSRect) currentSelectionRectForEnveloppe:(VSCEnveloppePtr)enveloppe {
+    
+    if (enveloppe == _enveloppe) {
+        return self.currentSelectionRect;
+    }
+    
+    return NSZeroRect;
     
 }
 
@@ -159,11 +194,11 @@
     [self.layer setNeedsDisplay];
 }
 
--(VSCEnveloppeViewSetupPtr) getEnveloppeViewSetup {
+-(VSCEnveloppeEditorGUIConfigPtr) getEnveloppeViewSetup {
     return _enveloppeViewSetup;
 }
 
--(void) setEnveloppeViewSetup:(VSCEnveloppeViewSetupPtr)enveloppeViewSetup {
+-(void) setEnveloppeViewSetup:(VSCEnveloppeEditorGUIConfigPtr)enveloppeViewSetup {
 	assert(enveloppeViewSetup);
     _enveloppeViewSetup = enveloppeViewSetup;
 }

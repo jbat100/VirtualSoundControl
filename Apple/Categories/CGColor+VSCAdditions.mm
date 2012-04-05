@@ -10,7 +10,7 @@
 
 
 
-CGColorRef CGColorCreateFromRGBNSColor (NSColor *color) {
+CGColorRef CGColorCreateFromRGBNSColor (const NSColor *color) {
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB ();
 	NSColor *deviceColor = [color colorUsingColorSpaceName:NSDeviceRGBColorSpace];
 	CGFloat components[4];
@@ -19,13 +19,13 @@ CGColorRef CGColorCreateFromRGBNSColor (NSColor *color) {
 	return CGColorCreate (colorSpace, components);
 }
 
-CGColorRef CGColorCreateFromRGB (float r, float g, float b) {
+CGColorRef CGColorCreateFromRGB (const float r, const float g, const float b) {
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB ();
 	CGFloat components[4] = {r, g, b, 1.0};
 	return CGColorCreate (colorSpace, components);
 }
 
-CGColorRef CGColorCreateFromRGBA (float r, float g, float b, float a) {
+CGColorRef CGColorCreateFromRGBA (const float r, const float g, const float b, const float a) {
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB ();
 	CGFloat components[4] = {r, g, b, a};
 	return CGColorCreate (colorSpace, components);

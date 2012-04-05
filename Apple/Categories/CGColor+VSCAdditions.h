@@ -13,9 +13,9 @@
  *	These functions follow the same convention as native CG functions
  *	-> Their names contain "Create" and so they should be released after use.
  */
-CGColorRef CGColorCreateFromRGBNSColor (NSColor *color);
-CGColorRef CGColorCreateFromRGB (float r, float g, float b);
-CGColorRef CGColorCreateFromRGBA (float r, float g, float b, float a);
+CGColorRef CGColorCreateFromRGBNSColor (const NSColor *color);
+CGColorRef CGColorCreateFromRGB (const float r, const float g, const float b);
+CGColorRef CGColorCreateFromRGBA (const float r, const float g, const float b, const float a);
 CGColorRef CGColorCreateFromVSCColour (const VSCColour& colour);
 
 void drawLinearGradientInContext(CGContextRef context, CGRect rect, CGColorRef startColor, CGColorRef  endColor);

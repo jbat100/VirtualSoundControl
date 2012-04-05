@@ -9,12 +9,19 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "VSCEnveloppe.h"
-#import "VSCEnveloppeDisplaySetup.h"
+#import "VSCEnveloppeGUI.h"
 
 #import <map>
 
-typedef std::map<VSCEnveloppePtr, VSCEnveloppeDisplaySetupPtr>      VSCEnveloppeDisplaySetupMap;
+typedef std::map<VSCEnveloppePtr, VSCEnveloppeGUIConfigPtr>      VSCEnveloppeGUIConfigMap;
 
+@protocol VSCEnveloppeEditor <NSObject>
+
+-(BOOL) enveloppeIsEditable:(VSCEnveloppePtr)enveloppe;
+-(BOOL) pointIsSelected:(VSCEnveloppePointPtr)enveloppePoint;
+-(NSRect) currentSelectionRectForEnveloppe:(VSCEnveloppePtr)enveloppe;
+
+@end
 
 @interface VSCEnveloppeLayer : CALayer {
     
@@ -25,10 +32,12 @@ typedef std::map<VSCEnveloppePtr, VSCEnveloppeDisplaySetupPtr>      VSCEnveloppe
     VSCEnveloppe::ValueRange    _valueRange;
     VSCEnveloppe::TimeRange     _timeRange;
     
-    VSCEnveloppeDisplaySetupPtr     _defaultDisplaySetup;
-    VSCEnveloppeDisplaySetupMap     _enveloppeDisplaySetupMap;
+    VSCEnveloppeGUIConfigPtr     _defaultDisplaySetup;
+    VSCEnveloppeGUIConfigMap     _enveloppeDisplaySetupMap;
     
 }
+
+@property (nonatomic, weak) id<VSCEnveloppeEditor> editor;
 
 -(void) addEnveloppe:(VSCEnveloppePtr)enveloppe;
 -(void) addEnveloppe:(VSCEnveloppePtr)enveloppe atIndex:(NSUInteger)index;
@@ -40,10 +49,11 @@ typedef std::map<VSCEnveloppePtr, VSCEnveloppeDisplaySetupPtr>      VSCEnveloppe
 -(VSCEnveloppe::TimeRange) getTimeRange;
 -(void) setTimeRange:(VSCEnveloppe::TimeRange)range;
 
--(VSCEnveloppeDisplaySetupPtr) getDefaultDisplaySetup;
--(void) setDefaultDisplaySetup:(VSCEnveloppeDisplaySetupPtr)setup;
+-(VSCEnveloppeGUIConfigPtr) getDefaultDisplaySetup;
+-(void) setDefaultDisplaySetup:(VSCEnveloppeGUIConfigPtr)setup;
 
--(void) setDisplaySetup:(VSCEnveloppeDisplaySetupPtr)setup forEnveloppe:(VSCEnveloppePtr)enveloppe;
--(VSCEnveloppeDisplaySetupPtr) getDisplaySetupForEnveloppe:(VSCEnveloppePtr)enveloppe;
+-(void) setDisplaySetup:(VSCEnveloppeGUIConfigPtr)setup forEnveloppe:(VSCEnveloppePtr)enveloppe;
+-(VSCEnveloppeGUIConfigPtr) getDisplaySetupForEnveloppe:(VSCEnveloppePtr)enveloppe;
+
 
 @end

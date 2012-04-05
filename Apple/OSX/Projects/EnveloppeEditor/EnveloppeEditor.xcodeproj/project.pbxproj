@@ -13,8 +13,6 @@
 		104225C2151A335B00E1F68D /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 104225C1151A335B00E1F68D /* CoreMIDI.framework */; };
 		104225C4151A343C00E1F68D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 104225C3151A343C00E1F68D /* CoreFoundation.framework */; };
 		104225C6151A344D00E1F68D /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 104225C5151A344D00E1F68D /* CoreAudio.framework */; };
-		104636F214E9587500C7AAD9 /* VSCController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104636F014E9587500C7AAD9 /* VSCController.cpp */; };
-		104636F514E9631300C7AAD9 /* VSCTriggeredController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104636F314E9631300C7AAD9 /* VSCTriggeredController.cpp */; };
 		106A54C5143D097B00455BC2 /* libboost_serialization.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106A54C4143D097B00455BC2 /* libboost_serialization.a */; };
 		107A78FE132ADE3700C4B1FE /* VSCEnveloppeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		10946E4E1526050B002B9F66 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -23,17 +21,33 @@
 		10DCC6841529F19900DEF66F /* VSCEnveloppeController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10DCC6831529F19900DEF66F /* VSCEnveloppeController.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		10DE92361413EDE600CC602A /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE92351413EDE600CC602A /* libboost_filesystem.a */; };
 		10DE923E1413EEB200CC602A /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE923D1413EEB200CC602A /* libboost_system.a */; };
-		10E55E78152C827000DB553F /* CGColor+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E6F152C827000DB553F /* CGColor+VSCAdditions.mm */; };
-		10E55E79152C827000DB553F /* NS+VSCGeomOperations.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E71152C827000DB553F /* NS+VSCGeomOperations.mm */; };
-		10E55E7A152C827000DB553F /* NSApplication+VSCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E73152C827000DB553F /* NSApplication+VSCAdditions.m */; };
-		10E55E7B152C827000DB553F /* NSFileManager+VSCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E75152C827000DB553F /* NSFileManager+VSCAdditions.m */; };
-		10E55E7C152C827000DB553F /* NSString+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E77152C827000DB553F /* NSString+VSCAdditions.mm */; };
+		10E55E78152C827000DB553F /* CGColor+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E6F152C827000DB553F /* CGColor+VSCAdditions.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		10E55E79152C827000DB553F /* NS+VSCGeomOperations.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E71152C827000DB553F /* NS+VSCGeomOperations.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		10E55E7A152C827000DB553F /* NSApplication+VSCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E73152C827000DB553F /* NSApplication+VSCAdditions.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		10E55E7B152C827000DB553F /* NSFileManager+VSCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E75152C827000DB553F /* NSFileManager+VSCAdditions.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		10E55E7C152C827000DB553F /* NSString+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E77152C827000DB553F /* NSString+VSCAdditions.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		10E55E88152C828400DB553F /* VSCBoost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E7E152C828400DB553F /* VSCBoost.cpp */; };
 		10E55E89152C828400DB553F /* VSCColour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E80152C828400DB553F /* VSCColour.cpp */; };
 		10E55E8A152C828400DB553F /* VSCException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E82152C828400DB553F /* VSCException.cpp */; };
 		10E55E8B152C828400DB553F /* VSCGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E84152C828400DB553F /* VSCGUI.cpp */; };
 		10E55E8C152C828400DB553F /* VSCMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E86152C828400DB553F /* VSCMath.cpp */; };
-		10F47DF4152AE90D002662A7 /* VSCEnveloppeLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F47DF3152AE90D002662A7 /* VSCEnveloppeLayer.m */; };
+		10F47DF4152AE90D002662A7 /* VSCEnveloppeLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F47DF3152AE90D002662A7 /* VSCEnveloppeLayer.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		10FB8F34152DED2C00C24B07 /* VSCController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10FB8F2E152DECF000C24B07 /* VSCController.cpp */; };
+		10FB8F35152DED2C00C24B07 /* VSCManualController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10FB8F30152DECF000C24B07 /* VSCManualController.cpp */; };
+		10FB8F36152DED2C00C24B07 /* VSCTriggeredController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10FB8F32152DECF000C24B07 /* VSCTriggeredController.cpp */; };
+		10FB8F37152DED2C00C24B07 /* VSCMIDI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E65152C823F00DB553F /* VSCMIDI.cpp */; };
+		10FB8F38152DED2C00C24B07 /* VSCMIDIControlCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E67152C823F00DB553F /* VSCMIDIControlCenter.cpp */; };
+		10FB8F39152DED2C00C24B07 /* VSCMIDIController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E69152C823F00DB553F /* VSCMIDIController.cpp */; };
+		10FB8F3A152DED2C00C24B07 /* VSCMIDIOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E6B152C823F00DB553F /* VSCMIDIOutput.cpp */; };
+		10FB8F3B152DED2C00C24B07 /* VSCSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E93152C82AD00DB553F /* VSCSound.cpp */; };
+		10FB8F3C152DED2C00C24B07 /* VSCEnveloppe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E8D152C82A300DB553F /* VSCEnveloppe.cpp */; };
+		10FB8F3D152DED2C00C24B07 /* VSCEnveloppeCoordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E8F152C82A300DB553F /* VSCEnveloppeCoordinate.cpp */; };
+		10FB8F3E152DED2C00C24B07 /* VSCEnveloppePoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E91152C82A300DB553F /* VSCEnveloppePoint.cpp */; };
+		10FB8F3F152DED2C00C24B07 /* VSCEnveloppeGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E9E152C907300DB553F /* VSCEnveloppeGUI.cpp */; };
+		10FB8F40152DED2C00C24B07 /* VSCMIDITest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E96152C82D100DB553F /* VSCMIDITest.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		10FB8F41152DED2C00C24B07 /* VSCMIDITestController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E98152C82D100DB553F /* VSCMIDITestController.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		10FB8F42152DED2C00C24B07 /* VSCMIDITestView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E9A152C82D100DB553F /* VSCMIDITestView.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		10FB8F43152DED2C00C24B07 /* VSCMIDITestWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E9B152C82D100DB553F /* VSCMIDITestWindowController.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
@@ -50,22 +64,16 @@
 		104225C1151A335B00E1F68D /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		104225C3151A343C00E1F68D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		104225C5151A344D00E1F68D /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
-		104636F014E9587500C7AAD9 /* VSCController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCController.cpp; path = ../Sound/Controller/VSCController.cpp; sourceTree = "<group>"; };
-		104636F114E9587500C7AAD9 /* VSCController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCController.h; path = ../Sound/Controller/VSCController.h; sourceTree = "<group>"; };
-		104636F314E9631300C7AAD9 /* VSCTriggeredController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCTriggeredController.cpp; path = ../Sound/Controller/VSCTriggeredController.cpp; sourceTree = "<group>"; };
-		104636F414E9631300C7AAD9 /* VSCTriggeredController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCTriggeredController.h; path = ../Sound/Controller/VSCTriggeredController.h; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		106A54C4143D097B00455BC2 /* libboost_serialization.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_serialization.a; path = lib/libboost_serialization.a; sourceTree = BOOST_ROOT; };
-		107A78FC132ADE3700C4B1FE /* VSCEnveloppeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeView.h; sourceTree = "<group>"; };
-		107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCEnveloppeView.mm; sourceTree = "<group>"; };
+		107A78FC132ADE3700C4B1FE /* VSCEnveloppeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = VSCEnveloppeView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = VSCEnveloppeView.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		109EFA9214E3C96B00EC7AD6 /* RtError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RtError.h; path = include/RtError.h; sourceTree = STK_ROOT; };
 		109EFA9314E3C96B00EC7AD6 /* RtMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RtMidi.h; path = include/RtMidi.h; sourceTree = STK_ROOT; };
 		109FCFE314D949A40088DCD5 /* libstk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libstk.a; path = lib/libstk.a; sourceTree = STK_ROOT; };
 		10A168EA14DAEBFC00413E58 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		10DCC6821529F19900DEF66F /* VSCEnveloppeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeController.h; sourceTree = "<group>"; };
 		10DCC6831529F19900DEF66F /* VSCEnveloppeController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCEnveloppeController.mm; sourceTree = "<group>"; };
-		10DDE63E150A4997009CFFB2 /* VSCManualController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCManualController.cpp; path = ../Sound/Controller/VSCManualController.cpp; sourceTree = "<group>"; };
-		10DDE63F150A4997009CFFB2 /* VSCManualController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCManualController.h; path = ../Sound/Controller/VSCManualController.h; sourceTree = "<group>"; };
 		10DE92351413EDE600CC602A /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = lib/libboost_filesystem.a; sourceTree = BOOST_ROOT; };
 		10DE923D1413EEB200CC602A /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = lib/libboost_system.a; sourceTree = BOOST_ROOT; };
 		10E55E65152C823F00DB553F /* VSCMIDI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDI.cpp; path = ../../../../MIDI/VSCMIDI.cpp; sourceTree = "<group>"; };
@@ -113,10 +121,16 @@
 		10E55E9B152C82D100DB553F /* VSCMIDITestWindowController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCMIDITestWindowController.mm; path = ../../MIDI/VSCMIDITestWindowController.mm; sourceTree = "<group>"; };
 		10E55E9C152C82D100DB553F /* VSCMIDITestWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = VSCMIDITestWindowController.xib; path = ../../MIDI/VSCMIDITestWindowController.xib; sourceTree = "<group>"; };
 		10E55E9D152C82F500DB553F /* VSCMIDITestWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCMIDITestWindowController.h; path = ../../MIDI/VSCMIDITestWindowController.h; sourceTree = "<group>"; };
-		10E55E9E152C907300DB553F /* VSCEnveloppeGUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCEnveloppeGUI.cpp; path = ../../../../Enveloppe/VSCEnveloppeGUI.cpp; sourceTree = "<group>"; };
-		10E55E9F152C907300DB553F /* VSCEnveloppeGUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCEnveloppeGUI.h; path = ../../../../Enveloppe/VSCEnveloppeGUI.h; sourceTree = "<group>"; };
-		10F47DF2152AE90D002662A7 /* VSCEnveloppeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCEnveloppeLayer.h; sourceTree = "<group>"; };
-		10F47DF3152AE90D002662A7 /* VSCEnveloppeLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSCEnveloppeLayer.m; sourceTree = "<group>"; };
+		10E55E9E152C907300DB553F /* VSCEnveloppeGUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCEnveloppeGUI.cpp; path = ../../../../Enveloppe/VSCEnveloppeGUI.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		10E55E9F152C907300DB553F /* VSCEnveloppeGUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCEnveloppeGUI.h; path = ../../../../Enveloppe/VSCEnveloppeGUI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		10F47DF2152AE90D002662A7 /* VSCEnveloppeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = VSCEnveloppeLayer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		10F47DF3152AE90D002662A7 /* VSCEnveloppeLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = VSCEnveloppeLayer.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		10FB8F2E152DECF000C24B07 /* VSCController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCController.cpp; path = ../../../../Controller/VSCController.cpp; sourceTree = "<group>"; };
+		10FB8F2F152DECF000C24B07 /* VSCController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCController.h; path = ../../../../Controller/VSCController.h; sourceTree = "<group>"; };
+		10FB8F30152DECF000C24B07 /* VSCManualController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCManualController.cpp; path = ../../../../Controller/VSCManualController.cpp; sourceTree = "<group>"; };
+		10FB8F31152DECF000C24B07 /* VSCManualController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCManualController.h; path = ../../../../Controller/VSCManualController.h; sourceTree = "<group>"; };
+		10FB8F32152DECF000C24B07 /* VSCTriggeredController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCTriggeredController.cpp; path = ../../../../Controller/VSCTriggeredController.cpp; sourceTree = "<group>"; };
+		10FB8F33152DECF000C24B07 /* VSCTriggeredController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCTriggeredController.h; path = ../../../../Controller/VSCTriggeredController.h; sourceTree = "<group>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD582B0DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2564AD2C0F5327BB00F57823 /* EnveloppeEditor_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnveloppeEditor_Prefix.pch; sourceTree = "<group>"; };
@@ -180,12 +194,12 @@
 		104636EF14E9578400C7AAD9 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				104636F314E9631300C7AAD9 /* VSCTriggeredController.cpp */,
-				104636F414E9631300C7AAD9 /* VSCTriggeredController.h */,
-				10DDE63E150A4997009CFFB2 /* VSCManualController.cpp */,
-				10DDE63F150A4997009CFFB2 /* VSCManualController.h */,
-				104636F014E9587500C7AAD9 /* VSCController.cpp */,
-				104636F114E9587500C7AAD9 /* VSCController.h */,
+				10FB8F2E152DECF000C24B07 /* VSCController.cpp */,
+				10FB8F2F152DECF000C24B07 /* VSCController.h */,
+				10FB8F30152DECF000C24B07 /* VSCManualController.cpp */,
+				10FB8F31152DECF000C24B07 /* VSCManualController.h */,
+				10FB8F32152DECF000C24B07 /* VSCTriggeredController.cpp */,
+				10FB8F33152DECF000C24B07 /* VSCTriggeredController.h */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -246,7 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				10F47DF2152AE90D002662A7 /* VSCEnveloppeLayer.h */,
-				10F47DF3152AE90D002662A7 /* VSCEnveloppeLayer.m */,
+				10F47DF3152AE90D002662A7 /* VSCEnveloppeLayer.mm */,
 				107A78FC132ADE3700C4B1FE /* VSCEnveloppeView.h */,
 				107A78FD132ADE3700C4B1FE /* VSCEnveloppeView.mm */,
 				10DCC6821529F19900DEF66F /* VSCEnveloppeController.h */,
@@ -461,24 +475,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				104636F214E9587500C7AAD9 /* VSCController.cpp in Sources */,
-				104636F514E9631300C7AAD9 /* VSCTriggeredController.cpp in Sources */,
-				10946E4E1526050B002B9F66 /* main.m in Sources */,
-				1030EFE3132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm in Sources */,
-				107A78FE132ADE3700C4B1FE /* VSCEnveloppeView.mm in Sources */,
-				102C2146141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm in Sources */,
-				10DCC6841529F19900DEF66F /* VSCEnveloppeController.mm in Sources */,
-				10F47DF4152AE90D002662A7 /* VSCEnveloppeLayer.m in Sources */,
-				10E55E78152C827000DB553F /* CGColor+VSCAdditions.mm in Sources */,
-				10E55E79152C827000DB553F /* NS+VSCGeomOperations.mm in Sources */,
-				10E55E7A152C827000DB553F /* NSApplication+VSCAdditions.m in Sources */,
-				10E55E7B152C827000DB553F /* NSFileManager+VSCAdditions.m in Sources */,
-				10E55E7C152C827000DB553F /* NSString+VSCAdditions.mm in Sources */,
+				10FB8F34152DED2C00C24B07 /* VSCController.cpp in Sources */,
+				10FB8F35152DED2C00C24B07 /* VSCManualController.cpp in Sources */,
+				10FB8F36152DED2C00C24B07 /* VSCTriggeredController.cpp in Sources */,
+				10FB8F37152DED2C00C24B07 /* VSCMIDI.cpp in Sources */,
+				10FB8F38152DED2C00C24B07 /* VSCMIDIControlCenter.cpp in Sources */,
+				10FB8F39152DED2C00C24B07 /* VSCMIDIController.cpp in Sources */,
+				10FB8F3A152DED2C00C24B07 /* VSCMIDIOutput.cpp in Sources */,
+				10FB8F3B152DED2C00C24B07 /* VSCSound.cpp in Sources */,
+				10FB8F3C152DED2C00C24B07 /* VSCEnveloppe.cpp in Sources */,
+				10FB8F3D152DED2C00C24B07 /* VSCEnveloppeCoordinate.cpp in Sources */,
+				10FB8F3E152DED2C00C24B07 /* VSCEnveloppePoint.cpp in Sources */,
+				10FB8F3F152DED2C00C24B07 /* VSCEnveloppeGUI.cpp in Sources */,
 				10E55E88152C828400DB553F /* VSCBoost.cpp in Sources */,
 				10E55E89152C828400DB553F /* VSCColour.cpp in Sources */,
 				10E55E8A152C828400DB553F /* VSCException.cpp in Sources */,
 				10E55E8B152C828400DB553F /* VSCGUI.cpp in Sources */,
 				10E55E8C152C828400DB553F /* VSCMath.cpp in Sources */,
+				10FB8F40152DED2C00C24B07 /* VSCMIDITest.mm in Sources */,
+				10FB8F41152DED2C00C24B07 /* VSCMIDITestController.mm in Sources */,
+				10FB8F42152DED2C00C24B07 /* VSCMIDITestView.mm in Sources */,
+				10FB8F43152DED2C00C24B07 /* VSCMIDITestWindowController.mm in Sources */,
+				10946E4E1526050B002B9F66 /* main.m in Sources */,
+				1030EFE3132985C300E4BCA1 /* VSCEnveloppeEditorDocument.mm in Sources */,
+				107A78FE132ADE3700C4B1FE /* VSCEnveloppeView.mm in Sources */,
+				102C2146141CFA4000EEEF55 /* VSCEnveloppeEditorWindowController.mm in Sources */,
+				10DCC6841529F19900DEF66F /* VSCEnveloppeController.mm in Sources */,
+				10F47DF4152AE90D002662A7 /* VSCEnveloppeLayer.mm in Sources */,
+				10E55E78152C827000DB553F /* CGColor+VSCAdditions.mm in Sources */,
+				10E55E79152C827000DB553F /* NS+VSCGeomOperations.mm in Sources */,
+				10E55E7A152C827000DB553F /* NSApplication+VSCAdditions.m in Sources */,
+				10E55E7B152C827000DB553F /* NSFileManager+VSCAdditions.m in Sources */,
+				10E55E7C152C827000DB553F /* NSString+VSCAdditions.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

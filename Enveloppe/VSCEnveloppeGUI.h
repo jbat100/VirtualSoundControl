@@ -10,36 +10,26 @@
 #ifndef _VSC_ENVELOPPE_GUI_H_
 #define _VSC_ENVELOPPE_GUI_H_
 
+#include "VSCGUI.h"
 #include "VSCColour.h"
 #include "VSCSound.h"
 #include "VSCEnveloppe.h"
-#include "VSCEnveloppeDisplaySetup.h"
-#include <utility>
-#include <list>
+
 #include <boost/shared_ptr.hpp>
-
-/*
- *	Enveloppe point calculations
- */
-
-VSCSFloat pointForTime(const VSCSFloat t, const VSCEnveloppe::TimeRange timeRange, const VSCSFloat width) const;
-VSCSFloat pointForValue(const VSCSFloat v, const VSCEnveloppe::ValueRange valueRange, const VSCSFloat height) const;
-VSCSFloat timeForPoint(const VSCSFloat point, const VSCEnveloppe::TimeRange timeRange, const VSCSFloat width) const;
-VSCSFloat valueForPoint(const VSCSFloat point, const VSCEnveloppe::ValueRange valueRange, const VSCSFloat height) const;
 
 /*
  *	VSCEnveloppeViewSetup
  */
 
-class VSCEnveloppeViewSetup;
+class VSCEnveloppeEditorGUIConfig;
 
-typedef boost::shared_ptr<VSCEnveloppeViewSetup> VSCEnveloppeViewSetupPtr;
+typedef boost::shared_ptr<VSCEnveloppeEditorGUIConfig> VSCEnveloppeEditorGUIConfigPtr;
 
-class VSCEnveloppeViewSetup {
+class VSCEnveloppeEditorGUIConfig {
 	
 public:
 	
-	VSCEnveloppeViewSetup(void);
+	VSCEnveloppeEditorGUIConfig(void);
 	
 	void setToDefault(void);
 	
@@ -47,18 +37,41 @@ public:
 	 *	View range setters / getters
 	 */
     const VSCEnveloppe::TimeRange& getTimeRange(void) const;
-	void setTimeRange(const VSCEnveloppe::TimeRange timeRange);
+	void setTimeRange(const VSCEnveloppe::TimeRange& timeRange);
 	const VSCEnveloppe::ValueRange& getValueRange(void) const;
-	void setValueRange(const VSCEnveloppe::ValueRange valueRange);
+	void setValueRange(const VSCEnveloppe::ValueRange& valueRange);
     
     /*
 	 *	Allowed range setters / getters
 	 */
     const VSCEnveloppe::TimeRange& getAllowedTimeRange(void) const;
-	void setAllowedTimeRange(const VSCEnveloppe::TimeRange timeRange);
+	void setAllowedTimeRange(const VSCEnveloppe::TimeRange& timeRange);
 	const VSCEnveloppe::ValueRange& getAllowedValueRange(void) const;
-	void setAllowedValueRange(const VSCEnveloppe::ValueRange valueRange);
+	void setAllowedValueRange(const VSCEnveloppe::ValueRange& valueRange);
+    
+    /*
+	 *	Selection rect setters / getters
+	 */
+    const VSCColour& getSelectionRectColour(void) const;
+    void setSelectionRectColour(const VSCColour& colour);
+    float getSelectionRectLineWidth(void) const;
+    void setSelectionRectLineWidth(const float width);
 	
+    /*
+	 *	Editor size setters / getters
+	 */
+    const VSCGUISize& getEditorSize(void) const;
+    void setEditorSize(const VSCGUISize& size);
+    
+    /*
+	 *	Point Calculations
+	 */
+    VSCSFloat pointForTime(const VSCSFloat t, const VSCSFloat width);
+    VSCSFloat pointForValue(const VSCSFloat v, const VSCSFloat height);
+    VSCSFloat timeForPoint(const VSCSFloat point, const VSCSFloat width);
+    VSCSFloat valueForPoint(const VSCSFloat point, const VSCSFloat height);
+    
+    
 private:
 	
 	/*
@@ -72,23 +85,34 @@ private:
 	 */
 	VSCEnveloppe::TimeRange _allowedTimeRange;
 	VSCEnveloppe::ValueRange _allowedValueRange;
+    
+    /*
+	 *	Selection rect
+	 */
+    VSCColour _selectionRectColour;
+    float _selectionRectLineWidth;
+    
+    /*
+	 *	Editor Size (used for point/time and point/value conversions)
+	 */
+    VSCGUISize editorSize;
 
 };
 
 /*
- *	VSCEnveloppeDisplaySetup
+ *	VSCEnveloppeGUIConfig
  */
 
-class VSCEnveloppeDisplaySetup;
+class VSCEnveloppeGUIConfig;
 
-typedef boost::shared_ptr<VSCEnveloppeDisplaySetup> VSCEnveloppeDisplaySetupPtr;
+typedef boost::shared_ptr<VSCEnveloppeGUIConfig> VSCEnveloppeGUIConfigPtr;
 
-class VSCEnveloppeDisplaySetup {
+class VSCEnveloppeGUIConfig {
     
 public:
     
-    VSCEnveloppeDisplaySetup();
-    VSCEnveloppeDisplaySetup(const VSCEnveloppeDisplaySetup& setup);
+    VSCEnveloppeGUIConfig();
+    VSCEnveloppeGUIConfig(const VSCEnveloppeGUIConfig& setup);
     
     /*
 	 *	Control Points setters / getters
@@ -96,17 +120,19 @@ public:
 	float getControlPointRadius(void) const;
 	void setControlPointRadius(float controlPointRadius);
 	VSCColour getControlPointSelectedColour(void) const;
-	void setControlPointSelectedColour(VSCColour colour);
+	void setControlPointSelectedColour(const VSCColour& colour);
 	VSCColour getControlPointUnselectedColour(void) const;
-	void setControlPointUnselectedColour(VSCColour colour);
+	void setControlPointUnselectedColour(const VSCColour& colour);
 	
 	/*
 	 *	Enveloppe lines setters / getters
 	 */
 	float getLineWidth(void) const;
 	void setLineWidth(float lineWidth);
-	VSCColour getLineColour(void) const;
-	void setLineColour(VSCColour colour);
+	VSCColour getLineSelectedColour(void) const;
+	void setLineSelectedColour(const VSCColour& colour);
+    VSCColour getLineUnselectedColour(void) const;
+	void setLineUnselectedColour(const VSCColour& colour);
     
 private:
     
@@ -121,7 +147,8 @@ private:
 	 *	Enveloppe lines
 	 */
 	float _lineWidth;
-	VSCColour _lineColour;
+	VSCColour _lineSelectedColour;
+    VSCColour _lineUnselectedColour;
     
 };
 

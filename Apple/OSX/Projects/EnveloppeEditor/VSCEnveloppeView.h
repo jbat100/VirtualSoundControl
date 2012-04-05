@@ -11,7 +11,7 @@
 #import "VSCEnveloppeLayer.h"
 
 #import "VSCSound.h"
-#import "VSCEnveloppeViewSetup.h"
+#import "VSCEnveloppeEditorGUIConfig.h"
 #import "VSCEnveloppe.h"
 #import "VSCEnveloppePoint.h"
 
@@ -51,7 +51,7 @@ typedef enum _VSCEnveloppeViewMouseAction {
 } VSCEnveloppeViewMouseAction;
 
 
-@interface VSCEnveloppeView : NSView {
+@interface VSCEnveloppeView : NSView <VSCEnveloppeEditor> {
     
     @private
     
@@ -59,9 +59,9 @@ typedef enum _VSCEnveloppeViewMouseAction {
     VSCEnveloppe::List  _backgroundEnveloppeList;
     
     /*
-     *  A view setup
+     *  A editor setup
      */
-    VSCEnveloppeViewSetupPtr _enveloppeViewSetup;
+    VSCEnveloppeEditorGUIConfigPtr _enveloppeViewSetup;
 	
 	/*
      *  Keep track of the current grid points and their corresponding pixel
@@ -82,19 +82,19 @@ typedef enum _VSCEnveloppeViewMouseAction {
      */
 	VSCEnveloppeViewMouseAction currentMouseAction;
 	BOOL movedSinceMouseDown;
-    
-    /*
-     *  Keeps track of the selection rectangles
-     *  - currentSelectionRect is the rect which should currently be affected by mouse movements (in case the currentMouseAction
-     *  VSCEnveloppeViewMouseActionSelect)
-     */
-    NSRect      currentSelectionRect;
-	NSPoint     currentSelectionOrigin;
 
 }
 
 @property (nonatomic, strong) VSCEnveloppeLayer* mainEnveloppeLayer;
 @property (nonatomic, strong) VSCEnveloppeLayer* backgroundEnveloppesLayer;
+
+/*
+ *  Keeps track of the selection rectangles
+ *  - currentSelectionRect is the rect which should currently be affected by mouse movements (in case the currentMouseAction
+ *  VSCEnveloppeViewMouseActionSelect)
+ */
+@property (nonatomic, assign, readonly) NSRect currentSelectionRect;
+@property (nonatomic, assign, readonly) NSPoint currentSelectionOrigin;
 
 @property (nonatomic, weak) id<VSCEnveloppeViewDataSource> dataSource;
 
@@ -105,8 +105,8 @@ typedef enum _VSCEnveloppeViewMouseAction {
 /* 
  *  C++ setters / getters *
  */
--(VSCEnveloppeViewSetupPtr) getEnveloppeViewSetup;
--(void)setEnveloppeViewSetup:(VSCEnveloppeViewSetupPtr)enveloppe; 
+-(VSCEnveloppeEditorGUIConfigPtr) getEnveloppeViewSetup;
+-(void)setEnveloppeViewSetup:(VSCEnveloppeEditorGUIConfigPtr)enveloppe; 
 -(VSCEnveloppe::PointSet&)getCurrentlySelectedPoints; // passing back by reference is less expensive
 -(void)getCurrentlySelectedPoints:(VSCEnveloppe::PointSet&)points; // copying into new set is more expensice
 -(void)setCurrentlySelectedPoints:(VSCEnveloppe::PointSet&)points;
