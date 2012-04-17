@@ -7,7 +7,7 @@
 //
 
 #import "VSCEnveloppeView.h"
-#import "VSCEnveloppeViewSetup.h"
+#import "VSCEnveloppeGUI.h"
 #import "VSCSound.h"
 #import "VSCColour.h"
 #import "VSCBoost.h"
@@ -68,7 +68,7 @@
 }
 
 -(void) redrawAllEnveloppes {
-    [self.backgroundEnveloppesLayer setNeedDisplay];
+    [self.backgroundEnveloppesLayer setNeedsDisplay];
 }
 
 
@@ -455,8 +455,8 @@
 	}
 		
 	if (currentMouseAction & (VSCEnveloppeViewMouseActionSelect | VSCEnveloppeViewMouseActionPersistentSelect)) {
-		currentSelectionRect = NSMakeRect(locationInView.x, locationInView.y, 0.0, 0.0);
-		currentSelectionOrigin = NSMakePoint(locationInView.x, locationInView.y);
+		self.currentSelectionRect = NSMakeRect(locationInView.x, locationInView.y, 0.0, 0.0);
+		self.currentSelectionOrigin = NSMakePoint(locationInView.x, locationInView.y);
 	}
 	
     [self setNeedsDisplay:YES];
@@ -511,8 +511,8 @@
 			}
 		}
 		
-		currentSelectionRect = NSMakeRect(0.0, 0.0, 0.0, 0.0);
-		currentSelectionOrigin = NSMakePoint(0.0, 0.0);
+		self.currentSelectionRect = NSMakeRect(0.0, 0.0, 0.0, 0.0);
+		self.currentSelectionOrigin = NSMakePoint(0.0, 0.0);
 
 	}
 
@@ -537,12 +537,12 @@
     if ((currentMouseAction & (VSCEnveloppeViewMouseActionSelect | VSCEnveloppeViewMouseActionPersistentSelect)) 
 		&& movedSinceMouseDown == YES) {
 		
-		[self addPointsInRect:currentSelectionRect toPointSet:_currentlySelectedPoints];
+		[self addPointsInRect:self.currentSelectionRect toPointSet:_currentlySelectedPoints];
 		
 		_pointsInCurrentSelectionRect.clear();
 		
-		currentSelectionRect = NSMakeRect(0.0, 0.0, 0.0, 0.0);
-		currentSelectionOrigin = NSMakePoint(0.0, 0.0);
+		self.currentSelectionRect = NSMakeRect(0.0, 0.0, 0.0, 0.0);
+		self.currentSelectionOrigin = NSMakePoint(0.0, 0.0);
 		
 	}
 	
@@ -586,29 +586,29 @@
 		//NSRect selectionRect = currentSelectionRect;
 		CGFloat nx, ny, nw, nh;
 		
-		if (locationInView.x < currentSelectionOrigin.x) {
+		if (locationInView.x < self.currentSelectionOrigin.x) {
 			nx = locationInView.x;
-			nw = currentSelectionOrigin.x - locationInView.x;
+			nw = self.currentSelectionOrigin.x - locationInView.x;
 		}
 		else {
-			nx = currentSelectionOrigin.x;
-			nw = locationInView.x - currentSelectionOrigin.x;
+			nx = self.currentSelectionOrigin.x;
+			nw = locationInView.x - self.currentSelectionOrigin.x;
 		}
 		
-		if (locationInView.y < currentSelectionOrigin.y) {
+		if (self.locationInView.y < self.currentSelectionOrigin.y) {
 			ny = locationInView.y;
-			nh = currentSelectionOrigin.y - locationInView.y;
+			nh = self.currentSelectionOrigin.y - locationInView.y;
 		}
 		else {
-			ny = currentSelectionOrigin.y;
-			nh = locationInView.y - currentSelectionOrigin.y;
+			ny = self.currentSelectionOrigin.y;
+			nh = locationInView.y - self.currentSelectionOrigin.y;
 		}
 		
-		currentSelectionRect = NSMakeRect(nx, ny, nw, nh);
+		self.currentSelectionRect = NSMakeRect(nx, ny, nw, nh);
 		
 		_pointsInCurrentSelectionRect.clear();
 		
-		[self addPointsInRect:currentSelectionRect toPointSet:_pointsInCurrentSelectionRect];
+		[self addPointsInRect:self.currentSelectionRect toPointSet:_pointsInCurrentSelectionRect];
 		
 	}
 	

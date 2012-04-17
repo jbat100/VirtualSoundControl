@@ -20,6 +20,7 @@ typedef std::map<VSCEnveloppePtr, VSCEnveloppeGUIConfigPtr>      VSCEnveloppeGUI
 -(BOOL) enveloppeIsEditable:(VSCEnveloppePtr)enveloppe;
 -(BOOL) pointIsSelected:(VSCEnveloppePointPtr)enveloppePoint;
 -(NSRect) currentSelectionRectForEnveloppe:(VSCEnveloppePtr)enveloppe;
+-(VSCEnveloppeEditorGUIConfigPtr) enveloppeEditorGUIConfig;
 
 @end
 

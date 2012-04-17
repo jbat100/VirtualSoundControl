@@ -9,20 +9,6 @@
 #ifndef _VSC_GUI_H_
 #define _VSC_GUI_H_
 
-struct {
-    float x;
-    float y;
-} VSCGUIPoint;
-
-struct {
-    float width;
-    float height;
-} VSCGUISize;
-
-struct {
-    VSCGUIPoint origin;
-    VSCGUISize  size;
-} VSCGUIRect;
 
 
 #endif

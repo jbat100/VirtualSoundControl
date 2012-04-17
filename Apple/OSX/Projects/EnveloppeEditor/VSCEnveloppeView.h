@@ -11,9 +11,9 @@
 #import "VSCEnveloppeLayer.h"
 
 #import "VSCSound.h"
-#import "VSCEnveloppeEditorGUIConfig.h"
 #import "VSCEnveloppe.h"
 #import "VSCEnveloppePoint.h"
+#import "VSCEnveloppeGUI.h"
 
 #import <list>
 #import <set>
@@ -59,7 +59,7 @@ typedef enum _VSCEnveloppeViewMouseAction {
     VSCEnveloppe::List  _backgroundEnveloppeList;
     
     /*
-     *  A editor setup
+     *  An editor setup
      */
     VSCEnveloppeEditorGUIConfigPtr _enveloppeViewSetup;
 	

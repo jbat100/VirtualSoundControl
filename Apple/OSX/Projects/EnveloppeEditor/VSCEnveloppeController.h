@@ -17,6 +17,7 @@
 @interface VSCEnveloppeController : NSObject <VSCEnveloppeViewDataSource> {
     
     VSCEnveloppePtr _currentEnveloppe;
+    VSCEnveloppe::List _backgroundEnveloppes;
     
 }
 
@@ -28,10 +29,12 @@
 -(VSCEnveloppePtr) getCurrentEnveloppe;
 -(void) setCurrentEnveloppe:(VSCEnveloppePtr)enveloppe;
 
+-(void) addEnveloppe:(VSCEnveloppePtr)enveloppe;
+-(void) removeEnveloppe:(VSCEnveloppePtr)enveloppe;
+
 -(IBAction) loadEnveloppe:(id)sender;
 -(IBAction) saveEnveloppe:(id)sender;
 -(IBAction) saveEnveloppeAs:(id)sender;
-
 
 // slider value maps to seconds represented in the enveloppe vue
 -(IBAction) scaleSliderValueChanged:(id)sender; 

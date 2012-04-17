@@ -36,7 +36,15 @@
 
 -(void) setCurrentEnveloppe:(VSCEnveloppePtr)enveloppe {
     _currentEnveloppe = enveloppe;
-    [self.enveloppeView reloadMainEnveloppe];
+    [self.enveloppeView redrawMainEnveloppe];
+}
+
+-(void) addEnveloppe:(VSCEnveloppePtr)enveloppe {
+    // not implemented
+}
+
+-(void) removeEnveloppe:(VSCEnveloppePtr)enveloppe {
+    // not implemented
 }
 
 #pragma mark - VSCEnveloppeViewDataSource Methods
@@ -46,7 +54,8 @@
 }
 
 -(VSCEnveloppe::List) backgroundEnveloppesForEnveloppeView:(VSCEnveloppeView*)enveloppeView {
-    return VSCEnveloppe::List();
+    //return VSCEnveloppe::List();
+    return _backgroundEnveloppes;
 }
 
 

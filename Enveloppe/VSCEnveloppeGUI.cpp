@@ -7,36 +7,34 @@
  *
  */
 
-#include "VSCEnveloppeViewSetup.h"
+#include "VSCEnveloppeGUI.h"
 #include "VSCSound.h"
 #include "VSCException.h"
 
 #include <cmath>
 
-VSCSFloat pointForTime(const VSCSFloat t, const VSCEnveloppe::TimeRange timeRange, const VSCSFloat width) {
-    
+VSCSFloat pointForTime(const VSCSFloat t, const VSCEnveloppe::TimeRange& timeRange, const VSCSFloat width) {
+    return 0.0;
 }
 
-VSCSFloat pointForValue(const VSCSFloat v, const VSCEnveloppe::ValueRange valueRange, const VSCSFloat height) {
-    
+VSCSFloat pointForValue(const VSCSFloat v, const VSCEnveloppe::ValueRange& valueRange, const VSCSFloat height) {
+    return 0.0;
 }
 
-VSCSFloat timeForPoint(const VSCSFloat point, const VSCEnveloppe::TimeRange timeRange, const VSCSFloat width) {
-    
+VSCSFloat timeForPoint(const VSCSFloat point, const VSCEnveloppe::TimeRange& timeRange, const VSCSFloat width) {
+    return 0.0;
 }
 
-VSCSFloat valueForPoint(const VSCSFloat point, const VSCEnveloppe::ValueRange valueRange, const VSCSFloat height) {
-    
+VSCSFloat valueForPoint(const VSCSFloat point, const VSCEnveloppe::ValueRange& valueRange, const VSCSFloat height) {
+    return 0.0;
 }
 
-#pragma mark View range setters / getters
 
 VSCEnveloppeEditorGUIConfig::VSCEnveloppeEditorGUIConfig(void) {
 	setToDefault();
 }
 
 void VSCEnveloppeEditorGUIConfig::setToDefault(void) {
-	this->setDisplayType(VSCEnveloppeDisplayTypeDefault);
     this->setTimeRange(VSCEnveloppe::TimeRange(0.0,5.0));
     this->setValueRange(VSCEnveloppe::ValueRange(0.0,1.0));
     this->setAllowedTimeRange(VSCEnveloppe::TimeRange(0.0,5.0));
@@ -44,7 +42,7 @@ void VSCEnveloppeEditorGUIConfig::setToDefault(void) {
 }
 
 
-#pragma mark View range setters / getters
+#pragma mark Setters / Getters
 
 /*
  *	View range setters / getters
@@ -85,31 +83,50 @@ void VSCEnveloppeEditorGUIConfig::setAllowedValueRange(const VSCEnveloppe::Value
     _allowedValueRange = valueRange;
 }
 
-#pragma mark Display type setters / getters
-
-/*
- *	Display type setters / getters
- */
-
-VSCEnveloppeDisplayType VSCEnveloppeEditorGUIConfig::getDisplayType(void) const {
-	return _displayType;
+const VSCSFloat VSCEnveloppeEditorGUIConfig::getPointSelectionRadius(void) const {
+    
 }
 
-void VSCEnveloppeEditorGUIConfig::setDisplayType(const VSCEnveloppeDisplayType displayType) {
-	_displayType = displayType;
+void VSCEnveloppeEditorGUIConfig::setPointSelectionRadius(const VSCSFloat radius) {
+    
 }
+
+#pragma mark Point Calculations
+
+VSCSFloat VSCEnveloppeEditorGUIConfig::pointForTime(const VSCSFloat t) {
+    return ::pointForTime(t, _timeRange, _editorSize.width);
+}
+
+VSCSFloat VSCEnveloppeEditorGUIConfig::pointForValue(const VSCSFloat v) {
+    return ::pointForValue(v, _valueRange, _editorSize.height);
+}
+
+VSCSFloat VSCEnveloppeEditorGUIConfig::timeForPoint(const VSCSFloat point) {
+    return ::timeForPoint(point, _timeRange, _editorSize.width);
+}
+
+VSCSFloat VSCEnveloppeEditorGUIConfig::valueForPoint(const VSCSFloat point) {
+    return ::valueForPoint(point, _valueRange, _editorSize.height);
+}
+
+VSC::Point VSCEnveloppeEditorGUIConfig::pointForEnveloppeCoordinate(const VSCEnveloppeCoordinatePtr& p) {
+    VSC::Point point;
+    point.x = this->pointForTime(p->getTime());
+    point.y = this->pointForValue(p->getValue());
+    return point;
+}
+
+VSCEnveloppeCoordinatePtr VSCEnveloppeEditorGUIConfig::enveloppeCoordinateForPoint(const VSC::Point& p) {
+    VSCEnveloppeCoordinatePtr coord = VSCEnveloppeCoordinatePtr(new VSCEnveloppeCoordinate());
+    coord->setTime(this->timeForPoint(p.x));
+    coord->setValue(this->valueForPoint(p.y));
+    return coord;
+}
+
 
 #pragma mark -
 
 #pragma mark Enveloppe Display Setups
-
-VSCEnveloppeGUIConfig& VSCEnveloppeEditorGUIConfig::getActiveDisplaySetup() {
-    return _activeDisplaySetup;
-}
-
-VSCEnveloppeGUIConfig& VSCEnveloppeEditorGUIConfig::getInactiveDisplaySetup() {
-    return _inactiveDisplaySetup;
-}
 
 
 VSCEnveloppeGUIConfig::VSCEnveloppeGUIConfig() {
@@ -117,13 +134,15 @@ VSCEnveloppeGUIConfig::VSCEnveloppeGUIConfig() {
     this->setLineWidth(1.0);
     this->setControlPointSelectedColour((VSCColour){0.0, 0.0, 1.0, 1.0});
     this->setControlPointUnselectedColour((VSCColour){0.0, 0.0, 0.0, 1.0});
-    this->setLineColour((VSCColour){0.0, 0.0, 0.0, 1.0});
+    this->setLineSelectedColour((VSCColour){0.0, 0.0, 0.0, 1.0});
+    this->setLineUnselectedColour((VSCColour){0.0, 0.0, 1.0, 1.0});
 }
 
 VSCEnveloppeGUIConfig::VSCEnveloppeGUIConfig(const VSCEnveloppeGUIConfig& setup) {
     _controlPointRadius = setup._controlPointRadius;
     _lineWidth = setup._lineWidth;
-    _lineColour = setup._lineColour;
+    _lineSelectedColour = setup._lineSelectedColour;
+    _lineUnselectedColour = setup._lineUnselectedColour;
     _controlPointSelectedColour = setup._controlPointSelectedColour;
     _controlPointUnselectedColour = setup._controlPointUnselectedColour;
 }
@@ -142,7 +161,7 @@ void VSCEnveloppeGUIConfig::setControlPointRadius(float controlPointRadius) {
 	_controlPointRadius = controlPointRadius;
 }
 
-VSCColour VSCEnveloppeGUIConfig::getControlPointSelectedColour(void) const {
+const VSCColour& VSCEnveloppeGUIConfig::getControlPointSelectedColour(void) const {
 	return _controlPointSelectedColour;
 }
 
@@ -150,7 +169,7 @@ void VSCEnveloppeGUIConfig::setControlPointSelectedColour(const VSCColour& colou
 	_controlPointSelectedColour = colour;
 }
 
-VSCColour VSCEnveloppeGUIConfig::getControlPointUnselectedColour(void) const {
+const VSCColour& VSCEnveloppeGUIConfig::getControlPointUnselectedColour(void) const {
 	return _controlPointUnselectedColour;
 }
 
@@ -172,7 +191,7 @@ void VSCEnveloppeGUIConfig::setLineWidth(float lineWidth) {
  *	Enveloppe lines setters / getters
  */
 
-VSCColour VSCEnveloppeGUIConfig::getLineSelectedColour(void) const {
+const VSCColour& VSCEnveloppeGUIConfig::getLineSelectedColour(void) const {
 	return _lineSelectedColour;
 }
 
@@ -180,10 +199,10 @@ void VSCEnveloppeGUIConfig::setLineSelectedColour(const VSCColour& colour) {
 	_lineSelectedColour = colour;
 }
 
-VSCColour getLineUnselectedColour(void) const {
+const VSCColour& VSCEnveloppeGUIConfig::getLineUnselectedColour(void) const {
     return _lineUnselectedColour;
 }
 
-void setLineUnselectedColour(const VSCColour& colour) {
+void VSCEnveloppeGUIConfig::setLineUnselectedColour(const VSCColour& colour) {
     _lineUnselectedColour = colour;
 }

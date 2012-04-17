@@ -11,6 +11,7 @@
 #define _VSC_ENVELOPPE_GUI_H_
 
 #include "VSCGUI.h"
+#include "VSCMath.h"
 #include "VSCColour.h"
 #include "VSCSound.h"
 #include "VSCEnveloppe.h"
@@ -54,22 +55,30 @@ public:
 	 */
     const VSCColour& getSelectionRectColour(void) const;
     void setSelectionRectColour(const VSCColour& colour);
-    float getSelectionRectLineWidth(void) const;
+    VSCSFloat getSelectionRectLineWidth(void) const;
     void setSelectionRectLineWidth(const float width);
 	
     /*
+	 *	Point selection radius
+	 */
+    const VSCSFloat getPointSelectionRadius(void) const;
+    void setPointSelectionRadius(const VSCSFloat radius);
+    
+    /*
 	 *	Editor size setters / getters
 	 */
-    const VSCGUISize& getEditorSize(void) const;
-    void setEditorSize(const VSCGUISize& size);
+    const VSC::Size& getEditorSize(void) const;
+    void setEditorSize(const VSC::Size& size);
     
     /*
 	 *	Point Calculations
 	 */
-    VSCSFloat pointForTime(const VSCSFloat t, const VSCSFloat width);
-    VSCSFloat pointForValue(const VSCSFloat v, const VSCSFloat height);
-    VSCSFloat timeForPoint(const VSCSFloat point, const VSCSFloat width);
-    VSCSFloat valueForPoint(const VSCSFloat point, const VSCSFloat height);
+    VSCSFloat pointForTime(const VSCSFloat t);
+    VSCSFloat pointForValue(const VSCSFloat v);
+    VSCSFloat timeForPoint(const VSCSFloat point);
+    VSCSFloat valueForPoint(const VSCSFloat point);
+    VSC::Point pointForEnveloppeCoordinate(const VSCEnveloppeCoordinatePtr& p);
+    VSCEnveloppeCoordinatePtr enveloppeCoordinateForPoint(const VSC::Point& p);
     
     
 private:
@@ -90,12 +99,17 @@ private:
 	 *	Selection rect
 	 */
     VSCColour _selectionRectColour;
-    float _selectionRectLineWidth;
+    VSCSFloat _selectionRectLineWidth;
     
     /*
 	 *	Editor Size (used for point/time and point/value conversions)
 	 */
-    VSCGUISize editorSize;
+    VSC::Size _editorSize;
+    
+    /*
+     *  Point Selection Radius
+     */
+    VSCSFloat _pointSelectionRadius;
 
 };
 
@@ -119,9 +133,9 @@ public:
 	 */
 	float getControlPointRadius(void) const;
 	void setControlPointRadius(float controlPointRadius);
-	VSCColour getControlPointSelectedColour(void) const;
+	const VSCColour& getControlPointSelectedColour(void) const;
 	void setControlPointSelectedColour(const VSCColour& colour);
-	VSCColour getControlPointUnselectedColour(void) const;
+	const VSCColour& getControlPointUnselectedColour(void) const;
 	void setControlPointUnselectedColour(const VSCColour& colour);
 	
 	/*
@@ -129,9 +143,9 @@ public:
 	 */
 	float getLineWidth(void) const;
 	void setLineWidth(float lineWidth);
-	VSCColour getLineSelectedColour(void) const;
+	const VSCColour& getLineSelectedColour(void) const;
 	void setLineSelectedColour(const VSCColour& colour);
-    VSCColour getLineUnselectedColour(void) const;
+    const VSCColour& getLineUnselectedColour(void) const;
 	void setLineUnselectedColour(const VSCColour& colour);
     
 private:
@@ -151,5 +165,10 @@ private:
     VSCColour _lineUnselectedColour;
     
 };
+
+VSCSFloat pointForTime(const VSCSFloat t, const VSCEnveloppe::TimeRange& timeRange, const VSCSFloat width);
+VSCSFloat pointForValue(const VSCSFloat v, const VSCEnveloppe::ValueRange& valueRange, const VSCSFloat height);
+VSCSFloat timeForPoint(const VSCSFloat point, const VSCEnveloppe::TimeRange& timeRange, const VSCSFloat width);
+VSCSFloat valueForPoint(const VSCSFloat point, const VSCEnveloppe::ValueRange& valueRange, const VSCSFloat height);
 
 #endif

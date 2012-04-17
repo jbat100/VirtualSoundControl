@@ -123,6 +123,7 @@
 		10E55E9D152C82F500DB553F /* VSCMIDITestWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCMIDITestWindowController.h; path = ../../MIDI/VSCMIDITestWindowController.h; sourceTree = "<group>"; };
 		10E55E9E152C907300DB553F /* VSCEnveloppeGUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCEnveloppeGUI.cpp; path = ../../../../Enveloppe/VSCEnveloppeGUI.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		10E55E9F152C907300DB553F /* VSCEnveloppeGUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCEnveloppeGUI.h; path = ../../../../Enveloppe/VSCEnveloppeGUI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		10F05EA9152ED8E70056EA7A /* NSLog+VSCDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSLog+VSCDefinitions.h"; path = "../../../Common/NSLog+VSCDefinitions.h"; sourceTree = "<group>"; };
 		10F47DF2152AE90D002662A7 /* VSCEnveloppeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = VSCEnveloppeLayer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10F47DF3152AE90D002662A7 /* VSCEnveloppeLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = VSCEnveloppeLayer.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10FB8F2E152DECF000C24B07 /* VSCController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCController.cpp; path = ../../../../Controller/VSCController.cpp; sourceTree = "<group>"; };
@@ -176,6 +177,7 @@
 		1017811F132BF9BF001C6A96 /* Apple */ = {
 			isa = PBXGroup;
 			children = (
+				10F05EA9152ED8E70056EA7A /* NSLog+VSCDefinitions.h */,
 				10E55E6D152C827000DB553F /* Categories */,
 			);
 			name = Apple;
