@@ -21,6 +21,11 @@
 		10DCC6841529F19900DEF66F /* VSCEnveloppeController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10DCC6831529F19900DEF66F /* VSCEnveloppeController.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		10DE92361413EDE600CC602A /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE92351413EDE600CC602A /* libboost_filesystem.a */; };
 		10DE923E1413EEB200CC602A /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE923D1413EEB200CC602A /* libboost_system.a */; };
+		10E3D06A1542A18F007EEC78 /* CollisionControl2DView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E3D0691542A18F007EEC78 /* CollisionControl2DView.m */; };
+		10E3D0721542A303007EEC78 /* VSCCollisionReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E3D0711542A303007EEC78 /* VSCCollisionReceiver.cpp */; };
+		10E3D07A1542AC86007EEC78 /* LinearMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10E3D0791542AC86007EEC78 /* LinearMath.framework */; };
+		10E3D07D1542AC92007EEC78 /* BulletCollision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10E3D07B1542AC92007EEC78 /* BulletCollision.framework */; };
+		10E3D07E1542AC92007EEC78 /* BulletDynamics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10E3D07C1542AC92007EEC78 /* BulletDynamics.framework */; };
 		10E55E78152C827000DB553F /* CGColor+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E6F152C827000DB553F /* CGColor+VSCAdditions.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		10E55E79152C827000DB553F /* NS+VSCGeomOperations.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E71152C827000DB553F /* NS+VSCGeomOperations.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		10E55E7A152C827000DB553F /* NSApplication+VSCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E73152C827000DB553F /* NSApplication+VSCAdditions.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -76,6 +81,23 @@
 		10DCC6831529F19900DEF66F /* VSCEnveloppeController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCEnveloppeController.mm; sourceTree = "<group>"; };
 		10DE92351413EDE600CC602A /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = lib/libboost_filesystem.a; sourceTree = BOOST_ROOT; };
 		10DE923D1413EEB200CC602A /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = lib/libboost_system.a; sourceTree = BOOST_ROOT; };
+		10E3D0681542A18F007EEC78 /* CollisionControl2DView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollisionControl2DView.h; path = ../../Control/CollisionControl2DView.h; sourceTree = "<group>"; };
+		10E3D0691542A18F007EEC78 /* CollisionControl2DView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollisionControl2DView.m; path = ../../Control/CollisionControl2DView.m; sourceTree = "<group>"; };
+		10E3D0701542A2E5007EEC78 /* VSCCollisionReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCCollisionReceiver.h; path = ../../../../Interface/VSCCollisionReceiver.h; sourceTree = "<group>"; };
+		10E3D0711542A303007EEC78 /* VSCCollisionReceiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCCollisionReceiver.cpp; path = ../../../../Interface/VSCCollisionReceiver.cpp; sourceTree = "<group>"; };
+		10E3D0731542A3CA007EEC78 /* VSCCollision.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCCollision.cpp; path = ../../../../Interface/VSCCollision.cpp; sourceTree = "<group>"; };
+		10E3D0741542A3CA007EEC78 /* VSCCollision.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCCollision.h; path = ../../../../Interface/VSCCollision.h; sourceTree = "<group>"; };
+		10E3D0751542A3CA007EEC78 /* VSCCollisionCreator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCCollisionCreator.cpp; path = ../../../../Interface/VSCCollisionCreator.cpp; sourceTree = "<group>"; };
+		10E3D0761542A3CA007EEC78 /* VSCCollisionCreator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCCollisionCreator.h; path = ../../../../Interface/VSCCollisionCreator.h; sourceTree = "<group>"; };
+		10E3D0771542A476007EEC78 /* VSCCollisionFunctions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCCollisionFunctions.cpp; path = ../../../../Interface/VSCCollisionFunctions.cpp; sourceTree = "<group>"; };
+		10E3D0781542A476007EEC78 /* VSCCollisionFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCCollisionFunctions.h; path = ../../../../Interface/VSCCollisionFunctions.h; sourceTree = "<group>"; };
+		10E3D0791542AC86007EEC78 /* LinearMath.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinearMath.framework; path = Library/Frameworks/LinearMath.framework; sourceTree = SDKROOT; };
+		10E3D07B1542AC92007EEC78 /* BulletCollision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletCollision.framework; path = Library/Frameworks/BulletCollision.framework; sourceTree = SDKROOT; };
+		10E3D07C1542AC92007EEC78 /* BulletDynamics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletDynamics.framework; path = Library/Frameworks/BulletDynamics.framework; sourceTree = SDKROOT; };
+		10E3D07F1542AE53007EEC78 /* VSCCollisionCreatorSphere.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCCollisionCreatorSphere.cpp; path = ../../../../Interface/VSCCollisionCreatorSphere.cpp; sourceTree = "<group>"; };
+		10E3D0801542AE53007EEC78 /* VSCCollisionCreatorSphere.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCCollisionCreatorSphere.h; path = ../../../../Interface/VSCCollisionCreatorSphere.h; sourceTree = "<group>"; };
+		10E3D0811542AE53007EEC78 /* VSCCollisionReceiverSphere.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCCollisionReceiverSphere.cpp; path = ../../../../Interface/VSCCollisionReceiverSphere.cpp; sourceTree = "<group>"; };
+		10E3D0821542AE53007EEC78 /* VSCCollisionReceiverSphere.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCCollisionReceiverSphere.h; path = ../../../../Interface/VSCCollisionReceiverSphere.h; sourceTree = "<group>"; };
 		10E55E65152C823F00DB553F /* VSCMIDI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDI.cpp; path = ../../../../MIDI/VSCMIDI.cpp; sourceTree = "<group>"; };
 		10E55E66152C823F00DB553F /* VSCMIDI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCMIDI.h; path = ../../../../MIDI/VSCMIDI.h; sourceTree = "<group>"; };
 		10E55E67152C823F00DB553F /* VSCMIDIControlCenter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDIControlCenter.cpp; path = ../../../../MIDI/VSCMIDIControlCenter.cpp; sourceTree = "<group>"; };
@@ -148,6 +170,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10E3D07D1542AC92007EEC78 /* BulletCollision.framework in Frameworks */,
+				10E3D07E1542AC92007EEC78 /* BulletDynamics.framework in Frameworks */,
+				10E3D07A1542AC86007EEC78 /* LinearMath.framework in Frameworks */,
 				104225C6151A344D00E1F68D /* CoreAudio.framework in Frameworks */,
 				104225C4151A343C00E1F68D /* CoreFoundation.framework in Frameworks */,
 				104225C2151A335B00E1F68D /* CoreMIDI.framework in Frameworks */,
@@ -209,6 +234,9 @@
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				10E3D07B1542AC92007EEC78 /* BulletCollision.framework */,
+				10E3D07C1542AC92007EEC78 /* BulletDynamics.framework */,
+				10E3D0791542AC86007EEC78 /* LinearMath.framework */,
 				104225C5151A344D00E1F68D /* CoreAudio.framework */,
 				104225C3151A343C00E1F68D /* CoreFoundation.framework */,
 				2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */,
@@ -308,6 +336,27 @@
 			name = "MIDI View And Controller";
 			sourceTree = "<group>";
 		};
+		10E3D06C1542A197007EEC78 /* Collision */ = {
+			isa = PBXGroup;
+			children = (
+				10E3D0681542A18F007EEC78 /* CollisionControl2DView.h */,
+				10E3D0691542A18F007EEC78 /* CollisionControl2DView.m */,
+				10E3D0781542A476007EEC78 /* VSCCollisionFunctions.h */,
+				10E3D0771542A476007EEC78 /* VSCCollisionFunctions.cpp */,
+				10E3D0741542A3CA007EEC78 /* VSCCollision.h */,
+				10E3D0731542A3CA007EEC78 /* VSCCollision.cpp */,
+				10E3D0701542A2E5007EEC78 /* VSCCollisionReceiver.h */,
+				10E3D0711542A303007EEC78 /* VSCCollisionReceiver.cpp */,
+				10E3D0761542A3CA007EEC78 /* VSCCollisionCreator.h */,
+				10E3D0751542A3CA007EEC78 /* VSCCollisionCreator.cpp */,
+				10E3D07F1542AE53007EEC78 /* VSCCollisionCreatorSphere.cpp */,
+				10E3D0801542AE53007EEC78 /* VSCCollisionCreatorSphere.h */,
+				10E3D0811542AE53007EEC78 /* VSCCollisionReceiverSphere.cpp */,
+				10E3D0821542AE53007EEC78 /* VSCCollisionReceiverSphere.h */,
+			);
+			name = Collision;
+			sourceTree = "<group>";
+		};
 		10E55E6D152C827000DB553F /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,6 +416,7 @@
 		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				10E3D06C1542A197007EEC78 /* Collision */,
 				104636EF14E9578400C7AAD9 /* Controller */,
 				109EFA9114E3C90500EC7AD6 /* STK */,
 				10A12B4814DFE97C00B302BC /* MIDI */,
@@ -509,6 +559,8 @@
 				10E55E7A152C827000DB553F /* NSApplication+VSCAdditions.m in Sources */,
 				10E55E7B152C827000DB553F /* NSFileManager+VSCAdditions.m in Sources */,
 				10E55E7C152C827000DB553F /* NSString+VSCAdditions.mm in Sources */,
+				10E3D06A1542A18F007EEC78 /* CollisionControl2DView.m in Sources */,
+				10E3D0721542A303007EEC78 /* VSCCollisionReceiver.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,6 +613,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(BOOST_ROOT)/include/",
 					"$(STK_ROOT)/include/",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = "EnveloppeEditor-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -590,6 +643,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(BOOST_ROOT)/include/",
 					"$(STK_ROOT)/include/",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = "EnveloppeEditor-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -621,6 +675,7 @@
 					"$(STK_ROOT)/include/",
 					"$(CORE_PLOT_ROOT)/Source/framework",
 					"$(CORE_PLOT_ROOT)/Source/framework/MacOnly",
+					"$(BULLET_ROOT)/src/",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(BOOST_LIB)",
@@ -647,6 +702,7 @@
 					"$(STK_ROOT)/include/",
 					"$(CORE_PLOT_ROOT)/Source/framework",
 					"$(CORE_PLOT_ROOT)/Source/framework/MacOnly",
+					"$(BULLET_ROOT)/src/",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(BOOST_LIB)",

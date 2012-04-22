@@ -15,17 +15,17 @@ subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
-#ifndef DEMO_APPLICATION_H
-#define DEMO_APPLICATION_H
+#ifndef _VSC_ROOT_APPLICATION_H_
+#define _VSC_ROOT_APPLICATION_H_
 
-#include "GlutStuff.h"
+#include <GLUT/GLUT.h>
 #include "GL_ShapeDrawer.h"
 
-#include "LinearMath/btVector3.h"
-#include "LinearMath/btMatrix3x3.h"
-#include "LinearMath/btTransform.h"
-#include "LinearMath/btQuickprof.h"
-#include "LinearMath/btAlignedObjectArray.h"
+#include <LinearMath/btVector3.h>
+#include <LinearMath/btMatrix3x3.h>
+#include <LinearMath/btTransform.h>
+#include <LinearMath/btQuickprof.h>
+#include <LinearMath/btAlignedObjectArray.h>
 
 #include "VSCControlSetup.h"
 
@@ -42,11 +42,13 @@ class btTypedConstraint;
 enum VSCApplicationType {
 	VSCApplicationTypeNone = 0,
 	VSCApplicationTypeBasic,
-	VSCApplicationTypeConstraint
+	VSCApplicationTypeConstraint,
+    VSCApplicationTypeHackday
 };
 
 #define VSCApplicationTypeBasicDescriptionString			"Basic Application"
 #define VSCApplicationTypeConstraintDescriptionString		"Constraint Application"
+#define VSCApplicationTypeHackdayDescriptionString		"Hackday Application"
 
 class VSCRootApplication
 {
@@ -205,7 +207,7 @@ public:
 	float getCameraDistance() { return m_cameraDistance; }
 	void setCameraDistance(float dist) { m_cameraDistance = dist;}	
     void reshape(int w, int h);
-    void clientResetScene();
+    virtual void clientResetScene();
 
 	/*
 	 * Generic (GLUT-independant) Camera Interface

@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "btBulletDynamicsCommon.h"
+#import <BulletDynamics/btBulletDynamicsCommon.h>
 #import "VSCOpenGLView.h"
 #import "VSCGLProfilingView.h"
 #import "VSCDocumentProtocol.h"

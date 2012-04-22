@@ -10,8 +10,8 @@
 #include "VSCConstraintApplication.h"
 
 
-#include "btBulletDynamicsCommon.h"
-#include "LinearMath/btIDebugDraw.h"
+#include <BulletDynamics/btBulletDynamicsCommon.h>
+#include <LinearMath/btIDebugDraw.h>
 
 #include "GLDebugDrawer.h"
 
@@ -20,7 +20,8 @@
 
 #include "VSCConstraintApplication.h"
 #include "GL_ShapeDrawer.h"
-#include "GlutStuff.h"
+
+#include <GLUT/GLUT.h>
 
 
 const int numObjects = 3;

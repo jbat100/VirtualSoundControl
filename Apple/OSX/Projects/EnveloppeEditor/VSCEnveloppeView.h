@@ -61,7 +61,7 @@ typedef enum _VSCEnveloppeViewMouseAction {
     /*
      *  An editor setup
      */
-    VSCEnveloppeEditorGUIConfigPtr _enveloppeViewSetup;
+    VSCEnveloppeEditorGUIConfigPtr _enveloppeEditorGUIConfig;
 	
 	/*
      *  Keep track of the current grid points and their corresponding pixel

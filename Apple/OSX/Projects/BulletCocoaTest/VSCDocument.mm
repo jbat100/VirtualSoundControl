@@ -9,8 +9,8 @@
 #import "VSCDocument.h"
 #import "VSCBaseApplication.h"
 #import "VSCConstraintApplication.h"
-
-#include <string>
+#import "VSCHackdayApplication.h"
+#import <string>
 
 
 @implementation VSCDocument
@@ -28,7 +28,7 @@
 		cameraSpeed = 0.5;
 		currentApplicationType = VSCApplicationTypeNone;
 		
-		[self createApplicationWithType:VSCApplicationTypeBasic];
+		[self createApplicationWithType:VSCApplicationTypeHackday];
 		
 	}
 	
@@ -116,6 +116,15 @@
 		//constraintDemo->getDynamicsWorld()->setDebugDrawer(&gDebugDrawer);
 		//constraintDemo->setDebugMode(btIDebugDraw::DBG_DrawConstraints+btIDebugDraw::DBG_DrawConstraintLimits);
 		currentApplicationType = VSCApplicationTypeConstraint;
+	}
+    
+    if (t == VSCApplicationTypeHackday) {
+		NSLog(@"Creating hackday application");
+		rootApplication = new VSCHackdayApplication();
+		rootApplication->initPhysics();
+		//constraintDemo->getDynamicsWorld()->setDebugDrawer(&gDebugDrawer);
+		//constraintDemo->setDebugMode(btIDebugDraw::DBG_DrawConstraints+btIDebugDraw::DBG_DrawConstraintLimits);
+		currentApplicationType = VSCApplicationTypeHackday;
 	}
 	
 	rootApplication->setCameraSpeed((float)cameraSpeed);

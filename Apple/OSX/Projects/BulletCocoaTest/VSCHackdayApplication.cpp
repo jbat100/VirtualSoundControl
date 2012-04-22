@@ -14,13 +14,6 @@ subject to the following restrictions:
 */
 
 
-///create 125 (5x5x5) dynamic object
-#define ARRAY_SIZE_X 5
-#define ARRAY_SIZE_Y 5
-#define ARRAY_SIZE_Z 5
-
-//maximum number of objects (and allow user to shoot additional boxes)
-#define MAX_PROXIES (ARRAY_SIZE_X*ARRAY_SIZE_Y*ARRAY_SIZE_Z + 1024)
 
 ///scaling of the objects (0.1 = 20 centimeter boxes )
 #define SCALING 1.
@@ -28,20 +21,56 @@ subject to the following restrictions:
 #define START_POS_Y -5
 #define START_POS_Z -3
 
-#include "VSCBaseApplication.h"
+#define ARRAY_SIZE_X 2
+#define ARRAY_SIZE_Y 2
+#define ARRAY_SIZE_Z 1
+
+#include "VSCHackdayApplication.h"
 //#include "GlutStuff.h"
 #include <GLUT/GLUT.h>
 ///btBulletDynamicsCommon.h is the main Bullet include file, contains most common include files.
 #include <BulletDynamics/btBulletDynamicsCommon.h>
 #include <stdio.h> //printf debugging
+#include <iostream>
 
 
-void VSCBaseApplication::swapBuffers()
+struct ContactCallback : public btCollisionWorld::ContactResultCallback
+{
+	virtual	btScalar addSingleResult(btManifoldPoint& cp,	
+                                     const btCollisionObject* colObj0,
+                                     int partId0,
+                                     int index0,
+                                     const btCollisionObject* colObj1,
+                                     int partId1,
+                                     int index1)
+	{
+        
+        std::cout << "COLLISION!!! Between " << colObj0 << " and " << colObj1 << std::endl;
+        
+        
+        
+        /*
+		glBegin(GL_LINES);
+		glColor3f(0, 0, 0);
+        
+		btVector3 ptA = cp.getPositionWorldOnA();
+		btVector3 ptB = cp.getPositionWorldOnB();
+        
+		glVertex3d(ptA.x(),ptA.y(),ptA.z());
+		glVertex3d(ptB.x(),ptB.y(),ptB.z());
+		glEnd();
+         */
+        
+		return 0;
+	}
+};
+
+void VSCHackdayApplication::swapBuffers()
 {
 	glutSwapBuffers();
 }
 
-void VSCBaseApplication::initPhysics()
+void VSCHackdayApplication::initPhysics()
 {
 	setTexturing(true);
 	setShadows(true);
@@ -101,7 +130,7 @@ void VSCBaseApplication::initPhysics()
 		// Re-using the same collision is better for memory usage and performance
 
 		btCollisionShape* colShape = new btBoxShape(btVector3(SCALING*1,SCALING*1,SCALING*1));
-		//btCollisionShape* colShape = new btSphereShape(btScalar(1.));
+		//btCollisionShape* colShape = new btSphereShape(btScalar(SCALING));
 		m_collisionShapes.push_back(colShape);
 
 		/// Create Dynamic Objects
@@ -137,8 +166,7 @@ void VSCBaseApplication::initPhysics()
 					btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 					btRigidBody::btRigidBodyConstructionInfo rbInfo(mass,myMotionState,colShape,localInertia);
 					btRigidBody* body = new btRigidBody(rbInfo);
-					
-
+                    
 					m_dynamicsWorld->addRigidBody(body);
 				}
 			}
@@ -148,14 +176,14 @@ void VSCBaseApplication::initPhysics()
 
 }
 
-void VSCBaseApplication::clientResetScene()
+void VSCHackdayApplication::clientResetScene()
 {
 	exitPhysics();
 	initPhysics();
 }	
 	
 
-void VSCBaseApplication::exitPhysics()
+void VSCHackdayApplication::exitPhysics()
 {
 
 	//cleanup in the reverse order of creation/initialization
@@ -191,8 +219,63 @@ void VSCBaseApplication::exitPhysics()
 	delete m_dispatcher;
 
 	delete m_collisionConfiguration;
-
 	
+}
+
+void VSCHackdayApplication::simulate() 
+{
+    VSCRootApplication::simulate();
+    
+    this->collisionCheck();
+    
+}
+
+void VSCHackdayApplication::collisionCheck () 
+{
+    
+    // http://bulletphysics.org/mediawiki-1.5.8/index.php/Collision_Callbacks_and_Triggers
+    
+    std::list<btPersistentManifold*> localManifolds;
+	int numManifolds = m_dynamicsWorld->getDispatcher()->getNumManifolds();
+	for (int i=0;i<numManifolds;i++)
+	{
+		btPersistentManifold* contactManifold = m_dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
+        
+		//btCollisionObject* obA = static_cast<btCollisionObject*>(contactManifold->getBody0());
+		//btCollisionObject* obB = static_cast<btCollisionObject*>(contactManifold->getBody1());
+        
+        localManifolds.push_back(contactManifold);        
+        
+		int numContacts = contactManifold->getNumContacts();
+		for (int j=0;j<numContacts;j++)
+		{
+			btManifoldPoint& pt = contactManifold->getContactPoint(j);
+            btVector3 ptA = pt.getPositionWorldOnA();
+			btVector3 ptB = pt.getPositionWorldOnB();
+		}
+        
+		//you can un-comment out this line, and then all points are removed
+		contactManifold->clearManifold();	
+	}
+     
+    std::vector<btPersistentManifold*>::iterator diffIt;
+    
+    std::vector<btPersistentManifold*> newManifolds (localManifolds.size());
+    diffIt = std::set_difference(localManifolds.begin(), localManifolds.end(), _currentManifolds.begin(), _currentManifolds.end(), 
+                                 newManifolds.begin());
+    for (std::vector<btPersistentManifold*>::iterator it = newManifolds.begin(); it != diffIt; it++) {
+        std::cout << "COLLISION START " << *it << std::endl;
+    }
+    
+    std::vector<btPersistentManifold*> oldManifolds (_currentManifolds.size());
+    diffIt = std::set_difference(_currentManifolds.begin(), _currentManifolds.end(), localManifolds.begin(), localManifolds.end(), 
+                                 oldManifolds.begin());
+    for (std::vector<btPersistentManifold*>::iterator it = oldManifolds.begin(); it != diffIt; it++) {
+        std::cout << "COLLISION END " << *it << std::endl;
+    }
+    
+    _currentManifolds = localManifolds;
+    
 }
 
 

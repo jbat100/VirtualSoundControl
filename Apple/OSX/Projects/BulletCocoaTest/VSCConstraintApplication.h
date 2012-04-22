@@ -7,11 +7,11 @@
  *
  */
 
-#ifndef CONSTRAINT_DEMO_H
-#define CONSTRAINT_DEMO_H
+#ifndef _VSC_CONSTRAINT_APPLICATION_H_
+#define _VSC_CONSTRAINT_APPLICATION_H_
 
 #include "VSCRootApplication.h"
-#include "LinearMath/btAlignedObjectArray.h"
+#include <LinearMath/btAlignedObjectArray.h>
 
 class btBroadphaseInterface;
 class btCollisionShape;
