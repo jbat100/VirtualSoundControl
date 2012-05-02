@@ -298,7 +298,7 @@ void VSCEnveloppe::removePoints(PointList& pnts) {
 
 void VSCEnveloppe::removePointsInTimeRange(TimeRange range){
 	PointList l;
-    std::cout << "Removing points in time range " << range.first << " - " << range.second << std::endl;
+    std::cout << "Removing points in time range " << range.origin << " - " << range.size << std::endl;
 	this->getPointsInTimeRange(l, range);
 	this->removePoints(l);
     assert(isSortedByTime());
@@ -400,7 +400,7 @@ VSCEnveloppePointPtr VSCEnveloppe::getFirstPointBeforeTime(VSCSFloat time) const
 void VSCEnveloppe::getPointsInTimeRange(PointList& l, TimeRange range) const {
 	
 	for (ConstPointIterator it = _points.begin(); it != _points.end(); it++) {
-		if ((*it)->getTime() > range.first && (*it)->getTime() < range.first+ range.second) {
+		if ((*it)->getTime() > range.origin && (*it)->getTime() < range.origin+ range.size) {
 			l.push_back(*it);
 		}
 	}
@@ -423,24 +423,24 @@ bool VSCEnveloppe::canDisplacePoint(VSCEnveloppePointPtr point, VSCSFloat deltaT
     /*
      *  Check allowed time and value limits 
      */
-    if (deltaTime > 0 && point->getTime() + deltaTime > _allowedTimeRange.first + _allowedTimeRange.second) {
+    if (deltaTime > 0 && point->getTime() + deltaTime > _allowedTimeRange.origin + _allowedTimeRange.size) {
         std::cout << "Cannot move point " << *point << " by time " << deltaTime  << "allowed range ( ";
-        std::cout << _allowedTimeRange.first << " " << _allowedTimeRange.first + _allowedTimeRange.second << ")" << std::endl; 
+        std::cout << _allowedTimeRange.origin << " " << _allowedTimeRange.origin + _allowedTimeRange.size << ")" << std::endl; 
         return false;
     }
-    if (deltaTime < 0 && point->getTime() + deltaTime < _allowedTimeRange.first)  {
+    if (deltaTime < 0 && point->getTime() + deltaTime < _allowedTimeRange.origin)  {
         std::cout << "Cannot move point " << *point << " by time " << deltaTime  << "allowed range ( ";
-        std::cout << _allowedTimeRange.first << " " << _allowedTimeRange.first + _allowedTimeRange.second << ")" << std::endl; 
+        std::cout << _allowedTimeRange.origin << " " << _allowedTimeRange.origin + _allowedTimeRange.size << ")" << std::endl; 
         return false;
     }
-    if (deltaValue > 0 && point->getValue() + deltaValue > _allowedValueRange.first + _allowedValueRange.second) {
+    if (deltaValue > 0 && point->getValue() + deltaValue > _allowedValueRange.origin + _allowedValueRange.size) {
         std::cout << "Cannot move point " << *point << " by value " << deltaValue  << "allowed range ( ";
-        std::cout << _allowedValueRange.first << " " << _allowedValueRange.first + _allowedValueRange.second << ")" << std::endl; 
+        std::cout << _allowedValueRange.origin << " " << _allowedValueRange.origin + _allowedValueRange.size << ")" << std::endl; 
         return false;
     }
-    if (deltaValue < 0 && point->getValue() + deltaValue < _allowedValueRange.first) {
+    if (deltaValue < 0 && point->getValue() + deltaValue < _allowedValueRange.origin) {
         std::cout << "Cannot move point " << *point << " by value " << deltaValue  << "allowed range ( ";
-        std::cout << _allowedValueRange.first << " " << _allowedValueRange.first + _allowedValueRange.second << ")" << std::endl;
+        std::cout << _allowedValueRange.origin << " " << _allowedValueRange.origin + _allowedValueRange.size << ")" << std::endl;
         return false;
     }
     /*

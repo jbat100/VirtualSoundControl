@@ -30,9 +30,6 @@ typedef std::map<VSCEnveloppePtr, VSCEnveloppeGUIConfigPtr>      VSCEnveloppeGUI
     
     VSCEnveloppe::List          _enveloppeList;
     
-    VSCEnveloppe::ValueRange    _valueRange;
-    VSCEnveloppe::TimeRange     _timeRange;
-    
     VSCEnveloppeGUIConfigPtr     _defaultDisplaySetup;
     VSCEnveloppeGUIConfigMap     _enveloppeDisplaySetupMap;
     
@@ -43,12 +40,6 @@ typedef std::map<VSCEnveloppePtr, VSCEnveloppeGUIConfigPtr>      VSCEnveloppeGUI
 -(void) addEnveloppe:(VSCEnveloppePtr)enveloppe;
 -(void) addEnveloppe:(VSCEnveloppePtr)enveloppe atIndex:(NSUInteger)index;
 -(void) removeEnveloppe:(VSCEnveloppePtr)enveloppe;
-
--(VSCEnveloppe::ValueRange) getValueRange;
--(void) setValueRange:(VSCEnveloppe::ValueRange)range;
-
--(VSCEnveloppe::TimeRange) getTimeRange;
--(void) setTimeRange:(VSCEnveloppe::TimeRange)range;
 
 -(VSCEnveloppeGUIConfigPtr) getDefaultDisplaySetup;
 -(void) setDefaultDisplaySetup:(VSCEnveloppeGUIConfigPtr)setup;

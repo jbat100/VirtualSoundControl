@@ -56,12 +56,12 @@ public:
     const VSCColour& getSelectionRectColour(void) const;
     void setSelectionRectColour(const VSCColour& colour);
     VSCSFloat getSelectionRectLineWidth(void) const;
-    void setSelectionRectLineWidth(const float width);
+    void setSelectionRectLineWidth(const VSCSFloat width);
 	
     /*
 	 *	Point selection radius
 	 */
-    const VSCSFloat getPointSelectionRadius(void) const;
+    VSCSFloat getPointSelectionRadius(void) const;
     void setPointSelectionRadius(const VSCSFloat radius);
     
     /*
@@ -77,8 +77,11 @@ public:
     VSCSFloat pointForValue(const VSCSFloat v);
     VSCSFloat timeForPoint(const VSCSFloat point);
     VSCSFloat valueForPoint(const VSCSFloat point);
+    VSCSFloat timeDeltaForPointDelta(const VSCSFloat delta);
+    VSCSFloat valueDeltaForPointDelta(const VSCSFloat delta);
     VSC::Point pointForEnveloppeCoordinate(const VSCEnveloppeCoordinatePtr& p);
-    VSCEnveloppeCoordinatePtr enveloppeCoordinateForPoint(const VSC::Point& p);
+    VSCEnveloppeCoordinatePtr createEnveloppeCoordinateForPoint(const VSC::Point& p);
+    void setEnveloppeCoordinateToPoint(VSCEnveloppeCoordinatePtr coord, const VSC::Point& p);
     
     
 private:
@@ -131,7 +134,7 @@ public:
     /*
 	 *	Control Points setters / getters
 	 */
-	float getControlPointRadius(void) const;
+	float getControlPointRadius(void) const;    
 	void setControlPointRadius(float controlPointRadius);
 	const VSCColour& getControlPointSelectedColour(void) const;
 	void setControlPointSelectedColour(const VSCColour& colour);
@@ -165,10 +168,5 @@ private:
     VSCColour _lineUnselectedColour;
     
 };
-
-VSCSFloat pointForTime(const VSCSFloat t, const VSCEnveloppe::TimeRange& timeRange, const VSCSFloat width);
-VSCSFloat pointForValue(const VSCSFloat v, const VSCEnveloppe::ValueRange& valueRange, const VSCSFloat height);
-VSCSFloat timeForPoint(const VSCSFloat point, const VSCEnveloppe::TimeRange& timeRange, const VSCSFloat width);
-VSCSFloat valueForPoint(const VSCSFloat point, const VSCEnveloppe::ValueRange& valueRange, const VSCSFloat height);
 
 #endif

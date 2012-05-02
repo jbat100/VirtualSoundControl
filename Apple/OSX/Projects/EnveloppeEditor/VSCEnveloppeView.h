@@ -127,7 +127,7 @@ typedef enum _VSCEnveloppeViewMouseAction {
 /* 
  *  Create points 
  */
--(VSCEnveloppePointPtr) createEnveloppePointForPoint:(NSPoint)point;
+-(VSCEnveloppePointPtr) createEnveloppePointForPoint:(const NSPoint)point;
 
 @end
 

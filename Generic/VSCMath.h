@@ -28,6 +28,18 @@ namespace VSC {
         Size  size;
     } Rect;
     
+    template <typename PointType>
+    Point MakePointFromPoint(const PointType& p) {
+        Point vscPoint = {p.x, p.y};
+        return vscPoint;
+    }
+    
+    template <typename SizeType>
+    Size MakeSizeFromSize(const SizeType& s) {
+        Size vscSize = {s.width, s.height};
+        return vscSize;
+    }
+    
     /*
      *  Degrees / radians 
      */
@@ -52,10 +64,10 @@ namespace VSC {
          */
         
         template <typename DistanceType, typename PointType>
-        DistanceType const& DistanceBetweenPoints(PointType const& point1, PointType const& point2) {
+        DistanceType DistanceBetweenPoints(PointType const& point1, PointType const& point2) {
             DistanceType dx = point2.x - point1.x;
             DistanceType dy = point2.y - point1.y;
-            return sqrt(dx*dx + dy*dy);
+            return (DistanceType)sqrt(dx*dx + dy*dy);
         }
         
     }

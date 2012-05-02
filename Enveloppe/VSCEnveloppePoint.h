@@ -34,6 +34,7 @@ public:
 	/* Constructors / Destructors */
     VSCEnveloppePoint(void);
 	VSCEnveloppePoint(const VSCEnveloppePoint& p);
+    VSCEnveloppePoint(const VSCEnveloppeCoordinate& p) : VSCEnveloppeCoordinate(p) {};
 	VSCEnveloppePoint(VSCSFloat value, VSCSFloat time);
 	~VSCEnveloppePoint(void);
     

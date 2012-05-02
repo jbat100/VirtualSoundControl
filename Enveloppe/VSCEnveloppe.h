@@ -49,6 +49,20 @@ public:
 		CurveTypeBezierQuadratic,
 		CurveTypeBezierCubic
 	};
+    
+    struct ValueRange {
+        ValueRange() : origin(0.0), size(0.0) {};
+        ValueRange(const VSCSFloat _origin, const VSCSFloat _size) : origin(_origin), size(_size) {};
+        VSCSFloat origin;
+        VSCSFloat size;
+    };
+    
+    struct TimeRange {
+        TimeRange() : origin(0.0), size(0.0) {};
+        TimeRange(const VSCSFloat _origin, const VSCSFloat _size) : origin(_origin), size(_size) {};
+        VSCSFloat origin;
+        VSCSFloat size;
+    };
 	
 	enum PointDisplacementConflictResolution {
 		PointDisplacementConflictResolutionNone = 0,
@@ -66,10 +80,6 @@ public:
     typedef PointList::const_iterator                                   ConstPointIterator;
     typedef PointList::reverse_iterator                                 ReversePointIterator;
     typedef PointList::const_reverse_iterator                           ConstReversePointIterator;
-    typedef std::pair<VSCSFloat, VSCSFloat>                             ValueRange; // value range is origin + offset
-    typedef std::pair<VSCSFloat, VSCSFloat>                             TimeRange; // time range is origin + offset
-    
-    
     
 	VSCEnveloppe(void);
 	// VSCEnveloppe copy construct and file construct

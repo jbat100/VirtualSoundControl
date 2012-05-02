@@ -11,6 +11,7 @@
 #import "VSCSound.h"
 #import "VSCColour.h"
 #import "VSCBoost.h"
+#import "VSCMath.h"
 #import "VSCException.h"
 
 #import "CGColor+VSCAdditions.h"
@@ -39,16 +40,26 @@
 @synthesize backgroundEnveloppesLayer = _backgroundEnveloppesLayer;
 @synthesize dataSource = _dataSource; 
 
+@synthesize currentSelectionRect = _currentSelectionRect;
+@synthesize currentSelectionOrigin = _currentSelectionOrigin;
+
+#pragma mark - NSView Methods
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         _enveloppe = VSCEnveloppePtr();
-		_enveloppeViewSetup = VSCEnveloppeEditorGUIConfigPtr(new VSCEnveloppeEditorGUIConfig());
+		_enveloppeEditorGUIConfig = VSCEnveloppeEditorGUIConfigPtr(new VSCEnveloppeEditorGUIConfig());
     }
     return self;
 }
 
+-(void)setFrameSize:(NSSize)newSize {
+    _enveloppeEditorGUIConfig->setEditorSize(VSC::MakeSizeFromSize(newSize));
+    [super setFrameSize:newSize];
+}
+
+#pragma mark - Custom Draw Methods
 
 -(void) reloadEnveloppes {
     
@@ -59,6 +70,8 @@
         
         _enveloppe = [self.dataSource mainEnveloppeForEnveloppeView:self];
         _backgroundEnveloppeList = [self.dataSource backgroundEnveloppesForEnveloppeView:self];
+        
+        [self.mainEnveloppeLayer addEnveloppe:_enveloppe];
     }
     
 }
@@ -139,6 +152,10 @@
     
 }
 
+-(VSCEnveloppeEditorGUIConfigPtr) enveloppeEditorGUIConfig {
+    return _enveloppeEditorGUIConfig;
+}
+
 #pragma mark - Auto Adjust View Setup
 
 /* 
@@ -146,10 +163,10 @@
  */
 -(void)autoAdjustEnveloppeViewSetup {
     
-    assert(_enveloppeViewSetup);
+    assert(_enveloppeEditorGUIConfig);
 	
 	if (!_enveloppe) {
-		_enveloppeViewSetup->setToDefault();
+		_enveloppeEditorGUIConfig->setToDefault();
 	}
     
     VSCSFloat minTime, maxTime, minValue, maxValue;
@@ -169,13 +186,13 @@
         maxValue += valueMargin;
     } 
     catch (VSCEnveloppeEmptyException& e) {
-        _enveloppeViewSetup->setToDefault();
+        _enveloppeEditorGUIConfig->setToDefault();
         return;
     }
     
-    if (_enveloppeViewSetup) {
-        _enveloppeViewSetup->setTimeRange(VSCEnveloppe::TimeRange(minTime, maxTime-minTime));
-        _enveloppeViewSetup->setValueRange(VSCEnveloppe::ValueRange(minTime, maxValue-minValue));
+    if (_enveloppeEditorGUIConfig) {
+        _enveloppeEditorGUIConfig->setTimeRange(VSCEnveloppe::TimeRange(minTime, maxTime-minTime));
+        _enveloppeEditorGUIConfig->setValueRange(VSCEnveloppe::ValueRange(minTime, maxValue-minValue));
     }
     
 }
@@ -195,12 +212,12 @@
 }
 
 -(VSCEnveloppeEditorGUIConfigPtr) getEnveloppeViewSetup {
-    return _enveloppeViewSetup;
+    return _enveloppeEditorGUIConfig;
 }
 
 -(void) setEnveloppeViewSetup:(VSCEnveloppeEditorGUIConfigPtr)enveloppeViewSetup {
 	assert(enveloppeViewSetup);
-    _enveloppeViewSetup = enveloppeViewSetup;
+    _enveloppeEditorGUIConfig = enveloppeViewSetup;
 }
 
 -(VSCEnveloppe::PointSet&)getCurrentlySelectedPoints {
@@ -223,73 +240,30 @@
 
 #pragma mark - View to enveloppe conversion tools
 
--(VSCSFloat) valueDeltaForPointYDelta:(VSCSFloat)pointYDelta {
-	VSCSFloat range = _enveloppeViewSetup->getValueRange().second; 
-	return (pointYDelta / (VSCSFloat)self.frame.size.height) * range;
-}
-
--(VSCSFloat) timeDeltaForPointXDelta:(VSCSFloat)pointXDelta {
-	VSCSFloat range = _enveloppeViewSetup->getTimeRange().second; 
-	return (pointXDelta / (VSCSFloat)self.frame.size.width) * range;
-}
-
--(VSCSFloat) valueForPoint:(NSPoint)point {
-
-	assert(_enveloppeViewSetup);
-	
-	if (!_enveloppeViewSetup)
-		return 0.0;
-	VSCSFloat normalisedY = (point.y / (VSCSFloat)self.frame.size.height);
-	VSCSFloat range = _enveloppeViewSetup->getValueRange().second; 
-	VSCSFloat adjustedY = _enveloppeViewSetup->getValueRange().first  + (normalisedY*range);
-	
-	return adjustedY;
-	
-}
-
--(VSCSFloat) timeForPoint:(CGPoint)point {
-	
-	assert(_enveloppeViewSetup);
-	
-	if (!_enveloppeViewSetup)
-		return 0.0;
-	VSCSFloat normalisedX = (point.x / (VSCSFloat)self.frame.size.width);
-	VSCSFloat range = _enveloppeViewSetup->getTimeRange().second; 
-	return (NSTimeInterval)(_enveloppeViewSetup->getValueRange().first  + (normalisedX*range));
-	
-}
-
 -(NSPoint) pointForEnveloppePoint:(VSCEnveloppePointPtr)enveloppePoint {
 	return [self pointForTime:(NSTimeInterval)enveloppePoint->getTime() value:(VSCSFloat)enveloppePoint->getValue()];
 }
 
 -(NSPoint) pointForTime:(NSTimeInterval)time value:(VSCSFloat)value {
-	
-	VSCSFloat timeRange = _enveloppeViewSetup->getTimeRange().second; 
-	VSCSFloat timePerPixel = timeRange / self.frame.size.width; 
-	VSCSFloat x = (time - _enveloppeViewSetup->getValueRange().first) / timePerPixel;
-	
-	VSCSFloat valueRange = _enveloppeViewSetup->getValueRange().second;  
-	VSCSFloat valuePerPixel = valueRange / self.frame.size.height; 
-	VSCSFloat y = (value - _enveloppeViewSetup->getValueRange().first) / valuePerPixel;
-	
+	CGFloat x = _enveloppeEditorGUIConfig->pointForTime(time);
+	CGFloat y = _enveloppeEditorGUIConfig->pointForValue(value);
 	return NSMakePoint(x, y);
 }
 
--(BOOL) point:(NSPoint)p touchesEnveloppePoint:(VSCEnveloppePointPtr)enveloppePoint {
+-(BOOL) point:(const NSPoint)p touchesEnveloppePoint:(VSCEnveloppePointPtr)enveloppePoint {
 	
-	assert(_enveloppeViewSetup);
+	assert(_enveloppeEditorGUIConfig);
 	
-	float radius = _enveloppeViewSetup->getActiveDisplaySetup().getControlPointRadius();
+	float radius = _enveloppeEditorGUIConfig->getPointSelectionRadius();
 	
 	/* First do a simple sqaure test to discard faster */
-	NSPoint envP = [self pointForEnveloppePoint:enveloppePoint];
+	const NSPoint envP = [self pointForEnveloppePoint:enveloppePoint];
 	CGRect testRect = CGRectMake(envP.x-radius, envP.y, radius*2, radius*2);
 	if (!CGRectContainsPoint(testRect, envP))
 		return NO;
 	
-	/* If first test succeeded, do proper test */
-	CGFloat distanceToPoint = DistanceBetweenCGPoints(p, envP);
+	/* If first test succeeded, do proper test (template function can't work out the return type so specify it...) */
+	CGFloat distanceToPoint = VSC::Geom::DistanceBetweenPoints<CGFloat>(p, envP);
 	if (distanceToPoint < radius) 
 		return YES;
 	
@@ -300,52 +274,24 @@
 #pragma mark - Enveloppe points handling
 
 -(VSCEnveloppePointPtr) enveloppePointUnderPoint:(NSPoint)point {
-	
 	if (!_enveloppe) {
 		return VSCEnveloppePointPtr();
 	}
-	
 	for (VSCEnveloppe::ConstPointIterator it = _enveloppe->getPointBeginIterator(); it !=_enveloppe->getPointEndIterator(); it++) {
 		if ([self point:point touchesEnveloppePoint:(*it)])
 			return (*it);
 	}
-	
 	return VSCEnveloppePointPtr();
-	
 }
 
 -(void) getEnveloppePoints:(VSCEnveloppe::PointList&)ps InRect:(NSRect)rect {
-	
 	if (!_enveloppe) 
 		return;
-	
 	for (VSCEnveloppe::ConstPointIterator it = _enveloppe->getPointBeginIterator(); it !=_enveloppe->getPointEndIterator(); it++) {
 		NSPoint p = [self pointForEnveloppePoint:(*it)];
 		if (CGRectContainsPoint(rect, p))
 			ps.push_back(*it);
 	}
-	
-}
-
--(void) setEnveloppePoint:(VSCEnveloppePointPtr)controlPoint withPoint:(NSPoint)p {
-    
-    // this should NOT be done with points already in the enveloppe (use displacement instead)
-    
-	controlPoint->setValue([self valueForPoint:p]);
-	controlPoint->setTime([self timeForPoint:p]);
-}
-
--(VSCEnveloppePointPtr) createEnveloppePointForPoint:(NSPoint)point {
-	
-	VSCSFloat t = [self timeForPoint:point];
-	
-    /*
-	if (t<0.0) 
-		return VSCEnveloppePointPtr();
-	*/
-    
-	return VSCEnveloppePointPtr(new VSCEnveloppePoint([self valueForPoint:point], t));
-	
 }
 
 -(void) addPointsInRect:(NSRect)rect toPointSet:(VSCEnveloppe::PointSet&)pointSet {
@@ -482,7 +428,8 @@
 	 */
 	if ((currentMouseAction & VSCEnveloppeViewMouseActionCreate) && movedSinceMouseDown == NO) {
 		NSAssert(!enveloppePoint, @"Expected enveloppePoint to be NULL");
-		VSCEnveloppePointPtr newPoint = [self createEnveloppePointForPoint:locationInView];
+        VSCEnveloppeCoordinatePtr coord = _enveloppeEditorGUIConfig->createEnveloppeCoordinateForPoint(VSC::MakePointFromPoint(locationInView));
+        VSCEnveloppePointPtr newPoint = VSCEnveloppePointPtr(new VSCEnveloppePoint(*coord));
 		_enveloppe->addPoint(newPoint);
 	}
 	
@@ -595,7 +542,7 @@
 			nw = locationInView.x - self.currentSelectionOrigin.x;
 		}
 		
-		if (self.locationInView.y < self.currentSelectionOrigin.y) {
+		if (locationInView.y < self.currentSelectionOrigin.y) {
 			ny = locationInView.y;
 			nh = self.currentSelectionOrigin.y - locationInView.y;
 		}
@@ -618,15 +565,11 @@
 		
 		VSCEnveloppe::PointSet::iterator it;
         
-        VSCSFloat valueDelta = [self valueDeltaForPointYDelta:deltaY];
-        VSCSFloat timeDelta = [self timeDeltaForPointXDelta:deltaX];
+        VSCSFloat valueDelta = _enveloppeEditorGUIConfig->valueDeltaForPointDelta(deltaY);
+        VSCSFloat timeDelta = _enveloppeEditorGUIConfig->timeDeltaForPointDelta(deltaX);
 		
         VSCEnveloppe::PointList moveList;
 		for (it = _currentlySelectedPoints.begin(); it != _currentlySelectedPoints.end(); it++) {
-			//NSPoint p = [self pointForEnveloppePoint:(*it)];
-			//p.x += deltaX;
-			//p.y += deltaY;
-			//[self setEnveloppePoint:(*it) withPoint:p];
             moveList.push_back(*it);
 		}
         

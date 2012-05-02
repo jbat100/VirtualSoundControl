@@ -232,6 +232,7 @@
 													<string key="NSFrame">{{189, 18}, {176, 17}}</string>
 													<reference key="NSSuperview" ref="945008000"/>
 													<reference key="NSWindow"/>
+													<reference key="NSNextKeyView"/>
 													<string key="NSReuseIdentifierKey">_NS:1505</string>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSTextFieldCell" key="NSCell" id="785703553">
@@ -1193,7 +1194,7 @@
 													<string key="NSFrameSize">{414, 76}</string>
 													<reference key="NSSuperview" ref="563741191"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="927440967"/>
+													<reference key="NSNextKeyView" ref="556846227"/>
 													<string key="NSReuseIdentifierKey">_NS:13</string>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSTableHeaderView" key="NSHeaderView" id="552114040">
@@ -1407,7 +1408,7 @@
 									<string key="NSFrame">{{0, 400}, {416, 94}}</string>
 									<reference key="NSSuperview" ref="403740817"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="563741191"/>
+									<reference key="NSNextKeyView" ref="927440967"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<int key="NSsFlags">133682</int>
 									<reference key="NSVScroller" ref="556846227"/>
@@ -1900,14 +1901,10 @@
 							<string key="NSLabel">value: selection.controlValue</string>
 							<string key="NSBinding">value</string>
 							<string key="NSKeyPath">selection.controlValue</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">VSCMIDIValueTransformer</string>
-							</object>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">1310</int>
+					<int key="connectionID">1533</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -5441,7 +5438,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1532</int>
+			<int key="maxID">1533</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5466,6 +5463,7 @@
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="controlSliderChangedValue:">id</string>
+						<string key="fireEnveloppe:">id</string>
 						<string key="refreshInputs:">id</string>
 						<string key="refreshOutputs:">id</string>
 						<string key="sendMidiControlMessage:">id</string>
@@ -5477,6 +5475,10 @@
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="controlSliderChangedValue:">
 							<string key="name">controlSliderChangedValue:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="fireEnveloppe:">
+							<string key="name">fireEnveloppe:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="refreshInputs:">
@@ -5534,6 +5536,8 @@
 						<string key="controlChannelTextField">NSTextField</string>
 						<string key="controlValueTextField">NSTextField</string>
 						<string key="createMidiOutputButton">NSButton</string>
+						<string key="envFireButton">NSButton</string>
+						<string key="envUpdateFrequencyTextField">NSTextField</string>
 						<string key="midiChannelTextField">NSTextField</string>
 						<string key="midiInputsTable">NSTableView</string>
 						<string key="midiOutputTextField">NSTextField</string>
@@ -5563,6 +5567,14 @@
 						<object class="IBToOneOutletInfo" key="createMidiOutputButton">
 							<string key="name">createMidiOutputButton</string>
 							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="envFireButton">
+							<string key="name">envFireButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="envUpdateFrequencyTextField">
+							<string key="name">envUpdateFrequencyTextField</string>
+							<string key="candidateClassName">NSTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="midiChannelTextField">
 							<string key="name">midiChannelTextField</string>

@@ -21,7 +21,8 @@
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 
-#define VSCEnveloppeCoordinatePtr    boost::shared_ptr<VSCEnveloppeCoordinate>
+class VSCEnveloppeCoordinate;
+typedef boost::shared_ptr<VSCEnveloppeCoordinate> VSCEnveloppeCoordinatePtr;
 
 class VSCEnveloppeCoordinate {
 	

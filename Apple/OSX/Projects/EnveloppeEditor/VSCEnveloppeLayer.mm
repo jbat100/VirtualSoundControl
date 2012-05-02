@@ -9,6 +9,7 @@
 #import "VSCEnveloppeLayer.h"
 
 #import "CGColor+VSCAdditions.h"
+#import "NS+VSCGeomOperations.h"
 #import <boost/shared_ptr.hpp>
 
 @interface VSCEnveloppeLayer ()
@@ -20,6 +21,8 @@
 
 @implementation VSCEnveloppeLayer
 
+@synthesize editor = _editor;
+
 -(id) init {
     
     if ((self = [super init])) {
@@ -28,6 +31,39 @@
     
     return self;
     
+}
+
+#pragma mark - C++ Setters/Getters
+
+-(void) addEnveloppe:(VSCEnveloppePtr)enveloppe {
+    
+    VSCEnveloppe::List::iterator it = std::find(_enveloppeList.begin(), _enveloppeList.end(), enveloppe);
+    
+    if (it == _enveloppeList.end()) {
+        _enveloppeList.push_back(enveloppe);
+    }
+    
+}
+
+-(void) addEnveloppe:(VSCEnveloppePtr)enveloppe atIndex:(NSUInteger)index {
+    NSAssert(0, @"Not Implemented");
+}
+
+-(void) removeEnveloppe:(VSCEnveloppePtr)enveloppe {
+    _enveloppeList.remove(enveloppe);
+}
+
+-(VSCEnveloppeGUIConfigPtr) getDefaultDisplaySetup {
+    return _defaultDisplaySetup;
+}
+
+-(void) setDefaultDisplaySetup:(VSCEnveloppeGUIConfigPtr)setup {
+    _defaultDisplaySetup = setup;
+}
+
+
+-(void) setDisplaySetup:(VSCEnveloppeGUIConfigPtr)setup forEnveloppe:(VSCEnveloppePtr)enveloppe {
+    _enveloppeDisplaySetupMap[enveloppe] = setup;
 }
 
 -(VSCEnveloppeGUIConfigPtr) getDisplaySetupForEnveloppe:(VSCEnveloppePtr)enveloppe {
@@ -41,7 +77,7 @@
     return  _defaultDisplaySetup;
 }
         
-
+#pragma mark - Drawing
 
 - (void)drawInContext:(CGContextRef)ctx {
     
@@ -159,7 +195,8 @@
 		
 		// draw control circle for point
 		
-		NSPoint p = [self pointForEnveloppePoint:currentPoint];
+        VSC::Point vscp = [self.editor enveloppeEditorGUIConfig]->pointForEnveloppeCoordinate(boost::dynamic_pointer_cast<VSCEnveloppeCoordinate>(currentPoint));
+		NSPoint p =  NSMakePointFromPoint(vscp);
 		
         if (isEditable == YES) {
             if ([self.editor pointIsSelected:currentPoint]) {
