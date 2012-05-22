@@ -6,8 +6,8 @@ Copyright (c) 2007 tuan.kuranes@gmail.com (Use it Freely, even Statically, but h
 This source file is not LGPL, it's public source code that you can reuse.
 -----------------------------------------------------------------------------*/
 
-#include "OgreBulletListener.h"
-#include "OgreBulletGuiListener.h"
+#include "VSCOgreBulletListener.h"
+#include "VSCOgreBulletGuiListener.h"
 
 using namespace Ogre;
 

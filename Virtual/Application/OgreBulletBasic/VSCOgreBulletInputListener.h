@@ -17,7 +17,7 @@ A basic test framework that minimize code in each test scene listener.
 #ifndef _VSC_OGRE_BULLET_INPUT_LISTENER_H_
 #define _VSC_OGRE_BULLET_INPUT_LISTENER_H_
 
-#include "Ogre.h"
+#include <Ogre/Ogre.h>
 
 /*
  *  If we are not using OIS

@@ -21,8 +21,8 @@ Description: Base class for all the OGRE examples
 #ifndef _VSC_OGRE_APPLICATION_H_
 #define _VSC_OGRE_APPLICATION_H_
 
-#include "Ogre.h"
-#include "OgreConfigFile.h"
+#include <Ogre/Ogre.h>
+#include <Ogre/OgreConfigFile.h>
 
 #include "VSCOgreFrameListener.h"
 
@@ -53,12 +53,22 @@ public:
     VSCOgreApplication(SetupType setupType = SetupTypeDefault);
     /// Standard destructor
     virtual ~VSCOgreApplication();
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+    /*
+     *  When using cocoa we will not use the automatic rendering routine, (which uses root->startRendering),
+     *  instead 
+     */
+    friend class VSCOgreApplicationCocoaSetup;
+    VSCOgreApplicationCocoaSetup* getApplicationCocoaSetup(void);
+    void setApplicationCocoaSetup(VSCOgreApplicationCocoaSetup* setup);
+    virtual bool cocoaSetup(void);
+#else   
     /// Start the example
     virtual void go(void);
-    
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-    friend class VSCOgreApplicationCocoaSetup;
 #endif
+    
+    Root* getRoot(void);
 
 protected:
     

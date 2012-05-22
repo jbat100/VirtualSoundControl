@@ -98,7 +98,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		10B608B7154FF4AC006A6D6E /* OgreBulletFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OgreBulletFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		10B608B7154FF4AC006A6D6E /* OgreBullet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OgreBullet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		10B608BA154FF4AC006A6D6E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		10B608BD154FF4AC006A6D6E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		10B608BE154FF4AC006A6D6E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -228,7 +228,7 @@
 		10B608B8154FF4AC006A6D6E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				10B608B7154FF4AC006A6D6E /* OgreBulletFramework.framework */,
+				10B608B7154FF4AC006A6D6E /* OgreBullet.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -555,6 +555,7 @@
 				10B608B3154FF4AC006A6D6E /* Frameworks */,
 				10B608B4154FF4AC006A6D6E /* Headers */,
 				10B608B5154FF4AC006A6D6E /* Resources */,
+				10C0023C1564026300A088AF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -562,7 +563,7 @@
 			);
 			name = OgreBulletFramework;
 			productName = OgreBulletFramework;
-			productReference = 10B608B7154FF4AC006A6D6E /* OgreBulletFramework.framework */;
+			productReference = 10B608B7154FF4AC006A6D6E /* OgreBullet.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -601,6 +602,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		10C0023C1564026300A088AF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		10B608B2154FF4AC006A6D6E /* Sources */ = {
@@ -668,6 +685,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
+				DEPLOYMENT_LOCATION = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -704,6 +722,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_LOCATION = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -742,7 +761,7 @@
 					"\"$(SRCROOT)/../../../../../../Libraries/bullet-2.80/Extras/ConvexDecomposition\"",
 					"\"$(SRCROOT)/../../../../../../Libraries/bullet-2.80/Extras/GIMPACTUtils\"",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = OgreBullet;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -765,7 +784,7 @@
 					"\"$(SRCROOT)/../../../../../../Libraries/bullet-2.80/Extras/ConvexDecomposition\"",
 					"\"$(SRCROOT)/../../../../../../Libraries/bullet-2.80/Extras/GIMPACTUtils\"",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = OgreBullet;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
@@ -789,6 +808,7 @@
 				10B608CE154FF4AC006A6D6E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

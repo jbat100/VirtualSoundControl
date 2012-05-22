@@ -33,7 +33,7 @@ using namespace Ogre;
 
 VSCOgreApplicationCocoaSetup::VSCOgreApplicationCocoaSetup(void* view)
 {
-    OgreView* ogreView = (OgreView*)ogreView;
+    //OgreView* ogreView = (OgreView*)ogreView;
     this->setOgreView(view);
 }
 
@@ -53,6 +53,17 @@ bool VSCOgreApplicationCocoaSetup::setup(VSCOgreApplication* ogreApplication)
     workDir = Ogre::macBundlePath() + "/Contents/Resources/";
     pluginsPath = workDir;
     
+    /*
+     *  IMPORTANT: http://www.ogre3d.org/docs/api/html/classOgre_1_1Root.html#_details
+     *
+     *  The Ogre::Root class represents a starting point for the client application. From here, the application can gain access to 
+     *  the fundamentals of the system, namely the rendering systems available, management of saved configurations, logging, and access 
+     *  to other classes in the system. Acts as a hub from which all other objects may be reached. An instance of Root must be created
+     *  before any other Ogre operations are called. Once an instance has been created, the same instance is accessible throughout the 
+     *  life of that object by using Root::getSingleton (as a reference) or Root::getSingletonPtr (as a pointer). 
+     */
+    
+    
     // get the ogre root
     ogreApplication.mRoot = OGRE_NEW Ogre::Root(pluginsPath + "plugins.cfg", workDir + "ogre.cfg", workDir + "ogre.log");
     
@@ -70,10 +81,11 @@ bool VSCOgreApplicationCocoaSetup::setup(VSCOgreApplication* ogreApplication)
     misc["macAPI"] = "cocoa";
     
     // Actually create the render window
-    NSRect frame = [self.ogreView frame];
+    NSRect frame = [ogreView frame];
     mRoot->createRenderWindow("ogre window", frame.size.width, frame.size.height, false, &misc);
+    
     // And then get a pointer to it.
-    Ogre::RenderWindow *mWindow = [self.ogreView ogreWindow];
+    Ogre::RenderWindow *mWindow = [ogreView ogreWindow];
 }
 
 
@@ -96,11 +108,9 @@ void* VSCOgreApplicationCocoaSetup::getOgreView(OgreView)
 
 Ogre::RenderWindow* VSCOgreApplicationCocoaSetup::getRenderWindow(void) 
 {
-    if ([mOgreView isKindOfClass:[OgreView class]])
-    {
-        return [mOgreView ogreWindow]
-    }
+
+    OgreView* ogreView = (OgreView*)mOgreView;
+    return [mOgreView ogreWindow]
     
-    return 0;
 }
 

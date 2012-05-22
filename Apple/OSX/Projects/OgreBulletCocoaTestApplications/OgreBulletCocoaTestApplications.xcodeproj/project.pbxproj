@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		104982F815570F090031A1EC /* OgreBulletFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60EEC15505F0C006A6D6E /* OgreBulletFramework.framework */; };
+		10182C24156BCB2500D5E200 /* OgreBulletFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10EBEE5A156A331F005E20B7 /* OgreBulletFramework.framework */; };
 		109D51B1155946D90030C161 /* VSCOgreApplicationCocoaSetup.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109D51B0155946D90030C161 /* VSCOgreApplicationCocoaSetup.mm */; };
 		109D51B5155998EE0030C161 /* VSCException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109D51B3155998EE0030C161 /* VSCException.cpp */; };
 		10B60D2515505D6D006A6D6E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60D2415505D6D006A6D6E /* Cocoa.framework */; };
@@ -41,9 +41,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		10B60EEB15505F0C006A6D6E /* PBXContainerItemProxy */ = {
+		10EBEE59156A331F005E20B7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 10B60EE415505F0C006A6D6E /* OgreBulletFramework.xcodeproj */;
+			containerPortal = 10EBEE52156A331F005E20B7 /* OgreBulletFramework.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 10B608B7154FF4AC006A6D6E;
 			remoteInfo = OgreBulletFramework;
@@ -68,7 +68,6 @@
 		10B60D3615505D6D006A6D6E /* VSCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSCAppDelegate.h; sourceTree = "<group>"; };
 		10B60D3715505D6D006A6D6E /* VSCAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCAppDelegate.mm; sourceTree = "<group>"; };
 		10B60D3A15505D6D006A6D6E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		10B60EE415505F0C006A6D6E /* OgreBulletFramework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OgreBulletFramework.xcodeproj; path = ../../Frameworks/OgreBulletFramework/OgreBulletFramework.xcodeproj; sourceTree = "<group>"; };
 		10B60EED155080D9006A6D6E /* libOIS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOIS.a; path = lib/release/libOIS.a; sourceTree = OGRE_SDK; };
 		10B60EEE155080D9006A6D6E /* Ogre.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogre.framework; path = lib/release/Ogre.framework; sourceTree = OGRE_SDK; };
 		10B60EF215508101006A6D6E /* OIS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OIS.h; path = include/OIS/OIS.h; sourceTree = OGRE_SDK; };
@@ -93,6 +92,7 @@
 		10B60F051550850C006A6D6E /* Cg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cg.framework; path = /Library/Frameworks/Cg.framework; sourceTree = "<absolute>"; };
 		10B60F061550850C006A6D6E /* LinearMath.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinearMath.framework; path = /Library/Frameworks/LinearMath.framework; sourceTree = "<absolute>"; };
 		10B60F10155086F9006A6D6E /* OgreOSXCocoaView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaView.h; path = include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaView.h; sourceTree = OGRE_SDK; };
+		10EBEE52156A331F005E20B7 /* OgreBulletFramework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OgreBulletFramework.xcodeproj; path = ../../Frameworks/OgreBulletFramework/OgreBulletFramework.xcodeproj; sourceTree = "<group>"; };
 		10F4EDFB1557E752000E4591 /* VSCOgreApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreApplication.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreApplication.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		10F4EDFC1557E752000E4591 /* VSCOgreApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreApplication.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreApplication.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10F4EDFD1557E752000E4591 /* VSCOgreFrameListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreFrameListener.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreFrameListener.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -135,7 +135,7 @@
 				10B60F0B1550850C006A6D6E /* BulletSoftBodySolvers_OpenCL_Mini.framework in Frameworks */,
 				10B60F0C1550850C006A6D6E /* Cg.framework in Frameworks */,
 				10B60F0D1550850C006A6D6E /* LinearMath.framework in Frameworks */,
-				104982F815570F090031A1EC /* OgreBulletFramework.framework in Frameworks */,
+				10182C24156BCB2500D5E200 /* OgreBulletFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,10 +175,10 @@
 		10B60D1515505D6D006A6D6E = {
 			isa = PBXGroup;
 			children = (
+				10EBEE52156A331F005E20B7 /* OgreBulletFramework.xcodeproj */,
 				109D51B2155998CA0030C161 /* VSC */,
 				10B60F0E155086D0006A6D6E /* Ogre */,
 				10B60EF1155080F3006A6D6E /* OIS */,
-				10B60EE415505F0C006A6D6E /* OgreBulletFramework.xcodeproj */,
 				10B60D2A15505D6D006A6D6E /* OgreBulletCocoaTestApplications */,
 				10B60D2315505D6D006A6D6E /* Frameworks */,
 				10B60D2115505D6D006A6D6E /* Products */,
@@ -247,14 +247,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		10B60EE515505F0C006A6D6E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				10B60EEC15505F0C006A6D6E /* OgreBulletFramework.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		10B60EF1155080F3006A6D6E /* OIS */ = {
 			isa = PBXGroup;
 			children = (
@@ -291,6 +283,14 @@
 				10B60F10155086F9006A6D6E /* OgreOSXCocoaView.h */,
 			);
 			name = OSX;
+			sourceTree = "<group>";
+		};
+		10EBEE53156A331F005E20B7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				10EBEE5A156A331F005E20B7 /* OgreBulletFramework.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		10F4EE0F1557F482000E4591 /* VSCOgreBulletDemoApplication */ = {
@@ -354,8 +354,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 10B60EE515505F0C006A6D6E /* Products */;
-					ProjectRef = 10B60EE415505F0C006A6D6E /* OgreBulletFramework.xcodeproj */;
+					ProductGroup = 10EBEE53156A331F005E20B7 /* Products */;
+					ProjectRef = 10EBEE52156A331F005E20B7 /* OgreBulletFramework.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -366,11 +366,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		10B60EEC15505F0C006A6D6E /* OgreBulletFramework.framework */ = {
+		10EBEE5A156A331F005E20B7 /* OgreBulletFramework.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = OgreBulletFramework.framework;
-			remoteRef = 10B60EEB15505F0C006A6D6E /* PBXContainerItemProxy */;
+			remoteRef = 10EBEE59156A331F005E20B7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

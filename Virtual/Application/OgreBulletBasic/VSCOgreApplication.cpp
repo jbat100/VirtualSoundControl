@@ -25,7 +25,7 @@ Description: Base class for all the OGRE examples
 #include <Ogre/OgreConfigFile.h>
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-#include <OSX/macUtils.h>
+#include <Ogre/OSX/macUtils.h>
 #endif
 
 #include "VSCOgreApplication.h"
@@ -58,28 +58,39 @@ virtual ~VSCOgreApplication::VSCOgreApplication()
         OGRE_DELETE mRoot;
 }
 
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+VSCOgreApplicationCocoaSetup* VSCOgreApplication::getApplicationCocoaSetup(void) {
+    return mCocoaSetup;
+}
+void VSCOgreApplication::setApplicationCocoaSetup(VSCOgreApplicationCocoaSetup* setup) {
+    mCocoaSetup = setup;
+}
+#endif
+
 /// Start the example
 void VSCOgreApplication::go(void)
-{
-    
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-    if (mSetupType == SetupTypeAppleCocoa && mCocoaSetup != 0) {
-        if (mCocoaSetup) {
-            mCocoaSetup->setup(this);
-        }
-    }
-    else if (!setup())
-    {
-        return;
-    }
-#else
+{    
     if (!setup())
         return;
-#endif
-    
     mRoot->startRendering();
     // clean up
     destroyScene();
+}
+
+bool VSCOgreApplication::cocoaSetup(void) {
+    
+    mCocoaSetup->setup(this);
+    
+    this->chooseSceneManager();
+    this->createCamera();
+    this->createViewports();
+    // Set default mipmap level (NB some APIs ignore this)
+    TextureManager::getSingleton().setDefaultNumMipmaps(5);
+    this->createResourceListener(); // Create any resource listeners (for loading screens)
+    this->loadResources();
+    this->createScene();
+    this->createFrameListener();
+    
 }
 
 
@@ -124,6 +135,10 @@ bool VSCOgreApplication::setup(void)
     
     return true;
     
+}
+
+Root* VSCOgreApplication::getRoot(void) {
+    return mRoot;
 }
 
 /*

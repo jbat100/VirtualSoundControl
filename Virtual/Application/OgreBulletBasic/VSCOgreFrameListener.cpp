@@ -33,10 +33,6 @@ D:        Step right
 */
 
 
-#include "Ogre.h"
-#include "OgreStringConverter.h"
-#include "OgreException.h"
-
 #include "VSCOgreFrameListener.h"
 
 using namespace Ogre;

@@ -8,8 +8,26 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface VSCAppDelegate : NSObject <NSApplicationDelegate>
+#import <vector>
+
+class VSCOgreBulletApplication;
+class VSCOgreApplicationCocoaSetup;
+
+@class OgreView;
+
+@interface VSCAppDelegate : NSObject <NSApplicationDelegate> {
+    
+    VSCOgreBulletApplication* ogreBulletApplication;
+    VSCOgreApplicationCocoaSetup* ogreApplicationCocoaSetup;
+    std::vector<VSCOgreBulletListener*> ogreBulletScenes;
+    
+}
 
 @property (assign) IBOutlet NSWindow *window;
+@property (assign) IBOutlet OgreView *orgeView;
+@property (assign) VSCOgreBulletApplication* ogreBulletApplication;
+
+-(void) startRendering;
+-(void) stopRendering;
 
 @end

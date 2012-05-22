@@ -13,8 +13,8 @@ demo scenes and switch between them.
 #define _VSC_OGRE_BULLET_APPLICATION_H_
 
 // Include the OgreBullet interface which includes Ogre itself
-#include "OgreBulletCollisions.h"
-#include "OgreBulletDynamics.h"
+#include <OgreBullet/OgreBulletCollisions.h>
+#include <OgreBullet/OgreBulletDynamics.h>
 
 #include "VSCOgreBulletListener.h"
 #include "VSCOgreApplication.h"
@@ -25,9 +25,7 @@ demo scenes and switch between them.
     using namespace OIS;
 #endif //OGRE_VERSION eihort
 
-
 class VSCOgreBulletApplication;
-
 
 /**
  *  The test application, based on the Ogre example application for consistency

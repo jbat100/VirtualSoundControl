@@ -35,16 +35,16 @@ D:        Step right
 #ifndef _VSC_OGRE_FRAME_LISTENER_H_
 #define _VSC_OGRE_FRAME_LISTENER_H_
 
-#include "Ogre.h"
-#include "OgreStringConverter.h"
-#include "OgreException.h"
+#include <Ogre/Ogre.h>
+#include <Ogre/OgreConfigFile.h>
+#include <Ogre/OgreException.h>
 
 //Use this define to signify OIS will be used as a DLL
 //(so that dll import/export macros are in effect)
 #define OIS_DYNAMIC_LIB
 
 // NOTICE: You may need to change this line to <OIS.h> if you build OIS from source.
-#include <OIS\OIS.h>
+#include "OIS.h"
 
 using namespace Ogre;
 
