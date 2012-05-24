@@ -18,7 +18,7 @@ public:
     bool setup(VSCOgreApplication* ogreApplication);
     
     void setOgreView(void* ogreView);
-    void* getOgreView(OgreView);
+    void* getOgreView(void);
     
     Ogre::RenderWindow* getRenderWindow(void);
 

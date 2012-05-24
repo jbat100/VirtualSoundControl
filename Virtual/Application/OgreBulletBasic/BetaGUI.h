@@ -269,10 +269,10 @@ namespace BetaGUI
             GUI* getGUI() const {return mGUI;}
 
             void setZOrder(int zOrder){mGuiOverlay->setZOrder (zOrder);}
+        
 		protected:
-
 			
-			bool check(int x, int y, bool LMB); 
+			bool checkT(int x, int y, bool LMB); 
             bool checkKey(const Ogre::String &key, int x, int y);
 
 			TextInput* mActiveTextInput;				// Active TextInput

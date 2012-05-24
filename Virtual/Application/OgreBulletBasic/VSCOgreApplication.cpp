@@ -18,9 +18,6 @@ Description: Base class for all the OGRE examples
 -----------------------------------------------------------------------------
 */
 
-#ifndef _VSC_EXAMPLE_APPLICATION_H_
-#define _VSC_EXAMPLE_APPLICATION_H_
-
 #include <Ogre/Ogre.h>
 #include <Ogre/OgreConfigFile.h>
 
@@ -28,6 +25,7 @@ Description: Base class for all the OGRE examples
 #include <Ogre/OSX/macUtils.h>
 #endif
 
+#include "VSCOgreApplicationCocoaSetup.h"
 #include "VSCOgreApplication.h"
 #include "VSCOgreFrameListener.h"
 
@@ -50,7 +48,7 @@ mSetupType(setupType)
 }
 
 /// Standard destructor
-virtual ~VSCOgreApplication::VSCOgreApplication()
+VSCOgreApplication::~VSCOgreApplication()
 {
     if (mFrameListener)
         delete mFrameListener;
@@ -67,16 +65,7 @@ void VSCOgreApplication::setApplicationCocoaSetup(VSCOgreApplicationCocoaSetup* 
 }
 #endif
 
-/// Start the example
-void VSCOgreApplication::go(void)
-{    
-    if (!setup())
-        return;
-    mRoot->startRendering();
-    // clean up
-    destroyScene();
-}
-
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 bool VSCOgreApplication::cocoaSetup(void) {
     
     mCocoaSetup->setup(this);
@@ -91,7 +80,20 @@ bool VSCOgreApplication::cocoaSetup(void) {
     this->createScene();
     this->createFrameListener();
     
+    return true;
+    
 }
+#else
+/// Start the example
+void VSCOgreApplication::go(void)
+{    
+    if (!setup())
+        return;
+    mRoot->startRendering();
+    // clean up
+    destroyScene();
+}
+#endif
 
 
 // These internal methods package up the stages in the startup process
@@ -185,7 +187,7 @@ void VSCOgreApplication::createCamera(void)
 
 void VSCOgreApplication::createFrameListener(void)
 {
-    mFrameListener= new VSCOgreFrameListener(mWindow, mCamera);
+    mFrameListener = new VSCOgreFrameListener(mWindow, mCamera);
     mFrameListener->showDebugOverlay(true);
     mRoot->addFrameListener(mFrameListener);
 }
@@ -231,6 +233,10 @@ void VSCOgreApplication::setupResources(void)
     }
 }
 
+void VSCOgreApplication::createResourceListener(void)
+{
+    
+}
 
 
 /// Optional override method where you can perform resource group loading

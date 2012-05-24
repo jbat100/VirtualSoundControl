@@ -86,7 +86,7 @@ public:
      *  GUI stuff seperate this to keep this class GUI Agnostic?
      */
     
-    OgreBulletInputListener *getInputListener(){return mInputListener;}
+    VSCOgreBulletInputListener *getInputListener(){return mInputListener;}
 
     virtual void mouseMoved();
 
@@ -173,7 +173,7 @@ protected:
     Ogre::Vector3                       mCameraTrans;
 
     OgreBulletDynamics::DynamicsWorld   *mWorld;
-    OgreBulletApplication               *mApplication;
+    VSCOgreBulletApplication            *mApplication;
 
 
     std::deque<Ogre::Entity *>                          mEntities;
@@ -202,7 +202,7 @@ protected:
     bool                    mEnableCCD;
 
 
-   //BetaGUI::StaticText*  mFpsStaticText;
+   BetaGUI::StaticText*     mFpsStaticText;
 
 
    /**

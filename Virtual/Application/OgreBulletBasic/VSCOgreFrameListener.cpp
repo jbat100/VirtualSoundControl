@@ -77,10 +77,7 @@ void VSCOgreFrameListener::updateStats(void)
 
 // Constructor takes a RenderWindow because it uses that to determine input context
 VSCOgreFrameListener::VSCOgreFrameListener(RenderWindow* win, 
-                        Camera* cam, 
-                        bool bufferedKeys = false, 
-                        bool bufferedMouse = false,
-                        bool bufferedJoy = false ) :
+                        Camera* cam, bool bufferedKeys, bool bufferedMouse, bool bufferedJoy) :
 mCamera(cam), 
 mTranslateVector(Vector3::ZERO), 
 mCurrentSpeed(0), 
@@ -135,7 +132,7 @@ mJoy(0)
 }
 
 //Adjust mouse clipping area
-virtual void windowResized(RenderWindow* rw)
+void VSCOgreFrameListener::windowResized(RenderWindow* rw)
 {
     unsigned int width, height, depth;
     int left, top;
@@ -147,7 +144,7 @@ virtual void windowResized(RenderWindow* rw)
 }
 
 //Unattach OIS before window shutdown (very important under Linux)
-virtual void windowClosed(RenderWindow* rw)
+void VSCOgreFrameListener::windowClosed(RenderWindow* rw)
 {
     //Only close for window that created OIS (the main window in these demos)
     if( rw == mWindow )
@@ -164,14 +161,14 @@ virtual void windowClosed(RenderWindow* rw)
     }
 }
 
-virtual ~VSCOgreFrameListener()
+VSCOgreFrameListener::~VSCOgreFrameListener()
 {
     //Remove ourself as a Window listener
     WindowEventUtilities::removeWindowEventListener(mWindow, this);
     windowClosed(mWindow);
 }
 
-virtual bool processUnbufferedKeyInput(const FrameEvent& evt)
+bool VSCOgreFrameListener::processUnbufferedKeyInput(const FrameEvent& evt)
 {
     
     if(mKeyboard->isKeyDown(OIS::KC_A))
@@ -271,7 +268,7 @@ virtual bool processUnbufferedKeyInput(const FrameEvent& evt)
     return true;
 }
 
-virtual bool processUnbufferedMouseInput(const FrameEvent& evt)
+bool VSCOgreFrameListener::processUnbufferedMouseInput(const FrameEvent& evt)
 {
     
     // Rotation factors, may not be used if the second mouse button is pressed
@@ -291,7 +288,7 @@ virtual bool processUnbufferedMouseInput(const FrameEvent& evt)
     return true;
 }
 
-virtual void moveCamera()
+void VSCOgreFrameListener::moveCamera()
 {
     // Make all the changes to the camera
     // Note that YAW direction is around a fixed axis (freelook style) rather than a natural YAW
@@ -301,7 +298,7 @@ virtual void moveCamera()
     mCamera->moveRelative(mTranslateVector);
 }
 
-virtual void showDebugOverlay(bool show)
+void VSCOgreFrameListener::showDebugOverlay(bool show)
 {
     if (mDebugOverlay)
     {
@@ -313,7 +310,7 @@ virtual void showDebugOverlay(bool show)
 }
 
 // Override frameRenderingQueued event to process that (don't care about frameEnded)
-bool frameRenderingQueued(const FrameEvent& evt)
+bool VSCOgreFrameListener::frameRenderingQueued(const FrameEvent& evt)
 {
     
     if(mWindow->isClosed())	return false;
@@ -383,7 +380,7 @@ bool frameRenderingQueued(const FrameEvent& evt)
     return true;
 }
 
-bool frameEnded(const FrameEvent& evt)
+bool VSCOgreFrameListener::frameEnded(const FrameEvent& evt)
 {
     updateStats();
     return true;

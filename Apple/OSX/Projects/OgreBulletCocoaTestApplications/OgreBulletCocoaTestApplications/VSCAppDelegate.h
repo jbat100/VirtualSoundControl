@@ -10,6 +10,7 @@
 
 #import <vector>
 
+class VSCOgreBulletListener;
 class VSCOgreBulletApplication;
 class VSCOgreApplicationCocoaSetup;
 
@@ -24,8 +25,7 @@ class VSCOgreApplicationCocoaSetup;
 }
 
 @property (assign) IBOutlet NSWindow *window;
-@property (assign) IBOutlet OgreView *orgeView;
-@property (assign) VSCOgreBulletApplication* ogreBulletApplication;
+@property (assign) IBOutlet OgreView *ogreView;
 
 -(void) startRendering;
 -(void) stopRendering;

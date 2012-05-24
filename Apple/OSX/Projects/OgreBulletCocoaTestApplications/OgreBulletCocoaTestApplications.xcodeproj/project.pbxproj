@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		10182C24156BCB2500D5E200 /* OgreBulletFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10EBEE5A156A331F005E20B7 /* OgreBulletFramework.framework */; };
+		1033868C156E48AC00CEB288 /* Plugin_BSPSceneManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948C156E483000E70049 /* Plugin_BSPSceneManager.dylib */; };
+		1033868D156E48AC00CEB288 /* Plugin_CgProgramManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */; };
+		1033868E156E48AC00CEB288 /* Plugin_OctreeSceneManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */; };
+		1033868F156E48AC00CEB288 /* Plugin_ParticleFX.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */; };
+		10338690156E48AC00CEB288 /* libConvexDecomposition.2.80.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6947F156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib */; };
+		10338693156E592F00CEB288 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10338692156E592F00CEB288 /* Carbon.framework */; };
 		109D51B1155946D90030C161 /* VSCOgreApplicationCocoaSetup.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109D51B0155946D90030C161 /* VSCOgreApplicationCocoaSetup.mm */; };
 		109D51B5155998EE0030C161 /* VSCException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109D51B3155998EE0030C161 /* VSCException.cpp */; };
 		10B60D2515505D6D006A6D6E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60D2415505D6D006A6D6E /* Cocoa.framework */; };
@@ -25,6 +30,44 @@
 		10B60F0B1550850C006A6D6E /* BulletSoftBodySolvers_OpenCL_Mini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60F041550850C006A6D6E /* BulletSoftBodySolvers_OpenCL_Mini.framework */; };
 		10B60F0C1550850C006A6D6E /* Cg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60F051550850C006A6D6E /* Cg.framework */; };
 		10B60F0D1550850C006A6D6E /* LinearMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60F061550850C006A6D6E /* LinearMath.framework */; };
+		10CFE720156CD62000B24399 /* OgreBulletCollisionsDebugContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6D7156CD61F00B24399 /* OgreBulletCollisionsDebugContact.cpp */; };
+		10CFE721156CD62000B24399 /* OgreBulletCollisionsDebugDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6D8156CD61F00B24399 /* OgreBulletCollisionsDebugDrawer.cpp */; };
+		10CFE722156CD62000B24399 /* OgreBulletCollisionsDebugLines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6D9156CD61F00B24399 /* OgreBulletCollisionsDebugLines.cpp */; };
+		10CFE723156CD62000B24399 /* OgreBulletCollisionsDebugShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6DA156CD61F00B24399 /* OgreBulletCollisionsDebugShape.cpp */; };
+		10CFE725156CD62000B24399 /* OgreBulletCollisionsObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6DC156CD61F00B24399 /* OgreBulletCollisionsObject.cpp */; };
+		10CFE726156CD62000B24399 /* OgreBulletCollisionsObjectState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6DD156CD61F00B24399 /* OgreBulletCollisionsObjectState.cpp */; };
+		10CFE727156CD62000B24399 /* OgreBulletCollisionsPrecompiled.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6DE156CD61F00B24399 /* OgreBulletCollisionsPrecompiled.cpp */; };
+		10CFE728156CD62000B24399 /* OgreBulletCollisionsRay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6DF156CD61F00B24399 /* OgreBulletCollisionsRay.cpp */; };
+		10CFE729156CD62000B24399 /* OgreBulletCollisionsShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6E0156CD61F00B24399 /* OgreBulletCollisionsShape.cpp */; };
+		10CFE72A156CD62000B24399 /* OgreBulletCollisionsWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6E1156CD61F00B24399 /* OgreBulletCollisionsWorld.cpp */; };
+		10CFE72B156CD62000B24399 /* OgreBulletCollisionsBoxShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6E3156CD61F00B24399 /* OgreBulletCollisionsBoxShape.cpp */; };
+		10CFE72C156CD62000B24399 /* OgreBulletCollisionsCapsuleShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6E4156CD61F00B24399 /* OgreBulletCollisionsCapsuleShape.cpp */; };
+		10CFE72D156CD62000B24399 /* OgreBulletCollisionsCompoundShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6E5156CD61F00B24399 /* OgreBulletCollisionsCompoundShape.cpp */; };
+		10CFE72E156CD62000B24399 /* OgreBulletCollisionsConeShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6E6156CD61F00B24399 /* OgreBulletCollisionsConeShape.cpp */; };
+		10CFE72F156CD62000B24399 /* OgreBulletCollisionsConvexHullShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6E7156CD61F00B24399 /* OgreBulletCollisionsConvexHullShape.cpp */; };
+		10CFE730156CD62000B24399 /* OgreBulletCollisionsCylinderShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6E8156CD61F00B24399 /* OgreBulletCollisionsCylinderShape.cpp */; };
+		10CFE731156CD62000B24399 /* OgreBulletCollisionsGImpactShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6E9156CD61F00B24399 /* OgreBulletCollisionsGImpactShape.cpp */; };
+		10CFE732156CD62000B24399 /* OgreBulletCollisionsMinkowskiSumShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6EA156CD61F00B24399 /* OgreBulletCollisionsMinkowskiSumShape.cpp */; };
+		10CFE733156CD62000B24399 /* OgreBulletCollisionsMultiSphereShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6EB156CD61F00B24399 /* OgreBulletCollisionsMultiSphereShape.cpp */; };
+		10CFE734156CD62000B24399 /* OgreBulletCollisionsSphereShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6EC156CD61F00B24399 /* OgreBulletCollisionsSphereShape.cpp */; };
+		10CFE735156CD62000B24399 /* OgreBulletCollisionsStaticPlaneShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6ED156CD61F00B24399 /* OgreBulletCollisionsStaticPlaneShape.cpp */; };
+		10CFE736156CD62000B24399 /* OgreBulletCollisionsTriangleShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6EE156CD61F00B24399 /* OgreBulletCollisionsTriangleShape.cpp */; };
+		10CFE737156CD62000B24399 /* OgreBulletCollisionsTrimeshShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6EF156CD61F00B24399 /* OgreBulletCollisionsTrimeshShape.cpp */; };
+		10CFE738156CD62000B24399 /* OgreBulletCollisionsMeshToShapeConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6F1156CD61F00B24399 /* OgreBulletCollisionsMeshToShapeConverter.cpp */; };
+		10CFE73E156CD62000B24399 /* OgreBulletDynamics6DofConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE70C156CD62000B24399 /* OgreBulletDynamics6DofConstraint.cpp */; };
+		10CFE73F156CD62000B24399 /* OgreBulletDynamics6DofSpringConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE70D156CD62000B24399 /* OgreBulletDynamics6DofSpringConstraint.cpp */; };
+		10CFE740156CD62000B24399 /* OgreBulletDynamicsConeTwistConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE70E156CD62000B24399 /* OgreBulletDynamicsConeTwistConstraint.cpp */; };
+		10CFE741156CD62000B24399 /* OgreBulletDynamicsHingeConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE70F156CD62000B24399 /* OgreBulletDynamicsHingeConstraint.cpp */; };
+		10CFE742156CD62000B24399 /* OgreBulletDynamicsPoint2pointConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE710156CD62000B24399 /* OgreBulletDynamicsPoint2pointConstraint.cpp */; };
+		10CFE743156CD62000B24399 /* OgreBulletDynamicsRaycastVehicle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE711156CD62000B24399 /* OgreBulletDynamicsRaycastVehicle.cpp */; };
+		10CFE745156CD62000B24399 /* OgreBulletDynamicsConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE713156CD62000B24399 /* OgreBulletDynamicsConstraint.cpp */; };
+		10CFE746156CD62000B24399 /* OgreBulletDynamicsObjectState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE714156CD62000B24399 /* OgreBulletDynamicsObjectState.cpp */; };
+		10CFE747156CD62000B24399 /* OgreBulletDynamicsPrecompiled.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE715156CD62000B24399 /* OgreBulletDynamicsPrecompiled.cpp */; };
+		10CFE748156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE716156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp */; };
+		10CFE749156CD62000B24399 /* OgreBulletDynamicsWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE717156CD62000B24399 /* OgreBulletDynamicsWorld.cpp */; };
+		10CFE74A156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE719156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp */; };
+		10E1B289156D2A630013B9F7 /* RenderSystem_GL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */; };
+		10E1B28E156D3AFE0013B9F7 /* BetaGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E1B28C156D3AFE0013B9F7 /* BetaGUI.cpp */; };
 		10F4EE071557E752000E4591 /* VSCOgreApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EDFB1557E752000E4591 /* VSCOgreApplication.cpp */; };
 		10F4EE081557E752000E4591 /* VSCOgreFrameListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EDFD1557E752000E4591 /* VSCOgreFrameListener.cpp */; };
 		10F4EE091557E752000E4591 /* VSCOgreBulletApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EDFF1557E752000E4591 /* VSCOgreBulletApplication.cpp */; };
@@ -38,19 +81,55 @@
 		10F4EE1F1557F4A2000E4591 /* VSCOgreBulletTerrainDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EE161557F4A2000E4591 /* VSCOgreBulletTerrainDemo.cpp */; };
 		10F4EE201557F4A2000E4591 /* VSCOgreBulletTriMeshDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EE181557F4A2000E4591 /* VSCOgreBulletTriMeshDemo.cpp */; };
 		10F4EE211557F4A2000E4591 /* VSCOgreBulletVehiclesDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EE1A1557F4A2000E4591 /* VSCOgreBulletVehiclesDemo.cpp */; };
+		10F69480156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6947F156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib */; };
+		10F69483156E3D2700E70049 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F69482156E3D2700E70049 /* IOKit.framework */; };
+		10F69485156E41CB00E70049 /* Ogre.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10B60EEE155080D9006A6D6E /* Ogre.framework */; };
+		10F69487156E41E000E70049 /* RenderSystem_GL.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */; };
+		10F6948A156E456500E70049 /* Plugins_d.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 10F69488156E456500E70049 /* Plugins_d.cfg */; };
+		10F6948B156E456500E70049 /* Plugins.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 10F69489156E456500E70049 /* Plugins.cfg */; };
+		10F69490156E483000E70049 /* Plugin_BSPSceneManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948C156E483000E70049 /* Plugin_BSPSceneManager.dylib */; };
+		10F69491156E483000E70049 /* Plugin_CgProgramManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */; };
+		10F69492156E483000E70049 /* Plugin_OctreeSceneManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */; };
+		10F69493156E483000E70049 /* Plugin_ParticleFX.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		10EBEE59156A331F005E20B7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 10EBEE52156A331F005E20B7 /* OgreBulletFramework.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 10B608B7154FF4AC006A6D6E;
-			remoteInfo = OgreBulletFramework;
+/* Begin PBXCopyFilesBuildPhase section */
+		10F69484156E41A500E70049 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				10F69485156E41CB00E70049 /* Ogre.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXContainerItemProxy section */
+		10F69486156E41D300E70049 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				10F69487156E41E000E70049 /* RenderSystem_GL.dylib in CopyFiles */,
+				1033868C156E48AC00CEB288 /* Plugin_BSPSceneManager.dylib in CopyFiles */,
+				1033868D156E48AC00CEB288 /* Plugin_CgProgramManager.dylib in CopyFiles */,
+				1033868E156E48AC00CEB288 /* Plugin_OctreeSceneManager.dylib in CopyFiles */,
+				1033868F156E48AC00CEB288 /* Plugin_ParticleFX.dylib in CopyFiles */,
+				10338690156E48AC00CEB288 /* libConvexDecomposition.2.80.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		10338692156E592F00CEB288 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		10338694156E5BB100CEB288 /* OgreOSXCocoaContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaContext.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaContext.h; sourceTree = "<group>"; };
+		10338695156E5BB100CEB288 /* OgreOSXCocoaWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaWindow.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaWindow.h; sourceTree = "<group>"; };
+		10338696156E5BB100CEB288 /* OgreOSXCocoaWindowDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaWindowDelegate.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaWindowDelegate.h; sourceTree = "<group>"; };
+		10338697156E5BE300CEB288 /* OgreOSXContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXContext.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXContext.h; sourceTree = "<group>"; };
+		10338698156E5BE300CEB288 /* OgreOSXGLSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXGLSupport.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXGLSupport.h; sourceTree = "<group>"; };
+		10338699156E5BE300CEB288 /* OgreOSXRenderTexture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXRenderTexture.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXRenderTexture.h; sourceTree = "<group>"; };
+		1033869A156E5BE300CEB288 /* OgreOSXWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXWindow.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXWindow.h; sourceTree = "<group>"; };
 		109D51AF155946D90030C161 /* VSCOgreApplicationCocoaSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreApplicationCocoaSetup.h; path = ../../../Virtual/VSCOgreApplicationCocoaSetup.h; sourceTree = "<group>"; };
 		109D51B0155946D90030C161 /* VSCOgreApplicationCocoaSetup.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOgreApplicationCocoaSetup.mm; path = ../../../Virtual/VSCOgreApplicationCocoaSetup.mm; sourceTree = "<group>"; };
 		109D51B3155998EE0030C161 /* VSCException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCException.cpp; path = ../../../../Generic/VSCException.cpp; sourceTree = "<group>"; };
@@ -92,7 +171,98 @@
 		10B60F051550850C006A6D6E /* Cg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cg.framework; path = /Library/Frameworks/Cg.framework; sourceTree = "<absolute>"; };
 		10B60F061550850C006A6D6E /* LinearMath.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinearMath.framework; path = /Library/Frameworks/LinearMath.framework; sourceTree = "<absolute>"; };
 		10B60F10155086F9006A6D6E /* OgreOSXCocoaView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaView.h; path = include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaView.h; sourceTree = OGRE_SDK; };
-		10EBEE52156A331F005E20B7 /* OgreBulletFramework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OgreBulletFramework.xcodeproj; path = ../../Frameworks/OgreBulletFramework/OgreBulletFramework.xcodeproj; sourceTree = "<group>"; };
+		10CFE6B0156CD61F00B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE6B1156CD61F00B24399 /* OgreBulletCollisionsDebugContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsDebugContact.h; sourceTree = "<group>"; };
+		10CFE6B2156CD61F00B24399 /* OgreBulletCollisionsDebugDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsDebugDrawer.h; sourceTree = "<group>"; };
+		10CFE6B3156CD61F00B24399 /* OgreBulletCollisionsDebugLines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsDebugLines.h; sourceTree = "<group>"; };
+		10CFE6B4156CD61F00B24399 /* OgreBulletCollisionsDebugShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsDebugShape.h; sourceTree = "<group>"; };
+		10CFE6B5156CD61F00B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE6B6156CD61F00B24399 /* OgreBulletCollisions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisions.h; sourceTree = "<group>"; };
+		10CFE6B7156CD61F00B24399 /* OgreBulletCollisionsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsObject.h; sourceTree = "<group>"; };
+		10CFE6B8156CD61F00B24399 /* OgreBulletCollisionsObjectState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsObjectState.h; sourceTree = "<group>"; };
+		10CFE6B9156CD61F00B24399 /* OgreBulletCollisionsPreRequisites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsPreRequisites.h; sourceTree = "<group>"; };
+		10CFE6BA156CD61F00B24399 /* OgreBulletCollisionsRay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsRay.h; sourceTree = "<group>"; };
+		10CFE6BB156CD61F00B24399 /* OgreBulletCollisionsShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsShape.h; sourceTree = "<group>"; };
+		10CFE6BC156CD61F00B24399 /* OgreBulletCollisionsWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsWorld.h; sourceTree = "<group>"; };
+		10CFE6BE156CD61F00B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE6BF156CD61F00B24399 /* OgreBulletCollisionsBoxShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsBoxShape.h; sourceTree = "<group>"; };
+		10CFE6C0156CD61F00B24399 /* OgreBulletCollisionsCapsuleShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsCapsuleShape.h; sourceTree = "<group>"; };
+		10CFE6C1156CD61F00B24399 /* OgreBulletCollisionsCompoundShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsCompoundShape.h; sourceTree = "<group>"; };
+		10CFE6C2156CD61F00B24399 /* OgreBulletCollisionsConeShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsConeShape.h; sourceTree = "<group>"; };
+		10CFE6C3156CD61F00B24399 /* OgreBulletCollisionsConvexHullShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsConvexHullShape.h; sourceTree = "<group>"; };
+		10CFE6C4156CD61F00B24399 /* OgreBulletCollisionsCylinderShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsCylinderShape.h; sourceTree = "<group>"; };
+		10CFE6C5156CD61F00B24399 /* OgreBulletCollisionsGImpactShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsGImpactShape.h; sourceTree = "<group>"; };
+		10CFE6C6156CD61F00B24399 /* OgreBulletCollisionsMinkowskiSumShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsMinkowskiSumShape.h; sourceTree = "<group>"; };
+		10CFE6C7156CD61F00B24399 /* OgreBulletCollisionsMultiSphereShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsMultiSphereShape.h; sourceTree = "<group>"; };
+		10CFE6C8156CD61F00B24399 /* OgreBulletCollisionsSphereShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsSphereShape.h; sourceTree = "<group>"; };
+		10CFE6C9156CD61F00B24399 /* OgreBulletCollisionsStaticPlaneShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsStaticPlaneShape.h; sourceTree = "<group>"; };
+		10CFE6CA156CD61F00B24399 /* OgreBulletCollisionsTerrainShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsTerrainShape.h; sourceTree = "<group>"; };
+		10CFE6CB156CD61F00B24399 /* OgreBulletCollisionsTriangleShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsTriangleShape.h; sourceTree = "<group>"; };
+		10CFE6CC156CD61F00B24399 /* OgreBulletCollisionsTrimeshShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsTrimeshShape.h; sourceTree = "<group>"; };
+		10CFE6CE156CD61F00B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE6CF156CD61F00B24399 /* OgreBulletCollisionsMeshToShapeConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsMeshToShapeConverter.h; sourceTree = "<group>"; };
+		10CFE6D0156CD61F00B24399 /* OgreBulletConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletConverter.h; sourceTree = "<group>"; };
+		10CFE6D1156CD61F00B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE6D4156CD61F00B24399 /* OgreBulletCollisions_VC8.vcproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = OgreBulletCollisions_VC8.vcproj; sourceTree = "<group>"; };
+		10CFE6D7156CD61F00B24399 /* OgreBulletCollisionsDebugContact.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsDebugContact.cpp; sourceTree = "<group>"; };
+		10CFE6D8156CD61F00B24399 /* OgreBulletCollisionsDebugDrawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsDebugDrawer.cpp; sourceTree = "<group>"; };
+		10CFE6D9156CD61F00B24399 /* OgreBulletCollisionsDebugLines.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsDebugLines.cpp; sourceTree = "<group>"; };
+		10CFE6DA156CD61F00B24399 /* OgreBulletCollisionsDebugShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsDebugShape.cpp; sourceTree = "<group>"; };
+		10CFE6DB156CD61F00B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE6DC156CD61F00B24399 /* OgreBulletCollisionsObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsObject.cpp; sourceTree = "<group>"; };
+		10CFE6DD156CD61F00B24399 /* OgreBulletCollisionsObjectState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsObjectState.cpp; sourceTree = "<group>"; };
+		10CFE6DE156CD61F00B24399 /* OgreBulletCollisionsPrecompiled.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsPrecompiled.cpp; sourceTree = "<group>"; };
+		10CFE6DF156CD61F00B24399 /* OgreBulletCollisionsRay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsRay.cpp; sourceTree = "<group>"; };
+		10CFE6E0156CD61F00B24399 /* OgreBulletCollisionsShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsShape.cpp; sourceTree = "<group>"; };
+		10CFE6E1156CD61F00B24399 /* OgreBulletCollisionsWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsWorld.cpp; sourceTree = "<group>"; };
+		10CFE6E3156CD61F00B24399 /* OgreBulletCollisionsBoxShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsBoxShape.cpp; sourceTree = "<group>"; };
+		10CFE6E4156CD61F00B24399 /* OgreBulletCollisionsCapsuleShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsCapsuleShape.cpp; sourceTree = "<group>"; };
+		10CFE6E5156CD61F00B24399 /* OgreBulletCollisionsCompoundShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsCompoundShape.cpp; sourceTree = "<group>"; };
+		10CFE6E6156CD61F00B24399 /* OgreBulletCollisionsConeShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsConeShape.cpp; sourceTree = "<group>"; };
+		10CFE6E7156CD61F00B24399 /* OgreBulletCollisionsConvexHullShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsConvexHullShape.cpp; sourceTree = "<group>"; };
+		10CFE6E8156CD61F00B24399 /* OgreBulletCollisionsCylinderShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsCylinderShape.cpp; sourceTree = "<group>"; };
+		10CFE6E9156CD61F00B24399 /* OgreBulletCollisionsGImpactShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsGImpactShape.cpp; sourceTree = "<group>"; };
+		10CFE6EA156CD61F00B24399 /* OgreBulletCollisionsMinkowskiSumShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsMinkowskiSumShape.cpp; sourceTree = "<group>"; };
+		10CFE6EB156CD61F00B24399 /* OgreBulletCollisionsMultiSphereShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsMultiSphereShape.cpp; sourceTree = "<group>"; };
+		10CFE6EC156CD61F00B24399 /* OgreBulletCollisionsSphereShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsSphereShape.cpp; sourceTree = "<group>"; };
+		10CFE6ED156CD61F00B24399 /* OgreBulletCollisionsStaticPlaneShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsStaticPlaneShape.cpp; sourceTree = "<group>"; };
+		10CFE6EE156CD61F00B24399 /* OgreBulletCollisionsTriangleShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsTriangleShape.cpp; sourceTree = "<group>"; };
+		10CFE6EF156CD61F00B24399 /* OgreBulletCollisionsTrimeshShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsTrimeshShape.cpp; sourceTree = "<group>"; };
+		10CFE6F1156CD61F00B24399 /* OgreBulletCollisionsMeshToShapeConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsMeshToShapeConverter.cpp; sourceTree = "<group>"; };
+		10CFE6F5156CD61F00B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE6F6156CD61F00B24399 /* OgreBulletDynamics6DofConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamics6DofConstraint.h; sourceTree = "<group>"; };
+		10CFE6F7156CD61F00B24399 /* OgreBulletDynamics6DofSpringConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamics6DofSpringConstraint.h; sourceTree = "<group>"; };
+		10CFE6F8156CD61F00B24399 /* OgreBulletDynamicsConeTwistConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsConeTwistConstraint.h; sourceTree = "<group>"; };
+		10CFE6F9156CD61F00B24399 /* OgreBulletDynamicsHingeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsHingeConstraint.h; sourceTree = "<group>"; };
+		10CFE6FA156CD61F00B24399 /* OgreBulletDynamicsPoint2pointConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsPoint2pointConstraint.h; sourceTree = "<group>"; };
+		10CFE6FB156CD61F00B24399 /* OgreBulletDynamicsRaycastVehicle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsRaycastVehicle.h; sourceTree = "<group>"; };
+		10CFE6FC156CD62000B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE6FD156CD62000B24399 /* OgreBulletDynamics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamics.h; sourceTree = "<group>"; };
+		10CFE6FE156CD62000B24399 /* OgreBulletDynamicsConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsConstraint.h; sourceTree = "<group>"; };
+		10CFE6FF156CD62000B24399 /* OgreBulletDynamicsObjectState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsObjectState.h; sourceTree = "<group>"; };
+		10CFE700156CD62000B24399 /* OgreBulletDynamicsPreRequisites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsPreRequisites.h; sourceTree = "<group>"; };
+		10CFE701156CD62000B24399 /* OgreBulletDynamicsRigidBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsRigidBody.h; sourceTree = "<group>"; };
+		10CFE702156CD62000B24399 /* OgreBulletDynamicsWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsWorld.h; sourceTree = "<group>"; };
+		10CFE704156CD62000B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE705156CD62000B24399 /* OgreBulletDynamicsRagDoll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsRagDoll.h; sourceTree = "<group>"; };
+		10CFE706156CD62000B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE709156CD62000B24399 /* OgreBulletDynamics_VC8.vcproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = OgreBulletDynamics_VC8.vcproj; sourceTree = "<group>"; };
+		10CFE70C156CD62000B24399 /* OgreBulletDynamics6DofConstraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamics6DofConstraint.cpp; sourceTree = "<group>"; };
+		10CFE70D156CD62000B24399 /* OgreBulletDynamics6DofSpringConstraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamics6DofSpringConstraint.cpp; sourceTree = "<group>"; };
+		10CFE70E156CD62000B24399 /* OgreBulletDynamicsConeTwistConstraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsConeTwistConstraint.cpp; sourceTree = "<group>"; };
+		10CFE70F156CD62000B24399 /* OgreBulletDynamicsHingeConstraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsHingeConstraint.cpp; sourceTree = "<group>"; };
+		10CFE710156CD62000B24399 /* OgreBulletDynamicsPoint2pointConstraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsPoint2pointConstraint.cpp; sourceTree = "<group>"; };
+		10CFE711156CD62000B24399 /* OgreBulletDynamicsRaycastVehicle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsRaycastVehicle.cpp; sourceTree = "<group>"; };
+		10CFE712156CD62000B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE713156CD62000B24399 /* OgreBulletDynamicsConstraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsConstraint.cpp; sourceTree = "<group>"; };
+		10CFE714156CD62000B24399 /* OgreBulletDynamicsObjectState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsObjectState.cpp; sourceTree = "<group>"; };
+		10CFE715156CD62000B24399 /* OgreBulletDynamicsPrecompiled.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsPrecompiled.cpp; sourceTree = "<group>"; };
+		10CFE716156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsRigidBody.cpp; sourceTree = "<group>"; };
+		10CFE717156CD62000B24399 /* OgreBulletDynamicsWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsWorld.cpp; sourceTree = "<group>"; };
+		10CFE719156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsRagDoll.cpp; sourceTree = "<group>"; };
+		10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = RenderSystem_GL.dylib; path = lib/RenderSystem_GL.dylib; sourceTree = OGRE_SDK; };
+		10E1B28C156D3AFE0013B9F7 /* BetaGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BetaGUI.cpp; path = ../../../../Virtual/Application/OgreBulletBasic/BetaGUI.cpp; sourceTree = "<group>"; };
+		10E1B28D156D3AFE0013B9F7 /* BetaGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BetaGUI.h; path = ../../../../Virtual/Application/OgreBulletBasic/BetaGUI.h; sourceTree = "<group>"; };
 		10F4EDFB1557E752000E4591 /* VSCOgreApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreApplication.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreApplication.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		10F4EDFC1557E752000E4591 /* VSCOgreApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreApplication.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreApplication.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10F4EDFD1557E752000E4591 /* VSCOgreFrameListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreFrameListener.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreFrameListener.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -118,6 +288,14 @@
 		10F4EE191557F4A2000E4591 /* VSCOgreBulletTriMeshDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreBulletTriMeshDemo.h; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOgreBulletTriMeshDemo.h; sourceTree = "<group>"; };
 		10F4EE1A1557F4A2000E4591 /* VSCOgreBulletVehiclesDemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOgreBulletVehiclesDemo.cpp; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOgreBulletVehiclesDemo.cpp; sourceTree = "<group>"; };
 		10F4EE1B1557F4A2000E4591 /* VSCOgreBulletVehiclesDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreBulletVehiclesDemo.h; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOgreBulletVehiclesDemo.h; sourceTree = "<group>"; };
+		10F6947F156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libConvexDecomposition.2.80.dylib; path = "../../../../../../Libraries/bullet-2.80/Extras/ConvexDecomposition/libConvexDecomposition.2.80.dylib"; sourceTree = "<group>"; };
+		10F69482156E3D2700E70049 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		10F69488156E456500E70049 /* Plugins_d.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Plugins_d.cfg; path = ../../../../../Virtual/Application/OgreBulletBasic/Plugins_d.cfg; sourceTree = "<group>"; };
+		10F69489156E456500E70049 /* Plugins.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Plugins.cfg; path = ../../../../../Virtual/Application/OgreBulletBasic/Plugins.cfg; sourceTree = "<group>"; };
+		10F6948C156E483000E70049 /* Plugin_BSPSceneManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_BSPSceneManager.dylib; path = lib/Plugin_BSPSceneManager.dylib; sourceTree = OGRE_SDK; };
+		10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_CgProgramManager.dylib; path = lib/Plugin_CgProgramManager.dylib; sourceTree = OGRE_SDK; };
+		10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_OctreeSceneManager.dylib; path = lib/Plugin_OctreeSceneManager.dylib; sourceTree = OGRE_SDK; };
+		10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_ParticleFX.dylib; path = lib/Plugin_ParticleFX.dylib; sourceTree = OGRE_SDK; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,9 +303,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10338693156E592F00CEB288 /* Carbon.framework in Frameworks */,
 				10B60D2515505D6D006A6D6E /* Cocoa.framework in Frameworks */,
 				10B60EEF155080D9006A6D6E /* libOIS.a in Frameworks */,
+				10E1B289156D2A630013B9F7 /* RenderSystem_GL.dylib in Frameworks */,
+				10F69480156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib in Frameworks */,
+				10F69490156E483000E70049 /* Plugin_BSPSceneManager.dylib in Frameworks */,
+				10F69491156E483000E70049 /* Plugin_CgProgramManager.dylib in Frameworks */,
+				10F69492156E483000E70049 /* Plugin_OctreeSceneManager.dylib in Frameworks */,
+				10F69493156E483000E70049 /* Plugin_ParticleFX.dylib in Frameworks */,
 				10B60EF0155080D9006A6D6E /* Ogre.framework in Frameworks */,
+				10F69483156E3D2700E70049 /* IOKit.framework in Frameworks */,
 				10B60F071550850C006A6D6E /* BulletCollision.framework in Frameworks */,
 				10B60F081550850C006A6D6E /* BulletDynamics.framework in Frameworks */,
 				10B60F091550850C006A6D6E /* BulletMultiThreaded.framework in Frameworks */,
@@ -135,7 +321,6 @@
 				10B60F0B1550850C006A6D6E /* BulletSoftBodySolvers_OpenCL_Mini.framework in Frameworks */,
 				10B60F0C1550850C006A6D6E /* Cg.framework in Frameworks */,
 				10B60F0D1550850C006A6D6E /* LinearMath.framework in Frameworks */,
-				10182C24156BCB2500D5E200 /* OgreBulletFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,8 +330,8 @@
 		104982E91556B6DE0031A1EC /* VSCOgreBulletBasicApplication */ = {
 			isa = PBXGroup;
 			children = (
-				109D51AF155946D90030C161 /* VSCOgreApplicationCocoaSetup.h */,
 				109D51B0155946D90030C161 /* VSCOgreApplicationCocoaSetup.mm */,
+				109D51AF155946D90030C161 /* VSCOgreApplicationCocoaSetup.h */,
 				10F4EDFB1557E752000E4591 /* VSCOgreApplication.cpp */,
 				10F4EDFC1557E752000E4591 /* VSCOgreApplication.h */,
 				10F4EDFD1557E752000E4591 /* VSCOgreFrameListener.cpp */,
@@ -175,7 +360,8 @@
 		10B60D1515505D6D006A6D6E = {
 			isa = PBXGroup;
 			children = (
-				10EBEE52156A331F005E20B7 /* OgreBulletFramework.xcodeproj */,
+				10E1B28B156D3AEB0013B9F7 /* BetaGUI */,
+				10CFE6AC156CD5F700B24399 /* OgreBullet */,
 				109D51B2155998CA0030C161 /* VSC */,
 				10B60F0E155086D0006A6D6E /* Ogre */,
 				10B60EF1155080F3006A6D6E /* OIS */,
@@ -197,6 +383,12 @@
 			isa = PBXGroup;
 			children = (
 				10B60EED155080D9006A6D6E /* libOIS.a */,
+				10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */,
+				10F6948C156E483000E70049 /* Plugin_BSPSceneManager.dylib */,
+				10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */,
+				10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */,
+				10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */,
+				10F6947F156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib */,
 				10B60F001550850C006A6D6E /* BulletCollision.framework */,
 				10B60F011550850C006A6D6E /* BulletDynamics.framework */,
 				10B60F021550850C006A6D6E /* BulletMultiThreaded.framework */,
@@ -206,6 +398,8 @@
 				10B60F061550850C006A6D6E /* LinearMath.framework */,
 				10B60EEE155080D9006A6D6E /* Ogre.framework */,
 				10B60D2415505D6D006A6D6E /* Cocoa.framework */,
+				10F69482156E3D2700E70049 /* IOKit.framework */,
+				10338692156E592F00CEB288 /* Carbon.framework */,
 				10B60D2615505D6D006A6D6E /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -237,6 +431,8 @@
 		10B60D2B15505D6D006A6D6E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				10F69488156E456500E70049 /* Plugins_d.cfg */,
+				10F69489156E456500E70049 /* Plugins.cfg */,
 				10F4EE0D1557E775000E4591 /* resources.cfg */,
 				10B60D2C15505D6D006A6D6E /* OgreBulletCocoaTestApplications-Info.plist */,
 				10B60D2D15505D6D006A6D6E /* InfoPlist.strings */,
@@ -280,17 +476,282 @@
 		10B60F0F155086E5006A6D6E /* OSX */ = {
 			isa = PBXGroup;
 			children = (
+				10338697156E5BE300CEB288 /* OgreOSXContext.h */,
+				10338698156E5BE300CEB288 /* OgreOSXGLSupport.h */,
+				10338699156E5BE300CEB288 /* OgreOSXRenderTexture.h */,
+				1033869A156E5BE300CEB288 /* OgreOSXWindow.h */,
+				10338694156E5BB100CEB288 /* OgreOSXCocoaContext.h */,
+				10338695156E5BB100CEB288 /* OgreOSXCocoaWindow.h */,
+				10338696156E5BB100CEB288 /* OgreOSXCocoaWindowDelegate.h */,
 				10B60F10155086F9006A6D6E /* OgreOSXCocoaView.h */,
 			);
 			name = OSX;
 			sourceTree = "<group>";
 		};
-		10EBEE53156A331F005E20B7 /* Products */ = {
+		10CFE6AC156CD5F700B24399 /* OgreBullet */ = {
 			isa = PBXGroup;
 			children = (
-				10EBEE5A156A331F005E20B7 /* OgreBulletFramework.framework */,
+				10CFE6AD156CD61F00B24399 /* Collisions */,
+				10CFE6F2156CD61F00B24399 /* Dynamics */,
 			);
-			name = Products;
+			name = OgreBullet;
+			path = ../../Github/VirtualSoundControl/Apple/OSX/Projects/OgreBulletCocoaTestApplications;
+			sourceTree = OGREBULLET_ROOT;
+		};
+		10CFE6AD156CD61F00B24399 /* Collisions */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6AE156CD61F00B24399 /* include */,
+				10CFE6D1156CD61F00B24399 /* Makefile.am */,
+				10CFE6D2156CD61F00B24399 /* scripts */,
+				10CFE6D5156CD61F00B24399 /* src */,
+			);
+			path = Collisions;
+			sourceTree = OGREBULLET_ROOT;
+		};
+		10CFE6AE156CD61F00B24399 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6AF156CD61F00B24399 /* Debug */,
+				10CFE6B5156CD61F00B24399 /* Makefile.am */,
+				10CFE6B6156CD61F00B24399 /* OgreBulletCollisions.h */,
+				10CFE6B7156CD61F00B24399 /* OgreBulletCollisionsObject.h */,
+				10CFE6B8156CD61F00B24399 /* OgreBulletCollisionsObjectState.h */,
+				10CFE6B9156CD61F00B24399 /* OgreBulletCollisionsPreRequisites.h */,
+				10CFE6BA156CD61F00B24399 /* OgreBulletCollisionsRay.h */,
+				10CFE6BB156CD61F00B24399 /* OgreBulletCollisionsShape.h */,
+				10CFE6BC156CD61F00B24399 /* OgreBulletCollisionsWorld.h */,
+				10CFE6BD156CD61F00B24399 /* Shapes */,
+				10CFE6CD156CD61F00B24399 /* Utils */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		10CFE6AF156CD61F00B24399 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6B0156CD61F00B24399 /* Makefile.am */,
+				10CFE6B1156CD61F00B24399 /* OgreBulletCollisionsDebugContact.h */,
+				10CFE6B2156CD61F00B24399 /* OgreBulletCollisionsDebugDrawer.h */,
+				10CFE6B3156CD61F00B24399 /* OgreBulletCollisionsDebugLines.h */,
+				10CFE6B4156CD61F00B24399 /* OgreBulletCollisionsDebugShape.h */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		10CFE6BD156CD61F00B24399 /* Shapes */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6BE156CD61F00B24399 /* Makefile.am */,
+				10CFE6BF156CD61F00B24399 /* OgreBulletCollisionsBoxShape.h */,
+				10CFE6C0156CD61F00B24399 /* OgreBulletCollisionsCapsuleShape.h */,
+				10CFE6C1156CD61F00B24399 /* OgreBulletCollisionsCompoundShape.h */,
+				10CFE6C2156CD61F00B24399 /* OgreBulletCollisionsConeShape.h */,
+				10CFE6C3156CD61F00B24399 /* OgreBulletCollisionsConvexHullShape.h */,
+				10CFE6C4156CD61F00B24399 /* OgreBulletCollisionsCylinderShape.h */,
+				10CFE6C5156CD61F00B24399 /* OgreBulletCollisionsGImpactShape.h */,
+				10CFE6C6156CD61F00B24399 /* OgreBulletCollisionsMinkowskiSumShape.h */,
+				10CFE6C7156CD61F00B24399 /* OgreBulletCollisionsMultiSphereShape.h */,
+				10CFE6C8156CD61F00B24399 /* OgreBulletCollisionsSphereShape.h */,
+				10CFE6C9156CD61F00B24399 /* OgreBulletCollisionsStaticPlaneShape.h */,
+				10CFE6CA156CD61F00B24399 /* OgreBulletCollisionsTerrainShape.h */,
+				10CFE6CB156CD61F00B24399 /* OgreBulletCollisionsTriangleShape.h */,
+				10CFE6CC156CD61F00B24399 /* OgreBulletCollisionsTrimeshShape.h */,
+			);
+			path = Shapes;
+			sourceTree = "<group>";
+		};
+		10CFE6CD156CD61F00B24399 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6CE156CD61F00B24399 /* Makefile.am */,
+				10CFE6CF156CD61F00B24399 /* OgreBulletCollisionsMeshToShapeConverter.h */,
+				10CFE6D0156CD61F00B24399 /* OgreBulletConverter.h */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		10CFE6D2156CD61F00B24399 /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6D3156CD61F00B24399 /* VC8 */,
+			);
+			path = scripts;
+			sourceTree = "<group>";
+		};
+		10CFE6D3156CD61F00B24399 /* VC8 */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6D4156CD61F00B24399 /* OgreBulletCollisions_VC8.vcproj */,
+			);
+			path = VC8;
+			sourceTree = "<group>";
+		};
+		10CFE6D5156CD61F00B24399 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6D6156CD61F00B24399 /* Debug */,
+				10CFE6DB156CD61F00B24399 /* Makefile.am */,
+				10CFE6DC156CD61F00B24399 /* OgreBulletCollisionsObject.cpp */,
+				10CFE6DD156CD61F00B24399 /* OgreBulletCollisionsObjectState.cpp */,
+				10CFE6DE156CD61F00B24399 /* OgreBulletCollisionsPrecompiled.cpp */,
+				10CFE6DF156CD61F00B24399 /* OgreBulletCollisionsRay.cpp */,
+				10CFE6E0156CD61F00B24399 /* OgreBulletCollisionsShape.cpp */,
+				10CFE6E1156CD61F00B24399 /* OgreBulletCollisionsWorld.cpp */,
+				10CFE6E2156CD61F00B24399 /* Shapes */,
+				10CFE6F0156CD61F00B24399 /* Utils */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		10CFE6D6156CD61F00B24399 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6D7156CD61F00B24399 /* OgreBulletCollisionsDebugContact.cpp */,
+				10CFE6D8156CD61F00B24399 /* OgreBulletCollisionsDebugDrawer.cpp */,
+				10CFE6D9156CD61F00B24399 /* OgreBulletCollisionsDebugLines.cpp */,
+				10CFE6DA156CD61F00B24399 /* OgreBulletCollisionsDebugShape.cpp */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		10CFE6E2156CD61F00B24399 /* Shapes */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6E3156CD61F00B24399 /* OgreBulletCollisionsBoxShape.cpp */,
+				10CFE6E4156CD61F00B24399 /* OgreBulletCollisionsCapsuleShape.cpp */,
+				10CFE6E5156CD61F00B24399 /* OgreBulletCollisionsCompoundShape.cpp */,
+				10CFE6E6156CD61F00B24399 /* OgreBulletCollisionsConeShape.cpp */,
+				10CFE6E7156CD61F00B24399 /* OgreBulletCollisionsConvexHullShape.cpp */,
+				10CFE6E8156CD61F00B24399 /* OgreBulletCollisionsCylinderShape.cpp */,
+				10CFE6E9156CD61F00B24399 /* OgreBulletCollisionsGImpactShape.cpp */,
+				10CFE6EA156CD61F00B24399 /* OgreBulletCollisionsMinkowskiSumShape.cpp */,
+				10CFE6EB156CD61F00B24399 /* OgreBulletCollisionsMultiSphereShape.cpp */,
+				10CFE6EC156CD61F00B24399 /* OgreBulletCollisionsSphereShape.cpp */,
+				10CFE6ED156CD61F00B24399 /* OgreBulletCollisionsStaticPlaneShape.cpp */,
+				10CFE6EE156CD61F00B24399 /* OgreBulletCollisionsTriangleShape.cpp */,
+				10CFE6EF156CD61F00B24399 /* OgreBulletCollisionsTrimeshShape.cpp */,
+			);
+			path = Shapes;
+			sourceTree = "<group>";
+		};
+		10CFE6F0156CD61F00B24399 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6F1156CD61F00B24399 /* OgreBulletCollisionsMeshToShapeConverter.cpp */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		10CFE6F2156CD61F00B24399 /* Dynamics */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6F3156CD61F00B24399 /* include */,
+				10CFE706156CD62000B24399 /* Makefile.am */,
+				10CFE707156CD62000B24399 /* scripts */,
+				10CFE70A156CD62000B24399 /* src */,
+			);
+			path = Dynamics;
+			sourceTree = OGREBULLET_ROOT;
+		};
+		10CFE6F3156CD61F00B24399 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6F4156CD61F00B24399 /* Constraints */,
+				10CFE6FC156CD62000B24399 /* Makefile.am */,
+				10CFE6FD156CD62000B24399 /* OgreBulletDynamics.h */,
+				10CFE6FE156CD62000B24399 /* OgreBulletDynamicsConstraint.h */,
+				10CFE6FF156CD62000B24399 /* OgreBulletDynamicsObjectState.h */,
+				10CFE700156CD62000B24399 /* OgreBulletDynamicsPreRequisites.h */,
+				10CFE701156CD62000B24399 /* OgreBulletDynamicsRigidBody.h */,
+				10CFE702156CD62000B24399 /* OgreBulletDynamicsWorld.h */,
+				10CFE703156CD62000B24399 /* Prefab */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		10CFE6F4156CD61F00B24399 /* Constraints */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6F5156CD61F00B24399 /* Makefile.am */,
+				10CFE6F6156CD61F00B24399 /* OgreBulletDynamics6DofConstraint.h */,
+				10CFE6F7156CD61F00B24399 /* OgreBulletDynamics6DofSpringConstraint.h */,
+				10CFE6F8156CD61F00B24399 /* OgreBulletDynamicsConeTwistConstraint.h */,
+				10CFE6F9156CD61F00B24399 /* OgreBulletDynamicsHingeConstraint.h */,
+				10CFE6FA156CD61F00B24399 /* OgreBulletDynamicsPoint2pointConstraint.h */,
+				10CFE6FB156CD61F00B24399 /* OgreBulletDynamicsRaycastVehicle.h */,
+			);
+			path = Constraints;
+			sourceTree = "<group>";
+		};
+		10CFE703156CD62000B24399 /* Prefab */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE704156CD62000B24399 /* Makefile.am */,
+				10CFE705156CD62000B24399 /* OgreBulletDynamicsRagDoll.h */,
+			);
+			path = Prefab;
+			sourceTree = "<group>";
+		};
+		10CFE707156CD62000B24399 /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE708156CD62000B24399 /* VC8 */,
+			);
+			path = scripts;
+			sourceTree = "<group>";
+		};
+		10CFE708156CD62000B24399 /* VC8 */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE709156CD62000B24399 /* OgreBulletDynamics_VC8.vcproj */,
+			);
+			path = VC8;
+			sourceTree = "<group>";
+		};
+		10CFE70A156CD62000B24399 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE70B156CD62000B24399 /* Constraints */,
+				10CFE712156CD62000B24399 /* Makefile.am */,
+				10CFE713156CD62000B24399 /* OgreBulletDynamicsConstraint.cpp */,
+				10CFE714156CD62000B24399 /* OgreBulletDynamicsObjectState.cpp */,
+				10CFE715156CD62000B24399 /* OgreBulletDynamicsPrecompiled.cpp */,
+				10CFE716156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp */,
+				10CFE717156CD62000B24399 /* OgreBulletDynamicsWorld.cpp */,
+				10CFE718156CD62000B24399 /* Prefab */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		10CFE70B156CD62000B24399 /* Constraints */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE70C156CD62000B24399 /* OgreBulletDynamics6DofConstraint.cpp */,
+				10CFE70D156CD62000B24399 /* OgreBulletDynamics6DofSpringConstraint.cpp */,
+				10CFE70E156CD62000B24399 /* OgreBulletDynamicsConeTwistConstraint.cpp */,
+				10CFE70F156CD62000B24399 /* OgreBulletDynamicsHingeConstraint.cpp */,
+				10CFE710156CD62000B24399 /* OgreBulletDynamicsPoint2pointConstraint.cpp */,
+				10CFE711156CD62000B24399 /* OgreBulletDynamicsRaycastVehicle.cpp */,
+			);
+			path = Constraints;
+			sourceTree = "<group>";
+		};
+		10CFE718156CD62000B24399 /* Prefab */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE719156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp */,
+			);
+			path = Prefab;
+			sourceTree = "<group>";
+		};
+		10E1B28B156D3AEB0013B9F7 /* BetaGUI */ = {
+			isa = PBXGroup;
+			children = (
+				10E1B28D156D3AFE0013B9F7 /* BetaGUI.h */,
+				10E1B28C156D3AFE0013B9F7 /* BetaGUI.cpp */,
+			);
+			name = BetaGUI;
 			sourceTree = "<group>";
 		};
 		10F4EE0F1557F482000E4591 /* VSCOgreBulletDemoApplication */ = {
@@ -322,6 +783,8 @@
 				10B60D1C15505D6D006A6D6E /* Sources */,
 				10B60D1D15505D6D006A6D6E /* Frameworks */,
 				10B60D1E15505D6D006A6D6E /* Resources */,
+				10F69484156E41A500E70049 /* CopyFiles */,
+				10F69486156E41D300E70049 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -352,28 +815,12 @@
 			mainGroup = 10B60D1515505D6D006A6D6E;
 			productRefGroup = 10B60D2115505D6D006A6D6E /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 10EBEE53156A331F005E20B7 /* Products */;
-					ProjectRef = 10EBEE52156A331F005E20B7 /* OgreBulletFramework.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				10B60D1F15505D6D006A6D6E /* OgreBulletCocoaTestApplications */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		10EBEE5A156A331F005E20B7 /* OgreBulletFramework.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = OgreBulletFramework.framework;
-			remoteRef = 10EBEE59156A331F005E20B7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		10B60D1E15505D6D006A6D6E /* Resources */ = {
@@ -384,6 +831,8 @@
 				10B60D3515505D6D006A6D6E /* Credits.rtf in Resources */,
 				10B60D3B15505D6D006A6D6E /* MainMenu.xib in Resources */,
 				10F4EE0E1557E775000E4591 /* resources.cfg in Resources */,
+				10F6948A156E456500E70049 /* Plugins_d.cfg in Resources */,
+				10F6948B156E456500E70049 /* Plugins.cfg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,6 +859,43 @@
 				10F4EE211557F4A2000E4591 /* VSCOgreBulletVehiclesDemo.cpp in Sources */,
 				109D51B1155946D90030C161 /* VSCOgreApplicationCocoaSetup.mm in Sources */,
 				109D51B5155998EE0030C161 /* VSCException.cpp in Sources */,
+				10CFE720156CD62000B24399 /* OgreBulletCollisionsDebugContact.cpp in Sources */,
+				10CFE721156CD62000B24399 /* OgreBulletCollisionsDebugDrawer.cpp in Sources */,
+				10CFE722156CD62000B24399 /* OgreBulletCollisionsDebugLines.cpp in Sources */,
+				10CFE723156CD62000B24399 /* OgreBulletCollisionsDebugShape.cpp in Sources */,
+				10CFE725156CD62000B24399 /* OgreBulletCollisionsObject.cpp in Sources */,
+				10CFE726156CD62000B24399 /* OgreBulletCollisionsObjectState.cpp in Sources */,
+				10CFE727156CD62000B24399 /* OgreBulletCollisionsPrecompiled.cpp in Sources */,
+				10CFE728156CD62000B24399 /* OgreBulletCollisionsRay.cpp in Sources */,
+				10CFE729156CD62000B24399 /* OgreBulletCollisionsShape.cpp in Sources */,
+				10CFE72A156CD62000B24399 /* OgreBulletCollisionsWorld.cpp in Sources */,
+				10CFE72B156CD62000B24399 /* OgreBulletCollisionsBoxShape.cpp in Sources */,
+				10CFE72C156CD62000B24399 /* OgreBulletCollisionsCapsuleShape.cpp in Sources */,
+				10CFE72D156CD62000B24399 /* OgreBulletCollisionsCompoundShape.cpp in Sources */,
+				10CFE72E156CD62000B24399 /* OgreBulletCollisionsConeShape.cpp in Sources */,
+				10CFE72F156CD62000B24399 /* OgreBulletCollisionsConvexHullShape.cpp in Sources */,
+				10CFE730156CD62000B24399 /* OgreBulletCollisionsCylinderShape.cpp in Sources */,
+				10CFE731156CD62000B24399 /* OgreBulletCollisionsGImpactShape.cpp in Sources */,
+				10CFE732156CD62000B24399 /* OgreBulletCollisionsMinkowskiSumShape.cpp in Sources */,
+				10CFE733156CD62000B24399 /* OgreBulletCollisionsMultiSphereShape.cpp in Sources */,
+				10CFE734156CD62000B24399 /* OgreBulletCollisionsSphereShape.cpp in Sources */,
+				10CFE735156CD62000B24399 /* OgreBulletCollisionsStaticPlaneShape.cpp in Sources */,
+				10CFE736156CD62000B24399 /* OgreBulletCollisionsTriangleShape.cpp in Sources */,
+				10CFE737156CD62000B24399 /* OgreBulletCollisionsTrimeshShape.cpp in Sources */,
+				10CFE738156CD62000B24399 /* OgreBulletCollisionsMeshToShapeConverter.cpp in Sources */,
+				10CFE73E156CD62000B24399 /* OgreBulletDynamics6DofConstraint.cpp in Sources */,
+				10CFE73F156CD62000B24399 /* OgreBulletDynamics6DofSpringConstraint.cpp in Sources */,
+				10CFE740156CD62000B24399 /* OgreBulletDynamicsConeTwistConstraint.cpp in Sources */,
+				10CFE741156CD62000B24399 /* OgreBulletDynamicsHingeConstraint.cpp in Sources */,
+				10CFE742156CD62000B24399 /* OgreBulletDynamicsPoint2pointConstraint.cpp in Sources */,
+				10CFE743156CD62000B24399 /* OgreBulletDynamicsRaycastVehicle.cpp in Sources */,
+				10CFE745156CD62000B24399 /* OgreBulletDynamicsConstraint.cpp in Sources */,
+				10CFE746156CD62000B24399 /* OgreBulletDynamicsObjectState.cpp in Sources */,
+				10CFE747156CD62000B24399 /* OgreBulletDynamicsPrecompiled.cpp in Sources */,
+				10CFE748156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp in Sources */,
+				10CFE749156CD62000B24399 /* OgreBulletDynamicsWorld.cpp in Sources */,
+				10CFE74A156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp in Sources */,
+				10E1B28E156D3AFE0013B9F7 /* BetaGUI.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,6 +951,15 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(OGRE_SDK)/include/OGRE",
+					"$(OGRE_SDK)/include/OGRE/RenderSystems/GL",
+					"$(OGRE_SDK)/include/OGRE/RenderSystems",
+					"$(BULLET_ROOT)/src",
+					"$(BULLET_ROOT)/Extras/ConvexDecomposition",
+					"$(OGREBULLET_ROOT)/Collisions/include",
+					"$(OGREBULLET_ROOT)/Dynamics/include",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -487,6 +982,15 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(OGRE_SDK)/include/OGRE",
+					"$(OGRE_SDK)/include/OGRE/RenderSystems/GL",
+					"$(OGRE_SDK)/include/OGRE/RenderSystems",
+					"$(BULLET_ROOT)/src",
+					"$(BULLET_ROOT)/Extras/ConvexDecomposition",
+					"$(OGREBULLET_ROOT)/Collisions/include",
+					"$(OGREBULLET_ROOT)/Dynamics/include",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
@@ -495,13 +999,18 @@
 		10B60D3F15505D6D006A6D6E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../../Libraries/OgreSDK/lib/release\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OgreBulletCocoaTestApplications/OgreBulletCocoaTestApplications-Prefix.pch";
 				INFOPLIST_FILE = "OgreBulletCocoaTestApplications/OgreBulletCocoaTestApplications-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../../../Libraries/OgreSDK/lib/release\"",
+					"\"$(SRCROOT)/../../../../../../Libraries/OgreSDK/lib\"",
+					"\"$(SRCROOT)/../../../../../../Libraries/bullet-2.80/Extras/ConvexDecomposition\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -511,13 +1020,18 @@
 		10B60D4015505D6D006A6D6E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../../Libraries/OgreSDK/lib/release\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OgreBulletCocoaTestApplications/OgreBulletCocoaTestApplications-Prefix.pch";
 				INFOPLIST_FILE = "OgreBulletCocoaTestApplications/OgreBulletCocoaTestApplications-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../../../Libraries/OgreSDK/lib/release\"",
+					"\"$(SRCROOT)/../../../../../../Libraries/OgreSDK/lib\"",
+					"\"$(SRCROOT)/../../../../../../Libraries/bullet-2.80/Extras/ConvexDecomposition\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

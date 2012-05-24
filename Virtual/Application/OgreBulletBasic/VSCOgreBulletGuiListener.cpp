@@ -12,7 +12,7 @@ This source file is not LGPL, it's public source code that you can reuse.
 using namespace Ogre;
 
 // -------------------------------------------------------------------------
-OgreBulletGuiListener::OgreBulletGuiListener(OgreBulletListener *listener, Ogre::RenderWindow *win) :
+VSCOgreBulletGuiListener::VSCOgreBulletGuiListener(VSCOgreBulletListener *listener, Ogre::RenderWindow *win) :
     mListener(listener),
     mWindow(win),
     mMouseOverlay(0),
@@ -57,13 +57,13 @@ OgreBulletGuiListener::OgreBulletGuiListener(OgreBulletListener *listener, Ogre:
 
 }
 // -------------------------------------------------------------------------
-OgreBulletGuiListener::~OgreBulletGuiListener()
+VSCOgreBulletGuiListener::~VSCOgreBulletGuiListener()
 {
     // other buttons  and window managed by BETAGUI will be deleted by BETAGUI himself.
     delete mGui;
 }
 // -------------------------------------------------------------------------
-void OgreBulletGuiListener::addBool(BetaGUI::Window *window, bool* value, const String &label, Vector2 &pos)
+void VSCOgreBulletGuiListener::addBool(BetaGUI::Window *window, bool* value, const String &label, Vector2 &pos)
 {
     window->createBoolButton(
         Vector4(pos.x, pos.y, 7*label.size(), 24), 
@@ -73,7 +73,7 @@ void OgreBulletGuiListener::addBool(BetaGUI::Window *window, bool* value, const 
         value);
 }
 // -------------------------------------------------------------------------
-void OgreBulletGuiListener::onButtonPress(BetaGUI::Button *ref, Ogre::uchar type)
+void VSCOgreBulletGuiListener::onButtonPress(BetaGUI::Button *ref, Ogre::uchar type)
 {
     //if(type == 1) // button down
     //{
@@ -81,17 +81,17 @@ void OgreBulletGuiListener::onButtonPress(BetaGUI::Button *ref, Ogre::uchar type
     //}
 }
 // -------------------------------------------------------------------------
-void OgreBulletGuiListener::hideMouse()
+void VSCOgreBulletGuiListener::hideMouse()
 {
    mMousePanel->hide();
 }
 // -------------------------------------------------------------------------
-void OgreBulletGuiListener::showMouse()
+void VSCOgreBulletGuiListener::showMouse()
 {
    mMousePanel->show();
 }
 // -------------------------------------------------------------------------
-void OgreBulletGuiListener::setMousePosition(Ogre::Real x, Ogre::Real y)
+void VSCOgreBulletGuiListener::setMousePosition(Ogre::Real x, Ogre::Real y)
 {
     mMousePanel->setPosition (x - mMouseCursorHalfWidth, y - mMouseCursorHalfHeight);
 }

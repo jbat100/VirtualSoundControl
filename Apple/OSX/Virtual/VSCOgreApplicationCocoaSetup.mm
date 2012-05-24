@@ -18,16 +18,21 @@ Description: Base class for all the OGRE examples
 -----------------------------------------------------------------------------
 */
 
-#ifndef _VSC_EXAMPLE_APPLICATION_H_
-#define _VSC_EXAMPLE_APPLICATION_H_
+#import "VSCOgreApplicationCocoaSetup.h"
 
 #import <Cocoa/Cocoa.h>
 
 #import <Ogre/Ogre.h>
 #import <Ogre/OgreConfigFile.h>
+#import <Ogre/OSX/macUtils.h>
+
+#import "OgreOSXCocoaView.h"
+#import "OgreOSXCocoaWindow.h"
 
 #import "VSCOgreApplication.h"
 #import "VSCOgreFrameListener.h"
+
+#import "VSCException.h"
 
 using namespace Ogre;
 
@@ -45,7 +50,7 @@ VSCOgreApplicationCocoaSetup::~VSCOgreApplicationCocoaSetup()
 
 bool VSCOgreApplicationCocoaSetup::setup(VSCOgreApplication* ogreApplication)
 {
-    OgreView* ogreView = (OgreView*)mOgreView;
+    OgreView* ogreView = (__bridge OgreView*)mOgreView;
     
     // get platform-specific working directory
     Ogre::String workDir = Ogre::StringUtil::BLANK;
@@ -65,13 +70,13 @@ bool VSCOgreApplicationCocoaSetup::setup(VSCOgreApplication* ogreApplication)
     
     
     // get the ogre root
-    ogreApplication.mRoot = OGRE_NEW Ogre::Root(pluginsPath + "plugins.cfg", workDir + "ogre.cfg", workDir + "ogre.log");
+    ogreApplication->mRoot = OGRE_NEW Ogre::Root(pluginsPath + "plugins.cfg", workDir + "ogre.cfg", workDir + "ogre.log");
     
     // set up the render system. Since this is running on Mac, our only option is OpenGL.
-    mRoot->setRenderSystem(mRoot->getRenderSystemByName("OpenGL Rendering Subsystem"));
+    ogreApplication->mRoot->setRenderSystem(ogreApplication->mRoot->getRenderSystemByName("OpenGL Rendering Subsystem"));
     
     // Initialise without an automatically created window
-    mRoot->initialise(false);
+    ogreApplication->mRoot->initialise(false);
     
     // Ask for a new renderwindow passing in the ogreView in our nib file
     Ogre::NameValuePairList misc;
@@ -82,26 +87,33 @@ bool VSCOgreApplicationCocoaSetup::setup(VSCOgreApplication* ogreApplication)
     
     // Actually create the render window
     NSRect frame = [ogreView frame];
-    mRoot->createRenderWindow("ogre window", frame.size.width, frame.size.height, false, &misc);
+    ogreApplication->mRoot->createRenderWindow("ogre window", frame.size.width, frame.size.height, false, &misc);
     
     // And then get a pointer to it.
     Ogre::RenderWindow *mWindow = [ogreView ogreWindow];
+    
+    // This cast works so we do actually have a Ogre::OSXCocoaWindow here
+    //std::cout << "mWindow is " << (void*)mWindow;
+    //Ogre::OSXCocoaWindow* cocoaWindow = dynamic_cast<Ogre::OSXCocoaWindow*> (mWindow);
+    //std::cout << "cocoaWindow is " << (void*)cocoaWindow;
+    
+    return true;
 }
 
 
 void VSCOgreApplicationCocoaSetup::setOgreView(void* ogreView)
 {
-    if ([ogreView isKindOfClass:[OgreView class]]) 
+    if ([(__bridge OgreView*)ogreView isKindOfClass:[OgreView class]]) 
     {
-        mOgreView = view;
+        mOgreView = ogreView;
     }
-    else 
+    else if (ogreView != NULL) // only throw an exception if the view is not NULL
     {
         throw VSCInvalidArgumentException("Expected argument view to b objective-c++ kind of class OgreView");
     }
 }
 
-void* VSCOgreApplicationCocoaSetup::getOgreView(OgreView)
+void* VSCOgreApplicationCocoaSetup::getOgreView(void)
 {
     return mOgreView;
 }
@@ -109,8 +121,8 @@ void* VSCOgreApplicationCocoaSetup::getOgreView(OgreView)
 Ogre::RenderWindow* VSCOgreApplicationCocoaSetup::getRenderWindow(void) 
 {
 
-    OgreView* ogreView = (OgreView*)mOgreView;
-    return [mOgreView ogreWindow]
+    //OgreView* ogreView = (__bridge OgreView*)mOgreView;
+    return [(__bridge OgreView*)mOgreView ogreWindow];
     
 }
 

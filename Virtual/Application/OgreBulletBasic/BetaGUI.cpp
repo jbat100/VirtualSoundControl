@@ -169,7 +169,7 @@ namespace BetaGUI
         for(std::vector<Window*>::iterator i=mWindows.begin();i!=mWindows.end();++i) 
         {
 		    if((*i)->isVisible() && 
-                (*i)->check(x, y, LMB)) 
+                (*i)->checkT(x, y, LMB)) 
             {
                 mActiveDraggedWindow = (*i);
                 sortZOrder ();
@@ -774,7 +774,7 @@ namespace BetaGUI
 		return true;
     }
     //------------------------------------------------------------------------------------------------
-	bool Window::check(int px, int py, bool LMB) 
+	bool Window::checkT(int px, int py, bool LMB) 
     {       
         if (mUnderEffect)
             return false;

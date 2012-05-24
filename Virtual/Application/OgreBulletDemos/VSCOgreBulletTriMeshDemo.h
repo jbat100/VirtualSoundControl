@@ -19,8 +19,8 @@ class VSCOgreBulletTriMeshDemo : public VSCOgreBulletListener
 {
 public:
 
-    Trimesh_Demo() : VSCOgreBulletListener() {mName = "Trimesh Static Scene test";};
-    virtual ~Trimesh_Demo(){};
+    VSCOgreBulletTriMeshDemo() : VSCOgreBulletListener() {mName = "Trimesh Static Scene test";};
+    virtual ~VSCOgreBulletTriMeshDemo(){};
 
     void init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application);
 

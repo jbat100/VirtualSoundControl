@@ -29,7 +29,7 @@ public:
     
 	void button0Pressed();
     
-	bool frameStarted(Ogre::Real elapsedTime);s
+	bool frameStarted(Ogre::Real elapsedTime);
 	bool frameEnded(Ogre::Real elapsedTime);
     
 };

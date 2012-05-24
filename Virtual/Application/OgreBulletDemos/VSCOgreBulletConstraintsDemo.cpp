@@ -57,7 +57,7 @@ void VSCOgreBulletConstraintsDemo::init(Ogre::Root *root, Ogre::RenderWindow *wi
     mCamera->rotate(Ogre::Vector3(1,0,0), Degree(90));
     mCamera->setFixedYawAxis(true, Ogre::Vector3::UNIT_Z);
 
-    OgreBulletListener::init(root, win, application);
+    VSCOgreBulletListener::init(root, win, application);
 
     // ------------------------
     // add lights
@@ -77,9 +77,9 @@ void VSCOgreBulletConstraintsDemo::init(Ogre::Root *root, Ogre::RenderWindow *wi
 // -------------------------------------------------------------------------
 void VSCOgreBulletConstraintsDemo::keyPressed(BULLET_KEY_CODE key)
 {
-    OgreBulletListener::throwDynamicObject (key);
-    OgreBulletListener::dropDynamicObject (key);
+    VSCOgreBulletListener::throwDynamicObject (key);
+    VSCOgreBulletListener::dropDynamicObject (key);
 
-    return OgreBulletListener::keyPressed (key);
+    return VSCOgreBulletListener::keyPressed (key);
 }
 

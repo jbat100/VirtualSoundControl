@@ -29,7 +29,7 @@ const Ogre::Vector3 CameraStart  = Ogre::Vector3(0,-9,1);
 
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletTriMeshDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, OgreBulletApplication *application)
+void VSCOgreBulletTriMeshDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application)
 {
     mHelpKeys.clear();
     mHelpKeys.push_back (BASIC_HELP_INFO0);

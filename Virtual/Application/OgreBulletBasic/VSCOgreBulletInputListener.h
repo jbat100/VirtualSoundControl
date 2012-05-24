@@ -105,9 +105,9 @@ public:
      */
 
 	// Constructor/destructor
-    VSCOgreBulletInputListener(VSCOgreBulletListener *ogreBulletListener,
-                            Ogre::RenderWindow *win);
-    virtual VSCOgreBulletInputListener(){};
+    VSCOgreBulletInputListener(VSCOgreBulletListener *ogreBulletListener, Ogre::RenderWindow *win);
+    
+    virtual ~VSCOgreBulletInputListener(){};
 
     // MouseMotionListener Callbacks
     BULLET_LISTENER_IMPLEMENTATION_RETURN mouseDragged (BULLET_MOUSE_EVENT e);
@@ -157,7 +157,7 @@ protected:
 
 
     Ogre::RenderWindow      *mWindow;
-    OgreBulletListener      *mListener;
+    VSCOgreBulletListener   *mListener;
 };
 
 #endif//_VSC_OGRE_BULLET_INPUT_LISTENER_H_

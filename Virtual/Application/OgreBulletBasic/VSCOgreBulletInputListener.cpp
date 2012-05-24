@@ -20,7 +20,7 @@ using namespace OIS;
 
 
 // -------------------------------------------------------------------------
-VSCOgreBulletInputListener::VSCOgreBulletInputListener(OgreBulletListener * ogreBulletListener, 
+VSCOgreBulletInputListener::VSCOgreBulletInputListener(VSCOgreBulletListener * ogreBulletListener, 
                                                  Ogre::RenderWindow *win) :
 
     mButton0Pressed (false),

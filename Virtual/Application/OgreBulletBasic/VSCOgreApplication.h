@@ -75,7 +75,7 @@ protected:
     Root                    *mRoot;
     Camera                  *mCamera;
     SceneManager            *mSceneMgr;
-    ExampleFrameListener    *mFrameListener;
+    VSCOgreFrameListener    *mFrameListener;
     RenderWindow            *mWindow;
 	Ogre::String            mResourcePath;
     SetupType               mSetupType;

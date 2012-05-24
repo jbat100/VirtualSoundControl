@@ -22,8 +22,8 @@ using namespace OgreBulletCollisions;
 //using namespace OgreBulletLoader;
 
 // -------------------------------------------------------------------------
-VSCOgreBulletApplication::VSCOgreBulletApplication(std::vector <OgreBulletListener *> *bulletListeners) : 
-    ExampleApplication(),
+VSCOgreBulletApplication::VSCOgreBulletApplication(std::vector <VSCOgreBulletListener *> *bulletListeners) : 
+    VSCOgreApplication(),
     FrameListener(),
     mInputSystem(0),
     mInput(0),
@@ -48,7 +48,7 @@ VSCOgreBulletApplication::~VSCOgreBulletApplication()
     }
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletApplication::switchListener(OgreBulletListener *newListener)
+bool VSCOgreBulletApplication::switchListener(VSCOgreBulletListener *newListener)
 {
 
 #if (OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
@@ -90,7 +90,7 @@ bool VSCOgreBulletApplication::frameStarted(const FrameEvent& evt)
     mInput->capture();
 #endif 
 
-    std::vector <OgreBulletListener *>::iterator it =  mBulletListeners->begin();
+    std::vector <VSCOgreBulletListener *>::iterator it =  mBulletListeners->begin();
     while (it != mBulletListeners->end())
     {
         if ((*(*it)->getBoolActivator()) == true || mInput->isKeyDown ((*it)->getNextKey ()))
@@ -149,7 +149,9 @@ void VSCOgreBulletApplication::createFrameListener(void)
         mWindow->getCustomAttribute("WINDOW", &windowHnd);
     #elif defined OIS_LINUX_PLATFORM
         //mWindow->getCustomAttribute( "GLXWINDOW", &windowHnd );
-		mWindow->getCustomAttribute( "WINDOW", &windowHnd );
+		mWindow->getCustomAttribute( "WINDOW", &windowHnd );    
+    #else // do it for apple also
+        mWindow->getCustomAttribute( "GLXWINDOW", &windowHnd ); 
     #endif    
 
     // Fill parameter list
@@ -204,7 +206,7 @@ void VSCOgreBulletApplication::setupResources(void)
  *  The ogrebullet media folder needs to be copied to "/Library/VirtualSoundControl/Ogrebullet/Media"
  */
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-            baseName = "/Library/VirtualSoundControl/Ogrebullet/Media"
+            baseName = "/Library/VirtualSoundControl/Ogrebullet/Media";
             rsm->addResourceLocation (baseName, "FileSystem", resName);
 			rsm->addResourceLocation (baseName + "/textures", "FileSystem", resName);
 			rsm->addResourceLocation (baseName + "/overlays", "FileSystem", resName);

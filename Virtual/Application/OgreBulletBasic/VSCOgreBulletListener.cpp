@@ -144,7 +144,7 @@ mCollisionClosestRayResultCallback(0)
 
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::init(Ogre::Root *root, Ogre::RenderWindow *win, OgreBulletApplication *application)
+void VSCOgreBulletListener::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application)
 {
     /*
      *  A bit of OGRE reading ...

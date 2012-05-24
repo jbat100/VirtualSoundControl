@@ -16,6 +16,8 @@ A basic test framework that minimize code in each test scene listener.
 #ifndef _VSC_OGRE_BULLET_GUI_LISTENER_H_
 #define _VSC_OGRE_BULLET_GUI_LISTENER_H_
 
+#include <Ogre/Ogre.h>
+
 // We'll need the OgreBulletListener definitions
 #include "BetaGUI.h"
 
@@ -28,8 +30,8 @@ class VSCOgreBulletGuiListener : public BetaGUI::BetaGUIListener
 {
 public:
 	// Constructor/destructor
-    VSCOgreBulletGuiListener(OgreBulletListener *listener, Ogre::RenderWindow *win);
-    virtual VSCOgreBulletGuiListener();
+    VSCOgreBulletGuiListener(VSCOgreBulletListener *listener, Ogre::RenderWindow *win);
+    virtual ~VSCOgreBulletGuiListener();
 
     // Gui Callbacks
     void onButtonPress(BetaGUI::Button *ref, Ogre::uchar type);
@@ -48,7 +50,7 @@ protected:
 
    BetaGUI::GUI             *mGui;
 
-   VSCOgreBulletListener       *mListener;
+   VSCOgreBulletListener    *mListener;
    Ogre::RenderWindow       *mWindow;
 
    Ogre::Overlay		    *mMouseOverlay;

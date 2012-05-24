@@ -7,17 +7,20 @@
 //
 
 #import "VSCAppDelegate.h"
+
+#import "OgreOSXCocoaView.h"
+
 #import <vector>
 
+#import "VSCOgreBulletListener.h"
 #import "VSCOgreBulletApplication.h"
 #import "VSCOgreApplicationCocoaSetup.h"
 
-#import "VSCOgreBulletListener.h"
 #import "VSCOgreBulletPrimitivesDemo.h"
 #import "VSCOgreBulletTriMeshDemo.h"
 #import "VSCOgreBulletVehiclesDemo.h"
 #import "VSCOgreBulletConstraintsDemo.h"
-#import "VSCOgreBulletTerrainDemo.h
+#import "VSCOgreBulletTerrainDemo.h"
 #import "VSCOgreBulletRagdollDemo.h"
 
 @interface VSCAppDelegate () {
@@ -69,8 +72,10 @@
     // Create the application and try to run it
     ogreBulletApplication = new VSCOgreBulletApplication(&ogreBulletScenes);
     ogreApplicationCocoaSetup = new VSCOgreApplicationCocoaSetup();
-    ogreApplicationCocoaSetup->setOgreView(self.ogreView);
-    ogreBulletApplication->setup(ogreBulletApplication);
+    ogreApplicationCocoaSetup->setOgreView((__bridge void*)self.ogreView);
+    ogreBulletApplication->setApplicationCocoaSetup(ogreApplicationCocoaSetup);
+    
+    ogreBulletApplication->cocoaSetup();
     
 }
 
@@ -110,7 +115,7 @@
 
 -(void) stopRendering {
     
-    [renderTime invalidate];
+    [renderTimer invalidate];
     renderTimer = nil;
     
 }

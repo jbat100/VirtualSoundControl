@@ -126,7 +126,7 @@ void VSCOgreBulletTerrainDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
 	std::string terrain_cfg("terrain.cfg");
 	mSceneMgr->setWorldGeometry(terrain_cfg);
 
-    OgreBulletListener::init(root, win, application);
+    VSCOgreBulletListener::init(root, win, application);
 
     // ------------------------
     // add lights
@@ -380,8 +380,8 @@ void VSCOgreBulletTerrainDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
 // -------------------------------------------------------------------------
 void VSCOgreBulletTerrainDemo::keyPressed(BULLET_KEY_CODE key)
 {
-    OgreBulletListener::throwDynamicObject (key);
-    OgreBulletListener::dropDynamicObject (key);
+    VSCOgreBulletListener::throwDynamicObject (key);
+    VSCOgreBulletListener::dropDynamicObject (key);
 
     bool wheel_engine_style_change = false;
     bool wheel_steering_style_change = false;
@@ -489,7 +489,7 @@ void VSCOgreBulletTerrainDemo::keyPressed(BULLET_KEY_CODE key)
         }
     }
 
-    return OgreBulletListener::keyPressed (key);
+    return VSCOgreBulletListener::keyPressed (key);
 }
 // -------------------------------------------------------------------------
 void VSCOgreBulletTerrainDemo::keyReleased(BULLET_KEY_CODE key)
@@ -513,7 +513,7 @@ void VSCOgreBulletTerrainDemo::keyReleased(BULLET_KEY_CODE key)
         break;
 
     }
-    return OgreBulletListener::keyReleased (key);
+    return VSCOgreBulletListener::keyReleased (key);
 }
 // -------------------------------------------------------------------------
 bool VSCOgreBulletTerrainDemo::frameStarted(Real elapsedTime)
@@ -547,6 +547,6 @@ bool VSCOgreBulletTerrainDemo::frameStarted(Real elapsedTime)
             mVehicle->setSteeringValue (-mSteering, mWheelsSteerable[i]);
     }
 
-    return OgreBulletListener::frameStarted(elapsedTime);
+    return VSCOgreBulletListener::frameStarted(elapsedTime);
 }
 // -------------------------------------------------------------------------
