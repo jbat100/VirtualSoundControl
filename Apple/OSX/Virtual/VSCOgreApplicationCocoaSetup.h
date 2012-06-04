@@ -21,10 +21,18 @@ public:
     void* getOgreView(void);
     
     Ogre::RenderWindow* getRenderWindow(void);
+    
+    /*
+     *  A bit hacky, just testing ...
+     */
+    //void setNSWindow(void* nsWindow);
+    void* getNSWindow(void);
 
 private:
     
     void* mOgreView;
+    
+    
 
 };
 

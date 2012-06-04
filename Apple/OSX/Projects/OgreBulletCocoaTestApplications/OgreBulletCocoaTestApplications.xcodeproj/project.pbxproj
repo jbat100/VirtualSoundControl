@@ -12,7 +12,7 @@
 		1033868E156E48AC00CEB288 /* Plugin_OctreeSceneManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */; };
 		1033868F156E48AC00CEB288 /* Plugin_ParticleFX.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */; };
 		10338690156E48AC00CEB288 /* libConvexDecomposition.2.80.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6947F156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib */; };
-		10338693156E592F00CEB288 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10338692156E592F00CEB288 /* Carbon.framework */; };
+		1033869E156E77E100CEB288 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1033869D156E77E100CEB288 /* Carbon.framework */; };
 		109D51B1155946D90030C161 /* VSCOgreApplicationCocoaSetup.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109D51B0155946D90030C161 /* VSCOgreApplicationCocoaSetup.mm */; };
 		109D51B5155998EE0030C161 /* VSCException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109D51B3155998EE0030C161 /* VSCException.cpp */; };
 		10B60D2515505D6D006A6D6E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60D2415505D6D006A6D6E /* Cocoa.framework */; };
@@ -122,7 +122,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		10338692156E592F00CEB288 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		10338694156E5BB100CEB288 /* OgreOSXCocoaContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaContext.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaContext.h; sourceTree = "<group>"; };
 		10338695156E5BB100CEB288 /* OgreOSXCocoaWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaWindow.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaWindow.h; sourceTree = "<group>"; };
 		10338696156E5BB100CEB288 /* OgreOSXCocoaWindowDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaWindowDelegate.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaWindowDelegate.h; sourceTree = "<group>"; };
@@ -130,6 +129,7 @@
 		10338698156E5BE300CEB288 /* OgreOSXGLSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXGLSupport.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXGLSupport.h; sourceTree = "<group>"; };
 		10338699156E5BE300CEB288 /* OgreOSXRenderTexture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXRenderTexture.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXRenderTexture.h; sourceTree = "<group>"; };
 		1033869A156E5BE300CEB288 /* OgreOSXWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXWindow.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXWindow.h; sourceTree = "<group>"; };
+		1033869D156E77E100CEB288 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		109D51AF155946D90030C161 /* VSCOgreApplicationCocoaSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreApplicationCocoaSetup.h; path = ../../../Virtual/VSCOgreApplicationCocoaSetup.h; sourceTree = "<group>"; };
 		109D51B0155946D90030C161 /* VSCOgreApplicationCocoaSetup.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOgreApplicationCocoaSetup.mm; path = ../../../Virtual/VSCOgreApplicationCocoaSetup.mm; sourceTree = "<group>"; };
 		109D51B3155998EE0030C161 /* VSCException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCException.cpp; path = ../../../../Generic/VSCException.cpp; sourceTree = "<group>"; };
@@ -303,7 +303,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				10338693156E592F00CEB288 /* Carbon.framework in Frameworks */,
+				1033869E156E77E100CEB288 /* Carbon.framework in Frameworks */,
 				10B60D2515505D6D006A6D6E /* Cocoa.framework in Frameworks */,
 				10B60EEF155080D9006A6D6E /* libOIS.a in Frameworks */,
 				10E1B289156D2A630013B9F7 /* RenderSystem_GL.dylib in Frameworks */,
@@ -360,6 +360,7 @@
 		10B60D1515505D6D006A6D6E = {
 			isa = PBXGroup;
 			children = (
+				1033869D156E77E100CEB288 /* Carbon.framework */,
 				10E1B28B156D3AEB0013B9F7 /* BetaGUI */,
 				10CFE6AC156CD5F700B24399 /* OgreBullet */,
 				109D51B2155998CA0030C161 /* VSC */,
@@ -399,7 +400,6 @@
 				10B60EEE155080D9006A6D6E /* Ogre.framework */,
 				10B60D2415505D6D006A6D6E /* Cocoa.framework */,
 				10F69482156E3D2700E70049 /* IOKit.framework */,
-				10338692156E592F00CEB288 /* Carbon.framework */,
 				10B60D2615505D6D006A6D6E /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -955,6 +955,7 @@
 					"$(OGRE_SDK)/include/OGRE",
 					"$(OGRE_SDK)/include/OGRE/RenderSystems/GL",
 					"$(OGRE_SDK)/include/OGRE/RenderSystems",
+					"$(OGRE_SDK)/boost_1_46_1",
 					"$(BULLET_ROOT)/src",
 					"$(BULLET_ROOT)/Extras/ConvexDecomposition",
 					"$(OGREBULLET_ROOT)/Collisions/include",
@@ -986,6 +987,7 @@
 					"$(OGRE_SDK)/include/OGRE",
 					"$(OGRE_SDK)/include/OGRE/RenderSystems/GL",
 					"$(OGRE_SDK)/include/OGRE/RenderSystems",
+					"$(OGRE_SDK)/boost_1_46_1",
 					"$(BULLET_ROOT)/src",
 					"$(BULLET_ROOT)/Extras/ConvexDecomposition",
 					"$(OGREBULLET_ROOT)/Collisions/include",

@@ -46,9 +46,9 @@ D:        Step right
 // NOTICE: You may need to change this line to <OIS.h> if you build OIS from source.
 #include "OIS.h"
 
-using namespace Ogre;
+//using namespace Ogre; // namespace pollution created ambiguity with carbon
 
-class VSCOgreFrameListener: public FrameListener, public WindowEventListener
+class VSCOgreFrameListener: public Ogre::FrameListener, public Ogre::WindowEventListener
 {
     
 protected:
@@ -60,37 +60,37 @@ public:
     VSCOgreFrameListener();
     
 	// Constructor takes a RenderWindow because it uses that to determine input context
-	VSCOgreFrameListener(RenderWindow* win, Camera* cam, 
+	VSCOgreFrameListener(Ogre::RenderWindow* win, Ogre::Camera* cam, 
                          bool bufferedKeys = false, bool bufferedMouse = false, bool bufferedJoy = false);
     
     virtual ~VSCOgreFrameListener();
 
 	//Adjust mouse clipping area
-	virtual void windowResized(RenderWindow* rw);
+	virtual void windowResized(Ogre::RenderWindow* rw);
 
 	//Unattach OIS before window shutdown (very important under Linux)
-	virtual void windowClosed(RenderWindow* rw);
+	virtual void windowClosed(Ogre::RenderWindow* rw);
 
-	virtual bool processUnbufferedKeyInput(const FrameEvent& evt);
+	virtual bool processUnbufferedKeyInput(const Ogre::FrameEvent& evt);
 
-	virtual bool processUnbufferedMouseInput(const FrameEvent& evt);
+	virtual bool processUnbufferedMouseInput(const Ogre::FrameEvent& evt);
 
 	virtual void moveCamera();
 
 	virtual void showDebugOverlay(bool show);
 
 	// Override frameRenderingQueued event to process that (don't care about frameEnded)
-	bool frameRenderingQueued(const FrameEvent& evt);
+	bool frameRenderingQueued(const Ogre::FrameEvent& evt);
 
-	bool frameEnded(const FrameEvent& evt);
+	bool frameEnded(const Ogre::FrameEvent& evt);
 
 protected:
     
-	Camera* mCamera;
+	Ogre::Camera* mCamera;
 
-	Vector3 mTranslateVector;
-	Real mCurrentSpeed;
-	RenderWindow* mWindow;
+	Ogre::Vector3 mTranslateVector;
+	Ogre::Real mCurrentSpeed;
+	Ogre::RenderWindow* mWindow;
 	bool mStatsOn;
 
 	std::string mDebugText;
@@ -98,17 +98,17 @@ protected:
 	unsigned int mNumScreenShots;
 	float mMoveScale;
 	float mSpeedLimit;
-	Degree mRotScale;
+	Ogre::Degree mRotScale;
 	// just to stop toggles flipping too fast
-	Real mTimeUntilNextToggle ;
-	Radian mRotX, mRotY;
-	TextureFilterOptions mFiltering;
+	Ogre::Real mTimeUntilNextToggle ;
+	Ogre::Radian mRotX, mRotY;
+	Ogre::TextureFilterOptions mFiltering;
 	int mAniso;
 
 	int mSceneDetailIndex ;
-	Real mMoveSpeed;
-	Degree mRotateSpeed;
-	Overlay* mDebugOverlay;
+	Ogre::Real mMoveSpeed;
+	Ogre::Degree mRotateSpeed;
+	Ogre::Overlay* mDebugOverlay;
 
 	//OIS Input devices
 	OIS::InputManager* mInputManager;

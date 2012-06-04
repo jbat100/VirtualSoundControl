@@ -22,7 +22,7 @@ demo scenes and switch between them.
 #include <vector>
 
 #if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
-    using namespace OIS;
+    //using namespace OIS;
 #endif //OGRE_VERSION eihort
 
 class VSCOgreBulletApplication;
@@ -30,7 +30,7 @@ class VSCOgreBulletApplication;
 /**
  *  The test application, based on the Ogre example application for consistency
  */
-class VSCOgreBulletApplication: public VSCOgreApplication,  public FrameListener
+class VSCOgreBulletApplication: public VSCOgreApplication,  public Ogre::FrameListener
 {
 public:
 	// Standard constructor/destructor
@@ -52,8 +52,8 @@ protected:
     void setupResources(void);
 	void loadResources(void);
 
-    bool frameStarted(const FrameEvent& evt);
-    bool frameEnded(const FrameEvent& evt);
+    bool frameStarted(const Ogre::FrameEvent& evt);
+    bool frameEnded(const Ogre::FrameEvent& evt);
 
     bool switchListener(VSCOgreBulletListener *newListener);
 

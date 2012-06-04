@@ -7,24 +7,24 @@ This source file is not LGPL, it's public source code that you can reuse.
 -----------------------------------------------------------------------------*/
 #include "VSCOgreBulletApplication.h"
 #include "VSCOgreBulletListener.h"
-
+#include "VSCOgreApplicationCocoaSetup.h"
 
 #include "OgreResourceGroupManager.h"
 
-using namespace Ogre;
-
 #if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
-    using namespace OIS;
+    //using namespace OIS;
 #endif //OGRE_VERSION not Eihort
 
-using namespace OgreBulletDynamics;
-using namespace OgreBulletCollisions;
+#include <boost/assert.hpp>
+
+//using namespace OgreBulletDynamics;
+//using namespace OgreBulletCollisions;
 //using namespace OgreBulletLoader;
 
 // -------------------------------------------------------------------------
 VSCOgreBulletApplication::VSCOgreBulletApplication(std::vector <VSCOgreBulletListener *> *bulletListeners) : 
     VSCOgreApplication(),
-    FrameListener(),
+    Ogre::FrameListener(),
     mInputSystem(0),
     mInput(0),
     mBulletListener(0)
@@ -43,7 +43,7 @@ VSCOgreBulletApplication::~VSCOgreBulletApplication()
         #else
             mInputSystem->destroyInputObject(mInput);
             mInputSystem->destroyInputObject(mMouse);
-            InputManager::destroyInputSystem(mInputSystem);
+            OIS::InputManager::destroyInputSystem(mInputSystem);
         #endif //OGRE_VERSION not Eihort
     }
 }
@@ -80,7 +80,7 @@ bool VSCOgreBulletApplication::switchListener(VSCOgreBulletListener *newListener
     return true;
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletApplication::frameStarted(const FrameEvent& evt)
+bool VSCOgreBulletApplication::frameStarted(const Ogre::FrameEvent& evt)
 {
 
 #if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
@@ -115,7 +115,7 @@ bool VSCOgreBulletApplication::frameStarted(const FrameEvent& evt)
 }
 
 // -------------------------------------------------------------------------
-bool VSCOgreBulletApplication::frameEnded(const FrameEvent& evt)
+bool VSCOgreBulletApplication::frameEnded(const Ogre::FrameEvent& evt)
 {
     assert (mBulletListener);
     // we're running a scene, tell it that a frame's started 
@@ -151,31 +151,52 @@ void VSCOgreBulletApplication::createFrameListener(void)
         //mWindow->getCustomAttribute( "GLXWINDOW", &windowHnd );
 		mWindow->getCustomAttribute( "WINDOW", &windowHnd );    
     #else // do it for apple also
-        mWindow->getCustomAttribute( "GLXWINDOW", &windowHnd ); 
+        mWindow->getCustomAttribute( "WINDOW", &windowHnd ); 
     #endif    
+    
+    std::cout << "windowHnd is " << windowHnd << " " << std::endl;
+    
+    if (windowHnd == 0) 
+    {
+        //windowHnd = mWindow->getWindowHandle();
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+        std::cout << "Size of size_t is " << sizeof(size_t) << "Size of unsigned int is " << sizeof(unsigned int) << std::endl;
+        windowHnd = (size_t) (mCocoaSetup->getNSWindow());
+        std::cout << "windowHnd is " << windowHnd << " " << std::endl;
+         
+#endif
+    }
 
     // Fill parameter list
-    windowHndStr << (unsigned int) windowHnd;
+    
+    /*
+     *  Correction made by jbat100
+     *  This was windowHndStr << (unsigned int) windowHnd;
+     *  Which did not work with 64 bit system 
+     */
+    
+    windowHndStr << (size_t) windowHnd;
+    
+    std::cout << "windowHndStr is " << windowHndStr.str() << std::endl; 
+    
     pl.insert( std::make_pair( std::string( "WINDOW" ), windowHndStr.str() ) );
 
     // Uncomment these two lines to allow users to switch keyboards via the language bar
     //paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND") ));
     //paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE") ));
 
-    mInputSystem  = InputManager::createInputSystem( pl );
-
-    //Create all devices (We only catch joystick exceptions here, as, most people have Key/Mouse)
-    mInput = static_cast<Keyboard*>(mInputSystem->createInputObject( OISKeyboard, true ));
-    mMouse = static_cast<Mouse*>(mInputSystem->createInputObject( OISMouse, true ));
-
     unsigned int width, height, depth;
     int left, top;
     mWindow->getMetrics(width, height, depth, left, top);
 
+    
+    mInputSystem  = OIS::InputManager::createInputSystem( pl );
+    mInput = static_cast<OIS::Keyboard*>(mInputSystem->createInputObject( OIS::OISKeyboard, true ));
+    mMouse = static_cast<OIS::Mouse*>(mInputSystem->createInputObject( OIS::OISMouse, true ));
     const OIS::MouseState &ms = mMouse->getMouseState();
     ms.width = width;
     ms.height = height;
-
+    
 #endif //OGRE_VERSION not Eihort
 
     switchListener (*(mBulletListeners->begin()));
@@ -186,20 +207,20 @@ void VSCOgreBulletApplication::createFrameListener(void)
 void VSCOgreBulletApplication::setupResources(void)
 {
 	VSCOgreApplication::setupResources(); 
-	ResourceGroupManager *rsm = ResourceGroupManager::getSingletonPtr();
-	StringVector groups = rsm->getResourceGroups();        
-	FileInfoListPtr finfo =  ResourceGroupManager::getSingleton().findResourceFileInfo ("Bootstrap", "axes.mesh");
+	Ogre::ResourceGroupManager *rsm = Ogre::ResourceGroupManager::getSingletonPtr();
+	Ogre::StringVector groups = rsm->getResourceGroups();        
+	Ogre::FileInfoListPtr finfo =  Ogre::ResourceGroupManager::getSingleton().findResourceFileInfo ("Bootstrap", "axes.mesh");
     
 	const bool isSDK =  (!finfo->empty()) && 
-    StringUtil::startsWith (finfo->begin()->archive->getName(), "../../media/packs/ogrecore.zip", true);
+    Ogre::StringUtil::startsWith (finfo->begin()->archive->getName(), "../../media/packs/ogrecore.zip", true);
 
-	const String resName ("OgreBullet");
+	const Ogre::String resName ("OgreBullet");
 	{
 		if (std::find(groups.begin(), groups.end(), resName) == groups.end())
 		{
 
 			rsm->createResourceGroup(resName);
-            String baseName;
+            Ogre::String baseName;
             
 /*
  *  Hacky temporary stuff by jonathan (given the path to the executable is not known when using workspaces),
@@ -236,9 +257,9 @@ void VSCOgreBulletApplication::setupResources(void)
 // -------------------------------------------------------------------------
 void VSCOgreBulletApplication::loadResources(void)
 {
-	ResourceGroupManager *rsm = ResourceGroupManager::getSingletonPtr();
-	StringVector groups = rsm->getResourceGroups();      
-	for (StringVector::iterator it = groups.begin(); it != groups.end(); ++it)
+	Ogre::ResourceGroupManager *rsm = Ogre::ResourceGroupManager::getSingletonPtr();
+	Ogre::StringVector groups = rsm->getResourceGroups();      
+	for (Ogre::StringVector::iterator it = groups.begin(); it != groups.end(); ++it)
 	{
 		rsm->initialiseResourceGroup((*it));
 	}

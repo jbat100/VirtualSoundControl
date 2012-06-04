@@ -23,6 +23,8 @@
 #import "VSCOgreBulletTerrainDemo.h"
 #import "VSCOgreBulletRagdollDemo.h"
 
+using namespace OIS;
+
 @interface VSCAppDelegate () {
     
     NSTimer* renderTimer;

@@ -22,19 +22,20 @@ Description: Base class for all the OGRE examples
 
 #import <Cocoa/Cocoa.h>
 
-#import <Ogre/Ogre.h>
-#import <Ogre/OgreConfigFile.h>
-#import <Ogre/OSX/macUtils.h>
+#include <Ogre/Ogre.h>
+#include <Ogre/OgreConfigFile.h>
+#include <Ogre/OSX/macUtils.h>
 
-#import "OgreOSXCocoaView.h"
-#import "OgreOSXCocoaWindow.h"
+#include "OgreOSXCocoaView.h"
+#include "OgreOSXCocoaWindow.h"
 
-#import "VSCOgreApplication.h"
-#import "VSCOgreFrameListener.h"
+#include "VSCOgreApplication.h"
+#include "VSCOgreFrameListener.h"
+#include "VSCException.h"
 
-#import "VSCException.h"
+#include <boost/assert.hpp>
 
-using namespace Ogre;
+//using namespace Ogre;
 
 VSCOgreApplicationCocoaSetup::VSCOgreApplicationCocoaSetup(void* view)
 {
@@ -92,6 +93,8 @@ bool VSCOgreApplicationCocoaSetup::setup(VSCOgreApplication* ogreApplication)
     // And then get a pointer to it.
     Ogre::RenderWindow *mWindow = [ogreView ogreWindow];
     
+    ogreApplication->mWindow = mWindow;
+    
     // This cast works so we do actually have a Ogre::OSXCocoaWindow here
     //std::cout << "mWindow is " << (void*)mWindow;
     //Ogre::OSXCocoaWindow* cocoaWindow = dynamic_cast<Ogre::OSXCocoaWindow*> (mWindow);
@@ -124,5 +127,31 @@ Ogre::RenderWindow* VSCOgreApplicationCocoaSetup::getRenderWindow(void)
     //OgreView* ogreView = (__bridge OgreView*)mOgreView;
     return [(__bridge OgreView*)mOgreView ogreWindow];
     
+}
+
+void* VSCOgreApplicationCocoaSetup::getNSWindow(void)
+{
+    /*
+    
+     // This code returns NULL
+     
+    Ogre::RenderWindow* renderWindow = this->getRenderWindow();
+    Ogre::OSXCocoaWindow* cocoaWindow = dynamic_cast<Ogre::OSXCocoaWindow*> (renderWindow);
+    
+    NSWindow* nsWindow = NULL;
+    
+    BOOST_ASSERT(cocoaWindow != NULL);
+    if (cocoaWindow != NULL) {
+        nsWindow = (NSWindow*) cocoaWindow->ogreWindow();
+        std::cout << "nsWindow is " << nsWindow << " (NSWindow*)" << std::endl;
+    }
+     
+     */
+    
+    NSWindow* nsWindow = (NSWindow*)[(__bridge OgreView*)mOgreView window];
+    
+    std::cout << "Size of NSWindow* is " << sizeof(NSWindow*) << " (pointing to " << (__bridge void*)nsWindow << ")" << std::endl;
+    
+    return (__bridge void*) nsWindow;
 }
 

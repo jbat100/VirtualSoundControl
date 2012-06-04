@@ -31,7 +31,7 @@ class VSCOgreApplicationCocoaSetup;
 #endif
 
 
-using namespace Ogre;
+//using namespace Ogre;
 
 /** Base class which manages the standard startup of an Ogre application.
     Designed to be subclassed for specific examples if required.
@@ -68,17 +68,17 @@ public:
     virtual void go(void);
 #endif
     
-    Root* getRoot(void);
+    Ogre::Root* getRoot(void);
 
 protected:
     
-    Root                    *mRoot;
-    Camera                  *mCamera;
-    SceneManager            *mSceneMgr;
-    VSCOgreFrameListener    *mFrameListener;
-    RenderWindow            *mWindow;
-	Ogre::String            mResourcePath;
-    SetupType               mSetupType;
+    Ogre::Root                      *mRoot;
+    Ogre::Camera                    *mCamera;
+    Ogre::SceneManager              *mSceneMgr;
+    VSCOgreFrameListener            *mFrameListener;
+    Ogre::RenderWindow              *mWindow;
+	Ogre::String                    mResourcePath;
+    SetupType                       mSetupType;
     
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     VSCOgreApplicationCocoaSetup*   mCocoaSetup;
