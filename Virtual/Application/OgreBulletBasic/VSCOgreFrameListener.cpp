@@ -101,17 +101,15 @@ mJoy(0)
     
     mDebugOverlay = OverlayManager::getSingleton().getByName("Core/DebugOverlay");
     
-    LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
-    OIS::ParamList pl;
+#if OGRE_PLATFORM != OGRE_PLATFORM_APPLE
     size_t windowHnd = 0;
     std::ostringstream windowHndStr;
-    
+    LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
+    OIS::ParamList pl;
     win->getCustomAttribute("WINDOW", &windowHnd);
     windowHndStr << windowHnd;
-    pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
-    
+    //pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
     mInputManager = OIS::InputManager::createInputSystem( pl );
-    
     //Create all devices (We only catch joystick exceptions here, as, most people have Key/Mouse)
     mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject( OIS::OISKeyboard, bufferedKeys));
     mMouse = static_cast<OIS::Mouse*>(mInputManager->createInputObject(OIS::OISMouse, bufferedMouse));
@@ -121,31 +119,38 @@ mJoy(0)
     catch(...) {
         mJoy = 0;
     }
-    
     //Set initial mouse clipping size
     windowResized(mWindow);
+    //Register as a Window listener
+#else
+    /*
+     *  Set up cocoa input
+     */
+#endif
+    
+    WindowEventUtilities::addWindowEventListener(mWindow, this);
     
     showDebugOverlay(true);
     
-    //Register as a Window listener
-    WindowEventUtilities::addWindowEventListener(mWindow, this);
 }
 
 //Adjust mouse clipping area
 void VSCOgreFrameListener::windowResized(RenderWindow* rw)
 {
+#if OGRE_PLATFORM != OGRE_PLATFORM_APPLE
     unsigned int width, height, depth;
     int left, top;
     rw->getMetrics(width, height, depth, left, top);
-    
     const OIS::MouseState &ms = mMouse->getMouseState();
     ms.width = width;
     ms.height = height;
+#endif
 }
 
 //Unattach OIS before window shutdown (very important under Linux)
 void VSCOgreFrameListener::windowClosed(RenderWindow* rw)
 {
+#if OGRE_PLATFORM != OGRE_PLATFORM_APPLE
     //Only close for window that created OIS (the main window in these demos)
     if( rw == mWindow )
     {
@@ -154,11 +159,11 @@ void VSCOgreFrameListener::windowClosed(RenderWindow* rw)
             mInputManager->destroyInputObject( mMouse );
             mInputManager->destroyInputObject( mKeyboard );
             mInputManager->destroyInputObject( mJoy );
-            
             OIS::InputManager::destroyInputSystem(mInputManager);
             mInputManager = 0;
         }
     }
+#endif
 }
 
 VSCOgreFrameListener::~VSCOgreFrameListener()
@@ -170,41 +175,33 @@ VSCOgreFrameListener::~VSCOgreFrameListener()
 
 bool VSCOgreFrameListener::processUnbufferedKeyInput(const FrameEvent& evt)
 {
+    static bool displayCameraDetails = false;
     
+#if OGRE_PLATFORM != OGRE_PLATFORM_APPLE
     if(mKeyboard->isKeyDown(OIS::KC_A))
         mTranslateVector.x = -mMoveScale;	// Move camera left
-    
     if(mKeyboard->isKeyDown(OIS::KC_D))
         mTranslateVector.x = mMoveScale;	// Move camera RIGHT
-    
     if(mKeyboard->isKeyDown(OIS::KC_UP) || mKeyboard->isKeyDown(OIS::KC_W) )
         mTranslateVector.z = -mMoveScale;	// Move camera forward
-    
     if(mKeyboard->isKeyDown(OIS::KC_DOWN) || mKeyboard->isKeyDown(OIS::KC_S) )
         mTranslateVector.z = mMoveScale;	// Move camera backward
-    
     if(mKeyboard->isKeyDown(OIS::KC_PGUP))
         mTranslateVector.y = mMoveScale;	// Move camera up
-    
     if(mKeyboard->isKeyDown(OIS::KC_PGDOWN))
         mTranslateVector.y = -mMoveScale;	// Move camera down
-    
     if(mKeyboard->isKeyDown(OIS::KC_RIGHT))
         mCamera->yaw(-mRotScale);
-    
     if(mKeyboard->isKeyDown(OIS::KC_LEFT))
         mCamera->yaw(mRotScale);
-    
     if( mKeyboard->isKeyDown(OIS::KC_ESCAPE) || mKeyboard->isKeyDown(OIS::KC_Q) )
         return false;
-    
     if( mKeyboard->isKeyDown(OIS::KC_F) && mTimeUntilNextToggle <= 0 )
     {
         mStatsOn = !mStatsOn;
         showDebugOverlay(mStatsOn);
         mTimeUntilNextToggle = 1;
     }
-    
     if( mKeyboard->isKeyDown(OIS::KC_T) && mTimeUntilNextToggle <= 0 )
     {
         switch(mFiltering)
@@ -225,11 +222,9 @@ bool VSCOgreFrameListener::processUnbufferedKeyInput(const FrameEvent& evt)
         }
         MaterialManager::getSingleton().setDefaultTextureFiltering(mFiltering);
         MaterialManager::getSingleton().setDefaultAnisotropy(mAniso);
-        
         showDebugOverlay(mStatsOn);
         mTimeUntilNextToggle = 1;
     }
-    
     if(mKeyboard->isKeyDown(OIS::KC_SYSRQ) && mTimeUntilNextToggle <= 0)
     {
         std::ostringstream ss;
@@ -238,7 +233,6 @@ bool VSCOgreFrameListener::processUnbufferedKeyInput(const FrameEvent& evt)
         mTimeUntilNextToggle = 0.5;
         mDebugText = "Saved: " + ss.str();
     }
-    
     if(mKeyboard->isKeyDown(OIS::KC_R) && mTimeUntilNextToggle <=0)
     {
         mSceneDetailIndex = (mSceneDetailIndex+1)%3 ;
@@ -249,8 +243,6 @@ bool VSCOgreFrameListener::processUnbufferedKeyInput(const FrameEvent& evt)
         }
         mTimeUntilNextToggle = 0.5;
     }
-    
-    static bool displayCameraDetails = false;
     if(mKeyboard->isKeyDown(OIS::KC_P) && mTimeUntilNextToggle <= 0)
     {
         displayCameraDetails = !displayCameraDetails;
@@ -258,6 +250,9 @@ bool VSCOgreFrameListener::processUnbufferedKeyInput(const FrameEvent& evt)
         if (!displayCameraDetails)
             mDebugText = "";
     }
+#else 
+    
+#endif
     
     // Print camera details
     if(displayCameraDetails)
@@ -271,6 +266,7 @@ bool VSCOgreFrameListener::processUnbufferedKeyInput(const FrameEvent& evt)
 bool VSCOgreFrameListener::processUnbufferedMouseInput(const FrameEvent& evt)
 {
     
+#if OGRE_PLATFORM != OGRE_PLATFORM_APPLE
     // Rotation factors, may not be used if the second mouse button is pressed
     // 2nd mouse button - slide, otherwise rotate
     const OIS::MouseState &ms = mMouse->getMouseState();
@@ -284,7 +280,11 @@ bool VSCOgreFrameListener::processUnbufferedMouseInput(const FrameEvent& evt)
         mRotX = Degree(-ms.X.rel * 0.13);
         mRotY = Degree(-ms.Y.rel * 0.13);
     }
-    
+#else
+    /*
+     *  Do Cocoa stuff
+     */
+#endif
     return true;
 }
 
@@ -316,15 +316,14 @@ bool VSCOgreFrameListener::frameRenderingQueued(const FrameEvent& evt)
     if(mWindow->isClosed())	return false;
     
     mSpeedLimit = mMoveScale * evt.timeSinceLastFrame;
+    Ogre::Vector3 lastMotion = mTranslateVector;
     
+#if OGRE_PLATFORM != OGRE_PLATFORM_APPLE
     //Need to capture/update each device
     mKeyboard->capture();
     mMouse->capture();
     if( mJoy ) mJoy->capture();
-    
     bool buffJ = (mJoy) ? mJoy->buffered() : true;
-    
-    Ogre::Vector3 lastMotion = mTranslateVector;
     
     //Check if one of the devices is not buffered
     if( !mMouse->buffered() || !mKeyboard->buffered() || !buffJ )
@@ -351,6 +350,9 @@ bool VSCOgreFrameListener::frameRenderingQueued(const FrameEvent& evt)
     if( !mMouse->buffered() )
         if( processUnbufferedMouseInput(evt) == false )
             return false;
+#else
+    
+#endif
     
     // ramp up / ramp down speed
     if (mTranslateVector == Ogre::Vector3::ZERO)
@@ -373,9 +375,12 @@ bool VSCOgreFrameListener::frameRenderingQueued(const FrameEvent& evt)
     
     mTranslateVector *= mCurrentSpeed;
     
-    
+#if OGRE_PLATFORM != OGRE_PLATFORM_APPLE    
     if( !mMouse->buffered() || !mKeyboard->buffered() || !buffJ )
         moveCamera();
+#else
+    
+#endif
     
     return true;
 }

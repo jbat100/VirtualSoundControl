@@ -118,7 +118,7 @@ void VSCOgreBulletRagdollDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
 }
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletRagdollDemo::keyPressed(BULLET_KEY_CODE key)
+void VSCOgreBulletRagdollDemo::keyPressed(OIS::KeyCode key)
 {
 	const float trowDist = 2.0f;
 	switch(key)

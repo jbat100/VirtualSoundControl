@@ -18,121 +18,23 @@ A basic test framework that minimize code in each test scene listener.
 #define _VSC_OGRE_BULLET_INPUT_LISTENER_H_
 
 #include <Ogre/Ogre.h>
-
-/*
- *  If we are not using OIS
- */
-
-#if (OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
-    #include "OgreInput.h"
-    #include "OgreKeyEvent.h"
-    #include "OgreEventListeners.h"
-    //#define BULLET_KEY_CODE                               Ogre::KeyCode
-    #define BULLET_KEY_CODE                                 int
-    #define BULLET_KEY_EVENT                                Ogre::KeyEvent*
-    #define BULLET_MOUSE_EVENT                              Ogre::MouseEvent*
-    #define BULLET_KC                                       Ogre::KC
-    #define BULLET_LISTENER_IMPLEMENTATION_RETURN           void
-    #define BULLET_LISTENER_IMPLEMENTATION_RETURN_CODE
-    #define BULLET_GETKEY                                   e->getKey()
-    #define BULLET_BUTTON0_DOWN                             e->getButtonID() == e->BUTTON0_MASK
-    #define BULLET_BUTTON1_DOWN                             e->getButtonID() == e->BUTTON1_MASK
-    #define BULLET_BUTTON2_DOWN                             e->getButtonID() == e->BUTTON2_MASK
-    #define BULLET_BUTTON0_UP                               e->getButtonID() == e->BUTTON0_MASK
-    #define BULLET_BUTTON1_UP                               e->getButtonID() == e->BUTTON1_MASK
-    #define BULLET_BUTTON2_UP                               e->getButtonID() == e->BUTTON2_MASK
-    #define BULLET_GETRELX                                  e->getRelX()
-    #define BULLET_GETRELY                                  e->getRelY()
-    #define BULLET_GETX                                     e->getX()
-    #define BULLET_GETY                                     e->getY()
-#else
-
-/*
- *  If we are using OIS
- */
-// NOTICE: You may need to change this line to <OIS.h> if you build OIS from source.
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-    #include "OIS.h"
-#else
-    #include "OIS.h"
-#endif
-    namespace OIS
-    {
-        class Keyboard;
-        class Mouse;
-    };
-    #define BULLET_KEY_CODE                             OIS::KeyCode
-    #define BULLET_KEY_EVENT                            const OIS::KeyEvent&
-    #define BULLET_MOUSE_EVENT                          const OIS::MouseEvent&
-    #define BULLET_KC                                   OIS::KC
-    #define BULLET_LISTENER_IMPLEMENTATION_RETURN       bool
-    #define BULLET_LISTENER_IMPLEMENTATION_RETURN_CODE  return true;
-    #define BULLET_GETKEY                               e.key
-    #define BULLET_BUTTON0_DOWN                         buttonid == OIS::MB_Left
-    #define BULLET_BUTTON1_DOWN                         buttonid == OIS::MB_Middle
-    #define BULLET_BUTTON2_DOWN                         buttonid == OIS::MB_Right
-    #define BULLET_BUTTON0_UP                           buttonid == OIS::MB_Left
-    #define BULLET_BUTTON1_UP                           buttonid == OIS::MB_Middle
-    #define BULLET_BUTTON2_UP                           buttonid == OIS::MB_Right
-    #define BULLET_GETRELX                              e.state.X.rel
-    #define BULLET_GETRELY                              e.state.Y.rel
-    #define BULLET_GETX                                 e.state.X.abs
-    #define BULLET_GETY                                 e.state.Y.abs
-#endif //OGRE_VERSION not Eihort
-
+#include "OIS.h"
 #include "VSCOgreBulletGuiListener.h"
 class VSCOgreBulletListener;
 
-/**
- *  The base Test class, is also able to listen for collisions and thus change the contact properties
- */
-class VSCOgreBulletInputListener :
-#if (OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
-    public Ogre::MouseMotionListener,
-    public Ogre::MouseListener,
-    public Ogre::KeyListener
-#else
-    public OIS::MouseListener,
-    public OIS::KeyListener
-#endif
+class VSCOgreBulletInputListener 
 {
-public:
-    static const Ogre::Real KEY_DELAY;
     
-    /*
-     *  These are probably the methods which will have to be called manually when 
-     *  using a cocoa NSView
-     */
-
-	// Constructor/destructor
-    VSCOgreBulletInputListener(VSCOgreBulletListener *ogreBulletListener, Ogre::RenderWindow *win);
+public:
+    
+    static const Ogre::Real KEY_DELAY;
+    VSCOgreBulletInputListener(VSCOgreBulletListener *ogreBulletListener);
     
     virtual ~VSCOgreBulletInputListener(){};
 
-    // MouseMotionListener Callbacks
-    BULLET_LISTENER_IMPLEMENTATION_RETURN mouseDragged (BULLET_MOUSE_EVENT e);
-    BULLET_LISTENER_IMPLEMENTATION_RETURN mouseMoved   (BULLET_MOUSE_EVENT e);
-
-    // MouseListener Callbacks
-    BULLET_LISTENER_IMPLEMENTATION_RETURN mouseClicked (BULLET_MOUSE_EVENT e);
-    BULLET_LISTENER_IMPLEMENTATION_RETURN mouseEntered (BULLET_MOUSE_EVENT e);
-    BULLET_LISTENER_IMPLEMENTATION_RETURN mouseExited  (BULLET_MOUSE_EVENT e);
-
-    BULLET_LISTENER_IMPLEMENTATION_RETURN mousePressed (BULLET_MOUSE_EVENT e
-#if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
-        , OIS::MouseButtonID buttonid
-#endif //OGRE_VERSION is Eihort
-        );
-    BULLET_LISTENER_IMPLEMENTATION_RETURN mouseReleased(BULLET_MOUSE_EVENT e
-#if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
-        , OIS::MouseButtonID buttonid
-#endif //OGRE_VERSION is Eihort
-        );
-
     // KeyListener Callbacks
-    BULLET_LISTENER_IMPLEMENTATION_RETURN keyClicked(BULLET_KEY_EVENT e);
-    BULLET_LISTENER_IMPLEMENTATION_RETURN keyPressed(BULLET_KEY_EVENT e);
-    BULLET_LISTENER_IMPLEMENTATION_RETURN keyReleased(BULLET_KEY_EVENT e);
+    virtual bool keyPressed(const OIS::KeyEvent& e);
+    virtual bool keyReleased(const OIS::KeyEvent& e);
 
     Ogre::Real getRelMouseX() const {return mRelX;}
     Ogre::Real getRelMouseY() const {return mRelY;}
@@ -140,23 +42,21 @@ public:
     Ogre::Real getAbsMouseX() const {return mMouseCursorX;}
     Ogre::Real getAbsMouseY() const {return mMouseCursorY;}
 
-    bool getButton0Pressed() const {return mButton0Pressed;}
-    bool getButton1Pressed() const {return mButton1Pressed;}
-    bool getButton2Pressed() const {return mButton2Pressed;}
+    bool getButtonLeftPressed() const {return mButtonLeftPressed;}
+    bool getButtonMiddlePressed() const {return mButtonMiddlePressed;}
+    bool getButtonRightPressed() const {return mButtonRightPressed;}
 
 protected:
 
-   Ogre::Real               mRelX;
-   Ogre::Real               mRelY;
-   Ogre::Real               mMouseCursorX;
-   Ogre::Real               mMouseCursorY;
+    Ogre::Real mRelX;
+    Ogre::Real mRelY;
+    Ogre::Real mMouseCursorX;
+    Ogre::Real mMouseCursorY;
+    
+    bool mButtonLeftPressed;
+    bool mButtonMiddlePressed;
+    bool mButtonRightPressed;
 
-   bool                     mButton0Pressed;
-   bool                     mButton1Pressed;
-   bool                     mButton2Pressed;
-
-
-    Ogre::RenderWindow      *mWindow;
     VSCOgreBulletListener   *mListener;
 };
 

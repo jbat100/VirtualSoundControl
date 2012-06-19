@@ -51,6 +51,7 @@ VSCOgreBulletApplication::~VSCOgreBulletApplication()
 bool VSCOgreBulletApplication::switchListener(VSCOgreBulletListener *newListener)
 {
 
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
 #if (OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
     if (mBulletListener)
     {
@@ -74,6 +75,7 @@ bool VSCOgreBulletApplication::switchListener(VSCOgreBulletListener *newListener
     mInput->setEventCallback (newListener->getInputListener());
     mMouse->setEventCallback (newListener->getInputListener());
 #endif //OGRE_VERSION not Eihort
+#endif //VSC_ENABLE_OIS_INPUT_SYSTEM
 
     mBulletListener = newListener;
 
@@ -83,12 +85,14 @@ bool VSCOgreBulletApplication::switchListener(VSCOgreBulletListener *newListener
 bool VSCOgreBulletApplication::frameStarted(const Ogre::FrameEvent& evt)
 {
 
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
 #if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
         mMouse->capture();
         mInput->capture();
 #else
     mInput->capture();
 #endif 
+#endif
 
     std::vector <VSCOgreBulletListener *>::iterator it =  mBulletListeners->begin();
     while (it != mBulletListeners->end())

@@ -135,8 +135,10 @@ mShootSpeed (7.f),
 mImpulseForce (10.f),
 mDebugRayLine(0),
 mRayQuery(0),
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
 mInputListener(0),
 mGuiListener(0),
+#endif
 mPickConstraint(0),
 mCollisionClosestRayResultCallback(0)
 {
@@ -157,11 +159,13 @@ void VSCOgreBulletListener::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCO
     mApplication = application;
     mCameraTrans = Ogre::Vector3::ZERO;
 
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
     /**
      *  We have separate GUI and Input listeners, presumably to keep this agnostic to the interface type
      */
     mGuiListener = new VSCOgreBulletGuiListener(this, win);
     mInputListener = new VSCOgreBulletInputListener(this, win);
+#endif
 
     /******************* CREATESHADOWS If not debug mode ***************************/
 #ifndef _DEBUG
@@ -413,8 +417,10 @@ void VSCOgreBulletListener::getDebugLines()
 // -------------------------------------------------------------------------
 void VSCOgreBulletListener::shutdown ()
 {
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
     delete mInputListener;
     delete mGuiListener;
+#endif
 
     // OgreBullet physic delete 
     std::deque<OgreBulletDynamics::RigidBody *>::iterator itBody = mBodies.begin();
@@ -447,8 +453,11 @@ void VSCOgreBulletListener::shutdown ()
     mRoot->destroySceneManager (mSceneMgr);
     delete mDebugRayLine;
 
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
     mInputListener = 0;
     mGuiListener = 0;
+#endif
+    
     mRayQuery = 0;
     mWorld = 0;
     mCamera = 0;
@@ -501,6 +510,7 @@ void VSCOgreBulletListener::button0Pressed()
         mDebugRayLine->draw();
     }
 
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
     if (mGuiListener->getGui()->injectMouse(mInputListener->getAbsMouseX ()*mWindow->getWidth(), 
         mInputListener->getAbsMouseY ()*mWindow->getHeight(), true))
     {
@@ -510,6 +520,7 @@ void VSCOgreBulletListener::button0Pressed()
     {
         mGuiListener->showMouse ();
     }
+#endif
 }
 // -------------------------------------------------------------------------
 void VSCOgreBulletListener::button1Pressed()
@@ -580,12 +591,24 @@ void VSCOgreBulletListener::button2Released()
 // -------------------------------------------------------------------------
 void VSCOgreBulletListener::mouseMoved()
 {
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
     mGuiListener->setMousePosition(mInputListener->getAbsMouseX (), mInputListener->getAbsMouseY ());
+#endif
+    
     if (mPickConstraint)
     {
         // dragging
         //add a point to point constraint for picking	
-        Ogre::Ray rayTo = mCamera->getCameraToViewportRay (mInputListener->getAbsMouseX(), mInputListener->getAbsMouseY());
+        
+        float absX = 0.0;
+        float absY = 0.0;
+        
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
+        absX = mInputListener->getAbsMouseX();
+        absY = mInputListener->getAbsMouseY();
+#endif
+        
+        Ogre::Ray rayTo = mCamera->getCameraToViewportRay (absX, absY);
         //move the constraint pivot
         OgreBulletDynamics::PointToPointConstraint * p2p = static_cast <OgreBulletDynamics::PointToPointConstraint *>(mPickConstraint);
         //keep it at the same picking distance
@@ -606,9 +629,12 @@ void VSCOgreBulletListener::mouseMoved()
         getDebugLines();
         mDebugRayLine->addLine (mPickedBody->getWorldPosition (), newPos);
         mDebugRayLine->draw();
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
         mGuiListener->showMouse();
+#endif
     }
 
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
     if (mGuiListener->getGui()->injectMouse(mInputListener->getAbsMouseX ()*mWindow->getWidth(), 
         mInputListener->getAbsMouseY ()*mWindow->getHeight(), mInputListener->getButton0Pressed()))
     {
@@ -618,17 +644,16 @@ void VSCOgreBulletListener::mouseMoved()
     {
         mGuiListener->showMouse();
     }
-
-
     if (mInputListener->getButton2Pressed())
     {
         mCameraRotX = Degree(-mInputListener->getRelMouseX () * 0.13);
         mCameraRotY = Degree(-mInputListener->getRelMouseY () * 0.13);
     }
+#endif
 
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::keyPressed(BULLET_KEY_CODE key)
+void VSCOgreBulletListener::keyPressed(OIS::KeyCode key)
 {
     static int count = 0;
     // Scene Debug Options
@@ -722,7 +747,7 @@ void VSCOgreBulletListener::keyPressed(BULLET_KEY_CODE key)
 }
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::keyReleased(BULLET_KEY_CODE key)
+void VSCOgreBulletListener::keyReleased(OIS::KeyCode key)
 {
     switch(key)
     {
@@ -750,7 +775,16 @@ void VSCOgreBulletListener::keyReleased(BULLET_KEY_CODE key)
 // -------------------------------------------------------------------------
 OgreBulletDynamics::RigidBody* VSCOgreBulletListener::getBodyUnderCursorUsingBullet(Ogre::Vector3 &intersectionPoint, Ray &rayTo)
 {
-    rayTo = mCamera->getCameraToViewportRay (mInputListener->getAbsMouseX(), mInputListener->getAbsMouseY());
+    
+    float absX = 0.0;
+    float absY = 0.0;
+    
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
+    absX = mInputListener->getAbsMouseX();
+    absY = mInputListener->getAbsMouseY();
+#endif
+    
+    rayTo = mCamera->getCameraToViewportRay (absX, absY);
 
 	delete mCollisionClosestRayResultCallback;
 	mCollisionClosestRayResultCallback = new CollisionClosestRayResultCallback(rayTo, mWorld, mCamera->getFarClipDistance());
@@ -770,7 +804,15 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletListener::getBodyUnderCursorUsingBul
 // -------------------------------------------------------------------------
 OgreBulletDynamics::RigidBody* VSCOgreBulletListener::getBodyUnderCursorUsingOgre(Ogre::Vector3 &intersectionPoint, Ray &rayTo)
 {
-    rayTo = mCamera->getCameraToViewportRay (mInputListener->getAbsMouseX(), mInputListener->getAbsMouseY());
+    float absX = 0.0;
+    float absY = 0.0;
+    
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
+    absX = mInputListener->getAbsMouseX();
+    absY = mInputListener->getAbsMouseY();
+#endif
+    
+    rayTo = mCamera->getCameraToViewportRay (absX, absY);
 
     mRayQuery->setRay (rayTo);
     const RaySceneQueryResult& result = mRayQuery->execute();
@@ -812,14 +854,15 @@ bool VSCOgreBulletListener::frameStarted(Real elapsedTime)
     if (mQuit)
         return false;
 
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
     if (mInputListener->getButton2Pressed())
     {
         mCamera->yaw(mCameraRotX);
         mCamera->pitch(mCameraRotY);
-
         mCameraRotX = 0;
         mCameraRotY = 0;
     }
+#endif
 
     mCamera->moveRelative(mCameraTrans);
 
@@ -900,7 +943,10 @@ bool VSCOgreBulletListener::frameEnded(Real elapsedTime)
         mEnableCCD = false;
     }
 
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
     mGuiListener->getGui ()->update (elapsedTime);
+#endif
+    
     updateStats();
     return true;
 }
@@ -920,7 +966,7 @@ bool VSCOgreBulletListener::checkIfEnoughPlaceToAddObject(float maxDist)
     return true;        
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::throwDynamicObject(BULLET_KEY_CODE key)
+void VSCOgreBulletListener::throwDynamicObject(OIS::KeyCode key)
 {
     const float trowDist = 2.0f;
     switch(key)
@@ -979,7 +1025,7 @@ void VSCOgreBulletListener::throwDynamicObject(BULLET_KEY_CODE key)
     }
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::dropDynamicObject(BULLET_KEY_CODE key)
+void VSCOgreBulletListener::dropDynamicObject(OIS::KeyCode key)
 {
     const float dropDist = 10.0f;
     switch(key)

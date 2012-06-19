@@ -24,8 +24,8 @@ public:
 
     void init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application);
 
-    void keyPressed(BULLET_KEY_CODE key);
-    void keyReleased(BULLET_KEY_CODE key);
+    void keyPressed(OIS::KeyCode key);
+    void keyReleased(OIS::KeyCode key);
 
     bool frameStarted(Ogre::Real elapsedTime);
 

@@ -9,6 +9,7 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "VSCOgreBulletListener.h"
 #include "VSCOgreBulletGuiListener.h"
 
+
 using namespace Ogre;
 
 // -------------------------------------------------------------------------
@@ -19,6 +20,7 @@ VSCOgreBulletGuiListener::VSCOgreBulletGuiListener(VSCOgreBulletListener *listen
     mMousePanel(0)
 {	
         
+//#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     /******************* CREATE Cursor Overlay ***************************/
     mMouseOverlay = (Overlay*)OverlayManager::getSingleton().getByName("GuiOverlay");
     if (mMouseOverlay)
@@ -31,7 +33,13 @@ VSCOgreBulletGuiListener::VSCOgreBulletGuiListener(VSCOgreBulletListener *listen
         mMouseOverlay->setZOrder(600);
         mMousePanel = (Ogre::OverlayElement *)
             OverlayManager::getSingletonPtr()->createOverlayElement("Panel", "GUIMouse");
-        mMousePanel->setMaterialName("OgreBulletDemos/TargetSights");
+        
+        try {
+            mMousePanel->setMaterialName("OgreBulletDemos/TargetSights");
+        }
+        catch (Ogre::ItemIdentityException& e) {
+            std::cout << "Exception: " << e.getFullDescription() << std::endl;
+        }
 
         TexturePtr mouseTex = TextureManager::getSingleton().load("target.png", "Bullet");
         mMousePanel->setWidth (mouseTex->getWidth() / (float)win->getWidth());
@@ -53,7 +61,14 @@ VSCOgreBulletGuiListener::VSCOgreBulletGuiListener(VSCOgreBulletListener *listen
     OverlayContainer* mouseCursor = mGui->createMousePointer(Vector2(32, 32), "bgui.pointer");
     mouseCursor->hide();
 
+    std::cout << "Window dimensions: " << mWindow->getWidth() << " " << mWindow->getHeight() << std::endl;
+    
     mGui->injectMouse(mWindow->getWidth() * 0.5, mWindow->getHeight() * 0.5, false);
+//#else
+    
+//#endif
+    
+    
 
 }
 // -------------------------------------------------------------------------

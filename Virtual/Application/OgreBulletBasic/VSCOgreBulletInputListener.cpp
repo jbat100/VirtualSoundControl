@@ -13,20 +13,13 @@ File modified for VSC project
 #include "VSCOgreBulletInputListener.h"
 
 using namespace Ogre;
-
-#if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
 using namespace OIS;
-#endif //OGRE_VERSION not Eihort
-
 
 // -------------------------------------------------------------------------
-VSCOgreBulletInputListener::VSCOgreBulletInputListener(VSCOgreBulletListener * ogreBulletListener, 
-                                                 Ogre::RenderWindow *win) :
-
-    mButton0Pressed (false),
-    mButton1Pressed (false),
-    mButton2Pressed (false),
-    mWindow (win),
+VSCOgreBulletInputListener::VSCOgreBulletInputListener(VSCOgreBulletListener * ogreBulletListener) :
+    mButtonLeftPressed (false),
+    mButtonMiddlePressed (false),
+    mButtonRightPressed (false),
     mListener(ogreBulletListener)
 {
     mMouseCursorX = 0.5; 
@@ -34,127 +27,15 @@ VSCOgreBulletInputListener::VSCOgreBulletInputListener(VSCOgreBulletListener * o
 }
 
 // -------------------------------------------------------------------------
-BULLET_LISTENER_IMPLEMENTATION_RETURN VSCOgreBulletInputListener::mouseClicked(BULLET_MOUSE_EVENT e)
+bool VSCOgreBulletInputListener::keyPressed(const OIS::KeyEvent& e)
 {
-    BULLET_LISTENER_IMPLEMENTATION_RETURN_CODE
+    mListener->keyPressed(e.key);
+    return true;   
 }
 
 // -------------------------------------------------------------------------
-BULLET_LISTENER_IMPLEMENTATION_RETURN VSCOgreBulletInputListener::mouseEntered(BULLET_MOUSE_EVENT e)
+bool VSCOgreBulletInputListener::keyReleased(const OIS::KeyEvent& e)
 {
-    BULLET_LISTENER_IMPLEMENTATION_RETURN_CODE
-}
-
-// -------------------------------------------------------------------------
-BULLET_LISTENER_IMPLEMENTATION_RETURN VSCOgreBulletInputListener::mouseExited(BULLET_MOUSE_EVENT e)
-{
-    BULLET_LISTENER_IMPLEMENTATION_RETURN_CODE
-}
-
-// -------------------------------------------------------------------------
-BULLET_LISTENER_IMPLEMENTATION_RETURN VSCOgreBulletInputListener::mousePressed(BULLET_MOUSE_EVENT e
-#if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
-, OIS::MouseButtonID buttonid
-#endif //OGRE_VERSION is Eihort
-)
-{
-    if (BULLET_BUTTON0_DOWN)
-    {
-        mButton0Pressed = true;
-        mListener->button0Pressed();
-    }
-    else if (BULLET_BUTTON1_DOWN)
-    {
-        mButton1Pressed = true;
-        mListener->button1Pressed();
-    }
-    else if (BULLET_BUTTON2_DOWN)
-    {
-        mButton2Pressed = true;
-        mListener->button2Pressed();
-    }
-    BULLET_LISTENER_IMPLEMENTATION_RETURN_CODE
-}
-
-// -------------------------------------------------------------------------
-BULLET_LISTENER_IMPLEMENTATION_RETURN VSCOgreBulletInputListener::mouseReleased(BULLET_MOUSE_EVENT e
-#if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
-, OIS::MouseButtonID buttonid
-#endif //OGRE_VERSION is Eihort
-)
-{
-    if (BULLET_BUTTON0_UP)
-    {
-        mButton0Pressed = false;
-        mListener->button0Released ();
-    }
-    if (BULLET_BUTTON1_UP)
-    {
-        mButton1Pressed = false;
-        mListener->button1Released ();
-    }
-    if (BULLET_BUTTON2_UP)
-    {
-        mButton2Pressed = false;
-        mListener->button2Released ();
-    }
-    BULLET_LISTENER_IMPLEMENTATION_RETURN_CODE   
-}
-
-// -------------------------------------------------------------------------
-BULLET_LISTENER_IMPLEMENTATION_RETURN VSCOgreBulletInputListener::mouseDragged(BULLET_MOUSE_EVENT e)
-{ 
-    // This populates the cursor moves or camera rotation variables
-    mRelX = BULLET_GETRELX;
-    mRelY = BULLET_GETRELY;
-
-#if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
-    mMouseCursorX = Real(BULLET_GETX) / mWindow->getWidth ();
-    mMouseCursorY = Real(BULLET_GETY) / mWindow->getHeight ();
-#else
-    mMouseCursorX = BULLET_GETX;
-    mMouseCursorY = BULLET_GETY;
-#endif 
-
-    mListener->mouseMoved ();
-    BULLET_LISTENER_IMPLEMENTATION_RETURN_CODE   
-}
-
-// -------------------------------------------------------------------------
-BULLET_LISTENER_IMPLEMENTATION_RETURN VSCOgreBulletInputListener::mouseMoved(BULLET_MOUSE_EVENT e)
-{
-    // This populates the cursor moves or camera rotation variables
-    mRelX = BULLET_GETRELX;
-    mRelY = BULLET_GETRELY;
-
-#if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
-    mMouseCursorX = Real(BULLET_GETX) / mWindow->getWidth ();
-    mMouseCursorY = Real(BULLET_GETY) / mWindow->getHeight ();
-#else
-    mMouseCursorX = BULLET_GETX;
-    mMouseCursorY = BULLET_GETY;
-#endif 
-
-    mListener->mouseMoved ();
-    BULLET_LISTENER_IMPLEMENTATION_RETURN_CODE    
-}
-
-// -------------------------------------------------------------------------
-BULLET_LISTENER_IMPLEMENTATION_RETURN VSCOgreBulletInputListener::keyClicked(BULLET_KEY_EVENT e)
-{
-    BULLET_LISTENER_IMPLEMENTATION_RETURN_CODE   
-}
-
-// -------------------------------------------------------------------------
-BULLET_LISTENER_IMPLEMENTATION_RETURN VSCOgreBulletInputListener::keyPressed(BULLET_KEY_EVENT e)
-{
-    mListener->keyPressed(BULLET_GETKEY);
-    BULLET_LISTENER_IMPLEMENTATION_RETURN_CODE   
-}
-
-// -------------------------------------------------------------------------
-BULLET_LISTENER_IMPLEMENTATION_RETURN VSCOgreBulletInputListener::keyReleased(BULLET_KEY_EVENT e)
-{
-    mListener->keyReleased(BULLET_GETKEY);
-    BULLET_LISTENER_IMPLEMENTATION_RETURN_CODE   
+    mListener->keyReleased(e.key);
+    return true;   
 }

@@ -378,7 +378,7 @@ void VSCOgreBulletTerrainDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
 
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletTerrainDemo::keyPressed(BULLET_KEY_CODE key)
+void VSCOgreBulletTerrainDemo::keyPressed(OIS::KeyCode key)
 {
     VSCOgreBulletListener::throwDynamicObject (key);
     VSCOgreBulletListener::dropDynamicObject (key);
@@ -492,7 +492,7 @@ void VSCOgreBulletTerrainDemo::keyPressed(BULLET_KEY_CODE key)
     return VSCOgreBulletListener::keyPressed (key);
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletTerrainDemo::keyReleased(BULLET_KEY_CODE key)
+void VSCOgreBulletTerrainDemo::keyReleased(OIS::KeyCode key)
 {
     switch(key)
     {

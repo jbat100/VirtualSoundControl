@@ -31,8 +31,7 @@ Description: Base class for all the OGRE examples
 
 using namespace Ogre;
 
-VSCOgreApplication::VSCOgreApplication(SetupType setupType) :
-mSetupType(setupType)
+VSCOgreApplication::VSCOgreApplication(SetupType setupType) : mSetupType(setupType)
 {
     mFrameListener = 0;
     mRoot = 0;
@@ -45,6 +44,8 @@ mSetupType(setupType)
 #else
     mResourcePath = "";
 #endif
+    
+    std::cout << "Resource path is : " << mResourcePath << std::endl;
 }
 
 /// Standard destructor
@@ -69,7 +70,7 @@ void VSCOgreApplication::setApplicationCocoaSetup(VSCOgreApplicationCocoaSetup* 
 bool VSCOgreApplication::cocoaSetup(void) {
     
     mCocoaSetup->setup(this);
-    
+    this->setupResources();
     this->chooseSceneManager();
     this->createCamera();
     this->createViewports();
@@ -105,6 +106,7 @@ bool VSCOgreApplication::setup(void)
     if (mSetupType == SetupTypeDefault) {
         String pluginsPath;
         String pluginsName = "plugins.cfg";
+        
         // only use plugins.cfg if not static
 #ifndef OGRE_STATIC_LIB
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
@@ -225,7 +227,14 @@ void VSCOgreApplication::setupResources(void)
             // OS X does not set the working directory relative to the app,
             // In order to make things portable on OS X we need to provide
             // the loading with it's own bundle path location
-            ResourceGroupManager::getSingleton().addResourceLocation(String(macBundlePath() + "/" + archName), typeName, secName);
+            try {
+                std::cout << "typeName : " << typeName << "; archName : " << archName << "; secName : " << secName << ";" << std::endl; 
+                //ResourceGroupManager::getSingleton().addResourceLocation(String(Ogre::macBundlePath() + "/" + archName), typeName, secName);
+                //Changed by jbat100
+                ResourceGroupManager::getSingleton().addResourceLocation(archName, typeName, secName);
+            } catch (Ogre::Exception& e) {
+                std::cout << "Exception : " << e.getFullDescription() << std::endl;
+            }
 #else
             ResourceGroupManager::getSingleton().addResourceLocation(archName, typeName, secName);
 #endif

@@ -100,7 +100,7 @@ void VSCOgreBulletTriMeshDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
         0.8f);   
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletTriMeshDemo::keyPressed(BULLET_KEY_CODE key)
+void VSCOgreBulletTriMeshDemo::keyPressed(OIS::KeyCode key)
 {
     VSCOgreBulletListener::throwDynamicObject(key);
     VSCOgreBulletListener::dropDynamicObject(key);

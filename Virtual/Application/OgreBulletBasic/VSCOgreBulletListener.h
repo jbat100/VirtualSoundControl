@@ -18,9 +18,9 @@ A basic test framework that minimize code in each test scene listener.
 #define _VSC_OGRE_BULLET_LISTENER_H_
 
 #include "OgreBulletDynamics.h"
-
 #include "VSCOgreBulletInputListener.h"
 #include "VSCOgreBulletGuiListener.h"
+#include "OIS.h"
 
 #define BASIC_HELP_INFO0 "Use F1, F2, F3, F4"
 #define BASIC_HELP_INFO1 "B,N,G,H to Throw a Cube, Sphere, Cone, Cylinder"
@@ -62,8 +62,8 @@ public:
     void setPhysicGUI();
     void setBasicLight();
 
-    const BULLET_KEY_CODE getNextKey() const {return mActivationKeyCode;};
-    void setNextKey(BULLET_KEY_CODE code){mActivationKeyCode = code;};
+    const OIS::KeyCode getNextKey() const {return mActivationKeyCode;};
+    void setNextKey(OIS::KeyCode code){mActivationKeyCode = code;};
 
     /**
      *  MISC Info
@@ -79,27 +79,22 @@ public:
     virtual bool frameEnded(Ogre::Real elapsedTime);
 
     bool checkIfEnoughPlaceToAddObject(float maxDist);
-    void throwDynamicObject(BULLET_KEY_CODE key);
-    void dropDynamicObject(BULLET_KEY_CODE key);
+    void throwDynamicObject(OIS::KeyCode key);
+    void dropDynamicObject(OIS::KeyCode key);
 
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
     /**--------------------------------------------------------------
      *  GUI stuff seperate this to keep this class GUI Agnostic?
      */
-    
     VSCOgreBulletInputListener *getInputListener(){return mInputListener;}
+#endif
 
-    virtual void mouseMoved();
+    virtual void mouseMoved(Ogre::Real x, Ogre::Real y, Ogre::Real relX, Ogre::Real relY);
+    virtual void mouseButtonPressed(MouseButtonID buttonID);
+    virtual void mouseButtonReleased(MouseButtonID buttonID);
 
-    virtual void button0Pressed();
-    virtual void button1Pressed();
-    virtual void button2Pressed();
-
-    virtual void button0Released();
-    virtual void button1Released();
-    virtual void button2Released();
-
-    virtual void keyPressed(BULLET_KEY_CODE key);
-    virtual void keyReleased(BULLET_KEY_CODE key);
+    virtual void keyPressed(OIS::KeyCode key);
+    virtual void keyReleased(OIS::KeyCode key);
 
     bool *getBoolActivator(){return &mActivationBool;}
 
@@ -217,12 +212,14 @@ protected:
    OgreBulletCollisions::DebugLines    *mDebugRayLine;
    Ogre::RaySceneQuery                 *mRayQuery;
    
-   BULLET_KEY_CODE                      mActivationKeyCode;
+   OIS::KeyCode                      mActivationKeyCode;
    bool                                 mActivationBool;
 
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
    VSCOgreBulletInputListener          *mInputListener;
    VSCOgreBulletGuiListener            *mGuiListener;
-
+#endif
+    
    Ogre::String                         mDebugText;
 
    Ogre::String                         mName;

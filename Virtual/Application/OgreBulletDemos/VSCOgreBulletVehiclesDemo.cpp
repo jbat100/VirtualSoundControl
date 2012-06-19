@@ -305,7 +305,7 @@ void VSCOgreBulletVehiclesDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, 
 }
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletVehiclesDemo::keyPressed(BULLET_KEY_CODE key)
+void VSCOgreBulletVehiclesDemo::keyPressed(OIS::KeyCode key)
 {
     VSCOgreBulletListener::throwDynamicObject (key);
     VSCOgreBulletListener::dropDynamicObject (key);
@@ -419,7 +419,7 @@ void VSCOgreBulletVehiclesDemo::keyPressed(BULLET_KEY_CODE key)
     return VSCOgreBulletListener::keyPressed (key);
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletVehiclesDemo::keyReleased(BULLET_KEY_CODE key)
+void VSCOgreBulletVehiclesDemo::keyReleased(OIS::KeyCode key)
 {
     switch(key)
     {
