@@ -19,8 +19,7 @@ VSCOgreBulletGuiListener::VSCOgreBulletGuiListener(VSCOgreBulletListener *listen
     mMouseOverlay(0),
     mMousePanel(0)
 {	
-        
-//#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+
     /******************* CREATE Cursor Overlay ***************************/
     mMouseOverlay = (Overlay*)OverlayManager::getSingleton().getByName("GuiOverlay");
     if (mMouseOverlay)
@@ -64,11 +63,6 @@ VSCOgreBulletGuiListener::VSCOgreBulletGuiListener(VSCOgreBulletListener *listen
     std::cout << "Window dimensions: " << mWindow->getWidth() << " " << mWindow->getHeight() << std::endl;
     
     mGui->injectMouse(mWindow->getWidth() * 0.5, mWindow->getHeight() * 0.5, false);
-//#else
-    
-//#endif
-    
-    
 
 }
 // -------------------------------------------------------------------------

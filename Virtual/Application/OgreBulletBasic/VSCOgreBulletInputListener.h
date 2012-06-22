@@ -17,46 +17,76 @@ A basic test framework that minimize code in each test scene listener.
 #ifndef _VSC_OGRE_BULLET_INPUT_LISTENER_H_
 #define _VSC_OGRE_BULLET_INPUT_LISTENER_H_
 
+#include <set>
 #include <Ogre/Ogre.h>
 #include "OIS.h"
 #include "VSCOgreBulletGuiListener.h"
 class VSCOgreBulletListener;
 
-class VSCOgreBulletInputListener 
+class VSCOgreBulletInputListener : public OIS::MouseListener, public OIS::KeyListener
 {
     
 public:
     
-    static const Ogre::Real KEY_DELAY;
-    VSCOgreBulletInputListener(VSCOgreBulletListener *ogreBulletListener);
+    typedef std::set<OIS::KeyCode>          KeyCodeSet;
+    typedef std::set<OIS::MouseButtonID>    MouseButtonSet;
     
+    static const Ogre::Real KEY_DELAY;
+    // the listener will be called when something happens, should not be nil
+    VSCOgreBulletInputListener(VSCOgreBulletListener *ogreBulletListener); 
     virtual ~VSCOgreBulletInputListener(){};
 
+    /*
+     *  Listener Keyboard stuff query 
+     */
+    
+    // currently pressed non modifier keys
+    const KeyCodeSet&  getCurrentKeys() {return mCurrentKeys;} 
+    // convienience method
+    bool isKeyPressed(OIS::KeyCode key); 
+    bool isKeyModifier(OIS::KeyCode key)
+
+    /*
+     *  Listener Mouse stuff query 
+     */
+    
+    bool isMouseButtonPressed(OIS::MouseButtonID) const;
+    // probably dont need these ...
+    Ogre::Vector2 getLastMousePosition() const {return mLastMousePosition;}
+    Ogre::Vector2 getLastMouseMovement() const {return mLastMouseMovement;}
+    
+    /*
+     *  Input called by the actual input system (OIS::MouseListener, public OIS::KeyListener methods)
+     *  The can be an OIS input system OR any other such as cocoa (which will have to be implemented)
+     */
+    
+    // MouseMotionListener Callbacks
+    bool mouseDragged (const OIS::MouseEvent& e);
+    bool mouseMoved   (const OIS::MouseEvent& e);
+    
+    // MouseListener Callbacks
+    bool mouseClicked (const OIS::MouseEvent& e);
+    bool mouseEntered (const OIS::MouseEvent& e);
+    bool mouseExited  (const OIS::MouseEvent& e);
+    
+    bool mousePressed (const OIS::MouseEvent& e, OIS::MouseButtonID buttonid);
+    bool mouseReleased(const OIS::MouseEvent& e, OIS::MouseButtonID buttonid);
+    
     // KeyListener Callbacks
-    virtual bool keyPressed(const OIS::KeyEvent& e);
-    virtual bool keyReleased(const OIS::KeyEvent& e);
-
-    Ogre::Real getRelMouseX() const {return mRelX;}
-    Ogre::Real getRelMouseY() const {return mRelY;}
-
-    Ogre::Real getAbsMouseX() const {return mMouseCursorX;}
-    Ogre::Real getAbsMouseY() const {return mMouseCursorY;}
-
-    bool getButtonLeftPressed() const {return mButtonLeftPressed;}
-    bool getButtonMiddlePressed() const {return mButtonMiddlePressed;}
-    bool getButtonRightPressed() const {return mButtonRightPressed;}
-
+    bool keyClicked(const OIS::KeyEvent& e);
+    bool keyPressed(const OIS::KeyEvent& e);
+    bool keyReleased(const OIS::KeyEvent& e);
+    
 protected:
 
-    Ogre::Real mRelX;
-    Ogre::Real mRelY;
-    Ogre::Real mMouseCursorX;
-    Ogre::Real mMouseCursorY;
-    
-    bool mButtonLeftPressed;
-    bool mButtonMiddlePressed;
-    bool mButtonRightPressed;
+    Ogre::Vector2 mLastMousePosition;
+    Ogre::Vector2 mLastMouseMovement;
 
+    KeyCodeSet  mModifierKeys;
+    KeyCodeSet  mCurrentKeys;
+    
+    MouseButtonSet  mCurrentMouseButtons;
+    
     VSCOgreBulletListener   *mListener;
 };
 

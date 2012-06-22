@@ -89,10 +89,16 @@ public:
     VSCOgreBulletInputListener *getInputListener(){return mInputListener;}
 #endif
 
-    virtual void mouseMoved(Ogre::Real x, Ogre::Real y, Ogre::Real relX, Ogre::Real relY);
-    virtual void mouseButtonPressed(MouseButtonID buttonID);
-    virtual void mouseButtonReleased(MouseButtonID buttonID);
-
+    /**--------------------------------------------------------------
+     *  These methods are called by the input listener when some 
+     *  input related thing happens 
+     */
+    virtual void mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement);
+    virtual void mouseDragged(const Ogre::Vector2& position, const Ogre::Vector2& movement);
+    virtual void mouseEntered(const Ogre::Vector2& position);
+    virtual void mouseExited(const Ogre::Vector2& position);
+    virtual void mouseButtonPressed(OIS::MouseButtonID buttonID);
+    virtual void mouseButtonReleased(OIS::MouseButtonID buttonID);
     virtual void keyPressed(OIS::KeyCode key);
     virtual void keyReleased(OIS::KeyCode key);
 
@@ -203,27 +209,26 @@ protected:
    /**
     *   Mouse picking, drag and drop
     */
+    
    OgreBulletDynamics::RigidBody                            *mPickedBody;
    OgreBulletDynamics::TypedConstraint                      *mPickConstraint;
    Ogre::Vector3                                            mOldPickingPos;
    Ogre::Vector3                                            mOldPickingDist;
    OgreBulletCollisions::CollisionClosestRayResultCallback  *mCollisionClosestRayResultCallback;
 
-   OgreBulletCollisions::DebugLines    *mDebugRayLine;
-   Ogre::RaySceneQuery                 *mRayQuery;
+   OgreBulletCollisions::DebugLines                         *mDebugRayLine;
+   Ogre::RaySceneQuery                                      *mRayQuery;
    
-   OIS::KeyCode                      mActivationKeyCode;
-   bool                                 mActivationBool;
+   OIS::KeyCode                                             mActivationKeyCode;
+   bool                                                     mActivationBool;
 
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-   VSCOgreBulletInputListener          *mInputListener;
-   VSCOgreBulletGuiListener            *mGuiListener;
-#endif
+   VSCOgreBulletInputListener                               *mInputListener;
+   VSCOgreBulletGuiListener                                 *mGuiListener;
     
-   Ogre::String                         mDebugText;
-
-   Ogre::String                         mName;
-   std::vector<Ogre::String>            mHelpKeys;
+   Ogre::String                                             mDebugText;
+   Ogre::String                                             mName;
+   std::vector<Ogre::String>                                mHelpKeys;
+    
    void updateStats();
 };
 

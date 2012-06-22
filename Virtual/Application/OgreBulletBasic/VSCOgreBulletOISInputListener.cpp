@@ -12,7 +12,8 @@ File modified for VSC project
 #include "VSCOgreBulletListener.h"
 #include "VSCOgreBulletOISInputListener.h"
 
-using namespace Ogre;
+using Ogre::Real;
+using Ogre::Vector2;
 
 //#if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
 using namespace OIS;
@@ -50,111 +51,6 @@ VSCOgreBulletOISInputListener::VSCOgreBulletOISInputListener(VSCOgreBulletListen
     VSCOgreBulletInputListener(ogreBulletListener),
     mWindow(win)
 {
-    mMouseCursorX = 0.5; 
-    mMouseCursorY = 0.5;
+
 }
 
-// -------------------------------------------------------------------------
-bool VSCOgreBulletOISInputListener::mouseClicked(const OIS::MouseEvent& e)
-{
-    return true;
-}
-
-// -------------------------------------------------------------------------
-bool VSCOgreBulletOISInputListener::mouseEntered(const OIS::MouseEvent& e)
-{
-    return true;
-}
-
-// -------------------------------------------------------------------------
-bool VSCOgreBulletOISInputListener::mouseExited(const OIS::MouseEvent& e)
-{
-    return true;
-}
-
-// -------------------------------------------------------------------------
-bool VSCOgreBulletOISInputListener::mousePressed(const OIS::MouseEvent& e, OIS::MouseButtonID buttonid)
-{
-    if (buttonid == OIS::MB_Left)
-    {
-        mButtonLeftPressed = true;
-    }
-    else if (buttonid == OIS::MB_Middle)
-    {
-        mButton1Pressed = true;
-    }
-    else if (buttonid == OIS::MB_Right)
-    {
-        mButton2Pressed = true;
-    }
-    
-    mListener->mouseButtonPressed(buttonid);
-    
-    return true;
-}
-
-// -------------------------------------------------------------------------
-bool VSCOgreBulletOISInputListener::mouseReleased(const OIS::MouseEvent& e, OIS::MouseButtonID buttonid)
-{
-    if (buttonid == OIS::MB_Left)
-    {
-        mButtonLeftPressed = false;
-    }
-    if (buttonid == OIS::MB_Middle)
-    {
-        mButton1Pressed = false;
-    }
-    if (buttonid == OIS::MB_Right)
-    {
-        mButton2Pressed = false;
-    }
-    
-    mListener->mouseButtonReleased (buttonid);
-    
-    return true;   
-}
-
-// -------------------------------------------------------------------------
-bool VSCOgreBulletOISInputListener::mouseDragged(const OIS::MouseEvent& e)
-{ 
-    // This populates the cursor moves or camera rotation variables
-    mRelX = e.state.X.rel;
-    mRelY = e.state.Y.rel;
-    mMouseCursorX = Real(e.state.X.abs) / mWindow->getWidth ();
-    mMouseCursorY = Real(e.state.Y.abs) / mWindow->getHeight ();
-    mListener->mouseMoved ();
-    return true;   
-}
-
-// -------------------------------------------------------------------------
-bool VSCOgreBulletOISInputListener::mouseMoved(const OIS::MouseEvent& e)
-{
-    // This populates the cursor moves or camera rotation variables
-    mRelX = e.state.X.rel;
-    mRelY = e.state.Y.rel;
-    mMouseCursorX = Real(e.state.X.abs) / mWindow->getWidth ();
-    mMouseCursorY = Real(e.state.Y.abs) / mWindow->getHeight ();
-    mListener->mouseMoved ();
-    
-    return true;    
-}
-
-// -------------------------------------------------------------------------
-bool VSCOgreBulletOISInputListener::keyClicked(const OIS::KeyEvent& e)
-{
-    return true;   
-}
-
-// -------------------------------------------------------------------------
-bool VSCOgreBulletOISInputListener::keyPressed(const OIS::KeyEvent& e)
-{
-    mListener->keyPressed(e.key);
-    return true;   
-}
-
-// -------------------------------------------------------------------------
-bool VSCOgreBulletOISInputListener::keyReleased(const OIS::KeyEvent& e)
-{
-    mListener->keyReleased(e.key);
-    return true;   
-}

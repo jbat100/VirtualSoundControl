@@ -328,6 +328,7 @@
 					"$(OGRE_SDK)/include/OGRE/RenderSystems/GL",
 					"$(OGRE_SDK)/include/OGRE/RenderSystems/GL/OSX",
 					"$(OGRE_SDK)/include/OGRE/",
+					"$(BOOST_ROOT)/include",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
@@ -355,6 +356,7 @@
 					"$(OGRE_SDK)/include/OGRE/RenderSystems/GL",
 					"$(OGRE_SDK)/include/OGRE/RenderSystems/GL/OSX",
 					"$(OGRE_SDK)/include/OGRE/",
+					"$(BOOST_ROOT)/include",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;

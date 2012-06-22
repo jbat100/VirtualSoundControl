@@ -6,33 +6,24 @@ Copyright (c) 2007 tuan.kuranes@gmail.com (Use it Freely, even Statically, but h
 This source file is not LGPL, it's public source code that you can reuse.
 -----------------------------------------------------------------------------*/
 /***************************************************************************
- File modified for VSC project
+File modified for VSC project
  -----------------------------------------------------------------------------*/
 
-/*
-InputListener.h
--------------
-A basic test framework that minimize code in each test scene listener.
-*/
-#ifndef _VSC_OGRE_BULLET_OIS_INPUT_LISTENER_H_
-#define _VSC_OGRE_BULLET_OIS_INPUT_LISTENER_H_
+#include "VSCOgreBulletListener.h"
+#include "VSCOgreBulletCocoaInputListener.h"
+#include "VSCOgreBulletCocoaInputAdapter.h"
+#include "OgreOSXCocoaView.h"
 
-#include <Ogre/Ogre.h>
-#include "OIS.h"
-#include "VSCOgreBulletInputListener.h"
 
-class VSCOgreBulletOISInputListener : public VSCOgreBulletInputListener
+// -------------------------------------------------------------------------
+VSCOgreBulletCocoaInputListener::VSCOgreBulletCocoaInputListener(VSCOgreBulletListener * ogreBulletListener, 
+                                                                 VSCOgreBulletCocoaInputAdapter *adapter) :
+VSCOgreBulletInputListener(ogreBulletListener), 
+mCocoaInputAdapter(adapter)
 {
-public:
+    /*
+     *  Check that mCocoaInputAdapter or maybe for valid arguments in adapter constructor
+     */
+}
 
-	// Constructor/destructor
-    VSCOgreBulletOISInputListener(VSCOgreBulletListener *ogreBulletListener, Ogre::RenderWindow *win);
-    virtual ~VSCOgreBulletOISInputListener(){};
 
-
-protected:
-
-    Ogre::RenderWindow      *mWindow;
-};
-
-#endif//_VSC_OGRE_BULLET_OIS_INPUT_LISTENER_H_
