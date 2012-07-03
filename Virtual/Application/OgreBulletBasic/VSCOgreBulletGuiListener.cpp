@@ -100,7 +100,7 @@ void VSCOgreBulletGuiListener::showMouse()
    mMousePanel->show();
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletGuiListener::setMousePosition(Ogre::Real x, Ogre::Real y)
+void VSCOgreBulletGuiListener::setMousePosition(Ogre::Vector2 position)
 {
-    mMousePanel->setPosition (x - mMouseCursorHalfWidth, y - mMouseCursorHalfHeight);
+    mMousePanel->setPosition (position.x - mMouseCursorHalfWidth, position.y - mMouseCursorHalfHeight);
 }

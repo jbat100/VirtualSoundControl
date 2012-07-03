@@ -33,7 +33,7 @@
 		10B60F0D1550850C006A6D6E /* LinearMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60F061550850C006A6D6E /* LinearMath.framework */; };
 		10C74D6B1594A9CC00F641CD /* VSCOgreBulletCocoaInputAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10C74D681594A9CB00F641CD /* VSCOgreBulletCocoaInputAdapter.mm */; };
 		10C74D6C1594A9CC00F641CD /* VSCOgreBulletCocoaInputListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10C74D6A1594A9CC00F641CD /* VSCOgreBulletCocoaInputListener.mm */; };
-		10C74D6F1594AA4000F641CD /* VSCOgreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C74D6E1594AA4000F641CD /* VSCOgreView.m */; };
+		10C74D6F1594AA4000F641CD /* VSCOgreView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10C74D6E1594AA4000F641CD /* VSCOgreView.mm */; };
 		10CFE720156CD62000B24399 /* OgreBulletCollisionsDebugContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6D7156CD61F00B24399 /* OgreBulletCollisionsDebugContact.cpp */; };
 		10CFE721156CD62000B24399 /* OgreBulletCollisionsDebugDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6D8156CD61F00B24399 /* OgreBulletCollisionsDebugDrawer.cpp */; };
 		10CFE722156CD62000B24399 /* OgreBulletCollisionsDebugLines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6D9156CD61F00B24399 /* OgreBulletCollisionsDebugLines.cpp */; };
@@ -182,7 +182,7 @@
 		10C74D691594A9CC00F641CD /* VSCOgreBulletCocoaInputListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreBulletCocoaInputListener.h; path = ../../../../../Virtual/Application/APPLE/VSCOgreBulletCocoaInputListener.h; sourceTree = "<group>"; };
 		10C74D6A1594A9CC00F641CD /* VSCOgreBulletCocoaInputListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOgreBulletCocoaInputListener.mm; path = ../../../../../Virtual/Application/APPLE/VSCOgreBulletCocoaInputListener.mm; sourceTree = "<group>"; };
 		10C74D6D1594AA4000F641CD /* VSCOgreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreView.h; path = ../../../../../Virtual/Application/APPLE/VSCOgreView.h; sourceTree = "<group>"; };
-		10C74D6E1594AA4000F641CD /* VSCOgreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSCOgreView.m; path = ../../../../../Virtual/Application/APPLE/VSCOgreView.m; sourceTree = "<group>"; };
+		10C74D6E1594AA4000F641CD /* VSCOgreView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOgreView.mm; path = ../../../../../Virtual/Application/APPLE/VSCOgreView.mm; sourceTree = "<group>"; };
 		10CFE6B0156CD61F00B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		10CFE6B1156CD61F00B24399 /* OgreBulletCollisionsDebugContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsDebugContact.h; sourceTree = "<group>"; };
 		10CFE6B2156CD61F00B24399 /* OgreBulletCollisionsDebugDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsDebugDrawer.h; sourceTree = "<group>"; };
@@ -339,11 +339,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		104982E91556B6DE0031A1EC /* VSCOgreBulletBasicApplication */ = {
+		1001CA7815985607002566F4 /* Cocoa Specifics */ = {
 			isa = PBXGroup;
 			children = (
 				109D51B0155946D90030C161 /* VSCOgreApplicationCocoaSetup.mm */,
 				109D51AF155946D90030C161 /* VSCOgreApplicationCocoaSetup.h */,
+				10C74D671594A9CB00F641CD /* VSCOgreBulletCocoaInputAdapter.h */,
+				10C74D681594A9CB00F641CD /* VSCOgreBulletCocoaInputAdapter.mm */,
+				10C74D691594A9CC00F641CD /* VSCOgreBulletCocoaInputListener.h */,
+				10C74D6A1594A9CC00F641CD /* VSCOgreBulletCocoaInputListener.mm */,
+				10C74D6D1594AA4000F641CD /* VSCOgreView.h */,
+				10C74D6E1594AA4000F641CD /* VSCOgreView.mm */,
+			);
+			name = "Cocoa Specifics";
+			sourceTree = "<group>";
+		};
+		1001CA7A1598561D002566F4 /* Core */ = {
+			isa = PBXGroup;
+			children = (
 				10F4EDFB1557E752000E4591 /* VSCOgreApplication.cpp */,
 				10F4EDFC1557E752000E4591 /* VSCOgreApplication.h */,
 				10F4EDFD1557E752000E4591 /* VSCOgreFrameListener.cpp */,
@@ -354,16 +367,19 @@
 				10F4EE021557E752000E4591 /* VSCOgreBulletGuiListener.h */,
 				100088971590B67E002F21B1 /* VSCOgreBulletInputListener.cpp */,
 				100088981590B67E002F21B1 /* VSCOgreBulletInputListener.h */,
-				10C74D671594A9CB00F641CD /* VSCOgreBulletCocoaInputAdapter.h */,
-				10C74D681594A9CB00F641CD /* VSCOgreBulletCocoaInputAdapter.mm */,
-				10C74D691594A9CC00F641CD /* VSCOgreBulletCocoaInputListener.h */,
-				10C74D6A1594A9CC00F641CD /* VSCOgreBulletCocoaInputListener.mm */,
 				10F4EE031557E752000E4591 /* VSCOgreBulletOISInputListener.cpp */,
 				10F4EE041557E752000E4591 /* VSCOgreBulletOISInputListener.h */,
 				10F4EE051557E752000E4591 /* VSCOgreBulletListener.cpp */,
 				10F4EE061557E752000E4591 /* VSCOgreBulletListener.h */,
-				10C74D6D1594AA4000F641CD /* VSCOgreView.h */,
-				10C74D6E1594AA4000F641CD /* VSCOgreView.m */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		104982E91556B6DE0031A1EC /* VSCOgreBulletBasicApplication */ = {
+			isa = PBXGroup;
+			children = (
+				1001CA7A1598561D002566F4 /* Core */,
+				1001CA7815985607002566F4 /* Cocoa Specifics */,
 			);
 			name = VSCOgreBulletBasicApplication;
 			sourceTree = "<group>";
@@ -919,7 +935,7 @@
 				100088991590B67E002F21B1 /* VSCOgreBulletInputListener.cpp in Sources */,
 				10C74D6B1594A9CC00F641CD /* VSCOgreBulletCocoaInputAdapter.mm in Sources */,
 				10C74D6C1594A9CC00F641CD /* VSCOgreBulletCocoaInputListener.mm in Sources */,
-				10C74D6F1594AA4000F641CD /* VSCOgreView.m in Sources */,
+				10C74D6F1594AA4000F641CD /* VSCOgreView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

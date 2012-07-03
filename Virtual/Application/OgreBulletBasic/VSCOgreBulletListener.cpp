@@ -470,145 +470,153 @@ void VSCOgreBulletListener::shutdown ()
 
 }
 
-// -------------------------------------------------------------------------
-void VSCOgreBulletListener::button0Pressed()
+void VSCOgreBulletListener::mouseButtonPressed(OIS::MouseButtonID buttonID)
 {
-    // pick a body and try to drag it.
-    Ogre::Vector3 pickPos;
-    Ogre::Ray rayTo;
-    OgreBulletDynamics::RigidBody * body = 
-        getBodyUnderCursorUsingBullet(pickPos, rayTo);
-        //getBodyUnderCursorUsingOgre(pickPos, rayTo);
-    if (body)
-    {  
-        //other exclusions?
-        if (!(body->isStaticObject() 
-            //|| body->isKinematicObject()
-            ))
+    switch (buttonID) 
+    {
+        case OIS::MB_Left:
         {
-            mPickedBody = body;
-            mPickedBody->disableDeactivation();		
-            const Ogre::Vector3 localPivot (body->getCenterOfMassPivot(pickPos));
-            OgreBulletDynamics::PointToPointConstraint *p2p  = 
-                new OgreBulletDynamics::PointToPointConstraint(body, localPivot);
-
-            mWorld->addConstraint(p2p);					    
-
-            //save mouse position for dragging
-            mOldPickingPos = pickPos;
-            const Ogre::Vector3 eyePos(mCamera->getDerivedPosition());
-            mOldPickingDist  = (pickPos - eyePos).length();
-
-            //very weak constraint for picking
-            p2p->setTau (0.1f);
-            mPickConstraint = p2p;
-
-
-        }
-        getDebugLines();
-        mDebugRayLine->addLine (rayTo.getOrigin(), pickPos);
-        mDebugRayLine->draw();
-    }
-
+            // pick a body and try to drag it.
+            Ogre::Vector3 pickPos;
+            Ogre::Ray rayTo;
+            OgreBulletDynamics::RigidBody * body = 
+            getBodyUnderCursorUsingBullet(pickPos, rayTo);
+            //getBodyUnderCursorUsingOgre(pickPos, rayTo);
+            if (body)
+            {  
+                //other exclusions?
+                if (!(body->isStaticObject() 
+                      //|| body->isKinematicObject()
+                      ))
+                {
+                    mPickedBody = body;
+                    mPickedBody->disableDeactivation();		
+                    const Ogre::Vector3 localPivot (body->getCenterOfMassPivot(pickPos));
+                    OgreBulletDynamics::PointToPointConstraint *p2p  = 
+                    new OgreBulletDynamics::PointToPointConstraint(body, localPivot);
+                    
+                    mWorld->addConstraint(p2p);					    
+                    
+                    //save mouse position for dragging
+                    mOldPickingPos = pickPos;
+                    const Ogre::Vector3 eyePos(mCamera->getDerivedPosition());
+                    mOldPickingDist  = (pickPos - eyePos).length();
+                    
+                    //very weak constraint for picking
+                    p2p->setTau (0.1f);
+                    mPickConstraint = p2p;
+                    
+                    
+                }
+                getDebugLines();
+                mDebugRayLine->addLine (rayTo.getOrigin(), pickPos);
+                mDebugRayLine->draw();
+            }
+            
 #ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-    if (mGuiListener->getGui()->injectMouse(mInputListener->getAbsMouseX ()*mWindow->getWidth(), 
-        mInputListener->getAbsMouseY ()*mWindow->getHeight(), true))
-    {
-        mGuiListener->hideMouse();
-    }
-    else
-    {
-        mGuiListener->showMouse ();
-    }
+            if (mGuiListener->getGui()->injectMouse(mInputListener->getAbsMouseX ()*mWindow->getWidth(), 
+                                                    mInputListener->getAbsMouseY ()*mWindow->getHeight(), true))
+            {
+                mGuiListener->hideMouse();
+            }
+            else
+            {
+                mGuiListener->showMouse ();
+            }
 #endif
-}
-// -------------------------------------------------------------------------
-void VSCOgreBulletListener::button1Pressed()
-{
-
-    // small unique impulse under cursor.
-    Ogre::Vector3 pickPos;
-    Ogre::Ray rayTo;
-    OgreBulletDynamics::RigidBody * body = 
-        getBodyUnderCursorUsingBullet(pickPos, rayTo);
-        //getBodyUnderCursorUsingOgre(pickPos, rayTo);
-    if (body)
-    {  
-        if (!(body->isStaticObject() 
-            || body->isKinematicObject()
-            ))
+        }
+            
+        case OIS::MB_Middle:
         {
-
-            body->enableActiveState ();
-
-            const Ogre::Vector3 relPos (pickPos - body->getCenterOfMassPosition());
-            const Ogre::Vector3 impulse (rayTo.getDirection ());
-
-            body->applyImpulse (impulse * mImpulseForce, relPos);		
-
+            // small unique impulse under cursor.
+            Ogre::Vector3 pickPos;
+            Ogre::Ray rayTo;
+            OgreBulletDynamics::RigidBody * body = 
+            getBodyUnderCursorUsingBullet(pickPos, rayTo);
+            //getBodyUnderCursorUsingOgre(pickPos, rayTo);
+            if (body)
+            {  
+                if (!(body->isStaticObject() 
+                      || body->isKinematicObject()
+                      ))
+                {
+                    
+                    body->enableActiveState ();
+                    
+                    const Ogre::Vector3 relPos (pickPos - body->getCenterOfMassPosition());
+                    const Ogre::Vector3 impulse (rayTo.getDirection ());
+                    
+                    body->applyImpulse (impulse * mImpulseForce, relPos);		
+                    
+                }
+                
+                getDebugLines();
+                mDebugRayLine->addLine (rayTo.getOrigin(), pickPos);
+                mDebugRayLine->draw();	
+            }
         }
-
-        getDebugLines();
-        mDebugRayLine->addLine (rayTo.getOrigin(), pickPos);
-        mDebugRayLine->draw();	
-    }  
-}
-// -------------------------------------------------------------------------
-void VSCOgreBulletListener::button2Pressed()
-{ 
-    mGuiListener->hideMouse ();
-}
-// -------------------------------------------------------------------------
-void VSCOgreBulletListener::button0Released()
-{
-    if (mPickConstraint)
-    {
-        // was dragging, but button released
-        // Remove constraint
-        mWorld->removeConstraint(mPickConstraint);
-        delete mPickConstraint;
-
-        mPickConstraint = 0;
-        mPickedBody->forceActivationState();
-        mPickedBody->setDeactivationTime( 0.f );
-        mPickedBody = 0;	
-
-        getDebugLines();
-        mDebugRayLine->addLine (Ogre::Vector3::ZERO, Ogre::Vector3::ZERO);	
-        mDebugRayLine->draw();  
-        mGuiListener->showMouse(); 
+            
+        case OIS::MB_Right:
+        {
+            mGuiListener->hideMouse ();
+        }
     }
 }
-// -------------------------------------------------------------------------
-void VSCOgreBulletListener::button1Released()
+
+
+void VSCOgreBulletListener::mouseButtonReleased(OIS::MouseButtonID buttonID)
 {
+    switch (buttonID) 
+    {
+        case OIS::MB_Left:
+        {
+            if (mPickConstraint)
+            {
+                // was dragging, but button released
+                // Remove constraint
+                mWorld->removeConstraint(mPickConstraint);
+                delete mPickConstraint;
+                
+                mPickConstraint = 0;
+                mPickedBody->forceActivationState();
+                mPickedBody->setDeactivationTime( 0.f );
+                mPickedBody = 0;	
+                
+                getDebugLines();
+                mDebugRayLine->addLine (Ogre::Vector3::ZERO, Ogre::Vector3::ZERO);	
+                mDebugRayLine->draw();  
+                mGuiListener->showMouse(); 
+            }
+        }
+            
+        case OIS::MB_Middle:
+        {
+            
+        }
+            
+        case OIS::MB_Right:
+        {
+            mGuiListener->showMouse ();
+        }
+    }
 }
-// -------------------------------------------------------------------------
-void VSCOgreBulletListener::button2Released()
+
+void VSCOgreBulletListener::mouseDragged(const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
-    mGuiListener->showMouse ();
+    this->mouseMoved(position, movement);
 }
+
+
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::mouseMoved()
+void VSCOgreBulletListener::mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-    mGuiListener->setMousePosition(mInputListener->getAbsMouseX (), mInputListener->getAbsMouseY ());
-#endif
+
+    mGuiListener->setMousePosition(position);
     
     if (mPickConstraint)
     {
-        // dragging
-        //add a point to point constraint for picking	
         
-        float absX = 0.0;
-        float absY = 0.0;
-        
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-        absX = mInputListener->getAbsMouseX();
-        absY = mInputListener->getAbsMouseY();
-#endif
-        
-        Ogre::Ray rayTo = mCamera->getCameraToViewportRay (absX, absY);
+        Ogre::Ray rayTo = mCamera->getCameraToViewportRay (position.x, position.y);
         //move the constraint pivot
         OgreBulletDynamics::PointToPointConstraint * p2p = static_cast <OgreBulletDynamics::PointToPointConstraint *>(mPickConstraint);
         //keep it at the same picking distance
@@ -629,29 +637,45 @@ void VSCOgreBulletListener::mouseMoved()
         getDebugLines();
         mDebugRayLine->addLine (mPickedBody->getWorldPosition (), newPos);
         mDebugRayLine->draw();
+        
 #ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
         mGuiListener->showMouse();
 #endif
     }
 
 #ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-    if (mGuiListener->getGui()->injectMouse(mInputListener->getAbsMouseX ()*mWindow->getWidth(), 
-        mInputListener->getAbsMouseY ()*mWindow->getHeight(), mInputListener->getButton0Pressed()))
+    if (mGuiListener->getGui()->injectMouse(position.x * mWindow->getWidth(), 
+                                            position.y * mWindow->getHeight(), 
+                                            mInputListener->isMouseButtonPressed(OIS::MB_Left)))
     {
         mGuiListener->hideMouse();
     }
+    
     else 
     {
         mGuiListener->showMouse();
     }
-    if (mInputListener->getButton2Pressed())
-    {
-        mCameraRotX = Degree(-mInputListener->getRelMouseX () * 0.13);
-        mCameraRotY = Degree(-mInputListener->getRelMouseY () * 0.13);
-    }
 #endif
+    
+    if (mInputListener->isMouseButtonPressed(OIS::MB_Right))
+    {
+        mCameraRotX = Degree(-movement.x * 0.13);
+        mCameraRotY = Degree(-movement.y * 0.13);
+    }
 
 }
+
+
+void VSCOgreBulletListener::mouseEntered(const Ogre::Vector2& position)
+{
+    
+}
+
+void VSCOgreBulletListener::mouseExited(const Ogre::Vector2& position)
+{
+    
+}
+
 // -------------------------------------------------------------------------
 void VSCOgreBulletListener::keyPressed(OIS::KeyCode key)
 {
@@ -779,10 +803,8 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletListener::getBodyUnderCursorUsingBul
     float absX = 0.0;
     float absY = 0.0;
     
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-    absX = mInputListener->getAbsMouseX();
-    absY = mInputListener->getAbsMouseY();
-#endif
+    absX = mInputListener->getLastMousePosition().x;
+    absY = mInputListener->getLastMousePosition().y;
     
     rayTo = mCamera->getCameraToViewportRay (absX, absY);
 
@@ -790,6 +812,7 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletListener::getBodyUnderCursorUsingBul
 	mCollisionClosestRayResultCallback = new CollisionClosestRayResultCallback(rayTo, mWorld, mCamera->getFarClipDistance());
 
     mWorld->launchRay (*mCollisionClosestRayResultCallback);
+    
     if (mCollisionClosestRayResultCallback->doesCollide ())
     {
         OgreBulletDynamics::RigidBody * body = static_cast <OgreBulletDynamics::RigidBody *> 
@@ -799,6 +822,7 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletListener::getBodyUnderCursorUsingBul
         setDebugText("Hit :" + body->getName());
         return body;
     }
+    
     return 0;
 }
 // -------------------------------------------------------------------------
@@ -807,10 +831,8 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletListener::getBodyUnderCursorUsingOgr
     float absX = 0.0;
     float absY = 0.0;
     
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-    absX = mInputListener->getAbsMouseX();
-    absY = mInputListener->getAbsMouseY();
-#endif
+    absX = mInputListener->getLastMousePosition().x;
+    absY = mInputListener->getLastMousePosition().y;
     
     rayTo = mCamera->getCameraToViewportRay (absX, absY);
 

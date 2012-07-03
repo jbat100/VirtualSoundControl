@@ -12,9 +12,12 @@ File modified for VSC project
 #include "VSCOgreBulletListener.h"
 #include "VSCOgreBulletInputListener.h"
 
+using Ogre::Vector2;
+using Ogre::Real;
+
 // -------------------------------------------------------------------------
 VSCOgreBulletInputListener::VSCOgreBulletInputListener(VSCOgreBulletListener* ogreBulletListener) :
-    mListener(ogreBulletListener)
+    mListener(ogreBulletListener), mWindow(NULL)
 {
     mLastMouseMovement = Vector2(0.0, 0.0); 
     mLastMousePosition = Vector2(0.0, 0.0);
@@ -91,7 +94,7 @@ bool VSCOgreBulletInputListener::mouseMoved(const OIS::MouseEvent& e)
     // This populates the cursor moves or camera rotation variables
     mLastMouseMovement = Vector2(e.state.X.rel, e.state.Y.rel);
     mLastMousePosition = Vector2(Real(e.state.X.abs) / mWindow->getWidth(), Real(e.state.Y.abs) / mWindow->getHeight());
-    mListener->mouseMoved(mLastMousePosition.x, mLastMousePosition.y, mLastMouseMovement.x, mLastMouseMovement.y);
+    mListener->mouseMoved(mLastMousePosition, mLastMouseMovement);
     return true;    
 }
 

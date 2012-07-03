@@ -1,10 +1,13 @@
 #ifndef _VSC_OGRE_BULLET_COCOA_INPUT_ADAPTER_H_
 #define _VSC_OGRE_BULLET_COCOA_INPUT_ADAPTER_H_
 
-#include "VSCOgreBulletInputListener.h"
+#import <Cocoa/Cocoa.h>
 
-class VSCOgreBulletCocoaInputListener;
-@class NSEvent;
+//#include "VSCOgreBulletInputListener.h"
+#include "OIS.h"
+#include <set>
+
+class VSCOgreBulletInputListener;
 @class OgreView;
 
 class VSCOgreBulletCocoaInputAdapter
@@ -12,7 +15,7 @@ class VSCOgreBulletCocoaInputAdapter
 public:
 
 	// Constructor/destructor
-    VSCOgreBulletCocoaInputAdapter(VSCOgreBulletCocoaInputListener *ogreBulletInputListener, OgreView *cocoaOgreView);
+    VSCOgreBulletCocoaInputAdapter(VSCOgreBulletInputListener *ogreBulletInputListener, OgreView *cocoaOgreView);
     virtual ~VSCOgreBulletCocoaInputAdapter(){};
     
     /*
@@ -39,8 +42,22 @@ public:
     void rightMouseUp(NSEvent* theEvent);
     
     void scrollWheel(NSEvent* theEvent);
+    
+    void setOgreBulletInputListener(VSCOgreBulletInputListener* listener) {mOgreBulletInputListener = listener;}
+    VSCOgreBulletInputListener* getOgreBulletInputListener(void) {return mOgreBulletInputListener;}
+    
+    void setOgreView(OgreView* ogreView) {mCocoaOgreView = ogreView;}
+    OgreView* getOgreView(void) {return mCocoaOgreView;}
 
+    std::set<OIS::KeyCode> keyCodesForCocoaString(NSString* s);
+    OIS::Keyboard::Modifier modiferForCocoaModifierFlags(NSUInteger m);
+    
 private:
+    
+    typedef std::map<UInt32, OIS::KeyCode> UnicarToOISKeyMap;
+    UnicarToOISKeyMap keyConversionMap;
+    
+    void populateKeyConversionMap(void);
 
     VSCOgreBulletInputListener*     mOgreBulletInputListener;
     OgreView*                       mCocoaOgreView;

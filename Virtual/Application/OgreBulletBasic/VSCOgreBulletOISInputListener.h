@@ -30,9 +30,6 @@ public:
     virtual ~VSCOgreBulletOISInputListener(){};
 
 
-protected:
-
-    Ogre::RenderWindow      *mWindow;
 };
 
 #endif//_VSC_OGRE_BULLET_OIS_INPUT_LISTENER_H_

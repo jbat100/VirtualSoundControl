@@ -42,7 +42,8 @@ public:
 
     void hideMouse();
     void showMouse();
-    void setMousePosition(Ogre::Real x, Ogre::Real y);
+    
+    void setMousePosition(Ogre::Vector2 position);
     
     void showHelp(bool show);
     

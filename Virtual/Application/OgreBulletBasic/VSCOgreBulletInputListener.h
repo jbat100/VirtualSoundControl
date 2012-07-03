@@ -44,7 +44,7 @@ public:
     const KeyCodeSet&  getCurrentKeys() {return mCurrentKeys;} 
     // convienience method
     bool isKeyPressed(OIS::KeyCode key); 
-    bool isKeyModifier(OIS::KeyCode key)
+    bool isKeyModifier(OIS::KeyCode key);
 
     /*
      *  Listener Mouse stuff query 
@@ -88,6 +88,8 @@ protected:
     MouseButtonSet  mCurrentMouseButtons;
     
     VSCOgreBulletListener   *mListener;
+    
+    Ogre::RenderWindow      *mWindow;
 };
 
 #endif//_VSC_OGRE_BULLET_INPUT_LISTENER_H_

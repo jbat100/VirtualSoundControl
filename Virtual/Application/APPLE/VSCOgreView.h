@@ -8,6 +8,10 @@
 
 #import "OgreOSXCocoaView.h"
 
-@interface VSCOgreView : OgreView
+class VSCOgreBulletCocoaInputAdapter;
+
+@interface VSCOgreView : OgreView 
+
+@property (nonatomic, assign) VSCOgreBulletCocoaInputAdapter* inputAdapter;
 
 @end

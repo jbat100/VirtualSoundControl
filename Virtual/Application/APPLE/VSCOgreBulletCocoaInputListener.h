@@ -24,7 +24,7 @@ public:
 
 	// Constructor/destructor
     VSCOgreBulletCocoaInputListener(VSCOgreBulletListener *ogreBulletListener, VSCOgreBulletCocoaInputAdapter* adapter);
-    virtual ~VSCOgreBulletOISInputListener(){};
+    virtual ~VSCOgreBulletCocoaInputListener(){};
 
 private:
 
