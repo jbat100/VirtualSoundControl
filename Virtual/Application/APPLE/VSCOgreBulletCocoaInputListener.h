@@ -23,8 +23,11 @@ class VSCOgreBulletCocoaInputListener : public VSCOgreBulletInputListener
 public:
 
 	// Constructor/destructor
-    VSCOgreBulletCocoaInputListener(VSCOgreBulletListener *ogreBulletListener, VSCOgreBulletCocoaInputAdapter* adapter);
+    VSCOgreBulletCocoaInputListener(VSCOgreBulletListener *ogreBulletListener, Ogre::RenderWindow *window);
     virtual ~VSCOgreBulletCocoaInputListener(){};
+    
+    void setInputAdapter(VSCOgreBulletCocoaInputAdapter* adapter) {mCocoaInputAdapter = adapter;}
+    VSCOgreBulletCocoaInputAdapter* getInputAdapter(void) {return mCocoaInputAdapter;}
 
 private:
 

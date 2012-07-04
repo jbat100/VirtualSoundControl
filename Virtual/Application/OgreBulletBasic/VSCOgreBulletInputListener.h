@@ -33,7 +33,7 @@ public:
     
     static const Ogre::Real KEY_DELAY;
     // the listener will be called when something happens, should not be nil
-    VSCOgreBulletInputListener(VSCOgreBulletListener *ogreBulletListener); 
+    VSCOgreBulletInputListener(VSCOgreBulletListener *ogreBulletListener, Ogre::RenderWindow *window); 
     virtual ~VSCOgreBulletInputListener(){};
 
     /*

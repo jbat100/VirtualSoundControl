@@ -14,10 +14,11 @@ File modified for VSC project
 
 using Ogre::Vector2;
 using Ogre::Real;
+using Ogre::RenderWindow;
 
 // -------------------------------------------------------------------------
-VSCOgreBulletInputListener::VSCOgreBulletInputListener(VSCOgreBulletListener* ogreBulletListener) :
-    mListener(ogreBulletListener), mWindow(NULL)
+VSCOgreBulletInputListener::VSCOgreBulletInputListener(VSCOgreBulletListener* ogreBulletListener, RenderWindow *window) :
+    mWindow(window), mListener(ogreBulletListener)
 {
     mLastMouseMovement = Vector2(0.0, 0.0); 
     mLastMousePosition = Vector2(0.0, 0.0);

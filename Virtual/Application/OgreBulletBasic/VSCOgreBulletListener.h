@@ -22,6 +22,7 @@ A basic test framework that minimize code in each test scene listener.
 #include "VSCOgreBulletGuiListener.h"
 #include "OIS.h"
 
+
 #define BASIC_HELP_INFO0 "Use F1, F2, F3, F4"
 #define BASIC_HELP_INFO1 "B,N,G,H to Throw a Cube, Sphere, Cone, Cylinder"
 #define BASIC_HELP_INFO2 "J,K,I,U to Drop  a Cube, Sphere, Cone, Cylinder"
@@ -82,12 +83,10 @@ public:
     void throwDynamicObject(OIS::KeyCode key);
     void dropDynamicObject(OIS::KeyCode key);
 
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
     /**--------------------------------------------------------------
      *  GUI stuff seperate this to keep this class GUI Agnostic?
      */
     VSCOgreBulletInputListener *getInputListener(){return mInputListener;}
-#endif
 
     /**--------------------------------------------------------------
      *  These methods are called by the input listener when some 

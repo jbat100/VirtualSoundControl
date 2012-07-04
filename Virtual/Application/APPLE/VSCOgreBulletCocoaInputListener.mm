@@ -16,10 +16,8 @@ File modified for VSC project
 
 
 // -------------------------------------------------------------------------
-VSCOgreBulletCocoaInputListener::VSCOgreBulletCocoaInputListener(VSCOgreBulletListener * ogreBulletListener, 
-                                                                 VSCOgreBulletCocoaInputAdapter *adapter) :
-VSCOgreBulletInputListener(ogreBulletListener), 
-mCocoaInputAdapter(adapter)
+VSCOgreBulletCocoaInputListener::VSCOgreBulletCocoaInputListener(VSCOgreBulletListener * ogreBulletListener, Ogre::RenderWindow *window) :
+VSCOgreBulletInputListener(ogreBulletListener, window)
 {
     /*
      *  Check that mCocoaInputAdapter or maybe for valid arguments in adapter constructor

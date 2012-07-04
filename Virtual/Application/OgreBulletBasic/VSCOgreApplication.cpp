@@ -31,11 +31,10 @@ Description: Base class for all the OGRE examples
 
 using namespace Ogre;
 
-VSCOgreApplication::VSCOgreApplication(SetupType setupType) : mSetupType(setupType)
+VSCOgreApplication::VSCOgreApplication() : 
+mFrameListener(0),
+mRoot(0),
 {
-    mFrameListener = 0;
-    mRoot = 0;
-    mCocoaSetup = 0;
     // Provide a nice cross platform solution for locating the configuration files
     // On windows files are searched for in the current working directory, on OS X however
     // you must provide the full path, the helper function macBundlePath does this for us.
@@ -57,19 +56,13 @@ VSCOgreApplication::~VSCOgreApplication()
         OGRE_DELETE mRoot;
 }
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-VSCOgreApplicationCocoaSetup* VSCOgreApplication::getApplicationCocoaSetup(void) {
-    return mCocoaSetup;
-}
-void VSCOgreApplication::setApplicationCocoaSetup(VSCOgreApplicationCocoaSetup* setup) {
-    mCocoaSetup = setup;
-}
-#endif
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-bool VSCOgreApplication::cocoaSetup(void) {
+bool VSCOgreApplication::setupWithOgreView(void* ogreView) {
     
-    mCocoaSetup->setup(this);
+    VSCOgreApplicationCocoaSetup cocoaSetup;
+    cocoaSetup.setup(this, ogreView);
+    
     this->setupResources();
     this->chooseSceneManager();
     this->createCamera();
@@ -94,9 +87,6 @@ void VSCOgreApplication::go(void)
     // clean up
     destroyScene();
 }
-#endif
-
-
 // These internal methods package up the stages in the startup process
 /** Sets up the application - returns false if the user chooses to abandon configuration. */
 bool VSCOgreApplication::setup(void)
@@ -108,16 +98,16 @@ bool VSCOgreApplication::setup(void)
         String pluginsName = "plugins.cfg";
         
         // only use plugins.cfg if not static
-#ifndef OGRE_STATIC_LIB
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-#ifdef _DEBUG
+        #ifndef OGRE_STATIC_LIB
+        #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+        #ifdef _DEBUG
         pluginsName = "plugins_d.cfg";
-#else
+        #else
         pluginsName = "plugins.cfg";
-#endif
-#endif
+        #endif
+        #endif
         pluginsPath = mResourcePath + pluginsName;
-#endif
+        #endif
         mRoot = OGRE_NEW Root(pluginsPath, mResourcePath + "ogre.cfg", mResourcePath + "Ogre.log");
         setupResources();
         bool carryOn = configure();
@@ -135,11 +125,15 @@ bool VSCOgreApplication::setup(void)
         createScene();
         createFrameListener();
     }
-        
+    
     
     return true;
     
 }
+#endif
+
+
+
 
 Root* VSCOgreApplication::getRoot(void) {
     return mRoot;

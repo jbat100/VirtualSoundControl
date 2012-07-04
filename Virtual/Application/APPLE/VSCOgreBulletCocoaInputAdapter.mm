@@ -18,6 +18,12 @@ File modified for VSC project
 
 using namespace OIS;
 
+VSCOgreBulletCocoaInputAdapter::VSCOgreBulletCocoaInputAdapter(OgreView *cocoaOgreView) :
+mCocoaOgreView(cocoaOgreView)
+{
+    
+}
+
 void VSCOgreBulletCocoaInputAdapter::populateKeyConversionMap(void) {
     
     // Virtual Key Map to KeyCode

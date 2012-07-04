@@ -12,7 +12,13 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "VSCOgreBulletApplication.h"
 #include "VSCOgreBulletListener.h"
 #include "VSCOgreBulletGuiListener.h"
-#include "VSCOgreBulletInputListener.h"
+
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
+#include "VSCOgreBulletOISInputListener.h"
+#else
+#include "VSCOgreBulletCocoaInputListener.h"
+#endif
+
 
 /*
  *  OgreBullet Shapes
@@ -135,10 +141,8 @@ mShootSpeed (7.f),
 mImpulseForce (10.f),
 mDebugRayLine(0),
 mRayQuery(0),
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
 mInputListener(0),
 mGuiListener(0),
-#endif
 mPickConstraint(0),
 mCollisionClosestRayResultCallback(0)
 {
@@ -159,12 +163,15 @@ void VSCOgreBulletListener::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCO
     mApplication = application;
     mCameraTrans = Ogre::Vector3::ZERO;
 
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
+
     /**
      *  We have separate GUI and Input listeners, presumably to keep this agnostic to the interface type
      */
     mGuiListener = new VSCOgreBulletGuiListener(this, win);
-    mInputListener = new VSCOgreBulletInputListener(this, win);
+#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
+    mInputListener = new VSCOgreBulletOISInputListener(this, win);
+#else
+    mInputListener = new VSCOgreBulletCocoaInputListener(this, win);
 #endif
 
     /******************* CREATESHADOWS If not debug mode ***************************/
@@ -679,6 +686,9 @@ void VSCOgreBulletListener::mouseExited(const Ogre::Vector2& position)
 // -------------------------------------------------------------------------
 void VSCOgreBulletListener::keyPressed(OIS::KeyCode key)
 {
+    
+    std::cout << "VSCOgreBulletListener got key pressed code: " << key << std::endl; 
+    
     static int count = 0;
     // Scene Debug Options
 

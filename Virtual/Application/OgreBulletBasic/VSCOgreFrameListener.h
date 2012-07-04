@@ -39,14 +39,9 @@ D:        Step right
 #include <Ogre/OgreConfigFile.h>
 #include <Ogre/OgreException.h>
 
-//Use this define to signify OIS will be used as a DLL
-//(so that dll import/export macros are in effect)
-#define OIS_DYNAMIC_LIB
-
-// NOTICE: You may need to change this line to <OIS.h> if you build OIS from source.
 #include "OIS.h"
 
-//using namespace Ogre; // namespace pollution created ambiguity with carbon
+class VSCOgreBulletInputListener;
 
 class VSCOgreFrameListener: public Ogre::FrameListener, public Ogre::WindowEventListener
 {
@@ -59,45 +54,44 @@ public:
     
     VSCOgreFrameListener();
     
+#if VSC_ENABLE_OIS_INPUT_SYSTEM
 	// Constructor takes a RenderWindow because it uses that to determine input context
-	VSCOgreFrameListener(Ogre::RenderWindow* win, Ogre::Camera* cam, 
-                         bool bufferedKeys = false, bool bufferedMouse = false, bool bufferedJoy = false);
+	VSCOgreFrameListener(Ogre::RenderWindow* win, Ogre::Camera* cam, bool bufferedKeys = false, bool bufferedMouse = false, bool bufferedJoy = false);
+#else
+    VSCOgreFrameListener(Ogre::RenderWindow* win, Ogre::Camera* cam, VSCOgreBulletInputListener* inputListener = 0);
+    void setInputListener(VSCOgreBulletInputListener* inputListener) {mInputListener = inputListener;}
+    VSCOgreBulletInputListener* getInputListener(void) {return mInputListener;}
+#endif
     
     virtual ~VSCOgreFrameListener();
 
 	//Adjust mouse clipping area
 	virtual void windowResized(Ogre::RenderWindow* rw);
-
 	//Unattach OIS before window shutdown (very important under Linux)
 	virtual void windowClosed(Ogre::RenderWindow* rw);
-
 	virtual bool processUnbufferedKeyInput(const Ogre::FrameEvent& evt);
-
 	virtual bool processUnbufferedMouseInput(const Ogre::FrameEvent& evt);
-
 	virtual void moveCamera();
 
 	virtual void showDebugOverlay(bool show);
 
 	// Override frameRenderingQueued event to process that (don't care about frameEnded)
 	bool frameRenderingQueued(const Ogre::FrameEvent& evt);
-
 	bool frameEnded(const Ogre::FrameEvent& evt);
 
 protected:
     
 	Ogre::Camera* mCamera;
-
 	Ogre::Vector3 mTranslateVector;
 	Ogre::Real mCurrentSpeed;
 	Ogre::RenderWindow* mWindow;
 	bool mStatsOn;
 
 	std::string mDebugText;
-
 	unsigned int mNumScreenShots;
 	float mMoveScale;
 	float mSpeedLimit;
+    
 	Ogre::Degree mRotScale;
 	// just to stop toggles flipping too fast
 	Ogre::Real mTimeUntilNextToggle ;
@@ -110,11 +104,15 @@ protected:
 	Ogre::Degree mRotateSpeed;
 	Ogre::Overlay* mDebugOverlay;
 
+#if VSC_ENABLE_OIS_INPUT_SYSTEM
 	//OIS Input devices
-	OIS::InputManager* mInputManager;
-	OIS::Mouse*    mMouse;
-	OIS::Keyboard* mKeyboard;
-	OIS::JoyStick* mJoy;
+	OIS::InputManager*  mInputManager;
+	OIS::Mouse*         mMouse;
+	OIS::Keyboard*      mKeyboard;
+	OIS::JoyStick*      mJoy;
+#else
+    VSCOgreBulletInputListener* mInputListener;
+#endif
     
 };
 

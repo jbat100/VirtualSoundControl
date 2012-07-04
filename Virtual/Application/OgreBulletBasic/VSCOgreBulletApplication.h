@@ -21,10 +21,6 @@ demo scenes and switch between them.
 
 #include <vector>
 
-#if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
-    //using namespace OIS;
-#endif //OGRE_VERSION eihort
-
 class VSCOgreBulletApplication;
 
 /**
@@ -56,16 +52,11 @@ protected:
     bool frameEnded(const Ogre::FrameEvent& evt);
 
     bool switchListener(VSCOgreBulletListener *newListener);
-
-protected:
     
     VSCOgreBulletListener *mBulletListener;
-    std::vector <VSCOgreBulletListener*> *mBulletListeners;
+    std::vector<VSCOgreBulletListener*> *mBulletListeners;
 
-#if (OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
-    Ogre::InputReader       *mInput; 
-    Ogre::EventProcessor    *mInputSystem; 
-#else
+#if VSC_ENABLE_OIS_INPUT_SYSTEM
     OIS::Keyboard           *mInput;
     OIS::Mouse              *mMouse;
     OIS::InputManager       *mInputSystem;

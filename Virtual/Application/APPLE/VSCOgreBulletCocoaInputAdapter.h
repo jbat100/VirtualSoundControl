@@ -15,7 +15,7 @@ class VSCOgreBulletCocoaInputAdapter
 public:
 
 	// Constructor/destructor
-    VSCOgreBulletCocoaInputAdapter(VSCOgreBulletInputListener *ogreBulletInputListener, OgreView *cocoaOgreView);
+    VSCOgreBulletCocoaInputAdapter(OgreView *cocoaOgreView);
     virtual ~VSCOgreBulletCocoaInputAdapter(){};
     
     /*

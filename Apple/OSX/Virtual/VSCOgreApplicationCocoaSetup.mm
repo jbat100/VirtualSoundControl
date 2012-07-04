@@ -32,26 +32,16 @@ Description: Base class for all the OGRE examples
 #include "VSCOgreApplication.h"
 #include "VSCOgreFrameListener.h"
 #include "VSCException.h"
+#include "VSCOgreBulletInputListener"
+#include "VSCOgreBulletCocoaInputAdapter"
 
 #include <boost/assert.hpp>
 
-//using namespace Ogre;
 
-VSCOgreApplicationCocoaSetup::VSCOgreApplicationCocoaSetup(void* view)
+bool VSCOgreApplicationCocoaSetup::setup(VSCOgreApplication* ogreApplication, void* rawOgreView)
 {
-    //OgreView* ogreView = (OgreView*)ogreView;
-    this->setOgreView(view);
-}
-
-VSCOgreApplicationCocoaSetup::~VSCOgreApplicationCocoaSetup()
-{
-    
-}
-
-
-bool VSCOgreApplicationCocoaSetup::setup(VSCOgreApplication* ogreApplication)
-{
-    OgreView* ogreView = (__bridge OgreView*)mOgreView;
+    OgreView* ogreView = (__bridge OgreView*)rawOgreView;
+    BOOST_ASSERT_MSG( [ogreView isKindOfClass:[OgreView class]], "Expected ogreView to be of class OgreView" ); 
     
     // get platform-specific working directory
     Ogre::String workDir = Ogre::StringUtil::BLANK;
@@ -68,7 +58,6 @@ bool VSCOgreApplicationCocoaSetup::setup(VSCOgreApplication* ogreApplication)
      *  before any other Ogre operations are called. Once an instance has been created, the same instance is accessible throughout the 
      *  life of that object by using Root::getSingleton (as a reference) or Root::getSingletonPtr (as a pointer). 
      */
-    
     
     // get the ogre root
     ogreApplication->mRoot = OGRE_NEW Ogre::Root(pluginsPath + "plugins.cfg", workDir + "ogre.cfg", workDir + "ogre.log");
@@ -90,68 +79,28 @@ bool VSCOgreApplicationCocoaSetup::setup(VSCOgreApplication* ogreApplication)
     NSRect frame = [ogreView frame];
     ogreApplication->mRoot->createRenderWindow("ogre window", frame.size.width, frame.size.height, false, &misc);
     
-    // And then get a pointer to it.
-    Ogre::RenderWindow *mWindow = [ogreView ogreWindow];
-    
     ogreApplication->mWindow = mWindow;
-    
     // This cast works so we do actually have a Ogre::OSXCocoaWindow here
-    //std::cout << "mWindow is " << (void*)mWindow;
-    //Ogre::OSXCocoaWindow* cocoaWindow = dynamic_cast<Ogre::OSXCocoaWindow*> (mWindow);
-    //std::cout << "cocoaWindow is " << (void*)cocoaWindow;
+    std::cout << "mWindow is " << (void*)ogreApplication->mWindow;
     
     return true;
 }
 
-
-void VSCOgreApplicationCocoaSetup::setOgreView(void* ogreView)
+Ogre::RenderWindow* VSCOgreApplicationCocoaSetup::getRenderWindow(void* rawOgreView) 
 {
-    if ([(__bridge OgreView*)ogreView isKindOfClass:[OgreView class]]) 
-    {
-        mOgreView = ogreView;
-    }
-    else if (ogreView != NULL) // only throw an exception if the view is not NULL
-    {
-        throw VSCInvalidArgumentException("Expected argument view to b objective-c++ kind of class OgreView");
-    }
-}
-
-void* VSCOgreApplicationCocoaSetup::getOgreView(void)
-{
-    return mOgreView;
-}
-
-Ogre::RenderWindow* VSCOgreApplicationCocoaSetup::getRenderWindow(void) 
-{
-
-    //OgreView* ogreView = (__bridge OgreView*)mOgreView;
-    return [(__bridge OgreView*)mOgreView ogreWindow];
+    OgreView* ogreView = (__bridge OgreView*)rawOgreView;
+    BOOST_ASSERT_MSG( [ogreView isKindOfClass:[OgreView class]], "Expected ogreView to be of class OgreView" ); 
+    Ogre::RenderWindow *mWindow = [ogreView ogreWindow];
+    return [(__bridge OgreView*)ogreView ogreWindow];
     
 }
 
-void* VSCOgreApplicationCocoaSetup::getNSWindow(void)
+bool VSCOgreApplicationCocoaSetup::setupAdapter(VSCOgreBulletCocoaInputAdapter* adapter, void* rawOgreView, VSCOgreBulletInputListener* inputListener)
 {
-    /*
+    OgreView* ogreView = (__bridge OgreView*)rawOgreView;
+    BOOST_ASSERT_MSG( [ogreView isKindOfClass:[OgreView class]], "Expected ogreView to be of class OgreView" ); 
     
-     // This code returns NULL
-     
-    Ogre::RenderWindow* renderWindow = this->getRenderWindow();
-    Ogre::OSXCocoaWindow* cocoaWindow = dynamic_cast<Ogre::OSXCocoaWindow*> (renderWindow);
-    
-    NSWindow* nsWindow = NULL;
-    
-    BOOST_ASSERT(cocoaWindow != NULL);
-    if (cocoaWindow != NULL) {
-        nsWindow = (NSWindow*) cocoaWindow->ogreWindow();
-        std::cout << "nsWindow is " << nsWindow << " (NSWindow*)" << std::endl;
-    }
-     
-     */
-    
-    NSWindow* nsWindow = (NSWindow*)[(__bridge OgreView*)mOgreView window];
-    
-    std::cout << "Size of NSWindow* is " << sizeof(NSWindow*) << " (pointing to " << (__bridge void*)nsWindow << ")" << std::endl;
-    
-    return (__bridge void*) nsWindow;
+    adapter->setOgreView(ogreView);
+    adapter->setOgreBulletInputListener(inputListener);
 }
 

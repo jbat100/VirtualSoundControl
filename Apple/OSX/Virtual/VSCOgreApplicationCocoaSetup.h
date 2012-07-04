@@ -6,33 +6,17 @@
 #import <Ogre/Ogre.h>
 
 class VSCOgreApplication;
+class VSCOgreBulletInputListener;
+class VSCOgreBulletCocoaInputAdapter;
 
 class VSCOgreApplicationCocoaSetup
 {
     
 public:
     
-    VSCOgreApplicationCocoaSetup(void* ogreView = 0);
-    ~VSCOgreApplicationCocoaSetup();
-    
-    bool setup(VSCOgreApplication* ogreApplication);
-    
-    void setOgreView(void* ogreView);
-    void* getOgreView(void);
-    
-    Ogre::RenderWindow* getRenderWindow(void);
-    
-    /*
-     *  A bit hacky, just testing ...
-     */
-    //void setNSWindow(void* nsWindow);
-    void* getNSWindow(void);
-
-private:
-    
-    void* mOgreView;
-    
-    
+    static bool setup(VSCOgreApplication* ogreApplication, void* ogreView);
+    static Ogre::RenderWindow* getRenderWindow(void* ogreView);
+    static bool setupAdapter(VSCOgreBulletCocoaInputAdapter* adapter, void* ogreView, VSCOgreBulletInputListener* inputListener);
 
 };
 

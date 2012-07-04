@@ -26,12 +26,10 @@ Description: Base class for all the OGRE examples
 
 #include "VSCOgreFrameListener.h"
 
+
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-class VSCOgreApplicationCocoaSetup;
+class VSCOgreBulletCocoaInputAdapter;
 #endif
-
-
-//using namespace Ogre;
 
 /** Base class which manages the standard startup of an Ogre application.
     Designed to be subclassed for specific examples if required.
@@ -41,16 +39,9 @@ class VSCOgreApplication
     
 public:
     
-    enum SetupType {
-        SetupTypeNone = 0,
-        SetupTypeDefault,
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-        SetupTypeAppleCocoa
-#endif
-    };
     
     /// Standard constructor
-    VSCOgreApplication(SetupType setupType = SetupTypeDefault);
+    VSCOgreApplication();
     /// Standard destructor
     virtual ~VSCOgreApplication();
 
@@ -59,13 +50,15 @@ public:
      *  When using cocoa we will not use the automatic rendering routine, (which uses root->startRendering),
      *  instead 
      */
-    friend class VSCOgreApplicationCocoaSetup;
-    VSCOgreApplicationCocoaSetup* getApplicationCocoaSetup(void);
-    void setApplicationCocoaSetup(VSCOgreApplicationCocoaSetup* setup);
-    virtual bool cocoaSetup(void);
+    virtual bool setupWithOgreView(void* ogreView);
+    VSCOgreBulletCocoaInputAdapter* getCocoaInputAdapter(void) {return mCocoaInputAdapter;}
+    void setCocoaInputAdapter(VSCOgreBulletCocoaInputAdapter* adapter) {mCocoaInputAdapter = adapter;}
 #else   
     /// Start the example
     virtual void go(void);
+    // These internal methods package up the stages in the startup process
+    /** Sets up the application - returns false if the user chooses to abandon configuration. */
+    virtual bool setup(void);
 #endif
     
     Ogre::Root* getRoot(void);
@@ -78,15 +71,10 @@ protected:
     VSCOgreFrameListener            *mFrameListener;
     Ogre::RenderWindow              *mWindow;
 	Ogre::String                    mResourcePath;
-    SetupType                       mSetupType;
     
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-    VSCOgreApplicationCocoaSetup*   mCocoaSetup;
+    VSCOgreBulletCocoaInputAdapter  *mCocoaInputAdapter;
 #endif
-
-    // These internal methods package up the stages in the startup process
-    /** Sets up the application - returns false if the user chooses to abandon configuration. */
-    virtual bool setup(void);
     
     /*
      *  NOTE: This is probably where the fun is in terms of making the application run on Cocoa

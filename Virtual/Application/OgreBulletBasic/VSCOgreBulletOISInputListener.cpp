@@ -25,30 +25,11 @@ namespace OIS
     class Mouse;
 };
 
-/*
-#define BULLET_KEY_CODE                             OIS::KeyCode
-#define BULLET_KEY_EVENT                            const OIS::KeyEvent&
-#define BULLET_MOUSE_EVENT                          const OIS::MouseEvent&
-#define BULLET_KC                                   OIS::KC
-#define BULLET_LISTENER_IMPLEMENTATION_RETURN       bool
-#define BULLET_LISTENER_IMPLEMENTATION_RETURN_CODE  return true;
-#define BULLET_GETKEY                               e.key
-#define BULLET_BUTTON0_DOWN                         buttonid == OIS::MB_Left
-#define BULLET_BUTTON1_DOWN                         buttonid == OIS::MB_Middle
-#define BULLET_BUTTON2_DOWN                         buttonid == OIS::MB_Right
-#define BULLET_BUTTON0_UP                           buttonid == OIS::MB_Left
-#define BULLET_BUTTON1_UP                           buttonid == OIS::MB_Middle
-#define BULLET_BUTTON2_UP                           buttonid == OIS::MB_Right
-#define BULLET_GETRELX                              e.state.X.rel
-#define BULLET_GETRELY                              e.state.Y.rel
-#define BULLET_GETX                                 e.state.X.abs
-#define e.state.Y.abs                                 e.state.Y.abs
- */
 
 
 // -------------------------------------------------------------------------
 VSCOgreBulletOISInputListener::VSCOgreBulletOISInputListener(VSCOgreBulletListener * ogreBulletListener, Ogre::RenderWindow *win) :
-    VSCOgreBulletInputListener(ogreBulletListener)
+    VSCOgreBulletInputListener(ogreBulletListener, win)
 {
     mWindow = win;
 }

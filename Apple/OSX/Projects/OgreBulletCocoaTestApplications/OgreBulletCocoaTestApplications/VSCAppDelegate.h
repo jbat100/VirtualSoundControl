@@ -13,19 +13,21 @@
 class VSCOgreBulletListener;
 class VSCOgreBulletApplication;
 class VSCOgreApplicationCocoaSetup;
+class VSCOgreBulletCocoaInputAdapter;
 
-@class OgreView;
+@class VSCOgreView;
 
 @interface VSCAppDelegate : NSObject <NSApplicationDelegate> {
     
     VSCOgreBulletApplication* ogreBulletApplication;
     VSCOgreApplicationCocoaSetup* ogreApplicationCocoaSetup;
+    VSCOgreBulletCocoaInputAdapter* cocoaInputAdapter;
     std::vector<VSCOgreBulletListener*> ogreBulletScenes;
     
 }
 
 @property (assign) IBOutlet NSWindow *window;
-@property (assign) IBOutlet OgreView *ogreView;
+@property (assign) IBOutlet VSCOgreView *ogreView;
 
 -(void) startRendering;
 -(void) stopRendering;
