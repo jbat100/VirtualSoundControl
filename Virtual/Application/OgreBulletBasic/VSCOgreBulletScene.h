@@ -85,6 +85,17 @@ public:
 
 
     bool *getBoolActivator(){return &mActivationBool;}
+    
+    /*
+     *  Input listener callback overrides
+     */
+    void mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
+    void mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
+    void mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement);
+    void mouseEntered(const Ogre::Vector2& position);
+    void mouseExited(const Ogre::Vector2& position);
+    void keyPressed(OIS::KeyCode key);
+    void keyReleased(OIS::KeyCode key);
 
 protected:
 

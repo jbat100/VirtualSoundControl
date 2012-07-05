@@ -13,12 +13,6 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "VSCOgreBulletScene.h"
 #include "VSCOgreBetaGUIListener.h"
 
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-#include "VSCOgreBulletOISInputListener.h"
-#else
-#include "VSCOgreBulletCocoaInputListener.h"
-#endif
-
 
 /*
  *  OgreBullet Shapes
@@ -599,10 +593,6 @@ void VSCOgreBulletScene::mouseButtonReleased(const Ogre::Vector2& position, OIS:
     }
 }
 
-void VSCOgreBulletScene::mouseDragged(const Ogre::Vector2& position, const Ogre::Vector2& movement)
-{
-    this->mouseMoved(position, movement);
-}
 
 
 // -------------------------------------------------------------------------

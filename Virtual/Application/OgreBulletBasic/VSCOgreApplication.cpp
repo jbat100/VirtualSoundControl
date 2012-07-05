@@ -28,15 +28,12 @@ Description: Base class for all the OGRE examples
 #include "VSCOgreApplicationCocoaSetup.h"
 #include "VSCOgreApplication.h"
 #include "VSCOgreFrameListener.h"
+#include "VSCOgreInputAdapter.h"
 
 using namespace Ogre;
 
 VSCOgreApplication::VSCOgreApplication() : 
-mFrameListener(0),
-mRoot(0)
-#ifndef VSC_ENABLE_OIS_INPUT_SYSTEM
-, mCocoaInputAdapter(0)
-#endif
+mRoot(0), mInputAdapter(0)
 {
     // Provide a nice cross platform solution for locating the configuration files
     // On windows files are searched for in the current working directory, on OS X however
@@ -46,17 +43,14 @@ mRoot(0)
 #else
     mResourcePath = "";
 #endif
-    
     std::cout << "Resource path is : " << mResourcePath << std::endl;
 }
 
 /// Standard destructor
 VSCOgreApplication::~VSCOgreApplication()
 {
-    if (mFrameListener)
-        delete mFrameListener;
-    if (mCocoaInputAdapter) 
-        delete mCocoaInputAdapter;
+    if (mInputAdapter) 
+        delete mInputAdapter;
     if (mRoot)
         OGRE_DELETE mRoot;
 }
@@ -66,14 +60,6 @@ VSCOgreApplication::~VSCOgreApplication()
 bool VSCOgreApplication::setupWithOgreView(void* ogreView) {
     
     VSCOgreApplicationCocoaSetup::setupApplicationWithOgreView(this, ogreView);
-    
-    #ifndef VSC_ENABLE_OIS_INPUT_SYSTEM
-    if (!mCocoaInputAdapter) 
-    {
-        mCocoaInputAdapter = VSCOgreApplicationCocoaSetup::createCocoaInputAdapter();
-    }
-    VSCOgreApplicationCocoaSetup::setupCocoaInputAdapter(mCocoaInputAdapter, ogreView)
-    #endif
     
     this->setupResources();
     this->chooseSceneManager();
@@ -197,9 +183,7 @@ void VSCOgreApplication::createCamera(void)
 
 void VSCOgreApplication::createFrameListener(void)
 {
-    mFrameListener = new VSCOgreFrameListener(mWindow, mCamera);
-    mFrameListener->showDebugOverlay(true);
-    mRoot->addFrameListener(mFrameListener);
+
 }
 
 void VSCOgreApplication::createViewports(void)

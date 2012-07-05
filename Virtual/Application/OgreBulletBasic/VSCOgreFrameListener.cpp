@@ -91,7 +91,7 @@ mAniso(1),
 mSceneDetailIndex(0), 
 mMoveSpeed(100), 
 mRotateSpeed(36), 
-mDebugOverlay(0),
+mDebugOverlay(0)
 {
     
     mDebugOverlay = OverlayManager::getSingleton().getByName("Core/DebugOverlay");

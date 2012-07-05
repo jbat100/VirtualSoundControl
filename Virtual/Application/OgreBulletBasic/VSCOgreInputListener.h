@@ -20,7 +20,6 @@ A basic test framework that minimize code in each test scene listener.
 #include <set>
 #include <Ogre/Ogre.h>
 #include "OIS.h"
-#include "VSCOgreBetaGUIListener.h"
 class VSCOgreBulletScene;
 
 class VSCOgreInputListener
@@ -39,18 +38,15 @@ public:
     /*
      *  Listener Keyboard stuff query 
      */
-    
     // currently pressed non modifier keys
     const KeyCodeSet&  getCurrentKeys() {return mCurrentKeys;} 
     // convienience method
     bool isKeyPressed(OIS::KeyCode key); 
     OIS::Keyboard::Modifier currentModifiers(void); // OIS::Keyboard::Modifier is a bit mask
     
-
     /*
      *  Listener Mouse stuff query 
      */
-    
     bool isMouseButtonPressed(OIS::MouseButtonID) const;
     // probably dont need these ...
     Ogre::Vector2 getLastMousePosition() const {return mLastMousePosition;}
@@ -58,14 +54,10 @@ public:
     Ogre::Vector2 getBufferedMouseMovement() const {return mBufferedMouseMovement;}
     void resetBufferedMouseMovement() {mBufferedMouseMovement = 0;}
     
-    /*
-     *  Input called by the actual input system (OIS::MouseListener, public OIS::KeyListener methods)
-     *  The can be an OIS input system OR any other such as cocoa (which will have to be implemented)
-     */
-    
     /**--------------------------------------------------------------
-     *  These methods are called by the input listener when some 
-     *  input related thing happens 
+     *  These methods are called by the input adapter when some 
+     *  input related thing happens. Do not call these methods 
+     *  in any other case, unless you want to simulate input.
      */
     virtual void mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement);
     virtual void mouseEntered(const Ogre::Vector2& position);

@@ -15,7 +15,6 @@ demo scenes and switch between them.
 // Include the OgreBullet interface which includes Ogre itself
 #include "OgreBulletCollisions.h"
 #include "OgreBulletDynamics.h"
-
 #include "VSCOgreBulletScene.h"
 #include "VSCOgreApplication.h"
 
@@ -33,7 +32,7 @@ public:
     VSCOgreBulletApplication(std::vector <VSCOgreBulletScene *> *bulletListeners);
     ~VSCOgreBulletApplication();
 
-    std::vector <VSCOgreBulletScene *> *getScenesList(){return mBulletListeners;};
+    std::vector <VSCOgreBulletScene *> *getScenesList(){return mBulletScenes;};
 
 protected:
     
@@ -53,8 +52,8 @@ protected:
 
     bool switchListener(VSCOgreBulletScene *newListener);
     
-    VSCOgreBulletScene *mBulletListener;
-    std::vector<VSCOgreBulletScene*> *mBulletListeners;
+    VSCOgreBulletScene *mBulletScene;
+    std::vector<VSCOgreBulletScene*> *mBulletScenes;
 
 
 };

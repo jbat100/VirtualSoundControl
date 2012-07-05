@@ -17,7 +17,6 @@ public:
     static bool setupApplicationWithOgreView(VSCOgreApplication* ogreApplication, void* ogreView);
     static Ogre::RenderWindow* getRenderWindow(void* ogreView);
     static VSCOgreBulletCocoaInputAdapter* createCocoaInputAdapter(void);
-    static bool setupCocoaInputAdapter(VSCOgreBulletCocoaInputAdapter* adapter, void* ogreView, VSCOgreInputListener* inputListener);
 
 };
 

@@ -55,7 +55,6 @@
                                                                    Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, false);
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
     
-    
     // Create the camera, node & attach camera
     Ogre::Camera *mCamera = mSceneMgr->createCamera("PlayerCam");
     Ogre::SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();

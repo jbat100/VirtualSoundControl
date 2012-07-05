@@ -2,8 +2,9 @@
 #define _VSC_OGRE_BULLET_COCOA_INPUT_ADAPTER_H_
 
 #import <Cocoa/Cocoa.h>
-#include "VSCOgreInputAdapter.h"
+#include <Ogre/Ogre.h>
 #include "OIS.h"
+#include "VSCOgreInputAdapter.h"
 #include <set>
 
 class VSCOgreInputListener;
@@ -11,6 +12,8 @@ class VSCOgreInputListener;
 class VSCOgreBulletCocoaInputAdapter : public VSCOgreInputAdapter
 {
 public:
+    
+    VSCOgreBulletCocoaInputAdapter(void);
     
     /*
      *  Slots for forwarding the appropriate NSResponder callbacks
@@ -38,12 +41,21 @@ public:
     std::set<OIS::KeyCode> keyCodesForCocoaString(NSString* s);
     OIS::Keyboard::Modifier modiferForCocoaModifierFlags(NSUInteger m);
     
+    /*
+     *  Cocoa view
+     */
+    void setCocoaView(NSView* v){mCocoaView = v;}
+    NSView* getCocoaView(void){return mCocoaView;}
+    
 private:
+    
+    Ogre::Vector2 adaptedEventCoordinatesForEvent(NSEvent* theEvent);
     
     typedef std::map<UInt32, OIS::KeyCode> UnicarToOISKeyMap;
     UnicarToOISKeyMap keyConversionMap;
-    
     void populateKeyConversionMap(void);
+    
+    NSView* mCocoaView;
     
 };
 

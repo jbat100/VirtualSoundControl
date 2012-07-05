@@ -30,10 +30,9 @@ Description: Base class for all the OGRE examples
 #include "OgreOSXCocoaWindow.h"
 
 #include "VSCOgreApplication.h"
-#include "VSCOgreFrameListener.h"
 #include "VSCException.h"
-#include "VSCOgreInputListener"
-#include "VSCOgreBulletCocoaInputAdapter"
+#include "VSCOgreInputListener.h"
+#include "VSCOgreBulletCocoaInputAdapter.h"
 
 #include <boost/assert.hpp>
 
@@ -79,9 +78,14 @@ bool VSCOgreApplicationCocoaSetup::setupApplicationWithOgreView(VSCOgreApplicati
     NSRect frame = [ogreView frame];
     ogreApplication->mRoot->createRenderWindow("ogre window", frame.size.width, frame.size.height, false, &misc);
     
-    ogreApplication->mWindow = mWindow;
+    ogreApplication->mWindow = VSCOgreApplicationCocoaSetup::getRenderWindow(rawOgreView);
     // This cast works so we do actually have a Ogre::OSXCocoaWindow here
     std::cout << "mWindow is " << (void*)ogreApplication->mWindow;
+    
+    VSCOgreBulletCocoaInputAdapter* adapter = VSCOgreApplicationCocoaSetup::createCocoaInputAdapter();
+    ogreApplication->setInputAdapter(adapter);
+    adapter->setCocoaView(ogreView);
+    adapter->addInputListener(ogreApplication);
     
     return true;
 }
@@ -91,17 +95,7 @@ Ogre::RenderWindow* VSCOgreApplicationCocoaSetup::getRenderWindow(void* rawOgreV
     OgreView* ogreView = (__bridge OgreView*)rawOgreView;
     BOOST_ASSERT_MSG( [ogreView isKindOfClass:[OgreView class]], "Expected ogreView to be of class OgreView" ); 
     Ogre::RenderWindow *mWindow = [ogreView ogreWindow];
-    return [(__bridge OgreView*)ogreView ogreWindow];
-    
-}
-
-bool VSCOgreApplicationCocoaSetup::setupCocoaInputAdapter(VSCOgreBulletCocoaInputAdapter* adapter, void* rawOgreView, VSCOgreInputListener* inputListener)
-{
-    OgreView* ogreView = (__bridge OgreView*)rawOgreView;
-    BOOST_ASSERT_MSG( [ogreView isKindOfClass:[OgreView class]], "Expected ogreView to be of class OgreView" ); 
-    
-    adapter->setOgreView(ogreView);
-    adapter->setOgreBulletInputListener(inputListener);
+    return [ogreView ogreWindow];
 }
 
 VSCOgreBulletCocoaInputAdapter* VSCOgreApplicationCocoaSetup::createCocoaInputAdapter(void)

@@ -73,11 +73,7 @@ using namespace OIS;
     
     // Create the application and try to run it
     ogreBulletApplication = new VSCOgreBulletApplication(&ogreBulletScenes);
-    
     ogreBulletApplication->setupWithOgreView((__bridge void*)self.ogreView);
-    
-    cocoaInputAdapter = new VSCOgreBulletCocoaInputAdapter((__bridge void*)self.ogreView);
-    
     
     [self startRendering];
     
@@ -96,13 +92,8 @@ using namespace OIS;
         ++it;
     }
     
-    delete ogreBulletApplication;
-    delete ogreApplicationCocoaSetup;
-    delete cocoaInputAdapter;
-    
+    delete ogreBulletApplication;    
     ogreBulletApplication = 0;
-    ogreApplicationCocoaSetup = 0;
-    cocoaInputAdapter = 0
     
     
 }

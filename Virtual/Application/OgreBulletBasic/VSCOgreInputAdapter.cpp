@@ -1,11 +1,17 @@
 
 #include "VSCOgreInputAdapter.h"
 
-void VSCOgreBulletCocoaInputAdapter::addOgreBulletInputListener(VSCOgreInputListener* listener)
+VSCOgreInputAdapter::VSCOgreInputAdapter(void) :
+mNormalizedCoordinates(false)
+{
+    
+}
+
+void VSCOgreInputAdapter::addInputListener(VSCOgreInputListener* listener)
 {
     mInputListeners.insert(listener);
 }
-void VSCOgreBulletCocoaInputAdapter::removeOgreBulletInputListener(VSCOgreInputListener* listener)
+void VSCOgreInputAdapter::removeInputListener(VSCOgreInputListener* listener)
 {
     mInputListeners.erase(listener);
 }

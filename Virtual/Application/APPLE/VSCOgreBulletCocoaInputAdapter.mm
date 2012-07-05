@@ -18,7 +18,15 @@ File modified for VSC project
 
 using namespace OIS;
 
+VSCOgreBulletCocoaInputAdapter::VSCOgreBulletCocoaInputAdapter(void) :
+mCocoaView(0)
+{
+    
+}
 
+Ogre::Vector2 VSCOgreBulletCocoaInputAdapter::adaptedEventCoordinatesForEvent(NSEvent* theEvent) {
+    return Ogre::Vector2(0,0);
+}
 
 void VSCOgreBulletCocoaInputAdapter::populateKeyConversionMap(void) {
     
@@ -171,10 +179,9 @@ void VSCOgreBulletCocoaInputAdapter::keyUp(NSEvent* theEvent) {
 
     BOOST_FOREACH( OIS::KeyCode key, keyCodeSet )
     {
-        OIS::KeyEvent e(NULL, key, 0);
         BOOST_FOREACH (VSCOgreInputListener* inputListener, mInputListeners) 
         {
-            inputListener->keyReleased(e);
+            inputListener->keyReleased(key);
         }
     }    
 }
@@ -187,17 +194,15 @@ void VSCOgreBulletCocoaInputAdapter::keyDown(NSEvent* theEvent) {
     
     BOOST_FOREACH( OIS::KeyCode key, keyCodeSet )
     {
-        OIS::KeyEvent e(NULL, key, 0);
         BOOST_FOREACH (VSCOgreInputListener* inputListener, mInputListeners) 
         {
-            inputListener->keyPressed(e);
+            inputListener->keyPressed(key);
         }
     }  
     
 }
 
 void VSCOgreBulletCocoaInputAdapter::mouseEntered(NSEvent* theEvent) {
-    
     
     
 }

@@ -23,38 +23,30 @@ Description: Base class for all the OGRE examples
 
 #include <Ogre/Ogre.h>
 #include <Ogre/OgreConfigFile.h>
+#include "VSCOgreInputListener.h"
 
-#include "VSCOgreFrameListener.h"
-
-
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-class VSCOgreBulletCocoaInputAdapter;
-#endif
+class VSCOgreInputAdapter;
+class VSCOgreApplicationCocoaSetup;
 
 /** Base class which manages the standard startup of an Ogre application.
     Designed to be subclassed for specific examples if required.
 */
-class VSCOgreApplication
+class VSCOgreApplication : public VSCOgreInputListener
 {
     
 public:
-    
     
     /// Standard constructor
     VSCOgreApplication();
     /// Standard destructor
     virtual ~VSCOgreApplication();
 
+    VSCOgreInputAdapter* getInputAdapter(void) {return mInputAdapter;}
+    void setInputAdapter(VSCOgreInputAdapter* adapter) {mInputAdapter = adapter;}
+    
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-    /*
-     *  When using cocoa we will not use the automatic rendering routine, (which uses root->startRendering),
-     *  instead 
-     */
+    friend class VSCOgreApplicationCocoaSetup;
     virtual bool setupWithOgreView(void* ogreView);
-    #ifndef VSC_ENABLE_OIS_INPUT_SYSTEM
-    VSCOgreBulletCocoaInputAdapter* getCocoaInputAdapter(void) {return mCocoaInputAdapter;}
-    void setCocoaInputAdapter(VSCOgreBulletCocoaInputAdapter* adapter) {mCocoaInputAdapter = adapter;}
-    #endif
 #else   
     /// Start the example
     virtual void go(void);
@@ -70,9 +62,9 @@ protected:
     Ogre::Root                      *mRoot;
     Ogre::Camera                    *mCamera;
     Ogre::SceneManager              *mSceneMgr;
-    VSCOgreFrameListener            *mFrameListener;
     Ogre::RenderWindow              *mWindow;
 	Ogre::String                    mResourcePath;
+    VSCOgreInputAdapter             *mInputAdapter;
     
     /*
      *  NOTE: This is probably where the fun is in terms of making the application run on Cocoa
@@ -96,10 +88,6 @@ protected:
 	/// Optional override method where you can perform resource group loading
 	/// Must at least do ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 	virtual void loadResources(void);
-    
-#ifndef VSC_ENABLE_OIS_INPUT_SYSTEM
-    VSCOgreBulletCocoaInputAdapter* mCocoaInputAdapter;
-#endif
 
 };
 

@@ -73,7 +73,6 @@
 		10E1B28E156D3AFE0013B9F7 /* BetaGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E1B28C156D3AFE0013B9F7 /* BetaGUI.cpp */; };
 		10EB11FD15A5D8B500CA4D03 /* VSCOgreInputAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10EB11FB15A5D8B500CA4D03 /* VSCOgreInputAdapter.cpp */; };
 		10F4EE071557E752000E4591 /* VSCOgreApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EDFB1557E752000E4591 /* VSCOgreApplication.cpp */; };
-		10F4EE081557E752000E4591 /* VSCOgreFrameListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EDFD1557E752000E4591 /* VSCOgreFrameListener.cpp */; };
 		10F4EE091557E752000E4591 /* VSCOgreBulletApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EDFF1557E752000E4591 /* VSCOgreBulletApplication.cpp */; };
 		10F4EE0A1557E752000E4591 /* VSCOgreBetaGUIListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EE011557E752000E4591 /* VSCOgreBetaGUIListener.cpp */; };
 		10F4EE0C1557E752000E4591 /* VSCOgreBulletScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EE051557E752000E4591 /* VSCOgreBulletScene.cpp */; };
@@ -276,8 +275,6 @@
 		10EB11FC15A5D8B500CA4D03 /* VSCOgreInputAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreInputAdapter.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreInputAdapter.h; sourceTree = "<group>"; };
 		10F4EDFB1557E752000E4591 /* VSCOgreApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreApplication.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreApplication.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		10F4EDFC1557E752000E4591 /* VSCOgreApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreApplication.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreApplication.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		10F4EDFD1557E752000E4591 /* VSCOgreFrameListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreFrameListener.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreFrameListener.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		10F4EDFE1557E752000E4591 /* VSCOgreFrameListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreFrameListener.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreFrameListener.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10F4EDFF1557E752000E4591 /* VSCOgreBulletApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreBulletApplication.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreBulletApplication.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		10F4EE001557E752000E4591 /* VSCOgreBulletApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreBulletApplication.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreBulletApplication.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10F4EE011557E752000E4591 /* VSCOgreBetaGUIListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOgreBetaGUIListener.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreBetaGUIListener.cpp; sourceTree = "<group>"; };
@@ -358,8 +355,6 @@
 				100088981590B67E002F21B1 /* VSCOgreInputListener.h */,
 				10F4EDFB1557E752000E4591 /* VSCOgreApplication.cpp */,
 				10F4EDFC1557E752000E4591 /* VSCOgreApplication.h */,
-				10F4EDFD1557E752000E4591 /* VSCOgreFrameListener.cpp */,
-				10F4EDFE1557E752000E4591 /* VSCOgreFrameListener.h */,
 				10F4EDFF1557E752000E4591 /* VSCOgreBulletApplication.cpp */,
 				10F4EE001557E752000E4591 /* VSCOgreBulletApplication.h */,
 				10F4EE011557E752000E4591 /* VSCOgreBetaGUIListener.cpp */,
@@ -877,7 +872,6 @@
 				10B60D3115505D6D006A6D6E /* main.m in Sources */,
 				10B60D3815505D6D006A6D6E /* VSCAppDelegate.mm in Sources */,
 				10F4EE071557E752000E4591 /* VSCOgreApplication.cpp in Sources */,
-				10F4EE081557E752000E4591 /* VSCOgreFrameListener.cpp in Sources */,
 				10F4EE091557E752000E4591 /* VSCOgreBulletApplication.cpp in Sources */,
 				10F4EE0A1557E752000E4591 /* VSCOgreBetaGUIListener.cpp in Sources */,
 				10F4EE0C1557E752000E4591 /* VSCOgreBulletScene.cpp in Sources */,

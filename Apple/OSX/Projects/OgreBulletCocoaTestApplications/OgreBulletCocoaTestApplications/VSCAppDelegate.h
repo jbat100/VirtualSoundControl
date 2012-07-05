@@ -20,8 +20,6 @@ class VSCOgreBulletCocoaInputAdapter;
 @interface VSCAppDelegate : NSObject <NSApplicationDelegate> {
     
     VSCOgreBulletApplication* ogreBulletApplication;
-    VSCOgreApplicationCocoaSetup* ogreApplicationCocoaSetup;
-    VSCOgreBulletCocoaInputAdapter* cocoaInputAdapter;
     std::vector<VSCOgreBulletScene*> ogreBulletScenes;
     
 }

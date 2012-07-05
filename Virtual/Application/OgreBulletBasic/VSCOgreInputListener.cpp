@@ -17,11 +17,10 @@ using Ogre::Real;
 using Ogre::RenderWindow;
 
 // -------------------------------------------------------------------------
-VSCOgreInputListener::VSCOgreInputListener(VSCOgreBulletScene* ogreBulletListener, RenderWindow *window) :
-    mWindow(window), mListener(ogreBulletListener)
+VSCOgreInputListener::VSCOgreInputListener() 
 {
-    mMouseMovement = Vector2(0.0, 0.0); 
-    mMousePosition = Vector2(0.0, 0.0);
+    mLastMouseMovement = Vector2(0.0, 0.0); 
+    mLastMousePosition = Vector2(0.0, 0.0);
 }
 
 bool VSCOgreInputListener::isKeyPressed(OIS::KeyCode key)
@@ -29,49 +28,45 @@ bool VSCOgreInputListener::isKeyPressed(OIS::KeyCode key)
     return (mCurrentKeys.find(key) != mCurrentKeys.end());
 }
 
-bool VSCOgreInputListener::isKeyModifier(OIS::KeyCode key)
-{
-    return (mModifierKeys.find(key) != mModifierKeys.end());
-}
 
 bool VSCOgreInputListener::isMouseButtonPressed(OIS::MouseButtonID buttonid) const
 {
     return (mCurrentMouseButtons.find(buttonid) != mCurrentMouseButtons.end());
 }
 
-void mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement)
+void VSCOgreInputListener::mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
     mLastMousePosition = position;
     mLastMouseMovement = movement;
     mBufferedMouseMovement += movement;
 }
 
-void mouseEntered(const Ogre::Vector2& position)
+void VSCOgreInputListener::mouseEntered(const Ogre::Vector2& position)
 {
     
 }
 
-void mouseExited(const Ogre::Vector2& position)
+void VSCOgreInputListener::mouseExited(const Ogre::Vector2& position)
 {
     
 }
 
-void mouseButtonPressed(OIS::MouseButtonID buttonID)
+void VSCOgreInputListener::mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
     
 }
 
-void mouseButtonReleased(OIS::MouseButtonID buttonID)
+void VSCOgreInputListener::mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
     
 }
 
-void keyPressed(OIS::KeyCode key)
+void VSCOgreInputListener::keyPressed(OIS::KeyCode key)
 {
     
 }
 
-void keyReleased(OIS::KeyCode key)
+void VSCOgreInputListener::keyReleased(OIS::KeyCode key)
 {
     
 }

@@ -6,7 +6,7 @@ Copyright (c) 2007 tuan.kuranes@gmail.com (Use it Freely, even Statically, but h
 This source file is not LGPL, it's public source code that you can reuse.
 -----------------------------------------------------------------------------*/
 #include "VSCOgreBulletApplication.h"
-#include "VSCOgreBulletListener.h"
+#include "VSCOgreBulletScene.h"
 #include "VSCOgreApplicationCocoaSetup.h"
 
 #include "OgreResourceGroupManager.h"
@@ -14,12 +14,12 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include <boost/assert.hpp>
 
 // -------------------------------------------------------------------------
-VSCOgreBulletApplication::VSCOgreBulletApplication(std::vector<VSCOgreBulletListener*> *bulletListeners) : 
+VSCOgreBulletApplication::VSCOgreBulletApplication(std::vector<VSCOgreBulletScene*> *bulletScenes) : 
     VSCOgreApplication(),
     Ogre::FrameListener(),
-    mBulletListeners(bulletListeners)
+    mBulletScenes(bulletScenes)
 {
-    assert (!mBulletListeners->empty());
+    assert (!mBulletScenes->empty());
 }
 // -------------------------------------------------------------------------
 VSCOgreBulletApplication::~VSCOgreBulletApplication()
@@ -27,41 +27,31 @@ VSCOgreBulletApplication::~VSCOgreBulletApplication()
 
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletApplication::switchListener(VSCOgreBulletListener *newListener)
+bool VSCOgreBulletApplication::switchListener(VSCOgreBulletScene *newScene)
 {
-    mBulletListener = newListener;
+    mBulletScene = newScene;
     return true;
 }
 // -------------------------------------------------------------------------
 bool VSCOgreBulletApplication::frameStarted(const Ogre::FrameEvent& evt)
 {
 
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-    mMouse->capture();
-    mInput->capture();
-#endif
-
-    std::vector <VSCOgreBulletListener *>::iterator it =  mBulletListeners->begin();
-    while (it != mBulletListeners->end())
+    std::vector <VSCOgreBulletScene *>::iterator it =  mBulletScenes->begin();
+    while (it != mBulletScenes->end())
     {
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-        if ((*(*it)->getBoolActivator()) == true || mInput->isKeyDown ((*it)->getNextKey ()))
+        if ((*(*it)->getBoolActivator()) == true || this->isKeyPressed((*it)->getNextKey()))
         {
-            //if ((*it) !=  mBulletListener)
-            {
-                switchListener(*it);
-            }
+            switchListener(*it);
             break;
         }
         ++it;
-#endif
     }	
 
-    assert (mBulletListener);
+    assert (mBulletScene);
 
-    if (!mBulletListener->frameStarted(evt.timeSinceLastFrame))
+    if (!mBulletScene->frameStarted(evt.timeSinceLastFrame))
     {
-        mBulletListener->shutdown ();
+        mBulletScene->shutdown ();
         return false;
     }
     return true;
@@ -70,11 +60,10 @@ bool VSCOgreBulletApplication::frameStarted(const Ogre::FrameEvent& evt)
 // -------------------------------------------------------------------------
 bool VSCOgreBulletApplication::frameEnded(const Ogre::FrameEvent& evt)
 {
-    assert (mBulletListener);
-    // we're running a scene, tell it that a frame's started 
-    if (!mBulletListener->frameEnded(evt.timeSinceLastFrame))
+    assert (mBulletScene);
+    if (!mBulletScene->frameEnded(evt.timeSinceLastFrame))
     {
-        mBulletListener->shutdown();
+        mBulletScene->shutdown();
         return false;
     }
     return true; 
@@ -83,10 +72,8 @@ bool VSCOgreBulletApplication::frameEnded(const Ogre::FrameEvent& evt)
 // -------------------------------------------------------------------------
 void VSCOgreBulletApplication::createFrameListener(void)
 {
-    mFrameListener = 0;
-    switchListener (*(mBulletListeners->begin()));
+    switchListener (*(mBulletScenes->begin()));
     mRoot->addFrameListener(this);
-
 }
 // -------------------------------------------------------------------------
 void VSCOgreBulletApplication::setupResources(void)
@@ -120,14 +107,8 @@ void VSCOgreBulletApplication::setupResources(void)
 			rsm->addResourceLocation (baseName + "/models", "FileSystem", resName);
 			rsm->addResourceLocation (baseName + "/gui", "FileSystem", resName);
 #else
-			if (isSDK)
-			{
-				baseName = "../../../ogrebullet/";
-			}
-			else
-			{
-				baseName = "../../../../../ogreaddons/ogrebullet/";
-			}
+			if (isSDK) baseName = "../../../ogrebullet/";
+			else baseName = "../../../../../ogreaddons/ogrebullet/";
             rsm->addResourceLocation (baseName + "Demos/Media", "FileSystem", resName);
 			rsm->addResourceLocation (baseName + "Demos/Media/textures", "FileSystem", resName);
 			rsm->addResourceLocation (baseName + "Demos/Media/overlays", "FileSystem", resName);
