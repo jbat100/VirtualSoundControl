@@ -29,8 +29,7 @@ namespace OIS
 
 // -------------------------------------------------------------------------
 VSCOgreBulletOISInputListener::VSCOgreBulletOISInputListener(VSCOgreBulletListener * ogreBulletListener, Ogre::RenderWindow *win) :
-    VSCOgreBulletInputListener(ogreBulletListener, win)
+    VSCOgreInputListener(ogreBulletListener, win)
 {
-    mWindow = win;
 }
 

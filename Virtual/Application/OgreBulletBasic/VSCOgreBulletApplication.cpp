@@ -11,59 +11,25 @@ This source file is not LGPL, it's public source code that you can reuse.
 
 #include "OgreResourceGroupManager.h"
 
-#if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
-    //using namespace OIS;
-#endif //OGRE_VERSION not Eihort
-
 #include <boost/assert.hpp>
 
-//using namespace OgreBulletDynamics;
-//using namespace OgreBulletCollisions;
-//using namespace OgreBulletLoader;
-
 // -------------------------------------------------------------------------
-VSCOgreBulletApplication::VSCOgreBulletApplication(std::vector <VSCOgreBulletListener *> *bulletListeners) : 
+VSCOgreBulletApplication::VSCOgreBulletApplication(std::vector<VSCOgreBulletListener*> *bulletListeners) : 
     VSCOgreApplication(),
     Ogre::FrameListener(),
-#if VSC_ENABLE_OIS_INPUT_SYSTEM
-    mInputSystem(0),
-    mInput(0),
-#endif
-    mBulletListener(0)
+    mBulletListeners(bulletListeners)
 {
-    mBulletListeners = bulletListeners;
     assert (!mBulletListeners->empty());
 }
 // -------------------------------------------------------------------------
 VSCOgreBulletApplication::~VSCOgreBulletApplication()
 { 
-#if VSC_ENABLE_OIS_INPUT_SYSTEM
-    if (mInputSystem || mInput)
-    {
-            mInputSystem->destroyInputObject(mInput);
-            mInputSystem->destroyInputObject(mMouse);
-            OIS::InputManager::destroyInputSystem(mInputSystem);
-    }
-#endif 
+
 }
 // -------------------------------------------------------------------------
 bool VSCOgreBulletApplication::switchListener(VSCOgreBulletListener *newListener)
 {
-
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-    if (mBulletListener)
-    {
-        mInput->setEventCallback (0);
-        mMouse->setEventCallback (0);
-        mBulletListener->shutdown ();
-    }
-    newListener->init (mRoot, mWindow, this);
-    mInput->setEventCallback (newListener->getInputListener());
-    mMouse->setEventCallback (newListener->getInputListener());
-#endif //VSC_ENABLE_OIS_INPUT_SYSTEM
-
     mBulletListener = newListener;
-
     return true;
 }
 // -------------------------------------------------------------------------
@@ -118,34 +84,6 @@ bool VSCOgreBulletApplication::frameEnded(const Ogre::FrameEvent& evt)
 void VSCOgreBulletApplication::createFrameListener(void)
 {
     mFrameListener = 0;
-
-#if VSC_ENABLE_OIS_INPUT_SYSTEM
-    size_t windowHnd = 0;
-    std::ostringstream windowHndStr;
-	OIS::ParamList pl;
-
-    #if defined OIS_WIN32_PLATFORM
-    mWindow->getCustomAttribute("WINDOW", &windowHnd);
-    #elif defined OIS_LINUX_PLATFORM
-    mWindow->getCustomAttribute( "WINDOW", &windowHnd );    
-    #else // do it for apple also
-    mWindow->getCustomAttribute( "WINDOW", &windowHnd ); 
-    #endif    
-    windowHndStr << (size_t) windowHnd;
-    pl.insert( std::make_pair( std::string( "WINDOW" ), windowHndStr.str() ) );
-
-    unsigned int width, height, depth;
-    int left, top;
-    mWindow->getMetrics(width, height, depth, left, top);
-    
-    mInputSystem  = OIS::InputManager::createInputSystem( pl );
-    mInput = static_cast<OIS::Keyboard*>(mInputSystem->createInputObject( OIS::OISKeyboard, true ));
-    mMouse = static_cast<OIS::Mouse*>(mInputSystem->createInputObject( OIS::OISMouse, true ));
-    const OIS::MouseState &ms = mMouse->getMouseState();
-    ms.width = width;
-    ms.height = height;
-#endif
-
     switchListener (*(mBulletListeners->begin()));
     mRoot->addFrameListener(this);
 

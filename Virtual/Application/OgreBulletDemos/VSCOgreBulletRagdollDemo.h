@@ -11,14 +11,14 @@ This source file is not LGPL, it's public source code that you can reuse.
 
 #include "OgreBulletDynamics.h"
 
-#include "VSCOgreBulletListener.h"
+#include "VSCOgreBulletScene.h"
 
 // -------------------------------------------------------------------------
-class VSCOgreBulletRagdollDemo : public VSCOgreBulletListener 
+class VSCOgreBulletRagdollDemo : public VSCOgreBulletScene 
 {
 public:
     
-    VSCOgreBulletRagdollDemo() : VSCOgreBulletListener() {mName = "Ragdoll Demo";};
+    VSCOgreBulletRagdollDemo() : VSCOgreBulletScene() {mName = "Ragdoll Demo";};
     virtual ~VSCOgreBulletRagdollDemo(){};
     
     void init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application);

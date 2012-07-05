@@ -33,7 +33,10 @@ using namespace Ogre;
 
 VSCOgreApplication::VSCOgreApplication() : 
 mFrameListener(0),
-mRoot(0),
+mRoot(0)
+#ifndef VSC_ENABLE_OIS_INPUT_SYSTEM
+, mCocoaInputAdapter(0)
+#endif
 {
     // Provide a nice cross platform solution for locating the configuration files
     // On windows files are searched for in the current working directory, on OS X however
@@ -52,6 +55,8 @@ VSCOgreApplication::~VSCOgreApplication()
 {
     if (mFrameListener)
         delete mFrameListener;
+    if (mCocoaInputAdapter) 
+        delete mCocoaInputAdapter;
     if (mRoot)
         OGRE_DELETE mRoot;
 }
@@ -60,8 +65,15 @@ VSCOgreApplication::~VSCOgreApplication()
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 bool VSCOgreApplication::setupWithOgreView(void* ogreView) {
     
-    VSCOgreApplicationCocoaSetup cocoaSetup;
-    cocoaSetup.setup(this, ogreView);
+    VSCOgreApplicationCocoaSetup::setupApplicationWithOgreView(this, ogreView);
+    
+    #ifndef VSC_ENABLE_OIS_INPUT_SYSTEM
+    if (!mCocoaInputAdapter) 
+    {
+        mCocoaInputAdapter = VSCOgreApplicationCocoaSetup::createCocoaInputAdapter();
+    }
+    VSCOgreApplicationCocoaSetup::setupCocoaInputAdapter(mCocoaInputAdapter, ogreView)
+    #endif
     
     this->setupResources();
     this->chooseSceneManager();
@@ -69,8 +81,10 @@ bool VSCOgreApplication::setupWithOgreView(void* ogreView) {
     this->createViewports();
     // Set default mipmap level (NB some APIs ignore this)
     TextureManager::getSingleton().setDefaultNumMipmaps(5);
+    
     this->createResourceListener(); // Create any resource listeners (for loading screens)
     this->loadResources();
+    
     this->createScene();
     this->createFrameListener();
     

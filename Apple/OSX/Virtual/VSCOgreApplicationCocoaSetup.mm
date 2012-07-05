@@ -32,13 +32,13 @@ Description: Base class for all the OGRE examples
 #include "VSCOgreApplication.h"
 #include "VSCOgreFrameListener.h"
 #include "VSCException.h"
-#include "VSCOgreBulletInputListener"
+#include "VSCOgreInputListener"
 #include "VSCOgreBulletCocoaInputAdapter"
 
 #include <boost/assert.hpp>
 
 
-bool VSCOgreApplicationCocoaSetup::setup(VSCOgreApplication* ogreApplication, void* rawOgreView)
+bool VSCOgreApplicationCocoaSetup::setupApplicationWithOgreView(VSCOgreApplication* ogreApplication, void* rawOgreView)
 {
     OgreView* ogreView = (__bridge OgreView*)rawOgreView;
     BOOST_ASSERT_MSG( [ogreView isKindOfClass:[OgreView class]], "Expected ogreView to be of class OgreView" ); 
@@ -95,7 +95,7 @@ Ogre::RenderWindow* VSCOgreApplicationCocoaSetup::getRenderWindow(void* rawOgreV
     
 }
 
-bool VSCOgreApplicationCocoaSetup::setupAdapter(VSCOgreBulletCocoaInputAdapter* adapter, void* rawOgreView, VSCOgreBulletInputListener* inputListener)
+bool VSCOgreApplicationCocoaSetup::setupCocoaInputAdapter(VSCOgreBulletCocoaInputAdapter* adapter, void* rawOgreView, VSCOgreInputListener* inputListener)
 {
     OgreView* ogreView = (__bridge OgreView*)rawOgreView;
     BOOST_ASSERT_MSG( [ogreView isKindOfClass:[OgreView class]], "Expected ogreView to be of class OgreView" ); 
@@ -104,3 +104,7 @@ bool VSCOgreApplicationCocoaSetup::setupAdapter(VSCOgreBulletCocoaInputAdapter* 
     adapter->setOgreBulletInputListener(inputListener);
 }
 
+VSCOgreBulletCocoaInputAdapter* VSCOgreApplicationCocoaSetup::createCocoaInputAdapter(void)
+{
+    return new VSCOgreBulletCocoaInputAdapter();
+}

@@ -115,7 +115,7 @@ void VSCOgreBulletVehiclesDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, 
     mCamera->setPosition(CameraStart);
     mCamera->lookAt(CarPosition);
 
-    VSCOgreBulletListener::init(root, win, application);
+    VSCOgreBulletScene::init(root, win, application);
 
     // ------------------------
     // add lights
@@ -307,8 +307,8 @@ void VSCOgreBulletVehiclesDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, 
 // -------------------------------------------------------------------------
 void VSCOgreBulletVehiclesDemo::keyPressed(OIS::KeyCode key)
 {
-    VSCOgreBulletListener::throwDynamicObject (key);
-    VSCOgreBulletListener::dropDynamicObject (key);
+    VSCOgreBulletScene::throwDynamicObject (key);
+    VSCOgreBulletScene::dropDynamicObject (key);
 
     bool wheel_engine_style_change = false;
     bool wheel_steering_style_change = false;
@@ -416,7 +416,7 @@ void VSCOgreBulletVehiclesDemo::keyPressed(OIS::KeyCode key)
         }
     }
 
-    return VSCOgreBulletListener::keyPressed (key);
+    return VSCOgreBulletScene::keyPressed (key);
 }
 // -------------------------------------------------------------------------
 void VSCOgreBulletVehiclesDemo::keyReleased(OIS::KeyCode key)
@@ -440,7 +440,7 @@ void VSCOgreBulletVehiclesDemo::keyReleased(OIS::KeyCode key)
         break;
 
     }
-    return VSCOgreBulletListener::keyReleased (key);
+    return VSCOgreBulletScene::keyReleased (key);
 }
 
 // -------------------------------------------------------------------------
@@ -475,6 +475,6 @@ bool VSCOgreBulletVehiclesDemo::frameStarted(Real elapsedTime)
             mVehicle->setSteeringValue (-mSteering, mWheelsSteerable[i]);
     }
 
-    return VSCOgreBulletListener::frameStarted(elapsedTime);
+    return VSCOgreBulletScene::frameStarted(elapsedTime);
 }
 // -------------------------------------------------------------------------

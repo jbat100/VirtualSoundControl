@@ -10,7 +10,7 @@
 
 #import <vector>
 
-class VSCOgreBulletListener;
+class VSCOgreBulletScene;
 class VSCOgreBulletApplication;
 class VSCOgreApplicationCocoaSetup;
 class VSCOgreBulletCocoaInputAdapter;
@@ -22,7 +22,7 @@ class VSCOgreBulletCocoaInputAdapter;
     VSCOgreBulletApplication* ogreBulletApplication;
     VSCOgreApplicationCocoaSetup* ogreApplicationCocoaSetup;
     VSCOgreBulletCocoaInputAdapter* cocoaInputAdapter;
-    std::vector<VSCOgreBulletListener*> ogreBulletScenes;
+    std::vector<VSCOgreBulletScene*> ogreBulletScenes;
     
 }
 

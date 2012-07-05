@@ -51,8 +51,10 @@ public:
      *  instead 
      */
     virtual bool setupWithOgreView(void* ogreView);
+    #ifndef VSC_ENABLE_OIS_INPUT_SYSTEM
     VSCOgreBulletCocoaInputAdapter* getCocoaInputAdapter(void) {return mCocoaInputAdapter;}
     void setCocoaInputAdapter(VSCOgreBulletCocoaInputAdapter* adapter) {mCocoaInputAdapter = adapter;}
+    #endif
 #else   
     /// Start the example
     virtual void go(void);
@@ -71,10 +73,6 @@ protected:
     VSCOgreFrameListener            *mFrameListener;
     Ogre::RenderWindow              *mWindow;
 	Ogre::String                    mResourcePath;
-    
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-    VSCOgreBulletCocoaInputAdapter  *mCocoaInputAdapter;
-#endif
     
     /*
      *  NOTE: This is probably where the fun is in terms of making the application run on Cocoa
@@ -98,6 +96,10 @@ protected:
 	/// Optional override method where you can perform resource group loading
 	/// Must at least do ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 	virtual void loadResources(void);
+    
+#ifndef VSC_ENABLE_OIS_INPUT_SYSTEM
+    VSCOgreBulletCocoaInputAdapter* mCocoaInputAdapter;
+#endif
 
 };
 

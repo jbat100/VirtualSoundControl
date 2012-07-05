@@ -99,7 +99,7 @@ void VSCOgreBulletRagdollDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
     mCamera->rotate(Ogre::Vector3(1,0,0), Degree(90));
     mCamera->setFixedYawAxis(true, Ogre::Vector3::UNIT_Z);
 
-    VSCOgreBulletListener::init(root, win, application);
+    VSCOgreBulletScene::init(root, win, application);
 
     // ------------------------
     // add lights
@@ -127,10 +127,10 @@ void VSCOgreBulletRagdollDemo::keyPressed(OIS::KeyCode key)
 		shootToKill();
 		break;	
 	}
-    VSCOgreBulletListener::throwDynamicObject (key);
-    VSCOgreBulletListener::dropDynamicObject (key);
+    VSCOgreBulletScene::throwDynamicObject (key);
+    VSCOgreBulletScene::dropDynamicObject (key);
 
-    return VSCOgreBulletListener::keyPressed (key);
+    return VSCOgreBulletScene::keyPressed (key);
 }
 // -------------------------------------------------------------------------
 void VSCOgreBulletRagdollDemo::button0Pressed()
@@ -170,7 +170,7 @@ bool VSCOgreBulletRagdollDemo::frameStarted(Ogre::Real elapsedTime)
 	}
 #endif
 
-	return VSCOgreBulletListener::frameStarted(elapsedTime);;
+	return VSCOgreBulletScene::frameStarted(elapsedTime);;
 }
 // -------------------------------------------------------------------------
 bool VSCOgreBulletRagdollDemo::frameEnded(Ogre::Real elapsedTime)
@@ -223,7 +223,7 @@ bool VSCOgreBulletRagdollDemo::frameEnded(Ogre::Real elapsedTime)
 		myRagDolls.size() < static_cast<size_t>(sMaxRagdoll))
 		createRagDoll();
 #endif
-	return VSCOgreBulletListener::frameEnded(elapsedTime);;
+	return VSCOgreBulletScene::frameEnded(elapsedTime);;
 }
 
 // -------------------------------------------------------------------------
@@ -257,7 +257,7 @@ void VSCOgreBulletRagdollDemo::shootToKill()
 #ifdef _DEBUG_TRIMESH 
 				// ray cast could be tested against that instead of ragdoll.
 				// depending on complexity of mesh could be simpler
-				VSCOgreBulletListener::AnimatedMeshToShapeConverter meshconverter(e, e->getParentNode ()->_getFullTransform());
+				VSCOgreBulletScene::AnimatedMeshToShapeConverter meshconverter(e, e->getParentNode ()->_getFullTransform());
 				//_geoms.push_back(meshconverter.createStaticTriangleMesh(_world, _space));
 #else //_DEBUG_TRIMESH
 				bool wasPhysical = b && b->ragdoll && b->ragdoll->isCollisionEnabled();

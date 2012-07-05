@@ -14,16 +14,16 @@ This source file is not LGPL, it's public source code that you can reuse.
 
 #include <Ogre/Ogre.h>
 #include "OIS.h"
-#include "VSCOgreBulletInputListener.h"
+#include "VSCOgreInputListener.h"
 
 class VSCOgreBulletCocoaInputAdapter;
 
-class VSCOgreBulletCocoaInputListener : public VSCOgreBulletInputListener
+class VSCOgreBulletCocoaInputListener : public VSCOgreInputListener
 {
 public:
 
 	// Constructor/destructor
-    VSCOgreBulletCocoaInputListener(VSCOgreBulletListener *ogreBulletListener, Ogre::RenderWindow *window);
+    VSCOgreBulletCocoaInputListener(VSCOgreBulletScene *ogreBulletListener, Ogre::RenderWindow *window);
     virtual ~VSCOgreBulletCocoaInputListener(){};
     
     void setInputAdapter(VSCOgreBulletCocoaInputAdapter* adapter) {mCocoaInputAdapter = adapter;}

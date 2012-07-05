@@ -58,7 +58,7 @@ void VSCOgreBulletTriMeshDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
     mCamera->setFixedYawAxis(true, Ogre::Vector3::UNIT_Z);
 
 
-    VSCOgreBulletListener::init(root, win, application);
+    VSCOgreBulletScene::init(root, win, application);
 
     // ------------------------
     // add lights
@@ -102,9 +102,9 @@ void VSCOgreBulletTriMeshDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
 // -------------------------------------------------------------------------
 void VSCOgreBulletTriMeshDemo::keyPressed(OIS::KeyCode key)
 {
-    VSCOgreBulletListener::throwDynamicObject(key);
-    VSCOgreBulletListener::dropDynamicObject(key);
+    VSCOgreBulletScene::throwDynamicObject(key);
+    VSCOgreBulletScene::dropDynamicObject(key);
 
-    return VSCOgreBulletListener::keyPressed (key);
+    return VSCOgreBulletScene::keyPressed (key);
 }
 

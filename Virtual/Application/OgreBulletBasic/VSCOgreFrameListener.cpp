@@ -76,11 +76,7 @@ void VSCOgreFrameListener::updateStats(void)
 
 
 // Constructor takes a RenderWindow because it uses that to determine input context
-#if VSC_ENABLE_OIS_INPUT_SYSTEM
-VSCOgreFrameListener::VSCOgreFrameListener(RenderWindow* win, Camera* cam, bool bufferedKeys, bool bufferedMouse, bool bufferedJoy) :
-#else
-VSCOgreFrameListener::VSCOgreFrameListener(RenderWindow* win, Camera* cam, VSCOgreBulletInputListener* inputListener) :
-#endif
+VSCOgreFrameListener::VSCOgreFrameListener(RenderWindow* win, Camera* cam) :
 mCamera(cam), 
 mTranslateVector(Vector3::ZERO), 
 mCurrentSpeed(0), 
@@ -96,85 +92,27 @@ mSceneDetailIndex(0),
 mMoveSpeed(100), 
 mRotateSpeed(36), 
 mDebugOverlay(0),
-#if VSC_ENABLE_OIS_INPUT_SYSTEM
-mInputManager(0), 
-mMouse(0), 
-mKeyboard(0), 
-mJoy(0)
-#else 
-mInputListener(inputListener)
-#endif
 {
     
     mDebugOverlay = OverlayManager::getSingleton().getByName("Core/DebugOverlay");
-    
-#if VSC_ENABLE_OIS_INPUT_SYSTEM
-    size_t windowHnd = 0;
-    std::ostringstream windowHndStr;
-    LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
-    OIS::ParamList pl;
-    win->getCustomAttribute("WINDOW", &windowHnd);
-    windowHndStr << windowHnd;
-    pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
-    mInputManager = OIS::InputManager::createInputSystem( pl );
-    //Create all devices (We only catch joystick exceptions here, as, most people have Key/Mouse)
-    mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject( OIS::OISKeyboard, bufferedKeys));
-    mMouse = static_cast<OIS::Mouse*>(mInputManager->createInputObject(OIS::OISMouse, bufferedMouse));
-    try {
-        mJoy = static_cast<OIS::JoyStick*>(mInputManager->createInputObject( OIS::OISJoyStick, bufferedJoy ));
-    }
-    catch(...) {
-        mJoy = 0;
-    }
-    //Set initial mouse clipping size
-    windowResized(mWindow);
-    //Register as a Window listener
-#else
     /*
      *  Set up cocoa input
      */
-#endif
-    
+    windowResized(mWindow);
     WindowEventUtilities::addWindowEventListener(mWindow, this);
     showDebugOverlay(true);
-    
 }
 
 //Adjust mouse clipping area
 void VSCOgreFrameListener::windowResized(RenderWindow* rw)
 {
-#if VSC_ENABLE_OIS_INPUT_SYSTEM
-    unsigned int width, height, depth;
-    int left, top;
-    rw->getMetrics(width, height, depth, left, top);
-    const OIS::MouseState &ms = mMouse->getMouseState();
-    ms.width = width;
-    ms.height = height;
-#else
-    /*
-     *  cocoa resized
-     */
     std::cout << "COCOA resized " << rw;
-#endif
 }
 
 //Unattach OIS before window shutdown (very important under Linux)
 void VSCOgreFrameListener::windowClosed(RenderWindow* rw)
 {
-#if VSC_ENABLE_OIS_INPUT_SYSTEM
-    //Only close for window that created OIS (the main window in these demos)
-    if( rw == mWindow )
-    {
-        if( mInputManager )
-        {
-            mInputManager->destroyInputObject( mMouse );
-            mInputManager->destroyInputObject( mKeyboard );
-            mInputManager->destroyInputObject( mJoy );
-            OIS::InputManager::destroyInputSystem(mInputManager);
-            mInputManager = 0;
-        }
-    }
-#endif
+    std::cout << "COCOA closed " << rw;
 }
 
 VSCOgreFrameListener::~VSCOgreFrameListener()
@@ -188,7 +126,6 @@ bool VSCOgreFrameListener::processUnbufferedKeyInput(const FrameEvent& evt)
 {
     static bool displayCameraDetails = false;
     
-#if VSC_ENABLE_OIS_INPUT_SYSTEM
     if(mKeyboard->isKeyDown(OIS::KC_A))
         mTranslateVector.x = -mMoveScale;	// Move camera left
     if(mKeyboard->isKeyDown(OIS::KC_D))
@@ -261,11 +198,6 @@ bool VSCOgreFrameListener::processUnbufferedKeyInput(const FrameEvent& evt)
         if (!displayCameraDetails)
             mDebugText = "";
     }
-#else 
-    /*
-     *  Process cocoa
-     */
-#endif
     
     // Print camera details
     if(displayCameraDetails)

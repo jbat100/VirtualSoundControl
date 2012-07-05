@@ -6,7 +6,7 @@
 #import <Ogre/Ogre.h>
 
 class VSCOgreApplication;
-class VSCOgreBulletInputListener;
+class VSCOgreInputListener;
 class VSCOgreBulletCocoaInputAdapter;
 
 class VSCOgreApplicationCocoaSetup
@@ -14,9 +14,10 @@ class VSCOgreApplicationCocoaSetup
     
 public:
     
-    static bool setup(VSCOgreApplication* ogreApplication, void* ogreView);
+    static bool setupApplicationWithOgreView(VSCOgreApplication* ogreApplication, void* ogreView);
     static Ogre::RenderWindow* getRenderWindow(void* ogreView);
-    static bool setupAdapter(VSCOgreBulletCocoaInputAdapter* adapter, void* ogreView, VSCOgreBulletInputListener* inputListener);
+    static VSCOgreBulletCocoaInputAdapter* createCocoaInputAdapter(void);
+    static bool setupCocoaInputAdapter(VSCOgreBulletCocoaInputAdapter* adapter, void* ogreView, VSCOgreInputListener* inputListener);
 
 };
 

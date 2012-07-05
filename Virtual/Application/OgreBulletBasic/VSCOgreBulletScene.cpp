@@ -10,8 +10,8 @@ This source file is not LGPL, it's public source code that you can reuse.
  -----------------------------------------------------------------------------*/
 
 #include "VSCOgreBulletApplication.h"
-#include "VSCOgreBulletListener.h"
-#include "VSCOgreBulletGuiListener.h"
+#include "VSCOgreBulletScene.h"
+#include "VSCOgreBetaGUIListener.h"
 
 #ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
 #include "VSCOgreBulletOISInputListener.h"
@@ -53,16 +53,15 @@ using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
 //using namespace OgreBulletLoader;
 
-#if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
 using namespace OIS;
-#endif //OGRE_VERSION not Eihort
+
 
 
 /*
  *  GLOBAL VARIABLES
  */
 
-size_t VSCOgreBulletListener::mNumEntitiesInstanced = 0;
+size_t VSCOgreBulletScene::mNumEntitiesInstanced = 0;
 
 // -------------------------------------------------------------------------
 const Ogre::ColourValue g_minLightColour(0.2, 0.1, 0.0);
@@ -127,7 +126,7 @@ int convertShadowTechniqueToInt(Ogre::ShadowTechnique i)
 
 //MARK: Basic Constructor which does abolutely nothing interesting at all 
 
-VSCOgreBulletListener::VSCOgreBulletListener() :    
+VSCOgreBulletScene::VSCOgreBulletScene() :    
 mCameraMove (0.1f),
 mCameraTrans (Ogre::Vector3::ZERO),
 mCamera(0),
@@ -141,7 +140,6 @@ mShootSpeed (7.f),
 mImpulseForce (10.f),
 mDebugRayLine(0),
 mRayQuery(0),
-mInputListener(0),
 mGuiListener(0),
 mPickConstraint(0),
 mCollisionClosestRayResultCallback(0)
@@ -150,7 +148,7 @@ mCollisionClosestRayResultCallback(0)
 
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application)
+void VSCOgreBulletScene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application)
 {
     /*
      *  A bit of OGRE reading ...
@@ -167,12 +165,7 @@ void VSCOgreBulletListener::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCO
     /**
      *  We have separate GUI and Input listeners, presumably to keep this agnostic to the interface type
      */
-    mGuiListener = new VSCOgreBulletGuiListener(this, win);
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-    mInputListener = new VSCOgreBulletOISInputListener(this, win);
-#else
-    mInputListener = new VSCOgreBulletCocoaInputListener(this, win);
-#endif
+    mGuiListener = new VSCOgreBetaGUIListener(this, win);
 
     /******************* CREATESHADOWS If not debug mode ***************************/
 #ifndef _DEBUG
@@ -259,7 +252,7 @@ void VSCOgreBulletListener::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCO
 
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::setBasicLight()
+void VSCOgreBulletScene::setBasicLight()
 {
     // Set ambient light
     mSceneMgr->setAmbientLight(ColourValue(0.4, 0.4, 0.4));
@@ -298,7 +291,7 @@ void VSCOgreBulletListener::setBasicLight()
 
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::setPhysicGUI()
+void VSCOgreBulletScene::setPhysicGUI()
 {
     BetaGUI::GUI *gui = mGuiListener->getGui();
 
@@ -312,8 +305,8 @@ void VSCOgreBulletListener::setPhysicGUI()
      */
     aWindow = menuWindow->addMenuWindowTab("Scene Choice");
     {
-        std::vector <VSCOgreBulletListener *> *sceneList = mApplication->getScenesList();
-        std::vector <VSCOgreBulletListener *>::iterator itScenes = sceneList->begin();
+        std::vector <VSCOgreBulletScene *> *sceneList = mApplication->getScenesList();
+        std::vector <VSCOgreBulletScene *>::iterator itScenes = sceneList->begin();
         for (; itScenes < sceneList->end(); ++itScenes)
         {
             if ((*itScenes) == this)
@@ -412,7 +405,7 @@ void VSCOgreBulletListener::setPhysicGUI()
 }
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::getDebugLines()
+void VSCOgreBulletScene::getDebugLines()
 {
     if (mDebugRayLine == 0)
     {
@@ -422,12 +415,11 @@ void VSCOgreBulletListener::getDebugLines()
 }
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::shutdown ()
+void VSCOgreBulletScene::shutdown ()
 {
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-    delete mInputListener;
+
     delete mGuiListener;
-#endif
+    mGuiListener = 0;
 
     // OgreBullet physic delete 
     std::deque<OgreBulletDynamics::RigidBody *>::iterator itBody = mBodies.begin();
@@ -459,11 +451,6 @@ void VSCOgreBulletListener::shutdown ()
     mWindow->removeViewport(0);
     mRoot->destroySceneManager (mSceneMgr);
     delete mDebugRayLine;
-
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-    mInputListener = 0;
-    mGuiListener = 0;
-#endif
     
     mRayQuery = 0;
     mWorld = 0;
@@ -477,8 +464,10 @@ void VSCOgreBulletListener::shutdown ()
 
 }
 
-void VSCOgreBulletListener::mouseButtonPressed(OIS::MouseButtonID buttonID)
+//void VSCOgreBulletScene::mouseButtonPressed(OIS::MouseButtonID buttonID)
+void VSCOgreBulletScene::mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
+    
     switch (buttonID) 
     {
         case OIS::MB_Left:
@@ -486,9 +475,7 @@ void VSCOgreBulletListener::mouseButtonPressed(OIS::MouseButtonID buttonID)
             // pick a body and try to drag it.
             Ogre::Vector3 pickPos;
             Ogre::Ray rayTo;
-            OgreBulletDynamics::RigidBody * body = 
-            getBodyUnderCursorUsingBullet(pickPos, rayTo);
-            //getBodyUnderCursorUsingOgre(pickPos, rayTo);
+            OgreBulletDynamics::RigidBody* body = getBodyUnderCursorUsingBullet(pickPos, rayTo);
             if (body)
             {  
                 //other exclusions?
@@ -513,24 +500,24 @@ void VSCOgreBulletListener::mouseButtonPressed(OIS::MouseButtonID buttonID)
                     p2p->setTau (0.1f);
                     mPickConstraint = p2p;
                     
-                    
                 }
                 getDebugLines();
-                mDebugRayLine->addLine (rayTo.getOrigin(), pickPos);
+                mDebugRayLine->addLine(rayTo.getOrigin(), pickPos);
                 mDebugRayLine->draw();
             }
             
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-            if (mGuiListener->getGui()->injectMouse(mInputListener->getAbsMouseX ()*mWindow->getWidth(), 
-                                                    mInputListener->getAbsMouseY ()*mWindow->getHeight(), true))
+            /*
+             *  Beta mouse hidden... 
+             */
+            if (mGuiListener->getGui()->injectMouse(position.x*mWindow->getWidth(), position.y*mWindow->getHeight(), true))
             {
-                mGuiListener->hideMouse();
+                //mGuiListener->hideMouse();
             }
             else
             {
-                mGuiListener->showMouse ();
+                //mGuiListener->showMouse ();
             }
-#endif
+            
         }
             
         case OIS::MB_Middle:
@@ -538,8 +525,7 @@ void VSCOgreBulletListener::mouseButtonPressed(OIS::MouseButtonID buttonID)
             // small unique impulse under cursor.
             Ogre::Vector3 pickPos;
             Ogre::Ray rayTo;
-            OgreBulletDynamics::RigidBody * body = 
-            getBodyUnderCursorUsingBullet(pickPos, rayTo);
+            OgreBulletDynamics::RigidBody * body = getBodyUnderCursorUsingBullet(pickPos, rayTo);
             //getBodyUnderCursorUsingOgre(pickPos, rayTo);
             if (body)
             {  
@@ -563,15 +549,17 @@ void VSCOgreBulletListener::mouseButtonPressed(OIS::MouseButtonID buttonID)
             }
         }
             
+        /*
+         *  Keep Beta GUI mouse hidden all the time
+         */
         case OIS::MB_Right:
         {
-            mGuiListener->hideMouse ();
+            //mGuiListener->hideMouse ();
         }
     }
 }
 
-
-void VSCOgreBulletListener::mouseButtonReleased(OIS::MouseButtonID buttonID)
+void VSCOgreBulletScene::mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
     switch (buttonID) 
     {
@@ -601,21 +589,24 @@ void VSCOgreBulletListener::mouseButtonReleased(OIS::MouseButtonID buttonID)
             
         }
             
+            /*
+             *  Keep Beta GUI Mouse hidden 
+             */
         case OIS::MB_Right:
         {
-            mGuiListener->showMouse ();
+            //mGuiListener->showMouse ();
         }
     }
 }
 
-void VSCOgreBulletListener::mouseDragged(const Ogre::Vector2& position, const Ogre::Vector2& movement)
+void VSCOgreBulletScene::mouseDragged(const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
     this->mouseMoved(position, movement);
 }
 
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement)
+void VSCOgreBulletScene::mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
 
     mGuiListener->setMousePosition(position);
@@ -645,26 +636,29 @@ void VSCOgreBulletListener::mouseMoved(const Ogre::Vector2& position, const Ogre
         mDebugRayLine->addLine (mPickedBody->getWorldPosition (), newPos);
         mDebugRayLine->draw();
         
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-        mGuiListener->showMouse();
-#endif
+
+        /*
+         *  Keep beta GUI mouse hidden
+         */
+        
+        //mGuiListener->showMouse();
+
     }
 
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-    if (mGuiListener->getGui()->injectMouse(position.x * mWindow->getWidth(), 
-                                            position.y * mWindow->getHeight(), 
-                                            mInputListener->isMouseButtonPressed(OIS::MB_Left)))
+
+    if (mGuiListener->getGui()->injectMouse(position.x * mWindow->getWidth(), position.y * mWindow->getHeight(), 
+                                            this->isMouseButtonPressed(OIS::MB_Left)))
     {
-        mGuiListener->hideMouse();
+        //mGuiListener->hideMouse();
     }
     
     else 
     {
-        mGuiListener->showMouse();
+        //mGuiListener->showMouse();
     }
-#endif
+
     
-    if (mInputListener->isMouseButtonPressed(OIS::MB_Right))
+    if (this->isMouseButtonPressed(OIS::MB_Right))
     {
         mCameraRotX = Degree(-movement.x * 0.13);
         mCameraRotY = Degree(-movement.y * 0.13);
@@ -673,148 +667,148 @@ void VSCOgreBulletListener::mouseMoved(const Ogre::Vector2& position, const Ogre
 }
 
 
-void VSCOgreBulletListener::mouseEntered(const Ogre::Vector2& position)
+void VSCOgreBulletScene::mouseEntered(const Ogre::Vector2& position)
 {
-    
+    std::cout << "VSCOgreBulletScene mouse entered " << position << std::endl;
 }
 
-void VSCOgreBulletListener::mouseExited(const Ogre::Vector2& position)
+void VSCOgreBulletScene::mouseExited(const Ogre::Vector2& position)
 {
-    
+    std::cout << "VSCOgreBulletScene mouse exited " << position << std::endl;
 }
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::keyPressed(OIS::KeyCode key)
+void VSCOgreBulletScene::keyPressed(OIS::KeyCode key)
 {
     
-    std::cout << "VSCOgreBulletListener got key pressed code: " << key << std::endl; 
+    std::cout << "VSCOgreBulletScene got key pressed code: " << key << std::endl; 
     
     static int count = 0;
     // Scene Debug Options
-
+    
     switch(key)
     {
-        // Application Utils
-    case KC_ESCAPE:
-        mQuit = true;
-        break;
-
-    case KC_SYSRQ:
-        mWindow->writeContentsToFile("OgreBulletScreenShot"+StringConverter::toString(count++)+".png");
-        break;
-
-        // Scene Debug Options
-
-    case KC_T:
-        mWireFrame = true;
-        break;
-    case KC_1:
-        mDrawAabb = true;
-        break;
-    case KC_2:
-        mDrawFeaturesText = true;
-        break;
-    case KC_3:
-        mDrawContactPoints = true;
-        break;
-    case KC_4:
-        mNoDeactivation = true;
-        break;
-    case KC_5:
-        mNoHelpText = true;
-        break;
-    case KC_6:
-        mDrawText = true;
-        break;
-    case KC_7:
-        mProfileTimings = true;
-        break;
-    case KC_8:
-        mEnableSatComparison = true;
-        break;
-    case KC_9:
-        mDisableBulletLCP = true;
-        break;
-    case KC_0:
-        mEnableCCD = true;
-        break;
-
-        // pause
-    case KC_P:
-        mPaused = !mPaused;
-        break;
-        // single step
-    case KC_M:
-        mDoOnestep = true;
-        break;
-        // faster Shoots
-    case KC_ADD:
-        mShootSpeed += 5.0f;
-        break;
-        // Slower Shoots
-    case KC_MINUS:
-        mShootSpeed -= 5.0f;
-        break;
-
-        //Camera
-    case KC_Z:
-    case KC_W:
-        mCameraTrans.z -= mCameraMove;
-        break;
-
-    case KC_S:
-        mCameraTrans.z += mCameraMove;
-        break;
-
-    case KC_Q:
-    case KC_A:
-        mCameraTrans.x -= mCameraMove;
-        break;
-
-    case KC_D:
-        mCameraTrans.x += mCameraMove;
-        break;
-
-    default:
-        break;
+            // Application Utils
+        case KC_ESCAPE:
+            mQuit = true;
+            break;
+            
+        case KC_SYSRQ:
+            mWindow->writeContentsToFile("OgreBulletScreenShot"+StringConverter::toString(count++)+".png");
+            break;
+            
+            // Scene Debug Options
+            
+        case KC_T:
+            mWireFrame = true;
+            break;
+        case KC_1:
+            mDrawAabb = true;
+            break;
+        case KC_2:
+            mDrawFeaturesText = true;
+            break;
+        case KC_3:
+            mDrawContactPoints = true;
+            break;
+        case KC_4:
+            mNoDeactivation = true;
+            break;
+        case KC_5:
+            mNoHelpText = true;
+            break;
+        case KC_6:
+            mDrawText = true;
+            break;
+        case KC_7:
+            mProfileTimings = true;
+            break;
+        case KC_8:
+            mEnableSatComparison = true;
+            break;
+        case KC_9:
+            mDisableBulletLCP = true;
+            break;
+        case KC_0:
+            mEnableCCD = true;
+            break;
+            
+            // pause
+        case KC_P:
+            mPaused = !mPaused;
+            break;
+            // single step
+        case KC_M:
+            mDoOnestep = true;
+            break;
+            // faster Shoots
+        case KC_ADD:
+            mShootSpeed += 5.0f;
+            break;
+            // Slower Shoots
+        case KC_MINUS:
+            mShootSpeed -= 5.0f;
+            break;
+            
+            //Camera
+        case KC_Z:
+        case KC_W:
+            mCameraTrans.z -= mCameraMove;
+            break;
+            
+        case KC_S:
+            mCameraTrans.z += mCameraMove;
+            break;
+            
+        case KC_Q:
+        case KC_A:
+            mCameraTrans.x -= mCameraMove;
+            break;
+            
+        case KC_D:
+            mCameraTrans.x += mCameraMove;
+            break;
+            
+        default:
+            break;
     }
 }
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::keyReleased(OIS::KeyCode key)
+void VSCOgreBulletScene::keyReleased(OIS::KeyCode key)
 {
     switch(key)
     {
-        //Camera
-    case KC_Z:
-    case KC_W:
-        mCameraTrans.z += mCameraMove;
-        break;
-    case KC_S:
-        mCameraTrans.z -= mCameraMove;
-        break;
-    case KC_Q:
-    case KC_A:
-        mCameraTrans.x += mCameraMove;
-        break;
-    case KC_D:
-        mCameraTrans.x -= mCameraMove;
-        break;
-
-    default:
-        break;
+            //Camera
+        case KC_Z:
+        case KC_W:
+            mCameraTrans.z += mCameraMove;
+            break;
+        case KC_S:
+            mCameraTrans.z -= mCameraMove;
+            break;
+        case KC_Q:
+        case KC_A:
+            mCameraTrans.x += mCameraMove;
+            break;
+        case KC_D:
+            mCameraTrans.x -= mCameraMove;
+            break;
+            
+        default:
+            break;
     }
 }
 
 // -------------------------------------------------------------------------
-OgreBulletDynamics::RigidBody* VSCOgreBulletListener::getBodyUnderCursorUsingBullet(Ogre::Vector3 &intersectionPoint, Ray &rayTo)
+OgreBulletDynamics::RigidBody* VSCOgreBulletScene::getBodyUnderCursorUsingBullet(Ogre::Vector3 &intersectionPoint, Ray &rayTo)
 {
     
     float absX = 0.0;
     float absY = 0.0;
     
-    absX = mInputListener->getLastMousePosition().x;
-    absY = mInputListener->getLastMousePosition().y;
+    absX = this->getLastMousePosition().x;
+    absY = this->getLastMousePosition().y;
     
     rayTo = mCamera->getCameraToViewportRay (absX, absY);
 
@@ -836,13 +830,13 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletListener::getBodyUnderCursorUsingBul
     return 0;
 }
 // -------------------------------------------------------------------------
-OgreBulletDynamics::RigidBody* VSCOgreBulletListener::getBodyUnderCursorUsingOgre(Ogre::Vector3 &intersectionPoint, Ray &rayTo)
+OgreBulletDynamics::RigidBody* VSCOgreBulletScene::getBodyUnderCursorUsingOgre(Ogre::Vector3 &intersectionPoint, Ray &rayTo)
 {
     float absX = 0.0;
     float absY = 0.0;
     
-    absX = mInputListener->getLastMousePosition().x;
-    absY = mInputListener->getLastMousePosition().y;
+    absX = this->getLastMousePosition().x;
+    absY = this->getLastMousePosition().y;
     
     rayTo = mCamera->getCameraToViewportRay (absX, absY);
 
@@ -881,20 +875,19 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletListener::getBodyUnderCursorUsingOgr
     return 0;
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletListener::frameStarted(Real elapsedTime)
+bool VSCOgreBulletScene::frameStarted(Real elapsedTime)
 {
     if (mQuit)
         return false;
 
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-    if (mInputListener->getButton2Pressed())
+    //if (this->getButton2Pressed())
+    if (this->isMouseButtonPressed(OIS::MB_Middle))
     {
         mCamera->yaw(mCameraRotX);
         mCamera->pitch(mCameraRotY);
         mCameraRotX = 0;
         mCameraRotY = 0;
     }
-#endif
 
     mCamera->moveRelative(mCameraTrans);
 
@@ -907,7 +900,7 @@ bool VSCOgreBulletListener::frameStarted(Real elapsedTime)
     return true;
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletListener::frameEnded(Real elapsedTime)
+bool VSCOgreBulletScene::frameEnded(Real elapsedTime)
 {
     if (mQuit)
         return false;
@@ -975,20 +968,18 @@ bool VSCOgreBulletListener::frameEnded(Real elapsedTime)
         mEnableCCD = false;
     }
 
-#ifdef VSC_ENABLE_OIS_INPUT_SYSTEM
-    mGuiListener->getGui ()->update (elapsedTime);
-#endif
+    mGuiListener->getGui()->update (elapsedTime);
     
     updateStats();
+    
     return true;
 }
 // ------------------------------------------------------------------------- 
-bool VSCOgreBulletListener::checkIfEnoughPlaceToAddObject(float maxDist)
+bool VSCOgreBulletScene::checkIfEnoughPlaceToAddObject(float maxDist)
 {
     Ogre::Vector3 pickPos;
     Ogre::Ray rayTo;
-    OgreBulletDynamics::RigidBody * body = 
-        getBodyUnderCursorUsingBullet(pickPos, rayTo);
+    OgreBulletDynamics::RigidBody * body = getBodyUnderCursorUsingBullet(pickPos, rayTo);
         //getBodyUnderCursorUsingOgre(pickPos, rayTo);
     if (body)
     {          
@@ -998,119 +989,118 @@ bool VSCOgreBulletListener::checkIfEnoughPlaceToAddObject(float maxDist)
     return true;        
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::throwDynamicObject(OIS::KeyCode key)
+void VSCOgreBulletScene::throwDynamicObject(OIS::KeyCode key)
 {
     const float trowDist = 2.0f;
     switch(key)
     {
-    case KC_B: 
-        if ( checkIfEnoughPlaceToAddObject(trowDist))
-        {
-            const Ogre::Vector3 vec (mCamera->getDerivedPosition());
-            OgreBulletDynamics::RigidBody *body = addCube("cube", vec, Quaternion(0,0,0,1), 
-                gCubeBodyBounds, gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
-
-            body->setLinearVelocity(
-                mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed
-				);
-		}
-        break;
-    case KC_N: 
-        if ( checkIfEnoughPlaceToAddObject(trowDist))
-        {
-            const Ogre::Vector3 vec (mCamera->getDerivedPosition());
-            OgreBulletDynamics::RigidBody *body = addSphere("sphere", vec, Quaternion(0,0,0,1), 
-                gSphereBodyBounds, 
-                gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
-
-            body->setLinearVelocity(
-                mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed
-                );
-        }
-        break;
-    case KC_H: 
-        if ( checkIfEnoughPlaceToAddObject(trowDist))
-        {
-            const Ogre::Vector3 vec (mCamera->getDerivedPosition());
-            OgreBulletDynamics::RigidBody *body = addCylinder("cylinder", vec, Quaternion(0,0,0,1), 
-                gCylinderBodyBounds, 
-                gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
-
-            body->setLinearVelocity(
-                mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed
-                );
-        }
-        break;
-    case KC_G : 
-        if ( checkIfEnoughPlaceToAddObject(trowDist))
-        {
-            const Ogre::Vector3 vec (mCamera->getDerivedPosition());
-            OgreBulletDynamics::RigidBody *body = addCone("cone", vec, Quaternion(0,0,0,1), 
-                gConeBodyBounds, 
-                gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
-
-            body->setLinearVelocity(
-                mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed
-                );
-        }
-        break;
+        case KC_B: 
+            if ( checkIfEnoughPlaceToAddObject(trowDist))
+            {
+                const Ogre::Vector3 vec (mCamera->getDerivedPosition());
+                OgreBulletDynamics::RigidBody *body = addCube("cube", vec, Quaternion(0,0,0,1), 
+                                                              gCubeBodyBounds, gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
+                
+                body->setLinearVelocity(
+                                        mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed
+                                        );
+            }
+            break;
+        case KC_N: 
+            if ( checkIfEnoughPlaceToAddObject(trowDist))
+            {
+                const Ogre::Vector3 vec (mCamera->getDerivedPosition());
+                OgreBulletDynamics::RigidBody *body = addSphere("sphere", vec, Quaternion(0,0,0,1), 
+                                                                gSphereBodyBounds, 
+                                                                gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
+                
+                body->setLinearVelocity(
+                                        mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed
+                                        );
+            }
+            break;
+        case KC_H: 
+            if ( checkIfEnoughPlaceToAddObject(trowDist))
+            {
+                const Ogre::Vector3 vec (mCamera->getDerivedPosition());
+                OgreBulletDynamics::RigidBody *body = addCylinder("cylinder", vec, Quaternion(0,0,0,1), 
+                                                                  gCylinderBodyBounds, 
+                                                                  gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
+                
+                body->setLinearVelocity(
+                                        mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed
+                                        );
+            }
+            break;
+        case KC_G : 
+            if ( checkIfEnoughPlaceToAddObject(trowDist))
+            {
+                const Ogre::Vector3 vec (mCamera->getDerivedPosition());
+                OgreBulletDynamics::RigidBody *body = addCone("cone", vec, Quaternion(0,0,0,1), 
+                                                              gConeBodyBounds, 
+                                                              gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
+                
+                body->setLinearVelocity(
+                                        mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed
+                                        );
+            }
+            break;
     }
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::dropDynamicObject(OIS::KeyCode key)
+void VSCOgreBulletScene::dropDynamicObject(OIS::KeyCode key)
 {
     const float dropDist = 10.0f;
     switch(key)
     {
-    case KC_J: 
-        if ( checkIfEnoughPlaceToAddObject(dropDist))
-        {
-            const Ogre::Vector3 vec (mCamera->getDerivedPosition());
-            OgreBulletDynamics::RigidBody *body = addCube("cube", 
-                vec + mCamera->getDerivedDirection().normalisedCopy() * 10, 
-                Quaternion(0,0,0,1), 
-                gCubeBodyBounds, gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
-
-        }
-        break;
-    case KC_K: 
-        if ( checkIfEnoughPlaceToAddObject(dropDist))
-        {
-            const Ogre::Vector3 vec (mCamera->getDerivedPosition());
-            OgreBulletDynamics::RigidBody *body = addSphere("sphere", 
-                vec + mCamera->getDerivedDirection().normalisedCopy() * 10, 
-                Quaternion(0,0,0,1), 
-                gSphereBodyBounds, 
-                gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
-
-        }
-        break;
-    case KC_U : 
-        if ( checkIfEnoughPlaceToAddObject(dropDist))
-        {
-            const Ogre::Vector3 vec (mCamera->getDerivedPosition());
-            OgreBulletDynamics::RigidBody *body = addCylinder("Cylinder", vec, Quaternion(0,0,0,1), 
-                gCylinderBodyBounds, 
-                gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
-
-        }
-        break;
-    case KC_I: 
-        if ( checkIfEnoughPlaceToAddObject(dropDist))
-        {
-            const Ogre::Vector3 vec (mCamera->getDerivedPosition());
-            OgreBulletDynamics::RigidBody *body = addCone("Cone", 
-                vec + mCamera->getDerivedDirection().normalisedCopy() * 10, 
-                Quaternion(0,0,0,1), 
-                gConeBodyBounds, 
-                gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
-        }
-        break;
+        case KC_J: 
+            if ( checkIfEnoughPlaceToAddObject(dropDist))
+            {
+                const Ogre::Vector3 vec (mCamera->getDerivedPosition());
+                OgreBulletDynamics::RigidBody *body = addCube("cube", 
+                                                              vec + mCamera->getDerivedDirection().normalisedCopy() * 10, 
+                                                              Quaternion(0,0,0,1), 
+                                                              gCubeBodyBounds, gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
+                
+            }
+            break;
+        case KC_K: 
+            if ( checkIfEnoughPlaceToAddObject(dropDist))
+            {
+                const Ogre::Vector3 vec (mCamera->getDerivedPosition());
+                OgreBulletDynamics::RigidBody *body = addSphere("sphere", 
+                                                                vec + mCamera->getDerivedDirection().normalisedCopy() * 10, 
+                                                                Quaternion(0,0,0,1), 
+                                                                gSphereBodyBounds, 
+                                                                gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
+                
+            }
+            break;
+        case KC_U : 
+            if ( checkIfEnoughPlaceToAddObject(dropDist))
+            {
+                const Ogre::Vector3 vec (mCamera->getDerivedPosition());
+                OgreBulletDynamics::RigidBody *body = addCylinder("Cylinder", vec, Quaternion(0,0,0,1), 
+                                                                  gCylinderBodyBounds, 
+                                                                  gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
+                
+            }
+            break;
+        case KC_I: 
+            if ( checkIfEnoughPlaceToAddObject(dropDist))
+            {
+                const Ogre::Vector3 vec (mCamera->getDerivedPosition());
+                OgreBulletDynamics::RigidBody *body = addCone("Cone", 
+                                                              vec + mCamera->getDerivedDirection().normalisedCopy() * 10, 
+                                                              Quaternion(0,0,0,1), 
+                                                              gConeBodyBounds, 
+                                                              gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
+            }
+            break;
     }
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::initWorld(const Ogre::Vector3 &gravityVector, 
-                                   const Ogre::AxisAlignedBox &bounds)
+void VSCOgreBulletScene::initWorld(const Ogre::Vector3 &gravityVector, const Ogre::AxisAlignedBox &bounds)
 {
     // Start Bullet
     mWorld = new DynamicsWorld (mSceneMgr, bounds, gravityVector, true, true, 10000);
@@ -1126,14 +1116,12 @@ void VSCOgreBulletListener::initWorld(const Ogre::Vector3 &gravityVector,
 
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::addGround()
+void VSCOgreBulletScene::addGround()
 {
-    addStaticPlane(
-        gStaticBodyRestitution, 
-        gStaticBodyFriction);
+    addStaticPlane(gStaticBodyRestitution, gStaticBodyFriction);
 }
 // -------------------------------------------------------------------------
-RigidBody *VSCOgreBulletListener::addCube(const Ogre::String instanceName,
+RigidBody *VSCOgreBulletScene::addCube(const Ogre::String instanceName,
                                        const Ogre::Vector3 &pos, const Ogre::Quaternion &q, const Ogre::Vector3 &size,
                                        const Ogre::Real bodyRestitution, const Ogre::Real bodyFriction, 
                                        const Ogre::Real bodyMass)
@@ -1173,7 +1161,7 @@ RigidBody *VSCOgreBulletListener::addCube(const Ogre::String instanceName,
     return defaultBody;
 }
 // -------------------------------------------------------------------------
-RigidBody *VSCOgreBulletListener::addSphere(const Ogre::String instanceName,
+RigidBody *VSCOgreBulletScene::addSphere(const Ogre::String instanceName,
                                          const Ogre::Vector3 &pos, const Ogre::Quaternion &q, const Ogre::Real radius,
                                          const Ogre::Real bodyRestitution, const Ogre::Real bodyFriction, 
                                          const Ogre::Real bodyMass)
@@ -1210,7 +1198,7 @@ RigidBody *VSCOgreBulletListener::addSphere(const Ogre::String instanceName,
 }
 
 // -------------------------------------------------------------------------
-RigidBody *VSCOgreBulletListener::addCylinder(const Ogre::String instanceName,
+RigidBody *VSCOgreBulletScene::addCylinder(const Ogre::String instanceName,
                                            const Ogre::Vector3 &pos, const Ogre::Quaternion &q, const Ogre::Vector3 &size,
                                            const Ogre::Real bodyRestitution, const Ogre::Real bodyFriction, 
                                            const Ogre::Real bodyMass)
@@ -1250,7 +1238,7 @@ RigidBody *VSCOgreBulletListener::addCylinder(const Ogre::String instanceName,
     return defaultBody;
 }
 // -------------------------------------------------------------------------
-RigidBody *VSCOgreBulletListener::addCone(const Ogre::String instanceName,
+RigidBody *VSCOgreBulletScene::addCone(const Ogre::String instanceName,
                                        const Ogre::Vector3 &pos, const Ogre::Quaternion &q, const Ogre::Vector3 &size,
                                        const Ogre::Real bodyRestitution, const Ogre::Real bodyFriction, 
                                        const Ogre::Real bodyMass)
@@ -1287,7 +1275,7 @@ RigidBody *VSCOgreBulletListener::addCone(const Ogre::String instanceName,
     return defaultBody;
 }
 // -------------------------------------------------------------------------
-RigidBody *VSCOgreBulletListener::addStaticTrimesh(const Ogre::String &instanceName,
+RigidBody *VSCOgreBulletScene::addStaticTrimesh(const Ogre::String &instanceName,
                                                 const Ogre::String &meshName,
                                                 const Ogre::Vector3 &pos, 
                                                 const Ogre::Quaternion &q, 
@@ -1317,7 +1305,7 @@ RigidBody *VSCOgreBulletListener::addStaticTrimesh(const Ogre::String &instanceN
     return sceneRigid;
 }
 // -------------------------------------------------------------------------
-RigidBody *VSCOgreBulletListener::addStaticPlane( const Ogre::Real bodyRestitution, 
+RigidBody *VSCOgreBulletScene::addStaticPlane( const Ogre::Real bodyRestitution, 
                                               const Ogre::Real bodyFriction)
 {
     // Use a load of meshes to represent the floor
@@ -1364,7 +1352,7 @@ RigidBody *VSCOgreBulletListener::addStaticPlane( const Ogre::Real bodyRestituti
 
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletListener::updateStats(void)
+void VSCOgreBulletScene::updateStats(void)
 {
 
     // update stats when necessary

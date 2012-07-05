@@ -2,53 +2,39 @@
 #define _VSC_OGRE_BULLET_COCOA_INPUT_ADAPTER_H_
 
 #import <Cocoa/Cocoa.h>
-
-//#include "VSCOgreBulletInputListener.h"
+#include "VSCOgreInputAdapter.h"
 #include "OIS.h"
 #include <set>
 
-class VSCOgreBulletInputListener;
-@class OgreView;
+class VSCOgreInputListener;
 
-class VSCOgreBulletCocoaInputAdapter
+class VSCOgreBulletCocoaInputAdapter : public VSCOgreInputAdapter
 {
 public:
-
-	// Constructor/destructor
-    VSCOgreBulletCocoaInputAdapter(OgreView *cocoaOgreView);
-    virtual ~VSCOgreBulletCocoaInputAdapter(){};
     
     /*
      *  Slots for forwarding the appropriate NSResponder callbacks
      */
-    
     void keyUp(NSEvent* theEvent);
     void keyDown(NSEvent* theEvent);
-    
     void mouseEntered(NSEvent* theEvent);
     void mouseExited(NSEvent* theEvent);
     void mouseMoved(NSEvent* theEvent);
-    
     void mouseDown(NSEvent* theEvent);
     void mouseUp(NSEvent* theEvent);
     void mouseDragged(NSEvent* theEvent);
-    
     void otherMouseDown(NSEvent* theEvent);
     void otherMouseDragged(NSEvent* theEvent);
     void otherMouseUp(NSEvent* theEvent);
-    
     void rightMouseDown(NSEvent* theEvent);
     void rightMouseDragged(NSEvent* theEvent);
     void rightMouseUp(NSEvent* theEvent);
-    
     void scrollWheel(NSEvent* theEvent);
     
-    void setOgreBulletInputListener(VSCOgreBulletInputListener* listener) {mOgreBulletInputListener = listener;}
-    VSCOgreBulletInputListener* getOgreBulletInputListener(void) {return mOgreBulletInputListener;}
-    
-    void setOgreView(OgreView* ogreView) {mCocoaOgreView = ogreView;}
-    OgreView* getOgreView(void) {return mCocoaOgreView;}
 
+    /*
+     *  OIS/Cocoa conversion utilities
+     */
     std::set<OIS::KeyCode> keyCodesForCocoaString(NSString* s);
     OIS::Keyboard::Modifier modiferForCocoaModifierFlags(NSUInteger m);
     
@@ -58,9 +44,6 @@ private:
     UnicarToOISKeyMap keyConversionMap;
     
     void populateKeyConversionMap(void);
-
-    VSCOgreBulletInputListener*     mOgreBulletInputListener;
-    OgreView*                       mCocoaOgreView;
     
 };
 

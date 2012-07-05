@@ -10,15 +10,15 @@ This source file is not LGPL, it's public source code that you can reuse.
 
 #include "OgreBulletDynamics.h"
 
-#include "VSCOgreBulletListener.h"
+#include "VSCOgreBulletScene.h"
 class VSCOgreBulletApplication;
 
 // -------------------------------------------------------------------------
-class VSCOgreBulletVehiclesDemo : public VSCOgreBulletListener 
+class VSCOgreBulletVehiclesDemo : public VSCOgreBulletScene 
 {
 public:
 
-    VSCOgreBulletVehiclesDemo() : VSCOgreBulletListener() {mName = "Vehicle Test Scene";};
+    VSCOgreBulletVehiclesDemo() : VSCOgreBulletScene() {mName = "Vehicle Test Scene";};
     virtual ~VSCOgreBulletVehiclesDemo(){};
 
     void init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application);

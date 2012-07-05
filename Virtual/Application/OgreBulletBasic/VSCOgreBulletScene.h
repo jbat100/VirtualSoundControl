@@ -9,7 +9,7 @@ This source file is not LGPL, it's public source code that you can reuse.
  File modified for VSC project
  -----------------------------------------------------------------------------*/
 /*
- VSCOgreBulletListener.h
+ VSCOgreBulletScene.h
 -------------
 A basic test framework that minimize code in each test scene listener.
 */
@@ -18,8 +18,8 @@ A basic test framework that minimize code in each test scene listener.
 #define _VSC_OGRE_BULLET_LISTENER_H_
 
 #include "OgreBulletDynamics.h"
-#include "VSCOgreBulletInputListener.h"
-#include "VSCOgreBulletGuiListener.h"
+#include "VSCOgreInputListener.h"
+#include "VSCOgreBetaGUIListener.h"
 #include "OIS.h"
 
 
@@ -45,15 +45,15 @@ class VSCOgreBulletApplication;
 /*
 The base Test class, is also able to listen for collisions and thus change the contact properties
 */
-class VSCOgreBulletListener 
+class VSCOgreBulletScene : public VSCOgreInputListener
 {
 public:
 
 	/**--------------------------------------------------------------
      *  Constructor/Destructor/Initialization 
      */
-    VSCOgreBulletListener();
-    virtual ~VSCOgreBulletListener(){};
+    VSCOgreBulletScene();
+    virtual ~VSCOgreBulletScene(){};
     virtual void init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application);
 
     /**--------------------------------------------------------------
@@ -83,23 +83,6 @@ public:
     void throwDynamicObject(OIS::KeyCode key);
     void dropDynamicObject(OIS::KeyCode key);
 
-    /**--------------------------------------------------------------
-     *  GUI stuff seperate this to keep this class GUI Agnostic?
-     */
-    VSCOgreBulletInputListener *getInputListener(){return mInputListener;}
-
-    /**--------------------------------------------------------------
-     *  These methods are called by the input listener when some 
-     *  input related thing happens 
-     */
-    virtual void mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement);
-    virtual void mouseDragged(const Ogre::Vector2& position, const Ogre::Vector2& movement);
-    virtual void mouseEntered(const Ogre::Vector2& position);
-    virtual void mouseExited(const Ogre::Vector2& position);
-    virtual void mouseButtonPressed(OIS::MouseButtonID buttonID);
-    virtual void mouseButtonReleased(OIS::MouseButtonID buttonID);
-    virtual void keyPressed(OIS::KeyCode key);
-    virtual void keyReleased(OIS::KeyCode key);
 
     bool *getBoolActivator(){return &mActivationBool;}
 
@@ -221,8 +204,7 @@ protected:
    OIS::KeyCode                                             mActivationKeyCode;
    bool                                                     mActivationBool;
 
-   VSCOgreBulletInputListener                               *mInputListener;
-   VSCOgreBulletGuiListener                                 *mGuiListener;
+   VSCOgreBetaGUIListener                                   *mGuiListener;
     
    Ogre::String                                             mDebugText;
    Ogre::String                                             mName;

@@ -9,7 +9,7 @@ This source file is not LGPL, it's public source code that you can reuse.
  File modified for VSC project
  -----------------------------------------------------------------------------*/
 /*
-VSCOgreBulletGuiListener.h
+VSCOgreBetaGUIListener.h
 -------------
 A basic test framework that minimize code in each test scene listener.
 */
@@ -21,17 +21,17 @@ A basic test framework that minimize code in each test scene listener.
 // We'll need the OgreBulletListener definitions
 #include "BetaGUI.h"
 
-class VSCOgreBulletListener;
+class VSCOgreBulletScene;
 
 /*
 The base Test class, is also able to listen for collisions and thus change the contact properties
 */
-class VSCOgreBulletGuiListener : public BetaGUI::BetaGUIListener
+class VSCOgreBetaGUIListener : public BetaGUI::BetaGUIListener
 {
 public:
 	// Constructor/destructor
-    VSCOgreBulletGuiListener(VSCOgreBulletListener *listener, Ogre::RenderWindow *win);
-    virtual ~VSCOgreBulletGuiListener();
+    VSCOgreBetaGUIListener(VSCOgreBulletScene *listener, Ogre::RenderWindow *win);
+    virtual ~VSCOgreBetaGUIListener();
 
     // Gui Callbacks
     void onButtonPress(BetaGUI::Button *ref, Ogre::uchar type);
@@ -51,7 +51,7 @@ protected:
 
    BetaGUI::GUI             *mGui;
 
-   VSCOgreBulletListener    *mListener;
+   VSCOgreBulletScene       *mListener;
    Ogre::RenderWindow       *mWindow;
 
    Ogre::Overlay		    *mMouseOverlay;

@@ -10,7 +10,7 @@ File modified for VSC project
  -----------------------------------------------------------------------------*/
 
 #include "VSCOgreBulletCocoaInputAdapter.h"
-#include "VSCOgreBulletListener.h"
+#include "VSCOgreBulletScene.h"
 #include "VSCOgreBulletCocoaInputListener.h"
 #include "OgreOSXCocoaView.h"
 
@@ -18,11 +18,7 @@ File modified for VSC project
 
 using namespace OIS;
 
-VSCOgreBulletCocoaInputAdapter::VSCOgreBulletCocoaInputAdapter(OgreView *cocoaOgreView) :
-mCocoaOgreView(cocoaOgreView)
-{
-    
-}
+
 
 void VSCOgreBulletCocoaInputAdapter::populateKeyConversionMap(void) {
     
@@ -176,7 +172,10 @@ void VSCOgreBulletCocoaInputAdapter::keyUp(NSEvent* theEvent) {
     BOOST_FOREACH( OIS::KeyCode key, keyCodeSet )
     {
         OIS::KeyEvent e(NULL, key, 0);
-        bool b = mOgreBulletInputListener->keyReleased(e);
+        BOOST_FOREACH (VSCOgreInputListener* inputListener, mInputListeners) 
+        {
+            inputListener->keyReleased(e);
+        }
     }    
 }
 
@@ -189,7 +188,10 @@ void VSCOgreBulletCocoaInputAdapter::keyDown(NSEvent* theEvent) {
     BOOST_FOREACH( OIS::KeyCode key, keyCodeSet )
     {
         OIS::KeyEvent e(NULL, key, 0);
-        bool b = mOgreBulletInputListener->keyPressed(e);
+        BOOST_FOREACH (VSCOgreInputListener* inputListener, mInputListeners) 
+        {
+            inputListener->keyPressed(e);
+        }
     }  
     
 }

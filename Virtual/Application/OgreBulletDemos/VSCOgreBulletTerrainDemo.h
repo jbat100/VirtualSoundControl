@@ -10,16 +10,16 @@ This source file is not LGPL, it's public source code that you can reuse.
 #define _VSC_OGRE_BULLET_TERRAIN_DEMO_H_
 
 #include "OgreBulletDynamics.h"
-#include "VSCOgreBulletListener.h"
+#include "VSCOgreBulletScene.h"
 
 class VSCOgreBulletApplication;
 
 // -------------------------------------------------------------------------
-class VSCOgreBulletTerrainDemo : public VSCOgreBulletListener 
+class VSCOgreBulletTerrainDemo : public VSCOgreBulletScene 
 {
 public:
 
-    VSCOgreBulletTerrainDemo() : VSCOgreBulletListener() {mName = "Terrain Test Scene";};
+    VSCOgreBulletTerrainDemo() : VSCOgreBulletScene() {mName = "Terrain Test Scene";};
     virtual ~VSCOgreBulletTerrainDemo(){};
 
     void init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application);

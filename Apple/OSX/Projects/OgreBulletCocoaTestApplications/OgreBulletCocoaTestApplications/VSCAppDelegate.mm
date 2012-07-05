@@ -12,7 +12,7 @@
 
 #import <vector>
 
-#import "VSCOgreBulletListener.h"
+#import "VSCOgreBulletScene.h"
 #import "VSCOgreBulletApplication.h"
 #import "VSCOgreApplicationCocoaSetup.h"
 
@@ -89,7 +89,7 @@ using namespace OIS;
      *  Cleanup
      */
     
-    std::vector<VSCOgreBulletListener*>::iterator it =  ogreBulletScenes.begin();
+    std::vector<VSCOgreBulletScene*>::iterator it =  ogreBulletScenes.begin();
     while (it != ogreBulletScenes.end())
     {
         delete *it;

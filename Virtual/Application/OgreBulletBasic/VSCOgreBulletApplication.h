@@ -16,7 +16,7 @@ demo scenes and switch between them.
 #include "OgreBulletCollisions.h"
 #include "OgreBulletDynamics.h"
 
-#include "VSCOgreBulletListener.h"
+#include "VSCOgreBulletScene.h"
 #include "VSCOgreApplication.h"
 
 #include <vector>
@@ -30,10 +30,10 @@ class VSCOgreBulletApplication: public VSCOgreApplication,  public Ogre::FrameLi
 {
 public:
 	// Standard constructor/destructor
-    VSCOgreBulletApplication(std::vector <VSCOgreBulletListener *> *bulletListeners);
+    VSCOgreBulletApplication(std::vector <VSCOgreBulletScene *> *bulletListeners);
     ~VSCOgreBulletApplication();
 
-    std::vector <VSCOgreBulletListener *> *getScenesList(){return mBulletListeners;};
+    std::vector <VSCOgreBulletScene *> *getScenesList(){return mBulletListeners;};
 
 protected:
     
@@ -51,16 +51,11 @@ protected:
     bool frameStarted(const Ogre::FrameEvent& evt);
     bool frameEnded(const Ogre::FrameEvent& evt);
 
-    bool switchListener(VSCOgreBulletListener *newListener);
+    bool switchListener(VSCOgreBulletScene *newListener);
     
-    VSCOgreBulletListener *mBulletListener;
-    std::vector<VSCOgreBulletListener*> *mBulletListeners;
+    VSCOgreBulletScene *mBulletListener;
+    std::vector<VSCOgreBulletScene*> *mBulletListeners;
 
-#if VSC_ENABLE_OIS_INPUT_SYSTEM
-    OIS::Keyboard           *mInput;
-    OIS::Mouse              *mMouse;
-    OIS::InputManager       *mInputSystem;
-#endif
 
 };
 

@@ -6,14 +6,14 @@ Copyright (c) 2007 tuan.kuranes@gmail.com (Use it Freely, even Statically, but h
 This source file is not LGPL, it's public source code that you can reuse.
 -----------------------------------------------------------------------------*/
 
-#include "VSCOgreBulletListener.h"
-#include "VSCOgreBulletGuiListener.h"
+#include "VSCOgreBulletScene.h"
+#include "VSCOgreBetaGUIListener.h"
 
 
 using namespace Ogre;
 
 // -------------------------------------------------------------------------
-VSCOgreBulletGuiListener::VSCOgreBulletGuiListener(VSCOgreBulletListener *listener, Ogre::RenderWindow *win) :
+VSCOgreBetaGUIListener::VSCOgreBetaGUIListener(VSCOgreBulletScene *listener, Ogre::RenderWindow *win) :
     mListener(listener),
     mWindow(win),
     mMouseOverlay(0),
@@ -66,13 +66,13 @@ VSCOgreBulletGuiListener::VSCOgreBulletGuiListener(VSCOgreBulletListener *listen
 
 }
 // -------------------------------------------------------------------------
-VSCOgreBulletGuiListener::~VSCOgreBulletGuiListener()
+VSCOgreBetaGUIListener::~VSCOgreBetaGUIListener()
 {
     // other buttons  and window managed by BETAGUI will be deleted by BETAGUI himself.
     delete mGui;
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletGuiListener::addBool(BetaGUI::Window *window, bool* value, const String &label, Vector2 &pos)
+void VSCOgreBetaGUIListener::addBool(BetaGUI::Window *window, bool* value, const String &label, Vector2 &pos)
 {
     window->createBoolButton(
         Vector4(pos.x, pos.y, 7*label.size(), 24), 
@@ -82,7 +82,7 @@ void VSCOgreBulletGuiListener::addBool(BetaGUI::Window *window, bool* value, con
         value);
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletGuiListener::onButtonPress(BetaGUI::Button *ref, Ogre::uchar type)
+void VSCOgreBetaGUIListener::onButtonPress(BetaGUI::Button *ref, Ogre::uchar type)
 {
     //if(type == 1) // button down
     //{
@@ -90,17 +90,17 @@ void VSCOgreBulletGuiListener::onButtonPress(BetaGUI::Button *ref, Ogre::uchar t
     //}
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletGuiListener::hideMouse()
+void VSCOgreBetaGUIListener::hideMouse()
 {
    mMousePanel->hide();
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletGuiListener::showMouse()
+void VSCOgreBetaGUIListener::showMouse()
 {
    mMousePanel->show();
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletGuiListener::setMousePosition(Ogre::Vector2 position)
+void VSCOgreBetaGUIListener::setMousePosition(Ogre::Vector2 position)
 {
     mMousePanel->setPosition (position.x - mMouseCursorHalfWidth, position.y - mMouseCursorHalfHeight);
 }

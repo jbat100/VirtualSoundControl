@@ -14,22 +14,30 @@ InputListener.h
 -------------
 A basic test framework that minimize code in each test scene listener.
 */
-#ifndef _VSC_OGRE_BULLET_OIS_INPUT_LISTENER_H_
-#define _VSC_OGRE_BULLET_OIS_INPUT_LISTENER_H_
+#ifndef _VSC_OGRE_BULLET_INPUT_ADAPTER_H_
+#define _VSC_OGRE_BULLET_INPUT_ADAPTER_H_
 
-#include <Ogre/Ogre.h>
-#include "OIS.h"
-#include "VSCOgreInputListener.h"
+#include <set>
 
-class VSCOgreBulletOISInputListener : public VSCOgreInputListener
+class VSCOgreInputListener;
+
+class VSCOgreInputAdapter
 {
+    
 public:
+    
+    /*
+     *  Add/Remove input listeners
+     */
+    void addOgreBulletInputListener(VSCOgreInputListener* listener);
+    void removeOgreBulletInputListener(VSCOgreInputListener* listener);
+    const std::set<VSCOgreInputListener*>& getOgreBulletInputListeners(void) {return mInputListeners;}
+    
+private:
 
-	// Constructor/destructor
-    VSCOgreBulletOISInputListener(VSCOgreBulletListener *ogreBulletListener, Ogre::RenderWindow *win);
-    virtual ~VSCOgreBulletOISInputListener(){};
-
-
+    std::set<VSCOgreInputListener*>   mInputListeners;
+    
 };
 
-#endif//_VSC_OGRE_BULLET_OIS_INPUT_LISTENER_H_
+#endif//_VSC_OGRE_BULLET_INPUT_ADAPTER_H_
+

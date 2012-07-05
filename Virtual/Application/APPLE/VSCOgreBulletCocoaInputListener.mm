@@ -9,15 +9,15 @@ This source file is not LGPL, it's public source code that you can reuse.
 File modified for VSC project
  -----------------------------------------------------------------------------*/
 
-#include "VSCOgreBulletListener.h"
+#include "VSCOgreBulletScene.h"
 #include "VSCOgreBulletCocoaInputListener.h"
 #include "VSCOgreBulletCocoaInputAdapter.h"
 #include "OgreOSXCocoaView.h"
 
 
 // -------------------------------------------------------------------------
-VSCOgreBulletCocoaInputListener::VSCOgreBulletCocoaInputListener(VSCOgreBulletListener * ogreBulletListener, Ogre::RenderWindow *window) :
-VSCOgreBulletInputListener(ogreBulletListener, window)
+VSCOgreBulletCocoaInputListener::VSCOgreBulletCocoaInputListener(VSCOgreBulletScene * ogreBulletListener, Ogre::RenderWindow *window) :
+VSCOgreInputListener(ogreBulletListener, window)
 {
     /*
      *  Check that mCocoaInputAdapter or maybe for valid arguments in adapter constructor

@@ -10,16 +10,16 @@ This source file is not LGPL, it's public source code that you can reuse.
 #define _VSC_OGREBULLET_CONSTRAINTS_DEMO_H_
 
 #include "OgreBulletDynamics.h"
-#include "VSCOgreBulletListener.h"
+#include "VSCOgreBulletScene.h"
 
 class VSCOgreBulletApplication;
 
 // -------------------------------------------------------------------------
-class VSCOgreBulletConstraintsDemo : public VSCOgreBulletListener 
+class VSCOgreBulletConstraintsDemo : public VSCOgreBulletScene 
 {
 public:
 
-    VSCOgreBulletConstraintsDemo() : VSCOgreBulletListener()
+    VSCOgreBulletConstraintsDemo() : VSCOgreBulletScene()
       {
           mName = "Constraints Demo";
       };

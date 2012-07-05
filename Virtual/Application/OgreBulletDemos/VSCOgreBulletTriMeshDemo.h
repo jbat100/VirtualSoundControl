@@ -11,15 +11,15 @@ This source file is not LGPL, it's public source code that you can reuse.
 
 #include "OgreBulletDynamics.h"
 
-#include "VSCOgreBulletListener.h"
+#include "VSCOgreBulletScene.h"
 class VSCOgreBulletApplication;
 
 // -------------------------------------------------------------------------
-class VSCOgreBulletTriMeshDemo : public VSCOgreBulletListener 
+class VSCOgreBulletTriMeshDemo : public VSCOgreBulletScene 
 {
 public:
 
-    VSCOgreBulletTriMeshDemo() : VSCOgreBulletListener() {mName = "Trimesh Static Scene test";};
+    VSCOgreBulletTriMeshDemo() : VSCOgreBulletScene() {mName = "Trimesh Static Scene test";};
     virtual ~VSCOgreBulletTriMeshDemo(){};
 
     void init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application);

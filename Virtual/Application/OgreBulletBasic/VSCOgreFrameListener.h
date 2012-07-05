@@ -38,12 +38,9 @@ D:        Step right
 #include <Ogre/Ogre.h>
 #include <Ogre/OgreConfigFile.h>
 #include <Ogre/OgreException.h>
+#include "VSCOgreInputListener.h"
 
-#include "OIS.h"
-
-class VSCOgreBulletInputListener;
-
-class VSCOgreFrameListener: public Ogre::FrameListener, public Ogre::WindowEventListener
+class VSCOgreFrameListener: public Ogre::FrameListener, public Ogre::WindowEventListener, public VSCOgreInputListener
 {
     
 protected:
@@ -54,14 +51,8 @@ public:
     
     VSCOgreFrameListener();
     
-#if VSC_ENABLE_OIS_INPUT_SYSTEM
-	// Constructor takes a RenderWindow because it uses that to determine input context
-	VSCOgreFrameListener(Ogre::RenderWindow* win, Ogre::Camera* cam, bool bufferedKeys = false, bool bufferedMouse = false, bool bufferedJoy = false);
-#else
-    VSCOgreFrameListener(Ogre::RenderWindow* win, Ogre::Camera* cam, VSCOgreBulletInputListener* inputListener = 0);
-    void setInputListener(VSCOgreBulletInputListener* inputListener) {mInputListener = inputListener;}
-    VSCOgreBulletInputListener* getInputListener(void) {return mInputListener;}
-#endif
+	VSCOgreFrameListener(Ogre::RenderWindow* win, Ogre::Camera* cam);
+
     
     virtual ~VSCOgreFrameListener();
 
@@ -69,8 +60,6 @@ public:
 	virtual void windowResized(Ogre::RenderWindow* rw);
 	//Unattach OIS before window shutdown (very important under Linux)
 	virtual void windowClosed(Ogre::RenderWindow* rw);
-	virtual bool processUnbufferedKeyInput(const Ogre::FrameEvent& evt);
-	virtual bool processUnbufferedMouseInput(const Ogre::FrameEvent& evt);
 	virtual void moveCamera();
 
 	virtual void showDebugOverlay(bool show);
@@ -103,16 +92,6 @@ protected:
 	Ogre::Real mMoveSpeed;
 	Ogre::Degree mRotateSpeed;
 	Ogre::Overlay* mDebugOverlay;
-
-#if VSC_ENABLE_OIS_INPUT_SYSTEM
-	//OIS Input devices
-	OIS::InputManager*  mInputManager;
-	OIS::Mouse*         mMouse;
-	OIS::Keyboard*      mKeyboard;
-	OIS::JoyStick*      mJoy;
-#else
-    VSCOgreBulletInputListener* mInputListener;
-#endif
     
 };
 
