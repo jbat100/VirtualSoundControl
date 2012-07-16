@@ -26,7 +26,8 @@ Description: Base class for all the OGRE examples
 #include <Ogre/OgreConfigFile.h>
 #include <Ogre/OSX/macUtils.h>
 
-#include "OgreOSXCocoaView.h"
+//#include "OgreOSXCocoaView.h"
+#include "VSCOgreView.h"
 #include "OgreOSXCocoaWindow.h"
 
 #include "VSCOgreApplication.h"
@@ -39,8 +40,8 @@ Description: Base class for all the OGRE examples
 
 bool VSCOgreApplicationCocoaSetup::setupApplicationWithOgreView(VSCOgreApplication* ogreApplication, void* rawOgreView)
 {
-    OgreView* ogreView = (__bridge OgreView*)rawOgreView;
-    BOOST_ASSERT_MSG( [ogreView isKindOfClass:[OgreView class]], "Expected ogreView to be of class OgreView" ); 
+    VSCOgreView* ogreView = (__bridge VSCOgreView*)rawOgreView;
+    BOOST_ASSERT_MSG( [ogreView isKindOfClass:[VSCOgreView class]], "Expected ogreView to be of class OgreView" ); 
     
     // get platform-specific working directory
     Ogre::String workDir = Ogre::StringUtil::BLANK;
@@ -86,6 +87,7 @@ bool VSCOgreApplicationCocoaSetup::setupApplicationWithOgreView(VSCOgreApplicati
     ogreApplication->setInputAdapter(adapter);
     adapter->setCocoaView(ogreView);
     adapter->addInputListener(ogreApplication);
+    ogreView.inputAdapter = adapter;
     
     return true;
 }

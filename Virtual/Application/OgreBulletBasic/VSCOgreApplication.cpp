@@ -55,7 +55,6 @@ VSCOgreApplication::~VSCOgreApplication()
         OGRE_DELETE mRoot;
 }
 
-
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 bool VSCOgreApplication::setupWithOgreView(void* ogreView) {
     
@@ -67,12 +66,8 @@ bool VSCOgreApplication::setupWithOgreView(void* ogreView) {
     this->createViewports();
     // Set default mipmap level (NB some APIs ignore this)
     TextureManager::getSingleton().setDefaultNumMipmaps(5);
-    
     this->createResourceListener(); // Create any resource listeners (for loading screens)
     this->loadResources();
-    
-    this->createScene();
-    this->createFrameListener();
     
     return true;
     
@@ -132,13 +127,6 @@ bool VSCOgreApplication::setup(void)
 }
 #endif
 
-
-
-
-Root* VSCOgreApplication::getRoot(void) {
-    return mRoot;
-}
-
 /*
  *  NOTE: This is probably where the fun is in terms of making the application run on Cocoa
  */
@@ -172,18 +160,11 @@ void VSCOgreApplication::createCamera(void)
 {
     // Create the camera
     mCamera = mSceneMgr->createCamera("PlayerCam");
-    
     // Position it at 500 in Z direction
     mCamera->setPosition(Vector3(0,0,500));
     // Look back along -Z
     mCamera->lookAt(Vector3(0,0,-300));
     mCamera->setNearClipDistance(5);
-    
-}
-
-void VSCOgreApplication::createFrameListener(void)
-{
-
 }
 
 void VSCOgreApplication::createViewports(void)

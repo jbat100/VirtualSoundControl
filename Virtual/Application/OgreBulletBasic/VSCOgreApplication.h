@@ -28,9 +28,10 @@ Description: Base class for all the OGRE examples
 class VSCOgreInputAdapter;
 class VSCOgreApplicationCocoaSetup;
 
-/** Base class which manages the standard startup of an Ogre application.
-    Designed to be subclassed for specific examples if required.
-*/
+/** 
+ *  Base class which manages the standard startup of an Ogre application.
+ *  Designed to be subclassed for specific examples if required.
+ */
 class VSCOgreApplication : public VSCOgreInputListener
 {
     
@@ -55,7 +56,10 @@ public:
     virtual bool setup(void);
 #endif
     
-    Ogre::Root* getRoot(void);
+    Ogre::Root* getRoot(void) {return mRoot;}
+    Ogre::Camera* getCamera(void) {return mCamera;}
+    Ogre::SceneManager* getSceneManager(void) {return mSceneMgr;}
+    Ogre::RenderWindow* getRenderWindow(void) {return mWindow;}
 
 protected:
     
@@ -74,17 +78,10 @@ protected:
     virtual bool configure(void);
     virtual void chooseSceneManager(void);
     virtual void createCamera(void);
-    virtual void createFrameListener(void);
-
-    virtual void createScene(void) = 0;    // pure virtual - this has to be overridden
     virtual void destroyScene(void){}    // Optional to override this
     virtual void createViewports(void);
-
-    /// Method which will define the source of resources (other than current folder)
-    virtual void setupResources(void);
-	/// Optional override method where you can create resource listeners (e.g. for loading screens)
-	virtual void createResourceListener(void);
-
+    virtual void setupResources(void); // Method which will define the source of resources (other than current folder)
+	virtual void createResourceListener(void); // Optional override method where you can create resource listeners (e.g. for loading screens)
 	/// Optional override method where you can perform resource group loading
 	/// Must at least do ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 	virtual void loadResources(void);

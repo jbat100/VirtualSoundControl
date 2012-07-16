@@ -16,10 +16,8 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "Debug/OgreBulletCollisionsDebugDrawer.h"
 #include "Constraints/OgreBulletDynamicsRaycastVehicle.h"
 
-#if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
-using namespace OIS;
-#endif 
 
+using namespace OIS;
 using namespace Ogre;
 using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
@@ -56,6 +54,11 @@ static const    Ogre::Vector3      CarPosition     = Ogre::Vector3(15, 3,-15);
 // -------------------------------------------------------------------------
 void VSCOgreBulletVehiclesDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application)
 {
+    /*
+     *  the base impl is called later in the function 
+     */
+    // VSCOgreBulletScene::init(root, win, application);
+    
     /*
      *  Reset help keys
      */
@@ -102,7 +105,6 @@ void VSCOgreBulletVehiclesDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, 
      *  Start ogre scene, is this not done in one of the base classes?
      */
     mSceneMgr = root->createSceneManager(ST_GENERIC);
-
     mCamera = mSceneMgr->createCamera("Cam");
     //mCamera->setFOVy(Degree(90));
     mCamera->setNearClipDistance(0.1);
@@ -110,8 +112,7 @@ void VSCOgreBulletVehiclesDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, 
     Viewport *vp = win->addViewport(mCamera);
     vp->setBackgroundColour(ColourValue(0,0,0));
     // Alter the camera aspect ratio to match the viewport
-    mCamera->setAspectRatio(
-        Real(vp->getActualWidth()) / Real(vp->getActualHeight()));
+    mCamera->setAspectRatio(Real(vp->getActualWidth()) / Real(vp->getActualHeight()));
     mCamera->setPosition(CameraStart);
     mCamera->lookAt(CarPosition);
 
@@ -315,104 +316,104 @@ void VSCOgreBulletVehiclesDemo::keyPressed(OIS::KeyCode key)
 
     switch(key)
     {
-
-    case KC_PGUP: 
-        wheel_engine_style_change = true;
-        mWheelEngineStyle = (mWheelEngineStyle + 1) % 3;
-        break;
-    case KC_PGDOWN: 
-        wheel_engine_style_change = true;
-        mWheelEngineStyle = (mWheelEngineStyle - 1) % 3;
-        break;
-    case KC_HOME: 
-        wheel_steering_style_change = true;
-        mWheelSteeringStyle = (mWheelSteeringStyle + 1) % 3;
-        break;
-    case KC_END: 
-        wheel_steering_style_change = true;
-        mWheelSteeringStyle = (mWheelSteeringStyle - 1) % 3;;
-        break;
-
-    case KC_LEFT: 
-        mSteeringLeft = true;
-        break;
-    case KC_RIGHT: 
-        mSteeringRight = true;
-        break;
-    case KC_DOWN: 
-        mEngineForce = -gMaxEngineForce;
-        break;
-    case KC_UP: 
-        mEngineForce = gMaxEngineForce;
-        break;
-    default:
-        break;
-
+            
+        case KC_PGUP: 
+            wheel_engine_style_change = true;
+            mWheelEngineStyle = (mWheelEngineStyle + 1) % 3;
+            break;
+        case KC_PGDOWN: 
+            wheel_engine_style_change = true;
+            mWheelEngineStyle = (mWheelEngineStyle - 1) % 3;
+            break;
+        case KC_HOME: 
+            wheel_steering_style_change = true;
+            mWheelSteeringStyle = (mWheelSteeringStyle + 1) % 3;
+            break;
+        case KC_END: 
+            wheel_steering_style_change = true;
+            mWheelSteeringStyle = (mWheelSteeringStyle - 1) % 3;;
+            break;
+            
+        case KC_LEFT: 
+            mSteeringLeft = true;
+            break;
+        case KC_RIGHT: 
+            mSteeringRight = true;
+            break;
+        case KC_DOWN: 
+            mEngineForce = -gMaxEngineForce;
+            break;
+        case KC_UP: 
+            mEngineForce = gMaxEngineForce;
+            break;
+        default:
+            break;
+            
     }
-
+    
     if (wheel_engine_style_change)
     {
         for (int i = 0; i < 4; i++)
             mWheelsEngine[i] = 0;
-
+        
         if (mWheelEngineStyle < 0)
             mWheelEngineStyle = 2;
-
+        
         switch (mWheelEngineStyle)
         {
-        case 0://front
-            mWheelsSteerableCount = 2;
-            mWheelsSteerable[0] = 0;
-            mWheelsSteerable[1] = 1;  
-            break;
-        case 1://back
-            mWheelsSteerableCount = 2;
-            mWheelsSteerable[0] = 2;
-            mWheelsSteerable[1] = 3;  
-            break;
-        case 2://4x4
-            mWheelsSteerableCount = 4;
-            mWheelsSteerable[0] = 0;
-            mWheelsSteerable[1] = 1;  
-            mWheelsSteerable[2] = 2;
-            mWheelsSteerable[3] = 3; 
-            break;
-        default:
-            assert(0);
-            break;
+            case 0://front
+                mWheelsSteerableCount = 2;
+                mWheelsSteerable[0] = 0;
+                mWheelsSteerable[1] = 1;  
+                break;
+            case 1://back
+                mWheelsSteerableCount = 2;
+                mWheelsSteerable[0] = 2;
+                mWheelsSteerable[1] = 3;  
+                break;
+            case 2://4x4
+                mWheelsSteerableCount = 4;
+                mWheelsSteerable[0] = 0;
+                mWheelsSteerable[1] = 1;  
+                mWheelsSteerable[2] = 2;
+                mWheelsSteerable[3] = 3; 
+                break;
+            default:
+                assert(0);
+                break;
         }
     }
-
+    
     if (wheel_steering_style_change)
     {
         for (int i = 0; i < 4; i++)
             mWheelsSteerable[i] = 0;
-
+        
         if (mWheelSteeringStyle < 0)
             mWheelSteeringStyle = 2;
-
+        
         switch (mWheelSteeringStyle)
         {
-        case 0://front
-            mWheelsEngineCount = 2;
-            mWheelsEngine[0] = 0;
-            mWheelsEngine[1] = 1;  
-            break;
-        case 1://back
-            mWheelsEngineCount = 2;
-            mWheelsEngine[0] = 2;
-            mWheelsEngine[1] = 3;  
-            break;
-        case 2://4x4
-            mWheelsEngineCount = 4;
-            mWheelsEngine[0] = 0;
-            mWheelsEngine[1] = 1;  
-            mWheelsEngine[2] = 2;
-            mWheelsEngine[3] = 3; 
-            break;
-        default:
-            assert(0);
-            break;
+            case 0://front
+                mWheelsEngineCount = 2;
+                mWheelsEngine[0] = 0;
+                mWheelsEngine[1] = 1;  
+                break;
+            case 1://back
+                mWheelsEngineCount = 2;
+                mWheelsEngine[0] = 2;
+                mWheelsEngine[1] = 3;  
+                break;
+            case 2://4x4
+                mWheelsEngineCount = 4;
+                mWheelsEngine[0] = 0;
+                mWheelsEngine[1] = 1;  
+                mWheelsEngine[2] = 2;
+                mWheelsEngine[3] = 3; 
+                break;
+            default:
+                assert(0);
+                break;
         }
     }
 
@@ -423,22 +424,22 @@ void VSCOgreBulletVehiclesDemo::keyReleased(OIS::KeyCode key)
 {
     switch(key)
     {
-
-    case KC_LEFT: 
-        mSteeringLeft = false;
-        break;
-    case KC_RIGHT: 
-        mSteeringRight = false;
-        break;
-    case KC_DOWN: 
-        mEngineForce = 0;
-        break;
-    case KC_UP: 
-        mEngineForce = 0;
-        break;
-    default:
-        break;
-
+            
+        case KC_LEFT: 
+            mSteeringLeft = false;
+            break;
+        case KC_RIGHT: 
+            mSteeringRight = false;
+            break;
+        case KC_DOWN: 
+            mEngineForce = 0;
+            break;
+        case KC_UP: 
+            mEngineForce = 0;
+            break;
+        default:
+            break;
+            
     }
     return VSCOgreBulletScene::keyReleased (key);
 }
@@ -452,7 +453,7 @@ bool VSCOgreBulletVehiclesDemo::frameStarted(Real elapsedTime)
     {
         mVehicle->applyEngineForce (mEngineForce, mWheelsEngine[i]);
     }
-
+    
     if (mSteeringLeft)
     {
         mSteering += gSteeringIncrement;
@@ -465,7 +466,7 @@ bool VSCOgreBulletVehiclesDemo::frameStarted(Real elapsedTime)
         if (mSteering < -gSteeringClamp)
             mSteering = -gSteeringClamp;
     }
-
+    
     // apply Steering on relevant wheels
     for (int i = mWheelsSteerable[0]; i < mWheelsSteerableCount; i++)
     {

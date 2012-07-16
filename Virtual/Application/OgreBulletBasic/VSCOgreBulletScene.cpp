@@ -155,7 +155,6 @@ void VSCOgreBulletScene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgre
     mApplication = application;
     mCameraTrans = Ogre::Vector3::ZERO;
 
-
     /**
      *  We have separate GUI and Input listeners, presumably to keep this agnostic to the interface type
      */
@@ -167,8 +166,7 @@ void VSCOgreBulletScene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgre
     mCurrentShadowTechnique = convertShadowTechniqueToInt(SHADOWTYPE_TEXTURE_ADDITIVE);
 
     /**
-     *  QUESTION: Where does mSceneMgr get set to something other than 0?
-     *
+     *  QUESTION: Where does mSceneMgr get set to something other than 0? ANSWER: In the subclasses (Demos) of course.
      *  NOTE: Ogre::SceneManager is an absolutely massive class http://www.ogre3d.org/docs/api/html/classOgre_1_1SceneManager.html
      */
 	mSceneMgr->setShadowColour(ColourValue(0.5, 0.5, 0.5));
@@ -225,10 +223,11 @@ void VSCOgreBulletScene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgre
     mRayQuery->setQueryTypeMask(SceneManager::ENTITY_TYPE_MASK);
     MovableObject::setDefaultQueryFlags (ANY_QUERY_MASK);
 
-    /**
-     *  Nothing is enabled...
-     */
     mPickConstraint = 0;
+    
+    /**
+     *  Nothing is enabled by default...
+     */
     mQuit = false;
     mPaused = false;
     mActivationBool = false;
@@ -252,13 +251,13 @@ void VSCOgreBulletScene::setBasicLight()
     mSceneMgr->setAmbientLight(ColourValue(0.4, 0.4, 0.4));
 
 	// Fixed light, dim
-// 	mSunLight = mSceneMgr->createLight("Sun");
-// 	mSunLight->setPosition(0.0, 30.5, 0.0);
-// 	mSunLight->setCastShadows(false);
-// 	mSunLight->setType(Light::LT_POINT);
-// 	mSunLight->setDiffuseColour(g_minLightColour);
-// 	mSunLight->setSpecularColour(0.2, 0.2, 0.2);
-// 	mSunLight->setAttenuation(8000, 1, 0.0005, 0);
+ 	mSunLight = mSceneMgr->createLight("Sun");
+ 	mSunLight->setPosition(0.0, 30.5, 0.0);
+ 	mSunLight->setCastShadows(false);
+ 	mSunLight->setType(Light::LT_POINT);
+ 	mSunLight->setDiffuseColour(g_minLightColour);
+ 	mSunLight->setSpecularColour(0.2, 0.2, 0.2);
+ 	mSunLight->setAttenuation(8000, 1, 0.0005, 0);
 
 	// Point light, movable, reddish
 	mLight = mSceneMgr->createLight("Spot");
@@ -441,9 +440,11 @@ void VSCOgreBulletScene::shutdown ()
         ++itEntity;
     }
     mEntities.clear();
+    
     mSceneMgr->destroyCamera(mCamera->getName ());
     mWindow->removeViewport(0);
-    mRoot->destroySceneManager (mSceneMgr);
+    mRoot->destroySceneManager(mSceneMgr);
+    
     delete mDebugRayLine;
     
     mRayQuery = 0;
@@ -461,6 +462,8 @@ void VSCOgreBulletScene::shutdown ()
 //void VSCOgreBulletScene::mouseButtonPressed(OIS::MouseButtonID buttonID)
 void VSCOgreBulletScene::mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
+    
+    if (traceUI) std::cout << "VSCOgreBulletScene mouseButtonPressed : " << position << " (" << buttonID << ")";
     
     switch (buttonID) 
     {
@@ -550,11 +553,19 @@ void VSCOgreBulletScene::mouseButtonPressed(const Ogre::Vector2& position, OIS::
         {
             //mGuiListener->hideMouse ();
         }
+            
+        default:
+        {
+            std::cout << "Unknown mouse button pressed " << buttonID << std::endl;
+        }
     }
 }
 
 void VSCOgreBulletScene::mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
+    
+    if (traceUI) std::cout << "VSCOgreBulletScene mouseButtonPressed : " << position << " (" << buttonID << ")";
+    
     switch (buttonID) 
     {
         case OIS::MB_Left:
@@ -589,6 +600,11 @@ void VSCOgreBulletScene::mouseButtonReleased(const Ogre::Vector2& position, OIS:
         case OIS::MB_Right:
         {
             //mGuiListener->showMouse ();
+        }
+            
+        default:
+        {
+            std::cout << "Unknown mouse button released " << buttonID << std::endl;
         }
     }
 }
@@ -671,14 +687,15 @@ void VSCOgreBulletScene::mouseExited(const Ogre::Vector2& position)
 void VSCOgreBulletScene::keyPressed(OIS::KeyCode key)
 {
     
-    std::cout << "VSCOgreBulletScene got key pressed code: " << key << std::endl; 
+    if (traceUI) std::cout << "VSCOgreBulletScene got key pressed code: " << key << std::endl; 
     
     static int count = 0;
     // Scene Debug Options
     
     switch(key)
     {
-            // Application Utils
+        // Application Utils
+        
         case KC_ESCAPE:
             mQuit = true;
             break;
@@ -687,40 +704,51 @@ void VSCOgreBulletScene::keyPressed(OIS::KeyCode key)
             mWindow->writeContentsToFile("OgreBulletScreenShot"+StringConverter::toString(count++)+".png");
             break;
             
-            // Scene Debug Options
+        // Scene Debug Options
             
         case KC_T:
-            mWireFrame = true;
+            mWireFrame = !mWireFrame;
+            if (traceUI) std::cout << "Wireframe is " << (mWireFrame ? "on" : "off") << std::endl;
             break;
         case KC_1:
-            mDrawAabb = true;
+            mDrawAabb = !mDrawAabb;
+            if (traceUI) std::cout << "Draw AABB is " << (mDrawAabb ? "on" : "off") << std::endl;
             break;
         case KC_2:
-            mDrawFeaturesText = true;
+            mDrawFeaturesText = !mDrawFeaturesText;
+            if (traceUI) std::cout << "Draw Features Text is " << (mDrawFeaturesText ? "on" : "off") << std::endl;
             break;
         case KC_3:
-            mDrawContactPoints = true;
+            mDrawContactPoints = !mDrawContactPoints;
+            if (traceUI) std::cout << "Draw contact points is " << (mDrawContactPoints ? "on" : "off") << std::endl;
             break;
         case KC_4:
-            mNoDeactivation = true;
+            mNoDeactivation = !mNoDeactivation;
+            if (traceUI) std::cout << "No deactivation is " << (mNoDeactivation ? "on" : "off") << std::endl;
             break;
         case KC_5:
-            mNoHelpText = true;
+            mNoHelpText = !mNoHelpText;
+            if (traceUI) std::cout << "No help text is " << (mNoHelpText ? "on" : "off") << std::endl;
             break;
         case KC_6:
-            mDrawText = true;
+            mDrawText = !mDrawText;
+            if (traceUI) std::cout << "Draw text is " << (mDrawText ? "on" : "off") << std::endl;
             break;
         case KC_7:
-            mProfileTimings = true;
+            mProfileTimings = !mProfileTimings;
+            if (traceUI) std::cout << "Profile timings is " << (mProfileTimings ? "on" : "off") << std::endl;
             break;
         case KC_8:
-            mEnableSatComparison = true;
+            mEnableSatComparison = !mEnableSatComparison;
+            if (traceUI) std::cout << "Enable stats comparison is " << (mEnableSatComparison ? "on" : "off") << std::endl;
             break;
         case KC_9:
-            mDisableBulletLCP = true;
+            mDisableBulletLCP = !mDisableBulletLCP;
+            if (traceUI) std::cout << "Disable bullet LCP is " << (mDisableBulletLCP ? "on" : "off") << std::endl;
             break;
         case KC_0:
-            mEnableCCD = true;
+            mEnableCCD = !mEnableCCD;
+            if (traceUI) std::cout << "Enable CCD is " << (mEnableCCD ? "on" : "off") << std::endl;
             break;
             
             // pause
@@ -729,7 +757,7 @@ void VSCOgreBulletScene::keyPressed(OIS::KeyCode key)
             break;
             // single step
         case KC_M:
-            mDoOnestep = true;
+            mDoOnestep = !mDoOnestep;
             break;
             // faster Shoots
         case KC_ADD:
@@ -1035,12 +1063,16 @@ void VSCOgreBulletScene::throwDynamicObject(OIS::KeyCode key)
                                         );
             }
             break;
+            
+        default:
+            break;
     }
 }
 // -------------------------------------------------------------------------
 void VSCOgreBulletScene::dropDynamicObject(OIS::KeyCode key)
 {
     const float dropDist = 10.0f;
+    
     switch(key)
     {
         case KC_J: 
@@ -1086,6 +1118,9 @@ void VSCOgreBulletScene::dropDynamicObject(OIS::KeyCode key)
                                                               gConeBodyBounds, 
                                                               gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
             }
+            break;
+            
+        default:
             break;
     }
 }
@@ -1353,7 +1388,6 @@ void VSCOgreBulletScene::updateStats(void)
         static String avgFps = "Average FPS: ";
         static String currFps = "Current FPS: ";
         static String tris = "Triangle Count: ";
-
 
         mFpsStaticText->setValue
             (

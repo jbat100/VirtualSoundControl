@@ -1,13 +1,3 @@
-/***************************************************************************
-This source file is part of OGREBULLET
-(Object-oriented Graphics Rendering Engine Bullet Wrapper)
-For the latest info, see http://www.ogre3d.org/phpBB2addons/viewforum.php?f=10
-Copyright (c) 2007 tuan.kuranes@gmail.com (Use it Freely, even Statically, but have to contribute any changes)
-This source file is not LGPL, it's public source code that you can reuse.
------------------------------------------------------------------------------*/
-/***************************************************************************
-File modified for VSC project
- -----------------------------------------------------------------------------*/
 
 #include "VSCOgreBulletCocoaInputAdapter.h"
 #include "VSCOgreBulletScene.h"
@@ -21,7 +11,7 @@ using namespace OIS;
 VSCOgreBulletCocoaInputAdapter::VSCOgreBulletCocoaInputAdapter(void) :
 mCocoaView(0)
 {
-    
+    this->populateKeyConversionMap();
 }
 
 Ogre::Vector2 VSCOgreBulletCocoaInputAdapter::adaptedEventCoordinatesForEvent(NSEvent* theEvent) {
@@ -29,6 +19,8 @@ Ogre::Vector2 VSCOgreBulletCocoaInputAdapter::adaptedEventCoordinatesForEvent(NS
 }
 
 void VSCOgreBulletCocoaInputAdapter::populateKeyConversionMap(void) {
+    
+    //std::cout << "0x" << std::hex << this << " Populating keyConversionMap" << std::endl;
     
     // Virtual Key Map to KeyCode
 	keyConversionMap.insert(UnicarToOISKeyMap::value_type(0x12, KC_1));
@@ -139,6 +131,11 @@ void VSCOgreBulletCocoaInputAdapter::populateKeyConversionMap(void) {
 	
 	keyConversionMap.insert(UnicarToOISKeyMap::value_type(0x75, KC_DELETE)); 
     
+    //std::cout << "Populated keyConversionMap with " << keyConversionMap.size() << " elements" << std::endl;
+    
+    UnicarToOISKeyMap::iterator it1 =  keyConversionMap.find(0x77);
+    UnicarToOISKeyMap::iterator it2 =  keyConversionMap.find(0x99);
+    
 }
 
 
@@ -146,9 +143,14 @@ std::set<OIS::KeyCode> VSCOgreBulletCocoaInputAdapter::keyCodesForCocoaString(NS
     
     std::set<OIS::KeyCode> keyCodeSet;
     
+    //std::cout << "0x" << std::hex << this << " Test size = "  << std::dec << keyConversionMap.size() << std::endl;
+    //UnicarToOISKeyMap::iterator it1 =  keyConversionMap.find(0x77);
+    //std::cout << "Test 0x"  << std::hex << (*it1).first << " : 0x" << (*it1).first << std::endl;
+    
     for (NSUInteger i = 0; i < [s length]; i++)
     {
         UInt32 c = (UInt32)[s characterAtIndex:i];
+        //std::cout << "Finding ois for char " << [s characterAtIndex:i] << " UInt32: " << std::hex << c << std::endl;
         UnicarToOISKeyMap::iterator it =  keyConversionMap.find(c);
         if (it != keyConversionMap.end()) {
             keyCodeSet.insert(it->second);

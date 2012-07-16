@@ -27,12 +27,17 @@ class VSCOgreBulletApplication;
  */
 class VSCOgreBulletApplication: public VSCOgreApplication,  public Ogre::FrameListener
 {
+    
 public:
 	// Standard constructor/destructor
     VSCOgreBulletApplication(std::vector <VSCOgreBulletScene *> *bulletListeners);
     ~VSCOgreBulletApplication();
 
-    std::vector <VSCOgreBulletScene *> *getScenesList(){return mBulletScenes;};
+    std::vector <VSCOgreBulletScene*> *getScenesList() {return mBulletScenes;};
+    
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+    bool setupWithOgreView(void* ogreView);
+#endif   
 
 protected:
     
@@ -50,7 +55,9 @@ protected:
     bool frameStarted(const Ogre::FrameEvent& evt);
     bool frameEnded(const Ogre::FrameEvent& evt);
 
-    bool switchListener(VSCOgreBulletScene *newListener);
+    bool switchScene(VSCOgreBulletScene *newListener);
+    
+private:
     
     VSCOgreBulletScene *mBulletScene;
     std::vector<VSCOgreBulletScene*> *mBulletScenes;

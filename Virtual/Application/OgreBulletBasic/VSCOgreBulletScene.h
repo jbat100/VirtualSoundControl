@@ -96,6 +96,15 @@ public:
     void mouseExited(const Ogre::Vector2& position);
     void keyPressed(OIS::KeyCode key);
     void keyReleased(OIS::KeyCode key);
+    
+    /*
+     *  Ogre Setters/Getters
+     */
+    
+    Ogre::RenderWindow* getRenderWindow(void) {return mWindow;};
+    Ogre::Root* getRoot(void) {return mRoot;}
+    Ogre::SceneManager* getSceneManager(void) {return mSceneMgr;}
+    Ogre::Camera* getCamera(void) {return mCamera;}
 
 protected:
 
@@ -139,6 +148,8 @@ protected:
      *  Debug stuff
      */
     void getDebugLines();
+    
+    const static bool traceUI = true;
 
     /**
      *  Mouse picking utils 
@@ -146,7 +157,6 @@ protected:
     OgreBulletDynamics::RigidBody* getBodyUnderCursorUsingBullet(Ogre::Vector3 &intersectionPoint, Ogre::Ray &rayTo);
     OgreBulletDynamics::RigidBody* getBodyUnderCursorUsingOgre(Ogre::Vector3 &intersectionPoint, Ogre::Ray &rayTo);
 
-protected:
     
     static size_t mNumEntitiesInstanced;
     
@@ -181,7 +191,6 @@ protected:
     float                   mShootSpeed;
     float                   mImpulseForce;
     bool                    mPaused;
-
 
     bool                    mWireFrame;
     bool                    mDrawAabb;

@@ -12,9 +12,8 @@
 
 class VSCOgreBulletScene;
 class VSCOgreBulletApplication;
-class VSCOgreApplicationCocoaSetup;
-class VSCOgreBulletCocoaInputAdapter;
 
+@class VSCOgreBulletWindow;
 @class VSCOgreView;
 
 @interface VSCAppDelegate : NSObject <NSApplicationDelegate> {
@@ -24,7 +23,7 @@ class VSCOgreBulletCocoaInputAdapter;
     
 }
 
-@property (assign) IBOutlet NSWindow *window;
+@property (assign) IBOutlet VSCOgreBulletWindow *window;
 @property (assign) IBOutlet VSCOgreView *ogreView;
 
 -(void) startRendering;

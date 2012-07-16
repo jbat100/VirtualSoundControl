@@ -17,7 +17,8 @@ This source file is not LGPL, it's public source code that you can reuse.
 VSCOgreBulletApplication::VSCOgreBulletApplication(std::vector<VSCOgreBulletScene*> *bulletScenes) : 
     VSCOgreApplication(),
     Ogre::FrameListener(),
-    mBulletScenes(bulletScenes)
+    mBulletScenes(bulletScenes),
+    mBulletScene(0)
 {
     assert (!mBulletScenes->empty());
 }
@@ -26,9 +27,33 @@ VSCOgreBulletApplication::~VSCOgreBulletApplication()
 { 
 
 }
-// -------------------------------------------------------------------------
-bool VSCOgreBulletApplication::switchListener(VSCOgreBulletScene *newScene)
+
+bool VSCOgreBulletApplication::setupWithOgreView(void* ogreView)
 {
+    VSCOgreApplication::setupWithOgreView(ogreView);
+    switchScene (*(mBulletScenes->begin()));
+    mRoot->addFrameListener(this);
+    
+    return true;
+}
+
+// -------------------------------------------------------------------------
+bool VSCOgreBulletApplication::switchScene(VSCOgreBulletScene *newScene)
+{
+    /*
+     *  We need to reset the scene managers and everything...
+     */
+    
+    if (mBulletScene)
+    {
+        mBulletScene->shutdown();
+    }
+    
+    if (newScene)
+    {
+        newScene->init(mRoot, mWindow, this);
+    }
+    
     mBulletScene = newScene;
     return true;
 }
@@ -37,11 +62,12 @@ bool VSCOgreBulletApplication::frameStarted(const Ogre::FrameEvent& evt)
 {
 
     std::vector <VSCOgreBulletScene *>::iterator it =  mBulletScenes->begin();
+    
     while (it != mBulletScenes->end())
     {
         if ((*(*it)->getBoolActivator()) == true || this->isKeyPressed((*it)->getNextKey()))
         {
-            switchListener(*it);
+            switchScene(*it);
             break;
         }
         ++it;
@@ -69,12 +95,6 @@ bool VSCOgreBulletApplication::frameEnded(const Ogre::FrameEvent& evt)
     return true; 
 }
 
-// -------------------------------------------------------------------------
-void VSCOgreBulletApplication::createFrameListener(void)
-{
-    switchListener (*(mBulletScenes->begin()));
-    mRoot->addFrameListener(this);
-}
 // -------------------------------------------------------------------------
 void VSCOgreBulletApplication::setupResources(void)
 {

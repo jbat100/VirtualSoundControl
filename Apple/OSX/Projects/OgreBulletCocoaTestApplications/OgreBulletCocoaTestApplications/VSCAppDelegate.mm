@@ -104,7 +104,7 @@ using namespace OIS;
         
         // create a timer that causes OGRE to render at 50fps
         renderTimer = [NSTimer scheduledTimerWithTimeInterval:0.02 target:self 
-                                                     selector:@selector(renderFrame) 
+                                                     selector:@selector(renderCallback) 
                                                      userInfo:NULL 
                                                       repeats:YES];
         
