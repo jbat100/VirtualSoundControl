@@ -22,6 +22,8 @@ A basic test framework that minimize code in each test scene listener.
 #include "VSCOgreBetaGUIListener.h"
 #include "OIS.h"
 
+#include <boost/shared_ptr.hpp>
+
 
 #define BASIC_HELP_INFO0 "Use F1, F2, F3, F4"
 #define BASIC_HELP_INFO1 "B,N,G,H to Throw a Cube, Sphere, Cone, Cylinder"
@@ -30,6 +32,9 @@ A basic test framework that minimize code in each test scene listener.
 #define BASIC_HELP_INFO4 "left click to drag"
 #define BASIC_HELP_INFO5 "right to camera move"
 #define BASIC_HELP_INFO6 "middle for impulse"
+
+class VSCOgreCameraController;
+typedef boost::shared_ptr<VSCOgreCameraController> VSCOgreCameraControllerPtr;
 
 enum QueryFlags
 {
@@ -74,7 +79,7 @@ public:
     void setDebugText(const Ogre::String &debugText){mDebugText = debugText;}
 
     /**--------------------------------------------------------------
-     *  Ogre Frame Listener Overrides 
+     *  Ogre Frame Listener Forwarded messages from VSCOgreBulletApplication 
      */
     virtual bool frameStarted(Ogre::Real elapsedTime);
     virtual bool frameEnded(Ogre::Real elapsedTime);
@@ -105,6 +110,12 @@ public:
     Ogre::Root* getRoot(void) {return mRoot;}
     Ogre::SceneManager* getSceneManager(void) {return mSceneMgr;}
     Ogre::Camera* getCamera(void) {return mCamera;}
+    
+    /*
+     *  Other Setters/Getters
+     */
+    VSCOgreCameraControllerPtr getCameraController(void) {return mCameraController;}
+    void setCameraController(VSCOgreCameraControllerPtr controller) {mCameraController = controller;}
 
 protected:
 
@@ -149,7 +160,7 @@ protected:
      */
     void getDebugLines();
     
-    const static bool traceUI = true;
+    const static bool mTraceUI = true;
 
     /**
      *  Mouse picking utils 
@@ -163,18 +174,12 @@ protected:
     Ogre::RenderWindow                  *mWindow;
     Ogre::Root                          *mRoot;
     Ogre::SceneManager                  *mSceneMgr;
-
+    Ogre::Camera                        *mCamera;
+    
     int                                 mCurrentShadowTechnique;
     Ogre::Light                         *mSunLight;
 	Ogre::Light                         *mLight;
 	Ogre::Light                         *mLight2;
-
-
-    Ogre::Camera                        *mCamera;
-    Ogre::Radian                        mCameraRotX;
-    Ogre::Radian                        mCameraRotY;
-    float                               mCameraMove;
-    Ogre::Vector3                       mCameraTrans;
 
     OgreBulletDynamics::DynamicsWorld   *mWorld;
     VSCOgreBulletApplication            *mApplication;
@@ -231,6 +236,11 @@ protected:
    std::vector<Ogre::String>                                mHelpKeys;
     
    void updateStats();
+    
+private:
+    
+    VSCOgreCameraControllerPtr                              mCameraController;
+    
 };
 
 #endif //_VSC_OGRE_BULLET_LISTENER_H_

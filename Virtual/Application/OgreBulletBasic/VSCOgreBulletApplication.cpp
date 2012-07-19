@@ -8,6 +8,8 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "VSCOgreBulletApplication.h"
 #include "VSCOgreBulletScene.h"
 #include "VSCOgreApplicationCocoaSetup.h"
+#include "VSCOgreInputAdapter.h"
+#include "VSCOgreCameraController.h"
 
 #include "OgreResourceGroupManager.h"
 
@@ -46,20 +48,26 @@ bool VSCOgreBulletApplication::switchScene(VSCOgreBulletScene *newScene)
     
     if (mBulletScene)
     {
+        this->getInputAdapter()->removeInputListener(mBulletScene->getCameraController().get());
+        this->getInputAdapter()->removeInputListener(mBulletScene);
         mBulletScene->shutdown();
     }
     
     if (newScene)
     {
         newScene->init(mRoot, mWindow, this);
+        this->getInputAdapter()->addInputListener(newScene);
+        this->getInputAdapter()->addInputListener(newScene->getCameraController().get());
     }
     
     mBulletScene = newScene;
+    
     return true;
 }
 // -------------------------------------------------------------------------
 bool VSCOgreBulletApplication::frameStarted(const Ogre::FrameEvent& evt)
 {
+    if (mTraceFrame) std::cout << "VSCOgreBulletApplication frameStarted " << evt << std::endl;
 
     std::vector <VSCOgreBulletScene *>::iterator it =  mBulletScenes->begin();
     
@@ -80,6 +88,7 @@ bool VSCOgreBulletApplication::frameStarted(const Ogre::FrameEvent& evt)
         mBulletScene->shutdown ();
         return false;
     }
+    
     return true;
 }
 

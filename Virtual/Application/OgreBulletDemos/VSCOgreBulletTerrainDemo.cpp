@@ -19,6 +19,8 @@ This source file is not LGPL, it's public source code that you can reuse.
 
 #include "Constraints/OgreBulletDynamicsRaycastVehicle.h"
 
+#include "VSCOgreCameraController.h"
+
 #if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
 using namespace OIS;
 #endif 
@@ -65,8 +67,6 @@ static const    Ogre::Vector3 terrain_Shift = Ogre::Vector3(750, terrain_height,
 // -------------------------------------------------------------------------
 void VSCOgreBulletTerrainDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application)
 {
-
-	mCameraMove = 1;
 
     mHelpKeys.clear();
     mHelpKeys.push_back (BASIC_HELP_INFO0);
@@ -116,8 +116,7 @@ void VSCOgreBulletTerrainDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
     Viewport *vp = win->addViewport(mCamera);
     vp->setBackgroundColour(ColourValue(0,0,0));
     // Alter the camera aspect ratio to match the viewport
-    mCamera->setAspectRatio(
-        Real(vp->getActualWidth()) / Real(vp->getActualHeight()));
+    mCamera->setAspectRatio(Real(vp->getActualWidth()) / Real(vp->getActualHeight()));
     mCamera->setPosition(CameraStart + terrain_Shift);
     mCamera->lookAt(CarPosition + terrain_Shift);
 
@@ -127,17 +126,21 @@ void VSCOgreBulletTerrainDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
 	mSceneMgr->setWorldGeometry(terrain_cfg);
 
     VSCOgreBulletScene::init(root, win, application);
+    
+    /*
+     *  After init the camera controller has been created 
+     */
+    this->getCameraController()->setCameraSpeed(1.0f);
 
     // ------------------------
     // add lights
-    setBasicLight();
-
+    this->setBasicLight();
     // ------------------------
     // Add the Gui
-    setPhysicGUI();
+    this->setPhysicGUI();
     // ------------------------
     // Start Bullet
-    initWorld();
+    this->initWorld();
 
     // ------------------------
     // Add the ground

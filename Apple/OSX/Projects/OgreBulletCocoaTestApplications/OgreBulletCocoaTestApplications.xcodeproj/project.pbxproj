@@ -95,6 +95,7 @@
 		10F69491156E483000E70049 /* Plugin_CgProgramManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */; };
 		10F69492156E483000E70049 /* Plugin_OctreeSceneManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */; };
 		10F69493156E483000E70049 /* Plugin_ParticleFX.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */; };
+		10FBA39F15B5756800D65959 /* VSCOgreCameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10FBA39D15B5756800D65959 /* VSCOgreCameraController.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -309,6 +310,8 @@
 		10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_CgProgramManager.dylib; path = lib/Plugin_CgProgramManager.dylib; sourceTree = OGRE_SDK; };
 		10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_OctreeSceneManager.dylib; path = lib/Plugin_OctreeSceneManager.dylib; sourceTree = OGRE_SDK; };
 		10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_ParticleFX.dylib; path = lib/Plugin_ParticleFX.dylib; sourceTree = OGRE_SDK; };
+		10FBA39D15B5756800D65959 /* VSCOgreCameraController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOgreCameraController.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreCameraController.cpp; sourceTree = "<group>"; };
+		10FBA39E15B5756800D65959 /* VSCOgreCameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreCameraController.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreCameraController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -370,6 +373,8 @@
 				10F4EE021557E752000E4591 /* VSCOgreBetaGUIListener.h */,
 				10F4EE051557E752000E4591 /* VSCOgreBulletScene.cpp */,
 				10F4EE061557E752000E4591 /* VSCOgreBulletScene.h */,
+				10FBA39D15B5756800D65959 /* VSCOgreCameraController.cpp */,
+				10FBA39E15B5756800D65959 /* VSCOgreCameraController.h */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -938,6 +943,7 @@
 				10EB11FD15A5D8B500CA4D03 /* VSCOgreInputAdapter.cpp in Sources */,
 				10EE86C915AED21900AD9CEB /* VSCOgreBulletWindow.mm in Sources */,
 				1091F28415B07C0D00466854 /* VSCLog.cpp in Sources */,
+				10FBA39F15B5756800D65959 /* VSCOgreCameraController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

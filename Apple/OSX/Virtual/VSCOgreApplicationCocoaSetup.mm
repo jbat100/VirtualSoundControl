@@ -96,7 +96,7 @@ Ogre::RenderWindow* VSCOgreApplicationCocoaSetup::getRenderWindow(void* rawOgreV
 {
     OgreView* ogreView = (__bridge OgreView*)rawOgreView;
     BOOST_ASSERT_MSG( [ogreView isKindOfClass:[OgreView class]], "Expected ogreView to be of class OgreView" ); 
-    Ogre::RenderWindow *mWindow = [ogreView ogreWindow];
+    //Ogre::RenderWindow *mWindow = [ogreView ogreWindow];
     return [ogreView ogreWindow];
 }
 

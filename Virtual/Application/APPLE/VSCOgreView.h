@@ -10,7 +10,10 @@
 
 class VSCOgreBulletCocoaInputAdapter;
 
-@interface VSCOgreView : OgreView 
+@interface VSCOgreView : OgreView {
+    
+    
+}
 
 @property (nonatomic, assign) VSCOgreBulletCocoaInputAdapter* inputAdapter;
 

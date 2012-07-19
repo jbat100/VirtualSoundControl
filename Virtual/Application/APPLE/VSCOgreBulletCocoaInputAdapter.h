@@ -38,7 +38,7 @@ public:
     /*
      *  OIS/Cocoa conversion utilities
      */
-    std::set<OIS::KeyCode> keyCodesForCocoaString(NSString* s);
+    OIS::KeyCode keyCodeForEvent(NSEvent* e);
     OIS::Keyboard::Modifier modiferForCocoaModifierFlags(NSUInteger m);
     
     /*
@@ -49,13 +49,17 @@ public:
     
 private:
     
-    Ogre::Vector2 adaptedEventCoordinatesForEvent(NSEvent* theEvent);
+    Ogre::Vector2 adaptedMouseLocationForEvent(NSEvent* theEvent);
+    Ogre::Vector2 adaptedMouseMovementForEvent(NSEvent* theEvent);
+    OIS::MouseButtonID mouseButtonIdForEvent(NSEvent* theEvent);
     
-    typedef std::map<UInt32, OIS::KeyCode> UnicarToOISKeyMap;
-    UnicarToOISKeyMap keyConversionMap;
+    typedef std::map<unsigned short, OIS::KeyCode> VirtualToOISKeyMap;
+    VirtualToOISKeyMap keyConversionMap;
     void populateKeyConversionMap(void);
     
     NSView* mCocoaView;
+    
+    static const bool mTrace = true;
     
 };
 

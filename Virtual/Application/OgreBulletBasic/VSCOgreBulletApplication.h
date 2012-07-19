@@ -33,7 +33,7 @@ public:
     VSCOgreBulletApplication(std::vector <VSCOgreBulletScene *> *bulletListeners);
     ~VSCOgreBulletApplication();
 
-    std::vector <VSCOgreBulletScene*> *getScenesList() {return mBulletScenes;};
+    std::vector<VSCOgreBulletScene*>* getScenesList() {return mBulletScenes;};
     
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     bool setupWithOgreView(void* ogreView);
@@ -61,6 +61,8 @@ private:
     
     VSCOgreBulletScene *mBulletScene;
     std::vector<VSCOgreBulletScene*> *mBulletScenes;
+    
+    static const bool mTraceFrame = true;
 
 
 };

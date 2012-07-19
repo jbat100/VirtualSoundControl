@@ -12,7 +12,7 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "VSCOgreBulletApplication.h"
 #include "VSCOgreBulletScene.h"
 #include "VSCOgreBetaGUIListener.h"
-
+#include "VSCOgreCameraController.h"
 
 /*
  *  OgreBullet Shapes
@@ -121,8 +121,6 @@ int convertShadowTechniqueToInt(Ogre::ShadowTechnique i)
 //MARK: Basic Constructor which does abolutely nothing interesting at all 
 
 VSCOgreBulletScene::VSCOgreBulletScene() :    
-mCameraMove (0.1f),
-mCameraTrans (Ogre::Vector3::ZERO),
 mCamera(0),
 mRoot(0),
 mSceneMgr(0),
@@ -136,9 +134,9 @@ mDebugRayLine(0),
 mRayQuery(0),
 mGuiListener(0),
 mPickConstraint(0),
-mCollisionClosestRayResultCallback(0)
+mCollisionClosestRayResultCallback(0),
+mCameraController(VSCOgreCameraControllerPtr())
 {
-
 
 }
 // -------------------------------------------------------------------------
@@ -153,7 +151,12 @@ void VSCOgreBulletScene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgre
     mRoot = root;
     mWindow = win;
     mApplication = application;
-    mCameraTrans = Ogre::Vector3::ZERO;
+    
+    /*
+     *  Subclasses must have created a camera before calling VSCOgreBulletScene::init
+     */
+    mCameraController = VSCOgreCameraControllerPtr(new VSCOgreCameraController());
+    mCameraController->setCamera(mCamera);
 
     /**
      *  We have separate GUI and Input listeners, presumably to keep this agnostic to the interface type
@@ -244,6 +247,8 @@ void VSCOgreBulletScene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgre
     mEnableCCD = false;
 
 }
+
+
 // -------------------------------------------------------------------------
 void VSCOgreBulletScene::setBasicLight()
 {
@@ -283,7 +288,8 @@ void VSCOgreBulletScene::setBasicLight()
 	mLight2->setSpecularColour(0.3, 0.1, 0.1);
 
 }
-// -------------------------------------------------------------------------
+
+
 void VSCOgreBulletScene::setPhysicGUI()
 {
     BetaGUI::GUI *gui = mGuiListener->getGui();
@@ -397,7 +403,7 @@ void VSCOgreBulletScene::setPhysicGUI()
     gui->addEffect(new BetaGUI::AlphaEffect(menuWindow, 2, 0, 1, 0));
 }
 
-// -------------------------------------------------------------------------
+
 void VSCOgreBulletScene::getDebugLines()
 {
     if (mDebugRayLine == 0)
@@ -407,7 +413,7 @@ void VSCOgreBulletScene::getDebugLines()
     }
 }
 
-// -------------------------------------------------------------------------
+
 void VSCOgreBulletScene::shutdown ()
 {
 
@@ -441,7 +447,9 @@ void VSCOgreBulletScene::shutdown ()
     }
     mEntities.clear();
     
-    mSceneMgr->destroyCamera(mCamera->getName ());
+    mCameraController.reset();
+    
+    mSceneMgr->destroyCamera(mCamera->getName());
     mWindow->removeViewport(0);
     mRoot->destroySceneManager(mSceneMgr);
     
@@ -463,7 +471,7 @@ void VSCOgreBulletScene::shutdown ()
 void VSCOgreBulletScene::mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
     
-    if (traceUI) std::cout << "VSCOgreBulletScene mouseButtonPressed : " << position << " (" << buttonID << ")";
+    if (mTraceUI) std::cout << "VSCOgreBulletScene mouseButtonPressed : " << position << " (" << buttonID << ")" << std::endl;
     
     switch (buttonID) 
     {
@@ -564,7 +572,7 @@ void VSCOgreBulletScene::mouseButtonPressed(const Ogre::Vector2& position, OIS::
 void VSCOgreBulletScene::mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
     
-    if (traceUI) std::cout << "VSCOgreBulletScene mouseButtonPressed : " << position << " (" << buttonID << ")";
+    if (mTraceUI) std::cout << "VSCOgreBulletScene mouseButtonReleased : " << position << " (" << buttonID << ")" << std::endl;
     
     switch (buttonID) 
     {
@@ -594,11 +602,12 @@ void VSCOgreBulletScene::mouseButtonReleased(const Ogre::Vector2& position, OIS:
             
         }
             
+        case OIS::MB_Right:
+        {
             /*
              *  Keep Beta GUI Mouse hidden 
              */
-        case OIS::MB_Right:
-        {
+            
             //mGuiListener->showMouse ();
         }
             
@@ -614,6 +623,7 @@ void VSCOgreBulletScene::mouseButtonReleased(const Ogre::Vector2& position, OIS:
 // -------------------------------------------------------------------------
 void VSCOgreBulletScene::mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
+    if (mTraceUI) std::cout << "VSCOgreBulletScene mouseMoved position (" << position << "), movement (" << movement << ")" << std::endl;
 
     mGuiListener->setMousePosition(position);
     
@@ -630,6 +640,7 @@ void VSCOgreBulletScene::mouseMoved(const Ogre::Vector2& position, const Ogre::V
         //Ogre::Vector3 dir = rayTo.getDirection () - eyePos;
         //dir.normalise();
         //dir *= mOldPickingDist;
+        
         Ogre::Vector3 dir = rayTo.getDirection () * mOldPickingDist;
         dir.normalise();
 
@@ -663,31 +674,24 @@ void VSCOgreBulletScene::mouseMoved(const Ogre::Vector2& position, const Ogre::V
         //mGuiListener->showMouse();
     }
 
-    
-    if (this->isMouseButtonPressed(OIS::MB_Right))
-    {
-        mCameraRotX = Degree(-movement.x * 0.13);
-        mCameraRotY = Degree(-movement.y * 0.13);
-    }
-
 }
 
 
 void VSCOgreBulletScene::mouseEntered(const Ogre::Vector2& position)
 {
-    std::cout << "VSCOgreBulletScene mouse entered " << position << std::endl;
+    if (mTraceUI) std::cout << "VSCOgreBulletScene mouse entered " << position << std::endl;
 }
 
 void VSCOgreBulletScene::mouseExited(const Ogre::Vector2& position)
 {
-    std::cout << "VSCOgreBulletScene mouse exited " << position << std::endl;
+   if (mTraceUI)  std::cout << "VSCOgreBulletScene mouse exited " << position << std::endl;
 }
 
 // -------------------------------------------------------------------------
 void VSCOgreBulletScene::keyPressed(OIS::KeyCode key)
 {
     
-    if (traceUI) std::cout << "VSCOgreBulletScene got key pressed code: " << key << std::endl; 
+    if (mTraceUI) std::cout << "VSCOgreBulletScene got key pressed code: " << key << std::endl; 
     
     static int count = 0;
     // Scene Debug Options
@@ -708,83 +712,68 @@ void VSCOgreBulletScene::keyPressed(OIS::KeyCode key)
             
         case KC_T:
             mWireFrame = !mWireFrame;
-            if (traceUI) std::cout << "Wireframe is " << (mWireFrame ? "on" : "off") << std::endl;
+            if (mTraceUI) std::cout << "Wireframe is " << (mWireFrame ? "on" : "off") << std::endl;
             break;
         case KC_1:
             mDrawAabb = !mDrawAabb;
-            if (traceUI) std::cout << "Draw AABB is " << (mDrawAabb ? "on" : "off") << std::endl;
+            if (mTraceUI) std::cout << "Draw AABB is " << (mDrawAabb ? "on" : "off") << std::endl;
             break;
         case KC_2:
             mDrawFeaturesText = !mDrawFeaturesText;
-            if (traceUI) std::cout << "Draw Features Text is " << (mDrawFeaturesText ? "on" : "off") << std::endl;
+            if (mTraceUI) std::cout << "Draw Features Text is " << (mDrawFeaturesText ? "on" : "off") << std::endl;
             break;
         case KC_3:
             mDrawContactPoints = !mDrawContactPoints;
-            if (traceUI) std::cout << "Draw contact points is " << (mDrawContactPoints ? "on" : "off") << std::endl;
+            if (mTraceUI) std::cout << "Draw contact points is " << (mDrawContactPoints ? "on" : "off") << std::endl;
             break;
         case KC_4:
             mNoDeactivation = !mNoDeactivation;
-            if (traceUI) std::cout << "No deactivation is " << (mNoDeactivation ? "on" : "off") << std::endl;
+            if (mTraceUI) std::cout << "No deactivation is " << (mNoDeactivation ? "on" : "off") << std::endl;
             break;
         case KC_5:
             mNoHelpText = !mNoHelpText;
-            if (traceUI) std::cout << "No help text is " << (mNoHelpText ? "on" : "off") << std::endl;
+            if (mTraceUI) std::cout << "No help text is " << (mNoHelpText ? "on" : "off") << std::endl;
             break;
         case KC_6:
             mDrawText = !mDrawText;
-            if (traceUI) std::cout << "Draw text is " << (mDrawText ? "on" : "off") << std::endl;
+            if (mTraceUI) std::cout << "Draw text is " << (mDrawText ? "on" : "off") << std::endl;
             break;
         case KC_7:
             mProfileTimings = !mProfileTimings;
-            if (traceUI) std::cout << "Profile timings is " << (mProfileTimings ? "on" : "off") << std::endl;
+            if (mTraceUI) std::cout << "Profile timings is " << (mProfileTimings ? "on" : "off") << std::endl;
             break;
         case KC_8:
             mEnableSatComparison = !mEnableSatComparison;
-            if (traceUI) std::cout << "Enable stats comparison is " << (mEnableSatComparison ? "on" : "off") << std::endl;
+            if (mTraceUI) std::cout << "Enable stats comparison is " << (mEnableSatComparison ? "on" : "off") << std::endl;
             break;
         case KC_9:
             mDisableBulletLCP = !mDisableBulletLCP;
-            if (traceUI) std::cout << "Disable bullet LCP is " << (mDisableBulletLCP ? "on" : "off") << std::endl;
+            if (mTraceUI) std::cout << "Disable bullet LCP is " << (mDisableBulletLCP ? "on" : "off") << std::endl;
             break;
         case KC_0:
             mEnableCCD = !mEnableCCD;
-            if (traceUI) std::cout << "Enable CCD is " << (mEnableCCD ? "on" : "off") << std::endl;
+            if (mTraceUI) std::cout << "Enable CCD is " << (mEnableCCD ? "on" : "off") << std::endl;
             break;
             
             // pause
         case KC_P:
             mPaused = !mPaused;
+            if (mTraceUI) std::cout << "Paused is " << (mPaused ? "on" : "off") << std::endl;
             break;
             // single step
         case KC_M:
             mDoOnestep = !mDoOnestep;
+            if (mTraceUI) std::cout << "Do one step is " << (mDoOnestep ? "on" : "off") << std::endl;
             break;
             // faster Shoots
         case KC_ADD:
             mShootSpeed += 5.0f;
+            if (mTraceUI) std::cout << "Shoot speed is " << mShootSpeed << std::endl;
             break;
             // Slower Shoots
         case KC_MINUS:
             mShootSpeed -= 5.0f;
-            break;
-            
-            //Camera
-        case KC_Z:
-        case KC_W:
-            mCameraTrans.z -= mCameraMove;
-            break;
-            
-        case KC_S:
-            mCameraTrans.z += mCameraMove;
-            break;
-            
-        case KC_Q:
-        case KC_A:
-            mCameraTrans.x -= mCameraMove;
-            break;
-            
-        case KC_D:
-            mCameraTrans.x += mCameraMove;
+            if (mTraceUI) std::cout << "Shoot speed is " << mShootSpeed << std::endl;
             break;
             
         default:
@@ -797,21 +786,6 @@ void VSCOgreBulletScene::keyReleased(OIS::KeyCode key)
 {
     switch(key)
     {
-            //Camera
-        case KC_Z:
-        case KC_W:
-            mCameraTrans.z += mCameraMove;
-            break;
-        case KC_S:
-            mCameraTrans.z -= mCameraMove;
-            break;
-        case KC_Q:
-        case KC_A:
-            mCameraTrans.x += mCameraMove;
-            break;
-        case KC_D:
-            mCameraTrans.x -= mCameraMove;
-            break;
             
         default:
             break;
@@ -897,17 +871,6 @@ bool VSCOgreBulletScene::frameStarted(Real elapsedTime)
 {
     if (mQuit)
         return false;
-
-    //if (this->getButton2Pressed())
-    if (this->isMouseButtonPressed(OIS::MB_Middle))
-    {
-        mCamera->yaw(mCameraRotX);
-        mCamera->pitch(mCameraRotY);
-        mCameraRotX = 0;
-        mCameraRotY = 0;
-    }
-
-    mCamera->moveRelative(mCameraTrans);
 
     // update physics
     if (!mPaused || mDoOnestep)
