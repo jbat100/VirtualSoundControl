@@ -59,7 +59,7 @@ private:
     
     NSView* mCocoaView;
     
-    static const bool mTrace = true;
+    static const bool mTrace = false;
     
 };
 

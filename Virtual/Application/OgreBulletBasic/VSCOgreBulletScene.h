@@ -34,7 +34,8 @@ A basic test framework that minimize code in each test scene listener.
 #define BASIC_HELP_INFO6 "middle for impulse"
 
 class VSCOgreCameraController;
-typedef boost::shared_ptr<VSCOgreCameraController> VSCOgreCameraControllerPtr;
+// typedef boost::shared_ptr<VSCOgreCameraController> VSCOgreCameraControllerPtr;
+typedef VSCOgreCameraController* VSCOgreCameraControllerPtr;
 
 enum QueryFlags
 {

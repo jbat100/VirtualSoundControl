@@ -41,6 +41,7 @@ Description: Base class for all the OGRE examples
 bool VSCOgreApplicationCocoaSetup::setupApplicationWithOgreView(VSCOgreApplication* ogreApplication, void* rawOgreView)
 {
     VSCOgreView* ogreView = (__bridge VSCOgreView*)rawOgreView;
+    
     BOOST_ASSERT_MSG( [ogreView isKindOfClass:[VSCOgreView class]], "Expected ogreView to be of class OgreView" ); 
     
     // get platform-specific working directory
@@ -84,7 +85,12 @@ bool VSCOgreApplicationCocoaSetup::setupApplicationWithOgreView(VSCOgreApplicati
     std::cout << "mWindow is " << (void*)ogreApplication->mWindow;
     
     VSCOgreBulletCocoaInputAdapter* adapter = VSCOgreApplicationCocoaSetup::createCocoaInputAdapter();
-    ogreApplication->setInputAdapter(adapter);
+    
+    BOOST_ASSERT_MSG(adapter, "Expected adapter"); 
+    
+    ogreApplication->setKeyboardAdapter(adapter);
+    ogreApplication->setMouseAdapter(adapter);
+    
     adapter->setCocoaView(ogreView);
     adapter->addInputListener(ogreApplication);
     ogreView.inputAdapter = adapter;

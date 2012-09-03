@@ -194,25 +194,13 @@ OIS::Keyboard::Modifier VSCOgreBulletCocoaInputAdapter::modiferForCocoaModifierF
 }
 
 void VSCOgreBulletCocoaInputAdapter::keyUp(NSEvent* theEvent) {
-    
     OIS::KeyCode key = this->keyCodeForEvent(theEvent);
-
-    BOOST_FOREACH (VSCOgreInputListener* inputListener, mInputListeners) 
-    {
-        inputListener->keyReleased(key);
-    }
-  
+    this->keyReleased(key);
 }
 
 void VSCOgreBulletCocoaInputAdapter::keyDown(NSEvent* theEvent) {
-    
     OIS::KeyCode key = this->keyCodeForEvent(theEvent);
-    
-    BOOST_FOREACH (VSCOgreInputListener* inputListener, mInputListeners) 
-    {
-        inputListener->keyPressed(key);
-    }
-    
+    this->keyPressed(key);
 }
 
 void VSCOgreBulletCocoaInputAdapter::mouseEntered(NSEvent* theEvent) {
@@ -232,10 +220,7 @@ void VSCOgreBulletCocoaInputAdapter::mouseMoved(NSEvent* theEvent) {
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     Ogre::Vector2 movement = this->adaptedMouseMovementForEvent(theEvent);
     
-    BOOST_FOREACH (VSCOgreInputListener* inputListener, mInputListeners) 
-    {
-        inputListener->mouseMoved(location, movement);
-    }
+    VSCOgreInputAdapter::mouseMoved(location, movement);
     
 }
 
@@ -243,22 +228,18 @@ void VSCOgreBulletCocoaInputAdapter::mouseMoved(NSEvent* theEvent) {
 void VSCOgreBulletCocoaInputAdapter::mouseDown(NSEvent* theEvent) {
     
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
+    OIS::MouseButtonID mouseButtonID = this->mouseButtonIdForEvent(theEvent);
     
-    BOOST_FOREACH (VSCOgreInputListener* inputListener, mInputListeners) 
-    {
-        inputListener->mouseButtonPressed(location, this->mouseButtonIdForEvent(theEvent));
-    }
+    this->mouseButtonPressed(location, mouseButtonID);
     
 }
 
 void VSCOgreBulletCocoaInputAdapter::mouseUp(NSEvent* theEvent) {
     
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
+    OIS::MouseButtonID mouseButtonID = this->mouseButtonIdForEvent(theEvent);
     
-    BOOST_FOREACH (VSCOgreInputListener* inputListener, mInputListeners) 
-    {
-        inputListener->mouseButtonReleased(location, this->mouseButtonIdForEvent(theEvent));
-    }
+    this->mouseButtonReleased(location, mouseButtonID);
     
 }
 
@@ -267,10 +248,7 @@ void VSCOgreBulletCocoaInputAdapter::mouseDragged(NSEvent* theEvent) {
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     Ogre::Vector2 movement = this->adaptedMouseMovementForEvent(theEvent);
     
-    BOOST_FOREACH (VSCOgreInputListener* inputListener, mInputListeners) 
-    {
-        inputListener->mouseMoved(location, movement);
-    }
+    VSCOgreInputAdapter::mouseMoved(location, movement);
     
 }
 

@@ -33,7 +33,7 @@ Description: Base class for all the OGRE examples
 using namespace Ogre;
 
 VSCOgreApplication::VSCOgreApplication() : 
-mRoot(0), mInputAdapter(0)
+mRoot(0)
 {
     // Provide a nice cross platform solution for locating the configuration files
     // On windows files are searched for in the current working directory, on OS X however
@@ -49,8 +49,6 @@ mRoot(0), mInputAdapter(0)
 /// Standard destructor
 VSCOgreApplication::~VSCOgreApplication()
 {
-    if (mInputAdapter) 
-        delete mInputAdapter;
     if (mRoot)
         OGRE_DELETE mRoot;
 }

@@ -1,5 +1,6 @@
 
 #include "VSCOgreCameraController.h"
+#include "VSCOgreInputAdapter.h"
 
 VSCOgreCameraController::VSCOgreCameraController() :    
 mCameraSpeed (0.1f),
@@ -14,11 +15,11 @@ mCamera(0)
 }
 
 // -------------------------------------------------------------------------
-void VSCOgreCameraController::mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement)
+void VSCOgreCameraController::mouseMoved(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
     if (mTraceUI) std::cout << "VSCOgreCameraController mouseMoved position (" << position << "), movement (" << movement << ")" << std::endl;
     
-    if (this->isMouseButtonPressed(OIS::MB_Right))
+    if (this->getMouseAdapter()->isMouseButtonPressed(OIS::MB_Right))
     {
         mCameraRotX = Ogre::Degree(-movement.x * mMouseSensitivity);
         mCameraRotY = Ogre::Degree(-movement.y * mMouseSensitivity);
@@ -28,7 +29,7 @@ void VSCOgreCameraController::mouseMoved(const Ogre::Vector2& position, const Og
 
 
 // -------------------------------------------------------------------------
-void VSCOgreCameraController::keyPressed(OIS::KeyCode key)
+void VSCOgreCameraController::keyPressed(VSCOgreInputAdapter* adapter, OIS::KeyCode key)
 {
     
     if (mTraceUI) std::cout << "VSCOgreCameraController got key pressed code: " << key << " (W is " << OIS::KC_W << ")" << std::endl; 
@@ -62,7 +63,7 @@ void VSCOgreCameraController::keyPressed(OIS::KeyCode key)
 }
 
 // -------------------------------------------------------------------------
-void VSCOgreCameraController::keyReleased(OIS::KeyCode key)
+void VSCOgreCameraController::keyReleased(VSCOgreInputAdapter* adapter, OIS::KeyCode key)
 {
     if (mTraceUI) std::cout << "VSCOgreCameraController keyReleased : " << key << std::endl;
     
@@ -99,7 +100,7 @@ bool VSCOgreCameraController::frameStarted(Ogre::Real elapsedTime)
 
     if (mTraceUI) std::cout << "VSCOgreCameraController frameStarted" << std::endl;
     
-    if (this->isMouseButtonPressed(OIS::MB_Middle))
+    if (this->getMouseAdapter()->isMouseButtonPressed(OIS::MB_Middle))
     {
         if (mTraceUI) std::cout << "VSCOgreCameraController detected middle mouse, yaw: " << mCameraRotX << ", pitch: " << mCameraRotY << std::endl;
         mCamera->yaw(mCameraRotX);

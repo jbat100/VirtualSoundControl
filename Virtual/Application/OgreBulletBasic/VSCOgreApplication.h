@@ -41,9 +41,6 @@ public:
     VSCOgreApplication();
     /// Standard destructor
     virtual ~VSCOgreApplication();
-
-    VSCOgreInputAdapter* getInputAdapter(void) {return mInputAdapter;}
-    void setInputAdapter(VSCOgreInputAdapter* adapter) {mInputAdapter = adapter;}
     
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     friend class VSCOgreApplicationCocoaSetup;
@@ -56,10 +53,10 @@ public:
     virtual bool setup(void);
 #endif
     
-    Ogre::Root* getRoot(void) {return mRoot;}
-    Ogre::Camera* getCamera(void) {return mCamera;}
-    Ogre::SceneManager* getSceneManager(void) {return mSceneMgr;}
-    Ogre::RenderWindow* getRenderWindow(void) {return mWindow;}
+    Ogre::Root*             getRoot(void) {return mRoot;}
+    Ogre::Camera*           getCamera(void) {return mCamera;}
+    Ogre::SceneManager*     getSceneManager(void) {return mSceneMgr;}
+    Ogre::RenderWindow*     getRenderWindow(void) {return mWindow;}
 
 protected:
     
@@ -68,7 +65,6 @@ protected:
     Ogre::SceneManager              *mSceneMgr;
     Ogre::RenderWindow              *mWindow;
 	Ogre::String                    mResourcePath;
-    VSCOgreInputAdapter             *mInputAdapter;
     
     /*
      *  NOTE: This is probably where the fun is in terms of making the application run on Cocoa
@@ -85,6 +81,10 @@ protected:
 	/// Optional override method where you can perform resource group loading
 	/// Must at least do ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 	virtual void loadResources(void);
+    
+private:
+    
+
 
 };
 

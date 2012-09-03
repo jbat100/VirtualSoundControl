@@ -16,13 +16,13 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include <boost/assert.hpp>
 
 // -------------------------------------------------------------------------
-VSCOgreBulletApplication::VSCOgreBulletApplication(std::vector<VSCOgreBulletScene*> *bulletScenes) : 
+VSCOgreBulletApplication::VSCOgreBulletApplication(std::vector<VSCOgreBulletScene*> bulletScenes) : 
     VSCOgreApplication(),
     Ogre::FrameListener(),
     mBulletScenes(bulletScenes),
     mBulletScene(0)
 {
-    assert (!mBulletScenes->empty());
+    BOOST_ASSERT_MSG (!mBulletScenes.empty(), "Expected keyboard adapter");
 }
 // -------------------------------------------------------------------------
 VSCOgreBulletApplication::~VSCOgreBulletApplication()
@@ -32,8 +32,14 @@ VSCOgreBulletApplication::~VSCOgreBulletApplication()
 
 bool VSCOgreBulletApplication::setupWithOgreView(void* ogreView)
 {
+    //VSCOgreApplication::setupWithOgreView(ogreView);
+    
     VSCOgreApplication::setupWithOgreView(ogreView);
-    switchScene (*(mBulletScenes->begin()));
+    
+    BOOST_ASSERT_MSG(mBulletScenes.size() != 0, "Expected keyboard adapter");
+    
+    switchScene (*(mBulletScenes.begin()));
+    
     mRoot->addFrameListener(this);
     
     return true;
@@ -42,22 +48,66 @@ bool VSCOgreBulletApplication::setupWithOgreView(void* ogreView)
 // -------------------------------------------------------------------------
 bool VSCOgreBulletApplication::switchScene(VSCOgreBulletScene *newScene)
 {
+    
+    if (mTraceScene && newScene) std::cout << "VSCOgreBulletApplication switching scene to " << newScene << std::endl;
+    if (mTraceScene && !newScene) std::cout << "VSCOgreBulletApplication switching scene to NULL" << std::endl;
+    
     /*
      *  We need to reset the scene managers and everything...
      */
     
+    BOOST_ASSERT_MSG(this->getKeyboardAdapter() != 0, "Expected keyboard adapter");
+    BOOST_ASSERT_MSG(this->getMouseAdapter() != 0, "Expected mouse adapter");
+    
     if (mBulletScene)
     {
-        this->getInputAdapter()->removeInputListener(mBulletScene->getCameraController().get());
-        this->getInputAdapter()->removeInputListener(mBulletScene);
+        if (mTraceScene && newScene) std::cout << "Shutting down old scene..." << std::endl;
+        
+        BOOST_ASSERT_MSG(mRoot == &Ogre::Root::getSingleton(), "Expected mRoot to be Ogre::Root::getSingleton()");
+        
+        mRoot->removeFrameListener(mBulletScene->getCameraController());
+        
+        if (this->getKeyboardAdapter() != 0)
+        {
+            this->getKeyboardAdapter()->removeInputListener(mBulletScene->getCameraController());
+            this->getKeyboardAdapter()->removeInputListener(mBulletScene);
+        }
+        
+        if (this->getMouseAdapter() != 0) 
+        {
+            this->getMouseAdapter()->removeInputListener(mBulletScene->getCameraController());
+            this->getMouseAdapter()->removeInputListener(mBulletScene);
+        }
+        
         mBulletScene->shutdown();
     }
     
     if (newScene)
     {
+        if (mTraceScene && newScene) std::cout << "Initializing new scene..." << std::endl;
         newScene->init(mRoot, mWindow, this);
-        this->getInputAdapter()->addInputListener(newScene);
-        this->getInputAdapter()->addInputListener(newScene->getCameraController().get());
+        
+        if (this->getKeyboardAdapter() != 0)
+        {
+            this->getKeyboardAdapter()->addInputListener(newScene);
+            this->getKeyboardAdapter()->addInputListener(newScene->getCameraController());
+        }
+        
+        if (this->getMouseAdapter() != 0) 
+        {
+            this->getMouseAdapter()->addInputListener(newScene->getCameraController());
+            this->getMouseAdapter()->addInputListener(newScene);
+        }
+        
+        BOOST_ASSERT_MSG(mRoot == &Ogre::Root::getSingleton(), "Expected mRoot to be Ogre::Root::getSingleton()");
+        
+        mRoot->addFrameListener(newScene->getCameraController());
+        
+    }
+    
+    else 
+    {
+        if (mTraceScene && newScene) std::cout << "Switched to null scene..." << std::endl;
     }
     
     mBulletScene = newScene;
@@ -67,13 +117,13 @@ bool VSCOgreBulletApplication::switchScene(VSCOgreBulletScene *newScene)
 // -------------------------------------------------------------------------
 bool VSCOgreBulletApplication::frameStarted(const Ogre::FrameEvent& evt)
 {
-    if (mTraceFrame) std::cout << "VSCOgreBulletApplication frameStarted " << evt << std::endl;
+    if (mTraceFrame) std::cout << "VSCOgreBulletApplication frameStarted " << &evt << std::endl;
 
-    std::vector <VSCOgreBulletScene *>::iterator it =  mBulletScenes->begin();
+    std::vector <VSCOgreBulletScene *>::iterator it =  mBulletScenes.begin();
     
-    while (it != mBulletScenes->end())
+    while (it != mBulletScenes.end())
     {
-        if ((*(*it)->getBoolActivator()) == true || this->isKeyPressed((*it)->getNextKey()))
+        if ((*(*it)->getBoolActivator()) == true || this->getKeyboardAdapter()->isKeyPressed((*it)->getNextKey()))
         {
             switchScene(*it);
             break;

@@ -13,6 +13,7 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "VSCOgreBulletScene.h"
 #include "VSCOgreBetaGUIListener.h"
 #include "VSCOgreCameraController.h"
+#include "VSCOgreInputAdapter.h"
 
 /*
  *  OgreBullet Shapes
@@ -304,9 +305,9 @@ void VSCOgreBulletScene::setPhysicGUI()
      */
     aWindow = menuWindow->addMenuWindowTab("Scene Choice");
     {
-        std::vector <VSCOgreBulletScene *> *sceneList = mApplication->getScenesList();
-        std::vector <VSCOgreBulletScene *>::iterator itScenes = sceneList->begin();
-        for (; itScenes < sceneList->end(); ++itScenes)
+        std::vector <VSCOgreBulletScene*> sceneList = mApplication->getScenesList();
+        std::vector <VSCOgreBulletScene*>::iterator itScenes = sceneList.begin();
+        for (; itScenes < sceneList.end(); ++itScenes)
         {
             if ((*itScenes) == this)
                 aWindow->addBoolButton((*itScenes)->getBoolActivator(), "reset " + (*itScenes)->getName(), BetaGUI::WPT_VERTICAL);
@@ -447,7 +448,7 @@ void VSCOgreBulletScene::shutdown ()
     }
     mEntities.clear();
     
-    mCameraController.reset();
+    //mCameraController.reset();
     
     mSceneMgr->destroyCamera(mCamera->getName());
     mWindow->removeViewport(0);
@@ -664,7 +665,7 @@ void VSCOgreBulletScene::mouseMoved(const Ogre::Vector2& position, const Ogre::V
 
 
     if (mGuiListener->getGui()->injectMouse(position.x * mWindow->getWidth(), position.y * mWindow->getHeight(), 
-                                            this->isMouseButtonPressed(OIS::MB_Left)))
+                                            this->getMouseAdapter()->isMouseButtonPressed(OIS::MB_Left)))
     {
         //mGuiListener->hideMouse();
     }
@@ -799,8 +800,8 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletScene::getBodyUnderCursorUsingBullet
     float absX = 0.0;
     float absY = 0.0;
     
-    absX = this->getLastMousePosition().x;
-    absY = this->getLastMousePosition().y;
+    absX = this->getMouseAdapter()->getLastMousePosition().x;
+    absY = this->getMouseAdapter()->getLastMousePosition().y;
     
     rayTo = mCamera->getCameraToViewportRay (absX, absY);
 
@@ -827,8 +828,8 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletScene::getBodyUnderCursorUsingOgre(O
     float absX = 0.0;
     float absY = 0.0;
     
-    absX = this->getLastMousePosition().x;
-    absY = this->getLastMousePosition().y;
+    absX = this->getMouseAdapter()->getLastMousePosition().x;
+    absY = this->getMouseAdapter()->getLastMousePosition().y;
     
     rayTo = mCamera->getCameraToViewportRay (absX, absY);
 

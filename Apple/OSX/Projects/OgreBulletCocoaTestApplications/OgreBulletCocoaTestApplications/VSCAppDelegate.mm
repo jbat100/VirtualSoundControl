@@ -72,7 +72,8 @@ using namespace OIS;
 	ogreBulletScenes[5]->setNextKey(KC_F6);
     
     // Create the application and try to run it
-    ogreBulletApplication = new VSCOgreBulletApplication(&ogreBulletScenes);
+    ogreBulletApplication = new VSCOgreBulletApplication(ogreBulletScenes);
+    
     ogreBulletApplication->setupWithOgreView((__bridge void*)self.ogreView);
     
     [self startRendering];
@@ -85,7 +86,7 @@ using namespace OIS;
      *  Cleanup
      */
     
-    std::vector<VSCOgreBulletScene*>::iterator it =  ogreBulletScenes.begin();
+    std::vector<VSCOgreBulletScene*>::iterator it = ogreBulletScenes.begin();
     while (it != ogreBulletScenes.end())
     {
         delete *it;
@@ -126,6 +127,8 @@ using namespace OIS;
      *
      *  see http://www.ogre3d.org/docs/api/html/classOgre_1_1Root.html#_details
      */
+    
+    //std::cout << "In renderCallback ..." << std::endl;
     
     Ogre::Root::getSingleton().renderOneFrame();
     

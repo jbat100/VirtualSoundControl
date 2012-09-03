@@ -5,9 +5,8 @@
 #include "VSCOgreInputListener.h"
 #include <Ogre/Ogre.h>
 
-#
 
-class VSCOgreCameraController : public VSCOgreInputListener
+class VSCOgreCameraController : public VSCOgreInputListener, public Ogre::FrameListener
 {
 public:
 
@@ -25,9 +24,9 @@ public:
      *  Input Listener Overrides, only need to override these
      *  These can be overriden further to provide special camera control...
      */
-    void mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement);
-    void keyPressed(OIS::KeyCode key);
-    void keyReleased(OIS::KeyCode key);
+    virtual void mouseMoved(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position, const Ogre::Vector2& movement);
+    virtual void keyPressed(VSCOgreInputAdapter* adapter, OIS::KeyCode key);
+    virtual void keyReleased(VSCOgreInputAdapter* adapter, OIS::KeyCode key);
     
     /**
      *  Ogre Setters/Getters

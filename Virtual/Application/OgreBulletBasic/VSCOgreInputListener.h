@@ -20,61 +20,63 @@ A basic test framework that minimize code in each test scene listener.
 #include <set>
 #include <Ogre/Ogre.h>
 #include "OIS.h"
-class VSCOgreBulletScene;
+class VSCOgreInputAdapter;
 
 class VSCOgreInputListener
 {
     
 public:
     
-    typedef std::set<OIS::KeyCode>          KeyCodeSet;
-    typedef std::set<OIS::MouseButtonID>    MouseButtonSet;
-    
-    static const Ogre::Real KEY_DELAY;
     // the listener will be called when something happens, should not be nil
     VSCOgreInputListener(); 
-    virtual ~VSCOgreInputListener(){};
-
-    /*
-     *  Listener Keyboard stuff query 
-     */
-    // currently pressed non modifier keys
-    const KeyCodeSet&  getCurrentKeys() {return mCurrentKeys;} 
-    // convienience method
-    bool isKeyPressed(OIS::KeyCode key); 
-    OIS::Keyboard::Modifier currentModifiers(void); // OIS::Keyboard::Modifier is a bit mask
+    virtual ~VSCOgreInputListener(){}
+    
+    friend class VSCOgreInputAdapter;
     
     /*
-     *  Listener Mouse stuff query 
+     *  Keeps track of the adapters. I don't think this is really necessary 
+     *  as subclasses should be able to distinguish between keyboard adapter,
+     *  mouse adapter, joystic adapter, sensor adapter etc...
      */
-    bool isMouseButtonPressed(OIS::MouseButtonID) const;
-    // probably dont need these ...
-    Ogre::Vector2 getLastMousePosition() const {return mLastMousePosition;}
-    Ogre::Vector2 getLastMouseMovement() const {return mLastMouseMovement;}
-    Ogre::Vector2 getBufferedMouseMovement() const {return mBufferedMouseMovement;}
-    void resetBufferedMouseMovement() {mBufferedMouseMovement = 0;}
+    const std::set<VSCOgreInputAdapter*>& getInputAdapters(void) {return mInputAdapters;}
+    
+    /*
+     *  This is the interface which I think should be used
+     */
+    VSCOgreInputAdapter*    getKeyboardAdapter(void) {return mKeyboardAdapter;}
+    VSCOgreInputAdapter*    getMouseAdapter(void) {return mMouseAdapter;}
+    void                    setKeyboardAdapter(VSCOgreInputAdapter* keyboardAdapter) {mKeyboardAdapter = keyboardAdapter;}
+    void                    setMouseAdapter(VSCOgreInputAdapter* keyboardAdapter) {mMouseAdapter = keyboardAdapter;}
+    
+    /*
+     *  Then we can maybe have a set of sensor/glove/joystick listeners
+     */
     
     /**--------------------------------------------------------------
-     *  These methods are called by the input adapter when some 
+     *  These methods are called by the input adapters when some 
      *  input related thing happens. Do not call these methods 
      *  in any other case, unless you want to simulate input.
+     *
+     *  The decision to not make these methods purely virtual is deliberate,
+     *  so that subclasses can choose to implement the methods or not...
+     *
+     *  The derived classes must call the base class implementation
+     *  so that the trackers can be properly updated
      */
-    virtual void mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement);
-    virtual void mouseEntered(const Ogre::Vector2& position);
-    virtual void mouseExited(const Ogre::Vector2& position);
-    virtual void mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
-    virtual void mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
-    virtual void keyPressed(OIS::KeyCode key);
-    virtual void keyReleased(OIS::KeyCode key);
+    virtual void mouseMoved(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position, const Ogre::Vector2& movement);
+    virtual void mouseEntered(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position);
+    virtual void mouseExited(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position);
+    virtual void mouseButtonPressed(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
+    virtual void mouseButtonReleased(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
+    virtual void keyPressed(VSCOgreInputAdapter* adapter, OIS::KeyCode key);
+    virtual void keyReleased(VSCOgreInputAdapter* adapter, OIS::KeyCode key);
     
 private:
-
-    Ogre::Vector2 mLastMousePosition;
-    Ogre::Vector2 mLastMouseMovement;
-    Ogre::Vector2 mBufferedMouseMovement;
-
-    KeyCodeSet      mCurrentKeys;
-    MouseButtonSet  mCurrentMouseButtons;
+    
+    std::set<VSCOgreInputAdapter*>      mInputAdapters;
+    
+    VSCOgreInputAdapter                 *mKeyboardAdapter;
+    VSCOgreInputAdapter                 *mMouseAdapter;
     
 };
 

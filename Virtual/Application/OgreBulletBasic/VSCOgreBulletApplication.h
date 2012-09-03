@@ -18,6 +18,8 @@ demo scenes and switch between them.
 #include "VSCOgreBulletScene.h"
 #include "VSCOgreApplication.h"
 
+#include <Ogre/Ogre.h>
+
 #include <vector>
 
 class VSCOgreBulletApplication;
@@ -30,10 +32,10 @@ class VSCOgreBulletApplication: public VSCOgreApplication,  public Ogre::FrameLi
     
 public:
 	// Standard constructor/destructor
-    VSCOgreBulletApplication(std::vector <VSCOgreBulletScene *> *bulletListeners);
+    VSCOgreBulletApplication(std::vector<VSCOgreBulletScene*> bulletListeners);
     ~VSCOgreBulletApplication();
 
-    std::vector<VSCOgreBulletScene*>* getScenesList() {return mBulletScenes;};
+    const std::vector<VSCOgreBulletScene*>& getScenesList() {return mBulletScenes;};
     
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     bool setupWithOgreView(void* ogreView);
@@ -60,9 +62,10 @@ protected:
 private:
     
     VSCOgreBulletScene *mBulletScene;
-    std::vector<VSCOgreBulletScene*> *mBulletScenes;
+    std::vector<VSCOgreBulletScene*> mBulletScenes;
     
-    static const bool mTraceFrame = true;
+    static const bool mTraceFrame = false;
+    static const bool mTraceScene = true;
 
 
 };
