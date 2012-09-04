@@ -234,7 +234,6 @@ void VSCOgreBulletScene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgre
      */
     mQuit = false;
     mPaused = false;
-    mActivationBool = false;
     mWireFrame = false;
     mDrawAabb = false;
     mDrawFeaturesText = false;
@@ -303,6 +302,8 @@ void VSCOgreBulletScene::setPhysicGUI()
     /**-------------------------------------------------------------------
      *  Setup scene choice tab, with the scenes registered by mApplication
      */
+    
+    /*
     aWindow = menuWindow->addMenuWindowTab("Scene Choice");
     {
         std::vector <VSCOgreBulletScene*> sceneList = mApplication->getScenesList();
@@ -316,7 +317,8 @@ void VSCOgreBulletScene::setPhysicGUI()
         }
     }
     aWindow->hide ();
-
+     */
+     
     /**-------------------------------------------------------------------
      *  Time tab, play/pause, step
      */
@@ -870,6 +872,9 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletScene::getBodyUnderCursorUsingOgre(O
 // -------------------------------------------------------------------------
 bool VSCOgreBulletScene::frameStarted(Real elapsedTime)
 {
+    
+    if (mTraceFrame) std::cout << "VSCOgreBulletScene::frameStarted, elapsed time " << elapsedTime << std::endl;
+    
     if (mQuit)
         return false;
 
@@ -884,6 +889,8 @@ bool VSCOgreBulletScene::frameStarted(Real elapsedTime)
 // -------------------------------------------------------------------------
 bool VSCOgreBulletScene::frameEnded(Real elapsedTime)
 {
+    if (mTraceFrame) std::cout << "VSCOgreBulletScene::frameEnded, elapsed time " << elapsedTime << std::endl;
+    
     if (mQuit)
         return false;
 

@@ -100,6 +100,9 @@ bool VSCOgreCameraController::frameStarted(Ogre::Real elapsedTime)
 
     if (mTraceUI) std::cout << "VSCOgreCameraController frameStarted" << std::endl;
     
+    BOOST_ASSERT_MSG(this->getKeyboardAdapter() != 0, "Expected keyboard adapter");
+    BOOST_ASSERT_MSG(this->getMouseAdapter() != 0, "Expected mouse adapter");
+    
     if (this->getMouseAdapter()->isMouseButtonPressed(OIS::MB_Middle))
     {
         if (mTraceUI) std::cout << "VSCOgreCameraController detected middle mouse, yaw: " << mCameraRotX << ", pitch: " << mCameraRotY << std::endl;

@@ -85,14 +85,14 @@ public:
     virtual bool frameStarted(Ogre::Real elapsedTime);
     virtual bool frameEnded(Ogre::Real elapsedTime);
 
+    /**--------------------------------------------------------------
+     *  Dynamic actions and checks
+     */
     bool checkIfEnoughPlaceToAddObject(float maxDist);
     void throwDynamicObject(OIS::KeyCode key);
     void dropDynamicObject(OIS::KeyCode key);
-
-
-    bool *getBoolActivator(){return &mActivationBool;}
     
-    /*
+    /**--------------------------------------------------------------
      *  Input listener callback overrides
      */
     void mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
@@ -228,7 +228,6 @@ protected:
    Ogre::RaySceneQuery                                      *mRayQuery;
    
    OIS::KeyCode                                             mActivationKeyCode;
-   bool                                                     mActivationBool;
 
    VSCOgreBetaGUIListener                                   *mGuiListener;
     
@@ -241,6 +240,7 @@ protected:
 private:
     
     VSCOgreCameraControllerPtr                              mCameraController;
+    static const bool                                       mTraceFrame = true;
     
 };
 

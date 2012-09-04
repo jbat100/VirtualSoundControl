@@ -6,7 +6,7 @@
 #include <Ogre/Ogre.h>
 
 
-class VSCOgreCameraController : public VSCOgreInputListener, public Ogre::FrameListener
+class VSCOgreCameraController : public VSCOgreInputListener
 {
 public:
 

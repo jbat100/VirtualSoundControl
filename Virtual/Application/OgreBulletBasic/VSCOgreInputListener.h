@@ -33,20 +33,15 @@ public:
     
     friend class VSCOgreInputAdapter;
     
-    /*
-     *  Keeps track of the adapters. I don't think this is really necessary 
-     *  as subclasses should be able to distinguish between keyboard adapter,
-     *  mouse adapter, joystic adapter, sensor adapter etc...
-     */
-    const std::set<VSCOgreInputAdapter*>& getInputAdapters(void) {return mInputAdapters;}
+    bool isListeningToAdapter(VSCOgreInputAdapter* adapter);
     
     /*
      *  This is the interface which I think should be used
      */
     VSCOgreInputAdapter*    getKeyboardAdapter(void) {return mKeyboardAdapter;}
     VSCOgreInputAdapter*    getMouseAdapter(void) {return mMouseAdapter;}
-    void                    setKeyboardAdapter(VSCOgreInputAdapter* keyboardAdapter) {mKeyboardAdapter = keyboardAdapter;}
-    void                    setMouseAdapter(VSCOgreInputAdapter* keyboardAdapter) {mMouseAdapter = keyboardAdapter;}
+    void                    setKeyboardAdapter(VSCOgreInputAdapter* keyboardAdapter);
+    void                    setMouseAdapter(VSCOgreInputAdapter* mouseAdapter);
     
     /*
      *  Then we can maybe have a set of sensor/glove/joystick listeners
@@ -70,6 +65,16 @@ public:
     virtual void mouseButtonReleased(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
     virtual void keyPressed(VSCOgreInputAdapter* adapter, OIS::KeyCode key);
     virtual void keyReleased(VSCOgreInputAdapter* adapter, OIS::KeyCode key);
+    
+protected:
+    
+    /*
+     *  Keeps track of the adapters. I don't think this is really necessary 
+     *  as subclasses should be able to distinguish between keyboard adapter,
+     *  mouse adapter, joystic adapter, sensor adapter etc...
+     */
+    
+    const std::set<VSCOgreInputAdapter*>& getInputAdapters(void) {return mInputAdapters;}
     
 private:
     
