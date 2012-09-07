@@ -24,9 +24,9 @@ public:
      *  Input Listener Overrides, only need to override these
      *  These can be overriden further to provide special camera control...
      */
-    virtual void mouseMoved(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position, const Ogre::Vector2& movement);
-    virtual void keyPressed(VSCOgreInputAdapter* adapter, OIS::KeyCode key);
-    virtual void keyReleased(VSCOgreInputAdapter* adapter, OIS::KeyCode key);
+    virtual bool mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement);
+    virtual bool keyPressed(OIS::KeyCode key);
+    virtual bool keyReleased(OIS::KeyCode key);
     
     /**
      *  Ogre Setters/Getters
@@ -59,6 +59,7 @@ private:
     float                               mCameraSpeed;
     
     const static bool                   mTraceUI = true;
+    const static bool                   mTraceFrame = false;
 
 };
 

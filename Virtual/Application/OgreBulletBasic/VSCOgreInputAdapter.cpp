@@ -17,14 +17,14 @@ void VSCOgreInputAdapter::addInputListener(VSCOgreInputListener* listener)
 {
     BOOST_ASSERT_MSG(listener, "Expected listener");
     mInputListeners.insert(listener);
-    listener->mInputAdapters.insert(this);
+    listener->setInputAdapter(this);
 }
 
 void VSCOgreInputAdapter::removeInputListener(VSCOgreInputListener* listener)
 {
     BOOST_ASSERT_MSG(listener, "Expected listener");
     mInputListeners.erase(listener);
-    listener->mInputAdapters.erase(this);
+    listener->setInputAdapter(this);
 }
 
 
@@ -47,7 +47,7 @@ void VSCOgreInputAdapter::mouseMoved(const Ogre::Vector2& position, const Ogre::
     
     BOOST_FOREACH (VSCOgreInputListener* inputListener, this->getInputListeners()) 
     {
-        inputListener->mouseMoved(this, position, movement);
+        inputListener->mouseMoved(position, movement);
     }
 }
 
@@ -68,7 +68,7 @@ void VSCOgreInputAdapter::mouseButtonPressed(const Ogre::Vector2& position, OIS:
     
     BOOST_FOREACH (VSCOgreInputListener* inputListener, this->getInputListeners()) 
     {
-        inputListener->mouseButtonPressed(this, position, buttonID);
+        inputListener->mouseButtonPressed(position, buttonID);
     }
 }
 
@@ -78,7 +78,7 @@ void VSCOgreInputAdapter::mouseButtonReleased(const Ogre::Vector2& position, OIS
     
     BOOST_FOREACH (VSCOgreInputListener* inputListener, this->getInputListeners()) 
     {
-        inputListener->mouseButtonReleased(this, position, buttonID);
+        inputListener->mouseButtonReleased(position, buttonID);
     }
 }
 
@@ -99,7 +99,7 @@ void VSCOgreInputAdapter::keyPressed(OIS::KeyCode key)
     {
         BOOST_FOREACH (VSCOgreInputListener* inputListener, this->getInputListeners()) 
         {
-            inputListener->keyPressed(this, key);
+            inputListener->keyPressed(key);
         }
     }
 
@@ -122,7 +122,7 @@ void VSCOgreInputAdapter::keyReleased(OIS::KeyCode key)
     {
         BOOST_FOREACH (VSCOgreInputListener* inputListener, this->getInputListeners()) 
         {
-            inputListener->keyReleased(this, key);
+            inputListener->keyReleased(key);
         }
     }
 }

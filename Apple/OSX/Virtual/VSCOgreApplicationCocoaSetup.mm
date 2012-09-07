@@ -88,11 +88,11 @@ bool VSCOgreApplicationCocoaSetup::setupApplicationWithOgreView(VSCOgreApplicati
     
     BOOST_ASSERT_MSG(adapter, "Expected adapter"); 
     
-    ogreApplication->setKeyboardAdapter(adapter);
-    ogreApplication->setMouseAdapter(adapter);
+    //ogreApplication->setInputAdapter(adapter);
     
-    BOOST_ASSERT_MSG(ogreApplication->getKeyboardAdapter() == adapter, "Expected keyboard adapter"); 
-    BOOST_ASSERT_MSG(ogreApplication->getMouseAdapter() == adapter, "Expected mouse adapter"); 
+    adapter->addInputListener(ogreApplication);
+    
+    BOOST_ASSERT_MSG(ogreApplication->getInputAdapter() == adapter, "Expected adapter"); 
     
     adapter->setCocoaView(ogreView);
     

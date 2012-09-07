@@ -306,14 +306,15 @@ void VSCOgreBulletVehiclesDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, 
 }
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletVehiclesDemo::keyPressed(OIS::KeyCode key)
+bool VSCOgreBulletVehiclesDemo::keyPressed(OIS::KeyCode key)
 {
-    VSCOgreBulletScene::throwDynamicObject (key);
-    VSCOgreBulletScene::dropDynamicObject (key);
+
 
     bool wheel_engine_style_change = false;
     bool wheel_steering_style_change = false;
 
+    bool handled = true;
+    
     switch(key)
     {
             
@@ -347,6 +348,7 @@ void VSCOgreBulletVehiclesDemo::keyPressed(OIS::KeyCode key)
             mEngineForce = gMaxEngineForce;
             break;
         default:
+            handled = false;
             break;
             
     }
@@ -416,15 +418,19 @@ void VSCOgreBulletVehiclesDemo::keyPressed(OIS::KeyCode key)
                 break;
         }
     }
+    
+    if (!handled) handled = VSCOgreBulletScene::throwDynamicObject(key) || VSCOgreBulletScene::dropDynamicObject(key);
+    if (handled) return true;
 
-    return VSCOgreBulletScene::keyPressed (key);
+    return VSCOgreBulletScene::keyPressed(key);
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletVehiclesDemo::keyReleased(OIS::KeyCode key)
+bool VSCOgreBulletVehiclesDemo::keyReleased(OIS::KeyCode key)
 {
+    bool handled = true;
+    
     switch(key)
     {
-            
         case KC_LEFT: 
             mSteeringLeft = false;
             break;
@@ -438,10 +444,13 @@ void VSCOgreBulletVehiclesDemo::keyReleased(OIS::KeyCode key)
             mEngineForce = 0;
             break;
         default:
+            handled = false;
             break;
-            
     }
-    return VSCOgreBulletScene::keyReleased (key);
+    
+    if (handled) return true; 
+    
+    return VSCOgreBulletScene::keyReleased(key);
 }
 
 // -------------------------------------------------------------------------

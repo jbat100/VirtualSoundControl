@@ -118,19 +118,25 @@ void VSCOgreBulletRagdollDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
 }
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletRagdollDemo::keyPressed(OIS::KeyCode key)
+bool VSCOgreBulletRagdollDemo::keyPressed(OIS::KeyCode key)
 {
 	const float trowDist = 2.0f;
+    bool handled = true;
+    
 	switch(key)
 	{
-	case KC_X:
-		shootToKill();
-		break;	
+        case KC_X:
+            shootToKill();
+            break;	
+        default:
+            handled = false;
+            break;
 	}
-    VSCOgreBulletScene::throwDynamicObject (key);
-    VSCOgreBulletScene::dropDynamicObject (key);
+    
+    if (!handled) handled = VSCOgreBulletScene::throwDynamicObject(key) || VSCOgreBulletScene::dropDynamicObject(key);
+    if (handled) return true;
 
-    return VSCOgreBulletScene::keyPressed (key);
+    return VSCOgreBulletScene::keyPressed(key);
 }
 // -------------------------------------------------------------------------
 void VSCOgreBulletRagdollDemo::button0Pressed()

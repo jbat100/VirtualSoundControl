@@ -89,19 +89,19 @@ public:
      *  Dynamic actions and checks
      */
     bool checkIfEnoughPlaceToAddObject(float maxDist);
-    void throwDynamicObject(OIS::KeyCode key);
-    void dropDynamicObject(OIS::KeyCode key);
+    bool throwDynamicObject(OIS::KeyCode key);  // returns true if something happened
+    bool dropDynamicObject(OIS::KeyCode key);   // returns true if something happened
     
     /**--------------------------------------------------------------
      *  Input listener callback overrides
      */
-    void mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
-    void mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
-    void mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement);
-    void mouseEntered(const Ogre::Vector2& position);
-    void mouseExited(const Ogre::Vector2& position);
-    void keyPressed(OIS::KeyCode key);
-    void keyReleased(OIS::KeyCode key);
+    bool mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
+    bool mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
+    bool mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement);
+    bool mouseEntered(const Ogre::Vector2& position);
+    bool mouseExited(const Ogre::Vector2& position);
+    bool keyPressed(OIS::KeyCode key);
+    bool keyReleased(OIS::KeyCode key);
     
     /*
      *  Ogre Setters/Getters
@@ -111,12 +111,6 @@ public:
     Ogre::Root* getRoot(void) {return mRoot;}
     Ogre::SceneManager* getSceneManager(void) {return mSceneMgr;}
     Ogre::Camera* getCamera(void) {return mCamera;}
-    
-    /*
-     *  Other Setters/Getters
-     */
-    VSCOgreCameraControllerPtr getCameraController(void) {return mCameraController;}
-    void setCameraController(VSCOgreCameraControllerPtr controller) {mCameraController = controller;}
 
 protected:
 
@@ -239,8 +233,15 @@ protected:
     
 private:
     
+    /*
+     *  Other Setters/Getters
+     */
+    
+    VSCOgreCameraControllerPtr getCameraController(void) {return mCameraController;}
+    void setCameraController(VSCOgreCameraControllerPtr controller);
+    
     VSCOgreCameraControllerPtr                              mCameraController;
-    static const bool                                       mTraceFrame = true;
+    static const bool                                       mTraceFrame = false;
     
 };
 

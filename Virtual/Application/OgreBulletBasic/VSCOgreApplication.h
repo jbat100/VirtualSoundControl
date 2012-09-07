@@ -57,6 +57,11 @@ public:
     Ogre::Camera*           getCamera(void) {return mCamera;}
     Ogre::SceneManager*     getSceneManager(void) {return mSceneMgr;}
     Ogre::RenderWindow*     getRenderWindow(void) {return mWindow;}
+    
+    /*
+     *  VSCOgreInputListener override
+     */
+    virtual bool keyPressed(OIS::KeyCode key);
 
 protected:
     
@@ -84,7 +89,7 @@ protected:
     
 private:
     
-
+    static const bool mTraceUI = true;
 
 };
 

@@ -75,11 +75,10 @@ void VSCOgreBulletConstraintsDemo::init(Ogre::Root *root, Ogre::RenderWindow *wi
     addGround();
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletConstraintsDemo::keyPressed(OIS::KeyCode key)
+bool VSCOgreBulletConstraintsDemo::keyPressed(OIS::KeyCode key)
 {
-    VSCOgreBulletScene::throwDynamicObject (key);
-    VSCOgreBulletScene::dropDynamicObject (key);
-
+    bool handled = VSCOgreBulletScene::throwDynamicObject(key) || VSCOgreBulletScene::dropDynamicObject(key);
+    if (handled) return true;
     return VSCOgreBulletScene::keyPressed (key);
 }
 

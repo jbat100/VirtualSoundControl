@@ -33,55 +33,43 @@ public:
     
     friend class VSCOgreInputAdapter;
     
-    bool isListeningToAdapter(VSCOgreInputAdapter* adapter);
-    
-    /*
+    /*----------------------------------------------------------------
      *  This is the interface which I think should be used
      */
-    VSCOgreInputAdapter*    getKeyboardAdapter(void) {return mKeyboardAdapter;}
-    VSCOgreInputAdapter*    getMouseAdapter(void) {return mMouseAdapter;}
-    void                    setKeyboardAdapter(VSCOgreInputAdapter* keyboardAdapter);
-    void                    setMouseAdapter(VSCOgreInputAdapter* mouseAdapter);
+    VSCOgreInputAdapter*    getInputAdapter(void) {return mAdapter;}
+    void                    setInputAdapter(VSCOgreInputAdapter* adapter);
     
     /*
-     *  Then we can maybe have a set of sensor/glove/joystick listeners
+     *  Responder chain, if the current listener does not respond to an interface event (returns false)
+     *  then the call will be forwarded down the chain.
      */
+    VSCOgreInputListener*   getNextInputListener(void) {return mNextInputListener;}
+    void                    setNextInputListener(VSCOgreInputListener* next);
     
     /**--------------------------------------------------------------
      *  These methods are called by the input adapters when some 
-     *  input related thing happens. Do not call these methods 
+     *  input related thing happens, then chained down the responders. 
+     *  Do not call these methods 
      *  in any other case, unless you want to simulate input.
      *
      *  The decision to not make these methods purely virtual is deliberate,
      *  so that subclasses can choose to implement the methods or not...
-     *
-     *  The derived classes must call the base class implementation
-     *  so that the trackers can be properly updated
      */
-    virtual void mouseMoved(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position, const Ogre::Vector2& movement);
-    virtual void mouseEntered(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position);
-    virtual void mouseExited(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position);
-    virtual void mouseButtonPressed(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
-    virtual void mouseButtonReleased(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
-    virtual void keyPressed(VSCOgreInputAdapter* adapter, OIS::KeyCode key);
-    virtual void keyReleased(VSCOgreInputAdapter* adapter, OIS::KeyCode key);
-    
-protected:
-    
-    /*
-     *  Keeps track of the adapters. I don't think this is really necessary 
-     *  as subclasses should be able to distinguish between keyboard adapter,
-     *  mouse adapter, joystic adapter, sensor adapter etc...
-     */
-    
-    const std::set<VSCOgreInputAdapter*>& getInputAdapters(void) {return mInputAdapters;}
+
+    virtual bool mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement);
+    virtual bool mouseEntered(const Ogre::Vector2& position);
+    virtual bool mouseExited(const Ogre::Vector2& position);
+    virtual bool mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
+    virtual bool mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
+    virtual bool keyPressed(OIS::KeyCode key);
+    virtual bool keyReleased(OIS::KeyCode key);
     
 private:
     
-    std::set<VSCOgreInputAdapter*>      mInputAdapters;
+    VSCOgreInputAdapter*                mAdapter;
+    VSCOgreInputListener*               mNextInputListener;
     
-    VSCOgreInputAdapter                 *mKeyboardAdapter;
-    VSCOgreInputAdapter                 *mMouseAdapter;
+    static const bool                   mTraceUI = true;
     
 };
 

@@ -12,76 +12,112 @@ using Ogre::RenderWindow;
 
 // -------------------------------------------------------------------------
 VSCOgreInputListener::VSCOgreInputListener() :
-mKeyboardAdapter(0),
-mMouseAdapter(0)
+mAdapter(0),
+mNextInputListener(0)
 {
 
 }
 
-bool VSCOgreInputListener::isListeningToAdapter(VSCOgreInputAdapter* adapter)
+void VSCOgreInputListener::setInputAdapter(VSCOgreInputAdapter* adapter) 
 {
-    if (!adapter) 
-    {
-        return false;
-    }
+    mAdapter = adapter;
     
-    if (adapter == mKeyboardAdapter) 
+    /*
+     *  Update the responder chain
+     */
+    if (mNextInputListener)
     {
-        return true;
+        mNextInputListener->setInputAdapter(mAdapter);
     }
+}
+
+void VSCOgreInputListener::setNextInputListener(VSCOgreInputListener* next)
+{
+    mNextInputListener = next;
     
-    if (adapter == mMouseAdapter)
+    if (mNextInputListener)
     {
-        return true;
+        mNextInputListener->setInputAdapter(mAdapter);
     }
+}
+
+
+bool VSCOgreInputListener::mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement) 
+{
+    if (mTraceUI) std::cout << "VSCOgreInputListener::mouseMoved, next listener is 0x" << (void*)mNextInputListener << std::endl;
     
-    if (mInputAdapters.find(adapter) != mInputAdapters.end()) 
+    if (mNextInputListener)
     {
-        return true;
+        return mNextInputListener->mouseMoved(position, movement);
     }
     
     return false;
-    
 }
 
-void VSCOgreInputListener::setKeyboardAdapter(VSCOgreInputAdapter* keyboardAdapter) 
+bool VSCOgreInputListener::mouseEntered(const Ogre::Vector2& position) 
 {
-    VSCOgreInputAdapter* oldAdapter = mKeyboardAdapter;
-    mKeyboardAdapter = keyboardAdapter;
-    
-    if (oldAdapter && this->isListeningToAdapter(oldAdapter)) 
+    if (mNextInputListener)
     {
-        oldAdapter->removeInputListener(this);
+        return mNextInputListener->mouseEntered(position);
     }
     
-    if (mKeyboardAdapter)
-    {
-        mKeyboardAdapter->addInputListener(this);
-    }
+    return false;
 }
 
-void VSCOgreInputListener::setMouseAdapter(VSCOgreInputAdapter* mouseAdapter) 
+bool VSCOgreInputListener::mouseExited(const Ogre::Vector2& position) 
 {
-    VSCOgreInputAdapter* oldAdapter = mMouseAdapter;
-    mMouseAdapter = mouseAdapter;
-    
-    if (oldAdapter && this->isListeningToAdapter(oldAdapter)) 
+    if (mNextInputListener)
     {
-        mMouseAdapter->removeInputListener(this);
+        return mNextInputListener->mouseEntered(position);
     }
     
-    if (mMouseAdapter)
-    {
-        mMouseAdapter->addInputListener(this);
-    }
+    return false;
 }
 
+bool VSCOgreInputListener::mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
+{
+    if (mTraceUI) std::cout << "VSCOgreInputListener::mouseButtonPressed, next listener is 0x" << (void*)mNextInputListener << std::endl;
+    
+    if (mNextInputListener)
+    {
+        return mNextInputListener->mouseButtonPressed(position, buttonID);
+    }
+    
+    return false;
+}
 
-void VSCOgreInputListener::mouseMoved(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position, const Ogre::Vector2& movement) {}
-void VSCOgreInputListener::mouseEntered(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position) {}
-void VSCOgreInputListener::mouseExited(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position) {}
-void VSCOgreInputListener::mouseButtonPressed(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position, OIS::MouseButtonID buttonID) {}
-void VSCOgreInputListener::mouseButtonReleased(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position, OIS::MouseButtonID buttonID) {}
-void VSCOgreInputListener::keyPressed(VSCOgreInputAdapter* adapter, OIS::KeyCode key) {}
-void VSCOgreInputListener::keyReleased(VSCOgreInputAdapter* adapter, OIS::KeyCode key) {}
+bool VSCOgreInputListener::mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
+{
+    if (mTraceUI) std::cout << "VSCOgreInputListener::mouseButtonReleased, next listener is 0x" << (void*)mNextInputListener << std::endl;
+    
+    if (mNextInputListener)
+    {
+        return mNextInputListener->mouseButtonReleased(position, buttonID);
+    }
+    
+    return false;
+}
+
+bool VSCOgreInputListener::keyPressed(OIS::KeyCode key)
+{
+    if (mTraceUI) std::cout << "VSCOgreInputListener::keyPressed " << key << ", next listener is 0x" << (void*)mNextInputListener << std::endl;
+    
+    if (mNextInputListener)
+    {
+        return mNextInputListener->keyPressed(key);
+    }
+    
+    return false;
+}
+
+bool VSCOgreInputListener::keyReleased(OIS::KeyCode key)
+{
+    if (mNextInputListener)
+    {
+        return mNextInputListener->keyReleased(key);
+    }
+    
+    return false;
+}
+
 

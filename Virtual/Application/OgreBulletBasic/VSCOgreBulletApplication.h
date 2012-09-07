@@ -40,6 +40,11 @@ public:
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     bool setupWithOgreView(void* ogreView);
 #endif   
+    
+    /*
+     *  VSCOgreInputListener override
+     */
+    virtual bool keyPressed(OIS::KeyCode key);
 
 protected:
     
@@ -64,6 +69,7 @@ private:
     VSCOgreBulletScene *mBulletScene;
     std::vector<VSCOgreBulletScene*> mBulletScenes;
     
+    static const bool mTraceUI = true;
     static const bool mTraceFrame = false;
     static const bool mTraceScene = true;
 

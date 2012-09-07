@@ -52,60 +52,21 @@ bool VSCOgreBulletApplication::switchScene(VSCOgreBulletScene *newScene)
      *  We need to reset the scene managers and everything...
      */
     
-    BOOST_ASSERT_MSG(this->getKeyboardAdapter() != 0, "Expected keyboard adapter");
-    BOOST_ASSERT_MSG(this->getMouseAdapter() != 0, "Expected mouse adapter");
+    BOOST_ASSERT_MSG(this->getInputAdapter() != 0, "Expected  adapter");
     
     if (mBulletScene)
     {
         if (mTraceScene && newScene) std::cout << "Shutting down old scene..." << std::endl;
-        
-        BOOST_ASSERT_MSG(mRoot == &Ogre::Root::getSingleton(), "Expected mRoot to be Ogre::Root::getSingleton()");
-        
-        //mRoot->removeFrameListener(mBulletScene->getCameraController());
-        
-        if (this->getKeyboardAdapter() != 0)
-        {
-            this->getKeyboardAdapter()->removeInputListener(mBulletScene->getCameraController());
-            this->getKeyboardAdapter()->removeInputListener(mBulletScene);
-        }
-        
-        if (this->getMouseAdapter() != 0) 
-        {
-            this->getMouseAdapter()->removeInputListener(mBulletScene->getCameraController());
-            this->getMouseAdapter()->removeInputListener(mBulletScene);
-        }
-        
+        //mBulletScene->setInputAdapter(0);
         mBulletScene->shutdown();
     }
     
     if (newScene)
     {
         if (mTraceScene && newScene) std::cout << "Initializing new scene..." << std::endl;
-        
         newScene->init(mRoot, mWindow, this);
-        
-        if (this->getKeyboardAdapter() != 0)
-        {
-            //this->getKeyboardAdapter()->addInputListener(newScene);
-            //this->getKeyboardAdapter()->addInputListener(newScene->getCameraController());
-            
-            newScene->setKeyboardAdapter(this->getKeyboardAdapter());
-            newScene->getCameraController()->setKeyboardAdapter(this->getKeyboardAdapter());
-        }
-        
-        if (this->getMouseAdapter() != 0) 
-        {
-            //this->getMouseAdapter()->addInputListener(newScene->getCameraController());
-            //this->getMouseAdapter()->addInputListener(newScene);
-            
-            newScene->setMouseAdapter(this->getKeyboardAdapter());
-            newScene->getCameraController()->setMouseAdapter(this->getKeyboardAdapter());
-        }
-        
-        BOOST_ASSERT_MSG(mRoot == &Ogre::Root::getSingleton(), "Expected mRoot to be Ogre::Root::getSingleton()");
-        
-        //mRoot->addFrameListener(newScene->getCameraController());
-        
+        //newScene->setInputAdapter(this->getInputAdapter());
+        this->setNextInputListener(newScene);
     }
     
     else 
@@ -124,16 +85,10 @@ bool VSCOgreBulletApplication::frameStarted(const Ogre::FrameEvent& evt)
 
     //BOOST_ASSERT_MSG (mBulletScene, "Expected mBulletScene");
     
-    if (mBulletScene) {
-        
-        mBulletScene->getCameraController()->frameStarted(evt.timeSinceLastFrame);
-        
-        if (!mBulletScene->frameStarted(evt.timeSinceLastFrame))
-        {
-            mBulletScene->shutdown ();
-            return false;
-        }
-        
+    if (mBulletScene && !mBulletScene->frameStarted(evt.timeSinceLastFrame))
+    {
+        mBulletScene->shutdown ();
+        return false;
     }
     
     return true;
@@ -146,15 +101,12 @@ bool VSCOgreBulletApplication::frameEnded(const Ogre::FrameEvent& evt)
     
     if (mTraceFrame) std::cout << "VSCOgreBulletApplication::frameEnded" << std::endl;
     
-    if (mBulletScene) 
+    if (mBulletScene && !mBulletScene->frameEnded(evt.timeSinceLastFrame))
     {
-        if (!mBulletScene->frameEnded(evt.timeSinceLastFrame))
-        {
-            mBulletScene->shutdown();
-            return false;
-        }
+        mBulletScene->shutdown();
+        return false;
     }
-    
+
     return true; 
 }
 
@@ -217,3 +169,10 @@ void VSCOgreBulletApplication::loadResources(void)
 }
 
 // -------------------------------------------------------------------------
+
+bool VSCOgreBulletApplication::keyPressed(OIS::KeyCode key)
+{
+    if (mTraceUI) std::cout << "VSCOgreBulletApplication::keyPressed " << key << std::endl;
+    
+    return VSCOgreApplication::keyPressed(key);
+}

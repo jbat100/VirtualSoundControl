@@ -23,7 +23,7 @@ public:
     
     void init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application);
     
-    void keyPressed(OIS::KeyCode key);
+    bool keyPressed(OIS::KeyCode key);
     
 	void shootToKill();
     

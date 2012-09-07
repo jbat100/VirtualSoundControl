@@ -15,25 +15,32 @@ mCamera(0)
 }
 
 // -------------------------------------------------------------------------
-void VSCOgreCameraController::mouseMoved(VSCOgreInputAdapter* adapter, const Ogre::Vector2& position, const Ogre::Vector2& movement)
+bool VSCOgreCameraController::mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
     if (mTraceUI) std::cout << "VSCOgreCameraController mouseMoved position (" << position << "), movement (" << movement << ")" << std::endl;
     
-    if (this->getMouseAdapter()->isMouseButtonPressed(OIS::MB_Right))
+    //bool handled = true;
+    
+    if (this->getInputAdapter()->isMouseButtonPressed(OIS::MB_Right))
     {
         mCameraRotX = Ogre::Degree(-movement.x * mMouseSensitivity);
         mCameraRotY = Ogre::Degree(-movement.y * mMouseSensitivity);
+        return true;
     }
+    
+    return VSCOgreInputListener::mouseMoved(position, movement);
 
 }
 
 
 // -------------------------------------------------------------------------
-void VSCOgreCameraController::keyPressed(VSCOgreInputAdapter* adapter, OIS::KeyCode key)
+bool VSCOgreCameraController::keyPressed(OIS::KeyCode key)
 {
     
     if (mTraceUI) std::cout << "VSCOgreCameraController got key pressed code: " << key << " (W is " << OIS::KC_W << ")" << std::endl; 
     
+    bool handled = true;
+    
     switch(key)
     {
             
@@ -58,14 +65,21 @@ void VSCOgreCameraController::keyPressed(VSCOgreInputAdapter* adapter, OIS::KeyC
             break;
             
         default:
+            handled =  false;
             break;
     }
+    
+    if (handled) return true;
+    return VSCOgreInputListener::keyPressed(key);
+    
 }
 
 // -------------------------------------------------------------------------
-void VSCOgreCameraController::keyReleased(VSCOgreInputAdapter* adapter, OIS::KeyCode key)
+bool VSCOgreCameraController::keyReleased(OIS::KeyCode key)
 {
     if (mTraceUI) std::cout << "VSCOgreCameraController keyReleased : " << key << std::endl;
+    
+    bool handled = true;
     
     switch(key)
     {
@@ -91,19 +105,23 @@ void VSCOgreCameraController::keyReleased(VSCOgreInputAdapter* adapter, OIS::Key
             break;
             
         default:
+            handled = false;
             break;
     }
+    
+    if (handled) return true;
+    return VSCOgreInputListener::keyReleased(key);
 }
 
 bool VSCOgreCameraController::frameStarted(Ogre::Real elapsedTime)
 {
 
-    if (mTraceUI) std::cout << "VSCOgreCameraController frameStarted" << std::endl;
+    if (mTraceFrame) std::cout << "VSCOgreCameraController frameStarted" << std::endl;
     
-    BOOST_ASSERT_MSG(this->getKeyboardAdapter() != 0, "Expected keyboard adapter");
-    BOOST_ASSERT_MSG(this->getMouseAdapter() != 0, "Expected mouse adapter");
+    BOOST_ASSERT_MSG(this->getInputAdapter() != 0, "Expected adapter");
+
     
-    if (this->getMouseAdapter()->isMouseButtonPressed(OIS::MB_Middle))
+    if (this->getInputAdapter()->isMouseButtonPressed(OIS::MB_Middle))
     {
         if (mTraceUI) std::cout << "VSCOgreCameraController detected middle mouse, yaw: " << mCameraRotX << ", pitch: " << mCameraRotY << std::endl;
         mCamera->yaw(mCameraRotX);

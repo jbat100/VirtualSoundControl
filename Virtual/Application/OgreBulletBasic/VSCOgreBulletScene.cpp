@@ -154,10 +154,11 @@ void VSCOgreBulletScene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgre
     mApplication = application;
     
     /*
-     *  Subclasses must have created a camera before calling VSCOgreBulletScene::init
+     *  IMPORTANT: Subclasses must have created a camera before calling VSCOgreBulletScene::init
      */
-    mCameraController = VSCOgreCameraControllerPtr(new VSCOgreCameraController());
-    mCameraController->setCamera(mCamera);
+    this->setCameraController(VSCOgreCameraControllerPtr(new VSCOgreCameraController()));
+    this->getCameraController()->setCamera(mCamera);
+    this->getCameraController()->setCameraSpeed(1.0f);
 
     /**
      *  We have separate GUI and Input listeners, presumably to keep this agnostic to the interface type
@@ -232,6 +233,7 @@ void VSCOgreBulletScene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgre
     /**
      *  Nothing is enabled by default...
      */
+    
     mQuit = false;
     mPaused = false;
     mWireFrame = false;
@@ -246,6 +248,14 @@ void VSCOgreBulletScene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgre
     mDisableBulletLCP = false;
     mEnableCCD = false;
 
+}
+
+
+
+void VSCOgreBulletScene::setCameraController(VSCOgreCameraControllerPtr controller) 
+{
+    mCameraController = controller;
+    this->setNextInputListener(mCameraController);
 }
 
 
@@ -471,7 +481,7 @@ void VSCOgreBulletScene::shutdown ()
 }
 
 //void VSCOgreBulletScene::mouseButtonPressed(OIS::MouseButtonID buttonID)
-void VSCOgreBulletScene::mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
+bool VSCOgreBulletScene::mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
     
     if (mTraceUI) std::cout << "VSCOgreBulletScene mouseButtonPressed : " << position << " (" << buttonID << ")" << std::endl;
@@ -512,11 +522,11 @@ void VSCOgreBulletScene::mouseButtonPressed(const Ogre::Vector2& position, OIS::
                 getDebugLines();
                 mDebugRayLine->addLine(rayTo.getOrigin(), pickPos);
                 mDebugRayLine->draw();
+                
             }
             
             /*
              *  Beta mouse hidden... 
-             */
             if (mGuiListener->getGui()->injectMouse(position.x*mWindow->getWidth(), position.y*mWindow->getHeight(), true))
             {
                 //mGuiListener->hideMouse();
@@ -525,6 +535,9 @@ void VSCOgreBulletScene::mouseButtonPressed(const Ogre::Vector2& position, OIS::
             {
                 //mGuiListener->showMouse ();
             }
+             */
+            
+            return true;
             
         }
             
@@ -555,24 +568,27 @@ void VSCOgreBulletScene::mouseButtonPressed(const Ogre::Vector2& position, OIS::
                 mDebugRayLine->addLine (rayTo.getOrigin(), pickPos);
                 mDebugRayLine->draw();	
             }
+            
+            return true;
         }
             
-        /*
-         *  Keep Beta GUI mouse hidden all the time
-         */
+
         case OIS::MB_Right:
         {
-            //mGuiListener->hideMouse ();
+            break;
         }
             
         default:
         {
-            std::cout << "Unknown mouse button pressed " << buttonID << std::endl;
+            //std::cout << "Unknown mouse button pressed " << buttonID << std::endl;
+            break;
         }
     }
+    
+    return VSCOgreInputListener::mouseButtonPressed(position, buttonID);;
 }
 
-void VSCOgreBulletScene::mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
+bool VSCOgreBulletScene::mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
     
     if (mTraceUI) std::cout << "VSCOgreBulletScene mouseButtonReleased : " << position << " (" << buttonID << ")" << std::endl;
@@ -598,74 +614,74 @@ void VSCOgreBulletScene::mouseButtonReleased(const Ogre::Vector2& position, OIS:
                 mDebugRayLine->draw();  
                 mGuiListener->showMouse(); 
             }
+            
+            return true;
         }
             
         case OIS::MB_Middle:
         {
-            
+            return true; // middle button is handled by scene for shooting
         }
             
         case OIS::MB_Right:
         {
-            /*
-             *  Keep Beta GUI Mouse hidden 
-             */
-            
-            //mGuiListener->showMouse ();
+            break;
         }
             
         default:
         {
             std::cout << "Unknown mouse button released " << buttonID << std::endl;
+            break;
         }
     }
+    
+    return VSCOgreInputListener::mouseButtonReleased(position, buttonID);
 }
 
 
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletScene::mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement)
+bool VSCOgreBulletScene::mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
-    if (mTraceUI) std::cout << "VSCOgreBulletScene mouseMoved position (" << position << "), movement (" << movement << ")" << std::endl;
-
-    mGuiListener->setMousePosition(position);
+    if (mTraceUI) std::cout << "VSCOgreBulletScene mouseMoved position: " << position << ", movement: " << movement << "" << std::endl;
     
-    if (mPickConstraint)
+    if (this->getInputAdapter()->isMouseButtonPressed(OIS::MB_Left))
     {
+        if (mPickConstraint)
+        {
+            
+            Ogre::Ray rayTo = mCamera->getCameraToViewportRay (position.x, position.y);
+            //move the constraint pivot
+            OgreBulletDynamics::PointToPointConstraint * p2p = static_cast <OgreBulletDynamics::PointToPointConstraint *>(mPickConstraint);
+            //keep it at the same picking distance
+
+            const Ogre::Vector3 eyePos(mCamera->getDerivedPosition());
+
+            //Ogre::Vector3 dir = rayTo.getDirection () - eyePos;
+            //dir.normalise();
+            //dir *= mOldPickingDist;
+            
+            Ogre::Vector3 dir = rayTo.getDirection () * mOldPickingDist;
+            dir.normalise();
+
+            const Ogre::Vector3 newPos (eyePos + dir);
+            p2p->setPivotB (newPos);    
+
+            setDebugText ("Dragging");
+
+            getDebugLines();
+            mDebugRayLine->addLine (mPickedBody->getWorldPosition (), newPos);
+            mDebugRayLine->draw();
+            
+        }
         
-        Ogre::Ray rayTo = mCamera->getCameraToViewportRay (position.x, position.y);
-        //move the constraint pivot
-        OgreBulletDynamics::PointToPointConstraint * p2p = static_cast <OgreBulletDynamics::PointToPointConstraint *>(mPickConstraint);
-        //keep it at the same picking distance
-
-        const Ogre::Vector3 eyePos(mCamera->getDerivedPosition());
-
-        //Ogre::Vector3 dir = rayTo.getDirection () - eyePos;
-        //dir.normalise();
-        //dir *= mOldPickingDist;
-        
-        Ogre::Vector3 dir = rayTo.getDirection () * mOldPickingDist;
-        dir.normalise();
-
-        const Ogre::Vector3 newPos (eyePos + dir);
-        p2p->setPivotB (newPos);    
-
-        setDebugText ("Dragging");
-
-        getDebugLines();
-        mDebugRayLine->addLine (mPickedBody->getWorldPosition (), newPos);
-        mDebugRayLine->draw();
-        
-
-        /*
-         *  Keep beta GUI mouse hidden
-         */
-        
-        //mGuiListener->showMouse();
-
+        return true;
     }
 
+    return VSCOgreInputListener::mouseMoved(position, movement);
 
+    /*
+    
     if (mGuiListener->getGui()->injectMouse(position.x * mWindow->getWidth(), position.y * mWindow->getHeight(), 
                                             this->getMouseAdapter()->isMouseButtonPressed(OIS::MB_Left)))
     {
@@ -676,28 +692,36 @@ void VSCOgreBulletScene::mouseMoved(const Ogre::Vector2& position, const Ogre::V
     {
         //mGuiListener->showMouse();
     }
+     
+     */
 
 }
 
 
-void VSCOgreBulletScene::mouseEntered(const Ogre::Vector2& position)
+bool VSCOgreBulletScene::mouseEntered(const Ogre::Vector2& position)
 {
     if (mTraceUI) std::cout << "VSCOgreBulletScene mouse entered " << position << std::endl;
+    
+    return false;
 }
 
-void VSCOgreBulletScene::mouseExited(const Ogre::Vector2& position)
+bool VSCOgreBulletScene::mouseExited(const Ogre::Vector2& position)
 {
-   if (mTraceUI)  std::cout << "VSCOgreBulletScene mouse exited " << position << std::endl;
+    if (mTraceUI)  std::cout << "VSCOgreBulletScene mouse exited " << position << std::endl;
+    
+    return false;
 }
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletScene::keyPressed(OIS::KeyCode key)
+bool VSCOgreBulletScene::keyPressed(OIS::KeyCode key)
 {
     
     if (mTraceUI) std::cout << "VSCOgreBulletScene got key pressed code: " << key << std::endl; 
     
     static int count = 0;
     // Scene Debug Options
+    
+    bool handled = true;
     
     switch(key)
     {
@@ -780,12 +804,20 @@ void VSCOgreBulletScene::keyPressed(OIS::KeyCode key)
             break;
             
         default:
+            handled = false;
             break;
     }
+    
+    if (handled) 
+    {
+        return true;
+    }
+    
+    return VSCOgreInputListener::keyPressed(key);
 }
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletScene::keyReleased(OIS::KeyCode key)
+bool VSCOgreBulletScene::keyReleased(OIS::KeyCode key)
 {
     switch(key)
     {
@@ -793,6 +825,8 @@ void VSCOgreBulletScene::keyReleased(OIS::KeyCode key)
         default:
             break;
     }
+    
+    return VSCOgreInputListener::keyReleased(key);
 }
 
 // -------------------------------------------------------------------------
@@ -802,8 +836,8 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletScene::getBodyUnderCursorUsingBullet
     float absX = 0.0;
     float absY = 0.0;
     
-    absX = this->getMouseAdapter()->getLastMousePosition().x;
-    absY = this->getMouseAdapter()->getLastMousePosition().y;
+    absX = this->getInputAdapter()->getLastMousePosition().x;
+    absY = this->getInputAdapter()->getLastMousePosition().y;
     
     rayTo = mCamera->getCameraToViewportRay (absX, absY);
 
@@ -830,8 +864,8 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletScene::getBodyUnderCursorUsingOgre(O
     float absX = 0.0;
     float absY = 0.0;
     
-    absX = this->getMouseAdapter()->getLastMousePosition().x;
-    absY = this->getMouseAdapter()->getLastMousePosition().y;
+    absX = this->getInputAdapter()->getLastMousePosition().x;
+    absY = this->getInputAdapter()->getLastMousePosition().y;
     
     rayTo = mCamera->getCameraToViewportRay (absX, absY);
 
@@ -877,6 +911,8 @@ bool VSCOgreBulletScene::frameStarted(Real elapsedTime)
     
     if (mQuit)
         return false;
+    
+    this->getCameraController()->frameStarted(elapsedTime);
 
     // update physics
     if (!mPaused || mDoOnestep)
@@ -895,7 +931,6 @@ bool VSCOgreBulletScene::frameEnded(Real elapsedTime)
         return false;
 
     DebugDrawer *debugDrawer = mWorld->getDebugDrawer ();
-
 
     // Scene Debug Options
     if (mWireFrame)
@@ -978,9 +1013,12 @@ bool VSCOgreBulletScene::checkIfEnoughPlaceToAddObject(float maxDist)
     return true;        
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletScene::throwDynamicObject(OIS::KeyCode key)
+bool VSCOgreBulletScene::throwDynamicObject(OIS::KeyCode key)
 {
     const float trowDist = 2.0f;
+    
+    bool handled = true;
+    
     switch(key)
     {
         case KC_B: 
@@ -1036,13 +1074,19 @@ void VSCOgreBulletScene::throwDynamicObject(OIS::KeyCode key)
             break;
             
         default:
+            handled = false;
             break;
     }
+    
+    return handled;
 }
+
 // -------------------------------------------------------------------------
-void VSCOgreBulletScene::dropDynamicObject(OIS::KeyCode key)
+bool VSCOgreBulletScene::dropDynamicObject(OIS::KeyCode key)
 {
     const float dropDist = 10.0f;
+    
+    bool handled = true;
     
     switch(key)
     {
@@ -1092,9 +1136,14 @@ void VSCOgreBulletScene::dropDynamicObject(OIS::KeyCode key)
             break;
             
         default:
+            handled = false;
             break;
     }
+    
+    return handled;
+
 }
+
 // -------------------------------------------------------------------------
 void VSCOgreBulletScene::initWorld(const Ogre::Vector3 &gravityVector, const Ogre::AxisAlignedBox &bounds)
 {

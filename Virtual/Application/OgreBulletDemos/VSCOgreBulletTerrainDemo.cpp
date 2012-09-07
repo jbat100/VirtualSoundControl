@@ -126,11 +126,6 @@ void VSCOgreBulletTerrainDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
 	mSceneMgr->setWorldGeometry(terrain_cfg);
 
     VSCOgreBulletScene::init(root, win, application);
-    
-    /*
-     *  After init the camera controller has been created 
-     */
-    this->getCameraController()->setCameraSpeed(1.0f);
 
     // ------------------------
     // add lights
@@ -381,49 +376,49 @@ void VSCOgreBulletTerrainDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
 
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletTerrainDemo::keyPressed(OIS::KeyCode key)
+bool VSCOgreBulletTerrainDemo::keyPressed(OIS::KeyCode key)
 {
-    VSCOgreBulletScene::throwDynamicObject (key);
-    VSCOgreBulletScene::dropDynamicObject (key);
 
     bool wheel_engine_style_change = false;
     bool wheel_steering_style_change = false;
+    
+    bool handled = true;
 
     switch(key)
     {
-
-    case KC_PGUP: 
-        wheel_engine_style_change = true;
-        mWheelEngineStyle = (mWheelEngineStyle + 1) % 3;
-        break;
-    case KC_PGDOWN: 
-        wheel_engine_style_change = true;
-        mWheelEngineStyle = (mWheelEngineStyle - 1) % 3;
-        break;
-    case KC_HOME: 
-        wheel_steering_style_change = true;
-        mWheelSteeringStyle = (mWheelSteeringStyle + 1) % 3;
-        break;
-    case KC_END: 
-        wheel_steering_style_change = true;
-        mWheelSteeringStyle = (mWheelSteeringStyle - 1) % 3;;
-        break;
-
-    case KC_LEFT: 
-        mSteeringLeft = true;
-        break;
-    case KC_RIGHT: 
-        mSteeringRight = true;
-        break;
-    case KC_DOWN: 
-        mEngineForce = -gMaxEngineForce;
-        break;
-    case KC_UP: 
-        mEngineForce = gMaxEngineForce;
-        break;
-    default:
-        break;
-
+        case KC_PGUP: 
+            wheel_engine_style_change = true;
+            mWheelEngineStyle = (mWheelEngineStyle + 1) % 3;
+            break;
+        case KC_PGDOWN: 
+            wheel_engine_style_change = true;
+            mWheelEngineStyle = (mWheelEngineStyle - 1) % 3;
+            break;
+        case KC_HOME: 
+            wheel_steering_style_change = true;
+            mWheelSteeringStyle = (mWheelSteeringStyle + 1) % 3;
+            break;
+        case KC_END: 
+            wheel_steering_style_change = true;
+            mWheelSteeringStyle = (mWheelSteeringStyle - 1) % 3;;
+            break;
+            
+        case KC_LEFT: 
+            mSteeringLeft = true;
+            break;
+        case KC_RIGHT: 
+            mSteeringRight = true;
+            break;
+        case KC_DOWN: 
+            mEngineForce = -gMaxEngineForce;
+            break;
+        case KC_UP: 
+            mEngineForce = gMaxEngineForce;
+            break;
+        default:
+            handled = false;
+            break;
+            
     }
 
     if (wheel_engine_style_change)
@@ -491,11 +486,14 @@ void VSCOgreBulletTerrainDemo::keyPressed(OIS::KeyCode key)
             break;
         }
     }
+    
+    if (!handled) handled = VSCOgreBulletScene::throwDynamicObject(key) || VSCOgreBulletScene::dropDynamicObject(key);
+    if (handled) return true;
 
-    return VSCOgreBulletScene::keyPressed (key);
+    return VSCOgreBulletScene::keyPressed(key);
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletTerrainDemo::keyReleased(OIS::KeyCode key)
+bool VSCOgreBulletTerrainDemo::keyReleased(OIS::KeyCode key)
 {
     switch(key)
     {

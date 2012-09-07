@@ -100,11 +100,11 @@ void VSCOgreBulletTriMeshDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
         0.8f);   
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletTriMeshDemo::keyPressed(OIS::KeyCode key)
+bool VSCOgreBulletTriMeshDemo::keyPressed(OIS::KeyCode key)
 {
     VSCOgreBulletScene::throwDynamicObject(key);
     VSCOgreBulletScene::dropDynamicObject(key);
 
-    return VSCOgreBulletScene::keyPressed (key);
+    return VSCOgreBulletScene::keyPressed(key);
 }
 
