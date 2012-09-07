@@ -16,7 +16,7 @@ public:
     VSCOgreCameraController();
 
     /**
-     *  Ogre Frame Listener Events Forwarded by scene
+     *  Ogre Frame Listener Events Forwarded by scene or viewport
      */
     bool frameStarted(Ogre::Real elapsedTime);
 
@@ -58,7 +58,7 @@ private:
     float                               mMouseSensitivity;
     float                               mCameraSpeed;
     
-    const static bool                   mTraceUI = true;
+    const static bool                   mTraceUI = false;
     const static bool                   mTraceFrame = false;
 
 };

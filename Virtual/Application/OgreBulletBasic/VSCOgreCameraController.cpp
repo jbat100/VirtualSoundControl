@@ -17,14 +17,16 @@ mCamera(0)
 // -------------------------------------------------------------------------
 bool VSCOgreCameraController::mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
-    if (mTraceUI) std::cout << "VSCOgreCameraController mouseMoved position (" << position << "), movement (" << movement << ")" << std::endl;
+    if (mTraceUI) std::cout << "VSCOgreCameraController::mouseMoved position " << position << ", movement " << movement << std::endl;
     
     //bool handled = true;
     
     if (this->getInputAdapter()->isMouseButtonPressed(OIS::MB_Right))
     {
+        if (mTraceUI) std::cout << "VSCOgreCameraController::mouseMoved RIGHT BUTTON PRESSED" << std::endl;
         mCameraRotX = Ogre::Degree(-movement.x * mMouseSensitivity);
         mCameraRotY = Ogre::Degree(-movement.y * mMouseSensitivity);
+        if (mTraceUI) std::cout << "VSCOgreCameraController::mouseMoved mCameraRotX: " << mCameraRotX << " mCameraRotY:" << mCameraRotY << std::endl;
         return true;
     }
     
@@ -121,7 +123,7 @@ bool VSCOgreCameraController::frameStarted(Ogre::Real elapsedTime)
     BOOST_ASSERT_MSG(this->getInputAdapter() != 0, "Expected adapter");
 
     
-    if (this->getInputAdapter()->isMouseButtonPressed(OIS::MB_Middle))
+    if (this->getInputAdapter()->isMouseButtonPressed(OIS::MB_Right))
     {
         if (mTraceUI) std::cout << "VSCOgreCameraController detected middle mouse, yaw: " << mCameraRotX << ", pitch: " << mCameraRotY << std::endl;
         mCamera->yaw(mCameraRotX);

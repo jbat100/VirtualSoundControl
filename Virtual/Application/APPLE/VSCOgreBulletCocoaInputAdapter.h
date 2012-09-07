@@ -60,6 +60,7 @@ private:
     NSView* mCocoaView;
     
     static const bool mTrace = false;
+    static const bool mTraceUI = true;
     
 };
 

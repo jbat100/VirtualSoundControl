@@ -821,7 +821,6 @@ bool VSCOgreBulletScene::keyReleased(OIS::KeyCode key)
 {
     switch(key)
     {
-            
         default:
             break;
     }
