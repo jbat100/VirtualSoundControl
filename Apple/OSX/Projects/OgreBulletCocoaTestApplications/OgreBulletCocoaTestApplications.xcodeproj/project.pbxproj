@@ -70,6 +70,7 @@
 		10CFE748156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE716156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp */; };
 		10CFE749156CD62000B24399 /* OgreBulletDynamicsWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE717156CD62000B24399 /* OgreBulletDynamicsWorld.cpp */; };
 		10CFE74A156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE719156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp */; };
+		10D5533A15FA409F002AED81 /* NSString+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10D5533915FA409F002AED81 /* NSString+VSCAdditions.mm */; };
 		10E1B289156D2A630013B9F7 /* RenderSystem_GL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */; };
 		10E1B28E156D3AFE0013B9F7 /* BetaGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E1B28C156D3AFE0013B9F7 /* BetaGUI.cpp */; };
 		10E8557415E65048008FF635 /* VSCUserInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E8557215E65048008FF635 /* VSCUserInput.cpp */; };
@@ -275,6 +276,8 @@
 		10CFE716156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsRigidBody.cpp; sourceTree = "<group>"; };
 		10CFE717156CD62000B24399 /* OgreBulletDynamicsWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsWorld.cpp; sourceTree = "<group>"; };
 		10CFE719156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsRagDoll.cpp; sourceTree = "<group>"; };
+		10D5533815FA409F002AED81 /* NSString+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+VSCAdditions.h"; path = "../../../Categories/NSString+VSCAdditions.h"; sourceTree = "<group>"; };
+		10D5533915FA409F002AED81 /* NSString+VSCAdditions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSString+VSCAdditions.mm"; path = "../../../Categories/NSString+VSCAdditions.mm"; sourceTree = "<group>"; };
 		10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = RenderSystem_GL.dylib; path = lib/RenderSystem_GL.dylib; sourceTree = OGRE_SDK; };
 		10E1B28C156D3AFE0013B9F7 /* BetaGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BetaGUI.cpp; path = ../../../../Virtual/Application/OgreBulletBasic/BetaGUI.cpp; sourceTree = "<group>"; };
 		10E1B28D156D3AFE0013B9F7 /* BetaGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BetaGUI.h; path = ../../../../Virtual/Application/OgreBulletBasic/BetaGUI.h; sourceTree = "<group>"; };
@@ -394,6 +397,8 @@
 		109D51B2155998CA0030C161 /* VSC */ = {
 			isa = PBXGroup;
 			children = (
+				10D5533815FA409F002AED81 /* NSString+VSCAdditions.h */,
+				10D5533915FA409F002AED81 /* NSString+VSCAdditions.mm */,
 				10E8557215E65048008FF635 /* VSCUserInput.cpp */,
 				10E8557315E65048008FF635 /* VSCUserInput.h */,
 				109D51B3155998EE0030C161 /* VSCException.cpp */,
@@ -950,6 +955,7 @@
 				1091F28415B07C0D00466854 /* VSCLog.cpp in Sources */,
 				10FBA39F15B5756800D65959 /* VSCOgreCameraController.cpp in Sources */,
 				10E8557415E65048008FF635 /* VSCUserInput.cpp in Sources */,
+				10D5533A15FA409F002AED81 /* NSString+VSCAdditions.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

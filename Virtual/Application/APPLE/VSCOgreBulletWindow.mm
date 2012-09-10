@@ -8,14 +8,67 @@
 
 #import "VSCOgreBulletWindow.h"
 #import "VSCOgreView.h"
+#import "NSString+VSCAdditions.h"
+
+#include "VSCOgreBulletApplication.h"
+#include "VSCOgreBulletScene.h"
+#include <Ogre/Ogre.h>
+
+#include <vector>
+#include <boost/assert.hpp>
+#include <boost/foreach.hpp>
 
 @implementation VSCOgreBulletWindow
 
-@synthesize ogreView;
+@synthesize ogreView = _ogreView;
+@synthesize ogreBulletApplication = _ogreBulletApplication;
+@synthesize scenePopUpButton = _scenePopUpButton;
 
 -(BOOL)acceptsFirstResponder {
     return YES;
 }
+
+#pragma mark - Custom Setters
+
+- (void) setOgreBulletApplication:(VSCOgreBulletApplication*)app {
+    // update the popup button with the scenes
+    
+    _ogreBulletApplication = app;
+    
+    std::vector<Ogre::String> sceneNames = app->getSceneNames();
+    
+    NSMutableArray* sceneStrings = [NSMutableArray array];
+    
+    BOOST_FOREACH (Ogre::String sceneName, sceneNames) 
+    {
+        [sceneStrings addObject:[NSString stringWithStdString:sceneName]];
+    }
+    
+    [self.scenePopUpButton removeAllItems];
+    [self.scenePopUpButton addItemsWithTitles:sceneStrings];
+    
+    /*
+     *  Set selected popup item to the current scene
+     */
+    
+    if (app->getCurrentScene()) 
+    {
+        Ogre::String selectedSceneName = app->getCurrentScene()->getName();
+        [self.scenePopUpButton selectItemWithTitle:[NSString stringWithStdString:selectedSceneName]];
+    }
+    
+}
+
+#pragma mark - UI Events
+
+- (IBAction)scenePopUpButtonChanged:(id)sender 
+{
+    NSString* sceneName = [self.scenePopUpButton titleOfSelectedItem];
+    bool success = self.ogreBulletApplication->switchToSceneWithName([sceneName stdString]);
+    BOOST_ASSERT_MSG(success == true, "Expected  success");
+}
+
+#pragma mark - Stupid tests
 
 - (void)keyDown:(NSEvent *)theEvent {
     NSLog(@"%@ keyDown %@", self, theEvent);
@@ -51,6 +104,8 @@
 - (IBAction)test3:(id)sender {
     
 }
+
+
                                  
                                  
 

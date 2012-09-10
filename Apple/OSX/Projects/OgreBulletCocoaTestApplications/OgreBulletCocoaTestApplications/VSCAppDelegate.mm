@@ -14,6 +14,7 @@
 
 #import "VSCOgreBulletScene.h"
 #import "VSCOgreBulletApplication.h"
+#import "VSCOgreBulletWindow.h"
 #import "VSCOgreApplicationCocoaSetup.h"
 
 #import "VSCOgreBulletPrimitivesDemo.h"
@@ -75,6 +76,8 @@ using namespace OIS;
     ogreBulletApplication = new VSCOgreBulletApplication(ogreBulletScenes);
     
     ogreBulletApplication->setupWithOgreView((__bridge void*)self.ogreView);
+    
+    self.window.ogreBulletApplication = ogreBulletApplication;
     
     [self startRendering];
     

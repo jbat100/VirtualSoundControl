@@ -1,14 +1,4 @@
-/***************************************************************************
-This source file is part of OGREBULLET
-(Object-oriented Graphics Rendering Engine Bullet Wrapper)
-For the latest info, see http://www.ogre3d.org/phpBB2addons/viewforum.php?f=10
-Copyright (c) 2007 tuan.kuranes@gmail.com (Use it Freely, even Statically, but have to contribute any changes)
-This source file is not LGPL, it's public source code that you can reuse.
------------------------------------------------------------------------------*/
-/*
-VSCOgreBulletApplication.h runs the OgreBullet
-demo scenes and switch between them.
-*/
+
 #ifndef _VSC_OGRE_BULLET_APPLICATION_H_
 #define _VSC_OGRE_BULLET_APPLICATION_H_
 
@@ -31,22 +21,37 @@ class VSCOgreBulletApplication: public VSCOgreApplication,  public Ogre::FrameLi
 {
     
 public:
-	// Standard constructor/destructor
-    VSCOgreBulletApplication(std::vector<VSCOgreBulletScene*> bulletListeners);
+    
+    /*------------------------------------------------------
+     *  Constructor / Destructor
+     */
+    
+    VSCOgreBulletApplication(std::vector<VSCOgreBulletScene*> scenes);
     ~VSCOgreBulletApplication();
-
-    const std::vector<VSCOgreBulletScene*>& getScenesList() {return mBulletScenes;};
     
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     bool setupWithOgreView(void* ogreView);
 #endif   
     
-    /*
+    /*------------------------------------------------------
+     *  Scenes stuff
+     */
+    
+    VSCOgreBulletScene* sceneWithName(Ogre::String name);
+    bool switchToScene(VSCOgreBulletScene *newScene);
+    bool switchToSceneWithName(Ogre::String sceneName);
+    VSCOgreBulletScene* getCurrentScene(void) {return mBulletScene;}
+    std::vector<Ogre::String> getSceneNames(void);
+    
+    /*------------------------------------------------------
      *  VSCOgreInputListener override
      */
+    
     virtual bool keyPressed(OIS::KeyCode key);
 
 protected:
+    
+    const std::vector<VSCOgreBulletScene*>& getScenes() {return mBulletScenes;};
     
 	// Override stuff from the base class
     void createScene(void){};	
@@ -61,8 +66,6 @@ protected:
 
     bool frameStarted(const Ogre::FrameEvent& evt);
     bool frameEnded(const Ogre::FrameEvent& evt);
-
-    bool switchScene(VSCOgreBulletScene *newListener);
     
 private:
     

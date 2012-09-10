@@ -316,7 +316,7 @@ void VSCOgreBulletScene::setPhysicGUI()
     /*
     aWindow = menuWindow->addMenuWindowTab("Scene Choice");
     {
-        std::vector <VSCOgreBulletScene*> sceneList = mApplication->getScenesList();
+        std::vector <VSCOgreBulletScene*> sceneList = mApplication->getScenes();
         std::vector <VSCOgreBulletScene*>::iterator itScenes = sceneList.begin();
         for (; itScenes < sceneList.end(); ++itScenes)
         {

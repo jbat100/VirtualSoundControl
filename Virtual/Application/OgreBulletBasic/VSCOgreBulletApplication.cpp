@@ -8,6 +8,7 @@
 #include "OgreResourceGroupManager.h"
 
 #include <boost/assert.hpp>
+#include <boost/foreach.hpp>
 
 // -------------------------------------------------------------------------
 VSCOgreBulletApplication::VSCOgreBulletApplication(std::vector<VSCOgreBulletScene*> bulletScenes) : 
@@ -24,6 +25,15 @@ VSCOgreBulletApplication::~VSCOgreBulletApplication()
 
 }
 
+VSCOgreBulletScene* VSCOgreBulletApplication::sceneWithName(Ogre::String name)
+{
+    BOOST_FOREACH (VSCOgreBulletScene* scene, mBulletScenes) 
+    {
+        if (name.compare(scene->getName()) == 0) return scene;
+    }
+    return 0;
+}
+
 bool VSCOgreBulletApplication::setupWithOgreView(void* ogreView)
 {
     //VSCOgreApplication::setupWithOgreView(ogreView);
@@ -32,7 +42,7 @@ bool VSCOgreBulletApplication::setupWithOgreView(void* ogreView)
     
     BOOST_ASSERT_MSG(mBulletScenes.size() != 0, "Expected keyboard adapter");
     
-    switchScene (*(mBulletScenes.begin()));
+    this->switchToScene (*mBulletScenes.begin());
     
     BOOST_ASSERT_MSG(mRoot == &Ogre::Root::getSingleton(), "Expected mRoot to be Ogre::Root::getSingleton()");
     
@@ -41,8 +51,32 @@ bool VSCOgreBulletApplication::setupWithOgreView(void* ogreView)
     return true;
 }
 
+std::vector<Ogre::String> VSCOgreBulletApplication::getSceneNames(void)
+{
+    std::vector<Ogre::String> sceneNames;
+    
+    BOOST_FOREACH (VSCOgreBulletScene* scene, mBulletScenes) 
+    {
+        sceneNames.push_back(scene->getName());
+    }
+    
+    return sceneNames;
+}
+
+bool VSCOgreBulletApplication::switchToSceneWithName(Ogre::String sceneName)
+{
+    VSCOgreBulletScene *scene = this->sceneWithName(sceneName);
+    
+    if (scene) 
+    {
+        return this->switchToScene(scene);
+    }
+    
+    return false;
+}
+
 // -------------------------------------------------------------------------
-bool VSCOgreBulletApplication::switchScene(VSCOgreBulletScene *newScene)
+bool VSCOgreBulletApplication::switchToScene(VSCOgreBulletScene *newScene)
 {
     
     if (mTraceScene && newScene) std::cout << "VSCOgreBulletApplication switching scene to " << newScene << std::endl;
@@ -57,7 +91,6 @@ bool VSCOgreBulletApplication::switchScene(VSCOgreBulletScene *newScene)
     if (mBulletScene)
     {
         if (mTraceScene && newScene) std::cout << "Shutting down old scene..." << std::endl;
-        //mBulletScene->setInputAdapter(0);
         mBulletScene->shutdown();
     }
     
@@ -65,14 +98,14 @@ bool VSCOgreBulletApplication::switchScene(VSCOgreBulletScene *newScene)
     {
         if (mTraceScene && newScene) std::cout << "Initializing new scene..." << std::endl;
         newScene->init(mRoot, mWindow, this);
-        //newScene->setInputAdapter(this->getInputAdapter());
-        this->setNextInputListener(newScene);
     }
     
     else 
     {
         if (mTraceScene && newScene) std::cout << "Switched to null scene..." << std::endl;
     }
+    
+    this->setNextInputListener(newScene);
     
     mBulletScene = newScene;
     
