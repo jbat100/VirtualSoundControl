@@ -120,4 +120,14 @@ bool VSCOgreInputListener::keyReleased(OIS::KeyCode key)
     return false;
 }
 
+bool VSCOgreInputListener::modifierChanged(OIS::Keyboard::Modifier modifier)
+{
+    if (mNextInputListener)
+    {
+        return mNextInputListener->modifierChanged(modifier);
+    }
+    
+    return false;
+}
+
 

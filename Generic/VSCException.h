@@ -193,5 +193,20 @@ class VSCEnveloppeEmptyException : public VSCBaseException
     }
 };
 
+#pragma mark UI Specific Exceptions
+
+class VSCUIException : public VSCBaseException
+{
+    
+public:
+    
+    VSCUIException(std::string additionalInfo) : VSCBaseException(additionalInfo) {}
+    
+    virtual const char* what() const throw()
+    {
+        return "UI exception";
+    }
+};
+
 
 #endif

@@ -63,6 +63,7 @@ public:
     virtual bool mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
     virtual bool keyPressed(OIS::KeyCode key);
     virtual bool keyReleased(OIS::KeyCode key);
+    virtual bool modifierChanged(OIS::Keyboard::Modifier modifier);
     
 private:
     

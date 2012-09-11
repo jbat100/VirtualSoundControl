@@ -771,7 +771,7 @@ bool VSCOgreBulletScene::keyPressed(OIS::KeyCode key)
             break;
         case KC_8:
             mEnableSatComparison = !mEnableSatComparison;
-            if (mTraceUI) std::cout << "Enable stats comparison is " << (mEnableSatComparison ? "on" : "off") << std::endl;
+            if (mTraceUI) std::cout << "Enable sat comparison is " << (mEnableSatComparison ? "on" : "off") << std::endl;
             break;
         case KC_9:
             mDisableBulletLCP = !mDisableBulletLCP;

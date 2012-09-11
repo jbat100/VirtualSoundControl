@@ -76,6 +76,9 @@
 		10E8557415E65048008FF635 /* VSCUserInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E8557215E65048008FF635 /* VSCUserInput.cpp */; };
 		10EB11FD15A5D8B500CA4D03 /* VSCOgreInputAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10EB11FB15A5D8B500CA4D03 /* VSCOgreInputAdapter.cpp */; };
 		10EE86C915AED21900AD9CEB /* VSCOgreBulletWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10EE86C815AED21900AD9CEB /* VSCOgreBulletWindow.mm */; };
+		10F2F97815FF29CC003B2CDB /* VSCKeyBindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F2F97615FF29CC003B2CDB /* VSCKeyBindings.cpp */; };
+		10F2F98A15FF886F003B2CDB /* VSCOgreKeyboardAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F2F98615FF886F003B2CDB /* VSCOgreKeyboardAction.cpp */; };
+		10F2F98B15FF886F003B2CDB /* VSCOgreKeyboardManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F2F98815FF886F003B2CDB /* VSCOgreKeyboardManager.cpp */; };
 		10F4EE071557E752000E4591 /* VSCOgreApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EDFB1557E752000E4591 /* VSCOgreApplication.cpp */; };
 		10F4EE091557E752000E4591 /* VSCOgreBulletApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EDFF1557E752000E4591 /* VSCOgreBulletApplication.cpp */; };
 		10F4EE0A1557E752000E4591 /* VSCOgreBetaGUIListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EE011557E752000E4591 /* VSCOgreBetaGUIListener.cpp */; };
@@ -287,6 +290,12 @@
 		10EB11FC15A5D8B500CA4D03 /* VSCOgreInputAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreInputAdapter.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreInputAdapter.h; sourceTree = "<group>"; };
 		10EE86C715AED21900AD9CEB /* VSCOgreBulletWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreBulletWindow.h; path = ../../../../../Virtual/Application/APPLE/VSCOgreBulletWindow.h; sourceTree = "<group>"; };
 		10EE86C815AED21900AD9CEB /* VSCOgreBulletWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOgreBulletWindow.mm; path = ../../../../../Virtual/Application/APPLE/VSCOgreBulletWindow.mm; sourceTree = "<group>"; };
+		10F2F97615FF29CC003B2CDB /* VSCKeyBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCKeyBindings.cpp; path = ../../../../Interface/VSCKeyBindings.cpp; sourceTree = "<group>"; };
+		10F2F97715FF29CC003B2CDB /* VSCKeyBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCKeyBindings.h; path = ../../../../Interface/VSCKeyBindings.h; sourceTree = "<group>"; };
+		10F2F98615FF886F003B2CDB /* VSCOgreKeyboardAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOgreKeyboardAction.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreKeyboardAction.cpp; sourceTree = "<group>"; };
+		10F2F98715FF886F003B2CDB /* VSCOgreKeyboardAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreKeyboardAction.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreKeyboardAction.h; sourceTree = "<group>"; };
+		10F2F98815FF886F003B2CDB /* VSCOgreKeyboardManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOgreKeyboardManager.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreKeyboardManager.cpp; sourceTree = "<group>"; };
+		10F2F98915FF886F003B2CDB /* VSCOgreKeyboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreKeyboardManager.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreKeyboardManager.h; sourceTree = "<group>"; };
 		10F4EDFB1557E752000E4591 /* VSCOgreApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreApplication.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreApplication.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		10F4EDFC1557E752000E4591 /* VSCOgreApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreApplication.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreApplication.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10F4EDFF1557E752000E4591 /* VSCOgreBulletApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreBulletApplication.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreBulletApplication.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -367,6 +376,10 @@
 		1001CA7A1598561D002566F4 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				10F2F98615FF886F003B2CDB /* VSCOgreKeyboardAction.cpp */,
+				10F2F98715FF886F003B2CDB /* VSCOgreKeyboardAction.h */,
+				10F2F98815FF886F003B2CDB /* VSCOgreKeyboardManager.cpp */,
+				10F2F98915FF886F003B2CDB /* VSCOgreKeyboardManager.h */,
 				10EB11FB15A5D8B500CA4D03 /* VSCOgreInputAdapter.cpp */,
 				10EB11FC15A5D8B500CA4D03 /* VSCOgreInputAdapter.h */,
 				100088971590B67E002F21B1 /* VSCOgreInputListener.cpp */,
@@ -401,6 +414,8 @@
 				10D5533915FA409F002AED81 /* NSString+VSCAdditions.mm */,
 				10E8557215E65048008FF635 /* VSCUserInput.cpp */,
 				10E8557315E65048008FF635 /* VSCUserInput.h */,
+				10F2F97615FF29CC003B2CDB /* VSCKeyBindings.cpp */,
+				10F2F97715FF29CC003B2CDB /* VSCKeyBindings.h */,
 				109D51B3155998EE0030C161 /* VSCException.cpp */,
 				109D51B4155998EE0030C161 /* VSCException.h */,
 				1091F27C15B0645D00466854 /* VSCNSLog.h */,
@@ -956,6 +971,9 @@
 				10FBA39F15B5756800D65959 /* VSCOgreCameraController.cpp in Sources */,
 				10E8557415E65048008FF635 /* VSCUserInput.cpp in Sources */,
 				10D5533A15FA409F002AED81 /* NSString+VSCAdditions.mm in Sources */,
+				10F2F97815FF29CC003B2CDB /* VSCKeyBindings.cpp in Sources */,
+				10F2F98A15FF886F003B2CDB /* VSCOgreKeyboardAction.cpp in Sources */,
+				10F2F98B15FF886F003B2CDB /* VSCOgreKeyboardManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

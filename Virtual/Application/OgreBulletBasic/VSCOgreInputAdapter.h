@@ -2,9 +2,10 @@
 #ifndef _VSC_OGRE_BULLET_INPUT_ADAPTER_H_
 #define _VSC_OGRE_BULLET_INPUT_ADAPTER_H_
 
+#include "VSCUserInput.h"
+#include "OIS.h"
 #include <set>
 #include <Ogre/Ogre.h>
-#include "VSCUserInput.h"
 
 class VSCOgreInputListener;
 
@@ -38,7 +39,7 @@ public:
     
     const VSCKeyCodeSet&  getCurrentKeys() {return mCurrentKeys;} // currently pressed non modifier keys
     bool isKeyPressed(OIS::KeyCode key); 
-    OIS::Keyboard::Modifier currentModifiers(void); // OIS::Keyboard::Modifier is a bit mask
+    OIS::Keyboard::Modifier getCurrentModifier(void); // OIS::Keyboard::Modifier is a bit mask
     
     /*
      *  Listener Mouse stuff query 
@@ -64,6 +65,7 @@ protected:
     void mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
     void keyPressed(OIS::KeyCode key);
     void keyReleased(OIS::KeyCode key);
+    void modifierChanged(OIS::Keyboard::Modifier modifier);
     
 private:
 
@@ -77,6 +79,8 @@ private:
     
     VSCKeyCodeSet                       mCurrentKeys;
     VSCMouseButtonSet                   mCurrentMouseButtons;
+    
+    OIS::Keyboard::Modifier             mCurrentModifier;
     
 };
 
