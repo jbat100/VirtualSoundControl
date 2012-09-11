@@ -415,6 +415,7 @@ bool VSCOgreBulletTerrainDemo::keyPressed(OIS::KeyCode key)
         case KC_UP: 
             mEngineForce = gMaxEngineForce;
             break;
+            
         default:
             handled = false;
             break;

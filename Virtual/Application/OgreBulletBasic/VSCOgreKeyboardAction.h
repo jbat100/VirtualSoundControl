@@ -7,6 +7,8 @@
 class VSCOgreKeyboardAction
 {
     
+public:
+    
     enum Key 
     {
         None = 0,
@@ -55,8 +57,26 @@ class VSCOgreKeyboardAction
         
         IncrementShootSpeed,
         DecrementShootSpeed,
-        Shoot,
-        Drop
+        ShootCube,
+        ShootSphere,
+        ShootCylinder,
+        ShootCone,
+        DropCube,
+        DropSphere,
+        DropCylinder,
+        DropCone
+        
+        /*
+         *  Vehicle
+         */
+        
+        VehicleSteerLeft,
+        VehicleSteerRight,
+        VehicleMoveForward,
+        VehicleMoveBackward,
+        VehicleIncrementEngineStyle,
+        VehicleDecrementEngineStyle,
+        
         
     };
     

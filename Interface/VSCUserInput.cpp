@@ -1,8 +1,12 @@
 
 #include "VSCUserInput.h"
+#include "OIS.h"
 
-const VSCKeyboard::Action       VSCKeyboard::NullAction      = {VSCKeyboard::ActionDomainNone, 0};
-const VSCKeyboard::Combination  VSCKeyboard::NullCombination = {(OIS::Keyboard::Modifier)0, OIS::KC_UNASSIGNED};
+#include <string>
+#include <set>
+
+const VSCKeyboard::Action       VSCKeyboard::NullAction      = VSCKeyboard::Action(0, VSCKeyboard::ActionDomainNone);
+const VSCKeyboard::Combination  VSCKeyboard::NullCombination = VSCKeyboard::Combination(OIS::KC_UNASSIGNED, (OIS::Keyboard::Modifier)0);
 
 
 bool VSCKeyboard::Combination::operator!=(const Combination& p) const
@@ -23,7 +27,7 @@ bool VSCKeyboard::Combination::operator<(const Combination& p) const
     return false;
 }
 
-VSCKeyboard::Combination(OIS::KeyCode c, OIS::Keyboard::Modifier m) : code(c), modifier(m)
+VSCKeyboard::Combination::Combination(OIS::KeyCode c, OIS::Keyboard::Modifier m) : code(c), modifier(m)
 {
     
 }
@@ -46,7 +50,7 @@ bool VSCKeyboard::Action::operator<(const Action& a) const
     return false;
 }
 
-VSCKeyboard::Action(int k, ActionDomain d) : key(k), domain(d)
+VSCKeyboard::Action::Action(int k, ActionDomain d) : key(k), domain(d)
 {
     
 }

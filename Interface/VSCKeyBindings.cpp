@@ -1,5 +1,6 @@
 
 #include "VSCKeyBindings.h"
+#include "VSCException.h"
 
 const VSCKeyboard::Action VSCKeyBindings::getActionForCombination(const VSCKeyboard::Combination& comb) const
 {
@@ -25,12 +26,12 @@ const VSCKeyboard::Combination VSCKeyBindings::getCombinationForAction(const VSC
     return VSCKeyboard::NullCombination;
 }
 
-bool VSCKeyBindings::eraseCombination(const VSCKeyboard::Combination& comb)
+void VSCKeyBindings::eraseCombination(const VSCKeyboard::Combination& comb)
 {
     mCombinationActionMap.left.erase(comb);
 }
 
-bool VSCKeyBindings::eraseAction(const VSCKeyboard::Action& action)
+void VSCKeyBindings::eraseAction(const VSCKeyboard::Action& action)
 {
     mCombinationActionMap.right.erase(action);
 }
@@ -60,7 +61,7 @@ void VSCKeyBindings::setBinding(const VSCKeyboard::Action& action, const VSCKeyb
         throw VSCUIException("Attempted to set binding with already bound action");
     }
     
-    mCombinationActionMap.insert(CombinationActionMapEntry(action, comb));
+    mCombinationActionMap.insert(CombinationActionMapEntry(comb, action));
     
 }
 
