@@ -1167,20 +1167,12 @@ RigidBody *VSCOgreBulletScene::addCube(const Ogre::String instanceName,
     // "Crate1.mesh");
     // "Crate2.mesh");
 
-
     entity->setQueryFlags (GEOMETRY_QUERY_MASK);
-#if (OGRE_VERSION < ((1 << 16) | (5 << 8) | 0)) // only applicable before shoggoth (1.5.0)
-    entity->setNormaliseNormals(true);
-#endif
 	entity->setCastShadows(true);
-
     entity->setMaterialName("Bullet/box");
 
     BoxCollisionShape *sceneCubeShape = new BoxCollisionShape(size);
-
-    RigidBody *defaultBody = new RigidBody(
-        "defaultCubeRigid" + StringConverter::toString(mNumEntitiesInstanced), 
-        mWorld);
+    RigidBody *defaultBody = new RigidBody("defaultCubeRigid" + StringConverter::toString(mNumEntitiesInstanced), mWorld);
 
     SceneNode *node = mSceneMgr->getRootSceneNode ()->createChildSceneNode ();
     node->attachObject (entity);
@@ -1200,23 +1192,14 @@ RigidBody *VSCOgreBulletScene::addSphere(const Ogre::String instanceName,
                                          const Ogre::Real bodyRestitution, const Ogre::Real bodyFriction, 
                                          const Ogre::Real bodyMass)
 {
-    Entity *entity = mSceneMgr->createEntity(
-        instanceName + StringConverter::toString(mNumEntitiesInstanced),
-        "ellipsoid.mesh");
+    Entity *entity = mSceneMgr->createEntity(instanceName + StringConverter::toString(mNumEntitiesInstanced), "ellipsoid.mesh");
 
     entity->setQueryFlags (GEOMETRY_QUERY_MASK);
-#if (OGRE_VERSION < ((1 << 16) | (5 << 8) | 0)) // only applicable before shoggoth (1.5.0)
-    entity->setNormaliseNormals(true);
-#endif
 	entity->setCastShadows(true);
-
     entity->setMaterialName("Bullet/box");
 
     SphereCollisionShape *sceneCubeShape = new SphereCollisionShape(radius);
-
-    RigidBody *defaultBody = new RigidBody(
-        "defaultSphereRigid" + StringConverter::toString(mNumEntitiesInstanced),
-        mWorld);
+    RigidBody *defaultBody = new RigidBody("defaultSphereRigid" + StringConverter::toString(mNumEntitiesInstanced), mWorld);
 
     SceneNode *node = mSceneMgr->getRootSceneNode ()->createChildSceneNode ();
     node->attachObject (entity);
@@ -1237,27 +1220,18 @@ RigidBody *VSCOgreBulletScene::addCylinder(const Ogre::String instanceName,
                                            const Ogre::Real bodyRestitution, const Ogre::Real bodyFriction, 
                                            const Ogre::Real bodyMass)
 {
-    Entity *entity = mSceneMgr->createEntity(
-        instanceName + StringConverter::toString(mNumEntitiesInstanced),
-        "cylinder.mesh");
+    Entity *entity = mSceneMgr->createEntity(instanceName + StringConverter::toString(mNumEntitiesInstanced), "cylinder.mesh");
     //   "capsule.mesh");
     // "Barrel.mesh");
     // "Barrel1.mesh");
     // "Barrel2.mesh");
 
     entity->setQueryFlags (GEOMETRY_QUERY_MASK);
-#if (OGRE_VERSION < ((1 << 16) | (5 << 8) | 0)) // only applicable before shoggoth (1.5.0)
-    entity->setNormaliseNormals(true);
-#endif
 	entity->setCastShadows(true);
-
     entity->setMaterialName("Bullet/box");
 
     CylinderCollisionShape *sceneCubeShape = new CylinderCollisionShape(size, Ogre::Vector3::UNIT_X);
-
-    RigidBody *defaultBody = new RigidBody(
-        "defaultCylinderRigid" + StringConverter::toString(mNumEntitiesInstanced), 
-        mWorld);
+    RigidBody *defaultBody = new RigidBody("defaultCylinderRigid" + StringConverter::toString(mNumEntitiesInstanced), mWorld);
 
     SceneNode *node = mSceneMgr->getRootSceneNode ()->createChildSceneNode ();
     node->attachObject (entity);
@@ -1277,28 +1251,18 @@ RigidBody *VSCOgreBulletScene::addCone(const Ogre::String instanceName,
                                        const Ogre::Real bodyRestitution, const Ogre::Real bodyFriction, 
                                        const Ogre::Real bodyMass)
 {
-    Entity *entity = mSceneMgr->createEntity(
-        instanceName + StringConverter::toString(mNumEntitiesInstanced),
+    Entity *entity = mSceneMgr->createEntity(instanceName + StringConverter::toString(mNumEntitiesInstanced), "Mesh.mesh");
         //"Cone.mesh");
-        "Mesh.mesh");
 
     entity->setQueryFlags (GEOMETRY_QUERY_MASK);
-#if (OGRE_VERSION < ((1 << 16) | (5 << 8) | 0)) // only applicable before shoggoth (1.5.0)
-    entity->setNormaliseNormals(true);
-#endif
 	entity->setCastShadows(true);
-
     entity->setMaterialName("Bullet/box");
 
     ConeCollisionShape *sceneCubeShape = new ConeCollisionShape(size.x, size.y, Ogre::Vector3::UNIT_Y);
-
-    RigidBody *defaultBody = new RigidBody(
-        "defaultConeRigid" + StringConverter::toString(mNumEntitiesInstanced), 
-        mWorld);
+    RigidBody *defaultBody = new RigidBody("defaultConeRigid" + StringConverter::toString(mNumEntitiesInstanced), mWorld);
 
     SceneNode *node = mSceneMgr->getRootSceneNode ()->createChildSceneNode ();
     node->attachObject (entity);
-
     defaultBody->setShape (node, sceneCubeShape, bodyRestitution, bodyFriction, bodyMass, pos, q);
 
     mEntities.push_back(entity);
@@ -1323,9 +1287,7 @@ RigidBody *VSCOgreBulletScene::addStaticTrimesh(const Ogre::String &instanceName
     StaticMeshToShapeConverter *trimeshConverter = new StaticMeshToShapeConverter(sceneEntity);
     TriangleMeshCollisionShape *sceneTriMeshShape = trimeshConverter->createTrimesh();
     delete trimeshConverter;
-    RigidBody *sceneRigid = new RigidBody(
-        instanceName + "Rigid" + StringConverter::toString(mNumEntitiesInstanced),
-        mWorld);
+    RigidBody *sceneRigid = new RigidBody(instanceName + "Rigid" + StringConverter::toString(mNumEntitiesInstanced), mWorld);
 
     SceneNode *node = mSceneMgr->getRootSceneNode ()->createChildSceneNode ();
     node->attachObject (sceneEntity);
@@ -1349,6 +1311,7 @@ RigidBody *VSCOgreBulletScene::addStaticPlane( const Ogre::Real bodyRestitution,
     s->setRegionDimensions(Ogre::Vector3(160.0, 100.0, 160.0));
     // Set the region origin so the center is at 0 world
     s->setOrigin(Ogre::Vector3::ZERO);
+    
     for (Real z = -80.0;z <= 80.0;z += 20.0)
     {
         for (Real x = -80.0;x <= 80.0;x += 20.0)
@@ -1366,14 +1329,9 @@ RigidBody *VSCOgreBulletScene::addStaticPlane( const Ogre::Real bodyRestitution,
     s->build();
     //SceneNode* mPlaneNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(name);
 
-
     CollisionShape *Shape = new StaticPlaneCollisionShape (Ogre::Vector3(0,1,0), 0);
 
-    RigidBody *defaultPlaneBody = new RigidBody(
-        "Plane" + StringConverter::toString(mNumEntitiesInstanced), 
-        mWorld);
-
-
+    RigidBody *defaultPlaneBody = new RigidBody("Plane" + StringConverter::toString(mNumEntitiesInstanced), mWorld);
     defaultPlaneBody->setStaticShape (Shape, bodyRestitution, bodyFriction);
 
     mBodies.push_back(defaultPlaneBody);
