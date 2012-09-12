@@ -25,8 +25,6 @@ class VSCOgreCameraController;
 // typedef boost::shared_ptr<VSCOgreCameraController> VSCOgreCameraControllerPtr;
 typedef VSCOgreCameraController* VSCOgreCameraControllerPtr;
 
-typedef boost::shared_ptr<VSCOgreKeyboardManager> VSCOgreKeyboardManagerPtr;
-
 enum QueryFlags
 {
 	ANY_QUERY_MASK					= 1<<0,
@@ -100,11 +98,12 @@ public:
     Ogre::Camera* getCamera(void) {return mCamera;}
 
     /**--------------------------------------------------------------
-     *  Other Setters/Getters
+     *  Other Setters/Getters, make virtual to allow subclasses 
+     *  to update the keyboard manager for their components
      */
     
     VSCOgreKeyboardManagerPtr getKeyboardManager(void) const;
-    void setKeyboardManager(VSCOgreKeyboardManagerPtr manager);
+    void setKeyboardManager(VSCOgreKeyboardManagerPtr manager) {mKeyboardManager = manager};
     
     
 protected:

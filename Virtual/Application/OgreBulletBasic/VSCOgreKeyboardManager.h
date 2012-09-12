@@ -6,6 +6,12 @@
 #include "VSCKeyBindings.h"
 #include "VSCOgreKeyboardAction.h"
 
+#include <boost/shared_ptr.hpp>
+
+class VSCOgreKeyboardManager;
+
+typedef boost::shared_ptr<VSCOgreKeyboardManager> VSCOgreKeyboardManagerPtr;
+
 class VSCOgreKeyboardManager
 {
     

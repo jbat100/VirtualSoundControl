@@ -18,6 +18,12 @@ VSCOgreBulletApplication::VSCOgreBulletApplication(std::vector<VSCOgreBulletScen
     mBulletScene(0)
 {
     BOOST_ASSERT_MSG (!mBulletScenes.empty(), "Expected keyboard adapter");
+    
+    BOOST_FOREACH (VSCOgreBulletScene* scene, mBulletScenes) 
+    {
+        scene->setKeyboardManager(this->getKeyboardManager);
+    }
+    
 }
 // -------------------------------------------------------------------------
 VSCOgreBulletApplication::~VSCOgreBulletApplication()
@@ -197,8 +203,12 @@ void VSCOgreBulletApplication::loadResources(void)
 	{
 		rsm->initialiseResourceGroup((*it));
 	}
-	// Initialise, parse scripts etc
-	//ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+    
+    /*
+     *  Initialise, parse scripts etc
+     */
+    
+	//ResourceGroupManager::getSingleton().initialiseAllResourceGroups(); 
 }
 
 // -------------------------------------------------------------------------

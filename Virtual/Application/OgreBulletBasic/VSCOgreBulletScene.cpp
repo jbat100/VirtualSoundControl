@@ -256,6 +256,18 @@ void VSCOgreBulletScene::setCameraController(VSCOgreCameraControllerPtr controll
 {
     mCameraController = controller;
     this->setNextInputListener(mCameraController);
+    
+}
+
+VSCOgreKeyboardManagerPtr VSCOgreBulletScene::getKeyboardManager(void) const
+{
+    if (mKeyboardManager) return mKeyboardManager;
+    
+    /*
+     *  If we don't have a keyboard manager then return the application's keyboard manager
+     */
+    
+    return mApplication->getKeyboardManager();
 }
 
 

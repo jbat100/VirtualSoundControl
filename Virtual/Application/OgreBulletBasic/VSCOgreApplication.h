@@ -24,6 +24,7 @@ Description: Base class for all the OGRE examples
 #include <Ogre/Ogre.h>
 #include <Ogre/OgreConfigFile.h>
 #include "VSCOgreInputListener.h"
+#include "VSCOgreKeyboardManager.h"
 
 class VSCOgreInputAdapter;
 class VSCOgreApplicationCocoaSetup;
@@ -53,10 +54,21 @@ public:
     virtual bool setup(void);
 #endif
     
+    /*
+     *  Ogre Setters/Getters
+     */
+    
     Ogre::Root*             getRoot(void) {return mRoot;}
     Ogre::Camera*           getCamera(void) {return mCamera;}
     Ogre::SceneManager*     getSceneManager(void) {return mSceneMgr;}
     Ogre::RenderWindow*     getRenderWindow(void) {return mWindow;}
+    
+    /*
+     *  Other Setters/Getters
+     */
+    
+    VSCOgreKeyboardManagerPtr getKeyboardManager(void) const;
+    void setKeyboardManager(VSCOgreKeyboardManagerPtr manager);
     
     /*
      *  VSCOgreInputListener override
@@ -88,6 +100,8 @@ protected:
 	virtual void loadResources(void);
     
 private:
+    
+    VSCOgreKeyboardManagerPtr   mKeyboardManager;
     
     static const bool mTraceUI = true;
 
