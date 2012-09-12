@@ -127,4 +127,15 @@ void VSCOgreInputAdapter::keyReleased(OIS::KeyCode key)
     }
 }
 
+void VSCOgreInputAdapter::modifierChanged(OIS::Keyboard::Modifier modifier)
+{
+    mCurrentModifier = modifier;
+    
+    BOOST_FOREACH (VSCOgreInputListener* inputListener, this->getInputListeners()) 
+    {
+        inputListener->modifierChanged(modifier);
+    }
+    
+}
+
 

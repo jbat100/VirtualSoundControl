@@ -14,6 +14,8 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "VSCOgreBetaGUIListener.h"
 #include "VSCOgreCameraController.h"
 #include "VSCOgreInputAdapter.h"
+#include "VSCOgreKeyboardManager.h";
+#include "VSCOgreKeyboardAction.h";
 
 /*
  *  OgreBullet Shapes
@@ -49,8 +51,6 @@ using namespace OgreBulletDynamics;
 //using namespace OgreBulletLoader;
 
 using namespace OIS;
-
-
 
 /*
  *  GLOBAL VARIABLES
@@ -308,26 +308,6 @@ void VSCOgreBulletScene::setPhysicGUI()
     menuWindow->hide ();
 
     BetaGUI::Window *aWindow;
-    
-    /**-------------------------------------------------------------------
-     *  Setup scene choice tab, with the scenes registered by mApplication
-     */
-    
-    /*
-    aWindow = menuWindow->addMenuWindowTab("Scene Choice");
-    {
-        std::vector <VSCOgreBulletScene*> sceneList = mApplication->getScenes();
-        std::vector <VSCOgreBulletScene*>::iterator itScenes = sceneList.begin();
-        for (; itScenes < sceneList.end(); ++itScenes)
-        {
-            if ((*itScenes) == this)
-                aWindow->addBoolButton((*itScenes)->getBoolActivator(), "reset " + (*itScenes)->getName(), BetaGUI::WPT_VERTICAL);
-            else
-                aWindow->addBoolButton((*itScenes)->getBoolActivator(), (*itScenes)->getName(), BetaGUI::WPT_VERTICAL);
-        }
-    }
-    aWindow->hide ();
-     */
      
     /**-------------------------------------------------------------------
      *  Time tab, play/pause, step
@@ -458,9 +438,8 @@ void VSCOgreBulletScene::shutdown ()
 
         ++itEntity;
     }
-    mEntities.clear();
     
-    //mCameraController.reset();
+    mEntities.clear();
     
     mSceneMgr->destroyCamera(mCamera->getName());
     mWindow->removeViewport(0);
@@ -721,84 +700,89 @@ bool VSCOgreBulletScene::keyPressed(OIS::KeyCode key)
     static int count = 0;
     // Scene Debug Options
     
+    OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
+    VSCKeyboard::Combination comb(key, modifier);
+    
+    VSCOgreKeyboardAction::Key actionKey = this->getKeyboardManager()->getActionKeyForCombination(comb);
+    
     bool handled = true;
     
-    switch(key)
+    switch(actionKey)
     {
         // Application Utils
         
-        case KC_ESCAPE:
+        case VSCOgreKeyboardAction::Quit:
             mQuit = true;
             break;
             
-        case KC_SYSRQ:
+        case VSCOgreKeyboardAction::SaveScreenShot:
             mWindow->writeContentsToFile("OgreBulletScreenShot"+StringConverter::toString(count++)+".png");
             break;
             
         // Scene Debug Options
             
-        case KC_T:
+        case VSCOgreKeyboardAction::ToggleDisplayWireFrame:
             mWireFrame = !mWireFrame;
             if (mTraceUI) std::cout << "Wireframe is " << (mWireFrame ? "on" : "off") << std::endl;
             break;
-        case KC_1:
+        case VSCOgreKeyboardAction::ToggleDisplayAABB:
             mDrawAabb = !mDrawAabb;
             if (mTraceUI) std::cout << "Draw AABB is " << (mDrawAabb ? "on" : "off") << std::endl;
             break;
-        case KC_2:
+        case VSCOgreKeyboardAction::ToggleFeaturesText:
             mDrawFeaturesText = !mDrawFeaturesText;
             if (mTraceUI) std::cout << "Draw Features Text is " << (mDrawFeaturesText ? "on" : "off") << std::endl;
             break;
-        case KC_3:
+        case VSCOgreKeyboardAction::ToggleDisplayContactPoints:
             mDrawContactPoints = !mDrawContactPoints;
             if (mTraceUI) std::cout << "Draw contact points is " << (mDrawContactPoints ? "on" : "off") << std::endl;
             break;
-        case KC_4:
+        case VSCOgreKeyboardAction::ToggleDeactivation:
             mNoDeactivation = !mNoDeactivation;
             if (mTraceUI) std::cout << "No deactivation is " << (mNoDeactivation ? "on" : "off") << std::endl;
             break;
-        case KC_5:
+        case VSCOgreKeyboardAction::ToggleHelpText:
             mNoHelpText = !mNoHelpText;
             if (mTraceUI) std::cout << "No help text is " << (mNoHelpText ? "on" : "off") << std::endl;
             break;
-        case KC_6:
+        case VSCOgreKeyboardAction::ToggleDrawText:
             mDrawText = !mDrawText;
             if (mTraceUI) std::cout << "Draw text is " << (mDrawText ? "on" : "off") << std::endl;
             break;
-        case KC_7:
+        case VSCOgreKeyboardAction::ToggleProfileTimings:
             mProfileTimings = !mProfileTimings;
             if (mTraceUI) std::cout << "Profile timings is " << (mProfileTimings ? "on" : "off") << std::endl;
             break;
-        case KC_8:
+        case VSCOgreKeyboardAction::ToggleSatComparison:
             mEnableSatComparison = !mEnableSatComparison;
             if (mTraceUI) std::cout << "Enable sat comparison is " << (mEnableSatComparison ? "on" : "off") << std::endl;
             break;
-        case KC_9:
+        case VSCOgreKeyboardAction::ToggleBulletLCP:
             mDisableBulletLCP = !mDisableBulletLCP;
             if (mTraceUI) std::cout << "Disable bullet LCP is " << (mDisableBulletLCP ? "on" : "off") << std::endl;
             break;
-        case KC_0:
+        case VSCOgreKeyboardAction::ToggleCCD:
             mEnableCCD = !mEnableCCD;
             if (mTraceUI) std::cout << "Enable CCD is " << (mEnableCCD ? "on" : "off") << std::endl;
             break;
             
             // pause
-        case KC_P:
+        case VSCOgreKeyboardAction::ToggleSimulationPause:
             mPaused = !mPaused;
             if (mTraceUI) std::cout << "Paused is " << (mPaused ? "on" : "off") << std::endl;
             break;
             // single step
-        case KC_M:
+        case VSCOgreKeyboardAction::SimulationStep:
             mDoOnestep = !mDoOnestep;
             if (mTraceUI) std::cout << "Do one step is " << (mDoOnestep ? "on" : "off") << std::endl;
             break;
             // faster Shoots
-        case KC_ADD:
+        case VSCOgreKeyboardAction::IncrementShootSpeed:
             mShootSpeed += 5.0f;
             if (mTraceUI) std::cout << "Shoot speed is " << mShootSpeed << std::endl;
             break;
             // Slower Shoots
-        case KC_MINUS:
+        case VSCOgreKeyboardAction::DecrementShootSpeed:
             mShootSpeed -= 5.0f;
             if (mTraceUI) std::cout << "Shoot speed is " << mShootSpeed << std::endl;
             break;
@@ -1012,7 +996,7 @@ bool VSCOgreBulletScene::checkIfEnoughPlaceToAddObject(float maxDist)
     return true;        
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletScene::throwDynamicObject(OIS::KeyCode key)
+bool VSCOgreBulletScene::throwDynamicObject(VSCOgreKeyboardAction::Key key)
 {
     const float trowDist = 2.0f;
     
@@ -1020,55 +1004,54 @@ bool VSCOgreBulletScene::throwDynamicObject(OIS::KeyCode key)
     
     switch(key)
     {
-        case KC_B: 
-            if ( checkIfEnoughPlaceToAddObject(trowDist))
+        case VSCOgreKeyboardAction::ShootCube: 
+            
+            if (this->checkIfEnoughPlaceToAddObject(trowDist))
             {
                 const Ogre::Vector3 vec (mCamera->getDerivedPosition());
                 OgreBulletDynamics::RigidBody *body = addCube("cube", vec, Quaternion(0,0,0,1), 
                                                               gCubeBodyBounds, gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
                 
-                body->setLinearVelocity(
-                                        mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed
-                                        );
+                body->setLinearVelocity(mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed);
             }
             break;
-        case KC_N: 
-            if ( checkIfEnoughPlaceToAddObject(trowDist))
+            
+        case VSCOgreKeyboardAction::ShootSphere: 
+            
+            if (this->checkIfEnoughPlaceToAddObject(trowDist))
             {
                 const Ogre::Vector3 vec (mCamera->getDerivedPosition());
                 OgreBulletDynamics::RigidBody *body = addSphere("sphere", vec, Quaternion(0,0,0,1), 
                                                                 gSphereBodyBounds, 
                                                                 gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
                 
-                body->setLinearVelocity(
-                                        mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed
-                                        );
+                body->setLinearVelocity(mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed);
             }
             break;
-        case KC_H: 
-            if ( checkIfEnoughPlaceToAddObject(trowDist))
+            
+        case VSCOgreKeyboardAction::ShootCylinder: 
+            
+            if (this->checkIfEnoughPlaceToAddObject(trowDist))
             {
                 const Ogre::Vector3 vec (mCamera->getDerivedPosition());
                 OgreBulletDynamics::RigidBody *body = addCylinder("cylinder", vec, Quaternion(0,0,0,1), 
                                                                   gCylinderBodyBounds, 
                                                                   gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
                 
-                body->setLinearVelocity(
-                                        mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed
-                                        );
+                body->setLinearVelocity(mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed);
             }
             break;
-        case KC_G : 
-            if ( checkIfEnoughPlaceToAddObject(trowDist))
+            
+        case VSCOgreKeyboardAction::ShootCone: 
+            
+            if (this->checkIfEnoughPlaceToAddObject(trowDist))
             {
                 const Ogre::Vector3 vec (mCamera->getDerivedPosition());
                 OgreBulletDynamics::RigidBody *body = addCone("cone", vec, Quaternion(0,0,0,1), 
                                                               gConeBodyBounds, 
                                                               gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
                 
-                body->setLinearVelocity(
-                                        mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed
-                                        );
+                body->setLinearVelocity(mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed);
             }
             break;
             
@@ -1081,7 +1064,7 @@ bool VSCOgreBulletScene::throwDynamicObject(OIS::KeyCode key)
 }
 
 // -------------------------------------------------------------------------
-bool VSCOgreBulletScene::dropDynamicObject(OIS::KeyCode key)
+bool VSCOgreBulletScene::dropDynamicObject(VSCOgreKeyboardAction::Key key)
 {
     const float dropDist = 10.0f;
     
@@ -1089,8 +1072,9 @@ bool VSCOgreBulletScene::dropDynamicObject(OIS::KeyCode key)
     
     switch(key)
     {
-        case KC_J: 
-            if ( checkIfEnoughPlaceToAddObject(dropDist))
+        case VSCOgreKeyboardAction::DropCube: 
+            
+            if (this->checkIfEnoughPlaceToAddObject(dropDist))
             {
                 const Ogre::Vector3 vec (mCamera->getDerivedPosition());
                 OgreBulletDynamics::RigidBody *body = addCube("cube", 
@@ -1100,8 +1084,10 @@ bool VSCOgreBulletScene::dropDynamicObject(OIS::KeyCode key)
                 
             }
             break;
-        case KC_K: 
-            if ( checkIfEnoughPlaceToAddObject(dropDist))
+            
+        case VSCOgreKeyboardAction::DropSphere: 
+            
+            if (this->checkIfEnoughPlaceToAddObject(dropDist))
             {
                 const Ogre::Vector3 vec (mCamera->getDerivedPosition());
                 OgreBulletDynamics::RigidBody *body = addSphere("sphere", 
@@ -1112,8 +1098,10 @@ bool VSCOgreBulletScene::dropDynamicObject(OIS::KeyCode key)
                 
             }
             break;
-        case KC_U : 
-            if ( checkIfEnoughPlaceToAddObject(dropDist))
+            
+        case VSCOgreKeyboardAction::DropCylinder : 
+            
+            if (this->checkIfEnoughPlaceToAddObject(dropDist))
             {
                 const Ogre::Vector3 vec (mCamera->getDerivedPosition());
                 OgreBulletDynamics::RigidBody *body = addCylinder("Cylinder", vec, Quaternion(0,0,0,1), 
@@ -1122,8 +1110,10 @@ bool VSCOgreBulletScene::dropDynamicObject(OIS::KeyCode key)
                 
             }
             break;
-        case KC_I: 
-            if ( checkIfEnoughPlaceToAddObject(dropDist))
+            
+        case VSCOgreKeyboardAction::DropCone: 
+            
+            if (this->checkIfEnoughPlaceToAddObject(dropDist))
             {
                 const Ogre::Vector3 vec (mCamera->getDerivedPosition());
                 OgreBulletDynamics::RigidBody *body = addCone("Cone", 

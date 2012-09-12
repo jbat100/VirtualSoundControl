@@ -1,25 +1,12 @@
-/***************************************************************************
-This source file is part of OGREBULLET
-(Object-oriented Graphics Rendering Engine Bullet Wrapper)
-For the latest info, see http://www.ogre3d.org/phpBB2addons/viewforum.php?f=10
-Copyright (c) 2007 tuan.kuranes@gmail.com (Use it Freely, even Statically, but have to contribute any changes)
-This source file is not LGPL, it's public source code that you can reuse.
------------------------------------------------------------------------------*/
-/***************************************************************************
- File modified for VSC project
- -----------------------------------------------------------------------------*/
-/*
- VSCOgreBulletScene.h
--------------
-A basic test framework that minimize code in each test scene listener.
-*/
 
-#ifndef _VSC_OGRE_BULLET_LISTENER_H_
-#define _VSC_OGRE_BULLET_LISTENER_H_
+#ifndef _VSC_OGRE_BULLET_SCENE_H_
+#define _VSC_OGRE_BULLET_SCENE_H_
 
 #include "OgreBulletDynamics.h"
 #include "VSCOgreInputListener.h"
 #include "VSCOgreBetaGUIListener.h"
+#include "VSCOgreKeyboardManager.h"
+#include "VSCOgreKeyboardAction.h"
 #include "OIS.h"
 
 #include <boost/shared_ptr.hpp>
@@ -34,8 +21,11 @@ A basic test framework that minimize code in each test scene listener.
 #define BASIC_HELP_INFO6 "middle for impulse"
 
 class VSCOgreCameraController;
+
 // typedef boost::shared_ptr<VSCOgreCameraController> VSCOgreCameraControllerPtr;
 typedef VSCOgreCameraController* VSCOgreCameraControllerPtr;
+
+typedef boost::shared_ptr<VSCOgreKeyboardManager> VSCOgreKeyboardManagerPtr;
 
 enum QueryFlags
 {
@@ -69,10 +59,7 @@ public:
     void setPhysicGUI();
     void setBasicLight();
 
-    const OIS::KeyCode getNextKey() const {return mActivationKeyCode;};
-    void setNextKey(OIS::KeyCode code){mActivationKeyCode = code;};
-
-    /**
+    /**--------------------------------------------------------------
      *  MISC Info
      */
     const Ogre::String getName() {return mName;}
@@ -89,8 +76,8 @@ public:
      *  Dynamic actions and checks
      */
     bool checkIfEnoughPlaceToAddObject(float maxDist);
-    bool throwDynamicObject(OIS::KeyCode key);  // returns true if something happened
-    bool dropDynamicObject(OIS::KeyCode key);   // returns true if something happened
+    bool throwDynamicObject(VSCOgreKeyboardAction::Key key);  // returns true if something happened
+    bool dropDynamicObject(VSCOgreKeyboardAction::Key key);   // returns true if something happened
     
     /**--------------------------------------------------------------
      *  Input listener callback overrides
@@ -103,7 +90,7 @@ public:
     bool keyPressed(OIS::KeyCode key);
     bool keyReleased(OIS::KeyCode key);
     
-    /*
+    /**--------------------------------------------------------------
      *  Ogre Setters/Getters
      */
     
@@ -112,6 +99,14 @@ public:
     Ogre::SceneManager* getSceneManager(void) {return mSceneMgr;}
     Ogre::Camera* getCamera(void) {return mCamera;}
 
+    /**--------------------------------------------------------------
+     *  Other Setters/Getters
+     */
+    
+    VSCOgreKeyboardManagerPtr getKeyboardManager(void) const;
+    void setKeyboardManager(VSCOgreKeyboardManagerPtr manager);
+    
+    
 protected:
 
     /**
@@ -184,25 +179,25 @@ protected:
     std::deque<OgreBulletDynamics::RigidBody *>         mBodies;
     std::deque<OgreBulletCollisions::CollisionShape *>  mShapes;
 
-    bool                    mStatsOn;
-    bool                    mQuit;
-    bool                    mDoOnestep;
+    bool  mStatsOn;
+    bool  mQuit;
+    bool  mDoOnestep;
 
-    float                   mShootSpeed;
-    float                   mImpulseForce;
-    bool                    mPaused;
+    float mShootSpeed;
+    float mImpulseForce;
+    bool  mPaused;
 
-    bool                    mWireFrame;
-    bool                    mDrawAabb;
-    bool                    mDrawFeaturesText;
-    bool                    mDrawContactPoints;
-    bool                    mNoDeactivation;
-    bool                    mNoHelpText;
-    bool                    mDrawText;
-    bool                    mProfileTimings;
-    bool                    mEnableSatComparison;
-    bool                    mDisableBulletLCP;
-    bool                    mEnableCCD;
+    bool  mWireFrame;
+    bool  mDrawAabb;
+    bool  mDrawFeaturesText;
+    bool  mDrawContactPoints;
+    bool  mNoDeactivation;
+    bool  mNoHelpText;
+    bool  mDrawText;
+    bool  mProfileTimings;
+    bool  mEnableSatComparison;
+    bool  mDisableBulletLCP;
+    bool  mEnableCCD;
 
 
    BetaGUI::StaticText*     mFpsStaticText;
@@ -220,8 +215,6 @@ protected:
 
    OgreBulletCollisions::DebugLines                         *mDebugRayLine;
    Ogre::RaySceneQuery                                      *mRayQuery;
-   
-   OIS::KeyCode                                             mActivationKeyCode;
 
    VSCOgreBetaGUIListener                                   *mGuiListener;
     
@@ -237,13 +230,14 @@ private:
      *  Other Setters/Getters
      */
     
-    VSCOgreCameraControllerPtr getCameraController(void) {return mCameraController;}
-    void setCameraController(VSCOgreCameraControllerPtr controller);
+    VSCOgreCameraControllerPtr  getCameraController(void) {return mCameraController;}
+    void                        setCameraController(VSCOgreCameraControllerPtr controller);
     
-    VSCOgreCameraControllerPtr                              mCameraController;
-    static const bool                                       mTraceFrame = false;
+    VSCOgreCameraControllerPtr  mCameraController;
+    VSCOgreKeyboardManagerPtr   mKeyboardManager;
+    static const bool           mTraceFrame = false;
     
 };
 
-#endif //_VSC_OGRE_BULLET_LISTENER_H_
+#endif //_VSC_OGRE_BULLET_SCENE_H_
 

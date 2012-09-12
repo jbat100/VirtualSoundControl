@@ -16,7 +16,7 @@ VSCOgreKeyboardManager::~VSCOgreKeyboardManager()
     
 }
 
-VSCOgreKeyboardAction::Key VSCOgreKeyboardManager::actionKeyForCombination(const VSCKeyboard::Combination& comb) const 
+VSCOgreKeyboardAction::Key VSCOgreKeyboardManager::getActionKeyForCombination(const VSCKeyboard::Combination& comb) const 
 {
     VSCKeyboard::Action action = mKeyBindings.getActionForCombination(comb);
     if (action == VSCKeyboard::NullAction) return VSCOgreKeyboardAction::None;
@@ -24,7 +24,7 @@ VSCOgreKeyboardAction::Key VSCOgreKeyboardManager::actionKeyForCombination(const
     return (VSCOgreKeyboardAction::Key)action.key;
 }
 
-VSCKeyboard::Combination VSCOgreKeyboardManager::combinationForActionKey(const VSCOgreKeyboardAction::Key& key) const 
+VSCKeyboard::Combination VSCOgreKeyboardManager::getCombinationForActionKey(const VSCOgreKeyboardAction::Key& key) const 
 {
     VSCKeyboard::Action action(key, VSCKeyboard::ActionDomainOgre);
     VSCKeyboard::Combination comb = mKeyBindings.getCombinationForAction(action);

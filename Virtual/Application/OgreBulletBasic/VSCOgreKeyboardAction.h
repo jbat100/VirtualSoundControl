@@ -35,6 +35,7 @@ public:
         
         ToggleDisplayWireFrame,
         ToggleDisplayAABB,
+        ToggleFeaturesText,
         ToggleDisplayContactPoints,
         ToggleDeactivation,
         ToggleHelpText,

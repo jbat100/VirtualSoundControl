@@ -14,8 +14,8 @@ public:
     VSCOgreKeyboardManager();
     ~VSCOgreKeyboardManager();
     
-    VSCOgreKeyboardAction::Key  actionKeyForCombination(const VSCKeyboard::Combination& comb) const;
-    VSCKeyboard::Combination    combinationForActionKey(const VSCOgreKeyboardAction::Key& key)  const;
+    VSCOgreKeyboardAction::Key  getActionKeyForCombination(const VSCKeyboard::Combination& comb) const;
+    VSCKeyboard::Combination    getCombinationForActionKey(const VSCOgreKeyboardAction::Key& key)  const;
     
     void setBinding(const VSCOgreKeyboardAction::Key& key, const VSCKeyboard::Combination& comb);
     
