@@ -2,7 +2,7 @@
 #ifndef _VSC_OGRE_BULLET_INPUT_ADAPTER_H_
 #define _VSC_OGRE_BULLET_INPUT_ADAPTER_H_
 
-#include "VSCUserInput.h"
+#include "VSCUI.h"
 #include "OIS.h"
 #include <set>
 #include <Ogre/Ogre.h>

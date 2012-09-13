@@ -2,53 +2,25 @@
 #ifndef _VSC_KEY_BINDINGS_H_
 #define _VSC_KEY_BINDINGS_H_
 
-#include "VSCUserInput.h"
-#include <boost/bimap.hpp>
-#include <string>
-#include <set>
-#include "OIS.h"
+#include "VSCUI.h"
+#include "VSCBindings.h"
 
-/*
- *  VSCKeyBindings stores and manipulates a group of bindings between VSCKeyboard::Action and 
- *  VSCKeyboard::Combination
- */
+#include <boost/shared_ptr.hpp>
 
-class VSCKeyBindings 
+template <typename Action, typename Input>
+class VSCBound 
 {
     
 public:
     
-    /*
-     *  Get the Action/Combination associated with a Combination/Action. Returns NullAction/NullCombination
-     *  if none was found.
-     */
+    VSCBound();
     
-    const VSCKeyboard::Action getActionForCombination(const VSCKeyboard::Combination& comb) const;
-    const VSCKeyboard::Combination getCombinationForAction(const VSCKeyboard::Action& action) const;
-    
-    /*
-     *  Erase the binding for a given Action or Combination. 
-     */
-    
-    void eraseCombination(const VSCKeyboard::Combination& comb);
-    void eraseAction(const VSCKeyboard::Action& action);
-    
-    /*
-     *  Set a binding, throws an exception if the action and/or the combination is already bound.
-     */
-    
-    void setBinding(const VSCKeyboard::Action& action, const VSCKeyboard::Combination& comb);
+    VSCBindings<Action,Input>::Ptr  getBindings() {return mBindings;}
+    void                            setBindings(VSCBindings<Action,Input>::Ptr bindings) {mBindings = bindings;}
     
 private:
     
-    typedef boost::bimap<VSCKeyboard::Combination, VSCKeyboard::Action>     CombinationActionMap;
-    typedef CombinationActionMap::value_type                                CombinationActionMapEntry;
-    typedef CombinationActionMap::left_map::iterator                        CombinationIterator;
-    typedef CombinationActionMap::right_map::iterator                       ActionIterator;
-    typedef CombinationActionMap::left_map::const_iterator                  CombinationConstIterator;
-    typedef CombinationActionMap::right_map::const_iterator                 ActionConstIterator;
-    
-    CombinationActionMap    mCombinationActionMap;
+    VSCBindings<Action,Input>::Ptr  mBindings;
     
 };
 

@@ -1,70 +1,96 @@
 
-#include "VSCKeyBindings.h"
+#include "VSCBindings.h"
 #include "VSCException.h"
 
-const VSCKeyboard::Action VSCKeyBindings::getActionForCombination(const VSCKeyboard::Combination& comb) const
+#include <boost/foreach.hpp>
+
+template<typename Action, typename Input>
+const std::set<Action>& VSCBindings::getActionsForCombination(const Input& input)
 {
-    CombinationConstIterator it = mCombinationActionMap.left.find(comb);
+    ActionInputsMap::iterator it = mInputActionsMap.find(input);
     
-    if (it != mCombinationActionMap.left.end())
+    if (it == mInputActionsMap.end())
     {
-        return it->second;
-    }
+        /*
+         *  If we don't have anything, then create an empty set and return that.
+         *  NOTE: DON'T just create a local and return it as it would go out of
+         *  scope and be destroyed (potentially) as soon as the function returns.
+         */
         
-    return VSCKeyboard::NullAction;
-}
-
-const VSCKeyboard::Combination VSCKeyBindings::getCombinationForAction(const VSCKeyboard::Action& action) const
-{
-    ActionConstIterator it = mCombinationActionMap.right.find(action);
-    
-    if (it != mCombinationActionMap.right.end())
-    {
-        return it->second;
+        std::set<Action> actionSet;
+        mInputActionsMap[input] = actionSet;
+        
+        it = mInputActionsMap.find(input);
     }
     
-    return VSCKeyboard::NullCombination;
+    return it->second;
 }
 
-void VSCKeyBindings::eraseCombination(const VSCKeyboard::Combination& comb)
+template<typename Action, typename Input>
+const std::set<Input>& VSCBindings::getInputsForAction(const Action& action)
 {
-    mCombinationActionMap.left.erase(comb);
-}
-
-void VSCKeyBindings::eraseAction(const VSCKeyboard::Action& action)
-{
-    mCombinationActionMap.right.erase(action);
-}
-
-void VSCKeyBindings::setBinding(const VSCKeyboard::Action& action, const VSCKeyboard::Combination& comb)
-{
+    InputActionsMap::iterator it = mActionInputsMap.find(action);
     
-    /*
-     *  Check if the combination is already bound
-     */
-    
-    CombinationConstIterator combIt = mCombinationActionMap.left.find(comb);
-    
-    if (combIt != mCombinationActionMap.left.end())
+    if (it == mInputActionsMap.end())
     {
-        throw VSCUIException("Attempted to set binding with already bound combination");
+        /*
+         *  If we don't have anything, then create an empty set and return that.
+         *  NOTE: DON'T just create a local and return it as it would go out of
+         *  scope and be destroyed (potentially) as soon as the function returns.
+         */
+        
+        std::set<Input> inputSet;
+        mActionInputsMap[action] = inputSet;
+        
+        it = mActionInputsMap.find(action);
     }
     
-    /*
-     *  Check if the action is already bound
-     */
-    
-    ActionConstIterator actionIt = mCombinationActionMap.right.find(action);
-    
-    if (actionIt != mCombinationActionMap.right.end())
-    {
-        throw VSCUIException("Attempted to set binding with already bound action");
-    }
-    
-    mCombinationActionMap.insert(CombinationActionMapEntry(comb, action));
-    
+    return it->second;
 }
 
+template<typename Action, typename Input>
+void VSCBindings::eraseBinding(const Action& action, const Input& input)
+{
+    InputActionsMap::iterator it = mActionInputsMap.find(action);
+    
+    if (it != mActionInputsMap.end())
+    {
+        it->second.erase(input);
+    }
+    
+    ActionInputsMap::iterator it = mInputActionsMap.find(input);
+    
+    if (it != mInputActionsMap.end())
+    {
+        it->second.erase(action);
+    }    
+}
+
+template<typename Action, typename Input>
+void VSCBindings::eraseInputBindings(const Input& input)
+{
+    mInputActionsMap.erase(input);
+    
+    BOOST_FOREACH (std::set<Action> inputListener, this->getInputListeners()) 
+    {
+        inputListener->mouseMoved(position, movement);
+    }
+}
+
+template<typename Action, typename Input>
+void VSCBindings::eraseActionBindings(const Action& action)
+{
+    BOOST_FOREACH (VSCOgreInputListener* inputListener, this->getInputListeners()) 
+    {
+        inputListener->mouseMoved(position, movement);
+    }
+}
+
+template<typename Action, typename Input>
+void VSCBindings::setBinding(const Action& action, const Input& input) 
+{
+    
+}
 
 
 

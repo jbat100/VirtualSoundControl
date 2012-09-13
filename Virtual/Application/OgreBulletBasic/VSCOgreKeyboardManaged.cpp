@@ -1,7 +1,7 @@
 
 #include "VSCOgreKeyboardManager.h"
-#include "VSCUserInput.h"
-#include "VSCKeyBindings.h"
+#include "VSCUI.h"
+#include "VSCBindings.h"
 #include "VSCOgreKeyboardAction.h"
 
 #include <boost/assert.hpp>

@@ -1,5 +1,5 @@
 
-#include "VSCKeyBindings.h"
+#include "VSCBindings.h"
 #include "VSCException.h"
 
 const VSCKeyboard::Action VSCKeyBindings::getActionForCombination(const VSCKeyboard::Combination& comb) const

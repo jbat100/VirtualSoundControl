@@ -1,57 +1,62 @@
 
-#ifndef _VSC_KEY_BINDINGS_H_
-#define _VSC_KEY_BINDINGS_H_
+#ifndef _VSC_BINDINGS_H_
+#define _VSC_BINDINGS_H_
 
-#include "VSCUserInput.h"
-#include <boost/bimap.hpp>
-#include <string>
+#include "VSCUI.h"
+
+#include <map>
 #include <set>
-#include "OIS.h"
+
+#include <boost/shared_ptr.hpp>
+
 
 /*
- *  VSCKeyBindings stores and manipulates a group of bindings between VSCKeyboard::Action and 
- *  VSCKeyboard::Combination
+ *  VSCBindings stores and manipulates a group of bindings between Action and 
+ *  Input types
  */
 
-class VSCKeyBindings 
+template<typename Action, typename Input>
+class VSCBindings 
 {
     
 public:
+    
+    typedef boost::shared_ptr< VSCBindings<Action,Input> > Ptr;
     
     /*
      *  Get the Action/Combination associated with a Combination/Action. Returns NullAction/NullCombination
      *  if none was found.
      */
     
-    const VSCKeyboard::Action getActionForCombination(const VSCKeyboard::Combination& comb) const;
-    const VSCKeyboard::Combination getCombinationForAction(const VSCKeyboard::Action& action) const;
+    const std::set<Action>& getActionsForCombination(const Input& input);
+    const std::set<Input>& getInputsForAction(const Action& action);
     
     /*
      *  Erase the binding for a given Action or Combination. 
      */
     
-    void eraseCombination(const VSCKeyboard::Combination& comb);
-    void eraseAction(const VSCKeyboard::Action& action);
+    void eraseBinding(const Action& action, const Input& input);
+    void eraseInputBindings(const Input& input);
+    void eraseActionBindings(const Action& action);
     
     /*
      *  Set a binding, throws an exception if the action and/or the combination is already bound.
      */
     
-    void setBinding(const VSCKeyboard::Action& action, const VSCKeyboard::Combination& comb);
+    void setBinding(const Action& action, const Input& input);
     
 private:
     
-    typedef boost::bimap<VSCKeyboard::Combination, VSCKeyboard::Action>     CombinationActionMap;
-    typedef CombinationActionMap::value_type                                CombinationActionMapEntry;
-    typedef CombinationActionMap::left_map::iterator                        CombinationIterator;
-    typedef CombinationActionMap::right_map::iterator                       ActionIterator;
-    typedef CombinationActionMap::left_map::const_iterator                  CombinationConstIterator;
-    typedef CombinationActionMap::right_map::const_iterator                 ActionConstIterator;
+    typedef std::map<Action, std::set<Input> > ActionInputsMap;
+    typedef std::map<Input, std::set<Action> > InputActionsMap
     
-    CombinationActionMap    mCombinationActionMap;
+    ActionInputsMap   mActionInputsMap;
+    InputActionsMap   mInputActionsMap;
     
 };
 
+#include "VSCBindings.cpp"
 
-#endif//_VSC_KEY_BINDINGS_H_
+
+#endif//_VSC_BINDINGS_H_
 
