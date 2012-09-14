@@ -3,8 +3,7 @@
 #define _VSC_OGRE_KEYBOARD_ACTION_H_
 
 #include <string>
-
-#warning "_VSC_OGRE_KEYBOARD_ACTION_H_"
+#include <set>
 
 class VSCOgreKeyboardAction
 {
@@ -83,9 +82,11 @@ public:
         
     };
     
+    typedef std::set<Key>   KeySet;
+    
     static std::string stringForKey(Key key);
     
 };
 
-#endif//_VSC_OGRE_KEYBOARD_H_
+#endif//_VSC_OGRE_KEYBOARD_ACTION_H_
 

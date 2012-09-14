@@ -18,6 +18,13 @@ VSCOgreBulletApplication::VSCOgreBulletApplication(std::vector<VSCOgreBulletScen
     mBulletScene(0)
 {
     BOOST_ASSERT_MSG (!mBulletScenes.empty(), "Expected keyboard adapter");
+    
+    BOOST_FOREACH (VSCOgreBulletScene* scene, mBulletScenes) 
+    {
+        // application bindings should be set in the base class constructor
+        scene->setBindings(this->getBindings());  
+    }
+    
 }
 // -------------------------------------------------------------------------
 VSCOgreBulletApplication::~VSCOgreBulletApplication()

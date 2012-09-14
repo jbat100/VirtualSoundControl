@@ -14,13 +14,14 @@ class VSCBound
 public:
     
     VSCBound();
+    virtual ~VSCBound();
     
-    VSCBindings<Action,Input>::Ptr  getBindings() {return mBindings;}
-    void                            setBindings(VSCBindings<Action,Input>::Ptr bindings) {mBindings = bindings;}
+    VSCBindings<Action,Input>::SPtr         getBindings() {return mBindings;}
+    void                                    setBindings(VSCBindings<Action,Input>::SPtr bindings) {mBindings = bindings;}
     
 private:
     
-    VSCBindings<Action,Input>::Ptr  mBindings;
+    VSCBindings<Action,Input>::SPtr         mBindings;
     
 };
 

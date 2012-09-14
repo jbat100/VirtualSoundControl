@@ -255,7 +255,7 @@ void VSCOgreBulletScene::setCameraController(VSCOgreCameraControllerPtr controll
 {
     mCameraController = controller;
     this->setNextInputListener(mCameraController);
-    
+    mCameraController->setBindings(this->getBindings());
 }
 
 // -------------------------------------------------------------------------
@@ -702,99 +702,99 @@ bool VSCOgreBulletScene::keyPressed(OIS::KeyCode key)
     OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
     VSCKeyboard::Combination comb(key, modifier);
     
-    VSCOgreKeyboardAction::Key actionKey = 
-    
     bool handled = true;
     
-    switch(actionKey)
+    const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getKeyBindings()->getActionsForInput(comb);
+    
+    BOOST_FOREACH (VSCOgreKeyboardAction::Key actionKey, actionKeySet) 
     {
-        // Application Utils
-        
-        case VSCOgreKeyboardAction::Quit:
-            mQuit = true;
-            break;
+        switch(actionKey)
+        {
+            // Application Utils
             
-        case VSCOgreKeyboardAction::SaveScreenShot:
-            mWindow->writeContentsToFile("OgreBulletScreenShot"+StringConverter::toString(count++)+".png");
-            break;
-            
-        // Scene Debug Options
-            
-        case VSCOgreKeyboardAction::ToggleDisplayWireFrame:
-            mWireFrame = !mWireFrame;
-            if (mTraceUI) std::cout << "Wireframe is " << (mWireFrame ? "on" : "off") << std::endl;
-            break;
-        case VSCOgreKeyboardAction::ToggleDisplayAABB:
-            mDrawAabb = !mDrawAabb;
-            if (mTraceUI) std::cout << "Draw AABB is " << (mDrawAabb ? "on" : "off") << std::endl;
-            break;
-        case VSCOgreKeyboardAction::ToggleFeaturesText:
-            mDrawFeaturesText = !mDrawFeaturesText;
-            if (mTraceUI) std::cout << "Draw Features Text is " << (mDrawFeaturesText ? "on" : "off") << std::endl;
-            break;
-        case VSCOgreKeyboardAction::ToggleDisplayContactPoints:
-            mDrawContactPoints = !mDrawContactPoints;
-            if (mTraceUI) std::cout << "Draw contact points is " << (mDrawContactPoints ? "on" : "off") << std::endl;
-            break;
-        case VSCOgreKeyboardAction::ToggleDeactivation:
-            mNoDeactivation = !mNoDeactivation;
-            if (mTraceUI) std::cout << "No deactivation is " << (mNoDeactivation ? "on" : "off") << std::endl;
-            break;
-        case VSCOgreKeyboardAction::ToggleHelpText:
-            mNoHelpText = !mNoHelpText;
-            if (mTraceUI) std::cout << "No help text is " << (mNoHelpText ? "on" : "off") << std::endl;
-            break;
-        case VSCOgreKeyboardAction::ToggleDrawText:
-            mDrawText = !mDrawText;
-            if (mTraceUI) std::cout << "Draw text is " << (mDrawText ? "on" : "off") << std::endl;
-            break;
-        case VSCOgreKeyboardAction::ToggleProfileTimings:
-            mProfileTimings = !mProfileTimings;
-            if (mTraceUI) std::cout << "Profile timings is " << (mProfileTimings ? "on" : "off") << std::endl;
-            break;
-        case VSCOgreKeyboardAction::ToggleSatComparison:
-            mEnableSatComparison = !mEnableSatComparison;
-            if (mTraceUI) std::cout << "Enable sat comparison is " << (mEnableSatComparison ? "on" : "off") << std::endl;
-            break;
-        case VSCOgreKeyboardAction::ToggleBulletLCP:
-            mDisableBulletLCP = !mDisableBulletLCP;
-            if (mTraceUI) std::cout << "Disable bullet LCP is " << (mDisableBulletLCP ? "on" : "off") << std::endl;
-            break;
-        case VSCOgreKeyboardAction::ToggleCCD:
-            mEnableCCD = !mEnableCCD;
-            if (mTraceUI) std::cout << "Enable CCD is " << (mEnableCCD ? "on" : "off") << std::endl;
-            break;
-            
-            // pause
-        case VSCOgreKeyboardAction::ToggleSimulationPause:
-            mPaused = !mPaused;
-            if (mTraceUI) std::cout << "Paused is " << (mPaused ? "on" : "off") << std::endl;
-            break;
-            // single step
-        case VSCOgreKeyboardAction::SimulationStep:
-            mDoOnestep = !mDoOnestep;
-            if (mTraceUI) std::cout << "Do one step is " << (mDoOnestep ? "on" : "off") << std::endl;
-            break;
-            // faster Shoots
-        case VSCOgreKeyboardAction::IncrementShootSpeed:
-            mShootSpeed += 5.0f;
-            if (mTraceUI) std::cout << "Shoot speed is " << mShootSpeed << std::endl;
-            break;
-            // Slower Shoots
-        case VSCOgreKeyboardAction::DecrementShootSpeed:
-            mShootSpeed -= 5.0f;
-            if (mTraceUI) std::cout << "Shoot speed is " << mShootSpeed << std::endl;
-            break;
-            
-        default:
-            handled = false;
-            break;
+            case VSCOgreKeyboardAction::Quit:
+                mQuit = true;
+                break;
+                
+            case VSCOgreKeyboardAction::SaveScreenShot:
+                mWindow->writeContentsToFile("OgreBulletScreenShot"+StringConverter::toString(count++)+".png");
+                break;
+                
+            // Scene Debug Options
+                
+            case VSCOgreKeyboardAction::ToggleDisplayWireFrame:
+                mWireFrame = !mWireFrame;
+                if (mTraceUI) std::cout << "Wireframe is " << (mWireFrame ? "on" : "off") << std::endl;
+                break;
+            case VSCOgreKeyboardAction::ToggleDisplayAABB:
+                mDrawAabb = !mDrawAabb;
+                if (mTraceUI) std::cout << "Draw AABB is " << (mDrawAabb ? "on" : "off") << std::endl;
+                break;
+            case VSCOgreKeyboardAction::ToggleFeaturesText:
+                mDrawFeaturesText = !mDrawFeaturesText;
+                if (mTraceUI) std::cout << "Draw Features Text is " << (mDrawFeaturesText ? "on" : "off") << std::endl;
+                break;
+            case VSCOgreKeyboardAction::ToggleDisplayContactPoints:
+                mDrawContactPoints = !mDrawContactPoints;
+                if (mTraceUI) std::cout << "Draw contact points is " << (mDrawContactPoints ? "on" : "off") << std::endl;
+                break;
+            case VSCOgreKeyboardAction::ToggleDeactivation:
+                mNoDeactivation = !mNoDeactivation;
+                if (mTraceUI) std::cout << "No deactivation is " << (mNoDeactivation ? "on" : "off") << std::endl;
+                break;
+            case VSCOgreKeyboardAction::ToggleHelpText:
+                mNoHelpText = !mNoHelpText;
+                if (mTraceUI) std::cout << "No help text is " << (mNoHelpText ? "on" : "off") << std::endl;
+                break;
+            case VSCOgreKeyboardAction::ToggleDrawText:
+                mDrawText = !mDrawText;
+                if (mTraceUI) std::cout << "Draw text is " << (mDrawText ? "on" : "off") << std::endl;
+                break;
+            case VSCOgreKeyboardAction::ToggleProfileTimings:
+                mProfileTimings = !mProfileTimings;
+                if (mTraceUI) std::cout << "Profile timings is " << (mProfileTimings ? "on" : "off") << std::endl;
+                break;
+            case VSCOgreKeyboardAction::ToggleSatComparison:
+                mEnableSatComparison = !mEnableSatComparison;
+                if (mTraceUI) std::cout << "Enable sat comparison is " << (mEnableSatComparison ? "on" : "off") << std::endl;
+                break;
+            case VSCOgreKeyboardAction::ToggleBulletLCP:
+                mDisableBulletLCP = !mDisableBulletLCP;
+                if (mTraceUI) std::cout << "Disable bullet LCP is " << (mDisableBulletLCP ? "on" : "off") << std::endl;
+                break;
+            case VSCOgreKeyboardAction::ToggleCCD:
+                mEnableCCD = !mEnableCCD;
+                if (mTraceUI) std::cout << "Enable CCD is " << (mEnableCCD ? "on" : "off") << std::endl;
+                break;
+                
+                // pause
+            case VSCOgreKeyboardAction::ToggleSimulationPause:
+                mPaused = !mPaused;
+                if (mTraceUI) std::cout << "Paused is " << (mPaused ? "on" : "off") << std::endl;
+                break;
+                // single step
+            case VSCOgreKeyboardAction::SimulationStep:
+                mDoOnestep = !mDoOnestep;
+                if (mTraceUI) std::cout << "Do one step is " << (mDoOnestep ? "on" : "off") << std::endl;
+                break;
+                // faster Shoots
+            case VSCOgreKeyboardAction::IncrementShootSpeed:
+                mShootSpeed += 5.0f;
+                if (mTraceUI) std::cout << "Shoot speed is " << mShootSpeed << std::endl;
+                break;
+                // Slower Shoots
+            case VSCOgreKeyboardAction::DecrementShootSpeed:
+                mShootSpeed -= 5.0f;
+                if (mTraceUI) std::cout << "Shoot speed is " << mShootSpeed << std::endl;
+                break;
+                
+            default:
+                handled = false;
+                break;
+        }
     }
     
-    if (handled) 
-    {
-        return true;
-    }
+    if (handled) return true;
     
     return VSCOgreInputListener::keyPressed(key);
 }
@@ -802,12 +802,6 @@ bool VSCOgreBulletScene::keyPressed(OIS::KeyCode key)
 // -------------------------------------------------------------------------
 bool VSCOgreBulletScene::keyReleased(OIS::KeyCode key)
 {
-    switch(key)
-    {
-        default:
-            break;
-    }
-    
     return VSCOgreInputListener::keyReleased(key);
 }
 

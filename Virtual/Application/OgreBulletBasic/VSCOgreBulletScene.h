@@ -6,6 +6,7 @@
 #include "VSCOgreInputListener.h"
 #include "VSCOgreBetaGUIListener.h"
 #include "VSCOgreKeyboardAction.h"
+#include "VSCOgreKeyBindings.h"
 #include "OIS.h"
 
 #include <boost/shared_ptr.hpp>
@@ -38,7 +39,7 @@ class VSCOgreBulletApplication;
 /*
 The base Test class, is also able to listen for collisions and thus change the contact properties
 */
-class VSCOgreBulletScene : public VSCOgreInputListener
+class VSCOgreBulletScene : public VSCOgreInputListener, public VSCOgreKeyBound
 {
 public:
 

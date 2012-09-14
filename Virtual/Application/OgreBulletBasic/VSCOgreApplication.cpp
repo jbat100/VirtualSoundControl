@@ -54,11 +54,11 @@ mWindow(0)
     std::cout << "Resource path is : " << mResourcePath << std::endl;
     
     /*
-     *  Create a default keyboard manager
+     *  Create a default keyboard manager and set bindings to default
      */
     
-    mKeyboardManager = VSCOgreKeyboardManagerPtr(new VSCOgreKeyboardManager());
-    mKeyboardManager->loadDefaultBindings();
+    mKeyboardManager = VSCOgreKeyboardManager::Ptr(new VSCOgreKeyboardManager());
+    this->setBindings(mKeyboardManager->generateDefaultBindings());
     
 }
 

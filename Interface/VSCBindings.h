@@ -21,17 +21,20 @@ class VSCBindings
     
 public:
     
-    typedef boost::shared_ptr< VSCBindings<Action,Input> > Ptr;
+    typedef boost::shared_ptr< VSCBindings<Action,Input> > SPtr;
     
     typedef std::set<Input>                     InputSet;
     typedef std::set<Action>                    ActionSet;
+    
+    VSCBindings() {}
+    virtual ~VSCBindings() {}
     
     /*
      *  Get the Action/Combination associated with a Combination/Action. Returns NullAction/NullCombination
      *  if none was found.
      */
     
-    const ActionSet& getActionsForCombination(const Input& input);
+    const ActionSet& getActionsForInput(const Input& input);
     const InputSet& getInputsForAction(const Action& action);
     
     /*

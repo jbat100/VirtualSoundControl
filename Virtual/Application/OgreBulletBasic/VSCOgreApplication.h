@@ -25,6 +25,7 @@ Description: Base class for all the OGRE examples
 #include <Ogre/OgreConfigFile.h>
 #include "VSCOgreInputListener.h"
 #include "VSCOgreKeyboardManager.h"
+#include "VSCOgreKeyBindings.h"
 
 class VSCOgreInputAdapter;
 class VSCOgreApplicationCocoaSetup;
@@ -33,7 +34,7 @@ class VSCOgreApplicationCocoaSetup;
  *  Base class which manages the standard startup of an Ogre application.
  *  Designed to be subclassed for specific examples if required.
  */
-class VSCOgreApplication : public VSCOgreInputListener
+class VSCOgreApplication : public VSCOgreInputListener, public VSCOgreKeyBound
 {
     
 public:

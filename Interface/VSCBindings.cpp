@@ -4,7 +4,7 @@
 #include <boost/foreach.hpp>
 
 template<typename Action, typename Input>
-const VSCBindings::ActionSet& VSCBindings::getActionsForCombination(const Input& input)
+const VSCBindings::ActionSet& VSCBindings::getActionsForInput(const Input& input)
 {
     InputActionsMap::iterator it = mInputActionsMap.find(input);
     
