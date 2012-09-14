@@ -5,7 +5,6 @@
 #include "OgreBulletDynamics.h"
 #include "VSCOgreInputListener.h"
 #include "VSCOgreBetaGUIListener.h"
-#include "VSCOgreKeyboardManager.h"
 #include "VSCOgreKeyboardAction.h"
 #include "OIS.h"
 
@@ -96,15 +95,6 @@ public:
     Ogre::Root* getRoot(void) {return mRoot;}
     Ogre::SceneManager* getSceneManager(void) {return mSceneMgr;}
     Ogre::Camera* getCamera(void) {return mCamera;}
-
-    /**--------------------------------------------------------------
-     *  Other Setters/Getters, make virtual to allow subclasses 
-     *  to update the keyboard manager for their components
-     */
-    
-    VSCOgreKeyboardManagerPtr getKeyboardManager(void) const;
-    void setKeyboardManager(VSCOgreKeyboardManagerPtr manager) {mKeyboardManager = manager};
-    
     
 protected:
 
@@ -233,7 +223,6 @@ private:
     void                        setCameraController(VSCOgreCameraControllerPtr controller);
     
     VSCOgreCameraControllerPtr  mCameraController;
-    VSCOgreKeyboardManagerPtr   mKeyboardManager;
     static const bool           mTraceFrame = false;
     
 };

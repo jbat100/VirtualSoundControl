@@ -65,13 +65,6 @@ using namespace OIS;
 	ogreBulletScenes.push_back(new VSCOgreBulletTerrainDemo());
 	ogreBulletScenes.push_back(new VSCOgreBulletRagdollDemo());
     
-    ogreBulletScenes[0]->setNextKey(KC_F1);
-    ogreBulletScenes[1]->setNextKey(KC_F2);
-	ogreBulletScenes[2]->setNextKey(KC_F3);
-	ogreBulletScenes[3]->setNextKey(KC_F4);
-	ogreBulletScenes[4]->setNextKey(KC_F5);
-	ogreBulletScenes[5]->setNextKey(KC_F6);
-    
     // Create the application and try to run it
     ogreBulletApplication = new VSCOgreBulletApplication(ogreBulletScenes);
     

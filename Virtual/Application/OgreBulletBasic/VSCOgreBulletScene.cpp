@@ -14,7 +14,6 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "VSCOgreBetaGUIListener.h"
 #include "VSCOgreCameraController.h"
 #include "VSCOgreInputAdapter.h"
-#include "VSCOgreKeyboardManager.h";
 #include "VSCOgreKeyboardAction.h";
 
 /*
@@ -258,18 +257,6 @@ void VSCOgreBulletScene::setCameraController(VSCOgreCameraControllerPtr controll
     this->setNextInputListener(mCameraController);
     
 }
-
-VSCOgreKeyboardManagerPtr VSCOgreBulletScene::getKeyboardManager(void) const
-{
-    if (mKeyboardManager) return mKeyboardManager;
-    
-    /*
-     *  If we don't have a keyboard manager then return the application's keyboard manager
-     */
-    
-    return mApplication->getKeyboardManager();
-}
-
 
 // -------------------------------------------------------------------------
 void VSCOgreBulletScene::setBasicLight()
@@ -715,7 +702,7 @@ bool VSCOgreBulletScene::keyPressed(OIS::KeyCode key)
     OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
     VSCKeyboard::Combination comb(key, modifier);
     
-    VSCOgreKeyboardAction::Key actionKey = this->getKeyboardManager()->getActionKeyForCombination(comb);
+    VSCOgreKeyboardAction::Key actionKey = 
     
     bool handled = true;
     

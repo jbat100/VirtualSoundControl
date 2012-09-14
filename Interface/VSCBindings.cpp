@@ -1,13 +1,12 @@
 
-#include "VSCBindings.h"
-#include "VSCException.h"
 
+#include "VSCException.h"
 #include <boost/foreach.hpp>
 
 template<typename Action, typename Input>
-const std::set<Action>& VSCBindings::getActionsForCombination(const Input& input)
+const VSCBindings::ActionSet& VSCBindings::getActionsForCombination(const Input& input)
 {
-    ActionInputsMap::iterator it = mInputActionsMap.find(input);
+    InputActionsMap::iterator it = mInputActionsMap.find(input);
     
     if (it == mInputActionsMap.end())
     {
@@ -17,7 +16,7 @@ const std::set<Action>& VSCBindings::getActionsForCombination(const Input& input
          *  scope and be destroyed (potentially) as soon as the function returns.
          */
         
-        std::set<Action> actionSet;
+        ActionSet actionSet;
         mInputActionsMap[input] = actionSet;
         
         it = mInputActionsMap.find(input);
@@ -27,9 +26,9 @@ const std::set<Action>& VSCBindings::getActionsForCombination(const Input& input
 }
 
 template<typename Action, typename Input>
-const std::set<Input>& VSCBindings::getInputsForAction(const Action& action)
+const VSCBindings::InputSet& VSCBindings::getInputsForAction(const Action& action)
 {
-    InputActionsMap::iterator it = mActionInputsMap.find(action);
+    ActionInputsMap::iterator it = mActionInputsMap.find(action);
     
     if (it == mInputActionsMap.end())
     {
@@ -39,7 +38,7 @@ const std::set<Input>& VSCBindings::getInputsForAction(const Action& action)
          *  scope and be destroyed (potentially) as soon as the function returns.
          */
         
-        std::set<Input> inputSet;
+        InputSet inputSet;
         mActionInputsMap[action] = inputSet;
         
         it = mActionInputsMap.find(action);
@@ -51,14 +50,14 @@ const std::set<Input>& VSCBindings::getInputsForAction(const Action& action)
 template<typename Action, typename Input>
 void VSCBindings::eraseBinding(const Action& action, const Input& input)
 {
-    InputActionsMap::iterator it = mActionInputsMap.find(action);
+    ActionInputsMap::iterator it = mActionInputsMap.find(action);
     
     if (it != mActionInputsMap.end())
     {
         it->second.erase(input);
     }
     
-    ActionInputsMap::iterator it = mInputActionsMap.find(input);
+    InputActionsMap::iterator it = mInputActionsMap.find(input);
     
     if (it != mInputActionsMap.end())
     {
@@ -69,27 +68,62 @@ void VSCBindings::eraseBinding(const Action& action, const Input& input)
 template<typename Action, typename Input>
 void VSCBindings::eraseInputBindings(const Input& input)
 {
+    /*
+     *  Have to cycle through all the input sets to remove the input. A bit expensive but
+     *  not a time critical operation...    
+     */
+    
     mInputActionsMap.erase(input);
     
-    BOOST_FOREACH (std::set<Action> inputListener, this->getInputListeners()) 
+    BOOST_FOREACH (ActionInputsMap::value_type& pair, mActionInputsMap) 
     {
-        inputListener->mouseMoved(position, movement);
+        pair->second.erase(input);
     }
 }
 
 template<typename Action, typename Input>
 void VSCBindings::eraseActionBindings(const Action& action)
 {
-    BOOST_FOREACH (VSCOgreInputListener* inputListener, this->getInputListeners()) 
+    mActionInputsMap.erase(action);
+    
+    BOOST_FOREACH (InputActionsMap::value_type& pair, mInputActionsMap) 
     {
-        inputListener->mouseMoved(position, movement);
+        pair->second.erase(action);
     }
 }
 
 template<typename Action, typename Input>
 void VSCBindings::setBinding(const Action& action, const Input& input) 
 {
+    /*
+     *  Update input set for action
+     */
     
+    {
+        ActionInputsMap::iterator it = mActionInputsMap.find(action);
+        if (it == mActionInputsMap.end()) 
+        {
+            InputSet inputSet;
+            mActionInputsMap[action] = inputSet;
+            it = mActionInputsMap.find(action);
+        }
+        it->second.insert(input);
+    }
+    
+    /*
+     *  Update action set for input
+     */
+    
+    {
+        InputActionsMap::iterator it = mInputActionsMap.find(input);
+        if (it == mInputActionsMap.end()) 
+        {
+            ActionSet actionSet;
+            mInputActionsMap[input] = actionSet;
+            it = mInputActionsMap.find(input);
+        }
+        it->second.insert(action);
+    }
 }
 
 

@@ -4,6 +4,8 @@
 
 #include <string>
 
+#warning "_VSC_OGRE_KEYBOARD_ACTION_H_"
+
 class VSCOgreKeyboardAction
 {
     
@@ -65,7 +67,7 @@ public:
         DropCube,
         DropSphere,
         DropCylinder,
-        DropCone
+        DropCone,
         
         /*
          *  Vehicle

@@ -23,13 +23,16 @@ public:
     
     typedef boost::shared_ptr< VSCBindings<Action,Input> > Ptr;
     
+    typedef std::set<Input>                     InputSet;
+    typedef std::set<Action>                    ActionSet;
+    
     /*
      *  Get the Action/Combination associated with a Combination/Action. Returns NullAction/NullCombination
      *  if none was found.
      */
     
-    const std::set<Action>& getActionsForCombination(const Input& input);
-    const std::set<Input>& getInputsForAction(const Action& action);
+    const ActionSet& getActionsForCombination(const Input& input);
+    const InputSet& getInputsForAction(const Action& action);
     
     /*
      *  Erase the binding for a given Action or Combination. 
@@ -47,15 +50,15 @@ public:
     
 private:
     
-    typedef std::map<Action, std::set<Input> > ActionInputsMap;
-    typedef std::map<Input, std::set<Action> > InputActionsMap
+    typedef std::map<Action, InputSet>          ActionInputsMap;
+    typedef std::map<Input, ActionSet>          InputActionsMap;
     
     ActionInputsMap   mActionInputsMap;
     InputActionsMap   mInputActionsMap;
     
 };
 
-#include "VSCBindings.cpp"
+//#include "VSCBindings.cpp"
 
 
 #endif//_VSC_BINDINGS_H_

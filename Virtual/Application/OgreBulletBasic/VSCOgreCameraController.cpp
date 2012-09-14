@@ -1,7 +1,6 @@
 
 #include "VSCOgreCameraController.h"
 #include "VSCOgreInputAdapter.h"
-#include "VSCOgreKeyboardManager.h"
 #include "VSCOgreKeyboardAction.h"
 
 VSCOgreCameraController::VSCOgreCameraController() :    
@@ -46,13 +45,12 @@ bool VSCOgreCameraController::keyPressed(OIS::KeyCode key)
     bool handled = true;
     
     BOOST_ASSERT_MSG(this->getInputAdapter() != 0, "Expected adapter");
-    BOOST_ASSERT_MSG(this->getKeyboardManager() != 0, "Expected keyboard manager");
     
-    if (this->getInputAdapter() != 0 && this->getKeyboardManager() != 0) 
+    if (this->getInputAdapter() != 0) 
     {
         OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
         VSCKeyboard::Combination comb(key, modifier);
-        VSCOgreKeyboardAction::Key actionKey = this->getKeyboardManager()->getActionKeyForCombination(comb);
+        VSCOgreKeyboardAction::Key actionKey = 
         
         switch(actionKey)
         {
@@ -98,14 +96,13 @@ bool VSCOgreCameraController::keyReleased(OIS::KeyCode key)
     bool handled = true;
     
     BOOST_ASSERT_MSG(this->getInputAdapter() != 0, "Expected adapter");
-    BOOST_ASSERT_MSG(this->getKeyboardManager() != 0, "Expected keyboard manager");
     
-    if (this->getInputAdapter() != 0 && this->getKeyboardManager() != 0) 
+    if (this->getInputAdapter() != 0) 
     {
         
         OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
         VSCKeyboard::Combination comb(key, modifier);
-        VSCOgreKeyboardAction::Key actionKey = this->getKeyboardManager()->getActionKeyForCombination(comb);
+        VSCOgreKeyboardAction::Key actionKey = 
         
         switch(actionKey)
         {
