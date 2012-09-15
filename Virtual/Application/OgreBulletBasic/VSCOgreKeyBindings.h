@@ -4,24 +4,45 @@
 
 #include "VSCUI.h"  
 #include "VSCBindings.h"
+#include "VSCBound.h"
 #include "VSCOgreKeyboardAction.h"
+
+#include <boost/shared_ptr.hpp>
+
 #include <set>
 
-class VSCOgreKeyBindings : private VSCBindings<VSCOgreKeyboardAction::Key, VSCKeyboard::Combination> 
+
+class VSCOgreKeyBindings : public VSCBindings<VSCOgreKeyboardAction::Key, VSCKeyboard::Combination>
 {
+    
+public:
+    
+    typedef boost::shared_ptr<VSCOgreKeyBindings> SPtr;
+    
     VSCOgreKeyBindings() {}
     virtual ~VSCOgreKeyBindings() {}
     
-    std::set<VSCOgreKeyboardAction::Key>    getActionKeysForCombination(void);
-    std::set<VSCKeyboard::Combination>      getCombinationForActionKeys(void);
+private:
     
-};
+    typedef VSCBindings<VSCOgreKeyboardAction::Key, VSCKeyboard::Combination> BaseBindings;
+    
+}
+
 
 class VSCOgreKeyBound : private VSCBound<VSCOgreKeyboardAction::Key, VSCKeyboard::Combination> 
 {
+    
+public:
+    
     VSCOgreKeyBound() {}
     virtual ~VSCOgreKeyBound() {}
-}
+    
+    void                        setOgreKeyBindings(VSCOgreKeyBindings::SPtr keyBindings);
+    VSCOgreKeyBindings::SPtr    getOgreKeyBindings(void);
+    
+};
+ 
+ 
 
 #endif//_VSC_OGRE_KEY_BINDINGS_H_
 

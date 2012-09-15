@@ -58,7 +58,7 @@ mWindow(0)
      */
     
     mKeyboardManager = VSCOgreKeyboardManager::Ptr(new VSCOgreKeyboardManager());
-    this->setBindings(mKeyboardManager->generateDefaultBindings());
+    VSCOgreKeyBound::setBindings(mKeyboardManager->generateDefaultBindings());
     
 }
 
