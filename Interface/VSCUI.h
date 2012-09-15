@@ -15,11 +15,6 @@ class VSCKeyboard
     
 public:
     
-    enum ActionDomain {
-        ActionDomainNone = 0,
-        ActionDomainOgre
-    };
-    
     struct Combination {
         OIS::Keyboard::Modifier modifier;
         OIS::KeyCode code;
@@ -28,21 +23,11 @@ public:
         bool operator<(const Combination& p) const;
         Combination(OIS::KeyCode c, OIS::Keyboard::Modifier m = (OIS::Keyboard::Modifier)0);
     };
-
-    struct Action {
-        ActionDomain domain;
-        int key;
-        bool operator!=(const Action& p) const;
-        bool operator==(const Action& p) const;
-        bool operator<(const Action& p) const;
-        Action(int k, ActionDomain d = (ActionDomain)0);
-    };
     
     static std::string stringForKeyCode(const OIS::KeyCode& code);
     static std::string stringForModifier(const OIS::Keyboard::Modifier& modifier);
     static std::string stringForCombination(const Combination& comb);
 
-    static const Action       NullAction;
     static const Combination  NullCombination;
     
 };

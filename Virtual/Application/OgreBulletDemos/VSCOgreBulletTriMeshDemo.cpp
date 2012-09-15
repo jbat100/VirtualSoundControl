@@ -15,10 +15,9 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "OgreBulletDynamicsRigidBody.h"
 #include "Debug/OgreBulletCollisionsDebugDrawer.h"
 
-#if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
-using namespace OIS;
-#endif 
+#include "VSCOgreInputAdapter.h"
 
+using namespace OIS;
 using namespace Ogre;
 using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
@@ -102,9 +101,21 @@ void VSCOgreBulletTriMeshDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
 // -------------------------------------------------------------------------
 bool VSCOgreBulletTriMeshDemo::keyPressed(OIS::KeyCode key)
 {
-    VSCOgreBulletScene::throwDynamicObject(key);
-    VSCOgreBulletScene::dropDynamicObject(key);
+    OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
+    VSCKeyboard::Combination comb(key, modifier);
+    
+    const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
+    
+    BOOST_FOREACH (VSCOgreKeyboardAction::Key actionKey, actionKeySet)
+    {
+        
+        VSCOgreBulletScene::throwDynamicObject(actionKey);
+        VSCOgreBulletScene::dropDynamicObject(actionKey);
 
-    return VSCOgreBulletScene::keyPressed(key);
+        return VSCOgreBulletScene::keyPressed(key);
+        
+    }
+    
+    return false;
 }
 

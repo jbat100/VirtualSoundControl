@@ -16,6 +16,7 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "Debug/OgreBulletCollisionsDebugDrawer.h"
 #include "Constraints/OgreBulletDynamicsRaycastVehicle.h"
 
+#include "VSCOgreInputAdapter.h"
 
 using namespace OIS;
 using namespace Ogre;
@@ -308,149 +309,173 @@ void VSCOgreBulletVehiclesDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, 
 // -------------------------------------------------------------------------
 bool VSCOgreBulletVehiclesDemo::keyPressed(OIS::KeyCode key)
 {
-
-
-    bool wheel_engine_style_change = false;
-    bool wheel_steering_style_change = false;
-
-    bool handled = true;
+    OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
+    VSCKeyboard::Combination comb(key, modifier);
     
-    switch(key)
-    {
-            
-        case KC_PGUP: 
-            wheel_engine_style_change = true;
-            mWheelEngineStyle = (mWheelEngineStyle + 1) % 3;
-            break;
-        case KC_PGDOWN: 
-            wheel_engine_style_change = true;
-            mWheelEngineStyle = (mWheelEngineStyle - 1) % 3;
-            break;
-        case KC_HOME: 
-            wheel_steering_style_change = true;
-            mWheelSteeringStyle = (mWheelSteeringStyle + 1) % 3;
-            break;
-        case KC_END: 
-            wheel_steering_style_change = true;
-            mWheelSteeringStyle = (mWheelSteeringStyle - 1) % 3;;
-            break;
-            
-        case KC_LEFT: 
-            mSteeringLeft = true;
-            break;
-        case KC_RIGHT: 
-            mSteeringRight = true;
-            break;
-        case KC_DOWN: 
-            mEngineForce = -gMaxEngineForce;
-            break;
-        case KC_UP: 
-            mEngineForce = gMaxEngineForce;
-            break;
-        default:
-            handled = false;
-            break;
-            
-    }
+    const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
     
-    if (wheel_engine_style_change)
+    BOOST_FOREACH (VSCOgreKeyboardAction::Key actionKey, actionKeySet)
     {
-        for (int i = 0; i < 4; i++)
-            mWheelsEngine[i] = 0;
+    
+        bool wheel_engine_style_change = false;
+        bool wheel_steering_style_change = false;
         
-        if (mWheelEngineStyle < 0)
-            mWheelEngineStyle = 2;
+        bool handled = true;
         
-        switch (mWheelEngineStyle)
+        switch(actionKey)
         {
-            case 0://front
-                mWheelsSteerableCount = 2;
-                mWheelsSteerable[0] = 0;
-                mWheelsSteerable[1] = 1;  
+            case VSCOgreKeyboardAction::VehicleIncrementEngineStyle: 
+                wheel_engine_style_change = true;
+                mWheelEngineStyle = (mWheelEngineStyle + 1) % 3;
                 break;
-            case 1://back
-                mWheelsSteerableCount = 2;
-                mWheelsSteerable[0] = 2;
-                mWheelsSteerable[1] = 3;  
+            case VSCOgreKeyboardAction::VehicleDecrementEngineStyle: 
+                wheel_engine_style_change = true;
+                mWheelEngineStyle = (mWheelEngineStyle - 1) % 3;
                 break;
-            case 2://4x4
-                mWheelsSteerableCount = 4;
-                mWheelsSteerable[0] = 0;
-                mWheelsSteerable[1] = 1;  
-                mWheelsSteerable[2] = 2;
-                mWheelsSteerable[3] = 3; 
+            case VSCOgreKeyboardAction::VehicleIncrementSteeringStyle: 
+                wheel_steering_style_change = true;
+                mWheelSteeringStyle = (mWheelSteeringStyle + 1) % 3;
+                break;
+            case VSCOgreKeyboardAction::VehicleDecrementSteeringStyle: 
+                wheel_steering_style_change = true;
+                mWheelSteeringStyle = (mWheelSteeringStyle - 1) % 3;;
+                break;
+                
+            case VSCOgreKeyboardAction::VehicleSteerLeft: 
+                mSteeringLeft = true;
+                break;
+            case VSCOgreKeyboardAction::VehicleSteerRight: 
+                mSteeringRight = true;
+                break;
+            case VSCOgreKeyboardAction::VehicleMoveBackward: 
+                mEngineForce = -gMaxEngineForce;
+                break;
+            case VSCOgreKeyboardAction::VehicleMoveForward:
+                mEngineForce = gMaxEngineForce;
                 break;
             default:
-                assert(0);
+                handled = false;
                 break;
         }
-    }
-    
-    if (wheel_steering_style_change)
-    {
-        for (int i = 0; i < 4; i++)
-            mWheelsSteerable[i] = 0;
         
-        if (mWheelSteeringStyle < 0)
-            mWheelSteeringStyle = 2;
-        
-        switch (mWheelSteeringStyle)
+        if (wheel_engine_style_change)
         {
-            case 0://front
-                mWheelsEngineCount = 2;
-                mWheelsEngine[0] = 0;
-                mWheelsEngine[1] = 1;  
-                break;
-            case 1://back
-                mWheelsEngineCount = 2;
-                mWheelsEngine[0] = 2;
-                mWheelsEngine[1] = 3;  
-                break;
-            case 2://4x4
-                mWheelsEngineCount = 4;
-                mWheelsEngine[0] = 0;
-                mWheelsEngine[1] = 1;  
-                mWheelsEngine[2] = 2;
-                mWheelsEngine[3] = 3; 
-                break;
-            default:
-                assert(0);
-                break;
+            for (int i = 0; i < 4; i++)
+                mWheelsEngine[i] = 0;
+            
+            if (mWheelEngineStyle < 0)
+                mWheelEngineStyle = 2;
+            
+            switch (mWheelEngineStyle)
+            {
+                case 0://front
+                    mWheelsSteerableCount = 2;
+                    mWheelsSteerable[0] = 0;
+                    mWheelsSteerable[1] = 1;  
+                    break;
+                case 1://back
+                    mWheelsSteerableCount = 2;
+                    mWheelsSteerable[0] = 2;
+                    mWheelsSteerable[1] = 3;  
+                    break;
+                case 2://4x4
+                    mWheelsSteerableCount = 4;
+                    mWheelsSteerable[0] = 0;
+                    mWheelsSteerable[1] = 1;  
+                    mWheelsSteerable[2] = 2;
+                    mWheelsSteerable[3] = 3; 
+                    break;
+                default:
+                    assert(0);
+                    break;
+            }
         }
+        
+        if (wheel_steering_style_change)
+        {
+            for (int i = 0; i < 4; i++)
+                mWheelsSteerable[i] = 0;
+            
+            if (mWheelSteeringStyle < 0)
+                mWheelSteeringStyle = 2;
+            
+            switch (mWheelSteeringStyle)
+            {
+                case 0://front
+                    mWheelsEngineCount = 2;
+                    mWheelsEngine[0] = 0;
+                    mWheelsEngine[1] = 1;  
+                    break;
+                case 1://back
+                    mWheelsEngineCount = 2;
+                    mWheelsEngine[0] = 2;
+                    mWheelsEngine[1] = 3;  
+                    break;
+                case 2://4x4
+                    mWheelsEngineCount = 4;
+                    mWheelsEngine[0] = 0;
+                    mWheelsEngine[1] = 1;  
+                    mWheelsEngine[2] = 2;
+                    mWheelsEngine[3] = 3; 
+                    break;
+                default:
+                    assert(0);
+                    break;
+            }
+        }
+    
+        if (!handled) handled = VSCOgreBulletScene::throwDynamicObject(actionKey);
+        if (!handled) handled = VSCOgreBulletScene::dropDynamicObject(actionKey);
+        
+        if (handled) return true;
+        
+        return VSCOgreBulletScene::keyPressed(key);
+        
     }
     
-    if (!handled) handled = VSCOgreBulletScene::throwDynamicObject(key) || VSCOgreBulletScene::dropDynamicObject(key);
-    if (handled) return true;
-
-    return VSCOgreBulletScene::keyPressed(key);
+    return false; // should never reach here
+    
 }
 // -------------------------------------------------------------------------
 bool VSCOgreBulletVehiclesDemo::keyReleased(OIS::KeyCode key)
 {
-    bool handled = true;
     
-    switch(key)
+    OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
+    VSCKeyboard::Combination comb(key, modifier);
+    
+    const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
+    
+    BOOST_FOREACH (VSCOgreKeyboardAction::Key actionKey, actionKeySet)
     {
-        case KC_LEFT: 
-            mSteeringLeft = false;
-            break;
-        case KC_RIGHT: 
-            mSteeringRight = false;
-            break;
-        case KC_DOWN: 
-            mEngineForce = 0;
-            break;
-        case KC_UP: 
-            mEngineForce = 0;
-            break;
-        default:
-            handled = false;
-            break;
+        
+        bool handled = true;
+        
+        switch(actionKey)
+        {
+            case VSCOgreKeyboardAction::VehicleSteerLeft: 
+                mSteeringLeft = false;
+                break;
+            case VSCOgreKeyboardAction::VehicleSteerRight:
+                mSteeringRight = false;
+                break;
+            case VSCOgreKeyboardAction::VehicleMoveBackward:
+                mEngineForce = 0;
+                break;
+            case VSCOgreKeyboardAction::VehicleMoveForward:
+                mEngineForce = 0;
+                break;
+            default:
+                handled = false;
+                break;
+        }
+        
+        if (handled) return true; 
+        
+        return VSCOgreBulletScene::keyReleased(key);
+        
     }
     
-    if (handled) return true; 
-    
-    return VSCOgreBulletScene::keyReleased(key);
+    return false;
 }
 
 // -------------------------------------------------------------------------

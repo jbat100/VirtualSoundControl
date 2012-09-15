@@ -5,8 +5,9 @@
 #include "OgreBulletDynamics.h"
 #include "VSCOgreInputListener.h"
 #include "VSCOgreBetaGUIListener.h"
-#include "VSCOgreKeyboardManager.h"
 #include "VSCOgreKeyboardAction.h"
+#include "VSCOgreKeyBindings.h"
+#include "VSCOgreCameraController.h"
 #include "OIS.h"
 
 #include <boost/shared_ptr.hpp>
@@ -20,10 +21,6 @@
 #define BASIC_HELP_INFO5 "right to camera move"
 #define BASIC_HELP_INFO6 "middle for impulse"
 
-class VSCOgreCameraController;
-
-// typedef boost::shared_ptr<VSCOgreCameraController> VSCOgreCameraControllerPtr;
-typedef VSCOgreCameraController* VSCOgreCameraControllerPtr;
 
 enum QueryFlags
 {
@@ -39,7 +36,7 @@ class VSCOgreBulletApplication;
 /*
 The base Test class, is also able to listen for collisions and thus change the contact properties
 */
-class VSCOgreBulletScene : public VSCOgreInputListener
+class VSCOgreBulletScene : public VSCOgreInputListener, public VSCOgreKeyBound
 {
 public:
 
@@ -96,15 +93,6 @@ public:
     Ogre::Root* getRoot(void) {return mRoot;}
     Ogre::SceneManager* getSceneManager(void) {return mSceneMgr;}
     Ogre::Camera* getCamera(void) {return mCamera;}
-
-    /**--------------------------------------------------------------
-     *  Other Setters/Getters, make virtual to allow subclasses 
-     *  to update the keyboard manager for their components
-     */
-    
-    VSCOgreKeyboardManagerPtr getKeyboardManager(void) const;
-    void setKeyboardManager(VSCOgreKeyboardManagerPtr manager) {mKeyboardManager = manager};
-    
     
 protected:
 
@@ -223,18 +211,17 @@ protected:
     
    void updateStats();
     
-private:
-    
     /*
      *  Other Setters/Getters
      */
     
-    VSCOgreCameraControllerPtr  getCameraController(void) {return mCameraController;}
-    void                        setCameraController(VSCOgreCameraControllerPtr controller);
+    VSCOgreCameraController::SPtr   getCameraController(void) {return mCameraController;}
+    void                            setCameraController(VSCOgreCameraController::SPtr controller);
     
-    VSCOgreCameraControllerPtr  mCameraController;
-    VSCOgreKeyboardManagerPtr   mKeyboardManager;
-    static const bool           mTraceFrame = false;
+private:
+    
+    VSCOgreCameraController::SPtr   mCameraController;
+    static const bool               mTraceFrame = false;
     
 };
 

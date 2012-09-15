@@ -2,34 +2,27 @@
 #ifndef _VSC_OGRE_KEYBOARD_MANAGER_H_
 #define _VSC_OGRE_KEYBOARD_MANAGER_H_
 
-#include "VSCUserInput.h"
-#include "VSCKeyBindings.h"
+#include "VSCUI.h"
+#include "VSCBindings.hpp"
 #include "VSCOgreKeyboardAction.h"
+#include "VSCOgreKeyBindings.h"
 
 #include <boost/shared_ptr.hpp>
-
-class VSCOgreKeyboardManager;
-
-typedef boost::shared_ptr<VSCOgreKeyboardManager> VSCOgreKeyboardManagerPtr;
 
 class VSCOgreKeyboardManager
 {
     
 public:
     
+    typedef boost::shared_ptr<VSCOgreKeyboardManager> SPtr;
+    
     VSCOgreKeyboardManager();
     ~VSCOgreKeyboardManager();
     
-    VSCOgreKeyboardAction::Key  getActionKeyForCombination(const VSCKeyboard::Combination& comb) const;
-    VSCKeyboard::Combination    getCombinationForActionKey(const VSCOgreKeyboardAction::Key& key)  const;
-    
-    void setBinding(const VSCOgreKeyboardAction::Key& key, const VSCKeyboard::Combination& comb);
-    
-    void loadDefaultBindings(void);
+    VSCOgreKeyBindings::SPtr generateDefaultBindings(void);
     
 private:
     
-    VSCKeyBindings mKeyBindings;
     
 };
 

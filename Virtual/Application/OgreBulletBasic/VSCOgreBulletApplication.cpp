@@ -21,7 +21,8 @@ VSCOgreBulletApplication::VSCOgreBulletApplication(std::vector<VSCOgreBulletScen
     
     BOOST_FOREACH (VSCOgreBulletScene* scene, mBulletScenes) 
     {
-        scene->setKeyboardManager(this->getKeyboardManager);
+        // application bindings should be set in the base class constructor
+        scene->setOgreKeyBindings(this->getOgreKeyBindings());
     }
     
 }

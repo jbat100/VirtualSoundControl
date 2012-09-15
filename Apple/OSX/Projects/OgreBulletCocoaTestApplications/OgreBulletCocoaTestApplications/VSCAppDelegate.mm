@@ -6,9 +6,8 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCAppDelegate.h"
 
-#import "OgreOSXCocoaView.h"
+#import "VSCAppDelegate.h"
 
 #import <vector>
 
@@ -23,6 +22,7 @@
 #import "VSCOgreBulletConstraintsDemo.h"
 #import "VSCOgreBulletTerrainDemo.h"
 #import "VSCOgreBulletRagdollDemo.h"
+
 
 using namespace OIS;
 
@@ -64,13 +64,6 @@ using namespace OIS;
 	ogreBulletScenes.push_back(new VSCOgreBulletConstraintsDemo());
 	ogreBulletScenes.push_back(new VSCOgreBulletTerrainDemo());
 	ogreBulletScenes.push_back(new VSCOgreBulletRagdollDemo());
-    
-    ogreBulletScenes[0]->setNextKey(KC_F1);
-    ogreBulletScenes[1]->setNextKey(KC_F2);
-	ogreBulletScenes[2]->setNextKey(KC_F3);
-	ogreBulletScenes[3]->setNextKey(KC_F4);
-	ogreBulletScenes[4]->setNextKey(KC_F5);
-	ogreBulletScenes[5]->setNextKey(KC_F6);
     
     // Create the application and try to run it
     ogreBulletApplication = new VSCOgreBulletApplication(ogreBulletScenes);

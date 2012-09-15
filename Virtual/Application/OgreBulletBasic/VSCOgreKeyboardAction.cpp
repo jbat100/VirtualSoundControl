@@ -3,7 +3,7 @@
 
 std::string VSCOgreKeyboardAction::stringForKey(Key key)
 {
-    return "";
+    return "No key string yet, be patient...";
 }
 
 

@@ -3,6 +3,7 @@
 #define _VSC_OGRE_KEYBOARD_ACTION_H_
 
 #include <string>
+#include <set>
 
 class VSCOgreKeyboardAction
 {
@@ -65,7 +66,7 @@ public:
         DropCube,
         DropSphere,
         DropCylinder,
-        DropCone
+        DropCone,
         
         /*
          *  Vehicle
@@ -77,13 +78,17 @@ public:
         VehicleMoveBackward,
         VehicleIncrementEngineStyle,
         VehicleDecrementEngineStyle,
+        VehicleIncrementSteeringStyle,
+        VehicleDecrementSteeringStyle,
         
         
     };
+    
+    typedef std::set<Key>   KeySet;
     
     static std::string stringForKey(Key key);
     
 };
 
-#endif//_VSC_OGRE_KEYBOARD_H_
+#endif//_VSC_OGRE_KEYBOARD_ACTION_H_
 

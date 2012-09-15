@@ -1,8 +1,10 @@
 
 #include "VSCOgreCameraController.h"
 #include "VSCOgreInputAdapter.h"
-#include "VSCOgreKeyboardManager.h"
 #include "VSCOgreKeyboardAction.h"
+
+#include <boost/assert.hpp>
+#include <boost/foreach.hpp>
 
 VSCOgreCameraController::VSCOgreCameraController() :    
 mCameraSpeed (0.1f),
@@ -46,40 +48,43 @@ bool VSCOgreCameraController::keyPressed(OIS::KeyCode key)
     bool handled = true;
     
     BOOST_ASSERT_MSG(this->getInputAdapter() != 0, "Expected adapter");
-    BOOST_ASSERT_MSG(this->getKeyboardManager() != 0, "Expected keyboard manager");
     
-    if (this->getInputAdapter() != 0 && this->getKeyboardManager() != 0) 
+    if (this->getInputAdapter() != 0) 
     {
         OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
         VSCKeyboard::Combination comb(key, modifier);
-        VSCOgreKeyboardAction::Key actionKey = this->getKeyboardManager()->getActionKeyForCombination(comb);
         
-        switch(actionKey)
+        const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
+        
+        BOOST_FOREACH (VSCOgreKeyboardAction::Key actionKey, actionKeySet) 
         {
-                
-            case VSCOgreKeyboardAction::MoveCameraForward:
-                mCameraTrans.z -= mCameraSpeed;
-                if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
-                break;
-                
-            case VSCOgreKeyboardAction::MoveCameraBackward:
-                mCameraTrans.z += mCameraSpeed;
-                if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
-                break;
-                
-            case VSCOgreKeyboardAction::MoveCameraLeft:
-                mCameraTrans.x -= mCameraSpeed;
-                if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
-                break;
-                
-            case VSCOgreKeyboardAction::MoveCameraRight:
-                mCameraTrans.x += mCameraSpeed;
-                if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
-                break;
-                
-            default:
-                handled =  false;
-                break;
+            switch(actionKey)
+            {
+                    
+                case VSCOgreKeyboardAction::MoveCameraForward:
+                    mCameraTrans.z -= mCameraSpeed;
+                    if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
+                    break;
+                    
+                case VSCOgreKeyboardAction::MoveCameraBackward:
+                    mCameraTrans.z += mCameraSpeed;
+                    if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
+                    break;
+                    
+                case VSCOgreKeyboardAction::MoveCameraLeft:
+                    mCameraTrans.x -= mCameraSpeed;
+                    if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
+                    break;
+                    
+                case VSCOgreKeyboardAction::MoveCameraRight:
+                    mCameraTrans.x += mCameraSpeed;
+                    if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
+                    break;
+                    
+                default:
+                    handled =  false;
+                    break;
+            }
         }
         
         if (handled) return true;
@@ -97,42 +102,46 @@ bool VSCOgreCameraController::keyReleased(OIS::KeyCode key)
     
     bool handled = true;
     
-    BOOST_ASSERT_MSG(this->getInputAdapter() != 0, "Expected adapter");
-    BOOST_ASSERT_MSG(this->getKeyboardManager() != 0, "Expected keyboard manager");
+    BOOST_ASSERT_MSG(this->getInputAdapter(), "Expected adapter");
+    BOOST_ASSERT_MSG(this->getOgreKeyBindings(), "Expected key bindings");
     
-    if (this->getInputAdapter() != 0 && this->getKeyboardManager() != 0) 
+    if (this->getInputAdapter() != 0) 
     {
         
         OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
         VSCKeyboard::Combination comb(key, modifier);
-        VSCOgreKeyboardAction::Key actionKey = this->getKeyboardManager()->getActionKeyForCombination(comb);
         
-        switch(actionKey)
+        const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
+        
+        BOOST_FOREACH (VSCOgreKeyboardAction::Key actionKey, actionKeySet) 
         {
-
-            case VSCOgreKeyboardAction::MoveCameraForward:
-                mCameraTrans.z += mCameraSpeed;
-                if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
-                break;
-                
-            case VSCOgreKeyboardAction::MoveCameraBackward:
-                mCameraTrans.z -= mCameraSpeed;
-                if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
-                break;
-
-            case VSCOgreKeyboardAction::MoveCameraLeft:
-                mCameraTrans.x += mCameraSpeed;
-                if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
-                break;
-                
-            case VSCOgreKeyboardAction::MoveCameraRight:
-                mCameraTrans.x -= mCameraSpeed;
-                if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
-                break;
-                
-            default:
-                handled = false;
-                break;
+            switch(actionKey)
+            {
+                    
+                case VSCOgreKeyboardAction::MoveCameraForward:
+                    mCameraTrans.z += mCameraSpeed;
+                    if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
+                    break;
+                    
+                case VSCOgreKeyboardAction::MoveCameraBackward:
+                    mCameraTrans.z -= mCameraSpeed;
+                    if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
+                    break;
+                    
+                case VSCOgreKeyboardAction::MoveCameraLeft:
+                    mCameraTrans.x += mCameraSpeed;
+                    if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
+                    break;
+                    
+                case VSCOgreKeyboardAction::MoveCameraRight:
+                    mCameraTrans.x -= mCameraSpeed;
+                    if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
+                    break;
+                    
+                default:
+                    handled = false;
+                    break;
+            }
         }
         
         if (handled) return true;

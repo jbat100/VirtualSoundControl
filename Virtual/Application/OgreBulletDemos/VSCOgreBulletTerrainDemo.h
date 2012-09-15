@@ -55,7 +55,6 @@ private:
     int mWheelEngineStyle;
     int mWheelSteeringStyle;
 
-
     bool mSteeringLeft;
     bool mSteeringRight;
 };

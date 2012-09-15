@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		100088991590B67E002F21B1 /* VSCOgreInputListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100088971590B67E002F21B1 /* VSCOgreInputListener.cpp */; };
-		100E30FC1600E5100074D2C6 /* VSCOgreKeyboardManaged.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100E30FA1600E50F0074D2C6 /* VSCOgreKeyboardManaged.cpp */; };
+		1012DE58160380BF00376716 /* VSCOgreKeyBindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1012DE56160380BF00376716 /* VSCOgreKeyBindings.cpp */; };
 		1033868C156E48AC00CEB288 /* Plugin_BSPSceneManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948C156E483000E70049 /* Plugin_BSPSceneManager.dylib */; };
 		1033868D156E48AC00CEB288 /* Plugin_CgProgramManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */; };
 		1033868E156E48AC00CEB288 /* Plugin_OctreeSceneManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */; };
@@ -74,10 +74,11 @@
 		10D5533A15FA409F002AED81 /* NSString+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10D5533915FA409F002AED81 /* NSString+VSCAdditions.mm */; };
 		10E1B289156D2A630013B9F7 /* RenderSystem_GL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */; };
 		10E1B28E156D3AFE0013B9F7 /* BetaGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E1B28C156D3AFE0013B9F7 /* BetaGUI.cpp */; };
-		10E8557415E65048008FF635 /* VSCUserInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E8557215E65048008FF635 /* VSCUserInput.cpp */; };
+		10E8557415E65048008FF635 /* VSCUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E8557215E65048008FF635 /* VSCUI.cpp */; };
 		10EB11FD15A5D8B500CA4D03 /* VSCOgreInputAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10EB11FB15A5D8B500CA4D03 /* VSCOgreInputAdapter.cpp */; };
+		10EB5A3B16050D7500F0939E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10EB5A3A16050D7500F0939E /* OpenGL.framework */; };
+		10ED088A1601CD8900053C07 /* VSCBound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10ED08881601CD8900053C07 /* VSCBound.cpp */; };
 		10EE86C915AED21900AD9CEB /* VSCOgreBulletWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10EE86C815AED21900AD9CEB /* VSCOgreBulletWindow.mm */; };
-		10F2F97815FF29CC003B2CDB /* VSCKeyBindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F2F97615FF29CC003B2CDB /* VSCKeyBindings.cpp */; };
 		10F2F98A15FF886F003B2CDB /* VSCOgreKeyboardAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F2F98615FF886F003B2CDB /* VSCOgreKeyboardAction.cpp */; };
 		10F2F98B15FF886F003B2CDB /* VSCOgreKeyboardManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F2F98815FF886F003B2CDB /* VSCOgreKeyboardManager.cpp */; };
 		10F4EE071557E752000E4591 /* VSCOgreApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EDFB1557E752000E4591 /* VSCOgreApplication.cpp */; };
@@ -135,8 +136,8 @@
 /* Begin PBXFileReference section */
 		100088971590B67E002F21B1 /* VSCOgreInputListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreInputListener.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreInputListener.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		100088981590B67E002F21B1 /* VSCOgreInputListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreInputListener.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreInputListener.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		100E30FA1600E50F0074D2C6 /* VSCOgreKeyboardManaged.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOgreKeyboardManaged.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreKeyboardManaged.cpp; sourceTree = "<group>"; };
-		100E30FB1600E50F0074D2C6 /* VSCOgreKeyboardManaged.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreKeyboardManaged.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreKeyboardManaged.h; sourceTree = "<group>"; };
+		1012DE56160380BF00376716 /* VSCOgreKeyBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOgreKeyBindings.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreKeyBindings.cpp; sourceTree = "<group>"; };
+		1012DE57160380BF00376716 /* VSCOgreKeyBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreKeyBindings.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreKeyBindings.h; sourceTree = "<group>"; };
 		10338694156E5BB100CEB288 /* OgreOSXCocoaContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaContext.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaContext.h; sourceTree = "<group>"; };
 		10338695156E5BB100CEB288 /* OgreOSXCocoaWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaWindow.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaWindow.h; sourceTree = "<group>"; };
 		10338696156E5BB100CEB288 /* OgreOSXCocoaWindowDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaWindowDelegate.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaWindowDelegate.h; sourceTree = "<group>"; };
@@ -287,14 +288,17 @@
 		10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = RenderSystem_GL.dylib; path = lib/RenderSystem_GL.dylib; sourceTree = OGRE_SDK; };
 		10E1B28C156D3AFE0013B9F7 /* BetaGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BetaGUI.cpp; path = ../../../../Virtual/Application/OgreBulletBasic/BetaGUI.cpp; sourceTree = "<group>"; };
 		10E1B28D156D3AFE0013B9F7 /* BetaGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BetaGUI.h; path = ../../../../Virtual/Application/OgreBulletBasic/BetaGUI.h; sourceTree = "<group>"; };
-		10E8557215E65048008FF635 /* VSCUserInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCUserInput.cpp; path = ../../../../Interface/VSCUserInput.cpp; sourceTree = "<group>"; };
-		10E8557315E65048008FF635 /* VSCUserInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCUserInput.h; path = ../../../../Interface/VSCUserInput.h; sourceTree = "<group>"; };
+		10E8557215E65048008FF635 /* VSCUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCUI.cpp; path = ../../../../Interface/VSCUI.cpp; sourceTree = "<group>"; };
+		10E8557315E65048008FF635 /* VSCUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCUI.h; path = ../../../../Interface/VSCUI.h; sourceTree = "<group>"; };
 		10EB11FB15A5D8B500CA4D03 /* VSCOgreInputAdapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOgreInputAdapter.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreInputAdapter.cpp; sourceTree = "<group>"; };
 		10EB11FC15A5D8B500CA4D03 /* VSCOgreInputAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreInputAdapter.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreInputAdapter.h; sourceTree = "<group>"; };
+		10EB5A3A16050D7500F0939E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		10ED08841601CC2700053C07 /* VSCBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCBindings.cpp; path = ../../../../Interface/VSCBindings.cpp; sourceTree = "<group>"; };
+		10ED08851601CC2700053C07 /* VSCBindings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = VSCBindings.hpp; path = ../../../../Interface/VSCBindings.hpp; sourceTree = "<group>"; };
+		10ED08881601CD8900053C07 /* VSCBound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCBound.cpp; path = ../../../../Interface/VSCBound.cpp; sourceTree = "<group>"; };
+		10ED08891601CD8900053C07 /* VSCBound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = VSCBound.hpp; path = ../../../../Interface/VSCBound.hpp; sourceTree = "<group>"; };
 		10EE86C715AED21900AD9CEB /* VSCOgreBulletWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreBulletWindow.h; path = ../../../../../Virtual/Application/APPLE/VSCOgreBulletWindow.h; sourceTree = "<group>"; };
 		10EE86C815AED21900AD9CEB /* VSCOgreBulletWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOgreBulletWindow.mm; path = ../../../../../Virtual/Application/APPLE/VSCOgreBulletWindow.mm; sourceTree = "<group>"; };
-		10F2F97615FF29CC003B2CDB /* VSCKeyBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCKeyBindings.cpp; path = ../../../../Interface/VSCKeyBindings.cpp; sourceTree = "<group>"; };
-		10F2F97715FF29CC003B2CDB /* VSCKeyBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCKeyBindings.h; path = ../../../../Interface/VSCKeyBindings.h; sourceTree = "<group>"; };
 		10F2F98615FF886F003B2CDB /* VSCOgreKeyboardAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOgreKeyboardAction.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreKeyboardAction.cpp; sourceTree = "<group>"; };
 		10F2F98715FF886F003B2CDB /* VSCOgreKeyboardAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreKeyboardAction.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreKeyboardAction.h; sourceTree = "<group>"; };
 		10F2F98815FF886F003B2CDB /* VSCOgreKeyboardManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOgreKeyboardManager.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreKeyboardManager.cpp; sourceTree = "<group>"; };
@@ -337,6 +341,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10EB5A3B16050D7500F0939E /* OpenGL.framework in Frameworks */,
 				1033869E156E77E100CEB288 /* Carbon.framework in Frameworks */,
 				10B60D2515505D6D006A6D6E /* Cocoa.framework in Frameworks */,
 				10B60EEF155080D9006A6D6E /* libOIS.a in Frameworks */,
@@ -379,8 +384,8 @@
 		1001CA7A1598561D002566F4 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				100E30FA1600E50F0074D2C6 /* VSCOgreKeyboardManaged.cpp */,
-				100E30FB1600E50F0074D2C6 /* VSCOgreKeyboardManaged.h */,
+				1012DE56160380BF00376716 /* VSCOgreKeyBindings.cpp */,
+				1012DE57160380BF00376716 /* VSCOgreKeyBindings.h */,
 				10F2F98615FF886F003B2CDB /* VSCOgreKeyboardAction.cpp */,
 				10F2F98715FF886F003B2CDB /* VSCOgreKeyboardAction.h */,
 				10F2F98815FF886F003B2CDB /* VSCOgreKeyboardManager.cpp */,
@@ -417,10 +422,12 @@
 			children = (
 				10D5533815FA409F002AED81 /* NSString+VSCAdditions.h */,
 				10D5533915FA409F002AED81 /* NSString+VSCAdditions.mm */,
-				10E8557215E65048008FF635 /* VSCUserInput.cpp */,
-				10E8557315E65048008FF635 /* VSCUserInput.h */,
-				10F2F97615FF29CC003B2CDB /* VSCKeyBindings.cpp */,
-				10F2F97715FF29CC003B2CDB /* VSCKeyBindings.h */,
+				10E8557215E65048008FF635 /* VSCUI.cpp */,
+				10E8557315E65048008FF635 /* VSCUI.h */,
+				10ED08881601CD8900053C07 /* VSCBound.cpp */,
+				10ED08891601CD8900053C07 /* VSCBound.hpp */,
+				10ED08841601CC2700053C07 /* VSCBindings.cpp */,
+				10ED08851601CC2700053C07 /* VSCBindings.hpp */,
 				109D51B3155998EE0030C161 /* VSCException.cpp */,
 				109D51B4155998EE0030C161 /* VSCException.h */,
 				1091F27C15B0645D00466854 /* VSCNSLog.h */,
@@ -433,7 +440,6 @@
 		10B60D1515505D6D006A6D6E = {
 			isa = PBXGroup;
 			children = (
-				1033869D156E77E100CEB288 /* Carbon.framework */,
 				10E1B28B156D3AEB0013B9F7 /* BetaGUI */,
 				10CFE6AC156CD5F700B24399 /* OgreBullet */,
 				109D51B2155998CA0030C161 /* VSC */,
@@ -473,6 +479,8 @@
 				10B60EEE155080D9006A6D6E /* Ogre.framework */,
 				10B60D2415505D6D006A6D6E /* Cocoa.framework */,
 				10F69482156E3D2700E70049 /* IOKit.framework */,
+				10EB5A3A16050D7500F0939E /* OpenGL.framework */,
+				1033869D156E77E100CEB288 /* Carbon.framework */,
 				10B60D2615505D6D006A6D6E /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -974,12 +982,12 @@
 				10EE86C915AED21900AD9CEB /* VSCOgreBulletWindow.mm in Sources */,
 				1091F28415B07C0D00466854 /* VSCLog.cpp in Sources */,
 				10FBA39F15B5756800D65959 /* VSCOgreCameraController.cpp in Sources */,
-				10E8557415E65048008FF635 /* VSCUserInput.cpp in Sources */,
+				10E8557415E65048008FF635 /* VSCUI.cpp in Sources */,
 				10D5533A15FA409F002AED81 /* NSString+VSCAdditions.mm in Sources */,
-				10F2F97815FF29CC003B2CDB /* VSCKeyBindings.cpp in Sources */,
 				10F2F98A15FF886F003B2CDB /* VSCOgreKeyboardAction.cpp in Sources */,
 				10F2F98B15FF886F003B2CDB /* VSCOgreKeyboardManager.cpp in Sources */,
-				100E30FC1600E5100074D2C6 /* VSCOgreKeyboardManaged.cpp in Sources */,
+				10ED088A1601CD8900053C07 /* VSCBound.cpp in Sources */,
+				1012DE58160380BF00376716 /* VSCOgreKeyBindings.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1039,8 +1047,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(OGRE_SDK)/include/OGRE",
 					"$(OGRE_SDK)/include/OGRE/RenderSystems/GL",
+					"$(OGRE_SDK)/include/OGRE",
 					"$(OGRE_SDK)/include/OGRE/RenderSystems",
 					"$(OGRE_SDK)/boost_1_46_1",
 					"$(BULLET_ROOT)/src",
@@ -1075,8 +1083,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(OGRE_SDK)/include/OGRE",
 					"$(OGRE_SDK)/include/OGRE/RenderSystems/GL",
+					"$(OGRE_SDK)/include/OGRE",
 					"$(OGRE_SDK)/include/OGRE/RenderSystems",
 					"$(OGRE_SDK)/boost_1_46_1",
 					"$(BULLET_ROOT)/src",

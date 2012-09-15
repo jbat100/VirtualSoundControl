@@ -3,15 +3,17 @@
 #define _VSC_OGRE_CAMERA_CONTROLLER_H_
 
 #include "VSCOgreInputListener.h"
-#include "VSCOgreKeyboardManager.h"
+#include "VSCOgreKeyBindings.h"
 #include <Ogre/Ogre.h>
 
-class VSCOgreBulletScene;
+#include <boost/shared_ptr.hpp>
 
-
-class VSCOgreCameraController : public VSCOgreInputListener
+class VSCOgreCameraController : public VSCOgreInputListener, public VSCOgreKeyBound
 {
+    
 public:
+    
+    typedef boost::shared_ptr<VSCOgreCameraController> SPtr;
 
 	/**
      *  Constructor/Destructor
@@ -50,13 +52,6 @@ public:
     float   getCameraSpeed(void) {return mCameraSpeed;}
     void    setCameraSpeed(float speed) {mCameraSpeed = speed;}
     
-    VSCOgreKeyboardManagerPtr   getKeyboardManager(void) {return mKeyboardManager;}
-    void                        setKeyboardManager(VSCOgreKeyboardManagerPtr manager) {mKeyboardManager = manager;}
-    
-    VSCOgreBulletScene*         getScene(void) const {return mScene;}
-    void                        setScene(VSCOgreBulletScene* scene) {}
-    
-    
 private:
 
     /** 
@@ -74,13 +69,9 @@ private:
     float                               mMouseSensitivity;
     float                               mCameraSpeed;
     
-    VSCOgreKeyboardManagerPtr           mKeyboardManager;
-    
     const static bool                   mTraceUI = false;
     const static bool                   mTraceFrame = false;
     
-    VSCOgreBulletScene*                 mScene;
-
 };
 
 #endif //_VSC_OGRE_CAMERA_CONTROLLER_H_

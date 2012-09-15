@@ -14,6 +14,8 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "OgreBulletDynamicsRigidBody.h"
 #include "Debug/OgreBulletCollisionsDebugDrawer.h"
 
+#include "VSCOgreInputAdapter.h"
+
 #if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
 using namespace OIS;
 #endif 
@@ -123,17 +125,28 @@ bool VSCOgreBulletRagdollDemo::keyPressed(OIS::KeyCode key)
 	const float trowDist = 2.0f;
     bool handled = true;
     
-	switch(key)
-	{
-        case KC_X:
-            shootToKill();
-            break;	
-        default:
-            handled = false;
-            break;
-	}
+    OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
+    VSCKeyboard::Combination comb(key, modifier);
     
-    if (!handled) handled = VSCOgreBulletScene::throwDynamicObject(key) || VSCOgreBulletScene::dropDynamicObject(key);
+    const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
+    
+    BOOST_FOREACH (VSCOgreKeyboardAction::Key actionKey, actionKeySet)
+    {
+    
+        switch(key)
+        {
+            case KC_X:
+                shootToKill();
+                break;	
+            default:
+                handled = false;
+                break;
+        }
+    
+        if (!handled) handled = VSCOgreBulletScene::throwDynamicObject(actionKey);
+        if (!handled) handled = VSCOgreBulletScene::dropDynamicObject(actionKey);
+    }
+    
     if (handled) return true;
 
     return VSCOgreBulletScene::keyPressed(key);

@@ -2,7 +2,7 @@
 #ifndef _VSC_KEY_BINDINGS_H_
 #define _VSC_KEY_BINDINGS_H_
 
-#include "VSCUserInput.h"
+#include "VSCUI.h"
 #include <boost/bimap.hpp>
 #include <string>
 #include <set>

@@ -27,7 +27,6 @@ Description: Base class for all the OGRE examples
 
 #include "VSCOgreApplicationCocoaSetup.h"
 #include "VSCOgreApplication.h"
-#include "VSCOgreFrameListener.h"
 #include "VSCOgreInputAdapter.h"
 
 using namespace Ogre;
@@ -38,6 +37,7 @@ mCamera(0),
 mSceneMgr(0),
 mWindow(0)
 {
+    
     /*
      *  Provide a cross platform solution for locating the configuration files
      *  On windows files are searched for in the current working directory, on OS X however
@@ -46,6 +46,7 @@ mWindow(0)
      *  Ultimately, this should probably be done through a public API by the master Application
      *  offering configurable resourced file paths.
      */
+    
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     mResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";
 #else
@@ -54,12 +55,11 @@ mWindow(0)
     std::cout << "Resource path is : " << mResourcePath << std::endl;
     
     /*
-     *  Create a default keyboard manager
+     *  Create a default keyboard manager and set bindings to default
      */
     
-    mKeyboardManager = VSCOgreKeyboardManagerPtr(new VSCOgreKeyboardManager());
-    
-    mKeyboardManager->loadDefaultBindings();
+    mKeyboardManager = VSCOgreKeyboardManager::SPtr(new VSCOgreKeyboardManager());
+    this->setOgreKeyBindings(mKeyboardManager->generateDefaultBindings());
     
 }
 

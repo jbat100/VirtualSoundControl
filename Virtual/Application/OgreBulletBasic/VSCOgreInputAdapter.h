@@ -2,7 +2,7 @@
 #ifndef _VSC_OGRE_BULLET_INPUT_ADAPTER_H_
 #define _VSC_OGRE_BULLET_INPUT_ADAPTER_H_
 
-#include "VSCUserInput.h"
+#include "VSCUI.h"
 #include "OIS.h"
 #include <set>
 #include <Ogre/Ogre.h>
@@ -39,7 +39,7 @@ public:
     
     const VSCKeyCodeSet&  getCurrentKeys() {return mCurrentKeys;} // currently pressed non modifier keys
     bool isKeyPressed(OIS::KeyCode key); 
-    OIS::Keyboard::Modifier getCurrentModifier(void); // OIS::Keyboard::Modifier is a bit mask
+    OIS::Keyboard::Modifier getCurrentModifier(void) {return mCurrentModifier;} // OIS::Keyboard::Modifier is a bit mask
     
     /*
      *  Listener Mouse stuff query 
