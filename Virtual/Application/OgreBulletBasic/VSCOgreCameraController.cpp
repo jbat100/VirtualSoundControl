@@ -54,7 +54,7 @@ bool VSCOgreCameraController::keyPressed(OIS::KeyCode key)
         OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
         VSCKeyboard::Combination comb(key, modifier);
         
-        const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getKeyBindings()->getActionsForInput(comb);
+        const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
         
         BOOST_FOREACH (VSCOgreKeyboardAction::Key actionKey, actionKeySet) 
         {
@@ -103,7 +103,7 @@ bool VSCOgreCameraController::keyReleased(OIS::KeyCode key)
     bool handled = true;
     
     BOOST_ASSERT_MSG(this->getInputAdapter(), "Expected adapter");
-    BOOST_ASSERT_MSG(this->getKeyBindings(), "Expected key bindings");
+    BOOST_ASSERT_MSG(this->getOgreKeyBindings(), "Expected key bindings");
     
     if (this->getInputAdapter() != 0) 
     {
@@ -111,7 +111,7 @@ bool VSCOgreCameraController::keyReleased(OIS::KeyCode key)
         OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
         VSCKeyboard::Combination comb(key, modifier);
         
-        const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getKeyBindings()->getActionsForInput(comb);
+        const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
         
         BOOST_FOREACH (VSCOgreKeyboardAction::Key actionKey, actionKeySet) 
         {

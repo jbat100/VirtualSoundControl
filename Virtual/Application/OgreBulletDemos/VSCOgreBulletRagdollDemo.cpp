@@ -14,6 +14,8 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "OgreBulletDynamicsRigidBody.h"
 #include "Debug/OgreBulletCollisionsDebugDrawer.h"
 
+#include "VSCOgreInputAdapter.h"
+
 #if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
 using namespace OIS;
 #endif 
@@ -122,6 +124,9 @@ bool VSCOgreBulletRagdollDemo::keyPressed(OIS::KeyCode key)
 {
 	const float trowDist = 2.0f;
     bool handled = true;
+    
+    OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
+    VSCKeyboard::Combination comb(key, modifier);
     
     const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
     

@@ -26,9 +26,6 @@ Description: Base class for all the OGRE examples
 #include <Ogre/OgreConfigFile.h>
 #include <Ogre/OSX/macUtils.h>
 
-//#include "OgreOSXCocoaView.h"
-#include "VSCOgreView.h"
-#include "OgreOSXCocoaWindow.h"
 
 #include "VSCOgreApplication.h"
 #include "VSCException.h"
@@ -37,6 +34,10 @@ Description: Base class for all the OGRE examples
 
 #include <boost/assert.hpp>
 
+
+#include "OgreOSXCocoaWindow.h"
+
+#import "VSCOgreView.h"
 
 bool VSCOgreApplicationCocoaSetup::setupApplicationWithOgreView(VSCOgreApplication* ogreApplication, void* rawOgreView)
 {

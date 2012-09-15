@@ -6,9 +6,8 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCAppDelegate.h"
 
-#import "OgreOSXCocoaView.h"
+#import "VSCAppDelegate.h"
 
 #import <vector>
 
@@ -23,6 +22,7 @@
 #import "VSCOgreBulletConstraintsDemo.h"
 #import "VSCOgreBulletTerrainDemo.h"
 #import "VSCOgreBulletRagdollDemo.h"
+
 
 using namespace OIS;
 

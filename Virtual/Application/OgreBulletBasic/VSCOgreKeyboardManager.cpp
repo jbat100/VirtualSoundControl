@@ -53,8 +53,8 @@ VSCOgreKeyBindings::SPtr VSCOgreKeyboardManager::generateDefaultBindings(void)
     
     keyBindings->setBinding(VSCOgreKeyboardAction::MoveCameraForward,            VSCKeyboard::Combination(KC_W));
     keyBindings->setBinding(VSCOgreKeyboardAction::MoveCameraBackward,           VSCKeyboard::Combination(KC_S));
-    keyBindings->setBinding(VSCOgreKeyboardAction::MoveCameraRight,              VSCKeyboard::Combination(KC_A));
-    keyBindings->setBinding(VSCOgreKeyboardAction::MoveCameraLeft,               VSCKeyboard::Combination(KC_D));
+    keyBindings->setBinding(VSCOgreKeyboardAction::MoveCameraRight,              VSCKeyboard::Combination(KC_D));
+    keyBindings->setBinding(VSCOgreKeyboardAction::MoveCameraLeft,               VSCKeyboard::Combination(KC_A));
     
     return keyBindings;
     

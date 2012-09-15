@@ -6,10 +6,12 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCOgreView.h"
+
 
 #include "VSCOgreBulletCocoaInputAdapter.h"
 #include <boost/assert.hpp>
+
+#import "VSCOgreView.h"
 
 @implementation VSCOgreView
 

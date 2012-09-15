@@ -7,7 +7,6 @@
 //
 
 #import "VSCOgreBulletWindow.h"
-#import "VSCOgreView.h"
 #import "NSString+VSCAdditions.h"
 
 #include "VSCOgreBulletApplication.h"
@@ -17,6 +16,8 @@
 #include <vector>
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
+
+#import "VSCOgreView.h" // include last!
 
 @implementation VSCOgreBulletWindow
 

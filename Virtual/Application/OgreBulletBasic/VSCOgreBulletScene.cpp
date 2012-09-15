@@ -134,7 +134,7 @@ mDebugRayLine(0),
 mRayQuery(0),
 mGuiListener(0),
 mPickConstraint(0),
-mCollisionClosestRayResultCallback(0),
+mCollisionClosestRayResultCallback(0)
 {
 
 }
@@ -253,7 +253,7 @@ void VSCOgreBulletScene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgre
 void VSCOgreBulletScene::setCameraController(VSCOgreCameraController::SPtr controller)
 {
     mCameraController = controller;
-    this->setNextInputListener(mCameraController);
+    this->setNextInputListener(mCameraController.get());
     mCameraController->setOgreKeyBindings(this->getOgreKeyBindings());
 }
 

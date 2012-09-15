@@ -13,8 +13,8 @@ class VSCBound
     
 public:
     
-    VSCBound();
-    virtual ~VSCBound();
+    VSCBound() {}
+    virtual ~VSCBound() {}
     
     typename VSCBindings<Action,Input>::SPtr    getBindings() {return mBindings;}
     void                                        setBindings(typename VSCBindings<Action,Input>::SPtr bindings) {mBindings = bindings;}

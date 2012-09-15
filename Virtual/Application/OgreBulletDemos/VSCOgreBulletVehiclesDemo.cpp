@@ -16,6 +16,7 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "Debug/OgreBulletCollisionsDebugDrawer.h"
 #include "Constraints/OgreBulletDynamicsRaycastVehicle.h"
 
+#include "VSCOgreInputAdapter.h"
 
 using namespace OIS;
 using namespace Ogre;
@@ -308,6 +309,8 @@ void VSCOgreBulletVehiclesDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, 
 // -------------------------------------------------------------------------
 bool VSCOgreBulletVehiclesDemo::keyPressed(OIS::KeyCode key)
 {
+    OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
+    VSCKeyboard::Combination comb(key, modifier);
     
     const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
     
@@ -436,6 +439,9 @@ bool VSCOgreBulletVehiclesDemo::keyPressed(OIS::KeyCode key)
 // -------------------------------------------------------------------------
 bool VSCOgreBulletVehiclesDemo::keyReleased(OIS::KeyCode key)
 {
+    
+    OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
+    VSCKeyboard::Combination comb(key, modifier);
     
     const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
     

@@ -6,12 +6,12 @@
 void VSCOgreKeyBound::setOgreKeyBindings(VSCOgreKeyBindings::SPtr keyBindings)
 {
     BaseBindings::SPtr baseKeyBinding = boost::dynamic_pointer_cast<BaseBindings>(keyBindings);
-    BaseBindings::setBindings(baseKeyBinding);
+    this->setBindings(baseKeyBinding);
 }
 
 VSCOgreKeyBindings::SPtr VSCOgreKeyBound::getOgreKeyBindings(void)
 {
-    BaseBindings::SPtr baseKeyBinding = BaseBindings::getBindings();
+    BaseBindings::SPtr baseKeyBinding = this->getBindings();
     return boost::dynamic_pointer_cast<VSCOgreKeyBindings>(baseKeyBinding);
 }
 

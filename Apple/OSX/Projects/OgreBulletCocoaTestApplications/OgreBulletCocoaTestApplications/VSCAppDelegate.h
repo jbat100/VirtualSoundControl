@@ -6,6 +6,9 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
+#include "OgrePrerequisites.h"
+#import "OgreOSXCocoaView.h"
+
 #import <Cocoa/Cocoa.h>
 
 #import <vector>

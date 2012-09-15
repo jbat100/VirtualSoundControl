@@ -76,6 +76,7 @@
 		10E1B28E156D3AFE0013B9F7 /* BetaGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E1B28C156D3AFE0013B9F7 /* BetaGUI.cpp */; };
 		10E8557415E65048008FF635 /* VSCUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E8557215E65048008FF635 /* VSCUI.cpp */; };
 		10EB11FD15A5D8B500CA4D03 /* VSCOgreInputAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10EB11FB15A5D8B500CA4D03 /* VSCOgreInputAdapter.cpp */; };
+		10EB5A3B16050D7500F0939E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10EB5A3A16050D7500F0939E /* OpenGL.framework */; };
 		10ED088A1601CD8900053C07 /* VSCBound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10ED08881601CD8900053C07 /* VSCBound.cpp */; };
 		10EE86C915AED21900AD9CEB /* VSCOgreBulletWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10EE86C815AED21900AD9CEB /* VSCOgreBulletWindow.mm */; };
 		10F2F98A15FF886F003B2CDB /* VSCOgreKeyboardAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F2F98615FF886F003B2CDB /* VSCOgreKeyboardAction.cpp */; };
@@ -291,6 +292,7 @@
 		10E8557315E65048008FF635 /* VSCUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCUI.h; path = ../../../../Interface/VSCUI.h; sourceTree = "<group>"; };
 		10EB11FB15A5D8B500CA4D03 /* VSCOgreInputAdapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOgreInputAdapter.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreInputAdapter.cpp; sourceTree = "<group>"; };
 		10EB11FC15A5D8B500CA4D03 /* VSCOgreInputAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreInputAdapter.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreInputAdapter.h; sourceTree = "<group>"; };
+		10EB5A3A16050D7500F0939E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		10ED08841601CC2700053C07 /* VSCBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCBindings.cpp; path = ../../../../Interface/VSCBindings.cpp; sourceTree = "<group>"; };
 		10ED08851601CC2700053C07 /* VSCBindings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = VSCBindings.hpp; path = ../../../../Interface/VSCBindings.hpp; sourceTree = "<group>"; };
 		10ED08881601CD8900053C07 /* VSCBound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCBound.cpp; path = ../../../../Interface/VSCBound.cpp; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10EB5A3B16050D7500F0939E /* OpenGL.framework in Frameworks */,
 				1033869E156E77E100CEB288 /* Carbon.framework in Frameworks */,
 				10B60D2515505D6D006A6D6E /* Cocoa.framework in Frameworks */,
 				10B60EEF155080D9006A6D6E /* libOIS.a in Frameworks */,
@@ -437,7 +440,6 @@
 		10B60D1515505D6D006A6D6E = {
 			isa = PBXGroup;
 			children = (
-				1033869D156E77E100CEB288 /* Carbon.framework */,
 				10E1B28B156D3AEB0013B9F7 /* BetaGUI */,
 				10CFE6AC156CD5F700B24399 /* OgreBullet */,
 				109D51B2155998CA0030C161 /* VSC */,
@@ -477,6 +479,8 @@
 				10B60EEE155080D9006A6D6E /* Ogre.framework */,
 				10B60D2415505D6D006A6D6E /* Cocoa.framework */,
 				10F69482156E3D2700E70049 /* IOKit.framework */,
+				10EB5A3A16050D7500F0939E /* OpenGL.framework */,
+				1033869D156E77E100CEB288 /* Carbon.framework */,
 				10B60D2615505D6D006A6D6E /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -1043,8 +1047,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(OGRE_SDK)/include/OGRE",
 					"$(OGRE_SDK)/include/OGRE/RenderSystems/GL",
+					"$(OGRE_SDK)/include/OGRE",
 					"$(OGRE_SDK)/include/OGRE/RenderSystems",
 					"$(OGRE_SDK)/boost_1_46_1",
 					"$(BULLET_ROOT)/src",
@@ -1079,8 +1083,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(OGRE_SDK)/include/OGRE",
 					"$(OGRE_SDK)/include/OGRE/RenderSystems/GL",
+					"$(OGRE_SDK)/include/OGRE",
 					"$(OGRE_SDK)/include/OGRE/RenderSystems",
 					"$(OGRE_SDK)/boost_1_46_1",
 					"$(BULLET_ROOT)/src",

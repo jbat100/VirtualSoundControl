@@ -12,6 +12,8 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "OgreBulletDynamicsRigidBody.h"
 #include "Debug/OgreBulletCollisionsDebugDrawer.h"
 
+#include "VSCOgreInputAdapter.h"
+
 #if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
 using namespace OIS;
 #endif 
@@ -76,6 +78,9 @@ void VSCOgreBulletPrimitivesDemo::init(Ogre::Root *root, Ogre::RenderWindow *win
 bool VSCOgreBulletPrimitivesDemo::keyPressed(OIS::KeyCode key)
 {
     bool handled = false;
+    
+    OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
+    VSCKeyboard::Combination comb(key, modifier);
     
     const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
     
