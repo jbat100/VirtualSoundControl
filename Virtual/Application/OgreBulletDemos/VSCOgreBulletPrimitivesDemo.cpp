@@ -75,7 +75,17 @@ void VSCOgreBulletPrimitivesDemo::init(Ogre::Root *root, Ogre::RenderWindow *win
 // -------------------------------------------------------------------------
 bool VSCOgreBulletPrimitivesDemo::keyPressed(OIS::KeyCode key)
 {
-    bool handled = VSCOgreBulletScene::throwDynamicObject(key) || VSCOgreBulletScene::dropDynamicObject(key);
+    bool handled = false;
+    
+    const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
+    
+    BOOST_FOREACH (VSCOgreKeyboardAction::Key actionKey, actionKeySet)
+    {
+        if (!handled) handled = VSCOgreBulletScene::throwDynamicObject(actionKey);
+        if (!handled) handled = VSCOgreBulletScene::dropDynamicObject(actionKey);
+    }
+    
     if (handled) return true;
-    return VSCOgreBulletScene::keyPressed (key);
+    
+    return VSCOgreBulletScene::keyPressed(key);
 }

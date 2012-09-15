@@ -78,6 +78,8 @@ public:
         VehicleMoveBackward,
         VehicleIncrementEngineStyle,
         VehicleDecrementEngineStyle,
+        VehicleIncrementSteeringStyle,
+        VehicleDecrementSteeringStyle,
         
         
     };

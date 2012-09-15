@@ -1,7 +1,7 @@
 
 #include "VSCOgreKeyboardManager.h"
 #include "VSCUI.h"
-#include "VSCBindings.h"
+#include "VSCBindings.hpp"
 #include "VSCOgreKeyboardAction.h"
 
 #include <boost/assert.hpp>
@@ -20,7 +20,7 @@ VSCOgreKeyBindings::SPtr VSCOgreKeyboardManager::generateDefaultBindings(void)
 {
     using namespace OIS;
     
-    VSCOgreKeyBindings::SPtr keyBindings = VSCOgreKeyBindings::SPtr(VSCOgreKeyBindings());
+    VSCOgreKeyBindings::SPtr keyBindings = VSCOgreKeyBindings::SPtr(new VSCOgreKeyBindings);
     
     keyBindings->setBinding(VSCOgreKeyboardAction::Quit,                         VSCKeyboard::Combination(KC_ESCAPE));
     keyBindings->setBinding(VSCOgreKeyboardAction::SaveScreenShot,               VSCKeyboard::Combination(KC_SYSRQ));

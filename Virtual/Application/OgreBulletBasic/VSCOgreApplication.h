@@ -68,8 +68,8 @@ public:
      *  Other Setters/Getters
      */
     
-    VSCOgreKeyboardManagerPtr getKeyboardManager(void) const;
-    void setKeyboardManager(VSCOgreKeyboardManagerPtr manager);
+    VSCOgreKeyboardManager::SPtr    getKeyboardManager(void) const;
+    void                            setKeyboardManager(VSCOgreKeyboardManager::SPtr manager);
     
     /*
      *  VSCOgreInputListener override
@@ -102,7 +102,7 @@ protected:
     
 private:
     
-    VSCOgreKeyboardManagerPtr   mKeyboardManager;
+    VSCOgreKeyboardManager::SPtr   mKeyboardManager;
     
     static const bool mTraceUI = true;
 

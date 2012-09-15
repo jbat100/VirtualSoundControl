@@ -3,8 +3,8 @@
 #define _VSC_OGRE_KEY_BINDINGS_H_
 
 #include "VSCUI.h"  
-#include "VSCBindings.h"
-#include "VSCBound.h"
+#include "VSCBindings.hpp"
+#include "VSCBound.hpp"
 #include "VSCOgreKeyboardAction.h"
 
 #include <boost/shared_ptr.hpp>
@@ -22,11 +22,7 @@ public:
     VSCOgreKeyBindings() {}
     virtual ~VSCOgreKeyBindings() {}
     
-private:
-    
-    typedef VSCBindings<VSCOgreKeyboardAction::Key, VSCKeyboard::Combination> BaseBindings;
-    
-}
+};
 
 
 class VSCOgreKeyBound : private VSCBound<VSCOgreKeyboardAction::Key, VSCKeyboard::Combination> 
@@ -39,6 +35,10 @@ public:
     
     void                        setOgreKeyBindings(VSCOgreKeyBindings::SPtr keyBindings);
     VSCOgreKeyBindings::SPtr    getOgreKeyBindings(void);
+    
+private:
+    
+    typedef VSCBindings<VSCOgreKeyboardAction::Key, VSCKeyboard::Combination> BaseBindings;
     
 };
  

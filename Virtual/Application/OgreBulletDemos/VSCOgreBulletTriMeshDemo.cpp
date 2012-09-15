@@ -102,9 +102,18 @@ void VSCOgreBulletTriMeshDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
 // -------------------------------------------------------------------------
 bool VSCOgreBulletTriMeshDemo::keyPressed(OIS::KeyCode key)
 {
-    VSCOgreBulletScene::throwDynamicObject(key);
-    VSCOgreBulletScene::dropDynamicObject(key);
+    const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
+    
+    BOOST_FOREACH (VSCOgreKeyboardAction::Key actionKey, actionKeySet)
+    {
+        
+        VSCOgreBulletScene::throwDynamicObject(actionKey);
+        VSCOgreBulletScene::dropDynamicObject(actionKey);
 
-    return VSCOgreBulletScene::keyPressed(key);
+        return VSCOgreBulletScene::keyPressed(key);
+        
+    }
+    
+    return false;
 }
 

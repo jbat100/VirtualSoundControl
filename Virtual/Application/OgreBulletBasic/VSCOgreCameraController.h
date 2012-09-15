@@ -6,10 +6,14 @@
 #include "VSCOgreKeyBindings.h"
 #include <Ogre/Ogre.h>
 
+#include <boost/shared_ptr.hpp>
 
 class VSCOgreCameraController : public VSCOgreInputListener, public VSCOgreKeyBound
 {
+    
 public:
+    
+    typedef boost::shared_ptr<VSCOgreCameraController> SPtr;
 
 	/**
      *  Constructor/Destructor

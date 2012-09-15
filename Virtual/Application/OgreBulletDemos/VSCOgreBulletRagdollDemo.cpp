@@ -123,17 +123,25 @@ bool VSCOgreBulletRagdollDemo::keyPressed(OIS::KeyCode key)
 	const float trowDist = 2.0f;
     bool handled = true;
     
-	switch(key)
-	{
-        case KC_X:
-            shootToKill();
-            break;	
-        default:
-            handled = false;
-            break;
-	}
+    const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
     
-    if (!handled) handled = VSCOgreBulletScene::throwDynamicObject(key) || VSCOgreBulletScene::dropDynamicObject(key);
+    BOOST_FOREACH (VSCOgreKeyboardAction::Key actionKey, actionKeySet)
+    {
+    
+        switch(key)
+        {
+            case KC_X:
+                shootToKill();
+                break;	
+            default:
+                handled = false;
+                break;
+        }
+    
+        if (!handled) handled = VSCOgreBulletScene::throwDynamicObject(actionKey);
+        if (!handled) handled = VSCOgreBulletScene::dropDynamicObject(actionKey);
+    }
+    
     if (handled) return true;
 
     return VSCOgreBulletScene::keyPressed(key);

@@ -7,6 +7,7 @@
 #include "VSCOgreBetaGUIListener.h"
 #include "VSCOgreKeyboardAction.h"
 #include "VSCOgreKeyBindings.h"
+#include "VSCOgreCameraController.h"
 #include "OIS.h"
 
 #include <boost/shared_ptr.hpp>
@@ -20,10 +21,6 @@
 #define BASIC_HELP_INFO5 "right to camera move"
 #define BASIC_HELP_INFO6 "middle for impulse"
 
-class VSCOgreCameraController;
-
-// typedef boost::shared_ptr<VSCOgreCameraController> VSCOgreCameraControllerPtr;
-typedef VSCOgreCameraController* VSCOgreCameraControllerPtr;
 
 enum QueryFlags
 {
@@ -214,17 +211,17 @@ protected:
     
    void updateStats();
     
-private:
-    
     /*
      *  Other Setters/Getters
      */
     
-    VSCOgreCameraControllerPtr  getCameraController(void) {return mCameraController;}
-    void                        setCameraController(VSCOgreCameraControllerPtr controller);
+    VSCOgreCameraController::SPtr   getCameraController(void) {return mCameraController;}
+    void                            setCameraController(VSCOgreCameraController::SPtr controller);
     
-    VSCOgreCameraControllerPtr  mCameraController;
-    static const bool           mTraceFrame = false;
+private:
+    
+    VSCOgreCameraController::SPtr   mCameraController;
+    static const bool               mTraceFrame = false;
     
 };
 

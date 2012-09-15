@@ -135,7 +135,6 @@ mRayQuery(0),
 mGuiListener(0),
 mPickConstraint(0),
 mCollisionClosestRayResultCallback(0),
-mCameraController(VSCOgreCameraControllerPtr())
 {
 
 }
@@ -149,13 +148,13 @@ void VSCOgreBulletScene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgre
      */
     
     mRoot = root;
-    mWindow = win;
+    mWindow = win; 
     mApplication = application;
     
     /*
      *  IMPORTANT: Subclasses must have created a camera before calling VSCOgreBulletScene::init
      */
-    this->setCameraController(VSCOgreCameraControllerPtr(new VSCOgreCameraController()));
+    this->setCameraController(VSCOgreCameraController::SPtr(new VSCOgreCameraController));
     this->getCameraController()->setCamera(mCamera);
     this->getCameraController()->setCameraSpeed(1.0f);
 
@@ -251,11 +250,11 @@ void VSCOgreBulletScene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgre
 
 
 
-void VSCOgreBulletScene::setCameraController(VSCOgreCameraControllerPtr controller) 
+void VSCOgreBulletScene::setCameraController(VSCOgreCameraController::SPtr controller)
 {
     mCameraController = controller;
     this->setNextInputListener(mCameraController);
-    mCameraController->setBindings(this->getBindings());
+    mCameraController->setOgreKeyBindings(this->getOgreKeyBindings());
 }
 
 // -------------------------------------------------------------------------
@@ -704,7 +703,7 @@ bool VSCOgreBulletScene::keyPressed(OIS::KeyCode key)
     
     bool handled = true;
     
-    const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getKeyBindings()->getActionsForInput(comb);
+    const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
     
     BOOST_FOREACH (VSCOgreKeyboardAction::Key actionKey, actionKeySet) 
     {

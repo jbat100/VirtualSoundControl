@@ -16,10 +16,7 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "OgreBulletDynamicsRigidBody.h"
 #include "Debug/OgreBulletCollisionsDebugDrawer.h"
 
-#if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
 using namespace OIS;
-#endif 
-
 using namespace Ogre;
 using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
@@ -77,8 +74,18 @@ void VSCOgreBulletConstraintsDemo::init(Ogre::Root *root, Ogre::RenderWindow *wi
 // -------------------------------------------------------------------------
 bool VSCOgreBulletConstraintsDemo::keyPressed(OIS::KeyCode key)
 {
-    bool handled = VSCOgreBulletScene::throwDynamicObject(key) || VSCOgreBulletScene::dropDynamicObject(key);
+    bool handled = false;
+    
+    const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
+    
+    BOOST_FOREACH (VSCOgreKeyboardAction::Key actionKey, actionKeySet)
+    {
+        if (!handled) handled = VSCOgreBulletScene::throwDynamicObject(actionKey);
+        if (!handled) handled = VSCOgreBulletScene::dropDynamicObject(actionKey);
+    }
+    
     if (handled) return true;
-    return VSCOgreBulletScene::keyPressed (key);
+    
+    return VSCOgreBulletScene::keyPressed(key);
 }
 

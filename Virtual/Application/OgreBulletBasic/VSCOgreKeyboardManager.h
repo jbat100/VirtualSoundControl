@@ -3,7 +3,7 @@
 #define _VSC_OGRE_KEYBOARD_MANAGER_H_
 
 #include "VSCUI.h"
-#include "VSCBindings.h"
+#include "VSCBindings.hpp"
 #include "VSCOgreKeyboardAction.h"
 #include "VSCOgreKeyBindings.h"
 

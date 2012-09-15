@@ -22,7 +22,7 @@ VSCOgreBulletApplication::VSCOgreBulletApplication(std::vector<VSCOgreBulletScen
     BOOST_FOREACH (VSCOgreBulletScene* scene, mBulletScenes) 
     {
         // application bindings should be set in the base class constructor
-        scene->setBindings(this->getBindings());  
+        scene->setOgreKeyBindings(this->getOgreKeyBindings());
     }
     
 }
