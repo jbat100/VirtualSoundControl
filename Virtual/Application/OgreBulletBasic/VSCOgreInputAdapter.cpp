@@ -66,6 +66,8 @@ void VSCOgreInputAdapter::mouseButtonPressed(const Ogre::Vector2& position, OIS:
 {
     mCurrentMouseButtons.insert(buttonID);
     
+    mLastMousePosition = position;
+    
     BOOST_FOREACH (VSCOgreInputListener* inputListener, this->getInputListeners()) 
     {
         inputListener->mouseButtonPressed(position, buttonID);
@@ -75,6 +77,8 @@ void VSCOgreInputAdapter::mouseButtonPressed(const Ogre::Vector2& position, OIS:
 void VSCOgreInputAdapter::mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
     mCurrentMouseButtons.erase(buttonID);
+    
+    mLastMousePosition = position;
     
     BOOST_FOREACH (VSCOgreInputListener* inputListener, this->getInputListeners()) 
     {

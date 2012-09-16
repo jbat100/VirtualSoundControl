@@ -221,9 +221,12 @@ void VSCOgreBulletScene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgre
 #endif // _DEBUG
 
     /******************* CREATE Queries ***************************/
+    
     mRayQuery = mSceneMgr->createRayQuery(Ray());
-    mRayQuery->setQueryMask (GEOMETRY_QUERY_MASK);
-    mRayQuery->setQueryTypeMask(SceneManager::ENTITY_TYPE_MASK);
+    
+    //mRayQuery->setQueryMask (GEOMETRY_QUERY_MASK);
+    //mRayQuery->setQueryTypeMask(SceneManager::ENTITY_TYPE_MASK);
+    
     MovableObject::setDefaultQueryFlags (ANY_QUERY_MASK);
 
     mPickConstraint = 0;
@@ -461,7 +464,7 @@ void VSCOgreBulletScene::shutdown ()
 bool VSCOgreBulletScene::mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
     
-    if (mTraceUI) std::cout << "VSCOgreBulletScene mouseButtonPressed : " << position << " (" << buttonID << ")" << std::endl;
+    if (mTraceUI) std::cout << "VSCOgreBulletScene::mouseButtonPressed : " << position << " (" << buttonID << ")" << std::endl;
     
     switch (buttonID) 
     {
@@ -470,9 +473,14 @@ bool VSCOgreBulletScene::mouseButtonPressed(const Ogre::Vector2& position, OIS::
             // pick a body and try to drag it.
             Ogre::Vector3 pickPos;
             Ogre::Ray rayTo;
-            OgreBulletDynamics::RigidBody* body = getBodyUnderCursorUsingBullet(pickPos, rayTo);
+            
+            //OgreBulletDynamics::RigidBody* body = getBodyUnderCursorUsingBullet(pickPos, rayTo);
+            OgreBulletDynamics::RigidBody* body = getBodyUnderCursorUsingOgre(pickPos, rayTo);
+            
             if (body)
-            {  
+            {
+                if (mTraceUI) std::cout << "VSCOgreBulletScene::mouseButtonPressed Left button, detected body" << std::endl;
+                
                 //other exclusions?
                 if (!(body->isStaticObject() 
                       //|| body->isKinematicObject()
@@ -500,6 +508,11 @@ bool VSCOgreBulletScene::mouseButtonPressed(const Ogre::Vector2& position, OIS::
                 mDebugRayLine->addLine(rayTo.getOrigin(), pickPos);
                 mDebugRayLine->draw();
                 
+            }
+            
+            else
+            {
+                if (mTraceUI) std::cout << "VSCOgreBulletScene::mouseButtonPressed Left button, detected no body" << std::endl;
             }
             
             /*
@@ -620,12 +633,13 @@ bool VSCOgreBulletScene::mouseButtonReleased(const Ogre::Vector2& position, OIS:
 // -------------------------------------------------------------------------
 bool VSCOgreBulletScene::mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
-    if (mTraceUI) std::cout << "VSCOgreBulletScene mouseMoved position: " << position << ", movement: " << movement << "" << std::endl;
+    if (mTraceUI) std::cout << "VSCOgreBulletScene::mouseMoved position: " << position << ", movement: " << movement << "" << std::endl;
     
     if (this->getInputAdapter()->isMouseButtonPressed(OIS::MB_Left))
     {
         if (mPickConstraint)
         {
+            if (mTraceUI) std::cout << "VSCOgreBulletScene::mouseMoved Left button is pressed and constraint exists" << std::endl;
             
             Ogre::Ray rayTo = mCamera->getCameraToViewportRay (position.x, position.y);
             //move the constraint pivot
@@ -650,6 +664,11 @@ bool VSCOgreBulletScene::mouseMoved(const Ogre::Vector2& position, const Ogre::V
             mDebugRayLine->addLine (mPickedBody->getWorldPosition (), newPos);
             mDebugRayLine->draw();
             
+        }
+        
+        else
+        {
+            if (mTraceUI) std::cout << "VSCOgreBulletScene::mouseMoved Left button is pressed and constraint does not exists" << std::endl;
         }
         
         return true;
@@ -814,12 +833,19 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletScene::getBodyUnderCursorUsingBullet
     absX = this->getInputAdapter()->getLastMousePosition().x;
     absY = this->getInputAdapter()->getLastMousePosition().y;
     
+    
+    
+    /*
+     *  See http://www.ogre3d.org/docs/api/html/classOgre_1_1Viewport.html
+     *  It seems to me that these x/y coordinates should be 0-1 (normalised)
+     */
+    
     rayTo = mCamera->getCameraToViewportRay (absX, absY);
 
 	delete mCollisionClosestRayResultCallback;
 	mCollisionClosestRayResultCallback = new CollisionClosestRayResultCallback(rayTo, mWorld, mCamera->getFarClipDistance());
 
-    mWorld->launchRay (*mCollisionClosestRayResultCallback);
+    mWorld->launchRay(*mCollisionClosestRayResultCallback);
     
     if (mCollisionClosestRayResultCallback->doesCollide ())
     {
@@ -836,11 +862,15 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletScene::getBodyUnderCursorUsingBullet
 // -------------------------------------------------------------------------
 OgreBulletDynamics::RigidBody* VSCOgreBulletScene::getBodyUnderCursorUsingOgre(Ogre::Vector3 &intersectionPoint, Ray &rayTo)
 {
-    float absX = 0.0;
-    float absY = 0.0;
+    float absX = this->getInputAdapter()->getLastMousePosition().x;
+    float absY = this->getInputAdapter()->getLastMousePosition().y;
     
-    absX = this->getInputAdapter()->getLastMousePosition().x;
-    absY = this->getInputAdapter()->getLastMousePosition().y;
+    Ogre::Viewport* viewport = mCamera->getViewport();
+    
+    float normX = absX / (float) viewport->getActualWidth();
+    float normY = absY / (float) viewport->getActualHeight();
+    
+    if (mTraceUI) std::cout << "VSCOgreBulletScene::getBodyUnderCursorUsingOgre norm coord: (" << normX << "," << normY << ")" << std::endl;
     
     rayTo = mCamera->getCameraToViewportRay (absX, absY);
 
@@ -854,11 +884,7 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletScene::getBodyUnderCursorUsingOgre(O
         while((i != result.end()))
         {
             SceneNode *node = i->movable->getParentSceneNode() ;
-#if (OGRE_VERSION >=  ((1 << 16) | (5 << 8) | 0)) // must have at least shoggoth (1.5.0)
 			intersectionPoint = node->_getDerivedPosition ();
-#else
-			intersectionPoint = node->getWorldPosition ();
-#endif
             const unsigned short num = node->numAttachedObjects();
             MovableObject* movable;
             for (unsigned short cur = 0;cur < num; cur++)
@@ -869,7 +895,6 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletScene::getBodyUnderCursorUsingOgre(O
                     OgreBulletCollisions::Object *object = static_cast <OgreBulletCollisions::Object *>(movable);
                     OgreBulletDynamics::RigidBody *body = static_cast <OgreBulletDynamics::RigidBody *>(object);
                     setDebugText ("Hit :" + body->getName());
-
                     return body;
                 }
             }
@@ -1152,21 +1177,19 @@ RigidBody *VSCOgreBulletScene::addCube(const Ogre::String instanceName,
                                        const Ogre::Real bodyRestitution, const Ogre::Real bodyFriction, 
                                        const Ogre::Real bodyMass)
 {
-    Entity *entity = mSceneMgr->createEntity(
-        instanceName + StringConverter::toString(mNumEntitiesInstanced),
-        "Bulletbox.mesh");
-    // "Crate.mesh");
-    // "Crate1.mesh");
-    // "Crate2.mesh");
+    Entity *entity = mSceneMgr->createEntity(instanceName + StringConverter::toString(mNumEntitiesInstanced), "Bulletbox.mesh");
+    
+    // "Crate.mesh", "Crate1.mesh", "Crate2.mesh"
 
     entity->setQueryFlags (GEOMETRY_QUERY_MASK);
+    
 	entity->setCastShadows(true);
     entity->setMaterialName("Bullet/box");
 
     BoxCollisionShape *sceneCubeShape = new BoxCollisionShape(size);
     RigidBody *defaultBody = new RigidBody("defaultCubeRigid" + StringConverter::toString(mNumEntitiesInstanced), mWorld);
 
-    SceneNode *node = mSceneMgr->getRootSceneNode ()->createChildSceneNode ();
+    SceneNode *node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
     node->attachObject (entity);
 
     defaultBody->setShape (node,  sceneCubeShape, bodyRestitution, bodyFriction, bodyMass, pos, q);
@@ -1174,6 +1197,7 @@ RigidBody *VSCOgreBulletScene::addCube(const Ogre::String instanceName,
     mEntities.push_back(entity);
     mShapes.push_back(sceneCubeShape);
     mBodies.push_back(defaultBody);
+    
     mNumEntitiesInstanced++;
 
     return defaultBody;
