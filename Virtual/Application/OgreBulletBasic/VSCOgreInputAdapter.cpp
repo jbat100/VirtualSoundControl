@@ -39,7 +39,7 @@ bool VSCOgreInputAdapter::isMouseButtonPressed(OIS::MouseButtonID buttonid) cons
     return (mCurrentMouseButtons.find(buttonid) != mCurrentMouseButtons.end());
 }
 
-void VSCOgreInputAdapter::mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement)
+void VSCOgreInputAdapter::mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
     mLastMousePosition = position;
     mLastMouseMovement = movement;
@@ -47,22 +47,22 @@ void VSCOgreInputAdapter::mouseMoved(const Ogre::Vector2& position, const Ogre::
     
     BOOST_FOREACH (VSCOgreInputListener* inputListener, this->getInputListeners()) 
     {
-        inputListener->mouseMoved(position, movement);
+        inputListener->mouseMoved(renderWindow, position, movement);
     }
 }
 
 
-void VSCOgreInputAdapter::mouseEntered(const Ogre::Vector2& position)
+void VSCOgreInputAdapter::mouseEntered(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position)
 {
     
 }
 
-void VSCOgreInputAdapter::mouseExited(const Ogre::Vector2& position)
+void VSCOgreInputAdapter::mouseExited(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position)
 {
     
 }
 
-void VSCOgreInputAdapter::mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
+void VSCOgreInputAdapter::mouseButtonPressed(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
     mCurrentMouseButtons.insert(buttonID);
     
@@ -70,11 +70,11 @@ void VSCOgreInputAdapter::mouseButtonPressed(const Ogre::Vector2& position, OIS:
     
     BOOST_FOREACH (VSCOgreInputListener* inputListener, this->getInputListeners()) 
     {
-        inputListener->mouseButtonPressed(position, buttonID);
+        inputListener->mouseButtonPressed(renderWindow, position, buttonID);
     }
 }
 
-void VSCOgreInputAdapter::mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
+void VSCOgreInputAdapter::mouseButtonReleased(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
     mCurrentMouseButtons.erase(buttonID);
     
@@ -82,11 +82,11 @@ void VSCOgreInputAdapter::mouseButtonReleased(const Ogre::Vector2& position, OIS
     
     BOOST_FOREACH (VSCOgreInputListener* inputListener, this->getInputListeners()) 
     {
-        inputListener->mouseButtonReleased(position, buttonID);
+        inputListener->mouseButtonReleased(renderWindow, position, buttonID);
     }
 }
 
-void VSCOgreInputAdapter::keyPressed(OIS::KeyCode key)
+void VSCOgreInputAdapter::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     bool relayToListeners = true;
     if (mAllowRapidFireKeyPresses == false)
@@ -103,13 +103,13 @@ void VSCOgreInputAdapter::keyPressed(OIS::KeyCode key)
     {
         BOOST_FOREACH (VSCOgreInputListener* inputListener, this->getInputListeners()) 
         {
-            inputListener->keyPressed(key);
+            inputListener->keyPressed(renderWindow, key);
         }
     }
 
 }
 
-void VSCOgreInputAdapter::keyReleased(OIS::KeyCode key)
+void VSCOgreInputAdapter::keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     bool relayToListeners = true;
     if (mAllowRapidFireKeyPresses == false)
@@ -126,20 +126,28 @@ void VSCOgreInputAdapter::keyReleased(OIS::KeyCode key)
     {
         BOOST_FOREACH (VSCOgreInputListener* inputListener, this->getInputListeners()) 
         {
-            inputListener->keyReleased(key);
+            inputListener->keyReleased(renderWindow, key);
         }
     }
 }
 
-void VSCOgreInputAdapter::modifierChanged(OIS::Keyboard::Modifier modifier)
+void VSCOgreInputAdapter::modifierChanged(Ogre::RenderWindow* renderWindow, OIS::Keyboard::Modifier modifier)
 {
     mCurrentModifier = modifier;
     
     BOOST_FOREACH (VSCOgreInputListener* inputListener, this->getInputListeners()) 
     {
-        inputListener->modifierChanged(modifier);
+        inputListener->modifierChanged(renderWindow, modifier);
     }
     
+}
+
+void VSCOgreInputAdapter::renderWindowChangedSize(Ogre::RenderWindow* renderWindow)
+{
+    BOOST_FOREACH (VSCOgreInputListener* inputListener, this->getInputListeners())
+    {
+        inputListener->renderWindowChangedSize(renderWindow);
+    }
 }
 
 

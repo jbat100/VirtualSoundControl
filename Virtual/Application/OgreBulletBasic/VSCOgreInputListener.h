@@ -56,14 +56,18 @@ public:
      *  so that subclasses can choose to implement the methods or not...
      */
 
-    virtual bool mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement);
-    virtual bool mouseEntered(const Ogre::Vector2& position);
-    virtual bool mouseExited(const Ogre::Vector2& position);
-    virtual bool mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
-    virtual bool mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
-    virtual bool keyPressed(OIS::KeyCode key);
-    virtual bool keyReleased(OIS::KeyCode key);
-    virtual bool modifierChanged(OIS::Keyboard::Modifier modifier);
+    virtual bool mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement);
+    virtual bool mouseEntered(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position);
+    virtual bool mouseExited(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position);
+    virtual bool mouseButtonPressed(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
+    virtual bool mouseButtonReleased(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
+    
+    virtual bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+    virtual bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+    
+    virtual bool modifierChanged(Ogre::RenderWindow* renderWindow, OIS::Keyboard::Modifier modifier);
+    
+    virtual bool renderWindowChangedSize(Ogre::RenderWindow* renderWindow);
     
 private:
     

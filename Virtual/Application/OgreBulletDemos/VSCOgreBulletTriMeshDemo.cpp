@@ -99,7 +99,7 @@ void VSCOgreBulletTriMeshDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
         0.8f);   
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletTriMeshDemo::keyPressed(OIS::KeyCode key)
+bool VSCOgreBulletTriMeshDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
     VSCKeyboard::Combination comb(key, modifier);
@@ -112,7 +112,7 @@ bool VSCOgreBulletTriMeshDemo::keyPressed(OIS::KeyCode key)
         VSCOgreBulletScene::throwDynamicObject(actionKey);
         VSCOgreBulletScene::dropDynamicObject(actionKey);
 
-        return VSCOgreBulletScene::keyPressed(key);
+        return VSCOgreBulletScene::keyPressed(renderWindow, key);
         
     }
     

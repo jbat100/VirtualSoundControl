@@ -120,7 +120,7 @@ void VSCOgreBulletRagdollDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
 }
 
 // -------------------------------------------------------------------------
-bool VSCOgreBulletRagdollDemo::keyPressed(OIS::KeyCode key)
+bool VSCOgreBulletRagdollDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
 	const float trowDist = 2.0f;
     bool handled = true;
@@ -149,7 +149,7 @@ bool VSCOgreBulletRagdollDemo::keyPressed(OIS::KeyCode key)
     
     if (handled) return true;
 
-    return VSCOgreBulletScene::keyPressed(key);
+    return VSCOgreBulletScene::keyPressed(renderWindow, key);
 }
 // -------------------------------------------------------------------------
 void VSCOgreBulletRagdollDemo::button0Pressed()

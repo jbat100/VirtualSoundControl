@@ -74,7 +74,7 @@ public:
     /*
      *  VSCOgreInputListener override
      */
-    virtual bool keyPressed(OIS::KeyCode key);
+    virtual bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
 
 protected:
     

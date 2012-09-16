@@ -29,6 +29,10 @@
     return YES;
 }
 
+-(BOOL)acceptsFirstMouse:(NSEvent *)theEvent {
+    return YES;
+}
+
 #pragma mark - Custom Setters
 
 - (void) setOgreBulletApplication:(VSCOgreBulletApplication*)app {

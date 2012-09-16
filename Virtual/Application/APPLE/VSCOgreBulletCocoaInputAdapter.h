@@ -18,21 +18,23 @@ public:
     /*
      *  Slots for forwarding the appropriate NSResponder callbacks
      */
-    void keyUp(NSEvent* theEvent);
-    void keyDown(NSEvent* theEvent);
-    void mouseEntered(NSEvent* theEvent);
-    void mouseExited(NSEvent* theEvent);
-    void mouseMoved(NSEvent* theEvent);
-    void mouseDown(NSEvent* theEvent);
-    void mouseUp(NSEvent* theEvent);
-    void mouseDragged(NSEvent* theEvent);
-    void otherMouseDown(NSEvent* theEvent);
-    void otherMouseDragged(NSEvent* theEvent);
-    void otherMouseUp(NSEvent* theEvent);
-    void rightMouseDown(NSEvent* theEvent);
-    void rightMouseDragged(NSEvent* theEvent);
-    void rightMouseUp(NSEvent* theEvent);
-    void scrollWheel(NSEvent* theEvent);
+    
+    void keyUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
+    void keyDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
+    
+    void mouseEntered(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
+    void mouseExited(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
+    void mouseMoved(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
+    void mouseDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
+    void mouseUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
+    void mouseDragged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
+    void otherMouseDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
+    void otherMouseDragged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
+    void otherMouseUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
+    void rightMouseDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
+    void rightMouseDragged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
+    void rightMouseUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
+    void scrollWheel(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
     
 
     /*

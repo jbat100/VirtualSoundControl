@@ -32,9 +32,9 @@ public:
      *  These can be overriden further to provide special camera control...
      */
     
-    virtual bool mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement);
-    virtual bool keyPressed(OIS::KeyCode key);
-    virtual bool keyReleased(OIS::KeyCode key);
+    virtual bool mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement);
+    virtual bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+    virtual bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
     
     /**
      *  Ogre Setters/Getters

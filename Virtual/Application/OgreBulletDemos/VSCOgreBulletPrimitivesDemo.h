@@ -23,7 +23,7 @@ public:
     
     void init (Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application);
     
-    bool keyPressed(OIS::KeyCode key);
+    bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
 };
 
 #endif //_VSC_OGREBULLET_PRIMITIVES_DEMO_H_

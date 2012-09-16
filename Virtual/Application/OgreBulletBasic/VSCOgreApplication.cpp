@@ -245,11 +245,11 @@ void VSCOgreApplication::loadResources(void)
     
 }
 
-bool VSCOgreApplication::keyPressed(OIS::KeyCode key)
+bool VSCOgreApplication::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     if (mTraceUI) std::cout << "VSCOgreApplication::keyPressed " << key << std::endl;
     
-    return VSCOgreInputListener::keyPressed(key);
+    return VSCOgreInputListener::keyPressed(renderWindow, key);
 }
 
 

@@ -19,7 +19,7 @@ mCamera(0)
 }
 
 // -------------------------------------------------------------------------
-bool VSCOgreCameraController::mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement)
+bool VSCOgreCameraController::mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
     if (mTraceUI) std::cout << "VSCOgreCameraController::mouseMoved position " << position << ", movement " << movement << std::endl;
     
@@ -34,13 +34,13 @@ bool VSCOgreCameraController::mouseMoved(const Ogre::Vector2& position, const Og
         return true;
     }
     
-    return VSCOgreInputListener::mouseMoved(position, movement);
+    return VSCOgreInputListener::mouseMoved(renderWindow, position, movement);
 
 }
 
 
 // -------------------------------------------------------------------------
-bool VSCOgreCameraController::keyPressed(OIS::KeyCode key)
+bool VSCOgreCameraController::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     
     if (mTraceUI) std::cout << "VSCOgreCameraController got key pressed code: " << key << " (W is " << OIS::KC_W << ")" << std::endl; 
@@ -91,12 +91,12 @@ bool VSCOgreCameraController::keyPressed(OIS::KeyCode key)
     }
     
     
-    return VSCOgreInputListener::keyPressed(key);
+    return VSCOgreInputListener::keyPressed(renderWindow, key);
     
 }
 
 // -------------------------------------------------------------------------
-bool VSCOgreCameraController::keyReleased(OIS::KeyCode key)
+bool VSCOgreCameraController::keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     if (mTraceUI) std::cout << "VSCOgreCameraController keyReleased : " << key << std::endl;
     
@@ -148,7 +148,7 @@ bool VSCOgreCameraController::keyReleased(OIS::KeyCode key)
         
     }
     
-    return VSCOgreInputListener::keyReleased(key);
+    return VSCOgreInputListener::keyReleased(renderWindow, key);
 }
 
 bool VSCOgreCameraController::frameStarted(Ogre::Real elapsedTime)

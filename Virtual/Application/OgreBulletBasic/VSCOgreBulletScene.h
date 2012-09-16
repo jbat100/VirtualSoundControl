@@ -77,13 +77,13 @@ public:
     /**--------------------------------------------------------------
      *  Input listener callback overrides
      */
-    bool mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
-    bool mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
-    bool mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement);
-    bool mouseEntered(const Ogre::Vector2& position);
-    bool mouseExited(const Ogre::Vector2& position);
-    bool keyPressed(OIS::KeyCode key);
-    bool keyReleased(OIS::KeyCode key);
+    bool mouseButtonPressed(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
+    bool mouseButtonReleased(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
+    bool mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement);
+    bool mouseEntered(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position);
+    bool mouseExited(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position);
+    bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+    bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
     
     /**--------------------------------------------------------------
      *  Ogre Setters/Getters

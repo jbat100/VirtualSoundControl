@@ -58,14 +58,26 @@ protected:
      *  mechanisms, will forward calls to the listeners.
      */
     
-    void mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement);
-    void mouseEntered(const Ogre::Vector2& position);
-    void mouseExited(const Ogre::Vector2& position);
-    void mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
-    void mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
-    void keyPressed(OIS::KeyCode key);
-    void keyReleased(OIS::KeyCode key);
-    void modifierChanged(OIS::Keyboard::Modifier modifier);
+    /*
+     *  Render window changes
+     */
+    void renderWindowChangedSize(Ogre::RenderWindow* renderWindow);
+    
+    /*
+     *  Mouse input
+     */
+    void mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement);
+    void mouseEntered(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position);
+    void mouseExited(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position);
+    void mouseButtonPressed(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
+    void mouseButtonReleased(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
+    
+    /*
+     *  Keyboard input
+     */
+    void keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+    void keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+    void modifierChanged(Ogre::RenderWindow* renderWindow, OIS::Keyboard::Modifier modifier);
     
 private:
 

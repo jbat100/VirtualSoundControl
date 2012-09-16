@@ -23,8 +23,8 @@ public:
 
     void init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application);
 
-    bool keyPressed(OIS::KeyCode key);
-    bool keyReleased(OIS::KeyCode key);
+    bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+    bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
 
     bool frameStarted(Ogre::Real elapsedTime);
 

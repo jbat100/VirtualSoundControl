@@ -74,7 +74,7 @@ void VSCOgreBulletConstraintsDemo::init(Ogre::Root *root, Ogre::RenderWindow *wi
     addGround();
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletConstraintsDemo::keyPressed(OIS::KeyCode key)
+bool VSCOgreBulletConstraintsDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     bool handled = false;
     
@@ -91,6 +91,6 @@ bool VSCOgreBulletConstraintsDemo::keyPressed(OIS::KeyCode key)
     
     if (handled) return true;
     
-    return VSCOgreBulletScene::keyPressed(key);
+    return VSCOgreBulletScene::keyPressed(renderWindow, key);
 }
 

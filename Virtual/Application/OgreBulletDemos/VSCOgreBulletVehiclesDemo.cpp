@@ -307,7 +307,7 @@ void VSCOgreBulletVehiclesDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, 
 }
 
 // -------------------------------------------------------------------------
-bool VSCOgreBulletVehiclesDemo::keyPressed(OIS::KeyCode key)
+bool VSCOgreBulletVehiclesDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
     VSCKeyboard::Combination comb(key, modifier);
@@ -429,7 +429,7 @@ bool VSCOgreBulletVehiclesDemo::keyPressed(OIS::KeyCode key)
         
         if (handled) return true;
         
-        return VSCOgreBulletScene::keyPressed(key);
+        return VSCOgreBulletScene::keyPressed(renderWindow, key);
         
     }
     
@@ -437,7 +437,7 @@ bool VSCOgreBulletVehiclesDemo::keyPressed(OIS::KeyCode key)
     
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletVehiclesDemo::keyReleased(OIS::KeyCode key)
+bool VSCOgreBulletVehiclesDemo::keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     
     OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
@@ -471,7 +471,7 @@ bool VSCOgreBulletVehiclesDemo::keyReleased(OIS::KeyCode key)
         
         if (handled) return true; 
         
-        return VSCOgreBulletScene::keyReleased(key);
+        return VSCOgreBulletScene::keyReleased(renderWindow, key);
         
     }
     

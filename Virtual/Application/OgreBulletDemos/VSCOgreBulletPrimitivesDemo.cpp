@@ -75,7 +75,7 @@ void VSCOgreBulletPrimitivesDemo::init(Ogre::Root *root, Ogre::RenderWindow *win
 
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletPrimitivesDemo::keyPressed(OIS::KeyCode key)
+bool VSCOgreBulletPrimitivesDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     bool handled = false;
     
@@ -92,5 +92,5 @@ bool VSCOgreBulletPrimitivesDemo::keyPressed(OIS::KeyCode key)
     
     if (handled) return true;
     
-    return VSCOgreBulletScene::keyPressed(key);
+    return VSCOgreBulletScene::keyPressed(renderWindow, key);
 }

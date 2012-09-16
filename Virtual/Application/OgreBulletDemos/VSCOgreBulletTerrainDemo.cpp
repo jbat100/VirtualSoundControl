@@ -371,7 +371,7 @@ void VSCOgreBulletTerrainDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
 
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletTerrainDemo::keyPressed(OIS::KeyCode key)
+bool VSCOgreBulletTerrainDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
 
     OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
@@ -494,14 +494,14 @@ bool VSCOgreBulletTerrainDemo::keyPressed(OIS::KeyCode key)
         
         if (handled) return true;
         
-        return VSCOgreBulletScene::keyPressed(key);
+        return VSCOgreBulletScene::keyPressed(renderWindow, key);
         
     }
     
     return false; // should never reach here
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletTerrainDemo::keyReleased(OIS::KeyCode key)
+bool VSCOgreBulletTerrainDemo::keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
     VSCKeyboard::Combination comb(key, modifier);
@@ -534,7 +534,7 @@ bool VSCOgreBulletTerrainDemo::keyReleased(OIS::KeyCode key)
         
         if (handled) return true;
         
-        return VSCOgreBulletScene::keyReleased(key);
+        return VSCOgreBulletScene::keyReleased(renderWindow, key);
         
     }
     

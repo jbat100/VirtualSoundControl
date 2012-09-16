@@ -224,8 +224,8 @@ void VSCOgreBulletScene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgre
     
     mRayQuery = mSceneMgr->createRayQuery(Ray());
     
-    //mRayQuery->setQueryMask (GEOMETRY_QUERY_MASK);
-    //mRayQuery->setQueryTypeMask(SceneManager::ENTITY_TYPE_MASK);
+    mRayQuery->setQueryMask(GEOMETRY_QUERY_MASK);
+    mRayQuery->setQueryTypeMask(SceneManager::ENTITY_TYPE_MASK);
     
     MovableObject::setDefaultQueryFlags (ANY_QUERY_MASK);
 
@@ -461,7 +461,7 @@ void VSCOgreBulletScene::shutdown ()
 }
 
 //void VSCOgreBulletScene::mouseButtonPressed(OIS::MouseButtonID buttonID)
-bool VSCOgreBulletScene::mouseButtonPressed(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
+bool VSCOgreBulletScene::mouseButtonPressed(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
     
     if (mTraceUI) std::cout << "VSCOgreBulletScene::mouseButtonPressed : " << position << " (" << buttonID << ")" << std::endl;
@@ -575,10 +575,10 @@ bool VSCOgreBulletScene::mouseButtonPressed(const Ogre::Vector2& position, OIS::
         }
     }
     
-    return VSCOgreInputListener::mouseButtonPressed(position, buttonID);;
+    return VSCOgreInputListener::mouseButtonPressed(renderWindow, position, buttonID);
 }
 
-bool VSCOgreBulletScene::mouseButtonReleased(const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
+bool VSCOgreBulletScene::mouseButtonReleased(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
     
     if (mTraceUI) std::cout << "VSCOgreBulletScene mouseButtonReleased : " << position << " (" << buttonID << ")" << std::endl;
@@ -625,13 +625,13 @@ bool VSCOgreBulletScene::mouseButtonReleased(const Ogre::Vector2& position, OIS:
         }
     }
     
-    return VSCOgreInputListener::mouseButtonReleased(position, buttonID);
+    return VSCOgreInputListener::mouseButtonReleased(renderWindow, position, buttonID);
 }
 
 
 
 // -------------------------------------------------------------------------
-bool VSCOgreBulletScene::mouseMoved(const Ogre::Vector2& position, const Ogre::Vector2& movement)
+bool VSCOgreBulletScene::mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
     if (mTraceUI) std::cout << "VSCOgreBulletScene::mouseMoved position: " << position << ", movement: " << movement << "" << std::endl;
     
@@ -674,7 +674,7 @@ bool VSCOgreBulletScene::mouseMoved(const Ogre::Vector2& position, const Ogre::V
         return true;
     }
 
-    return VSCOgreInputListener::mouseMoved(position, movement);
+    return VSCOgreInputListener::mouseMoved(renderWindow, position, movement);
 
     /*
     
@@ -694,14 +694,14 @@ bool VSCOgreBulletScene::mouseMoved(const Ogre::Vector2& position, const Ogre::V
 }
 
 
-bool VSCOgreBulletScene::mouseEntered(const Ogre::Vector2& position)
+bool VSCOgreBulletScene::mouseEntered(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position)
 {
     if (mTraceUI) std::cout << "VSCOgreBulletScene mouse entered " << position << std::endl;
     
     return false;
 }
 
-bool VSCOgreBulletScene::mouseExited(const Ogre::Vector2& position)
+bool VSCOgreBulletScene::mouseExited(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position)
 {
     if (mTraceUI)  std::cout << "VSCOgreBulletScene mouse exited " << position << std::endl;
     
@@ -709,7 +709,7 @@ bool VSCOgreBulletScene::mouseExited(const Ogre::Vector2& position)
 }
 
 // -------------------------------------------------------------------------
-bool VSCOgreBulletScene::keyPressed(OIS::KeyCode key)
+bool VSCOgreBulletScene::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     
     if (mTraceUI) std::cout << "VSCOgreBulletScene got key pressed code: " << key << std::endl; 
@@ -814,26 +814,26 @@ bool VSCOgreBulletScene::keyPressed(OIS::KeyCode key)
     
     if (handled) return true;
     
-    return VSCOgreInputListener::keyPressed(key);
+    return VSCOgreInputListener::keyPressed(renderWindow, key);
 }
 
 // -------------------------------------------------------------------------
-bool VSCOgreBulletScene::keyReleased(OIS::KeyCode key)
+bool VSCOgreBulletScene::keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
-    return VSCOgreInputListener::keyReleased(key);
+    return VSCOgreInputListener::keyReleased(renderWindow, key);
 }
 
 // -------------------------------------------------------------------------
 OgreBulletDynamics::RigidBody* VSCOgreBulletScene::getBodyUnderCursorUsingBullet(Ogre::Vector3 &intersectionPoint, Ray &rayTo)
 {
     
-    float absX = 0.0;
-    float absY = 0.0;
+    float absX = this->getInputAdapter()->getLastMousePosition().x;
+    float absY = this->getInputAdapter()->getLastMousePosition().y;
     
-    absX = this->getInputAdapter()->getLastMousePosition().x;
-    absY = this->getInputAdapter()->getLastMousePosition().y;
+    Ogre::Viewport* viewport = mCamera->getViewport();
     
-    
+    float normX = absX / (float) viewport->getActualWidth();
+    float normY = absY / (float) viewport->getActualHeight();
     
     /*
      *  See http://www.ogre3d.org/docs/api/html/classOgre_1_1Viewport.html
@@ -872,10 +872,17 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletScene::getBodyUnderCursorUsingOgre(O
     
     if (mTraceUI) std::cout << "VSCOgreBulletScene::getBodyUnderCursorUsingOgre norm coord: (" << normX << "," << normY << ")" << std::endl;
     
-    rayTo = mCamera->getCameraToViewportRay (absX, absY);
+    if (mTraceUI) std::cout << "VSCOgreBulletScene::getBodyUnderCursorUsingOgre viewport is " << viewport << std::endl;
+    
+    //rayTo = mCamera->getCameraToViewportRay (absX, absY);
+    rayTo = mCamera->getCameraToViewportRay (normX, normY);
+    
+    if (mTraceUI) std::cout << "VSCOgreBulletScene::getBodyUnderCursorUsingOgre rayTo is " << &rayTo << std::endl;
 
     mRayQuery->setRay (rayTo);
+    
     const RaySceneQueryResult& result = mRayQuery->execute();
+    
     if (!result.empty())
     {
         RaySceneQueryResult::const_iterator i = result.begin();
@@ -900,7 +907,8 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletScene::getBodyUnderCursorUsingOgre(O
             }
             ++i;
         }	
-    }// if results.	 
+    }// if results.
+    
     return 0;
 }
 // -------------------------------------------------------------------------
