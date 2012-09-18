@@ -166,7 +166,7 @@ bool VSCOgreCameraController::frameStarted(Ogre::Real elapsedTime)
 
     if (this->getInputAdapter()->isMouseButtonPressed(OIS::MB_Right))
     {
-        if (mTraceUI) std::cout << "VSCOgreCameraController detected middle mouse, yaw: " << mCameraRotX << ", pitch: " << mCameraRotY << std::endl;
+        if (mTraceUI) std::cout << "VSCOgreCameraController detected right mouse, yaw: " << mCameraRotX << ", pitch: " << mCameraRotY << std::endl;
         mCamera->yaw(mCameraRotX);
         mCamera->pitch(mCameraRotY);
         mCameraRotX = 0;

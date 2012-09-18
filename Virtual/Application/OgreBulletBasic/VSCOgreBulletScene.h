@@ -198,7 +198,7 @@ protected:
    OgreBulletDynamics::RigidBody                            *mPickedBody;
    OgreBulletDynamics::TypedConstraint                      *mPickConstraint;
    Ogre::Vector3                                            mOldPickingPos;
-   Ogre::Vector3                                            mOldPickingDist;
+   Ogre::Real                                               mOldPickingDist;
    OgreBulletCollisions::CollisionClosestRayResultCallback  *mCollisionClosestRayResultCallback;
 
    OgreBulletCollisions::DebugLines                         *mDebugRayLine;

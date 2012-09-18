@@ -477,30 +477,28 @@ bool VSCOgreBulletScene::mouseButtonPressed(Ogre::RenderWindow* renderWindow, co
             Ogre::Vector3 pickPos;
             Ogre::Ray rayTo;
             
-            //OgreBulletDynamics::RigidBody* body = getBodyUnderCursorUsingBullet(pickPos, rayTo);
-            OgreBulletDynamics::RigidBody* body = getBodyUnderCursorUsingOgre(pickPos, rayTo);
+            OgreBulletDynamics::RigidBody* body = getBodyUnderCursorUsingBullet(pickPos, rayTo);
+            //OgreBulletDynamics::RigidBody* body = getBodyUnderCursorUsingOgre(pickPos, rayTo);
             
             if (body)
             {
                 if (mTraceUI) std::cout << "VSCOgreBulletScene::mouseButtonPressed Left button, detected body" << std::endl;
                 
-                //other exclusions?
-                if (!(body->isStaticObject() 
-                      //|| body->isKinematicObject()
-                      ))
+                if (!body->isStaticObject())
                 {
                     mPickedBody = body;
                     mPickedBody->disableDeactivation();		
                     const Ogre::Vector3 localPivot (body->getCenterOfMassPivot(pickPos));
-                    OgreBulletDynamics::PointToPointConstraint *p2p  = 
-                    new OgreBulletDynamics::PointToPointConstraint(body, localPivot);
                     
+                    OgreBulletDynamics::PointToPointConstraint *p2p  = new OgreBulletDynamics::PointToPointConstraint(body, localPivot);
                     mWorld->addConstraint(p2p);					    
                     
                     //save mouse position for dragging
                     mOldPickingPos = pickPos;
                     const Ogre::Vector3 eyePos(mCamera->getDerivedPosition());
-                    mOldPickingDist  = (pickPos - eyePos).length();
+                    mOldPickingDist = (pickPos - eyePos).length();
+                    
+                    if (mTraceUI) std::cout << "VSCOgreBulletScene::mouseButtonPressed picked body " << mPickedBody << " at distance " << mOldPickingDist << std::endl;
                     
                     //very weak constraint for picking
                     p2p->setTau (0.1f);
@@ -644,19 +642,21 @@ bool VSCOgreBulletScene::mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre
         {
             if (mTraceUI) std::cout << "VSCOgreBulletScene::mouseMoved Left button is pressed and constraint exists" << std::endl;
             
-            Ogre::Ray rayTo = mCamera->getCameraToViewportRay (position.x, position.y);
+            Ogre::Viewport* viewport = mCamera->getViewport();
+            
+            float normX = position.x / (float) viewport->getActualWidth();
+            float normY = 1.0 - (position.y / (float) viewport->getActualHeight());
+            
+            //Ogre::Ray rayTo = mCamera->getCameraToViewportRay (position.x, position.y);
+            
+            Ogre::Ray rayTo = mCamera->getCameraToViewportRay (normX, normY);
+            
             //move the constraint pivot
             OgreBulletDynamics::PointToPointConstraint * p2p = static_cast <OgreBulletDynamics::PointToPointConstraint *>(mPickConstraint);
-            //keep it at the same picking distance
-
-            const Ogre::Vector3 eyePos(mCamera->getDerivedPosition());
-
-            //Ogre::Vector3 dir = rayTo.getDirection () - eyePos;
-            //dir.normalise();
-            //dir *= mOldPickingDist;
             
+            //keep it at the same picking distance
+            const Ogre::Vector3 eyePos(mCamera->getDerivedPosition());
             Ogre::Vector3 dir = rayTo.getDirection () * mOldPickingDist;
-            dir.normalise();
 
             const Ogre::Vector3 newPos (eyePos + dir);
             p2p->setPivotB (newPos);    
@@ -848,14 +848,14 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletScene::getBodyUnderCursorUsingBullet
     Ogre::Viewport* viewport = mCamera->getViewport();
     
     float normX = absX / (float) viewport->getActualWidth();
-    float normY = absY / (float) viewport->getActualHeight();
+    float normY = 1.0 - (absY / (float) viewport->getActualHeight());
     
     /*
      *  See http://www.ogre3d.org/docs/api/html/classOgre_1_1Viewport.html
      *  It seems to me that these x/y coordinates should be 0-1 (normalised)
      */
     
-    rayTo = mCamera->getCameraToViewportRay (absX, absY);
+    rayTo = mCamera->getCameraToViewportRay (normX, normY);
 
 	delete mCollisionClosestRayResultCallback;
 	mCollisionClosestRayResultCallback = new CollisionClosestRayResultCallback(rayTo, mWorld, mCamera->getFarClipDistance());
@@ -883,11 +883,10 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletScene::getBodyUnderCursorUsingOgre(O
     Ogre::Viewport* viewport = mCamera->getViewport();
     
     float normX = absX / (float) viewport->getActualWidth();
-    float normY = absY / (float) viewport->getActualHeight();
+    float normY = 1.0 - (absY / (float) viewport->getActualHeight());
     
-    if (mTraceUI) std::cout << "VSCOgreBulletScene::getBodyUnderCursorUsingOgre norm coord: (" << normX << "," << normY << ")" << std::endl;
-    
-    if (mTraceUI) std::cout << "VSCOgreBulletScene::getBodyUnderCursorUsingOgre viewport is " << viewport << std::endl;
+    //if (mTraceUI) std::cout << "VSCOgreBulletScene::getBodyUnderCursorUsingOgre norm coord: (" << normX << "," << normY << ")" << std::endl;
+    //if (mTraceUI) std::cout << "VSCOgreBulletScene::getBodyUnderCursorUsingOgre viewport is " << viewport << std::endl;
     
     //rayTo = mCamera->getCameraToViewportRay (absX, absY);
     rayTo = mCamera->getCameraToViewportRay (normX, normY);
@@ -900,29 +899,53 @@ OgreBulletDynamics::RigidBody* VSCOgreBulletScene::getBodyUnderCursorUsingOgre(O
     
     if (!result.empty())
     {
+        if (mTraceUI) std::cout << "VSCOgreBulletScene::getBodyUnderCursorUsingOgre results has " << result.size() << " elements" << std::endl;
+        
         RaySceneQueryResult::const_iterator i = result.begin();
 
         mRayQuery->setSortByDistance (true, 1);//only one hit
+        
         while((i != result.end()))
         {
             SceneNode *node = i->movable->getParentSceneNode() ;
 			intersectionPoint = node->_getDerivedPosition ();
             const unsigned short num = node->numAttachedObjects();
+            
             MovableObject* movable;
-            for (unsigned short cur = 0;cur < num; cur++)
+            
+            for (unsigned short cur = 0; cur < num; cur++)
             {
                 movable = node->getAttachedObject(cur);
-                if (movable->getMovableType() == OgreBulletCollisions::Object::mMovableType) 
+                
+                if (mTraceUI) std::cout << "VSCOgreBulletScene::getBodyUnderCursorUsingOgre movable->getMovableType() " << movable->getMovableType() << std::endl;
+                
+                /*
+                 *  Does not work, use ray casts using bullet, for some reason to be investigated we are getting back a simple Ogre::MovableObject 
+                 *  (dynamic down cast does not work)
+                 */
+                
+                OgreBulletCollisions::Object *object = dynamic_cast <OgreBulletCollisions::Object *>(movable);
+                OgreBulletDynamics::RigidBody *body = dynamic_cast <OgreBulletDynamics::RigidBody *>(object);
+                
+                if (movable->getMovableType() == OgreBulletCollisions::Object::mMovableType)
                 {
-                    OgreBulletCollisions::Object *object = static_cast <OgreBulletCollisions::Object *>(movable);
-                    OgreBulletDynamics::RigidBody *body = static_cast <OgreBulletDynamics::RigidBody *>(object);
+                    if (mTraceUI) std::cout << "VSCOgreBulletScene::getBodyUnderCursorUsingOgre object " << movable << " is movable" << std::endl;
                     setDebugText ("Hit :" + body->getName());
                     return body;
+                }
+                else
+                {
+                    if (mTraceUI) std::cout << "VSCOgreBulletScene::getBodyUnderCursorUsingOgre object " << movable << " is not movable" << std::endl;
                 }
             }
             ++i;
         }	
-    }// if results.
+    }
+    
+    else
+    {
+        if (mTraceUI) std::cout << "VSCOgreBulletScene::getBodyUnderCursorUsingOgre results is empty" << std::endl;
+    }
     
     return 0;
 }
