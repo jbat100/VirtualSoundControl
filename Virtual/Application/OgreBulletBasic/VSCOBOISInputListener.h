@@ -19,7 +19,7 @@ A basic test framework that minimize code in each test scene listener.
 
 #include <Ogre/Ogre.h>
 #include "OIS.h"
-#include "VSCOgreInputListener.h"
+#include "VSCOBInputListener.h"
 
 class VSCOgreBulletOISInputListener : public VSCOgreInputListener
 {

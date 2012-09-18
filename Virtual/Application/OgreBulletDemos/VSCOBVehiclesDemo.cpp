@@ -6,8 +6,8 @@ Copyright (c) 2007 tuan.kuranes@gmail.com (Use it Freely, even Statically, but h
 This source file is not LGPL, it's public source code that you can reuse.
 -----------------------------------------------------------------------------*/
 
-#include "VSCOgreBulletVehiclesDemo.h" 
-#include "VSCOgreBulletApplication.h"
+#include "VSCOBVehiclesDemo.h" 
+#include "VSCOBApplication.h"
 
 #include "Shapes/OgreBulletCollisionsBoxShape.h"
 #include "Shapes/OgreBulletCollisionsCompoundShape.h"
@@ -16,7 +16,7 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "Debug/OgreBulletCollisionsDebugDrawer.h"
 #include "Constraints/OgreBulletDynamicsRaycastVehicle.h"
 
-#include "VSCOgreInputAdapter.h"
+#include "VSCOBInputAdapter.h"
 
 using namespace OIS;
 using namespace Ogre;

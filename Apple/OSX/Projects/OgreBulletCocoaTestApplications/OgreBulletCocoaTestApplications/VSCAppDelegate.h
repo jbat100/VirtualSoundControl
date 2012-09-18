@@ -7,11 +7,13 @@
 //
 
 #include "OgrePrerequisites.h"
-#import "OgreOSXCocoaView.h"
+#include "VSCOBApplication.h"
+#include "VSCOBScene.h"
 
+#import "OgreOSXCocoaView.h"
 #import <Cocoa/Cocoa.h>
 
-#import <vector>
+#include <vector>
 
 class VSC::OB::Scene;
 class VSC::OB::Application;

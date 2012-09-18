@@ -1,5 +1,5 @@
 
-#include "VSCOgreKeyboardAction.h"
+#include "VSCOBKeyboardAction.h"
 
 std::string VSC::OB::KeyboardAction::stringForKey(Key key)
 {

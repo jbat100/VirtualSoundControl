@@ -18,7 +18,7 @@ Description: Base class for all the OGRE examples
 -----------------------------------------------------------------------------
 */
 
-#import "VSC::OB::OSXApplicationSetup.h"
+#import "VSCOBOSXApplicationSetup.h"
 
 #import <Cocoa/Cocoa.h>
 
@@ -27,13 +27,12 @@ Description: Base class for all the OGRE examples
 #include <Ogre/OSX/macUtils.h>
 
 
-#include "VSC::OB::ApplicationBase.h"
+#include "VSCOBApplicationBase.h"
 #include "VSCException.h"
-#include "VSCOgreInputListener.h"
-#include "VSCOgreBulletCocoaInputAdapter.h"
+#include "VSCOBInputListener.h"
+#include "VSCOBOSXInputAdapter.h"
 
 #include <boost/assert.hpp>
-
 
 #include "OgreOSXCocoaWindow.h"
 

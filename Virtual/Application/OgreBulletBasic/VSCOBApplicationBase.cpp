@@ -25,13 +25,13 @@ Description: Base class for all the OGRE examples
 #include <Ogre/OSX/macUtils.h>
 #endif
 
-#include "VSCOgreApplicationCocoaSetup.h"
-#include "VSCOgreApplication.h"
-#include "VSCOgreInputAdapter.h"
+#include "VSCOBOSXApplicationSetup.h"
+#include "VSCOBApplicationBase.h"
+#include "VSCOBInputAdapter.h"
 
 using namespace Ogre;
 
-VSC::OB::ApplicationBase::VSCOgreApplication() : 
+VSC::OB::ApplicationBase::ApplicationBase() : 
 mRoot(0),
 mCamera(0),
 mSceneMgr(0),
@@ -64,7 +64,7 @@ mWindow(0)
 }
 
 /// Standard destructor
-VSC::OB::ApplicationBase::~VSC::OB::ApplicationBase()
+VSC::OB::ApplicationBase::~ApplicationBase()
 {
     if (mRoot)
         OGRE_DELETE mRoot;

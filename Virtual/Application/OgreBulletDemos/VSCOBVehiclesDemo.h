@@ -9,7 +9,7 @@ This source file is not LGPL, it's public source code that you can reuse.
 #define _VSC_OGRE_BULLET_VEHICULES_DEMO_H_
 
 #include "OgreBulletDynamics.h"
-#include "VSCOgreBulletScene.h"
+#include "VSCOBScene.h"
 
 namespace VSC {
     

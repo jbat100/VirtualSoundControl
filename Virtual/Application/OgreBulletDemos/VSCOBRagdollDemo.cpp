@@ -7,19 +7,16 @@ This source file is not LGPL, it's public source code that you can reuse.
 -----------------------------------------------------------------------------*/
 
 
-#include "VSCOgreBulletRagdollDemo.h"
-#include "VSCOgreBulletApplication.h"
+#include "VSCOBRagdollDemo.h"
+#include "VSCOBApplication.h"
 
 #include "OgreBulletDynamicsWorld.h"
 #include "OgreBulletDynamicsRigidBody.h"
 #include "Debug/OgreBulletCollisionsDebugDrawer.h"
 
-#include "VSCOgreInputAdapter.h"
+#include "VSCOBInputAdapter.h"
 
-#if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
 using namespace OIS;
-#endif 
-
 using namespace Ogre;
 using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
@@ -73,7 +70,7 @@ int             _ragdoll_count;
 // -------------------------------------------------------------------------
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletRagdollDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Application *application)
+void VSC::OB::RagdollDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Application *application)
 {
     mHelpKeys.clear();
     mHelpKeys.push_back (BASIC_HELP_INFO0);
@@ -120,7 +117,7 @@ void VSCOgreBulletRagdollDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
 }
 
 // -------------------------------------------------------------------------
-bool VSCOgreBulletRagdollDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
+bool VSC::OB::RagdollDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
 	const float trowDist = 2.0f;
     bool handled = true;
@@ -152,12 +149,12 @@ bool VSCOgreBulletRagdollDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
     return VSC::OB::Scene::keyPressed(renderWindow, key);
 }
 // -------------------------------------------------------------------------
-void VSCOgreBulletRagdollDemo::button0Pressed()
+void VSC::OB::RagdollDemo::button0Pressed()
 {
 	shootToKill();
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletRagdollDemo::frameStarted(Ogre::Real elapsedTime)
+bool VSC::OB::RagdollDemo::frameStarted(Ogre::Real elapsedTime)
 {
 	_last_ragdoll += elapsedTime;
 
@@ -192,7 +189,7 @@ bool VSCOgreBulletRagdollDemo::frameStarted(Ogre::Real elapsedTime)
 	return VSC::OB::Scene::frameStarted(elapsedTime);;
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletRagdollDemo::frameEnded(Ogre::Real elapsedTime)
+bool VSC::OB::RagdollDemo::frameEnded(Ogre::Real elapsedTime)
 {
 #ifdef _RAGDOLL_FINISHED
 	_shot_time -= time;
@@ -246,7 +243,7 @@ bool VSCOgreBulletRagdollDemo::frameEnded(Ogre::Real elapsedTime)
 }
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletRagdollDemo::shootToKill()
+void VSC::OB::RagdollDemo::shootToKill()
 {
 #ifdef _RAGDOLL_FINISHED
 	if (_shot_time <= 0.0)

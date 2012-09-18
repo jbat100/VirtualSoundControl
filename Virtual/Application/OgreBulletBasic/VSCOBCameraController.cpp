@@ -1,12 +1,12 @@
 
-#include "VSCOgreCameraController.h"
-#include "VSCOgreInputAdapter.h"
-#include "VSCOgreKeyboardAction.h"
+#include "VSCOBCameraController.h"
+#include "VSCOBInputAdapter.h"
+#include "VSCOBKeyboardAction.h"
 
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
-VSCOgreCameraController::VSCOgreCameraController() :    
+VSC::OB::CameraController::CameraController() :    
 mCameraSpeed (0.1f),
 mMouseSensitivity (0.13f),
 mCameraTrans (Ogre::Vector3::ZERO),
@@ -18,25 +18,25 @@ mCamera(0)
 
 }
 
-bool VSCOgreCameraController::renderWindowChangedSize(Ogre::RenderWindow* renderWindow)
+bool VSC::OB::CameraController::renderWindowChangedSize(Ogre::RenderWindow* renderWindow)
 {
-    if (mTraceUI) std::cout << "VSCOgreCameraController::renderWindowChangedSize" << std::endl;
+    if (mTraceUI) std::cout << "VSC::OB::CameraController::renderWindowChangedSize" << std::endl;
     return false;
 }
 
 // -------------------------------------------------------------------------
-bool VSCOgreCameraController::mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement)
+bool VSC::OB::CameraController::mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
-    if (mTraceUI) std::cout << "VSCOgreCameraController::mouseMoved position " << position << ", movement " << movement << std::endl;
+    if (mTraceUI) std::cout << "VSC::OB::CameraController::mouseMoved position " << position << ", movement " << movement << std::endl;
     
     //bool handled = true;
     
     if (this->getInputAdapter()->isMouseButtonPressed(OIS::MB_Right))
     {
-        if (mTraceUI) std::cout << "VSCOgreCameraController::mouseMoved RIGHT BUTTON PRESSED" << std::endl;
+        if (mTraceUI) std::cout << "VSC::OB::CameraController::mouseMoved RIGHT BUTTON PRESSED" << std::endl;
         mCameraRotX = Ogre::Degree(-movement.x * mMouseSensitivity);
         mCameraRotY = Ogre::Degree(-movement.y * mMouseSensitivity);
-        if (mTraceUI) std::cout << "VSCOgreCameraController::mouseMoved mCameraRotX: " << mCameraRotX << " mCameraRotY:" << mCameraRotY << std::endl;
+        if (mTraceUI) std::cout << "VSC::OB::CameraController::mouseMoved mCameraRotX: " << mCameraRotX << " mCameraRotY:" << mCameraRotY << std::endl;
         return true;
     }
     
@@ -46,10 +46,10 @@ bool VSCOgreCameraController::mouseMoved(Ogre::RenderWindow* renderWindow, const
 
 
 // -------------------------------------------------------------------------
-bool VSCOgreCameraController::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
+bool VSC::OB::CameraController::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     
-    if (mTraceUI) std::cout << "VSCOgreCameraController got key pressed code: " << key << " (W is " << OIS::KC_W << ")" << std::endl; 
+    if (mTraceUI) std::cout << "VSC::OB::CameraController got key pressed code: " << key << " (W is " << OIS::KC_W << ")" << std::endl; 
     
     bool handled = true;
     
@@ -102,9 +102,9 @@ bool VSCOgreCameraController::keyPressed(Ogre::RenderWindow* renderWindow, OIS::
 }
 
 // -------------------------------------------------------------------------
-bool VSCOgreCameraController::keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
+bool VSC::OB::CameraController::keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
-    if (mTraceUI) std::cout << "VSCOgreCameraController keyReleased : " << key << std::endl;
+    if (mTraceUI) std::cout << "VSC::OB::CameraController keyReleased : " << key << std::endl;
     
     bool handled = true;
     
@@ -157,16 +157,16 @@ bool VSCOgreCameraController::keyReleased(Ogre::RenderWindow* renderWindow, OIS:
     return VSC::OB::InputListener::keyReleased(renderWindow, key);
 }
 
-bool VSCOgreCameraController::frameStarted(Ogre::Real elapsedTime)
+bool VSC::OB::CameraController::frameStarted(Ogre::Real elapsedTime)
 {
 
-    if (mTraceFrame) std::cout << "VSCOgreCameraController frameStarted" << std::endl;
+    if (mTraceFrame) std::cout << "VSC::OB::CameraController frameStarted" << std::endl;
     
     BOOST_ASSERT_MSG(this->getInputAdapter() != 0, "Expected adapter");
 
     if (this->getInputAdapter()->isMouseButtonPressed(OIS::MB_Right))
     {
-        if (mTraceUI) std::cout << "VSCOgreCameraController detected right mouse, yaw: " << mCameraRotX << ", pitch: " << mCameraRotY << std::endl;
+        if (mTraceUI) std::cout << "VSC::OB::CameraController detected right mouse, yaw: " << mCameraRotX << ", pitch: " << mCameraRotY << std::endl;
         mCamera->yaw(mCameraRotX);
         mCamera->pitch(mCameraRotY);
         mCameraRotX = 0;

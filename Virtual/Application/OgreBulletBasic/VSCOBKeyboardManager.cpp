@@ -1,17 +1,17 @@
 
-#include "VSCOgreKeyboardManager.h"
+#include "VSCOBKeyboardManager.h"
 #include "VSCUI.h"
 #include "VSCBindings.hpp"
-#include "VSCOgreKeyboardAction.h"
+#include "VSCOBKeyboardAction.h"
 
 #include <boost/assert.hpp>
 
-VSC::OB::KeyboardManager::VSC::OB::KeyboardManager()
+VSC::OB::KeyboardManager::KeyboardManager()
 {
     
 }
 
-VSC::OB::KeyboardManager::~VSC::OB::KeyboardManager()
+VSC::OB::KeyboardManager::~KeyboardManager()
 {
     
 }

@@ -1,5 +1,5 @@
 
-#include "VSCOgreKeyBindings.h"
+#include "VSCOBKeyBindings.h"
 
 #include <boost/pointer_cast.hpp>
 

@@ -11,17 +11,17 @@
 
 #import <vector>
 
-#import "VSC::OB::Scene.h"
-#import "VSCOgreBulletApplication.h"
+#import "VSCOBScene.h"
+#import "VSCOBApplication.h"
 #import "VSCOBOSXWindow.h"
-#import "VSCOgreApplicationCocoaSetup.h"
+#import "VSCOBOSXApplicationSetup.h"
 
-#import "VSCOgreBulletPrimitivesDemo.h"
-#import "VSCOgreBulletTriMeshDemo.h"
-#import "VSCOgreBulletVehiclesDemo.h"
-#import "VSCOgreBulletConstraintsDemo.h"
-#import "VSCOgreBulletTerrainDemo.h"
-#import "VSCOgreBulletRagdollDemo.h"
+#import "VSCOBPrimitivesDemo.h"
+#import "VSCOBTriMeshDemo.h"
+#import "VSCOBVehiclesDemo.h"
+#import "VSCOBConstraintsDemo.h"
+#import "VSCOBTerrainDemo.h"
+#import "VSCOBRagdollDemo.h"
 
 
 using namespace OIS;

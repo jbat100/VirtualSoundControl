@@ -6,14 +6,14 @@ Copyright (c) 2007 tuan.kuranes@gmail.com (Use it Freely, even Statically, but h
 This source file is not LGPL, it's public source code that you can reuse.
 -----------------------------------------------------------------------------*/
 
-#include "VSCOgreBulletScene.h"
-#include "VSCOgreBetaGUIListener.h"
+#include "VSCOBScene.h"
+#include "VSCOBBetaGUIListener.h"
 
 
 using namespace Ogre;
 
 // -------------------------------------------------------------------------
-VSCOgreBetaGUIListener::VSCOgreBetaGUIListener(VSC::OB::Scene *listener, Ogre::RenderWindow *win) :
+VSC::OB::BetaGUIListener::BetaGUIListener(VSC::OB::Scene *listener, Ogre::RenderWindow *win) :
     mListener(listener),
     mWindow(win),
     mMouseOverlay(0),
@@ -66,7 +66,7 @@ VSCOgreBetaGUIListener::VSCOgreBetaGUIListener(VSC::OB::Scene *listener, Ogre::R
 
 }
 // -------------------------------------------------------------------------
-VSCOgreBetaGUIListener::~VSCOgreBetaGUIListener()
+VSC::OB::BetaGUIListener::~BetaGUIListener()
 {
     // other buttons  and window managed by BETAGUI will be deleted by BETAGUI himself.
     delete mGui;

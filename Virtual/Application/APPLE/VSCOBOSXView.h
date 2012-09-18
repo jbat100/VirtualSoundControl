@@ -8,7 +8,9 @@
 
 #import "OgreOSXCocoaView.h"
 
-class VSC::OB::OSXInputAdapter;
+namespace VSC { namespace OB {
+    class OSXInputAdapter;
+}}
 
 @interface VSCOBOSXView : OgreView {
     

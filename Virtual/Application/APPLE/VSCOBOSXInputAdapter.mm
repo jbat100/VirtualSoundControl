@@ -1,7 +1,6 @@
 
-#include "VSCOgreBulletCocoaInputAdapter.h"
-#include "VSCOgreBulletScene.h"
-#include "VSCOgreBulletCocoaInputListener.h"
+#include "VSCOBOSXInputAdapter.h"
+#include "VSCOBScene.h"
 #include "OgreOSXCocoaView.h"
 
 #include <boost/foreach.hpp>
@@ -9,7 +8,7 @@
 
 using namespace OIS;
 
-VSC::OB::OSXInputAdapter::VSC::OB::OSXInputAdapter(void) :
+VSC::OB::OSXInputAdapter::OSXInputAdapter(void) :
 mCocoaView(0)
 {
     this->populateKeyConversionMap();

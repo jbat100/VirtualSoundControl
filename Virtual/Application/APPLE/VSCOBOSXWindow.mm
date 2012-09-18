@@ -9,8 +9,8 @@
 #import "VSCOBOSXWindow.h"
 #import "NSString+VSCAdditions.h"
 
-#include "VSCOgreBulletApplication.h"
-#include "VSCOgreBulletScene.h"
+#include "VSCOBApplication.h"
+#include "VSCOBScene.h"
 #include <Ogre/Ogre.h>
 
 #include <vector>

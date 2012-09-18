@@ -1,8 +1,8 @@
 
 
-#include "VSCOgreBulletScene.h"
-#include "VSCOgreInputListener.h"
-#include "VSCOgreInputAdapter.h"
+#include "VSCOBScene.h"
+#include "VSCOBInputListener.h"
+#include "VSCOBInputAdapter.h"
 
 #include <boost/assert.hpp>
 
@@ -11,7 +11,7 @@ using Ogre::Real;
 using Ogre::RenderWindow;
 
 // -------------------------------------------------------------------------
-VSC::OB::InputListener::VSC::OB::InputListener() :
+VSC::OB::InputListener::InputListener() :
 mAdapter(0),
 mNextInputListener(0)
 {

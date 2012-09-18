@@ -11,7 +11,7 @@ This source file is not LGPL, it's public source code that you can reuse.
 
 #include "OgreBulletDynamics.h"
 
-#include "VSCOgreBulletScene.h"
+#include "VSCOBScene.h"
 
 namespace VSC {
     

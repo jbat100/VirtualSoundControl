@@ -10,13 +10,13 @@ Copyright (c) 2007 tuan.kuranes@gmail.com (Use it Freely, even Statically, but h
 
 This source file is not LGPL, it's public source code that you can reuse.
 -----------------------------------------------------------------------------*/
-#include "VSCOgreBulletConstraintsDemo.h"
+#include "VSCOBConstraintsDemo.h"
 
 #include "OgreBulletDynamicsWorld.h"
 #include "OgreBulletDynamicsRigidBody.h"
 #include "Debug/OgreBulletCollisionsDebugDrawer.h"
 
-#include "VSCOgreInputAdapter.h"
+#include "VSCOBInputAdapter.h"
 
 using namespace OIS;
 using namespace Ogre;

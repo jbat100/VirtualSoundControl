@@ -5,90 +5,97 @@
 #include <string>
 #include <set>
 
-class VSC::OB::KeyboardAction
-{
+namespace VSC {
     
-public:
-    
-    enum Key 
-    {
-        None = 0,
+    namespace OB {
+
+        class KeyboardAction
+        {
+            
+        public:
+            
+            enum Key 
+            {
+                None = 0,
+                
+                /*
+                 *  General
+                 */
+                
+                Quit,
+                SaveScreenShot,
+                
+                /*
+                 *  Movement
+                 */
+                
+                MoveCameraForward,
+                MoveCameraBackward,
+                MoveCameraRight,
+                MoveCameraLeft,
+                
+                /*
+                 *  Debug Display
+                 */
+                
+                ToggleDisplayWireFrame,
+                ToggleDisplayAABB,
+                ToggleFeaturesText,
+                ToggleDisplayContactPoints,
+                ToggleDeactivation,
+                ToggleHelpText,
+                ToggleDrawText,
+                ToggleProfileTimings,
+                ToggleSatComparison,
+                ToggleBulletLCP,
+                ToggleCCD,
+                
+                /*
+                 *  Simulation
+                 */
+                
+                ToggleSimulationPause,
+                SimulationStep,
+                
+                /*
+                 *  Shooting
+                 */
+                
+                IncrementShootSpeed,
+                DecrementShootSpeed,
+                ShootCube,
+                ShootSphere,
+                ShootCylinder,
+                ShootCone,
+                DropCube,
+                DropSphere,
+                DropCylinder,
+                DropCone,
+                
+                /*
+                 *  Vehicle
+                 */
+                
+                VehicleSteerLeft,
+                VehicleSteerRight,
+                VehicleMoveForward,
+                VehicleMoveBackward,
+                VehicleIncrementEngineStyle,
+                VehicleDecrementEngineStyle,
+                VehicleIncrementSteeringStyle,
+                VehicleDecrementSteeringStyle,
+                
+                
+            };
+            
+            typedef std::set<Key>   KeySet;
+            
+            static std::string stringForKey(Key key);
+            
+        };
         
-        /*
-         *  General
-         */
-        
-        Quit,
-        SaveScreenShot,
-        
-        /*
-         *  Movement
-         */
-        
-        MoveCameraForward,
-        MoveCameraBackward,
-        MoveCameraRight,
-        MoveCameraLeft,
-        
-        /*
-         *  Debug Display
-         */
-        
-        ToggleDisplayWireFrame,
-        ToggleDisplayAABB,
-        ToggleFeaturesText,
-        ToggleDisplayContactPoints,
-        ToggleDeactivation,
-        ToggleHelpText,
-        ToggleDrawText,
-        ToggleProfileTimings,
-        ToggleSatComparison,
-        ToggleBulletLCP,
-        ToggleCCD,
-        
-        /*
-         *  Simulation
-         */
-        
-        ToggleSimulationPause,
-        SimulationStep,
-        
-        /*
-         *  Shooting
-         */
-        
-        IncrementShootSpeed,
-        DecrementShootSpeed,
-        ShootCube,
-        ShootSphere,
-        ShootCylinder,
-        ShootCone,
-        DropCube,
-        DropSphere,
-        DropCylinder,
-        DropCone,
-        
-        /*
-         *  Vehicle
-         */
-        
-        VehicleSteerLeft,
-        VehicleSteerRight,
-        VehicleMoveForward,
-        VehicleMoveBackward,
-        VehicleIncrementEngineStyle,
-        VehicleDecrementEngineStyle,
-        VehicleIncrementSteeringStyle,
-        VehicleDecrementSteeringStyle,
-        
-        
-    };
-    
-    typedef std::set<Key>   KeySet;
-    
-    static std::string stringForKey(Key key);
-    
-};
+    }
+}
 
 #endif//_VSC_OGRE_KEYBOARD_ACTION_H_
 

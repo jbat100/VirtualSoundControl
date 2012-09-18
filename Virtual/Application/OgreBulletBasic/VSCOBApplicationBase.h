@@ -23,18 +23,21 @@ Description: Base class for all the OGRE examples
 
 #include <Ogre/Ogre.h>
 #include <Ogre/OgreConfigFile.h>
-#include "VSCOgreInputListener.h"
-#include "VSCOgreKeyboardManager.h"
-#include "VSCOgreKeyBindings.h"
+#include "VSCOBInputListener.h"
+#include "VSCOBKeyboardManager.h"
+#include "VSCOBKeyBindings.h"
 
 namespace VSC {
     
     namespace OB {
 
         class InputAdapter;
+        
+        #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
         class OSXApplicationSetup;
+        #endif
 
-        /** 
+        /**
          *  Base class which manages the standard startup of an Ogre application.
          *  Designed to be subclassed for specific examples if required.
          */
@@ -48,16 +51,16 @@ namespace VSC {
             /// Standard destructor
             virtual ~ApplicationBase();
             
-        #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+            #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
             friend class OSXApplicationSetup;
             virtual bool setupWithOgreView(void* ogreView);
-        #else   
+            #else   
             /// Start the example
             virtual void go(void);
             // These internal methods package up the stages in the startup process
             /** Sets up the application - returns false if the user chooses to abandon configuration. */
             virtual bool setup(void);
-        #endif
+            #endif
             
             /*
              *  Ogre Setters/Getters

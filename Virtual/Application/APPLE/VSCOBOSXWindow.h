@@ -10,7 +10,10 @@
 
 @class VSCOBOSXView;
 
-class VSC::OB::Application;
+namespace VSC { namespace OB {
+    class Application;
+}}
+
 
 @interface VSCOBOSXWindow : NSWindow
 

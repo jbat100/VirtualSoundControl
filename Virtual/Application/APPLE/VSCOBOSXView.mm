@@ -8,7 +8,7 @@
 
 
 
-#include "VSCOgreBulletCocoaInputAdapter.h"
+#include "VSCOBOSXInputAdapter.h"
 #include <boost/assert.hpp>
 
 #import "VSCOBOSXView.h"

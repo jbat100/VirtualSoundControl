@@ -9,12 +9,12 @@ This source file is not LGPL, it's public source code that you can reuse.
  File modified for VSC project
  -----------------------------------------------------------------------------*/
 
-#include "VSCOgreBulletApplication.h"
-#include "VSCOgreBulletScene.h"
-#include "VSCOgreBetaGUIListener.h"
-#include "VSCOgreCameraController.h"
-#include "VSCOgreInputAdapter.h"
-#include "VSCOgreKeyboardAction.h";
+#include "VSCOBApplication.h"
+#include "VSCOBScene.h"
+#include "VSCOBBetaGUIListener.h"
+#include "VSCOBCameraController.h"
+#include "VSCOBInputAdapter.h"
+#include "VSCOBKeyboardAction.h"
 
 /*
  *  OgreBullet Shapes
@@ -120,7 +120,7 @@ int convertShadowTechniqueToInt(Ogre::ShadowTechnique i)
 
 //MARK: Basic Constructor which does abolutely nothing interesting at all 
 
-VSC::OB::Scene::VSCOgreBulletScene() :    
+VSC::OB::Scene::Scene() :    
 mCamera(0),
 mRoot(0),
 mSceneMgr(0),
@@ -154,7 +154,7 @@ void VSC::OB::Scene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Ap
     /*
      *  IMPORTANT: Subclasses must have created a camera before calling VSC::OB::Scene::init
      */
-    this->setCameraController(VSCOgreCameraController::SPtr(new VSCOgreCameraController));
+    this->setCameraController(VSC::OB::CameraController::SPtr(new VSC::OB::CameraController));
     this->getCameraController()->setCamera(mCamera);
     this->getCameraController()->setCameraSpeed(1.0f);
 
@@ -253,7 +253,7 @@ void VSC::OB::Scene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Ap
 
 
 
-void VSC::OB::Scene::setCameraController(VSCOgreCameraController::SPtr controller)
+void VSC::OB::Scene::setCameraController(VSC::OB::CameraController::SPtr controller)
 {
     mCameraController = controller;
     this->setNextInputListener(mCameraController.get());

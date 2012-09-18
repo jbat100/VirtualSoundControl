@@ -5,8 +5,8 @@
 // Include the OgreBullet interface which includes Ogre itself
 #include "OgreBulletCollisions.h"
 #include "OgreBulletDynamics.h"
-#include "VSCOgreBulletScene.h"
-#include "VSCOgreApplication.h"
+#include "VSCOBScene.h"
+#include "VSCOBApplicationBase.h"
 
 #include <Ogre/Ogre.h>
 
@@ -33,9 +33,9 @@ namespace VSC {
             Application(std::vector<Scene*> scenes);
             ~Application();
             
-        #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+            #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
             bool setupWithOgreView(void* ogreView);
-        #endif   
+            #endif   
             
             /*------------------------------------------------------
              *  Scenes stuff

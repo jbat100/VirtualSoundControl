@@ -1,9 +1,9 @@
     
-#include "VSCOgreBulletApplication.h"
-#include "VSCOgreBulletScene.h"
-#include "VSCOgreApplicationCocoaSetup.h"
-#include "VSCOgreInputAdapter.h"
-#include "VSCOgreCameraController.h"
+#include "VSCOBApplication.h"
+#include "VSCOBScene.h"
+#include "VSCOBOSXApplicationSetup.h"
+#include "VSCOBInputAdapter.h"
+#include "VSCOBCameraController.h"
 
 #include "OgreResourceGroupManager.h"
 
@@ -11,7 +11,7 @@
 #include <boost/foreach.hpp>
 
 // -------------------------------------------------------------------------
-VSC::OB::Application::VSC::OB::Application(std::vector<VSC::OB::Scene*> bulletScenes) : 
+VSC::OB::Application::Application(std::vector<VSC::OB::Scene*> bulletScenes) :
     VSC::OB::ApplicationBase(),
     Ogre::FrameListener(),
     mBulletScenes(bulletScenes),
@@ -27,7 +27,7 @@ VSC::OB::Application::VSC::OB::Application(std::vector<VSC::OB::Scene*> bulletSc
     
 }
 // -------------------------------------------------------------------------
-VSC::OB::Application::~VSC::OB::Application()
+VSC::OB::Application::~Application()
 { 
 
 }

@@ -2,8 +2,8 @@
 #ifndef _VSC_OGRE_CAMERA_CONTROLLER_H_
 #define _VSC_OGRE_CAMERA_CONTROLLER_H_
 
-#include "VSCOgreInputListener.h"
-#include "VSCOgreKeyBindings.h"
+#include "VSCOBInputListener.h"
+#include "VSCOBKeyBindings.h"
 #include <Ogre/Ogre.h>
 
 #include <boost/shared_ptr.hpp>
@@ -12,18 +12,18 @@ namespace VSC {
     
     namespace OB {
 
-        class VSCOgreCameraController : public InputListener, public KeyBound
+        class CameraController : public InputListener, public KeyBound
         {
             
         public:
             
-            typedef boost::shared_ptr<VSCOgreCameraController> SPtr;
+            typedef boost::shared_ptr<VSC::OB::CameraController> SPtr;
 
             /**
              *  Constructor/Destructor
              */
             
-            VSCOgreCameraController();
+            CameraController();
 
             /**
              *  Ogre Frame Listener Events Forwarded by scene or viewport

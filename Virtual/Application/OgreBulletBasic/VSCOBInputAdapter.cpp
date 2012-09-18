@@ -1,11 +1,11 @@
 
-#include "VSCOgreInputAdapter.h"
-#include "VSCOgreInputListener.h"
+#include "VSCOBInputAdapter.h"
+#include "VSCOBInputListener.h"
 
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
-VSC::OB::InputAdapter::VSC::OB::InputAdapter(void) : 
+VSC::OB::InputAdapter::InputAdapter(void) : 
 mNormalizedCoordinates(false),
 mLastMouseMovement(Ogre::Vector2(0.0, 0.0)),
 mLastMousePosition(Ogre::Vector2(0.0, 0.0))

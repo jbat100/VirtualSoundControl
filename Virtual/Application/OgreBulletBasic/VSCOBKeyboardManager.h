@@ -4,27 +4,34 @@
 
 #include "VSCUI.h"
 #include "VSCBindings.hpp"
-#include "VSCOgreKeyboardAction.h"
-#include "VSCOgreKeyBindings.h"
+#include "VSCOBKeyboardAction.h"
+#include "VSCOBKeyBindings.h"
 
 #include <boost/shared_ptr.hpp>
 
-class VSC::OB::KeyboardManager
-{
+namespace VSC {
     
-public:
-    
-    typedef boost::shared_ptr<VSC::OB::KeyboardManager> SPtr;
-    
-    VSC::OB::KeyboardManager();
-    ~VSC::OB::KeyboardManager();
-    
-    VSC::OB::KeyBindings::SPtr generateDefaultBindings(void);
-    
-private:
-    
-    
-};
+    namespace OB {
+
+        class KeyboardManager
+        {
+            
+        public:
+            
+            typedef boost::shared_ptr<KeyboardManager> SPtr;
+            
+            KeyboardManager();
+            ~KeyboardManager();
+            
+            KeyBindings::SPtr generateDefaultBindings(void);
+            
+        private:
+            
+            
+        };
+        
+    }
+}
 
 #endif//_VSC_OGRE_KEYBOARD_MANAGER_H_
 

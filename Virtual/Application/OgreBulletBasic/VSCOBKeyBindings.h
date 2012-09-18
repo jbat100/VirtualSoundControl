@@ -5,42 +5,48 @@
 #include "VSCUI.h"  
 #include "VSCBindings.hpp"
 #include "VSCBound.hpp"
-#include "VSCOgreKeyboardAction.h"
+#include "VSCOBKeyboardAction.h"
 
 #include <boost/shared_ptr.hpp>
 
 #include <set>
 
+namespace VSC {
+    
+    namespace OB {
 
-class VSC::OB::KeyBindings : public VSC::Bindings<VSC::OB::KeyboardAction::Key, VSC::Keyboard::Combination>
-{
-    
-public:
-    
-    typedef boost::shared_ptr<VSC::OB::KeyBindings> SPtr;
-    
-    VSC::OB::KeyBindings() {}
-    virtual ~VSC::OB::KeyBindings() {}
-    
-};
+        class KeyBindings : public VSC::Bindings<KeyboardAction::Key, VSC::Keyboard::Combination>
+        {
+            
+        public:
+            
+            typedef boost::shared_ptr<VSC::OB::KeyBindings> SPtr;
+            
+            KeyBindings() {}
+            virtual ~KeyBindings() {}
+            
+        };
 
 
-class VSC::OB::KeyBound : private VSC::Bound<VSC::OB::KeyboardAction::Key, VSC::Keyboard::Combination> 
-{
-    
-public:
-    
-    VSC::OB::KeyBound() {}
-    virtual ~VSC::OB::KeyBound() {}
-    
-    void                        setOgreKeyBindings(VSC::OB::KeyBindings::SPtr keyBindings);
-    VSC::OB::KeyBindings::SPtr    getOgreKeyBindings(void);
-    
-private:
-    
-    typedef VSC::Bindings<VSC::OB::KeyboardAction::Key, VSC::Keyboard::Combination> BaseBindings;
-    
-};
+        class KeyBound : private VSC::Bound<KeyboardAction::Key, VSC::Keyboard::Combination> 
+        {
+            
+        public:
+            
+            KeyBound() {}
+            virtual ~KeyBound() {}
+            
+            void                    setOgreKeyBindings(KeyBindings::SPtr keyBindings);
+            KeyBindings::SPtr       getOgreKeyBindings(void);
+            
+        private:
+            
+            typedef VSC::Bindings<KeyboardAction::Key, VSC::Keyboard::Combination> BaseBindings;
+            
+        };
+        
+    }
+}
  
  
 
