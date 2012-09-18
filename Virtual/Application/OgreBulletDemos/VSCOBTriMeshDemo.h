@@ -10,23 +10,30 @@ This source file is not LGPL, it's public source code that you can reuse.
 #define _VSC_OGRE_BULLET_TRIMESH_DEMO_H_
 
 #include "OgreBulletDynamics.h"
-
 #include "VSCOgreBulletScene.h"
-class VSC::OB::Application;
 
-// -------------------------------------------------------------------------
-class VSC::OB::TriMeshDemo : public VSC::OB::Scene 
-{
-public:
+namespace VSC {
+    
+    namespace OB {
 
-    VSC::OB::TriMeshDemo() : VSC::OB::Scene() {mName = "Trimesh Static Scene test";};
-    virtual ~VSC::OB::TriMeshDemo(){};
+        class Application;
 
-    void init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Application *application);
+        // -------------------------------------------------------------------------
+        class TriMeshDemo : public Scene 
+        {
+        public:
 
-    bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+            TriMeshDemo() : Scene() {mName = "Trimesh Static Scene test";};
+            virtual ~TriMeshDemo(){};
 
-};
+            void init(Ogre::Root *root, Ogre::RenderWindow *win, Application *application);
+
+            bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+
+        };
+        
+    }
+}
 
 
 #endif //_VSC_OGRE_BULLET_TRIMESH_DEMO_H_

@@ -13,7 +13,7 @@
 
 #import "VSC::OB::Scene.h"
 #import "VSCOgreBulletApplication.h"
-#import "VSCOgreBulletWindow.h"
+#import "VSCOBOSXWindow.h"
 #import "VSCOgreApplicationCocoaSetup.h"
 
 #import "VSCOgreBulletPrimitivesDemo.h"

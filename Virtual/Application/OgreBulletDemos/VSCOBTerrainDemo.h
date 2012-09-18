@@ -12,52 +12,57 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "OgreBulletDynamics.h"
 #include "VSCOgreBulletScene.h"
 
-class VSC::OB::Application;
+namespace VSC {
+    
+    namespace OB {
 
-// -------------------------------------------------------------------------
-class VSC::OB::TerrainDemo : public VSC::OB::Scene 
-{
-public:
+        class Application;
 
-    VSC::OB::TerrainDemo() : VSC::OB::Scene() {mName = "Terrain Test Scene";};
-    virtual ~VSC::OB::TerrainDemo(){};
+        // -------------------------------------------------------------------------
+        class TerrainDemo : public Scene 
+        {
+        public:
 
-    void init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Application *application);
+            TerrainDemo() : Scene() {mName = "Terrain Test Scene";};
+            virtual ~TerrainDemo(){};
 
-    bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
-    bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+            void init(Ogre::Root *root, Ogre::RenderWindow *win, Application *application);
 
-    bool frameStarted(Ogre::Real elapsedTime);
+            bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+            bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
 
-private:
+            bool frameStarted(Ogre::Real elapsedTime);
 
-	OgreBulletCollisions::HeightmapCollisionShape       *mTerrainShape;
+        private:
 
-
-    OgreBulletDynamics::WheeledRigidBody                *mCarChassis;
-    OgreBulletDynamics::VehicleTuning                   *mTuning;
-    OgreBulletDynamics::VehicleRayCaster                *mVehicleRayCaster;
-    OgreBulletDynamics::RaycastVehicle                  *mVehicle;
-
-    Ogre::Entity    *mChassis;
-    Ogre::Entity    *mWheels[4];
-    Ogre::SceneNode *mWheelNodes[4];
+            OgreBulletCollisions::HeightmapCollisionShape       *mTerrainShape;
 
 
-    int mWheelsEngine[4];
-    int mWheelsEngineCount;
-    int mWheelsSteerable[4];
-    int mWheelsSteerableCount;
+            OgreBulletDynamics::WheeledRigidBody                *mCarChassis;
+            OgreBulletDynamics::VehicleTuning                   *mTuning;
+            OgreBulletDynamics::VehicleRayCaster                *mVehicleRayCaster;
+            OgreBulletDynamics::RaycastVehicle                  *mVehicle;
 
-    float mEngineForce;
-    float mSteering;
-
-    int mWheelEngineStyle;
-    int mWheelSteeringStyle;
-
-    bool mSteeringLeft;
-    bool mSteeringRight;
-};
+            Ogre::Entity    *mChassis;
+            Ogre::Entity    *mWheels[4];
+            Ogre::SceneNode *mWheelNodes[4];
 
 
+            int mWheelsEngine[4];
+            int mWheelsEngineCount;
+            int mWheelsSteerable[4];
+            int mWheelsSteerableCount;
+
+            float mEngineForce;
+            float mSteering;
+
+            int mWheelEngineStyle;
+            int mWheelSteeringStyle;
+
+            bool mSteeringLeft;
+            bool mSteeringRight;
+        };
+
+    }
+}
 #endif //_VSC_OGRE_BULLET_TERRAIN_DEMO_H_

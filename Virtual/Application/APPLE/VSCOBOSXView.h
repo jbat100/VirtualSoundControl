@@ -1,5 +1,5 @@
 //
-//  VSCOgreView.h
+//  VSCOBOSXView.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 6/22/12.
@@ -10,7 +10,7 @@
 
 class VSC::OB::OSXInputAdapter;
 
-@interface VSCOgreView : OgreView {
+@interface VSCOBOSXView : OgreView {
     
     
 }

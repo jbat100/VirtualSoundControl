@@ -12,18 +12,26 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "OgreBulletDynamics.h"
 #include "VSCOgreBulletScene.h"
 
-class VSC::OB::Application;
+namespace VSC {
+    
+    namespace OB {
 
-class VSC::OB::PrimitivesDemo : public VSC::OB::Scene 
-{
-public:
-    
-    VSC::OB::PrimitivesDemo() : VSC::OB::Scene() {mName = "Primitives Test Scene";};
-    virtual ~VSC::OB::PrimitivesDemo(){};
-    
-    void init (Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Application *application);
-    
-    bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
-};
+        class Application;
+
+        class PrimitivesDemo : public Scene 
+        {
+        public:
+            
+            PrimitivesDemo() : Scene() {mName = "Primitives Test Scene";};
+            virtual ~PrimitivesDemo(){};
+            
+            void init (Ogre::Root *root, Ogre::RenderWindow *win, Application *application);
+            
+            bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+        };
+        
+    }
+
+}
 
 #endif //_VSC_OGREBULLET_PRIMITIVES_DEMO_H_

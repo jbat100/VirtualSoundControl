@@ -37,13 +37,13 @@ Description: Base class for all the OGRE examples
 
 #include "OgreOSXCocoaWindow.h"
 
-#import "VSCOgreView.h"
+#import "VSCOBOSXView.h"
 
 bool VSC::OB::OSXApplicationSetup::setupApplicationWithOgreView(VSC::OB::ApplicationBase* ogreApplication, void* rawOgreView)
 {
-    VSCOgreView* ogreView = (__bridge VSCOgreView*)rawOgreView;
+    VSCOBOSXView* ogreView = (__bridge VSCOBOSXView*)rawOgreView;
     
-    BOOST_ASSERT_MSG( [ogreView isKindOfClass:[VSCOgreView class]], "Expected ogreView to be of class OgreView" ); 
+    BOOST_ASSERT_MSG( [ogreView isKindOfClass:[VSCOBOSXView class]], "Expected ogreView to be of class OgreView" ); 
     
     // get platform-specific working directory
     Ogre::String workDir = Ogre::StringUtil::BLANK;

@@ -9,50 +9,57 @@ This source file is not LGPL, it's public source code that you can reuse.
 #define _VSC_OGRE_BULLET_VEHICULES_DEMO_H_
 
 #include "OgreBulletDynamics.h"
-
 #include "VSCOgreBulletScene.h"
-class VSC::OB::Application;
 
-// -------------------------------------------------------------------------
-class VSC::OB::VehiclesDemo : public VSC::OB::Scene 
-{
-public:
-
-    VSC::OB::VehiclesDemo() : VSC::OB::Scene() {mName = "Vehicle Test Scene";};
-    virtual ~VSC::OB::VehiclesDemo(){};
-
-    void init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Application *application);
-
-    bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
-    bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
-
-    bool frameStarted(Ogre::Real elapsedTime);
-
-private:
+namespace VSC {
     
-    OgreBulletDynamics::WheeledRigidBody        *mCarChassis;
-    OgreBulletDynamics::VehicleTuning	        *mTuning;
-    OgreBulletDynamics::VehicleRayCaster	    *mVehicleRayCaster;
-    OgreBulletDynamics::RaycastVehicle	        *mVehicle;
+    namespace OB {
+        
+        class Application;
 
-    Ogre::Entity        *mChassis;
-    Ogre::Entity        *mWheels[4];
-    Ogre::SceneNode     *mWheelNodes[4];
+        // -------------------------------------------------------------------------
+        class VehiclesDemo : public Scene 
+        {
+        public:
 
-    int mWheelsEngine[4];
-    int mWheelsEngineCount;
-    int mWheelsSteerable[4];
-    int mWheelsSteerableCount;
+            VehiclesDemo() : Scene() {mName = "Vehicle Test Scene";};
+            virtual ~VehiclesDemo(){};
 
-    float   mEngineForce;
-    float   mSteering;
+            void init(Ogre::Root *root, Ogre::RenderWindow *win, Application *application);
 
-    int     mWheelEngineStyle;
-    int     mWheelSteeringStyle;
+            bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+            bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
 
-    bool    mSteeringLeft;
-    bool    mSteeringRight;
-};
+            bool frameStarted(Ogre::Real elapsedTime);
+
+        private:
+            
+            OgreBulletDynamics::WheeledRigidBody        *mCarChassis;
+            OgreBulletDynamics::VehicleTuning	        *mTuning;
+            OgreBulletDynamics::VehicleRayCaster	    *mVehicleRayCaster;
+            OgreBulletDynamics::RaycastVehicle	        *mVehicle;
+
+            Ogre::Entity        *mChassis;
+            Ogre::Entity        *mWheels[4];
+            Ogre::SceneNode     *mWheelNodes[4];
+
+            int mWheelsEngine[4];
+            int mWheelsEngineCount;
+            int mWheelsSteerable[4];
+            int mWheelsSteerableCount;
+
+            float   mEngineForce;
+            float   mSteering;
+
+            int     mWheelEngineStyle;
+            int     mWheelSteeringStyle;
+
+            bool    mSteeringLeft;
+            bool    mSteeringRight;
+        };
+        
+    }
+}
 
 
 #endif //_VSC_OGRE_BULLET_VEHICULES_DEMO_H_

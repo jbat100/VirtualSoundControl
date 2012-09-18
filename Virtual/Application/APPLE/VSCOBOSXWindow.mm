@@ -1,12 +1,12 @@
 //
-//  VSCOgreBulletWindow.m
+//  VSCOBOSXWindow.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 7/12/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCOgreBulletWindow.h"
+#import "VSCOBOSXWindow.h"
 #import "NSString+VSCAdditions.h"
 
 #include "VSCOgreBulletApplication.h"
@@ -17,9 +17,9 @@
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
-#import "VSCOgreView.h" // include last!
+#import "VSCOBOSXView.h" // include last!
 
-@implementation VSCOgreBulletWindow
+@implementation VSCOBOSXWindow
 
 @synthesize ogreView = _ogreView;
 @synthesize ogreBulletApplication = _ogreBulletApplication;
@@ -86,11 +86,11 @@
 
 - (IBAction)test1:(id)sender {
     BOOL accepts = [self.ogreView acceptsFirstResponder];
-    NSLog(@"VSCOgreView %@ accept first responder", accepts ? @"DOES" : @"DOES NOT");
+    NSLog(@"VSCOBOSXView %@ accept first responder", accepts ? @"DOES" : @"DOES NOT");
     
     if (accepts) {
         BOOL isFirstResponder = [self firstResponder] != self.ogreView;
-        NSLog(@"VSCOgreView %@ first responder", isFirstResponder ? @"IS" : @"IS NOT");
+        NSLog(@"VSCOBOSXView %@ first responder", isFirstResponder ? @"IS" : @"IS NOT");
     }
 }
 
@@ -103,7 +103,7 @@
         [self.ogreView becomeFirstResponder];
     }
     isFirstResponder = [self firstResponder] != self.ogreView;
-     NSLog(@"VSCOgreView %@ first responder", isFirstResponder ? @"IS" : @"IS NOT");
+     NSLog(@"VSCOBOSXView %@ first responder", isFirstResponder ? @"IS" : @"IS NOT");
 }
 
 - (IBAction)test3:(id)sender {

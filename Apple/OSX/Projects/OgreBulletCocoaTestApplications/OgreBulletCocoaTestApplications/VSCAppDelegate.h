@@ -16,8 +16,8 @@
 class VSC::OB::Scene;
 class VSC::OB::Application;
 
-@class VSCOgreBulletWindow;
-@class VSCOgreView;
+@class VSCOBOSXWindow;
+@class VSCOBOSXView;
 
 @interface VSCAppDelegate : NSObject <NSApplicationDelegate> {
     
@@ -26,8 +26,8 @@ class VSC::OB::Application;
     
 }
 
-@property (assign) IBOutlet VSCOgreBulletWindow *window;
-@property (assign) IBOutlet VSCOgreView *ogreView;
+@property (assign) IBOutlet VSCOBOSXWindow *window;
+@property (assign) IBOutlet VSCOBOSXView *ogreView;
 
 -(void) startRendering;
 -(void) stopRendering;

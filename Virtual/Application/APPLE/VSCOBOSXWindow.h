@@ -1,5 +1,5 @@
 //
-//  VSCOgreBulletWindow.h
+//  VSCOBOSXWindow.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 7/12/12.
@@ -8,13 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class VSCOgreView;
+@class VSCOBOSXView;
 
 class VSC::OB::Application;
 
-@interface VSCOgreBulletWindow : NSWindow
+@interface VSCOBOSXWindow : NSWindow
 
-@property (nonatomic, strong) IBOutlet VSCOgreView* ogreView;
+@property (nonatomic, strong) IBOutlet VSCOBOSXView* ogreView;
 @property (nonatomic, strong) IBOutlet NSPopUpButton* scenePopUpButton;
 
 @property (nonatomic, assign) VSC::OB::Application* ogreBulletApplication;

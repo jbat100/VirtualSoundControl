@@ -27,86 +27,93 @@ Description: Base class for all the OGRE examples
 #include "VSCOgreKeyboardManager.h"
 #include "VSCOgreKeyBindings.h"
 
-class VSC::OB::InputAdapter;
-class VSC::OB::OSXApplicationSetup;
+namespace VSC {
+    
+    namespace OB {
 
-/** 
- *  Base class which manages the standard startup of an Ogre application.
- *  Designed to be subclassed for specific examples if required.
- */
-class VSC::OB::ApplicationBase : public VSC::OB::InputListener, public VSC::OB::KeyBound
-{
-    
-public:
-    
-    /// Standard constructor
-    VSC::OB::ApplicationBase();
-    /// Standard destructor
-    virtual ~VSC::OB::ApplicationBase();
-    
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-    friend class VSC::OB::OSXApplicationSetup;
-    virtual bool setupWithOgreView(void* ogreView);
-#else   
-    /// Start the example
-    virtual void go(void);
-    // These internal methods package up the stages in the startup process
-    /** Sets up the application - returns false if the user chooses to abandon configuration. */
-    virtual bool setup(void);
-#endif
-    
-    /*
-     *  Ogre Setters/Getters
-     */
-    
-    Ogre::Root*             getRoot(void) {return mRoot;}
-    Ogre::Camera*           getCamera(void) {return mCamera;}
-    Ogre::SceneManager*     getSceneManager(void) {return mSceneMgr;}
-    Ogre::RenderWindow*     getRenderWindow(void) {return mWindow;}
-    
-    /*
-     *  Other Setters/Getters
-     */
-    
-    VSC::OB::KeyboardManager::SPtr    getKeyboardManager(void) const;
-    void                            setKeyboardManager(VSC::OB::KeyboardManager::SPtr manager);
-    
-    /*
-     *  VSC::OB::InputListener override
-     */
-    virtual bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+        class InputAdapter;
+        class OSXApplicationSetup;
 
-protected:
-    
-    Ogre::Root                      *mRoot;
-    Ogre::Camera                    *mCamera;
-    Ogre::SceneManager              *mSceneMgr;
-    Ogre::RenderWindow              *mWindow;
-	Ogre::String                    mResourcePath;
-    
-    /*
-     *  NOTE: This is probably where the fun is in terms of making the application run on Cocoa
-     */
-    
-    /** Configures the application - returns false if the user chooses to abandon configuration. */
-    virtual bool configure(void);
-    virtual void chooseSceneManager(void);
-    virtual void createCamera(void);
-    virtual void destroyScene(void){}    // Optional to override this
-    virtual void createViewports(void);
-    virtual void setupResources(void); // Method which will define the source of resources (other than current folder)
-	virtual void createResourceListener(void); // Optional override method where you can create resource listeners (e.g. for loading screens)
-	/// Optional override method where you can perform resource group loading
-	/// Must at least do ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-	virtual void loadResources(void);
-    
-private:
-    
-    VSC::OB::KeyboardManager::SPtr   mKeyboardManager;
-    
-    static const bool mTraceUI = true;
+        /** 
+         *  Base class which manages the standard startup of an Ogre application.
+         *  Designed to be subclassed for specific examples if required.
+         */
+        class ApplicationBase : public InputListener, public KeyBound
+        {
+            
+        public:
+            
+            /// Standard constructor
+            ApplicationBase();
+            /// Standard destructor
+            virtual ~ApplicationBase();
+            
+        #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+            friend class OSXApplicationSetup;
+            virtual bool setupWithOgreView(void* ogreView);
+        #else   
+            /// Start the example
+            virtual void go(void);
+            // These internal methods package up the stages in the startup process
+            /** Sets up the application - returns false if the user chooses to abandon configuration. */
+            virtual bool setup(void);
+        #endif
+            
+            /*
+             *  Ogre Setters/Getters
+             */
+            
+            Ogre::Root*             getRoot(void) {return mRoot;}
+            Ogre::Camera*           getCamera(void) {return mCamera;}
+            Ogre::SceneManager*     getSceneManager(void) {return mSceneMgr;}
+            Ogre::RenderWindow*     getRenderWindow(void) {return mWindow;}
+            
+            /*
+             *  Other Setters/Getters
+             */
+            
+            KeyboardManager::SPtr    getKeyboardManager(void) const;
+            void                            setKeyboardManager(KeyboardManager::SPtr manager);
+            
+            /*
+             *  InputListener override
+             */
+            virtual bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
 
-};
+        protected:
+            
+            Ogre::Root                      *mRoot;
+            Ogre::Camera                    *mCamera;
+            Ogre::SceneManager              *mSceneMgr;
+            Ogre::RenderWindow              *mWindow;
+            Ogre::String                    mResourcePath;
+            
+            /*
+             *  NOTE: This is probably where the fun is in terms of making the application run on Cocoa
+             */
+            
+            /** Configures the application - returns false if the user chooses to abandon configuration. */
+            virtual bool configure(void);
+            virtual void chooseSceneManager(void);
+            virtual void createCamera(void);
+            virtual void destroyScene(void){}    // Optional to override this
+            virtual void createViewports(void);
+            virtual void setupResources(void); // Method which will define the source of resources (other than current folder)
+            virtual void createResourceListener(void); // Optional override method where you can create resource listeners (e.g. for loading screens)
+            /// Optional override method where you can perform resource group loading
+            /// Must at least do ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+            virtual void loadResources(void);
+            
+        private:
+            
+            KeyboardManager::SPtr   mKeyboardManager;
+            
+            static const bool mTraceUI = true;
+
+        };
+        
+    }
+}
 
 
 #endif//_VSC_EXAMPLE_APPLICATION_H_

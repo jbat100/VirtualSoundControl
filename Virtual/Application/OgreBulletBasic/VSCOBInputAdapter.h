@@ -37,7 +37,7 @@ public:
      *  Listener Keyboard stuff query 
      */
     
-    const VSCKeyCodeSet&  getCurrentKeys() {return mCurrentKeys;} // currently pressed non modifier keys
+    const VSC::KeyCodeSet&  getCurrentKeys() {return mCurrentKeys;} // currently pressed non modifier keys
     bool isKeyPressed(OIS::KeyCode key); 
     OIS::Keyboard::Modifier getCurrentModifier(void) {return mCurrentModifier;} // OIS::Keyboard::Modifier is a bit mask
     
@@ -89,8 +89,8 @@ private:
     Ogre::Vector2                       mLastMouseMovement;
     Ogre::Vector2                       mBufferedMouseMovement;
     
-    VSCKeyCodeSet                       mCurrentKeys;
-    VSCMouseButtonSet                   mCurrentMouseButtons;
+    VSC::KeyCodeSet                       mCurrentKeys;
+    VSC::MouseButtonSet                   mCurrentMouseButtons;
     
     OIS::Keyboard::Modifier             mCurrentModifier;
     

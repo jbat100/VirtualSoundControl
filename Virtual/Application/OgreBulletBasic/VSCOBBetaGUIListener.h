@@ -21,45 +21,52 @@ A basic test framework that minimize code in each test scene listener.
 // We'll need the OgreBulletListener definitions
 #include "BetaGUI.h"
 
-class VSC::OB::Scene;
-
-/*
-The base Test class, is also able to listen for collisions and thus change the contact properties
-*/
-class VSC::OB::BetaGUIListener : public BetaGUI::BetaGUIListener
-{
-public:
-	// Constructor/destructor
-    VSC::OB::BetaGUIListener(VSC::OB::Scene *listener, Ogre::RenderWindow *win);
-    virtual ~VSC::OB::BetaGUIListener();
-
-    // Gui Callbacks
-    void onButtonPress(BetaGUI::Button *ref, Ogre::uchar type);
-
-    BetaGUI::GUI *getGui(){return mGui;}
-
-    void addBool(BetaGUI::Window *mainWindow, bool* value, const Ogre::String &label, Ogre::Vector2 &pos);
-
-    void hideMouse();
-    void showMouse();
+namespace VSC {
     
-    void setMousePosition(Ogre::Vector2 position);
-    
-    void showHelp(bool show);
-    
-protected:
+    namespace OB {
 
-   BetaGUI::GUI             *mGui;
+        class Scene;
 
-   VSC::OB::Scene       *mListener;
-   Ogre::RenderWindow       *mWindow;
+        /*
+        The base Test class, is also able to listen for collisions and thus change the contact properties
+        */
+        class BetaGUIListener : public BetaGUI::BetaGUIListener
+        {
+        public:
+            // Constructor/destructor
+            BetaGUIListener(Scene *listener, Ogre::RenderWindow *win);
+            virtual ~BetaGUIListener();
 
-   Ogre::Overlay		    *mMouseOverlay;
-   Ogre::OverlayElement		*mMousePanel;
-   Ogre::Real               mMouseCursorHalfWidth;
-   Ogre::Real               mMouseCursorHalfHeight;
+            // Gui Callbacks
+            void onButtonPress(BetaGUI::Button *ref, Ogre::uchar type);
 
-};
+            BetaGUI::GUI *getGui(){return mGui;}
+
+            void addBool(BetaGUI::Window *mainWindow, bool* value, const Ogre::String &label, Ogre::Vector2 &pos);
+
+            void hideMouse();
+            void showMouse();
+            
+            void setMousePosition(Ogre::Vector2 position);
+            
+            void showHelp(bool show);
+            
+        protected:
+
+           BetaGUI::GUI             *mGui;
+
+           Scene       *mListener;
+           Ogre::RenderWindow       *mWindow;
+
+           Ogre::Overlay		    *mMouseOverlay;
+           Ogre::OverlayElement		*mMousePanel;
+           Ogre::Real               mMouseCursorHalfWidth;
+           Ogre::Real               mMouseCursorHalfHeight;
+
+        };
+    }
+}
+                
 
 #endif
 

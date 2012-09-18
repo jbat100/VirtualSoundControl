@@ -9,23 +9,25 @@
 #include <boost/foreach.hpp>
 
 /*
- *  VSC::Bindings stores and manipulates a group of bindings between Action and 
+ *  Bindings stores and manipulates a group of bindings between Action and 
  *  Input types
  */
 
+namespace VSC {
+
 template<typename Action, typename Input>
-class VSC::Bindings 
+class Bindings 
 {
     
 public:
     
-    typedef typename boost::shared_ptr< VSC::Bindings<Action,Input> > SPtr;
+    typedef typename boost::shared_ptr< Bindings<Action,Input> > SPtr;
     
     typedef typename std::set<Input>                     InputSet;
     typedef typename std::set<Action>                    ActionSet;
     
-    VSC::Bindings() {}
-    virtual ~VSC::Bindings() {}
+    Bindings() {}
+    virtual ~Bindings() {}
     
     /*
      *  Get the Action/Combination associated with a Combination/Action. Returns NullAction/NullCombination
@@ -60,7 +62,7 @@ private:
 };
 
 template<typename Action, typename Input>
-const typename VSC::Bindings<Action,Input>::ActionSet& VSC::Bindings<Action,Input>::getActionsForInput(const Input& input)
+const typename Bindings<Action,Input>::ActionSet& Bindings<Action,Input>::getActionsForInput(const Input& input)
 {
     typename InputActionsMap::iterator it = mInputActionsMap.find(input);
     
@@ -82,7 +84,7 @@ const typename VSC::Bindings<Action,Input>::ActionSet& VSC::Bindings<Action,Inpu
 }
 
 template<typename Action, typename Input>
-const typename VSC::Bindings<Action,Input>::InputSet& VSC::Bindings<Action,Input>::getInputsForAction(const Action& action)
+const typename Bindings<Action,Input>::InputSet& Bindings<Action,Input>::getInputsForAction(const Action& action)
 {
     typename ActionInputsMap::iterator it = mActionInputsMap.find(action);
     
@@ -104,7 +106,7 @@ const typename VSC::Bindings<Action,Input>::InputSet& VSC::Bindings<Action,Input
 }
 
 template<typename Action, typename Input>
-void VSC::Bindings<Action,Input>::eraseBinding(const Action& action, const Input& input)
+void Bindings<Action,Input>::eraseBinding(const Action& action, const Input& input)
 {
     {
         typename ActionInputsMap::iterator it = mActionInputsMap.find(action);
@@ -126,7 +128,7 @@ void VSC::Bindings<Action,Input>::eraseBinding(const Action& action, const Input
 }
 
 template<typename Action, typename Input>
-void VSC::Bindings<Action,Input>::eraseInputBindings(const Input& input)
+void Bindings<Action,Input>::eraseInputBindings(const Input& input)
 {
     /*
      *  Have to cycle through all the input sets to remove the input. A bit expensive but
@@ -142,7 +144,7 @@ void VSC::Bindings<Action,Input>::eraseInputBindings(const Input& input)
 }
 
 template<typename Action, typename Input>
-void VSC::Bindings<Action,Input>::eraseActionBindings(const Action& action)
+void Bindings<Action,Input>::eraseActionBindings(const Action& action)
 {
     mActionInputsMap.erase(action);
     
@@ -153,7 +155,7 @@ void VSC::Bindings<Action,Input>::eraseActionBindings(const Action& action)
 }
 
 template<typename Action, typename Input>
-void VSC::Bindings<Action,Input>::setBinding(const Action& action, const Input& input)
+void Bindings<Action,Input>::setBinding(const Action& action, const Input& input)
 {
     /*
      *  Update input set for action
@@ -184,6 +186,8 @@ void VSC::Bindings<Action,Input>::setBinding(const Action& action, const Input& 
         }
         it->second.insert(action);
     }
+}
+    
 }
 
 #endif//_VSC_BINDINGS_H_
