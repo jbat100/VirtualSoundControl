@@ -19,6 +19,8 @@ public:
      *  Slots for forwarding the appropriate NSResponder callbacks
      */
     
+    void renderWindowChangedSize(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
+    
     void keyUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
     void keyDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
     

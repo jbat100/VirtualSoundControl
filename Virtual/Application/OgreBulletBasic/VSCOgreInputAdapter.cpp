@@ -144,6 +144,8 @@ void VSCOgreInputAdapter::modifierChanged(Ogre::RenderWindow* renderWindow, OIS:
 
 void VSCOgreInputAdapter::renderWindowChangedSize(Ogre::RenderWindow* renderWindow)
 {
+    //BOOST_ASSERT_MSG(listener, "Expected listener");
+    
     BOOST_FOREACH (VSCOgreInputListener* inputListener, this->getInputListeners())
     {
         inputListener->renderWindowChangedSize(renderWindow);

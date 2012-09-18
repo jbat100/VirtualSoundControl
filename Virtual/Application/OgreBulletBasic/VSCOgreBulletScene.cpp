@@ -460,6 +460,9 @@ void VSCOgreBulletScene::shutdown ()
 
 }
 
+// MARK Interface
+
+
 //void VSCOgreBulletScene::mouseButtonPressed(OIS::MouseButtonID buttonID)
 bool VSCOgreBulletScene::mouseButtonPressed(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
@@ -821,6 +824,18 @@ bool VSCOgreBulletScene::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCo
 bool VSCOgreBulletScene::keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     return VSCOgreInputListener::keyReleased(renderWindow, key);
+}
+
+bool VSCOgreBulletScene::renderWindowChangedSize(Ogre::RenderWindow* renderWindow)
+{
+    if (renderWindow == mWindow)
+    {
+        Ogre::Viewport* vp = mCamera->getViewport();
+        mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+        return true;
+    }
+    
+    return false;
 }
 
 // -------------------------------------------------------------------------

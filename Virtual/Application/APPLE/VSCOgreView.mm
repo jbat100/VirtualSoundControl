@@ -22,11 +22,41 @@ static const bool mTraceUI = false;
 - (id)initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];
+    
     if (self) {
+        
         // Initialization code here.
+        
+        [self setPostsFrameChangedNotifications:YES];
+        [self setPostsBoundsChangedNotifications:YES];
+        
+        [[NSNotificationCenter defaultCenter] addObserverForName:NSViewBoundsDidChangeNotification
+                                                          object:nil
+                                                           queue:nil
+                                                      usingBlock:^(NSNotification *)
+        {
+            if (self.inputAdapter) self.inputAdapter->renderWindowChangedSize([self ogreWindow], nil);
+        }
+         ];
+        
+        [[NSNotificationCenter defaultCenter] addObserverForName:NSViewFrameDidChangeNotification
+                                                          object:nil
+                                                           queue:nil
+                                                      usingBlock:^(NSNotification *)
+         {
+             if (self.inputAdapter) self.inputAdapter->renderWindowChangedSize([self ogreWindow], nil);
+         }
+         ];
+        
     }
     
     return self;
+}
+
+-(void) dealloc {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
 }
 
 #pragma mark - NSResponder Stuff

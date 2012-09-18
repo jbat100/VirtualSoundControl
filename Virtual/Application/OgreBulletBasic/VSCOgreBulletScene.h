@@ -77,13 +77,14 @@ public:
     /**--------------------------------------------------------------
      *  Input listener callback overrides
      */
-    bool mouseButtonPressed(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
-    bool mouseButtonReleased(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
-    bool mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement);
-    bool mouseEntered(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position);
-    bool mouseExited(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position);
-    bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
-    bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+    virtual bool mouseButtonPressed(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
+    virtual bool mouseButtonReleased(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
+    virtual bool mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement);
+    virtual bool mouseEntered(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position);
+    virtual bool mouseExited(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position);
+    virtual bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+    virtual bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+    virtual bool renderWindowChangedSize(Ogre::RenderWindow* renderWindow);
     
     /**--------------------------------------------------------------
      *  Ogre Setters/Getters

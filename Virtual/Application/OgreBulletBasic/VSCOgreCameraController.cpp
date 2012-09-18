@@ -18,6 +18,12 @@ mCamera(0)
 
 }
 
+bool VSCOgreCameraController::renderWindowChangedSize(Ogre::RenderWindow* renderWindow)
+{
+    if (mTraceUI) std::cout << "VSCOgreCameraController::renderWindowChangedSize" << std::endl;
+    return false;
+}
+
 // -------------------------------------------------------------------------
 bool VSCOgreCameraController::mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {

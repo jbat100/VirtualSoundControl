@@ -199,6 +199,11 @@ OIS::Keyboard::Modifier VSCOgreBulletCocoaInputAdapter::modiferForCocoaModifierF
     
 }
 
+void VSCOgreBulletCocoaInputAdapter::renderWindowChangedSize(Ogre::RenderWindow* renderWindow, NSEvent* theEvent)
+{
+    VSCOgreInputAdapter::renderWindowChangedSize(renderWindow);
+}
+
 void VSCOgreBulletCocoaInputAdapter::keyUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     OIS::KeyCode key = this->keyCodeForEvent(theEvent);
     this->keyReleased(renderWindow, key);

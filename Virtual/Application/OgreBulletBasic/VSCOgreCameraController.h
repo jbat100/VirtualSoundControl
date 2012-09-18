@@ -36,6 +36,8 @@ public:
     virtual bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
     virtual bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
     
+    virtual bool renderWindowChangedSize(Ogre::RenderWindow* renderWindow);
+    
     /**
      *  Ogre Setters/Getters
      */
@@ -69,7 +71,7 @@ private:
     float                               mMouseSensitivity;
     float                               mCameraSpeed;
     
-    const static bool                   mTraceUI = false;
+    const static bool                   mTraceUI = true;
     const static bool                   mTraceFrame = false;
     
 };
