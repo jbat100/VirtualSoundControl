@@ -5,7 +5,7 @@
 #include <string>
 #include <set>
 
-class VSCOgreKeyboardAction
+class VSC::OB::KeyboardAction
 {
     
 public:

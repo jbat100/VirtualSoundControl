@@ -9,13 +9,13 @@
 
 using namespace OIS;
 
-VSCOgreBulletCocoaInputAdapter::VSCOgreBulletCocoaInputAdapter(void) :
+VSC::OB::OSXInputAdapter::VSC::OB::OSXInputAdapter(void) :
 mCocoaView(0)
 {
     this->populateKeyConversionMap();
 }
 
-Ogre::Vector2 VSCOgreBulletCocoaInputAdapter::adaptedMouseLocationForEvent(NSEvent* theEvent) {
+Ogre::Vector2 VSC::OB::OSXInputAdapter::adaptedMouseLocationForEvent(NSEvent* theEvent) {
     
     BOOST_ASSERT_MSG(mCocoaView, "Expected mCocoaView" ); 
     
@@ -25,15 +25,15 @@ Ogre::Vector2 VSCOgreBulletCocoaInputAdapter::adaptedMouseLocationForEvent(NSEve
     return Ogre::Vector2(locationInView.x,locationInView.y);
 }
 
-Ogre::Vector2 VSCOgreBulletCocoaInputAdapter::adaptedMouseMovementForEvent(NSEvent* theEvent) {
+Ogre::Vector2 VSC::OB::OSXInputAdapter::adaptedMouseMovementForEvent(NSEvent* theEvent) {
     return Ogre::Vector2([theEvent deltaX],[theEvent deltaY]);
 }
 
-OIS::MouseButtonID VSCOgreBulletCocoaInputAdapter::mouseButtonIdForEvent(NSEvent* theEvent) {
+OIS::MouseButtonID VSC::OB::OSXInputAdapter::mouseButtonIdForEvent(NSEvent* theEvent) {
     
     NSInteger mouseButton = [theEvent buttonNumber];
     
-    if (mTraceUI) std::cout << "VSCOgreBulletCocoaInputAdapter::mouseButtonIdForEvent, mouseButton is " << mouseButton << std::endl; 
+    if (mTraceUI) std::cout << "VSC::OB::OSXInputAdapter::mouseButtonIdForEvent, mouseButton is " << mouseButton << std::endl; 
     
     switch (mouseButton) {
         //case 1 << 0:
@@ -51,7 +51,7 @@ OIS::MouseButtonID VSCOgreBulletCocoaInputAdapter::mouseButtonIdForEvent(NSEvent
     return OIS::MouseButtonID(mouseButton-1);
 }
 
-void VSCOgreBulletCocoaInputAdapter::populateKeyConversionMap(void) {
+void VSC::OB::OSXInputAdapter::populateKeyConversionMap(void) {
     
     //std::cout << "0x" << std::hex << this << " Populating keyConversionMap" << std::endl;
     
@@ -172,7 +172,7 @@ void VSCOgreBulletCocoaInputAdapter::populateKeyConversionMap(void) {
 }
 
 
-OIS::KeyCode VSCOgreBulletCocoaInputAdapter::keyCodeForEvent(NSEvent* s) {
+OIS::KeyCode VSC::OB::OSXInputAdapter::keyCodeForEvent(NSEvent* s) {
     
     unsigned short keyCode = (unsigned short)[s keyCode];
     if (mTrace) std::cout << "Finding ois for keyCode " << std::hex << keyCode << std::endl;
@@ -187,7 +187,7 @@ OIS::KeyCode VSCOgreBulletCocoaInputAdapter::keyCodeForEvent(NSEvent* s) {
     
 }
 
-OIS::Keyboard::Modifier VSCOgreBulletCocoaInputAdapter::modiferForCocoaModifierFlags(NSUInteger m) {
+OIS::Keyboard::Modifier VSC::OB::OSXInputAdapter::modiferForCocoaModifierFlags(NSUInteger m) {
     
     OIS::Keyboard::Modifier oisMod = (OIS::Keyboard::Modifier)0;
     
@@ -199,22 +199,22 @@ OIS::Keyboard::Modifier VSCOgreBulletCocoaInputAdapter::modiferForCocoaModifierF
     
 }
 
-void VSCOgreBulletCocoaInputAdapter::renderWindowChangedSize(Ogre::RenderWindow* renderWindow, NSEvent* theEvent)
+void VSC::OB::OSXInputAdapter::renderWindowChangedSize(Ogre::RenderWindow* renderWindow, NSEvent* theEvent)
 {
-    VSCOgreInputAdapter::renderWindowChangedSize(renderWindow);
+    VSC::OB::InputAdapter::renderWindowChangedSize(renderWindow);
 }
 
-void VSCOgreBulletCocoaInputAdapter::keyUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInputAdapter::keyUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     OIS::KeyCode key = this->keyCodeForEvent(theEvent);
     this->keyReleased(renderWindow, key);
 }
 
-void VSCOgreBulletCocoaInputAdapter::keyDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInputAdapter::keyDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     OIS::KeyCode key = this->keyCodeForEvent(theEvent);
     this->keyPressed(renderWindow, key);
 }
 
-void VSCOgreBulletCocoaInputAdapter::mouseEntered(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInputAdapter::mouseEntered(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     Ogre::Vector2 movement = this->adaptedMouseMovementForEvent(theEvent);
@@ -222,23 +222,23 @@ void VSCOgreBulletCocoaInputAdapter::mouseEntered(Ogre::RenderWindow* renderWind
     
 }
 
-void VSCOgreBulletCocoaInputAdapter::mouseExited(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInputAdapter::mouseExited(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     
 }
 
-void VSCOgreBulletCocoaInputAdapter::mouseMoved(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInputAdapter::mouseMoved(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     Ogre::Vector2 movement = this->adaptedMouseMovementForEvent(theEvent);
     
     
     
-    VSCOgreInputAdapter::mouseMoved(renderWindow, location, movement);
+    VSC::OB::InputAdapter::mouseMoved(renderWindow, location, movement);
     
 }
 
 
-void VSCOgreBulletCocoaInputAdapter::mouseDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInputAdapter::mouseDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     
@@ -249,7 +249,7 @@ void VSCOgreBulletCocoaInputAdapter::mouseDown(Ogre::RenderWindow* renderWindow,
     
 }
 
-void VSCOgreBulletCocoaInputAdapter::mouseUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInputAdapter::mouseUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     
@@ -260,17 +260,17 @@ void VSCOgreBulletCocoaInputAdapter::mouseUp(Ogre::RenderWindow* renderWindow, N
     
 }
 
-void VSCOgreBulletCocoaInputAdapter::mouseDragged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInputAdapter::mouseDragged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     Ogre::Vector2 movement = this->adaptedMouseMovementForEvent(theEvent);
     
-    VSCOgreInputAdapter::mouseMoved(renderWindow, location, movement);
+    VSC::OB::InputAdapter::mouseMoved(renderWindow, location, movement);
     
 }
 
 
-void VSCOgreBulletCocoaInputAdapter::otherMouseDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInputAdapter::otherMouseDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     //this->mouseDown(theEvent);
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     //OIS::MouseButtonID mouseButtonID = this->mouseButtonIdForEvent(theEvent);
@@ -278,11 +278,11 @@ void VSCOgreBulletCocoaInputAdapter::otherMouseDown(Ogre::RenderWindow* renderWi
     this->mouseButtonPressed(renderWindow, location, mouseButtonID);
 }
 
-void VSCOgreBulletCocoaInputAdapter::otherMouseDragged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInputAdapter::otherMouseDragged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     this->mouseMoved(renderWindow, theEvent);
 }
 
-void VSCOgreBulletCocoaInputAdapter::otherMouseUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInputAdapter::otherMouseUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     //this->mouseUp(theEvent);
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     //OIS::MouseButtonID mouseButtonID = this->mouseButtonIdForEvent(theEvent);
@@ -291,7 +291,7 @@ void VSCOgreBulletCocoaInputAdapter::otherMouseUp(Ogre::RenderWindow* renderWind
 }
 
 
-void VSCOgreBulletCocoaInputAdapter::rightMouseDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInputAdapter::rightMouseDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     //this->mouseDown(theEvent);
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     //OIS::MouseButtonID mouseButtonID = this->mouseButtonIdForEvent(theEvent);
@@ -299,11 +299,11 @@ void VSCOgreBulletCocoaInputAdapter::rightMouseDown(Ogre::RenderWindow* renderWi
     this->mouseButtonPressed(renderWindow, location, mouseButtonID);
 }
 
-void VSCOgreBulletCocoaInputAdapter::rightMouseDragged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInputAdapter::rightMouseDragged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     this->mouseMoved(renderWindow, theEvent);
 }
 
-void VSCOgreBulletCocoaInputAdapter::rightMouseUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInputAdapter::rightMouseUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     //this->mouseUp(theEvent);
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     //OIS::MouseButtonID mouseButtonID = this->mouseButtonIdForEvent(theEvent);
@@ -312,7 +312,7 @@ void VSCOgreBulletCocoaInputAdapter::rightMouseUp(Ogre::RenderWindow* renderWind
 }
 
 
-void VSCOgreBulletCocoaInputAdapter::scrollWheel(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInputAdapter::scrollWheel(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     
 }
 

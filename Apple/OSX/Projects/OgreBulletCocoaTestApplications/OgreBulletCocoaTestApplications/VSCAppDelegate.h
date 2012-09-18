@@ -13,16 +13,16 @@
 
 #import <vector>
 
-class VSCOgreBulletScene;
-class VSCOgreBulletApplication;
+class VSC::OB::Scene;
+class VSC::OB::Application;
 
 @class VSCOgreBulletWindow;
 @class VSCOgreView;
 
 @interface VSCAppDelegate : NSObject <NSApplicationDelegate> {
     
-    VSCOgreBulletApplication* ogreBulletApplication;
-    std::vector<VSCOgreBulletScene*> ogreBulletScenes;
+    VSC::OB::Application* ogreBulletApplication;
+    std::vector<VSC::OB::Scene*> ogreBulletScenes;
     
 }
 

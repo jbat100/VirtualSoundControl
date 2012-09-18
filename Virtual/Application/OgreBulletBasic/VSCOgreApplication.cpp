@@ -31,7 +31,7 @@ Description: Base class for all the OGRE examples
 
 using namespace Ogre;
 
-VSCOgreApplication::VSCOgreApplication() : 
+VSC::OB::ApplicationBase::VSCOgreApplication() : 
 mRoot(0),
 mCamera(0),
 mSceneMgr(0),
@@ -58,22 +58,22 @@ mWindow(0)
      *  Create a default keyboard manager and set bindings to default
      */
     
-    mKeyboardManager = VSCOgreKeyboardManager::SPtr(new VSCOgreKeyboardManager());
+    mKeyboardManager = VSC::OB::KeyboardManager::SPtr(new VSC::OB::KeyboardManager());
     this->setOgreKeyBindings(mKeyboardManager->generateDefaultBindings());
     
 }
 
 /// Standard destructor
-VSCOgreApplication::~VSCOgreApplication()
+VSC::OB::ApplicationBase::~VSC::OB::ApplicationBase()
 {
     if (mRoot)
         OGRE_DELETE mRoot;
 }
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-bool VSCOgreApplication::setupWithOgreView(void* ogreView) {
+bool VSC::OB::ApplicationBase::setupWithOgreView(void* ogreView) {
     
-    VSCOgreApplicationCocoaSetup::setupApplicationWithOgreView(this, ogreView);
+    VSC::OB::OSXApplicationSetup::setupApplicationWithOgreView(this, ogreView);
     
     this->setupResources();
     this->chooseSceneManager();
@@ -89,7 +89,7 @@ bool VSCOgreApplication::setupWithOgreView(void* ogreView) {
 }
 #else
 /// Start the example
-void VSCOgreApplication::go(void)
+void VSC::OB::ApplicationBase::go(void)
 {    
     if (!setup())
         return;
@@ -99,7 +99,7 @@ void VSCOgreApplication::go(void)
 }
 // These internal methods package up the stages in the startup process
 /** Sets up the application - returns false if the user chooses to abandon configuration. */
-bool VSCOgreApplication::setup(void)
+bool VSC::OB::ApplicationBase::setup(void)
 {
     
     
@@ -147,7 +147,7 @@ bool VSCOgreApplication::setup(void)
  */
 
 /** Configures the application - returns false if the user chooses to abandon configuration. */
-bool VSCOgreApplication::configure(void)
+bool VSC::OB::ApplicationBase::configure(void)
 {
     // Show the configuration dialog and initialise the system
     // You can skip this and use root.restoreConfig() to load configuration
@@ -165,13 +165,13 @@ bool VSCOgreApplication::configure(void)
     }
 }
 
-void VSCOgreApplication::chooseSceneManager(void)
+void VSC::OB::ApplicationBase::chooseSceneManager(void)
 {
     // Create the SceneManager, in this case a generic one
     mSceneMgr = mRoot->createSceneManager(ST_GENERIC, "ExampleSMInstance");
 }
 
-void VSCOgreApplication::createCamera(void)
+void VSC::OB::ApplicationBase::createCamera(void)
 {
     // Create the camera
     mCamera = mSceneMgr->createCamera("PlayerCam");
@@ -182,7 +182,7 @@ void VSCOgreApplication::createCamera(void)
     mCamera->setNearClipDistance(5);
 }
 
-void VSCOgreApplication::createViewports(void)
+void VSC::OB::ApplicationBase::createViewports(void)
 {
     // Create one viewport, entire window
     Viewport* vp = mWindow->addViewport(mCamera);
@@ -192,7 +192,7 @@ void VSCOgreApplication::createViewports(void)
 }
 
 /// Method which will define the source of resources (other than current folder)
-void VSCOgreApplication::setupResources(void)
+void VSC::OB::ApplicationBase::setupResources(void)
 {
     // Load resource paths from config file
     ConfigFile cf;
@@ -230,7 +230,7 @@ void VSCOgreApplication::setupResources(void)
     }
 }
 
-void VSCOgreApplication::createResourceListener(void)
+void VSC::OB::ApplicationBase::createResourceListener(void)
 {
     
 }
@@ -238,18 +238,18 @@ void VSCOgreApplication::createResourceListener(void)
 
 /// Optional override method where you can perform resource group loading
 /// Must at least do ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-void VSCOgreApplication::loadResources(void)
+void VSC::OB::ApplicationBase::loadResources(void)
 {
     // Initialise, parse scripts etc
     ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
     
 }
 
-bool VSCOgreApplication::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
+bool VSC::OB::ApplicationBase::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
-    if (mTraceUI) std::cout << "VSCOgreApplication::keyPressed " << key << std::endl;
+    if (mTraceUI) std::cout << "VSC::OB::ApplicationBase::keyPressed " << key << std::endl;
     
-    return VSCOgreInputListener::keyPressed(renderWindow, key);
+    return VSC::OB::InputListener::keyPressed(renderWindow, key);
 }
 
 

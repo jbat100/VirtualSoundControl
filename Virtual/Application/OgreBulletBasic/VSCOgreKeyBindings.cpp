@@ -3,16 +3,16 @@
 
 #include <boost/pointer_cast.hpp>
 
-void VSCOgreKeyBound::setOgreKeyBindings(VSCOgreKeyBindings::SPtr keyBindings)
+void VSC::OB::KeyBound::setOgreKeyBindings(VSC::OB::KeyBindings::SPtr keyBindings)
 {
     BaseBindings::SPtr baseKeyBinding = boost::dynamic_pointer_cast<BaseBindings>(keyBindings);
     this->setBindings(baseKeyBinding);
 }
 
-VSCOgreKeyBindings::SPtr VSCOgreKeyBound::getOgreKeyBindings(void)
+VSC::OB::KeyBindings::SPtr VSC::OB::KeyBound::getOgreKeyBindings(void)
 {
     BaseBindings::SPtr baseKeyBinding = this->getBindings();
-    return boost::dynamic_pointer_cast<VSCOgreKeyBindings>(baseKeyBinding);
+    return boost::dynamic_pointer_cast<VSC::OB::KeyBindings>(baseKeyBinding);
 }
 
 

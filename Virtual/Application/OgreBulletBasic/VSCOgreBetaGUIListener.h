@@ -21,17 +21,17 @@ A basic test framework that minimize code in each test scene listener.
 // We'll need the OgreBulletListener definitions
 #include "BetaGUI.h"
 
-class VSCOgreBulletScene;
+class VSC::OB::Scene;
 
 /*
 The base Test class, is also able to listen for collisions and thus change the contact properties
 */
-class VSCOgreBetaGUIListener : public BetaGUI::BetaGUIListener
+class VSC::OB::BetaGUIListener : public BetaGUI::BetaGUIListener
 {
 public:
 	// Constructor/destructor
-    VSCOgreBetaGUIListener(VSCOgreBulletScene *listener, Ogre::RenderWindow *win);
-    virtual ~VSCOgreBetaGUIListener();
+    VSC::OB::BetaGUIListener(VSC::OB::Scene *listener, Ogre::RenderWindow *win);
+    virtual ~VSC::OB::BetaGUIListener();
 
     // Gui Callbacks
     void onButtonPress(BetaGUI::Button *ref, Ogre::uchar type);
@@ -51,7 +51,7 @@ protected:
 
    BetaGUI::GUI             *mGui;
 
-   VSCOgreBulletScene       *mListener;
+   VSC::OB::Scene       *mListener;
    Ogre::RenderWindow       *mWindow;
 
    Ogre::Overlay		    *mMouseOverlay;

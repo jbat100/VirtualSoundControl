@@ -9,17 +9,17 @@
 
 #include <boost/shared_ptr.hpp>
 
-class VSCOgreKeyboardManager
+class VSC::OB::KeyboardManager
 {
     
 public:
     
-    typedef boost::shared_ptr<VSCOgreKeyboardManager> SPtr;
+    typedef boost::shared_ptr<VSC::OB::KeyboardManager> SPtr;
     
-    VSCOgreKeyboardManager();
-    ~VSCOgreKeyboardManager();
+    VSC::OB::KeyboardManager();
+    ~VSC::OB::KeyboardManager();
     
-    VSCOgreKeyBindings::SPtr generateDefaultBindings(void);
+    VSC::OB::KeyBindings::SPtr generateDefaultBindings(void);
     
 private:
     

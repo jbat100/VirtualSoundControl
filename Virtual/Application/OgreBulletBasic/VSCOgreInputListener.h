@@ -20,31 +20,31 @@ A basic test framework that minimize code in each test scene listener.
 #include <set>
 #include <Ogre/Ogre.h>
 #include "OIS.h"
-class VSCOgreInputAdapter;
+class VSC::OB::InputAdapter;
 
-class VSCOgreInputListener
+class VSC::OB::InputListener
 {
     
 public:
     
     // the listener will be called when something happens, should not be nil
-    VSCOgreInputListener(); 
-    virtual ~VSCOgreInputListener(){}
+    VSC::OB::InputListener(); 
+    virtual ~VSC::OB::InputListener(){}
     
-    friend class VSCOgreInputAdapter;
+    friend class VSC::OB::InputAdapter;
     
     /*----------------------------------------------------------------
      *  This is the interface which I think should be used
      */
-    VSCOgreInputAdapter*    getInputAdapter(void) {return mAdapter;}
-    void                    setInputAdapter(VSCOgreInputAdapter* adapter);
+    VSC::OB::InputAdapter*    getInputAdapter(void) {return mAdapter;}
+    void                    setInputAdapter(VSC::OB::InputAdapter* adapter);
     
     /*
      *  Responder chain, if the current listener does not respond to an interface event (returns false)
      *  then the call will be forwarded down the chain.
      */
-    VSCOgreInputListener*   getNextInputListener(void) {return mNextInputListener;}
-    void                    setNextInputListener(VSCOgreInputListener* next);
+    VSC::OB::InputListener*   getNextInputListener(void) {return mNextInputListener;}
+    void                    setNextInputListener(VSC::OB::InputListener* next);
     
     /**--------------------------------------------------------------
      *  These methods are called by the input adapters when some 
@@ -71,8 +71,8 @@ public:
     
 private:
     
-    VSCOgreInputAdapter*                mAdapter;
-    VSCOgreInputListener*               mNextInputListener;
+    VSC::OB::InputAdapter*                mAdapter;
+    VSC::OB::InputListener*               mNextInputListener;
     
     static const bool                   mTraceUI = true;
     

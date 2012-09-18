@@ -11,7 +11,7 @@
 
 #import <vector>
 
-#import "VSCOgreBulletScene.h"
+#import "VSC::OB::Scene.h"
 #import "VSCOgreBulletApplication.h"
 #import "VSCOgreBulletWindow.h"
 #import "VSCOgreApplicationCocoaSetup.h"
@@ -58,15 +58,15 @@ using namespace OIS;
     
     NSAssert(self.ogreView != nil, @"Expected OgreView");
     
-    ogreBulletScenes.push_back(new VSCOgreBulletPrimitivesDemo());
-    ogreBulletScenes.push_back(new VSCOgreBulletTriMeshDemo());
-	ogreBulletScenes.push_back(new VSCOgreBulletVehiclesDemo());
-	ogreBulletScenes.push_back(new VSCOgreBulletConstraintsDemo());
-	ogreBulletScenes.push_back(new VSCOgreBulletTerrainDemo());
-	ogreBulletScenes.push_back(new VSCOgreBulletRagdollDemo());
+    ogreBulletScenes.push_back(new VSC::OB::PrimitivesDemo());
+    ogreBulletScenes.push_back(new VSC::OB::TriMeshDemo());
+	ogreBulletScenes.push_back(new VSC::OB::VehiclesDemo());
+	ogreBulletScenes.push_back(new VSC::OB::ConstraintsDemo());
+	ogreBulletScenes.push_back(new VSC::OB::TerrainDemo());
+	ogreBulletScenes.push_back(new VSC::OB::RagdollDemo());
     
     // Create the application and try to run it
-    ogreBulletApplication = new VSCOgreBulletApplication(ogreBulletScenes);
+    ogreBulletApplication = new VSC::OB::Application(ogreBulletScenes);
     
     ogreBulletApplication->setupWithOgreView((__bridge void*)self.ogreView);
     
@@ -82,7 +82,7 @@ using namespace OIS;
      *  Cleanup
      */
     
-    std::vector<VSCOgreBulletScene*>::iterator it = ogreBulletScenes.begin();
+    std::vector<VSC::OB::Scene*>::iterator it = ogreBulletScenes.begin();
     while (it != ogreBulletScenes.end())
     {
         delete *it;

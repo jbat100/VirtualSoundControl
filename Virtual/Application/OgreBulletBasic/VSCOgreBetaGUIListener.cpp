@@ -13,7 +13,7 @@ This source file is not LGPL, it's public source code that you can reuse.
 using namespace Ogre;
 
 // -------------------------------------------------------------------------
-VSCOgreBetaGUIListener::VSCOgreBetaGUIListener(VSCOgreBulletScene *listener, Ogre::RenderWindow *win) :
+VSCOgreBetaGUIListener::VSCOgreBetaGUIListener(VSC::OB::Scene *listener, Ogre::RenderWindow *win) :
     mListener(listener),
     mWindow(win),
     mMouseOverlay(0),
@@ -72,7 +72,7 @@ VSCOgreBetaGUIListener::~VSCOgreBetaGUIListener()
     delete mGui;
 }
 // -------------------------------------------------------------------------
-void VSCOgreBetaGUIListener::addBool(BetaGUI::Window *window, bool* value, const String &label, Vector2 &pos)
+void VSC::OB::BetaGUIListener::addBool(BetaGUI::Window *window, bool* value, const String &label, Vector2 &pos)
 {
     window->createBoolButton(
         Vector4(pos.x, pos.y, 7*label.size(), 24), 
@@ -82,7 +82,7 @@ void VSCOgreBetaGUIListener::addBool(BetaGUI::Window *window, bool* value, const
         value);
 }
 // -------------------------------------------------------------------------
-void VSCOgreBetaGUIListener::onButtonPress(BetaGUI::Button *ref, Ogre::uchar type)
+void VSC::OB::BetaGUIListener::onButtonPress(BetaGUI::Button *ref, Ogre::uchar type)
 {
     //if(type == 1) // button down
     //{
@@ -90,17 +90,17 @@ void VSCOgreBetaGUIListener::onButtonPress(BetaGUI::Button *ref, Ogre::uchar typ
     //}
 }
 // -------------------------------------------------------------------------
-void VSCOgreBetaGUIListener::hideMouse()
+void VSC::OB::BetaGUIListener::hideMouse()
 {
    mMousePanel->hide();
 }
 // -------------------------------------------------------------------------
-void VSCOgreBetaGUIListener::showMouse()
+void VSC::OB::BetaGUIListener::showMouse()
 {
    mMousePanel->show();
 }
 // -------------------------------------------------------------------------
-void VSCOgreBetaGUIListener::setMousePosition(Ogre::Vector2 position)
+void VSC::OB::BetaGUIListener::setMousePosition(Ogre::Vector2 position)
 {
     mMousePanel->setPosition (position.x - mMouseCursorHalfWidth, position.y - mMouseCursorHalfHeight);
 }

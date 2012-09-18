@@ -8,20 +8,20 @@
 #include <boost/shared_ptr.hpp>
 
 template <typename Action, typename Input>
-class VSCBound 
+class VSC::Bound 
 {
     
 public:
     
-    VSCBound() {}
-    virtual ~VSCBound() {}
+    VSC::Bound() {}
+    virtual ~VSC::Bound() {}
     
-    typename VSCBindings<Action,Input>::SPtr    getBindings() {return mBindings;}
-    void                                        setBindings(typename VSCBindings<Action,Input>::SPtr bindings) {mBindings = bindings;}
+    typename VSC::Bindings<Action,Input>::SPtr    getBindings() {return mBindings;}
+    void                                        setBindings(typename VSC::Bindings<Action,Input>::SPtr bindings) {mBindings = bindings;}
     
 private:
     
-    typename VSCBindings<Action,Input>::SPtr    mBindings;
+    typename VSC::Bindings<Action,Input>::SPtr    mBindings;
     
 };
 

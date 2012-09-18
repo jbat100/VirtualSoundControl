@@ -35,7 +35,7 @@
 
 #pragma mark - Custom Setters
 
-- (void) setOgreBulletApplication:(VSCOgreBulletApplication*)app {
+- (void) setOgreBulletApplication:(VSC::OB::Application*)app {
     // update the popup button with the scenes
     
     _ogreBulletApplication = app;

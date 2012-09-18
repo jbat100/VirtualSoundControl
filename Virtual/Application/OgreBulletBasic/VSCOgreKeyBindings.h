@@ -12,33 +12,33 @@
 #include <set>
 
 
-class VSCOgreKeyBindings : public VSCBindings<VSCOgreKeyboardAction::Key, VSCKeyboard::Combination>
+class VSC::OB::KeyBindings : public VSC::Bindings<VSC::OB::KeyboardAction::Key, VSC::Keyboard::Combination>
 {
     
 public:
     
-    typedef boost::shared_ptr<VSCOgreKeyBindings> SPtr;
+    typedef boost::shared_ptr<VSC::OB::KeyBindings> SPtr;
     
-    VSCOgreKeyBindings() {}
-    virtual ~VSCOgreKeyBindings() {}
+    VSC::OB::KeyBindings() {}
+    virtual ~VSC::OB::KeyBindings() {}
     
 };
 
 
-class VSCOgreKeyBound : private VSCBound<VSCOgreKeyboardAction::Key, VSCKeyboard::Combination> 
+class VSC::OB::KeyBound : private VSC::Bound<VSC::OB::KeyboardAction::Key, VSC::Keyboard::Combination> 
 {
     
 public:
     
-    VSCOgreKeyBound() {}
-    virtual ~VSCOgreKeyBound() {}
+    VSC::OB::KeyBound() {}
+    virtual ~VSC::OB::KeyBound() {}
     
-    void                        setOgreKeyBindings(VSCOgreKeyBindings::SPtr keyBindings);
-    VSCOgreKeyBindings::SPtr    getOgreKeyBindings(void);
+    void                        setOgreKeyBindings(VSC::OB::KeyBindings::SPtr keyBindings);
+    VSC::OB::KeyBindings::SPtr    getOgreKeyBindings(void);
     
 private:
     
-    typedef VSCBindings<VSCOgreKeyboardAction::Key, VSCKeyboard::Combination> BaseBindings;
+    typedef VSC::Bindings<VSC::OB::KeyboardAction::Key, VSC::Keyboard::Combination> BaseBindings;
     
 };
  

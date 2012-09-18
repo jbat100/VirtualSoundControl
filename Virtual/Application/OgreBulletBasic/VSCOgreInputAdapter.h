@@ -7,25 +7,25 @@
 #include <set>
 #include <Ogre/Ogre.h>
 
-class VSCOgreInputListener;
+class VSC::OB::InputListener;
 
-class VSCOgreInputAdapter
+class VSC::OB::InputAdapter
 {
     
 public:
     
-    VSCOgreInputAdapter(void);
-    virtual ~VSCOgreInputAdapter(void) {}
+    VSC::OB::InputAdapter(void);
+    virtual ~VSC::OB::InputAdapter(void) {}
     
-    //friend class VSCOgreInputListener;
+    //friend class VSC::OB::InputListener;
     
     /*
      *  Add/Remove input listeners
      */
     
-    const std::set<VSCOgreInputListener*>& getInputListeners(void) {return mInputListeners;}
-    void addInputListener(VSCOgreInputListener* listener);
-    void removeInputListener(VSCOgreInputListener* listener);
+    const std::set<VSC::OB::InputListener*>& getInputListeners(void) {return mInputListeners;}
+    void addInputListener(VSC::OB::InputListener* listener);
+    void removeInputListener(VSC::OB::InputListener* listener);
     
     bool areCoordinatesNormalized(void) {return mNormalizedCoordinates;}
     void normalizeCoordinates(bool norm) {mNormalizedCoordinates = norm;}
@@ -81,7 +81,7 @@ protected:
     
 private:
 
-    std::set<VSCOgreInputListener*>     mInputListeners;
+    std::set<VSC::OB::InputListener*>     mInputListeners;
     bool                                mNormalizedCoordinates;
     bool                                mAllowRapidFireKeyPresses;
     

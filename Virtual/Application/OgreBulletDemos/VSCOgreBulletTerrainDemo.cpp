@@ -63,7 +63,7 @@ static const    Ogre::Vector3 terrain_Shift = Ogre::Vector3(750, terrain_height,
 #define CUBE_HALF_EXTENTS 1
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletTerrainDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application)
+void VSC::OB::TerrainDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Application *application)
 {
 
     mHelpKeys.clear();
@@ -123,7 +123,7 @@ void VSCOgreBulletTerrainDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
 	std::string terrain_cfg("terrain.cfg");
 	mSceneMgr->setWorldGeometry(terrain_cfg);
 
-    VSCOgreBulletScene::init(root, win, application);
+    VSC::OB::Scene::init(root, win, application);
 
     // ------------------------
     // add lights
@@ -371,15 +371,15 @@ void VSCOgreBulletTerrainDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
 
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletTerrainDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
+bool VSC::OB::TerrainDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
 
     OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
-    VSCKeyboard::Combination comb(key, modifier);
+    VSC::Keyboard::Combination comb(key, modifier);
     
-    const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
+    const VSC::OB::KeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
     
-    BOOST_FOREACH (VSCOgreKeyboardAction::Key actionKey, actionKeySet)
+    BOOST_FOREACH (VSC::OB::KeyboardAction::Key actionKey, actionKeySet)
     {
         
         bool wheel_engine_style_change = false;
@@ -389,33 +389,33 @@ bool VSCOgreBulletTerrainDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
         
         switch(actionKey)
         {
-            case VSCOgreKeyboardAction::VehicleIncrementEngineStyle:
+            case VSC::OB::KeyboardAction::VehicleIncrementEngineStyle:
                 wheel_engine_style_change = true;
                 mWheelEngineStyle = (mWheelEngineStyle + 1) % 3;
                 break;
-            case VSCOgreKeyboardAction::VehicleDecrementEngineStyle:
+            case VSC::OB::KeyboardAction::VehicleDecrementEngineStyle:
                 wheel_engine_style_change = true;
                 mWheelEngineStyle = (mWheelEngineStyle - 1) % 3;
                 break;
-            case VSCOgreKeyboardAction::VehicleIncrementSteeringStyle:
+            case VSC::OB::KeyboardAction::VehicleIncrementSteeringStyle:
                 wheel_steering_style_change = true;
                 mWheelSteeringStyle = (mWheelSteeringStyle + 1) % 3;
                 break;
-            case VSCOgreKeyboardAction::VehicleDecrementSteeringStyle:
+            case VSC::OB::KeyboardAction::VehicleDecrementSteeringStyle:
                 wheel_steering_style_change = true;
                 mWheelSteeringStyle = (mWheelSteeringStyle - 1) % 3;;
                 break;
                 
-            case VSCOgreKeyboardAction::VehicleSteerLeft:
+            case VSC::OB::KeyboardAction::VehicleSteerLeft:
                 mSteeringLeft = true;
                 break;
-            case VSCOgreKeyboardAction::VehicleSteerRight:
+            case VSC::OB::KeyboardAction::VehicleSteerRight:
                 mSteeringRight = true;
                 break;
-            case VSCOgreKeyboardAction::VehicleMoveBackward:
+            case VSC::OB::KeyboardAction::VehicleMoveBackward:
                 mEngineForce = -gMaxEngineForce;
                 break;
-            case VSCOgreKeyboardAction::VehicleMoveForward:
+            case VSC::OB::KeyboardAction::VehicleMoveForward:
                 mEngineForce = gMaxEngineForce;
                 break;
             default:
@@ -489,42 +489,42 @@ bool VSCOgreBulletTerrainDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
             }
         }
         
-        if (!handled) handled = VSCOgreBulletScene::throwDynamicObject(actionKey);
-        if (!handled) handled = VSCOgreBulletScene::dropDynamicObject(actionKey);
+        if (!handled) handled = VSC::OB::Scene::throwDynamicObject(actionKey);
+        if (!handled) handled = VSC::OB::Scene::dropDynamicObject(actionKey);
         
         if (handled) return true;
         
-        return VSCOgreBulletScene::keyPressed(renderWindow, key);
+        return VSC::OB::Scene::keyPressed(renderWindow, key);
         
     }
     
     return false; // should never reach here
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletTerrainDemo::keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
+bool VSC::OB::TerrainDemo::keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
-    VSCKeyboard::Combination comb(key, modifier);
+    VSC::Keyboard::Combination comb(key, modifier);
     
-    const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
+    const VSC::OB::KeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
     
-    BOOST_FOREACH (VSCOgreKeyboardAction::Key actionKey, actionKeySet)
+    BOOST_FOREACH (VSC::OB::KeyboardAction::Key actionKey, actionKeySet)
     {
         
         bool handled = true;
         
         switch(actionKey)
         {
-            case VSCOgreKeyboardAction::VehicleSteerLeft:
+            case VSC::OB::KeyboardAction::VehicleSteerLeft:
                 mSteeringLeft = false;
                 break;
-            case VSCOgreKeyboardAction::VehicleSteerRight:
+            case VSC::OB::KeyboardAction::VehicleSteerRight:
                 mSteeringRight = false;
                 break;
-            case VSCOgreKeyboardAction::VehicleMoveBackward:
+            case VSC::OB::KeyboardAction::VehicleMoveBackward:
                 mEngineForce = 0;
                 break;
-            case VSCOgreKeyboardAction::VehicleMoveForward:
+            case VSC::OB::KeyboardAction::VehicleMoveForward:
                 mEngineForce = 0;
                 break;
             default:
@@ -534,14 +534,14 @@ bool VSCOgreBulletTerrainDemo::keyReleased(Ogre::RenderWindow* renderWindow, OIS
         
         if (handled) return true;
         
-        return VSCOgreBulletScene::keyReleased(renderWindow, key);
+        return VSC::OB::Scene::keyReleased(renderWindow, key);
         
     }
     
     return false;
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletTerrainDemo::frameStarted(Real elapsedTime)
+bool VSC::OB::TerrainDemo::frameStarted(Real elapsedTime)
 {
 
     // apply engine Force on relevant wheels
@@ -572,6 +572,6 @@ bool VSCOgreBulletTerrainDemo::frameStarted(Real elapsedTime)
             mVehicle->setSteeringValue (-mSteering, mWheelsSteerable[i]);
     }
 
-    return VSCOgreBulletScene::frameStarted(elapsedTime);
+    return VSC::OB::Scene::frameStarted(elapsedTime);
 }
 // -------------------------------------------------------------------------

@@ -11,15 +11,15 @@
 #include <boost/foreach.hpp>
 
 // -------------------------------------------------------------------------
-VSCOgreBulletApplication::VSCOgreBulletApplication(std::vector<VSCOgreBulletScene*> bulletScenes) : 
-    VSCOgreApplication(),
+VSC::OB::Application::VSC::OB::Application(std::vector<VSC::OB::Scene*> bulletScenes) : 
+    VSC::OB::ApplicationBase(),
     Ogre::FrameListener(),
     mBulletScenes(bulletScenes),
     mBulletScene(0)
 {
     BOOST_ASSERT_MSG (!mBulletScenes.empty(), "Expected keyboard adapter");
     
-    BOOST_FOREACH (VSCOgreBulletScene* scene, mBulletScenes) 
+    BOOST_FOREACH (VSC::OB::Scene* scene, mBulletScenes) 
     {
         // application bindings should be set in the base class constructor
         scene->setOgreKeyBindings(this->getOgreKeyBindings());
@@ -27,25 +27,25 @@ VSCOgreBulletApplication::VSCOgreBulletApplication(std::vector<VSCOgreBulletScen
     
 }
 // -------------------------------------------------------------------------
-VSCOgreBulletApplication::~VSCOgreBulletApplication()
+VSC::OB::Application::~VSC::OB::Application()
 { 
 
 }
 
-VSCOgreBulletScene* VSCOgreBulletApplication::sceneWithName(Ogre::String name)
+VSC::OB::Scene* VSC::OB::Application::sceneWithName(Ogre::String name)
 {
-    BOOST_FOREACH (VSCOgreBulletScene* scene, mBulletScenes) 
+    BOOST_FOREACH (VSC::OB::Scene* scene, mBulletScenes) 
     {
         if (name.compare(scene->getName()) == 0) return scene;
     }
     return 0;
 }
 
-bool VSCOgreBulletApplication::setupWithOgreView(void* ogreView)
+bool VSC::OB::Application::setupWithOgreView(void* ogreView)
 {
-    //VSCOgreApplication::setupWithOgreView(ogreView);
+    //VSC::OB::ApplicationBase::setupWithOgreView(ogreView);
     
-    VSCOgreApplication::setupWithOgreView(ogreView);
+    VSC::OB::ApplicationBase::setupWithOgreView(ogreView);
     
     BOOST_ASSERT_MSG(mBulletScenes.size() != 0, "Expected keyboard adapter");
     
@@ -58,11 +58,11 @@ bool VSCOgreBulletApplication::setupWithOgreView(void* ogreView)
     return true;
 }
 
-std::vector<Ogre::String> VSCOgreBulletApplication::getSceneNames(void)
+std::vector<Ogre::String> VSC::OB::Application::getSceneNames(void)
 {
     std::vector<Ogre::String> sceneNames;
     
-    BOOST_FOREACH (VSCOgreBulletScene* scene, mBulletScenes) 
+    BOOST_FOREACH (VSC::OB::Scene* scene, mBulletScenes) 
     {
         sceneNames.push_back(scene->getName());
     }
@@ -70,9 +70,9 @@ std::vector<Ogre::String> VSCOgreBulletApplication::getSceneNames(void)
     return sceneNames;
 }
 
-bool VSCOgreBulletApplication::switchToSceneWithName(Ogre::String sceneName)
+bool VSC::OB::Application::switchToSceneWithName(Ogre::String sceneName)
 {
-    VSCOgreBulletScene *scene = this->sceneWithName(sceneName);
+    VSC::OB::Scene *scene = this->sceneWithName(sceneName);
     
     if (scene) 
     {
@@ -83,11 +83,11 @@ bool VSCOgreBulletApplication::switchToSceneWithName(Ogre::String sceneName)
 }
 
 // -------------------------------------------------------------------------
-bool VSCOgreBulletApplication::switchToScene(VSCOgreBulletScene *newScene)
+bool VSC::OB::Application::switchToScene(VSC::OB::Scene *newScene)
 {
     
-    if (mTraceScene && newScene) std::cout << "VSCOgreBulletApplication switching scene to " << newScene << std::endl;
-    if (mTraceScene && !newScene) std::cout << "VSCOgreBulletApplication switching scene to NULL" << std::endl;
+    if (mTraceScene && newScene) std::cout << "VSC::OB::Application switching scene to " << newScene << std::endl;
+    if (mTraceScene && !newScene) std::cout << "VSC::OB::Application switching scene to NULL" << std::endl;
     
     /*
      *  We need to reset the scene managers and everything...
@@ -119,9 +119,9 @@ bool VSCOgreBulletApplication::switchToScene(VSCOgreBulletScene *newScene)
     return true;
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletApplication::frameStarted(const Ogre::FrameEvent& evt)
+bool VSC::OB::Application::frameStarted(const Ogre::FrameEvent& evt)
 {
-    if (mTraceFrame) std::cout << "VSCOgreBulletApplication frameStarted " << &evt << std::endl;
+    if (mTraceFrame) std::cout << "VSC::OB::Application frameStarted " << &evt << std::endl;
 
     //BOOST_ASSERT_MSG (mBulletScene, "Expected mBulletScene");
     
@@ -135,11 +135,11 @@ bool VSCOgreBulletApplication::frameStarted(const Ogre::FrameEvent& evt)
 }
 
 // -------------------------------------------------------------------------
-bool VSCOgreBulletApplication::frameEnded(const Ogre::FrameEvent& evt)
+bool VSC::OB::Application::frameEnded(const Ogre::FrameEvent& evt)
 {
     //BOOST_ASSERT_MSG (mBulletScene, "Expected mBulletScene");
     
-    if (mTraceFrame) std::cout << "VSCOgreBulletApplication::frameEnded" << std::endl;
+    if (mTraceFrame) std::cout << "VSC::OB::Application::frameEnded" << std::endl;
     
     if (mBulletScene && !mBulletScene->frameEnded(evt.timeSinceLastFrame))
     {
@@ -151,9 +151,9 @@ bool VSCOgreBulletApplication::frameEnded(const Ogre::FrameEvent& evt)
 }
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletApplication::setupResources(void)
+void VSC::OB::Application::setupResources(void)
 {
-	VSCOgreApplication::setupResources(); 
+	VSC::OB::ApplicationBase::setupResources(); 
 	Ogre::ResourceGroupManager *rsm = Ogre::ResourceGroupManager::getSingletonPtr();
 	Ogre::StringVector groups = rsm->getResourceGroups();        
 	Ogre::FileInfoListPtr finfo =  Ogre::ResourceGroupManager::getSingleton().findResourceFileInfo ("Bootstrap", "axes.mesh");
@@ -196,7 +196,7 @@ void VSCOgreBulletApplication::setupResources(void)
 }
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletApplication::loadResources(void)
+void VSC::OB::Application::loadResources(void)
 {
 	Ogre::ResourceGroupManager *rsm = Ogre::ResourceGroupManager::getSingletonPtr();
 	Ogre::StringVector groups = rsm->getResourceGroups();      
@@ -214,9 +214,9 @@ void VSCOgreBulletApplication::loadResources(void)
 
 // -------------------------------------------------------------------------
 
-bool VSCOgreBulletApplication::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
+bool VSC::OB::Application::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
-    if (mTraceUI) std::cout << "VSCOgreBulletApplication::keyPressed " << key << std::endl;
+    if (mTraceUI) std::cout << "VSC::OB::Application::keyPressed " << key << std::endl;
     
-    return VSCOgreApplication::keyPressed(renderWindow, key);
+    return VSC::OB::ApplicationBase::keyPressed(renderWindow, key);
 }

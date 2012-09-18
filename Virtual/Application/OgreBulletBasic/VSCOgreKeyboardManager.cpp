@@ -6,55 +6,55 @@
 
 #include <boost/assert.hpp>
 
-VSCOgreKeyboardManager::VSCOgreKeyboardManager()
+VSC::OB::KeyboardManager::VSC::OB::KeyboardManager()
 {
     
 }
 
-VSCOgreKeyboardManager::~VSCOgreKeyboardManager()
+VSC::OB::KeyboardManager::~VSC::OB::KeyboardManager()
 {
     
 }
 
-VSCOgreKeyBindings::SPtr VSCOgreKeyboardManager::generateDefaultBindings(void)
+VSC::OB::KeyBindings::SPtr VSC::OB::KeyboardManager::generateDefaultBindings(void)
 {
     using namespace OIS;
     
-    VSCOgreKeyBindings::SPtr keyBindings = VSCOgreKeyBindings::SPtr(new VSCOgreKeyBindings);
+    VSC::OB::KeyBindings::SPtr keyBindings = VSC::OB::KeyBindings::SPtr(new VSC::OB::KeyBindings);
     
-    keyBindings->setBinding(VSCOgreKeyboardAction::Quit,                         VSCKeyboard::Combination(KC_ESCAPE));
-    keyBindings->setBinding(VSCOgreKeyboardAction::SaveScreenShot,               VSCKeyboard::Combination(KC_SYSRQ));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::Quit,                         VSC::Keyboard::Combination(KC_ESCAPE));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::SaveScreenShot,               VSC::Keyboard::Combination(KC_SYSRQ));
     
-    keyBindings->setBinding(VSCOgreKeyboardAction::ToggleDisplayWireFrame,       VSCKeyboard::Combination(KC_T));
-    keyBindings->setBinding(VSCOgreKeyboardAction::ToggleDisplayAABB,            VSCKeyboard::Combination(KC_1));
-    keyBindings->setBinding(VSCOgreKeyboardAction::ToggleDisplayContactPoints,   VSCKeyboard::Combination(KC_3));
-    keyBindings->setBinding(VSCOgreKeyboardAction::ToggleDeactivation,           VSCKeyboard::Combination(KC_4));
-    keyBindings->setBinding(VSCOgreKeyboardAction::ToggleHelpText,               VSCKeyboard::Combination(KC_5));
-    keyBindings->setBinding(VSCOgreKeyboardAction::ToggleDrawText,               VSCKeyboard::Combination(KC_6));
-    keyBindings->setBinding(VSCOgreKeyboardAction::ToggleProfileTimings,         VSCKeyboard::Combination(KC_7));
-    keyBindings->setBinding(VSCOgreKeyboardAction::ToggleSatComparison,          VSCKeyboard::Combination(KC_8));
-    keyBindings->setBinding(VSCOgreKeyboardAction::ToggleBulletLCP,              VSCKeyboard::Combination(KC_9));
-    keyBindings->setBinding(VSCOgreKeyboardAction::ToggleCCD,                    VSCKeyboard::Combination(KC_0));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::ToggleDisplayWireFrame,       VSC::Keyboard::Combination(KC_T));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::ToggleDisplayAABB,            VSC::Keyboard::Combination(KC_1));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::ToggleDisplayContactPoints,   VSC::Keyboard::Combination(KC_3));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::ToggleDeactivation,           VSC::Keyboard::Combination(KC_4));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::ToggleHelpText,               VSC::Keyboard::Combination(KC_5));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::ToggleDrawText,               VSC::Keyboard::Combination(KC_6));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::ToggleProfileTimings,         VSC::Keyboard::Combination(KC_7));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::ToggleSatComparison,          VSC::Keyboard::Combination(KC_8));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::ToggleBulletLCP,              VSC::Keyboard::Combination(KC_9));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::ToggleCCD,                    VSC::Keyboard::Combination(KC_0));
     
-    keyBindings->setBinding(VSCOgreKeyboardAction::ToggleSimulationPause,        VSCKeyboard::Combination(KC_P));
-    keyBindings->setBinding(VSCOgreKeyboardAction::SimulationStep,               VSCKeyboard::Combination(KC_M));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::ToggleSimulationPause,        VSC::Keyboard::Combination(KC_P));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::SimulationStep,               VSC::Keyboard::Combination(KC_M));
     
-    keyBindings->setBinding(VSCOgreKeyboardAction::IncrementShootSpeed,          VSCKeyboard::Combination(KC_ADD));
-    keyBindings->setBinding(VSCOgreKeyboardAction::DecrementShootSpeed,          VSCKeyboard::Combination(KC_MINUS));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::IncrementShootSpeed,          VSC::Keyboard::Combination(KC_ADD));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::DecrementShootSpeed,          VSC::Keyboard::Combination(KC_MINUS));
     
-    keyBindings->setBinding(VSCOgreKeyboardAction::ShootCube,                    VSCKeyboard::Combination(KC_B));
-    keyBindings->setBinding(VSCOgreKeyboardAction::ShootSphere,                  VSCKeyboard::Combination(KC_N));
-    keyBindings->setBinding(VSCOgreKeyboardAction::ShootCylinder,                VSCKeyboard::Combination(KC_H));
-    keyBindings->setBinding(VSCOgreKeyboardAction::ShootCone,                    VSCKeyboard::Combination(KC_G));
-    keyBindings->setBinding(VSCOgreKeyboardAction::DropCube,                     VSCKeyboard::Combination(KC_J));
-    keyBindings->setBinding(VSCOgreKeyboardAction::DropSphere,                   VSCKeyboard::Combination(KC_K));
-    keyBindings->setBinding(VSCOgreKeyboardAction::DropCylinder,                 VSCKeyboard::Combination(KC_U));
-    keyBindings->setBinding(VSCOgreKeyboardAction::DropCone,                     VSCKeyboard::Combination(KC_I));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::ShootCube,                    VSC::Keyboard::Combination(KC_B));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::ShootSphere,                  VSC::Keyboard::Combination(KC_N));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::ShootCylinder,                VSC::Keyboard::Combination(KC_H));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::ShootCone,                    VSC::Keyboard::Combination(KC_G));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::DropCube,                     VSC::Keyboard::Combination(KC_J));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::DropSphere,                   VSC::Keyboard::Combination(KC_K));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::DropCylinder,                 VSC::Keyboard::Combination(KC_U));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::DropCone,                     VSC::Keyboard::Combination(KC_I));
     
-    keyBindings->setBinding(VSCOgreKeyboardAction::MoveCameraForward,            VSCKeyboard::Combination(KC_W));
-    keyBindings->setBinding(VSCOgreKeyboardAction::MoveCameraBackward,           VSCKeyboard::Combination(KC_S));
-    keyBindings->setBinding(VSCOgreKeyboardAction::MoveCameraRight,              VSCKeyboard::Combination(KC_D));
-    keyBindings->setBinding(VSCOgreKeyboardAction::MoveCameraLeft,               VSCKeyboard::Combination(KC_A));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::MoveCameraForward,            VSC::Keyboard::Combination(KC_W));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::MoveCameraBackward,           VSC::Keyboard::Combination(KC_S));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::MoveCameraRight,              VSC::Keyboard::Combination(KC_D));
+    keyBindings->setBinding(VSC::OB::KeyboardAction::MoveCameraLeft,               VSC::Keyboard::Combination(KC_A));
     
     return keyBindings;
     

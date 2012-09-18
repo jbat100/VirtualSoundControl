@@ -28,7 +28,7 @@ const Ogre::Vector3 CameraStart  = Ogre::Vector3(0,-9,1);
 
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletTriMeshDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application)
+void VSC::OB::TriMeshDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Application *application)
 {
     mHelpKeys.clear();
     mHelpKeys.push_back (BASIC_HELP_INFO0);
@@ -57,7 +57,7 @@ void VSCOgreBulletTriMeshDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
     mCamera->setFixedYawAxis(true, Ogre::Vector3::UNIT_Z);
 
 
-    VSCOgreBulletScene::init(root, win, application);
+    VSC::OB::Scene::init(root, win, application);
 
     // ------------------------
     // add lights
@@ -99,20 +99,20 @@ void VSCOgreBulletTriMeshDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
         0.8f);   
 }
 // -------------------------------------------------------------------------
-bool VSCOgreBulletTriMeshDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
+bool VSC::OB::TriMeshDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
-    VSCKeyboard::Combination comb(key, modifier);
+    VSC::Keyboard::Combination comb(key, modifier);
     
-    const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
+    const VSC::OB::KeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
     
-    BOOST_FOREACH (VSCOgreKeyboardAction::Key actionKey, actionKeySet)
+    BOOST_FOREACH (VSC::OB::KeyboardAction::Key actionKey, actionKeySet)
     {
         
-        VSCOgreBulletScene::throwDynamicObject(actionKey);
-        VSCOgreBulletScene::dropDynamicObject(actionKey);
+        VSC::OB::Scene::throwDynamicObject(actionKey);
+        VSC::OB::Scene::dropDynamicObject(actionKey);
 
-        return VSCOgreBulletScene::keyPressed(renderWindow, key);
+        return VSC::OB::Scene::keyPressed(renderWindow, key);
         
     }
     

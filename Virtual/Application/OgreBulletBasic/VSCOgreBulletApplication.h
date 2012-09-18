@@ -12,12 +12,12 @@
 
 #include <vector>
 
-class VSCOgreBulletApplication;
+class VSC::OB::Application;
 
 /**
  *  The test application, based on the Ogre example application for consistency
  */
-class VSCOgreBulletApplication: public VSCOgreApplication,  public Ogre::FrameListener
+class VSC::OB::Application : public VSC::OB::ApplicationBase,  public Ogre::FrameListener
 {
     
 public:
@@ -26,8 +26,8 @@ public:
      *  Constructor / Destructor
      */
     
-    VSCOgreBulletApplication(std::vector<VSCOgreBulletScene*> scenes);
-    ~VSCOgreBulletApplication();
+    VSC::OB::Application(std::vector<VSC::OB::Scene*> scenes);
+    ~VSC::OB::Application();
     
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     bool setupWithOgreView(void* ogreView);
@@ -37,10 +37,10 @@ public:
      *  Scenes stuff
      */
     
-    VSCOgreBulletScene* sceneWithName(Ogre::String name);
-    bool switchToScene(VSCOgreBulletScene *newScene);
+    VSC::OB::Scene* sceneWithName(Ogre::String name);
+    bool switchToScene(VSC::OB::Scene *newScene);
     bool switchToSceneWithName(Ogre::String sceneName);
-    VSCOgreBulletScene* getCurrentScene(void) {return mBulletScene;}
+    VSC::OB::Scene* getCurrentScene(void) {return mBulletScene;}
     std::vector<Ogre::String> getSceneNames(void);
     
     /*------------------------------------------------------
@@ -51,7 +51,7 @@ public:
 
 protected:
     
-    const std::vector<VSCOgreBulletScene*>& getScenes() {return mBulletScenes;};
+    const std::vector<VSC::OB::Scene*>& getScenes() {return mBulletScenes;};
     
 	// Override stuff from the base class
     void createScene(void){};	
@@ -69,8 +69,8 @@ protected:
     
 private:
     
-    VSCOgreBulletScene *mBulletScene;
-    std::vector<VSCOgreBulletScene*> mBulletScenes;
+    VSC::OB::Scene *mBulletScene;
+    std::vector<VSC::OB::Scene*> mBulletScenes;
     
     static const bool mTraceUI = true;
     static const bool mTraceFrame = false;

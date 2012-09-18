@@ -11,14 +11,14 @@ using Ogre::Real;
 using Ogre::RenderWindow;
 
 // -------------------------------------------------------------------------
-VSCOgreInputListener::VSCOgreInputListener() :
+VSC::OB::InputListener::VSC::OB::InputListener() :
 mAdapter(0),
 mNextInputListener(0)
 {
 
 }
 
-void VSCOgreInputListener::setInputAdapter(VSCOgreInputAdapter* adapter) 
+void VSC::OB::InputListener::setInputAdapter(VSC::OB::InputAdapter* adapter) 
 {
     mAdapter = adapter;
     
@@ -31,7 +31,7 @@ void VSCOgreInputListener::setInputAdapter(VSCOgreInputAdapter* adapter)
     }
 }
 
-void VSCOgreInputListener::setNextInputListener(VSCOgreInputListener* next)
+void VSC::OB::InputListener::setNextInputListener(VSC::OB::InputListener* next)
 {
     mNextInputListener = next;
     
@@ -42,9 +42,9 @@ void VSCOgreInputListener::setNextInputListener(VSCOgreInputListener* next)
 }
 
 
-bool VSCOgreInputListener::mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement) 
+bool VSC::OB::InputListener::mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement) 
 {
-    if (mTraceUI) std::cout << "VSCOgreInputListener::mouseMoved, next listener is 0x" << (void*)mNextInputListener << std::endl;
+    if (mTraceUI) std::cout << "VSC::OB::InputListener::mouseMoved, next listener is 0x" << (void*)mNextInputListener << std::endl;
     
     if (mNextInputListener)
     {
@@ -54,7 +54,7 @@ bool VSCOgreInputListener::mouseMoved(Ogre::RenderWindow* renderWindow, const Og
     return false;
 }
 
-bool VSCOgreInputListener::mouseEntered(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position) 
+bool VSC::OB::InputListener::mouseEntered(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position) 
 {
     if (mNextInputListener)
     {
@@ -64,7 +64,7 @@ bool VSCOgreInputListener::mouseEntered(Ogre::RenderWindow* renderWindow, const 
     return false;
 }
 
-bool VSCOgreInputListener::mouseExited(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position) 
+bool VSC::OB::InputListener::mouseExited(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position) 
 {
     if (mNextInputListener)
     {
@@ -74,9 +74,9 @@ bool VSCOgreInputListener::mouseExited(Ogre::RenderWindow* renderWindow, const O
     return false;
 }
 
-bool VSCOgreInputListener::mouseButtonPressed(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
+bool VSC::OB::InputListener::mouseButtonPressed(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
-    if (mTraceUI) std::cout << "VSCOgreInputListener::mouseButtonPressed, next listener is 0x" << (void*)mNextInputListener << std::endl;
+    if (mTraceUI) std::cout << "VSC::OB::InputListener::mouseButtonPressed, next listener is 0x" << (void*)mNextInputListener << std::endl;
     
     if (mNextInputListener)
     {
@@ -86,9 +86,9 @@ bool VSCOgreInputListener::mouseButtonPressed(Ogre::RenderWindow* renderWindow, 
     return false;
 }
 
-bool VSCOgreInputListener::mouseButtonReleased(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
+bool VSC::OB::InputListener::mouseButtonReleased(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
-    if (mTraceUI) std::cout << "VSCOgreInputListener::mouseButtonReleased, next listener is 0x" << (void*)mNextInputListener << std::endl;
+    if (mTraceUI) std::cout << "VSC::OB::InputListener::mouseButtonReleased, next listener is 0x" << (void*)mNextInputListener << std::endl;
     
     if (mNextInputListener)
     {
@@ -98,9 +98,9 @@ bool VSCOgreInputListener::mouseButtonReleased(Ogre::RenderWindow* renderWindow,
     return false;
 }
 
-bool VSCOgreInputListener::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
+bool VSC::OB::InputListener::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
-    if (mTraceUI) std::cout << "VSCOgreInputListener::keyPressed " << key << ", next listener is 0x" << (void*)mNextInputListener << std::endl;
+    if (mTraceUI) std::cout << "VSC::OB::InputListener::keyPressed " << key << ", next listener is 0x" << (void*)mNextInputListener << std::endl;
     
     if (mNextInputListener)
     {
@@ -110,7 +110,7 @@ bool VSCOgreInputListener::keyPressed(Ogre::RenderWindow* renderWindow, OIS::Key
     return false;
 }
 
-bool VSCOgreInputListener::keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
+bool VSC::OB::InputListener::keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     if (mNextInputListener)
     {
@@ -120,7 +120,7 @@ bool VSCOgreInputListener::keyReleased(Ogre::RenderWindow* renderWindow, OIS::Ke
     return false;
 }
 
-bool VSCOgreInputListener::modifierChanged(Ogre::RenderWindow* renderWindow, OIS::Keyboard::Modifier modifier)
+bool VSC::OB::InputListener::modifierChanged(Ogre::RenderWindow* renderWindow, OIS::Keyboard::Modifier modifier)
 {
     if (mNextInputListener)
     {
@@ -130,7 +130,7 @@ bool VSCOgreInputListener::modifierChanged(Ogre::RenderWindow* renderWindow, OIS
     return false;
 }
 
-bool VSCOgreInputListener::renderWindowChangedSize(Ogre::RenderWindow* renderWindow)
+bool VSC::OB::InputListener::renderWindowChangedSize(Ogre::RenderWindow* renderWindow)
 {
     if (mNextInputListener)
     {

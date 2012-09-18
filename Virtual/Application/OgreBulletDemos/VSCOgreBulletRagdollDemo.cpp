@@ -73,7 +73,7 @@ int             _ragdoll_count;
 // -------------------------------------------------------------------------
 
 // -------------------------------------------------------------------------
-void VSCOgreBulletRagdollDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application)
+void VSCOgreBulletRagdollDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Application *application)
 {
     mHelpKeys.clear();
     mHelpKeys.push_back (BASIC_HELP_INFO0);
@@ -101,7 +101,7 @@ void VSCOgreBulletRagdollDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
     mCamera->rotate(Ogre::Vector3(1,0,0), Degree(90));
     mCamera->setFixedYawAxis(true, Ogre::Vector3::UNIT_Z);
 
-    VSCOgreBulletScene::init(root, win, application);
+    VSC::OB::Scene::init(root, win, application);
 
     // ------------------------
     // add lights
@@ -126,11 +126,11 @@ bool VSCOgreBulletRagdollDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
     bool handled = true;
     
     OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
-    VSCKeyboard::Combination comb(key, modifier);
+    VSC::Keyboard::Combination comb(key, modifier);
     
-    const VSCOgreKeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
+    const VSC::OB::KeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
     
-    BOOST_FOREACH (VSCOgreKeyboardAction::Key actionKey, actionKeySet)
+    BOOST_FOREACH (VSC::OB::KeyboardAction::Key actionKey, actionKeySet)
     {
     
         switch(key)
@@ -143,13 +143,13 @@ bool VSCOgreBulletRagdollDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
                 break;
         }
     
-        if (!handled) handled = VSCOgreBulletScene::throwDynamicObject(actionKey);
-        if (!handled) handled = VSCOgreBulletScene::dropDynamicObject(actionKey);
+        if (!handled) handled = VSC::OB::Scene::throwDynamicObject(actionKey);
+        if (!handled) handled = VSC::OB::Scene::dropDynamicObject(actionKey);
     }
     
     if (handled) return true;
 
-    return VSCOgreBulletScene::keyPressed(renderWindow, key);
+    return VSC::OB::Scene::keyPressed(renderWindow, key);
 }
 // -------------------------------------------------------------------------
 void VSCOgreBulletRagdollDemo::button0Pressed()
@@ -189,7 +189,7 @@ bool VSCOgreBulletRagdollDemo::frameStarted(Ogre::Real elapsedTime)
 	}
 #endif
 
-	return VSCOgreBulletScene::frameStarted(elapsedTime);;
+	return VSC::OB::Scene::frameStarted(elapsedTime);;
 }
 // -------------------------------------------------------------------------
 bool VSCOgreBulletRagdollDemo::frameEnded(Ogre::Real elapsedTime)
@@ -242,7 +242,7 @@ bool VSCOgreBulletRagdollDemo::frameEnded(Ogre::Real elapsedTime)
 		myRagDolls.size() < static_cast<size_t>(sMaxRagdoll))
 		createRagDoll();
 #endif
-	return VSCOgreBulletScene::frameEnded(elapsedTime);;
+	return VSC::OB::Scene::frameEnded(elapsedTime);;
 }
 
 // -------------------------------------------------------------------------
@@ -276,7 +276,7 @@ void VSCOgreBulletRagdollDemo::shootToKill()
 #ifdef _DEBUG_TRIMESH 
 				// ray cast could be tested against that instead of ragdoll.
 				// depending on complexity of mesh could be simpler
-				VSCOgreBulletScene::AnimatedMeshToShapeConverter meshconverter(e, e->getParentNode ()->_getFullTransform());
+				VSC::OB::Scene::AnimatedMeshToShapeConverter meshconverter(e, e->getParentNode ()->_getFullTransform());
 				//_geoms.push_back(meshconverter.createStaticTriangleMesh(_world, _space));
 #else //_DEBUG_TRIMESH
 				bool wasPhysical = b && b->ragdoll && b->ragdoll->isCollisionEnabled();

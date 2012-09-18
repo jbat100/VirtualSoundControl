@@ -7,13 +7,13 @@
 #include "VSCOgreInputAdapter.h"
 #include <set>
 
-class VSCOgreInputListener;
+class VSC::OB::InputListener;
 
-class VSCOgreBulletCocoaInputAdapter : public VSCOgreInputAdapter
+class VSC::OB::OSXInputAdapter : public VSC::OB::InputAdapter
 {
 public:
     
-    VSCOgreBulletCocoaInputAdapter(void);
+    VSC::OB::OSXInputAdapter(void);
     
     /*
      *  Slots for forwarding the appropriate NSResponder callbacks

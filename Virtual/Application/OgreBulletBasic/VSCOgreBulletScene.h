@@ -31,21 +31,21 @@ enum QueryFlags
 	STATIC_GEOMETRY_QUERY_MASK		= 1<<4
 };
 
-class VSCOgreBulletApplication;
+class VSC::OB::Application;
 
 /*
 The base Test class, is also able to listen for collisions and thus change the contact properties
 */
-class VSCOgreBulletScene : public VSCOgreInputListener, public VSCOgreKeyBound
+class VSC::OB::Scene : public VSC::OB::InputListener, public VSC::OB::KeyBound
 {
 public:
 
 	/**--------------------------------------------------------------
      *  Constructor/Destructor/Initialization 
      */
-    VSCOgreBulletScene();
-    virtual ~VSCOgreBulletScene(){};
-    virtual void init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application);
+    VSC::OB::Scene();
+    virtual ~VSC::OB::Scene(){};
+    virtual void init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Application *application);
 
     /**--------------------------------------------------------------
      *  Setup/Teardown 
@@ -62,7 +62,7 @@ public:
     void setDebugText(const Ogre::String &debugText){mDebugText = debugText;}
 
     /**--------------------------------------------------------------
-     *  Ogre Frame Listener Forwarded messages from VSCOgreBulletApplication 
+     *  Ogre Frame Listener Forwarded messages from VSC::OB::Application 
      */
     virtual bool frameStarted(Ogre::Real elapsedTime);
     virtual bool frameEnded(Ogre::Real elapsedTime);
@@ -71,8 +71,8 @@ public:
      *  Dynamic actions and checks
      */
     bool checkIfEnoughPlaceToAddObject(float maxDist);
-    bool throwDynamicObject(VSCOgreKeyboardAction::Key key);  // returns true if something happened
-    bool dropDynamicObject(VSCOgreKeyboardAction::Key key);   // returns true if something happened
+    bool throwDynamicObject(VSC::OB::KeyboardAction::Key key);  // returns true if something happened
+    bool dropDynamicObject(VSC::OB::KeyboardAction::Key key);   // returns true if something happened
     
     /**--------------------------------------------------------------
      *  Input listener callback overrides
@@ -160,7 +160,7 @@ protected:
 	Ogre::Light                         *mLight2;
 
     OgreBulletDynamics::DynamicsWorld   *mWorld;
-    VSCOgreBulletApplication            *mApplication;
+    VSC::OB::Application            *mApplication;
 
 
     std::deque<Ogre::Entity *>                          mEntities;
@@ -204,7 +204,7 @@ protected:
    OgreBulletCollisions::DebugLines                         *mDebugRayLine;
    Ogre::RaySceneQuery                                      *mRayQuery;
 
-   VSCOgreBetaGUIListener                                   *mGuiListener;
+   VSC::OB::BetaGUIListener                                   *mGuiListener;
     
    Ogre::String                                             mDebugText;
    Ogre::String                                             mName;

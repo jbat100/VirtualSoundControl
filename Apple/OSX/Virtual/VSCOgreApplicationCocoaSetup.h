@@ -5,18 +5,18 @@
 
 #import <Ogre/Ogre.h>
 
-class VSCOgreApplication;
-class VSCOgreInputListener;
-class VSCOgreBulletCocoaInputAdapter;
+class VSC::OB::ApplicationBase;
+class VSC::OB::InputListener;
+class VSC::OB::OSXInputAdapter;
 
-class VSCOgreApplicationCocoaSetup
+class VSC::OB::OSXApplicationSetup
 {
     
 public:
     
-    static bool setupApplicationWithOgreView(VSCOgreApplication* ogreApplication, void* ogreView);
+    static bool setupApplicationWithOgreView(VSC::OB::ApplicationBase* ogreApplication, void* ogreView);
     static Ogre::RenderWindow* getRenderWindow(void* ogreView);
-    static VSCOgreBulletCocoaInputAdapter* createCocoaInputAdapter(void);
+    static VSC::OB::OSXInputAdapter* createCocoaInputAdapter(void);
 
 };
 

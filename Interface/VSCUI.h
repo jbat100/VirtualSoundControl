@@ -10,7 +10,7 @@
 typedef std::set<OIS::KeyCode>          VSCKeyCodeSet;
 typedef std::set<OIS::MouseButtonID>    VSCMouseButtonSet;
 
-class VSCKeyboard 
+class VSC::Keyboard 
 {
     
 public:

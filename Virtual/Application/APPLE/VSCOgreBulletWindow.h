@@ -10,14 +10,14 @@
 
 @class VSCOgreView;
 
-class VSCOgreBulletApplication;
+class VSC::OB::Application;
 
 @interface VSCOgreBulletWindow : NSWindow
 
 @property (nonatomic, strong) IBOutlet VSCOgreView* ogreView;
 @property (nonatomic, strong) IBOutlet NSPopUpButton* scenePopUpButton;
 
-@property (nonatomic, assign) VSCOgreBulletApplication* ogreBulletApplication;
+@property (nonatomic, assign) VSC::OB::Application* ogreBulletApplication;
 
 - (IBAction)test1:(id)sender;
 - (IBAction)test2:(id)sender;

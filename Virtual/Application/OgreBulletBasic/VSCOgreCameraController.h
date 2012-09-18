@@ -8,7 +8,7 @@
 
 #include <boost/shared_ptr.hpp>
 
-class VSCOgreCameraController : public VSCOgreInputListener, public VSCOgreKeyBound
+class VSCOgreCameraController : public VSC::OB::InputListener, public VSC::OB::KeyBound
 {
     
 public:

@@ -27,25 +27,25 @@ Description: Base class for all the OGRE examples
 #include "VSCOgreKeyboardManager.h"
 #include "VSCOgreKeyBindings.h"
 
-class VSCOgreInputAdapter;
-class VSCOgreApplicationCocoaSetup;
+class VSC::OB::InputAdapter;
+class VSC::OB::OSXApplicationSetup;
 
 /** 
  *  Base class which manages the standard startup of an Ogre application.
  *  Designed to be subclassed for specific examples if required.
  */
-class VSCOgreApplication : public VSCOgreInputListener, public VSCOgreKeyBound
+class VSC::OB::ApplicationBase : public VSC::OB::InputListener, public VSC::OB::KeyBound
 {
     
 public:
     
     /// Standard constructor
-    VSCOgreApplication();
+    VSC::OB::ApplicationBase();
     /// Standard destructor
-    virtual ~VSCOgreApplication();
+    virtual ~VSC::OB::ApplicationBase();
     
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-    friend class VSCOgreApplicationCocoaSetup;
+    friend class VSC::OB::OSXApplicationSetup;
     virtual bool setupWithOgreView(void* ogreView);
 #else   
     /// Start the example
@@ -68,11 +68,11 @@ public:
      *  Other Setters/Getters
      */
     
-    VSCOgreKeyboardManager::SPtr    getKeyboardManager(void) const;
-    void                            setKeyboardManager(VSCOgreKeyboardManager::SPtr manager);
+    VSC::OB::KeyboardManager::SPtr    getKeyboardManager(void) const;
+    void                            setKeyboardManager(VSC::OB::KeyboardManager::SPtr manager);
     
     /*
-     *  VSCOgreInputListener override
+     *  VSC::OB::InputListener override
      */
     virtual bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
 
@@ -102,7 +102,7 @@ protected:
     
 private:
     
-    VSCOgreKeyboardManager::SPtr   mKeyboardManager;
+    VSC::OB::KeyboardManager::SPtr   mKeyboardManager;
     
     static const bool mTraceUI = true;
 

@@ -18,7 +18,7 @@ Description: Base class for all the OGRE examples
 -----------------------------------------------------------------------------
 */
 
-#import "VSCOgreApplicationCocoaSetup.h"
+#import "VSC::OB::OSXApplicationSetup.h"
 
 #import <Cocoa/Cocoa.h>
 
@@ -27,7 +27,7 @@ Description: Base class for all the OGRE examples
 #include <Ogre/OSX/macUtils.h>
 
 
-#include "VSCOgreApplication.h"
+#include "VSC::OB::ApplicationBase.h"
 #include "VSCException.h"
 #include "VSCOgreInputListener.h"
 #include "VSCOgreBulletCocoaInputAdapter.h"
@@ -39,7 +39,7 @@ Description: Base class for all the OGRE examples
 
 #import "VSCOgreView.h"
 
-bool VSCOgreApplicationCocoaSetup::setupApplicationWithOgreView(VSCOgreApplication* ogreApplication, void* rawOgreView)
+bool VSC::OB::OSXApplicationSetup::setupApplicationWithOgreView(VSC::OB::ApplicationBase* ogreApplication, void* rawOgreView)
 {
     VSCOgreView* ogreView = (__bridge VSCOgreView*)rawOgreView;
     
@@ -81,11 +81,11 @@ bool VSCOgreApplicationCocoaSetup::setupApplicationWithOgreView(VSCOgreApplicati
     NSRect frame = [ogreView frame];
     ogreApplication->mRoot->createRenderWindow("ogre window", frame.size.width, frame.size.height, false, &misc);
     
-    ogreApplication->mWindow = VSCOgreApplicationCocoaSetup::getRenderWindow(rawOgreView);
+    ogreApplication->mWindow = VSC::OB::OSXApplicationSetup::getRenderWindow(rawOgreView);
     // This cast works so we do actually have a Ogre::OSXCocoaWindow here
     std::cout << "mWindow is " << (void*)ogreApplication->mWindow;
     
-    VSCOgreBulletCocoaInputAdapter* adapter = VSCOgreApplicationCocoaSetup::createCocoaInputAdapter();
+    VSC::OB::OSXInputAdapter* adapter = VSC::OB::OSXApplicationSetup::createCocoaInputAdapter();
     
     BOOST_ASSERT_MSG(adapter, "Expected adapter"); 
     
@@ -104,7 +104,7 @@ bool VSCOgreApplicationCocoaSetup::setupApplicationWithOgreView(VSCOgreApplicati
     return true;
 }
 
-Ogre::RenderWindow* VSCOgreApplicationCocoaSetup::getRenderWindow(void* rawOgreView) 
+Ogre::RenderWindow* VSC::OB::OSXApplicationSetup::getRenderWindow(void* rawOgreView) 
 {
     OgreView* ogreView = (__bridge OgreView*)rawOgreView;
     BOOST_ASSERT_MSG( [ogreView isKindOfClass:[OgreView class]], "Expected ogreView to be of class OgreView" ); 
@@ -112,7 +112,7 @@ Ogre::RenderWindow* VSCOgreApplicationCocoaSetup::getRenderWindow(void* rawOgreV
     return [ogreView ogreWindow];
 }
 
-VSCOgreBulletCocoaInputAdapter* VSCOgreApplicationCocoaSetup::createCocoaInputAdapter(void)
+VSC::OB::OSXInputAdapter* VSC::OB::OSXApplicationSetup::createCocoaInputAdapter(void)
 {
-    return new VSCOgreBulletCocoaInputAdapter();
+    return new VSC::OB::OSXInputAdapter();
 }

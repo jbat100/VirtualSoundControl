@@ -14,14 +14,14 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "VSCOgreBulletScene.h"
 
 // -------------------------------------------------------------------------
-class VSCOgreBulletRagdollDemo : public VSCOgreBulletScene 
+class VSC::OB::RagdollDemo : public VSC::OB::Scene 
 {
 public:
     
-    VSCOgreBulletRagdollDemo() : VSCOgreBulletScene() {mName = "Ragdoll Demo";};
-    virtual ~VSCOgreBulletRagdollDemo(){};
+    VSC::OB::RagdollDemo() : VSC::OB::Scene() {mName = "Ragdoll Demo";};
+    virtual ~VSC::OB::RagdollDemo(){};
     
-    void init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application);
+    void init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Application *application);
     
     bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
     

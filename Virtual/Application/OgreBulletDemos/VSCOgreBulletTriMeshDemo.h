@@ -12,17 +12,17 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "OgreBulletDynamics.h"
 
 #include "VSCOgreBulletScene.h"
-class VSCOgreBulletApplication;
+class VSC::OB::Application;
 
 // -------------------------------------------------------------------------
-class VSCOgreBulletTriMeshDemo : public VSCOgreBulletScene 
+class VSC::OB::TriMeshDemo : public VSC::OB::Scene 
 {
 public:
 
-    VSCOgreBulletTriMeshDemo() : VSCOgreBulletScene() {mName = "Trimesh Static Scene test";};
-    virtual ~VSCOgreBulletTriMeshDemo(){};
+    VSC::OB::TriMeshDemo() : VSC::OB::Scene() {mName = "Trimesh Static Scene test";};
+    virtual ~VSC::OB::TriMeshDemo(){};
 
-    void init(Ogre::Root *root, Ogre::RenderWindow *win, VSCOgreBulletApplication *application);
+    void init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Application *application);
 
     bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
 
