@@ -643,11 +643,8 @@ bool VSCOgreBulletScene::mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre
             if (mTraceUI) std::cout << "VSCOgreBulletScene::mouseMoved Left button is pressed and constraint exists" << std::endl;
             
             Ogre::Viewport* viewport = mCamera->getViewport();
-            
             float normX = position.x / (float) viewport->getActualWidth();
             float normY = 1.0 - (position.y / (float) viewport->getActualHeight());
-            
-            //Ogre::Ray rayTo = mCamera->getCameraToViewportRay (position.x, position.y);
             
             Ogre::Ray rayTo = mCamera->getCameraToViewportRay (normX, normY);
             
