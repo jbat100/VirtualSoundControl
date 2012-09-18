@@ -7,27 +7,29 @@
 //
 
 #include "OgrePrerequisites.h"
-#import "OgreOSXCocoaView.h"
+#include "VSCOBApplication.h"
+#include "VSCOBScene.h"
 
+#import "OgreOSXCocoaView.h"
 #import <Cocoa/Cocoa.h>
 
-#import <vector>
+#include <vector>
 
-class VSCOgreBulletScene;
-class VSCOgreBulletApplication;
+class VSC::OB::Scene;
+class VSC::OB::Application;
 
-@class VSCOgreBulletWindow;
-@class VSCOgreView;
+@class VSCOBOSXWindow;
+@class VSCOBOSXView;
 
 @interface VSCAppDelegate : NSObject <NSApplicationDelegate> {
     
-    VSCOgreBulletApplication* ogreBulletApplication;
-    std::vector<VSCOgreBulletScene*> ogreBulletScenes;
+    VSC::OB::Application* ogreBulletApplication;
+    std::vector<VSC::OB::Scene*> ogreBulletScenes;
     
 }
 
-@property (assign) IBOutlet VSCOgreBulletWindow *window;
-@property (assign) IBOutlet VSCOgreView *ogreView;
+@property (assign) IBOutlet VSCOBOSXWindow *window;
+@property (assign) IBOutlet VSCOBOSXView *ogreView;
 
 -(void) startRendering;
 -(void) stopRendering;

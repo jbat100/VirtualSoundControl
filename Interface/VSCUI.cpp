@@ -5,20 +5,20 @@
 #include <string>
 #include <set>
 
-const VSCKeyboard::Combination  VSCKeyboard::NullCombination = VSCKeyboard::Combination(OIS::KC_UNASSIGNED, (OIS::Keyboard::Modifier)0);
+const VSC::Keyboard::Combination  VSC::Keyboard::NullCombination = VSC::Keyboard::Combination(OIS::KC_UNASSIGNED, (OIS::Keyboard::Modifier)0);
 
 
-bool VSCKeyboard::Combination::operator!=(const Combination& p) const
+bool VSC::Keyboard::Combination::operator!=(const Combination& p) const
 {
     return !(*this == p);
 }
 
-bool VSCKeyboard::Combination::operator==(const Combination& p) const
+bool VSC::Keyboard::Combination::operator==(const Combination& p) const
 {
     return modifier == p.modifier && code == p.code;
 }
 
-bool VSCKeyboard::Combination::operator<(const Combination& p) const
+bool VSC::Keyboard::Combination::operator<(const Combination& p) const
 {
     if (modifier < p.modifier) return true;
     if (modifier > p.modifier) return false;
@@ -26,7 +26,7 @@ bool VSCKeyboard::Combination::operator<(const Combination& p) const
     return false;
 }
 
-VSCKeyboard::Combination::Combination(OIS::KeyCode c, OIS::Keyboard::Modifier m) : code(c), modifier(m)
+VSC::Keyboard::Combination::Combination(OIS::KeyCode c, OIS::Keyboard::Modifier m) : code(c), modifier(m)
 {
     
 }

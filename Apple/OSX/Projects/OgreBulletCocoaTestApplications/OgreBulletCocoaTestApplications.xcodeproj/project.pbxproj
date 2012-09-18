@@ -7,16 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		100088991590B67E002F21B1 /* VSCOgreInputListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100088971590B67E002F21B1 /* VSCOgreInputListener.cpp */; };
-		1012DE58160380BF00376716 /* VSCOgreKeyBindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1012DE56160380BF00376716 /* VSCOgreKeyBindings.cpp */; };
 		1033868C156E48AC00CEB288 /* Plugin_BSPSceneManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948C156E483000E70049 /* Plugin_BSPSceneManager.dylib */; };
 		1033868D156E48AC00CEB288 /* Plugin_CgProgramManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */; };
 		1033868E156E48AC00CEB288 /* Plugin_OctreeSceneManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */; };
 		1033868F156E48AC00CEB288 /* Plugin_ParticleFX.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */; };
 		10338690156E48AC00CEB288 /* libConvexDecomposition.2.80.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6947F156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib */; };
 		1033869E156E77E100CEB288 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1033869D156E77E100CEB288 /* Carbon.framework */; };
+		106A57E01608CAA500D905D8 /* VSCOBApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57CA1608CAA500D905D8 /* VSCOBApplication.cpp */; };
+		106A57E11608CAA500D905D8 /* VSCOBApplicationBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57CC1608CAA500D905D8 /* VSCOBApplicationBase.cpp */; };
+		106A57E21608CAA500D905D8 /* VSCOBBetaGUIListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57CE1608CAA500D905D8 /* VSCOBBetaGUIListener.cpp */; };
+		106A57E31608CAA500D905D8 /* VSCOBCameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57D01608CAA500D905D8 /* VSCOBCameraController.cpp */; };
+		106A57E41608CAA500D905D8 /* VSCOBInputAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57D21608CAA500D905D8 /* VSCOBInputAdapter.cpp */; };
+		106A57E51608CAA500D905D8 /* VSCOBInputListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57D41608CAA500D905D8 /* VSCOBInputListener.cpp */; };
+		106A57E61608CAA500D905D8 /* VSCOBKeyBindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57D61608CAA500D905D8 /* VSCOBKeyBindings.cpp */; };
+		106A57E71608CAA500D905D8 /* VSCOBKeyboardAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57D81608CAA500D905D8 /* VSCOBKeyboardAction.cpp */; };
+		106A57E81608CAA500D905D8 /* VSCOBKeyboardManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57DA1608CAA500D905D8 /* VSCOBKeyboardManager.cpp */; };
+		106A57EA1608CAA500D905D8 /* VSCOBScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57DE1608CAA500D905D8 /* VSCOBScene.cpp */; };
+		106A57F71608CBB300D905D8 /* VSCOBConstraintsDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57EB1608CBB300D905D8 /* VSCOBConstraintsDemo.cpp */; };
+		106A57F81608CBB300D905D8 /* VSCOBPrimitivesDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57ED1608CBB300D905D8 /* VSCOBPrimitivesDemo.cpp */; };
+		106A57F91608CBB300D905D8 /* VSCOBRagdollDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57EF1608CBB300D905D8 /* VSCOBRagdollDemo.cpp */; };
+		106A57FA1608CBB300D905D8 /* VSCOBTerrainDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57F11608CBB300D905D8 /* VSCOBTerrainDemo.cpp */; };
+		106A57FB1608CBB300D905D8 /* VSCOBTriMeshDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57F31608CBB300D905D8 /* VSCOBTriMeshDemo.cpp */; };
+		106A57FC1608CBB300D905D8 /* VSCOBVehiclesDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57F51608CBB300D905D8 /* VSCOBVehiclesDemo.cpp */; };
+		106A57FF1608CC0C00D905D8 /* VSCOBOSXApplicationSetup.mm in Sources */ = {isa = PBXBuildFile; fileRef = 106A57FE1608CC0C00D905D8 /* VSCOBOSXApplicationSetup.mm */; };
+		106A58061608CCF600D905D8 /* VSCOBOSXInputAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 106A58011608CCF600D905D8 /* VSCOBOSXInputAdapter.mm */; };
+		106A58071608CCF600D905D8 /* VSCOBOSXView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 106A58031608CCF600D905D8 /* VSCOBOSXView.mm */; };
+		106A58081608CCF600D905D8 /* VSCOBOSXWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 106A58051608CCF600D905D8 /* VSCOBOSXWindow.mm */; };
 		1091F28415B07C0D00466854 /* VSCLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1091F28215B07C0D00466854 /* VSCLog.cpp */; };
-		109D51B1155946D90030C161 /* VSCOgreApplicationCocoaSetup.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109D51B0155946D90030C161 /* VSCOgreApplicationCocoaSetup.mm */; };
 		109D51B5155998EE0030C161 /* VSCException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109D51B3155998EE0030C161 /* VSCException.cpp */; };
 		10B60D2515505D6D006A6D6E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60D2415505D6D006A6D6E /* Cocoa.framework */; };
 		10B60D2F15505D6D006A6D6E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 10B60D2D15505D6D006A6D6E /* InfoPlist.strings */; };
@@ -33,8 +50,6 @@
 		10B60F0B1550850C006A6D6E /* BulletSoftBodySolvers_OpenCL_Mini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60F041550850C006A6D6E /* BulletSoftBodySolvers_OpenCL_Mini.framework */; };
 		10B60F0C1550850C006A6D6E /* Cg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60F051550850C006A6D6E /* Cg.framework */; };
 		10B60F0D1550850C006A6D6E /* LinearMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60F061550850C006A6D6E /* LinearMath.framework */; };
-		10C74D6B1594A9CC00F641CD /* VSCOgreBulletCocoaInputAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10C74D681594A9CB00F641CD /* VSCOgreBulletCocoaInputAdapter.mm */; };
-		10C74D6F1594AA4000F641CD /* VSCOgreView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10C74D6E1594AA4000F641CD /* VSCOgreView.mm */; };
 		10CFE720156CD62000B24399 /* OgreBulletCollisionsDebugContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6D7156CD61F00B24399 /* OgreBulletCollisionsDebugContact.cpp */; };
 		10CFE721156CD62000B24399 /* OgreBulletCollisionsDebugDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6D8156CD61F00B24399 /* OgreBulletCollisionsDebugDrawer.cpp */; };
 		10CFE722156CD62000B24399 /* OgreBulletCollisionsDebugLines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6D9156CD61F00B24399 /* OgreBulletCollisionsDebugLines.cpp */; };
@@ -75,23 +90,9 @@
 		10E1B289156D2A630013B9F7 /* RenderSystem_GL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */; };
 		10E1B28E156D3AFE0013B9F7 /* BetaGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E1B28C156D3AFE0013B9F7 /* BetaGUI.cpp */; };
 		10E8557415E65048008FF635 /* VSCUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E8557215E65048008FF635 /* VSCUI.cpp */; };
-		10EB11FD15A5D8B500CA4D03 /* VSCOgreInputAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10EB11FB15A5D8B500CA4D03 /* VSCOgreInputAdapter.cpp */; };
 		10EB5A3B16050D7500F0939E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10EB5A3A16050D7500F0939E /* OpenGL.framework */; };
 		10ED088A1601CD8900053C07 /* VSCBound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10ED08881601CD8900053C07 /* VSCBound.cpp */; };
-		10EE86C915AED21900AD9CEB /* VSCOgreBulletWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10EE86C815AED21900AD9CEB /* VSCOgreBulletWindow.mm */; };
-		10F2F98A15FF886F003B2CDB /* VSCOgreKeyboardAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F2F98615FF886F003B2CDB /* VSCOgreKeyboardAction.cpp */; };
-		10F2F98B15FF886F003B2CDB /* VSCOgreKeyboardManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F2F98815FF886F003B2CDB /* VSCOgreKeyboardManager.cpp */; };
-		10F4EE071557E752000E4591 /* VSCOgreApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EDFB1557E752000E4591 /* VSCOgreApplication.cpp */; };
-		10F4EE091557E752000E4591 /* VSCOgreBulletApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EDFF1557E752000E4591 /* VSCOgreBulletApplication.cpp */; };
-		10F4EE0A1557E752000E4591 /* VSCOgreBetaGUIListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EE011557E752000E4591 /* VSCOgreBetaGUIListener.cpp */; };
-		10F4EE0C1557E752000E4591 /* VSCOgreBulletScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EE051557E752000E4591 /* VSCOgreBulletScene.cpp */; };
 		10F4EE0E1557E775000E4591 /* resources.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 10F4EE0D1557E775000E4591 /* resources.cfg */; };
-		10F4EE1C1557F4A2000E4591 /* VSCOgreBulletConstraintsDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EE101557F4A2000E4591 /* VSCOgreBulletConstraintsDemo.cpp */; };
-		10F4EE1D1557F4A2000E4591 /* VSCOgreBulletPrimitivesDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EE121557F4A2000E4591 /* VSCOgreBulletPrimitivesDemo.cpp */; };
-		10F4EE1E1557F4A2000E4591 /* VSCOgreBulletRagdollDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EE141557F4A2000E4591 /* VSCOgreBulletRagdollDemo.cpp */; };
-		10F4EE1F1557F4A2000E4591 /* VSCOgreBulletTerrainDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EE161557F4A2000E4591 /* VSCOgreBulletTerrainDemo.cpp */; };
-		10F4EE201557F4A2000E4591 /* VSCOgreBulletTriMeshDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EE181557F4A2000E4591 /* VSCOgreBulletTriMeshDemo.cpp */; };
-		10F4EE211557F4A2000E4591 /* VSCOgreBulletVehiclesDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F4EE1A1557F4A2000E4591 /* VSCOgreBulletVehiclesDemo.cpp */; };
 		10F69480156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6947F156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib */; };
 		10F69483156E3D2700E70049 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F69482156E3D2700E70049 /* IOKit.framework */; };
 		10F69485156E41CB00E70049 /* Ogre.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10B60EEE155080D9006A6D6E /* Ogre.framework */; };
@@ -102,7 +103,6 @@
 		10F69491156E483000E70049 /* Plugin_CgProgramManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */; };
 		10F69492156E483000E70049 /* Plugin_OctreeSceneManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */; };
 		10F69493156E483000E70049 /* Plugin_ParticleFX.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */; };
-		10FBA39F15B5756800D65959 /* VSCOgreCameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10FBA39D15B5756800D65959 /* VSCOgreCameraController.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -134,10 +134,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		100088971590B67E002F21B1 /* VSCOgreInputListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreInputListener.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreInputListener.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		100088981590B67E002F21B1 /* VSCOgreInputListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreInputListener.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreInputListener.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		1012DE56160380BF00376716 /* VSCOgreKeyBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOgreKeyBindings.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreKeyBindings.cpp; sourceTree = "<group>"; };
-		1012DE57160380BF00376716 /* VSCOgreKeyBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreKeyBindings.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreKeyBindings.h; sourceTree = "<group>"; };
 		10338694156E5BB100CEB288 /* OgreOSXCocoaContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaContext.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaContext.h; sourceTree = "<group>"; };
 		10338695156E5BB100CEB288 /* OgreOSXCocoaWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaWindow.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaWindow.h; sourceTree = "<group>"; };
 		10338696156E5BB100CEB288 /* OgreOSXCocoaWindowDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaWindowDelegate.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaWindowDelegate.h; sourceTree = "<group>"; };
@@ -146,11 +142,49 @@
 		10338699156E5BE300CEB288 /* OgreOSXRenderTexture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXRenderTexture.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXRenderTexture.h; sourceTree = "<group>"; };
 		1033869A156E5BE300CEB288 /* OgreOSXWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXWindow.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXWindow.h; sourceTree = "<group>"; };
 		1033869D156E77E100CEB288 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		106A57CA1608CAA500D905D8 /* VSCOBApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBApplication.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBApplication.cpp; sourceTree = "<group>"; };
+		106A57CB1608CAA500D905D8 /* VSCOBApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBApplication.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBApplication.h; sourceTree = "<group>"; };
+		106A57CC1608CAA500D905D8 /* VSCOBApplicationBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBApplicationBase.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBApplicationBase.cpp; sourceTree = "<group>"; };
+		106A57CD1608CAA500D905D8 /* VSCOBApplicationBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBApplicationBase.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBApplicationBase.h; sourceTree = "<group>"; };
+		106A57CE1608CAA500D905D8 /* VSCOBBetaGUIListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOBBetaGUIListener.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBBetaGUIListener.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		106A57CF1608CAA500D905D8 /* VSCOBBetaGUIListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOBBetaGUIListener.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBBetaGUIListener.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		106A57D01608CAA500D905D8 /* VSCOBCameraController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBCameraController.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBCameraController.cpp; sourceTree = "<group>"; };
+		106A57D11608CAA500D905D8 /* VSCOBCameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBCameraController.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBCameraController.h; sourceTree = "<group>"; };
+		106A57D21608CAA500D905D8 /* VSCOBInputAdapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBInputAdapter.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBInputAdapter.cpp; sourceTree = "<group>"; };
+		106A57D31608CAA500D905D8 /* VSCOBInputAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBInputAdapter.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBInputAdapter.h; sourceTree = "<group>"; };
+		106A57D41608CAA500D905D8 /* VSCOBInputListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBInputListener.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBInputListener.cpp; sourceTree = "<group>"; };
+		106A57D51608CAA500D905D8 /* VSCOBInputListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBInputListener.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBInputListener.h; sourceTree = "<group>"; };
+		106A57D61608CAA500D905D8 /* VSCOBKeyBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBKeyBindings.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBKeyBindings.cpp; sourceTree = "<group>"; };
+		106A57D71608CAA500D905D8 /* VSCOBKeyBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBKeyBindings.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBKeyBindings.h; sourceTree = "<group>"; };
+		106A57D81608CAA500D905D8 /* VSCOBKeyboardAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBKeyboardAction.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBKeyboardAction.cpp; sourceTree = "<group>"; };
+		106A57D91608CAA500D905D8 /* VSCOBKeyboardAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBKeyboardAction.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBKeyboardAction.h; sourceTree = "<group>"; };
+		106A57DA1608CAA500D905D8 /* VSCOBKeyboardManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBKeyboardManager.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBKeyboardManager.cpp; sourceTree = "<group>"; };
+		106A57DB1608CAA500D905D8 /* VSCOBKeyboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBKeyboardManager.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBKeyboardManager.h; sourceTree = "<group>"; };
+		106A57DE1608CAA500D905D8 /* VSCOBScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBScene.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBScene.cpp; sourceTree = "<group>"; };
+		106A57DF1608CAA500D905D8 /* VSCOBScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBScene.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBScene.h; sourceTree = "<group>"; };
+		106A57EB1608CBB300D905D8 /* VSCOBConstraintsDemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBConstraintsDemo.cpp; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOBConstraintsDemo.cpp; sourceTree = "<group>"; };
+		106A57EC1608CBB300D905D8 /* VSCOBConstraintsDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBConstraintsDemo.h; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOBConstraintsDemo.h; sourceTree = "<group>"; };
+		106A57ED1608CBB300D905D8 /* VSCOBPrimitivesDemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBPrimitivesDemo.cpp; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOBPrimitivesDemo.cpp; sourceTree = "<group>"; };
+		106A57EE1608CBB300D905D8 /* VSCOBPrimitivesDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBPrimitivesDemo.h; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOBPrimitivesDemo.h; sourceTree = "<group>"; };
+		106A57EF1608CBB300D905D8 /* VSCOBRagdollDemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOBRagdollDemo.cpp; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOBRagdollDemo.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		106A57F01608CBB300D905D8 /* VSCOBRagdollDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBRagdollDemo.h; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOBRagdollDemo.h; sourceTree = "<group>"; };
+		106A57F11608CBB300D905D8 /* VSCOBTerrainDemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBTerrainDemo.cpp; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOBTerrainDemo.cpp; sourceTree = "<group>"; };
+		106A57F21608CBB300D905D8 /* VSCOBTerrainDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBTerrainDemo.h; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOBTerrainDemo.h; sourceTree = "<group>"; };
+		106A57F31608CBB300D905D8 /* VSCOBTriMeshDemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBTriMeshDemo.cpp; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOBTriMeshDemo.cpp; sourceTree = "<group>"; };
+		106A57F41608CBB300D905D8 /* VSCOBTriMeshDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBTriMeshDemo.h; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOBTriMeshDemo.h; sourceTree = "<group>"; };
+		106A57F51608CBB300D905D8 /* VSCOBVehiclesDemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBVehiclesDemo.cpp; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOBVehiclesDemo.cpp; sourceTree = "<group>"; };
+		106A57F61608CBB300D905D8 /* VSCOBVehiclesDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBVehiclesDemo.h; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOBVehiclesDemo.h; sourceTree = "<group>"; };
+		106A57FD1608CC0C00D905D8 /* VSCOBOSXApplicationSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXApplicationSetup.h; path = ../../../Virtual/VSCOBOSXApplicationSetup.h; sourceTree = "<group>"; };
+		106A57FE1608CC0C00D905D8 /* VSCOBOSXApplicationSetup.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOBOSXApplicationSetup.mm; path = ../../../Virtual/VSCOBOSXApplicationSetup.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		106A58001608CCF600D905D8 /* VSCOBOSXInputAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXInputAdapter.h; path = ../../../../../Virtual/Application/APPLE/VSCOBOSXInputAdapter.h; sourceTree = "<group>"; };
+		106A58011608CCF600D905D8 /* VSCOBOSXInputAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXInputAdapter.mm; path = ../../../../../Virtual/Application/APPLE/VSCOBOSXInputAdapter.mm; sourceTree = "<group>"; };
+		106A58021608CCF600D905D8 /* VSCOBOSXView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOBOSXView.h; path = ../../../../../Virtual/Application/APPLE/VSCOBOSXView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		106A58031608CCF600D905D8 /* VSCOBOSXView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOBOSXView.mm; path = ../../../../../Virtual/Application/APPLE/VSCOBOSXView.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		106A58041608CCF600D905D8 /* VSCOBOSXWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOBOSXWindow.h; path = ../../../../../Virtual/Application/APPLE/VSCOBOSXWindow.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		106A58051608CCF600D905D8 /* VSCOBOSXWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOBOSXWindow.mm; path = ../../../../../Virtual/Application/APPLE/VSCOBOSXWindow.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		1091F27C15B0645D00466854 /* VSCNSLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCNSLog.h; path = ../../../Common/VSCNSLog.h; sourceTree = "<group>"; };
 		1091F28215B07C0D00466854 /* VSCLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCLog.cpp; path = ../../../../Generic/VSCLog.cpp; sourceTree = "<group>"; };
 		1091F28315B07C0D00466854 /* VSCLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCLog.h; path = ../../../../Generic/VSCLog.h; sourceTree = "<group>"; };
-		109D51AF155946D90030C161 /* VSCOgreApplicationCocoaSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreApplicationCocoaSetup.h; path = ../../../Virtual/VSCOgreApplicationCocoaSetup.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		109D51B0155946D90030C161 /* VSCOgreApplicationCocoaSetup.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOgreApplicationCocoaSetup.mm; path = ../../../Virtual/VSCOgreApplicationCocoaSetup.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		109D51B3155998EE0030C161 /* VSCException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCException.cpp; path = ../../../../Generic/VSCException.cpp; sourceTree = "<group>"; };
 		109D51B4155998EE0030C161 /* VSCException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCException.h; path = ../../../../Generic/VSCException.h; sourceTree = "<group>"; };
 		10B60D2015505D6D006A6D6E /* OgreBulletCocoaTestApplications.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OgreBulletCocoaTestApplications.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -163,8 +197,8 @@
 		10B60D3015505D6D006A6D6E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		10B60D3215505D6D006A6D6E /* OgreBulletCocoaTestApplications-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OgreBulletCocoaTestApplications-Prefix.pch"; sourceTree = "<group>"; };
 		10B60D3415505D6D006A6D6E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		10B60D3615505D6D006A6D6E /* VSCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSCAppDelegate.h; sourceTree = "<group>"; };
-		10B60D3715505D6D006A6D6E /* VSCAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCAppDelegate.mm; sourceTree = "<group>"; };
+		10B60D3615505D6D006A6D6E /* VSCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = VSCAppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		10B60D3715505D6D006A6D6E /* VSCAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = VSCAppDelegate.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10B60D3A15505D6D006A6D6E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		10B60EED155080D9006A6D6E /* libOIS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOIS.a; path = lib/release/libOIS.a; sourceTree = OGRE_SDK; };
 		10B60EEE155080D9006A6D6E /* Ogre.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogre.framework; path = lib/release/Ogre.framework; sourceTree = OGRE_SDK; };
@@ -190,10 +224,6 @@
 		10B60F051550850C006A6D6E /* Cg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cg.framework; path = /Library/Frameworks/Cg.framework; sourceTree = "<absolute>"; };
 		10B60F061550850C006A6D6E /* LinearMath.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinearMath.framework; path = /Library/Frameworks/LinearMath.framework; sourceTree = "<absolute>"; };
 		10B60F10155086F9006A6D6E /* OgreOSXCocoaView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaView.h; path = include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaView.h; sourceTree = OGRE_SDK; };
-		10C74D671594A9CB00F641CD /* VSCOgreBulletCocoaInputAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreBulletCocoaInputAdapter.h; path = ../../../../../Virtual/Application/APPLE/VSCOgreBulletCocoaInputAdapter.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		10C74D681594A9CB00F641CD /* VSCOgreBulletCocoaInputAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOgreBulletCocoaInputAdapter.mm; path = ../../../../../Virtual/Application/APPLE/VSCOgreBulletCocoaInputAdapter.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		10C74D6D1594AA4000F641CD /* VSCOgreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreView.h; path = ../../../../../Virtual/Application/APPLE/VSCOgreView.h; sourceTree = "<group>"; };
-		10C74D6E1594AA4000F641CD /* VSCOgreView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOgreView.mm; path = ../../../../../Virtual/Application/APPLE/VSCOgreView.mm; sourceTree = "<group>"; };
 		10CFE6B0156CD61F00B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		10CFE6B1156CD61F00B24399 /* OgreBulletCollisionsDebugContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsDebugContact.h; sourceTree = "<group>"; };
 		10CFE6B2156CD61F00B24399 /* OgreBulletCollisionsDebugDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsDebugDrawer.h; sourceTree = "<group>"; };
@@ -288,42 +318,14 @@
 		10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = RenderSystem_GL.dylib; path = lib/RenderSystem_GL.dylib; sourceTree = OGRE_SDK; };
 		10E1B28C156D3AFE0013B9F7 /* BetaGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BetaGUI.cpp; path = ../../../../Virtual/Application/OgreBulletBasic/BetaGUI.cpp; sourceTree = "<group>"; };
 		10E1B28D156D3AFE0013B9F7 /* BetaGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BetaGUI.h; path = ../../../../Virtual/Application/OgreBulletBasic/BetaGUI.h; sourceTree = "<group>"; };
-		10E8557215E65048008FF635 /* VSCUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCUI.cpp; path = ../../../../Interface/VSCUI.cpp; sourceTree = "<group>"; };
-		10E8557315E65048008FF635 /* VSCUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCUI.h; path = ../../../../Interface/VSCUI.h; sourceTree = "<group>"; };
-		10EB11FB15A5D8B500CA4D03 /* VSCOgreInputAdapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOgreInputAdapter.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreInputAdapter.cpp; sourceTree = "<group>"; };
-		10EB11FC15A5D8B500CA4D03 /* VSCOgreInputAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreInputAdapter.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreInputAdapter.h; sourceTree = "<group>"; };
+		10E8557215E65048008FF635 /* VSCUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCUI.cpp; path = ../../../../Interface/VSCUI.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		10E8557315E65048008FF635 /* VSCUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCUI.h; path = ../../../../Interface/VSCUI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10EB5A3A16050D7500F0939E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		10ED08841601CC2700053C07 /* VSCBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCBindings.cpp; path = ../../../../Interface/VSCBindings.cpp; sourceTree = "<group>"; };
-		10ED08851601CC2700053C07 /* VSCBindings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = VSCBindings.hpp; path = ../../../../Interface/VSCBindings.hpp; sourceTree = "<group>"; };
-		10ED08881601CD8900053C07 /* VSCBound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCBound.cpp; path = ../../../../Interface/VSCBound.cpp; sourceTree = "<group>"; };
-		10ED08891601CD8900053C07 /* VSCBound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = VSCBound.hpp; path = ../../../../Interface/VSCBound.hpp; sourceTree = "<group>"; };
-		10EE86C715AED21900AD9CEB /* VSCOgreBulletWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreBulletWindow.h; path = ../../../../../Virtual/Application/APPLE/VSCOgreBulletWindow.h; sourceTree = "<group>"; };
-		10EE86C815AED21900AD9CEB /* VSCOgreBulletWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOgreBulletWindow.mm; path = ../../../../../Virtual/Application/APPLE/VSCOgreBulletWindow.mm; sourceTree = "<group>"; };
-		10F2F98615FF886F003B2CDB /* VSCOgreKeyboardAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOgreKeyboardAction.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreKeyboardAction.cpp; sourceTree = "<group>"; };
-		10F2F98715FF886F003B2CDB /* VSCOgreKeyboardAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreKeyboardAction.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreKeyboardAction.h; sourceTree = "<group>"; };
-		10F2F98815FF886F003B2CDB /* VSCOgreKeyboardManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOgreKeyboardManager.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreKeyboardManager.cpp; sourceTree = "<group>"; };
-		10F2F98915FF886F003B2CDB /* VSCOgreKeyboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreKeyboardManager.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreKeyboardManager.h; sourceTree = "<group>"; };
-		10F4EDFB1557E752000E4591 /* VSCOgreApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreApplication.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreApplication.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		10F4EDFC1557E752000E4591 /* VSCOgreApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreApplication.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreApplication.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		10F4EDFF1557E752000E4591 /* VSCOgreBulletApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreBulletApplication.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreBulletApplication.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		10F4EE001557E752000E4591 /* VSCOgreBulletApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreBulletApplication.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreBulletApplication.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		10F4EE011557E752000E4591 /* VSCOgreBetaGUIListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOgreBetaGUIListener.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreBetaGUIListener.cpp; sourceTree = "<group>"; };
-		10F4EE021557E752000E4591 /* VSCOgreBetaGUIListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreBetaGUIListener.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreBetaGUIListener.h; sourceTree = "<group>"; };
-		10F4EE051557E752000E4591 /* VSCOgreBulletScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreBulletScene.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreBulletScene.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		10F4EE061557E752000E4591 /* VSCOgreBulletScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreBulletScene.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreBulletScene.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		10ED08851601CC2700053C07 /* VSCBindings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; name = VSCBindings.hpp; path = ../../../../Interface/VSCBindings.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		10ED08881601CD8900053C07 /* VSCBound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCBound.cpp; path = ../../../../Interface/VSCBound.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		10ED08891601CD8900053C07 /* VSCBound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; name = VSCBound.hpp; path = ../../../../Interface/VSCBound.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		10F4EE0D1557E775000E4591 /* resources.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = resources.cfg; path = ../../../../../Virtual/Application/OgreBulletBasic/resources.cfg; sourceTree = "<group>"; };
-		10F4EE101557F4A2000E4591 /* VSCOgreBulletConstraintsDemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreBulletConstraintsDemo.cpp; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOgreBulletConstraintsDemo.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		10F4EE111557F4A2000E4591 /* VSCOgreBulletConstraintsDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreBulletConstraintsDemo.h; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOgreBulletConstraintsDemo.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		10F4EE121557F4A2000E4591 /* VSCOgreBulletPrimitivesDemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreBulletPrimitivesDemo.cpp; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOgreBulletPrimitivesDemo.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		10F4EE131557F4A2000E4591 /* VSCOgreBulletPrimitivesDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreBulletPrimitivesDemo.h; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOgreBulletPrimitivesDemo.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		10F4EE141557F4A2000E4591 /* VSCOgreBulletRagdollDemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreBulletRagdollDemo.cpp; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOgreBulletRagdollDemo.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		10F4EE151557F4A2000E4591 /* VSCOgreBulletRagdollDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreBulletRagdollDemo.h; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOgreBulletRagdollDemo.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		10F4EE161557F4A2000E4591 /* VSCOgreBulletTerrainDemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreBulletTerrainDemo.cpp; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOgreBulletTerrainDemo.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		10F4EE171557F4A2000E4591 /* VSCOgreBulletTerrainDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreBulletTerrainDemo.h; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOgreBulletTerrainDemo.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		10F4EE181557F4A2000E4591 /* VSCOgreBulletTriMeshDemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreBulletTriMeshDemo.cpp; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOgreBulletTriMeshDemo.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		10F4EE191557F4A2000E4591 /* VSCOgreBulletTriMeshDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreBulletTriMeshDemo.h; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOgreBulletTriMeshDemo.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		10F4EE1A1557F4A2000E4591 /* VSCOgreBulletVehiclesDemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCOgreBulletVehiclesDemo.cpp; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOgreBulletVehiclesDemo.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		10F4EE1B1557F4A2000E4591 /* VSCOgreBulletVehiclesDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOgreBulletVehiclesDemo.h; path = ../../../../../Virtual/Application/OgreBulletDemos/VSCOgreBulletVehiclesDemo.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10F6947F156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libConvexDecomposition.2.80.dylib; path = "../../../../../../Libraries/bullet-2.80/Extras/ConvexDecomposition/libConvexDecomposition.2.80.dylib"; sourceTree = "<group>"; };
 		10F69482156E3D2700E70049 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		10F69488156E456500E70049 /* Plugins_d.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Plugins_d.cfg; path = ../../../../../Virtual/Application/OgreBulletBasic/Plugins_d.cfg; sourceTree = "<group>"; };
@@ -332,8 +334,6 @@
 		10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_CgProgramManager.dylib; path = lib/Plugin_CgProgramManager.dylib; sourceTree = OGRE_SDK; };
 		10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_OctreeSceneManager.dylib; path = lib/Plugin_OctreeSceneManager.dylib; sourceTree = OGRE_SDK; };
 		10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_ParticleFX.dylib; path = lib/Plugin_ParticleFX.dylib; sourceTree = OGRE_SDK; };
-		10FBA39D15B5756800D65959 /* VSCOgreCameraController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOgreCameraController.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreCameraController.cpp; sourceTree = "<group>"; };
-		10FBA39E15B5756800D65959 /* VSCOgreCameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOgreCameraController.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOgreCameraController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -369,14 +369,14 @@
 		1001CA7815985607002566F4 /* Cocoa Specifics */ = {
 			isa = PBXGroup;
 			children = (
-				109D51B0155946D90030C161 /* VSCOgreApplicationCocoaSetup.mm */,
-				109D51AF155946D90030C161 /* VSCOgreApplicationCocoaSetup.h */,
-				10C74D681594A9CB00F641CD /* VSCOgreBulletCocoaInputAdapter.mm */,
-				10C74D671594A9CB00F641CD /* VSCOgreBulletCocoaInputAdapter.h */,
-				10C74D6D1594AA4000F641CD /* VSCOgreView.h */,
-				10C74D6E1594AA4000F641CD /* VSCOgreView.mm */,
-				10EE86C715AED21900AD9CEB /* VSCOgreBulletWindow.h */,
-				10EE86C815AED21900AD9CEB /* VSCOgreBulletWindow.mm */,
+				106A57FD1608CC0C00D905D8 /* VSCOBOSXApplicationSetup.h */,
+				106A57FE1608CC0C00D905D8 /* VSCOBOSXApplicationSetup.mm */,
+				106A58001608CCF600D905D8 /* VSCOBOSXInputAdapter.h */,
+				106A58011608CCF600D905D8 /* VSCOBOSXInputAdapter.mm */,
+				106A58021608CCF600D905D8 /* VSCOBOSXView.h */,
+				106A58031608CCF600D905D8 /* VSCOBOSXView.mm */,
+				106A58041608CCF600D905D8 /* VSCOBOSXWindow.h */,
+				106A58051608CCF600D905D8 /* VSCOBOSXWindow.mm */,
 			);
 			name = "Cocoa Specifics";
 			sourceTree = "<group>";
@@ -384,26 +384,26 @@
 		1001CA7A1598561D002566F4 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				1012DE56160380BF00376716 /* VSCOgreKeyBindings.cpp */,
-				1012DE57160380BF00376716 /* VSCOgreKeyBindings.h */,
-				10F2F98615FF886F003B2CDB /* VSCOgreKeyboardAction.cpp */,
-				10F2F98715FF886F003B2CDB /* VSCOgreKeyboardAction.h */,
-				10F2F98815FF886F003B2CDB /* VSCOgreKeyboardManager.cpp */,
-				10F2F98915FF886F003B2CDB /* VSCOgreKeyboardManager.h */,
-				10EB11FB15A5D8B500CA4D03 /* VSCOgreInputAdapter.cpp */,
-				10EB11FC15A5D8B500CA4D03 /* VSCOgreInputAdapter.h */,
-				100088971590B67E002F21B1 /* VSCOgreInputListener.cpp */,
-				100088981590B67E002F21B1 /* VSCOgreInputListener.h */,
-				10F4EDFB1557E752000E4591 /* VSCOgreApplication.cpp */,
-				10F4EDFC1557E752000E4591 /* VSCOgreApplication.h */,
-				10F4EDFF1557E752000E4591 /* VSCOgreBulletApplication.cpp */,
-				10F4EE001557E752000E4591 /* VSCOgreBulletApplication.h */,
-				10F4EE011557E752000E4591 /* VSCOgreBetaGUIListener.cpp */,
-				10F4EE021557E752000E4591 /* VSCOgreBetaGUIListener.h */,
-				10F4EE051557E752000E4591 /* VSCOgreBulletScene.cpp */,
-				10F4EE061557E752000E4591 /* VSCOgreBulletScene.h */,
-				10FBA39D15B5756800D65959 /* VSCOgreCameraController.cpp */,
-				10FBA39E15B5756800D65959 /* VSCOgreCameraController.h */,
+				106A57CA1608CAA500D905D8 /* VSCOBApplication.cpp */,
+				106A57CB1608CAA500D905D8 /* VSCOBApplication.h */,
+				106A57CC1608CAA500D905D8 /* VSCOBApplicationBase.cpp */,
+				106A57CD1608CAA500D905D8 /* VSCOBApplicationBase.h */,
+				106A57CE1608CAA500D905D8 /* VSCOBBetaGUIListener.cpp */,
+				106A57CF1608CAA500D905D8 /* VSCOBBetaGUIListener.h */,
+				106A57D01608CAA500D905D8 /* VSCOBCameraController.cpp */,
+				106A57D11608CAA500D905D8 /* VSCOBCameraController.h */,
+				106A57D21608CAA500D905D8 /* VSCOBInputAdapter.cpp */,
+				106A57D31608CAA500D905D8 /* VSCOBInputAdapter.h */,
+				106A57D41608CAA500D905D8 /* VSCOBInputListener.cpp */,
+				106A57D51608CAA500D905D8 /* VSCOBInputListener.h */,
+				106A57D61608CAA500D905D8 /* VSCOBKeyBindings.cpp */,
+				106A57D71608CAA500D905D8 /* VSCOBKeyBindings.h */,
+				106A57D81608CAA500D905D8 /* VSCOBKeyboardAction.cpp */,
+				106A57D91608CAA500D905D8 /* VSCOBKeyboardAction.h */,
+				106A57DA1608CAA500D905D8 /* VSCOBKeyboardManager.cpp */,
+				106A57DB1608CAA500D905D8 /* VSCOBKeyboardManager.h */,
+				106A57DE1608CAA500D905D8 /* VSCOBScene.cpp */,
+				106A57DF1608CAA500D905D8 /* VSCOBScene.h */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -838,18 +838,18 @@
 		10F4EE0F1557F482000E4591 /* VSCOgreBulletDemoApplication */ = {
 			isa = PBXGroup;
 			children = (
-				10F4EE101557F4A2000E4591 /* VSCOgreBulletConstraintsDemo.cpp */,
-				10F4EE111557F4A2000E4591 /* VSCOgreBulletConstraintsDemo.h */,
-				10F4EE121557F4A2000E4591 /* VSCOgreBulletPrimitivesDemo.cpp */,
-				10F4EE131557F4A2000E4591 /* VSCOgreBulletPrimitivesDemo.h */,
-				10F4EE141557F4A2000E4591 /* VSCOgreBulletRagdollDemo.cpp */,
-				10F4EE151557F4A2000E4591 /* VSCOgreBulletRagdollDemo.h */,
-				10F4EE161557F4A2000E4591 /* VSCOgreBulletTerrainDemo.cpp */,
-				10F4EE171557F4A2000E4591 /* VSCOgreBulletTerrainDemo.h */,
-				10F4EE181557F4A2000E4591 /* VSCOgreBulletTriMeshDemo.cpp */,
-				10F4EE191557F4A2000E4591 /* VSCOgreBulletTriMeshDemo.h */,
-				10F4EE1A1557F4A2000E4591 /* VSCOgreBulletVehiclesDemo.cpp */,
-				10F4EE1B1557F4A2000E4591 /* VSCOgreBulletVehiclesDemo.h */,
+				106A57EB1608CBB300D905D8 /* VSCOBConstraintsDemo.cpp */,
+				106A57EC1608CBB300D905D8 /* VSCOBConstraintsDemo.h */,
+				106A57ED1608CBB300D905D8 /* VSCOBPrimitivesDemo.cpp */,
+				106A57EE1608CBB300D905D8 /* VSCOBPrimitivesDemo.h */,
+				106A57EF1608CBB300D905D8 /* VSCOBRagdollDemo.cpp */,
+				106A57F01608CBB300D905D8 /* VSCOBRagdollDemo.h */,
+				106A57F11608CBB300D905D8 /* VSCOBTerrainDemo.cpp */,
+				106A57F21608CBB300D905D8 /* VSCOBTerrainDemo.h */,
+				106A57F31608CBB300D905D8 /* VSCOBTriMeshDemo.cpp */,
+				106A57F41608CBB300D905D8 /* VSCOBTriMeshDemo.h */,
+				106A57F51608CBB300D905D8 /* VSCOBVehiclesDemo.cpp */,
+				106A57F61608CBB300D905D8 /* VSCOBVehiclesDemo.h */,
 			);
 			name = VSCOgreBulletDemoApplication;
 			sourceTree = "<group>";
@@ -926,17 +926,6 @@
 			files = (
 				10B60D3115505D6D006A6D6E /* main.m in Sources */,
 				10B60D3815505D6D006A6D6E /* VSCAppDelegate.mm in Sources */,
-				10F4EE071557E752000E4591 /* VSCOgreApplication.cpp in Sources */,
-				10F4EE091557E752000E4591 /* VSCOgreBulletApplication.cpp in Sources */,
-				10F4EE0A1557E752000E4591 /* VSCOgreBetaGUIListener.cpp in Sources */,
-				10F4EE0C1557E752000E4591 /* VSCOgreBulletScene.cpp in Sources */,
-				10F4EE1C1557F4A2000E4591 /* VSCOgreBulletConstraintsDemo.cpp in Sources */,
-				10F4EE1D1557F4A2000E4591 /* VSCOgreBulletPrimitivesDemo.cpp in Sources */,
-				10F4EE1E1557F4A2000E4591 /* VSCOgreBulletRagdollDemo.cpp in Sources */,
-				10F4EE1F1557F4A2000E4591 /* VSCOgreBulletTerrainDemo.cpp in Sources */,
-				10F4EE201557F4A2000E4591 /* VSCOgreBulletTriMeshDemo.cpp in Sources */,
-				10F4EE211557F4A2000E4591 /* VSCOgreBulletVehiclesDemo.cpp in Sources */,
-				109D51B1155946D90030C161 /* VSCOgreApplicationCocoaSetup.mm in Sources */,
 				109D51B5155998EE0030C161 /* VSCException.cpp in Sources */,
 				10CFE720156CD62000B24399 /* OgreBulletCollisionsDebugContact.cpp in Sources */,
 				10CFE721156CD62000B24399 /* OgreBulletCollisionsDebugDrawer.cpp in Sources */,
@@ -975,19 +964,30 @@
 				10CFE749156CD62000B24399 /* OgreBulletDynamicsWorld.cpp in Sources */,
 				10CFE74A156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp in Sources */,
 				10E1B28E156D3AFE0013B9F7 /* BetaGUI.cpp in Sources */,
-				100088991590B67E002F21B1 /* VSCOgreInputListener.cpp in Sources */,
-				10C74D6B1594A9CC00F641CD /* VSCOgreBulletCocoaInputAdapter.mm in Sources */,
-				10C74D6F1594AA4000F641CD /* VSCOgreView.mm in Sources */,
-				10EB11FD15A5D8B500CA4D03 /* VSCOgreInputAdapter.cpp in Sources */,
-				10EE86C915AED21900AD9CEB /* VSCOgreBulletWindow.mm in Sources */,
 				1091F28415B07C0D00466854 /* VSCLog.cpp in Sources */,
-				10FBA39F15B5756800D65959 /* VSCOgreCameraController.cpp in Sources */,
 				10E8557415E65048008FF635 /* VSCUI.cpp in Sources */,
 				10D5533A15FA409F002AED81 /* NSString+VSCAdditions.mm in Sources */,
-				10F2F98A15FF886F003B2CDB /* VSCOgreKeyboardAction.cpp in Sources */,
-				10F2F98B15FF886F003B2CDB /* VSCOgreKeyboardManager.cpp in Sources */,
 				10ED088A1601CD8900053C07 /* VSCBound.cpp in Sources */,
-				1012DE58160380BF00376716 /* VSCOgreKeyBindings.cpp in Sources */,
+				106A57E01608CAA500D905D8 /* VSCOBApplication.cpp in Sources */,
+				106A57E11608CAA500D905D8 /* VSCOBApplicationBase.cpp in Sources */,
+				106A57E21608CAA500D905D8 /* VSCOBBetaGUIListener.cpp in Sources */,
+				106A57E31608CAA500D905D8 /* VSCOBCameraController.cpp in Sources */,
+				106A57E41608CAA500D905D8 /* VSCOBInputAdapter.cpp in Sources */,
+				106A57E51608CAA500D905D8 /* VSCOBInputListener.cpp in Sources */,
+				106A57E61608CAA500D905D8 /* VSCOBKeyBindings.cpp in Sources */,
+				106A57E71608CAA500D905D8 /* VSCOBKeyboardAction.cpp in Sources */,
+				106A57E81608CAA500D905D8 /* VSCOBKeyboardManager.cpp in Sources */,
+				106A57EA1608CAA500D905D8 /* VSCOBScene.cpp in Sources */,
+				106A57F71608CBB300D905D8 /* VSCOBConstraintsDemo.cpp in Sources */,
+				106A57F81608CBB300D905D8 /* VSCOBPrimitivesDemo.cpp in Sources */,
+				106A57F91608CBB300D905D8 /* VSCOBRagdollDemo.cpp in Sources */,
+				106A57FA1608CBB300D905D8 /* VSCOBTerrainDemo.cpp in Sources */,
+				106A57FB1608CBB300D905D8 /* VSCOBTriMeshDemo.cpp in Sources */,
+				106A57FC1608CBB300D905D8 /* VSCOBVehiclesDemo.cpp in Sources */,
+				106A57FF1608CC0C00D905D8 /* VSCOBOSXApplicationSetup.mm in Sources */,
+				106A58061608CCF600D905D8 /* VSCOBOSXInputAdapter.mm in Sources */,
+				106A58071608CCF600D905D8 /* VSCOBOSXView.mm in Sources */,
+				106A58081608CCF600D905D8 /* VSCOBOSXWindow.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

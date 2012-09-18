@@ -7,23 +7,27 @@
 
 #include <boost/shared_ptr.hpp>
 
-template <typename Action, typename Input>
-class VSCBound 
-{
+namespace VSC {
+
+    template <typename Action, typename Input>
+    class Bound
+    {
+        
+    public:
+        
+        Bound() {}
+        virtual ~Bound() {}
+        
+        typename Bindings<Action,Input>::SPtr    getBindings() {return mBindings;}
+        void                                        setBindings(typename Bindings<Action,Input>::SPtr bindings) {mBindings = bindings;}
+        
+    private:
+        
+        typename Bindings<Action,Input>::SPtr    mBindings;
+        
+    };
     
-public:
-    
-    VSCBound() {}
-    virtual ~VSCBound() {}
-    
-    typename VSCBindings<Action,Input>::SPtr    getBindings() {return mBindings;}
-    void                                        setBindings(typename VSCBindings<Action,Input>::SPtr bindings) {mBindings = bindings;}
-    
-private:
-    
-    typename VSCBindings<Action,Input>::SPtr    mBindings;
-    
-};
+}
 
 
 #endif//_VSC_KEY_BINDINGS_H_
