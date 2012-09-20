@@ -32,13 +32,7 @@ const Ogre::Vector3    CameraStart            = Ogre::Vector3(0,-9,1);
 void VSC::OB::ConstraintsDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Application *application)
 {
     mHelpKeys.clear();
-    mHelpKeys.push_back (BASIC_HELP_INFO0);
-    mHelpKeys.push_back (BASIC_HELP_INFO1);
-    mHelpKeys.push_back (BASIC_HELP_INFO2);
-    mHelpKeys.push_back (BASIC_HELP_INFO3);
-    mHelpKeys.push_back (BASIC_HELP_INFO4);
-    mHelpKeys.push_back (BASIC_HELP_INFO5);
-    mHelpKeys.push_back (BASIC_HELP_INFO6);
+
     // ------------------------
     // Start OgreScene
     mSceneMgr = root->createSceneManager(ST_GENERIC);
@@ -50,8 +44,7 @@ void VSC::OB::ConstraintsDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
     Viewport *vp = win->addViewport(mCamera);
     vp->setBackgroundColour(ColourValue(0,0,0));
     // Alter the camera aspect ratio to match the viewport
-    mCamera->setAspectRatio(
-        Real(vp->getActualWidth()) / Real(vp->getActualHeight()));
+    mCamera->setAspectRatio(Real(vp->getActualWidth()) / Real(vp->getActualHeight()));
     mCamera->setPosition(CameraStart);
     mCamera->rotate(Ogre::Vector3(1,0,0), Degree(90));
     mCamera->setFixedYawAxis(true, Ogre::Vector3::UNIT_Z);
@@ -78,9 +71,7 @@ bool VSC::OB::ConstraintsDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
 {
     bool handled = false;
     
-    OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
-    VSC::Keyboard::Combination comb(key, modifier);
-    
+    VSC::Keyboard::Combination comb(key, this->getInputAdapter()->getCurrentModifier());
     const VSC::OB::KeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
     
     BOOST_FOREACH (VSC::OB::KeyboardAction::Key actionKey, actionKeySet)

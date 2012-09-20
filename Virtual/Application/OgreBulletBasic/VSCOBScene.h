@@ -13,26 +13,9 @@
 #include <boost/shared_ptr.hpp>
 
 
-#define BASIC_HELP_INFO0 "Use F1, F2, F3, F4"
-#define BASIC_HELP_INFO1 "B,N,G,H to Throw a Cube, Sphere, Cone, Cylinder"
-#define BASIC_HELP_INFO2 "J,K,I,U to Drop  a Cube, Sphere, Cone, Cylinder"
-#define BASIC_HELP_INFO3 ""
-#define BASIC_HELP_INFO4 "left click to drag"
-#define BASIC_HELP_INFO5 "right to camera move"
-#define BASIC_HELP_INFO6 "middle for impulse"
-
 namespace VSC {
     
     namespace OB {
-
-        enum QueryFlags
-        {
-            ANY_QUERY_MASK					= 1<<0,
-            RAGDOLL_QUERY_MASK				= 1<<1,
-            GEOMETRY_QUERY_MASK				= 1<<2,
-            VEHICLE_QUERY_MASK				= 1<<3,
-            STATIC_GEOMETRY_QUERY_MASK		= 1<<4
-        };
 
         class Application;
 
@@ -107,32 +90,6 @@ namespace VSC {
                             const Ogre::AxisAlignedBox &bounds = Ogre::AxisAlignedBox (Ogre::Vector3 (-10000, -10000, -10000),
                                                                                        Ogre::Vector3 (10000,  10000,  10000)));
             void addGround();
-
-            /**
-             *  Add objects to scene, no direct 
-             *  QUESTION: (no mesh data for addStaticTrimesh?) why cast shadow only for static tri mesh
-             */
-            OgreBulletDynamics::RigidBody *addCube(const Ogre::String instanceName,
-                const Ogre::Vector3 &pos, const Ogre::Quaternion &q, const Ogre::Vector3 &size,
-                const Ogre::Real bodyRestitution, const Ogre::Real bodyFriction, 
-                const Ogre::Real bodyMass);
-            OgreBulletDynamics::RigidBody *addCylinder(const Ogre::String instanceName,
-                const Ogre::Vector3 &pos, const Ogre::Quaternion &q, const Ogre::Vector3 &size,
-                const Ogre::Real bodyRestitution, const Ogre::Real bodyFriction, 
-                const Ogre::Real bodyMass);
-            OgreBulletDynamics::RigidBody *addSphere(const Ogre::String instanceName,
-                const Ogre::Vector3 &pos, const Ogre::Quaternion &q, const Ogre::Real radius,
-                const Ogre::Real bodyRestitution, const Ogre::Real bodyFriction, 
-                const Ogre::Real bodyMass);
-            OgreBulletDynamics::RigidBody *addCone(const Ogre::String instanceName,
-                const Ogre::Vector3 &pos, const Ogre::Quaternion &q, const Ogre::Vector3 &size,
-                const Ogre::Real bodyRestitution, const Ogre::Real bodyFriction, 
-                const Ogre::Real bodyMass);
-            OgreBulletDynamics::RigidBody *addStaticTrimesh(const Ogre::String &instanceName,
-                const Ogre::String &meshName, const Ogre::Vector3 &pos, const Ogre::Quaternion &q, 
-                const Ogre::Real bodyRestitution, const Ogre::Real bodyFriction, const bool castShadow = true);
-            OgreBulletDynamics::RigidBody *addStaticPlane( const Ogre::Real bodyRestitution, 
-                                                           const Ogre::Real bodyFriction);
             
             /*
              *  Debug stuff
@@ -164,19 +121,24 @@ namespace VSC {
             Ogre::Root                          *mRoot;
             Ogre::SceneManager                  *mSceneMgr;
             Ogre::Camera                        *mCamera;
-            int                                 mCurrentShadowTechnique;
             Ogre::Light                         *mSunLight;
             Ogre::Light                         *mLight;
             Ogre::Light                         *mLight2;
-            std::deque<Ogre::Entity*>           mEntities;
+            
+            int                                 mCurrentShadowTechnique;
+            
 
             /*
              *  OgreBullet variables
              */
             
             OgreBulletDynamics::DynamicsWorld                   *mWorld;
+            
+            /*
             std::deque<OgreBulletDynamics::RigidBody*>          mBodies;
             std::deque<OgreBulletCollisions::CollisionShape*>   mShapes;
+            std::deque<Ogre::Entity*>           mEntities;
+             */
 
             bool  mStatsOn;
             bool  mQuit;
@@ -227,13 +189,13 @@ namespace VSC {
              *  Other Setters/Getters
              */
             
-            CameraController::SPtr   getCameraController(void) {return mCameraController;}
-            void                            setCameraController(CameraController::SPtr controller);
+            CameraController::SPtr  getCameraController(void) {return mCameraController;}
+            void                    setCameraController(CameraController::SPtr controller);
             
         private:
             
-            CameraController::SPtr   mCameraController;
-            static const bool               mTraceFrame = false;
+            CameraController::SPtr  mCameraController;
+            static const bool       mTraceFrame = false;
             
         };
         

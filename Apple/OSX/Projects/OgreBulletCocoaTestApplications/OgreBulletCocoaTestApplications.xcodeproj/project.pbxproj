@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1013E96F160BC5F90014D566 /* VSCOB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1013E96D160BC5F90014D566 /* VSCOB.cpp */; };
+		1013E973160BCD820014D566 /* VSCOBStaticGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1013E971160BCD820014D566 /* VSCOBStaticGeometry.cpp */; };
 		1033868C156E48AC00CEB288 /* Plugin_BSPSceneManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948C156E483000E70049 /* Plugin_BSPSceneManager.dylib */; };
 		1033868D156E48AC00CEB288 /* Plugin_CgProgramManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */; };
 		1033868E156E48AC00CEB288 /* Plugin_OctreeSceneManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */; };
@@ -134,6 +136,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1013E96D160BC5F90014D566 /* VSCOB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOB.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOB.cpp; sourceTree = "<group>"; };
+		1013E96E160BC5F90014D566 /* VSCOB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOB.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOB.h; sourceTree = "<group>"; };
+		1013E971160BCD820014D566 /* VSCOBStaticGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBStaticGeometry.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBStaticGeometry.cpp; sourceTree = "<group>"; };
+		1013E972160BCD820014D566 /* VSCOBStaticGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBStaticGeometry.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBStaticGeometry.h; sourceTree = "<group>"; };
 		10338694156E5BB100CEB288 /* OgreOSXCocoaContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaContext.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaContext.h; sourceTree = "<group>"; };
 		10338695156E5BB100CEB288 /* OgreOSXCocoaWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaWindow.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaWindow.h; sourceTree = "<group>"; };
 		10338696156E5BB100CEB288 /* OgreOSXCocoaWindowDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaWindowDelegate.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaWindowDelegate.h; sourceTree = "<group>"; };
@@ -388,6 +394,8 @@
 		1001CA7A1598561D002566F4 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				1013E96D160BC5F90014D566 /* VSCOB.cpp */,
+				1013E96E160BC5F90014D566 /* VSCOB.h */,
 				106A57CA1608CAA500D905D8 /* VSCOBApplication.cpp */,
 				106A57CB1608CAA500D905D8 /* VSCOBApplication.h */,
 				106A57CC1608CAA500D905D8 /* VSCOBApplicationBase.cpp */,
@@ -410,6 +418,8 @@
 				106A57DF1608CAA500D905D8 /* VSCOBScene.h */,
 				10849B55160B0BE40047D0EE /* VSCOBObject.cpp */,
 				10849B56160B0BE50047D0EE /* VSCOBObject.h */,
+				1013E971160BCD820014D566 /* VSCOBStaticGeometry.cpp */,
+				1013E972160BCD820014D566 /* VSCOBStaticGeometry.h */,
 				10849B57160B0BE50047D0EE /* VSCOBObjectFactory.cpp */,
 				10849B58160B0BE50047D0EE /* VSCOBObjectFactory.h */,
 			);
@@ -996,6 +1006,8 @@
 				106A58061608CCF600D905D8 /* VSCOBOSXInputAdapter.mm in Sources */,
 				106A58071608CCF600D905D8 /* VSCOBOSXView.mm in Sources */,
 				106A58081608CCF600D905D8 /* VSCOBOSXWindow.mm in Sources */,
+				1013E96F160BC5F90014D566 /* VSCOB.cpp in Sources */,
+				1013E973160BCD820014D566 /* VSCOBStaticGeometry.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

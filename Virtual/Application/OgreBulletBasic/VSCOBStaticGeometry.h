@@ -1,6 +1,6 @@
 
-#ifndef _VSC_OGRE_BULLET_OBJECT_H_
-#define _VSC_OGRE_BULLET_OBJECT_H_
+#ifndef _VSC_OGRE_BULLET_STATIC_GEOMETRY_H_
+#define _VSC_OGRE_BULLET_STATIC_GEOMETRY_H_
 
 #include "OgreBulletDynamics.h"
 #include "OgreBulletCollisions.h"
@@ -18,52 +18,40 @@ namespace VSC {
          *  More of a container than a class...
          */
             
-        class Object {
+        class StaticGeometry {
             
         public:
             
-            typedef boost::shared_ptr<Object> SPtr;
-            
-            enum PrimitiveType {
-                PrimitiveNone = 0,
-                PrimitiveCube,
-                PrimitiveSphere,
-                PrimitiveCylinder,
-                PrimitiveCone
-            };
+            typedef boost::shared_ptr<StaticGeometry> SPtr;
             
             /*
              *  Constructor
              */
             
-            Object(Ogre::Entity* entity,
+            Object(Ogre::StaticGeometry* staticGeometry,
                    OgreBulletDynamics::DynamicsWorld* world,
                    OgreBulletDynamics::RigidBody* rigidBody,
-                   OgreBulletCollisions::CollisionShape* collisionShape,
-                   PrimitiveType primitiveType = PrimitiveNone);
+                   OgreBulletCollisions::CollisionShape* collisionShape);
             
             /*
              *  Getters
              */
             
-            Ogre::Entity*                           getEntity(void);
+            Ogre::StaticGeometry*                   getGeometry(void);
             OgreBulletDynamics::RigidBody*          getRigidBody(void);
             OgreBulletCollisions::CollisionShape*   getCollisionShape(void);
             OgreBulletDynamics::DynamicsWorld*      getWorld(void);
-            PrimitiveType                           getPrimitiveType(void);
             
         private:
             
-            Ogre::Entity*                           mEntity;
+            Ogre::StaticGeometry*                   mStaticGeometry;
             OgreBulletDynamics::RigidBody*          mRigidBody;
             OgreBulletCollisions::CollisionShape*   mCollisionShape;
             OgreBulletDynamics::DynamicsWorld*      mWorld;
-            
-            PrimitiveType                           mPrimitiveType;
         }
         
     }
 }
 
-#endif //_VSC_OGRE_BULLET_OBJECT_H_
+#endif //_VSC_OGRE_BULLET_STATIC_GEOMETRY_H_
 

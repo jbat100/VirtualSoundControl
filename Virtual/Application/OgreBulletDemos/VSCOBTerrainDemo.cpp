@@ -67,14 +67,6 @@ void VSC::OB::TerrainDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::
 {
 
     mHelpKeys.clear();
-    mHelpKeys.push_back (BASIC_HELP_INFO0);
-    mHelpKeys.push_back (BASIC_HELP_INFO1);
-    mHelpKeys.push_back (BASIC_HELP_INFO2);
-    mHelpKeys.push_back (BASIC_HELP_INFO3);
-    mHelpKeys.push_back (BASIC_HELP_INFO4);
-    mHelpKeys.push_back (BASIC_HELP_INFO5);
-    mHelpKeys.push_back (BASIC_HELP_INFO6);
-    mHelpKeys.push_back ("Use Arrow Key to move Car.");
 
 // reset
     for (int i = 0; i < 4; i++)
