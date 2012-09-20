@@ -134,8 +134,6 @@ namespace VSC {
             OgreBulletDynamics::RigidBody *addStaticPlane( const Ogre::Real bodyRestitution, 
                                                            const Ogre::Real bodyFriction);
             
-            
-            
             /*
              *  Debug stuff
              */
@@ -152,23 +150,33 @@ namespace VSC {
             
             static size_t mNumEntitiesInstanced;
             
+            /*
+             *  VSC::OB variables
+             */
+            
+            Application                         *mApplication;
+            
+            /*
+             *  Ogre variables
+             */
+            
             Ogre::RenderWindow                  *mWindow;
             Ogre::Root                          *mRoot;
             Ogre::SceneManager                  *mSceneMgr;
             Ogre::Camera                        *mCamera;
-            
             int                                 mCurrentShadowTechnique;
             Ogre::Light                         *mSunLight;
             Ogre::Light                         *mLight;
             Ogre::Light                         *mLight2;
+            std::deque<Ogre::Entity*>           mEntities;
 
-            OgreBulletDynamics::DynamicsWorld   *mWorld;
-            Application            *mApplication;
-
-
-            std::deque<Ogre::Entity *>                          mEntities;
-            std::deque<OgreBulletDynamics::RigidBody *>         mBodies;
-            std::deque<OgreBulletCollisions::CollisionShape *>  mShapes;
+            /*
+             *  OgreBullet variables
+             */
+            
+            OgreBulletDynamics::DynamicsWorld                   *mWorld;
+            std::deque<OgreBulletDynamics::RigidBody*>          mBodies;
+            std::deque<OgreBulletCollisions::CollisionShape*>   mShapes;
 
             bool  mStatsOn;
             bool  mQuit;
@@ -207,7 +215,7 @@ namespace VSC {
            OgreBulletCollisions::DebugLines                         *mDebugRayLine;
            Ogre::RaySceneQuery                                      *mRayQuery;
 
-           BetaGUIListener                                   *mGuiListener;
+           BetaGUIListener                                          *mGuiListener;
             
            Ogre::String                                             mDebugText;
            Ogre::String                                             mName;

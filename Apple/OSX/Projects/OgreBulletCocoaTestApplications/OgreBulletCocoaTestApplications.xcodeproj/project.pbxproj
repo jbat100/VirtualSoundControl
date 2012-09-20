@@ -182,6 +182,10 @@
 		106A58031608CCF600D905D8 /* VSCOBOSXView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOBOSXView.mm; path = ../../../../../Virtual/Application/APPLE/VSCOBOSXView.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		106A58041608CCF600D905D8 /* VSCOBOSXWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOBOSXWindow.h; path = ../../../../../Virtual/Application/APPLE/VSCOBOSXWindow.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		106A58051608CCF600D905D8 /* VSCOBOSXWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOBOSXWindow.mm; path = ../../../../../Virtual/Application/APPLE/VSCOBOSXWindow.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		10849B55160B0BE40047D0EE /* VSCOBObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBObject.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBObject.cpp; sourceTree = "<group>"; };
+		10849B56160B0BE50047D0EE /* VSCOBObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOBObject.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBObject.h; sourceTree = "<group>"; };
+		10849B57160B0BE50047D0EE /* VSCOBObjectFactory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBObjectFactory.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBObjectFactory.cpp; sourceTree = "<group>"; };
+		10849B58160B0BE50047D0EE /* VSCOBObjectFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOBObjectFactory.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBObjectFactory.h; sourceTree = "<group>"; };
 		1091F27C15B0645D00466854 /* VSCNSLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCNSLog.h; path = ../../../Common/VSCNSLog.h; sourceTree = "<group>"; };
 		1091F28215B07C0D00466854 /* VSCLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCLog.cpp; path = ../../../../Generic/VSCLog.cpp; sourceTree = "<group>"; };
 		1091F28315B07C0D00466854 /* VSCLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCLog.h; path = ../../../../Generic/VSCLog.h; sourceTree = "<group>"; };
@@ -404,6 +408,10 @@
 				106A57DB1608CAA500D905D8 /* VSCOBKeyboardManager.h */,
 				106A57DE1608CAA500D905D8 /* VSCOBScene.cpp */,
 				106A57DF1608CAA500D905D8 /* VSCOBScene.h */,
+				10849B55160B0BE40047D0EE /* VSCOBObject.cpp */,
+				10849B56160B0BE50047D0EE /* VSCOBObject.h */,
+				10849B57160B0BE50047D0EE /* VSCOBObjectFactory.cpp */,
+				10849B58160B0BE50047D0EE /* VSCOBObjectFactory.h */,
 			);
 			name = Core;
 			sourceTree = "<group>";
