@@ -57,8 +57,8 @@ namespace VSC {
              *  Scene Setter/Getter
              */
             
-            Scene::SPtr getScene(void);
-            void setScene(Scene::SPtr scene);
+            Scene::WPtr getScene(void);
+            void setScene(Scene::WPtr scene);
             
             /**--------------------------------------------------------------
              *  Actions Setter/Getter
@@ -93,7 +93,7 @@ namespace VSC {
             
         private:
             
-            Scene::SPtr mScene;
+            Scene::WPtr mScene;
             
             /**
              *   Mouse picking, drag and drop

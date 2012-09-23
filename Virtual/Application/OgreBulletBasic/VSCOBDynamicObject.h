@@ -40,20 +40,20 @@ namespace VSC {
                 Ogre::Vector3       position;
                 Ogre::Quaternion    orientation;
                 Ogre::Vector3       size;
-                Ogre::Real          bodyMass;
-                Ogre::Real          bodyFriction;
-                Ogre::Real          bodyRestitution;
-                Ogre::String        materialName;
+                Ogre::Real          bodyMass;           // 1.0f;
+                Ogre::Real          bodyFriction;       // 0.6f;
+                Ogre::Real          bodyRestitution;    // 0.6f;
+                Ogre::String        materialName;       // "Bullet/box"
+                bool                castsShadow;        // true
             }
             
             /**------------------------------------------------------------
              *  Constructor
              */
             
-            Object(Scene::WPtr scene,
-                   Ogre::Entity* entity,
-                   OgreBulletDynamics::RigidBody* rigidBody,
-                   OgreBulletCollisions::CollisionShape* collisionShape);
+            DynamicObject(Scene::WPtr scene,
+                          Ogre::Entity* entity,
+                          OgreBulletDynamics::RigidBody* rigidBody);
             
             /**------------------------------------------------------------
              *  Destroy
@@ -65,15 +65,11 @@ namespace VSC {
              *  Getters
              */
             
-            Ogre::Entity*                           getEntity(void);
-            OgreBulletDynamics::RigidBody*          getRigidBody(void);
-            OgreBulletCollisions::CollisionShape*   getCollisionShape(void);
+            Ogre::Entity*                           getEntity(void) {return mEntity;}
             
         private:
             
             Ogre::Entity*                           mEntity;
-            OgreBulletDynamics::RigidBody*          mRigidBody;
-            OgreBulletCollisions::CollisionShape*   mCollisionShape;
         }
         
     }

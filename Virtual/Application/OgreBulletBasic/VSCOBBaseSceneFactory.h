@@ -4,6 +4,7 @@
 
 #include "VSCOBScene.h"
 #include "VSCOBDynamicObject.h"
+#include "VSCOBStaticGeometry.h"
 
 #include "OgreBulletDynamics.h"
 #include "OgreBulletCollisions.h"
@@ -11,6 +12,8 @@
 #include <Ogre/Ogre.h>
 
 #include <boost/shared_ptr.hpp>
+
+#include <map>
 
 namespace VSC {
     
@@ -22,28 +25,22 @@ namespace VSC {
             
             BaseElementFactory(Scene::WPtr scene);
             
-            DynamicObject::SPtr addPrimitive(VSC::OB::PrimitiveType primitiveType,
+            DynamicObject::WPtr addPrimitive(VSC::OB::PrimitiveType primitiveType,
                                              const DynamicObject::FactoryDespription& description);
             
             
-            /*
-            Object::SPtr addStaticTrimesh(const Ogre::String &instanceName,
-                                          const Ogre::String &meshName,
-                                          const Ogre::Vector3 &pos,
-                                          const Ogre::Quaternion &q,
-                                          const Ogre::Real bodyRestitution,
-                                          const Ogre::Real bodyFriction,
-                                          const bool castShadow = true);
-             */
             
-            Object::SPtr addStaticPlane(const Ogre::Real bodyRestitution,
-                                        const Ogre::Real bodyFriction);
+            DynamicObject::WPtr addTrimesh(const Ogre::String& meshName,
+                                           const DynamicObject::FactoryDespription& description);
+             
+            
+            StaticGeometry::WPtr addStaticPlane(const StaticGeometry::FactoryDespription& description);
             
             
             
         private:
             
-            static int                          mNumberOfObjectsCreated;
+            static int mNumberOfObjectsCreated;
             
             
         }
