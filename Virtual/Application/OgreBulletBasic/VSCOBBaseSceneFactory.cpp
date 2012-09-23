@@ -1,14 +1,7 @@
 
-VSC::OB::Object::SPtr VSC::OB::ObjectFactory::addPrimitive(Object::PrimitiveType primitiveType,
-                                                           const Ogre::String instanceName,
-                                                           const Ogre::Vector3 &pos,
-                                                           const Ogre::Quaternion &q,
-                                                           const Ogre::Vector3 &size,
-                                                           const Ogre::Real bodyMass,
-                                                           const Ogre::Real bodyFriction,
-                                                           const Ogre::Real bodyRestitution);
+VSC::OB::DynamicObject::SPtr VSC::OB::ObjectFactory::addPrimitive(Object::PrimitiveType primitiveType,
+                                                                  const DynamicObject::FactoryDespription& description);
 {
-    using VSC::OB::Object;
     
     /*
      *  Depending on primitive type:
@@ -19,7 +12,7 @@ VSC::OB::Object::SPtr VSC::OB::ObjectFactory::addPrimitive(Object::PrimitiveType
     
     Ogre::Entity *entity = 0;
     OgreBulletCollisions::CollisionShape *collisionShape = 0;
-    Ogre::String entityName = instanceName + StringConverter::toString(mNumberOfObjectsCreated);
+    Ogre::String entityName = description.name + StringConverter::toString(mNumberOfObjectsCreated);
     Ogre::String rigidBodyName = "";
     
     switch (primitiveType) {
@@ -57,12 +50,12 @@ VSC::OB::Object::SPtr VSC::OB::ObjectFactory::addPrimitive(Object::PrimitiveType
             break;
     }
     
-    entity->setQueryFlags(GEOMETRY_QUERY_MASK);
+    entity->setQueryFlags(VSC::OB::QueryMaskGeometry);
 	entity->setCastShadows(true);
-    entity->setMaterialName(mDefaultMaterialName);
+    entity->setMaterialName(description.materialName);
     
     SceneNode *node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-    node->attachObject (entity);
+    node->attachObject(entity);
     
     /*
      *  Create an OgreBulletDynamics::RigidBody which handles the Ogre::SceneNode (along with the Ogre::Entity), 
@@ -71,12 +64,17 @@ VSC::OB::Object::SPtr VSC::OB::ObjectFactory::addPrimitive(Object::PrimitiveType
      */
     
     Ogre::String fullRigidBodyName = rigidBodyName + StringConverter::toString(mNumberOfObjectsCreated);
-    OgreBulletDynamics::RigidBody *rigidBody = new OgreBulletDynamics::RigidBody(fullRigidBodyName, mWorld);
-    rigidBody->setShape(node, collisionShape, bodyRestitution, bodyFriction, bodyMass, pos, q);
+    
+    OgreBulletDynamics::DynamicsWorld* world = this->getScene().lock()->getWorld();
+    
+    OgreBulletDynamics::RigidBody *rigidBody = new OgreBulletDynamics::RigidBody(fullRigidBodyName, world);
+    
+    rigidBody->setShape(node, collisionShape, description.bodyRestitution,
+                        description.bodyFriction, description.bodyMass, description.position, description.orientation);
     
     mNumberOfObjectsCreated++;
     
-    Object::SPtr object(new Object(entity, mWorld, rigidBody, collisionShape, primitiveType));
+    VSC::OB::DynamicObject::SPtr object(new VSC::OB::DynamicObject(this->getScene(), entity, rigidBody, collisionShape));
 
     return object;
 }
@@ -149,15 +147,13 @@ OgreBulletDynamics::RigidBody *VSC::OB::Scene::addStaticPlane( const Ogre::Real 
     
     s->build();
     
-    //SceneNode* mPlaneNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(name);
-
-    CollisionShape *Shape = new StaticPlaneCollisionShape (Ogre::Vector3(0,1,0), 0);
+    CollisionShape *shape = new StaticPlaneCollisionShape (Ogre::Vector3(0,1,0), 0);
 
     OgreBulletDynamics::RigidBody *defaultPlaneBody = new OgreBulletDynamics::RigidBody("Plane" + StringConverter::toString(mNumEntitiesInstanced), mWorld);
-    defaultPlaneBody->setStaticShape (Shape, bodyRestitution, bodyFriction);
+    defaultPlaneBody->setStaticShape(shape, bodyRestitution, bodyFriction);
 
     mBodies.push_back(defaultPlaneBody);
-    mShapes.push_back(Shape);
+    mShapes.push_back(shape);
 
     mNumEntitiesInstanced++;
 

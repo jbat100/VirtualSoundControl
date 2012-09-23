@@ -73,48 +73,6 @@ const Ogre::Vector3     gConeBodyBounds      = Ogre::Vector3 (1, 1, 1);
 const Real              gSphereBodyBounds    = 1.0f;
 // -------------------------------------------------------------------------
 
-//MARK: Convert Shadow technique to int and back, local functions, only used here
-
-// -------------------------------------------------------------------------
-Ogre::ShadowTechnique convertToShadowTechnique(int i)
-{
-    switch(i)
-    {
-    case 0: return SHADOWTYPE_NONE;
-    case 1: return SHADOWDETAILTYPE_ADDITIVE;
-    case 2: return SHADOWDETAILTYPE_MODULATIVE;
-    case 3: return SHADOWDETAILTYPE_INTEGRATED;
-    case 4: return SHADOWDETAILTYPE_STENCIL;
-    case 5: return SHADOWDETAILTYPE_TEXTURE;
-    case 6: return SHADOWTYPE_STENCIL_MODULATIVE;
-    case 7: return SHADOWTYPE_STENCIL_ADDITIVE;
-    case 8: return SHADOWTYPE_TEXTURE_MODULATIVE;
-    case 9: return SHADOWTYPE_TEXTURE_ADDITIVE;
-    case 10: return SHADOWTYPE_TEXTURE_ADDITIVE_INTEGRATED;
-    case 11: return SHADOWTYPE_TEXTURE_MODULATIVE_INTEGRATED;
-    default: return SHADOWTYPE_NONE;
-    }
-}
-// -------------------------------------------------------------------------
-int convertShadowTechniqueToInt(Ogre::ShadowTechnique i)
-{
-	switch(i)
-	{
-	case  SHADOWTYPE_NONE: return 0;
-	case  SHADOWDETAILTYPE_ADDITIVE: return 1;
-	case  SHADOWDETAILTYPE_MODULATIVE: return 2;
-	case  SHADOWDETAILTYPE_INTEGRATED: return 3;
-	case  SHADOWDETAILTYPE_STENCIL: return 4;
-	case  SHADOWDETAILTYPE_TEXTURE: return 5;
-	case  SHADOWTYPE_STENCIL_MODULATIVE: return 6;
-	case  SHADOWTYPE_STENCIL_ADDITIVE: return 7;
-	case  SHADOWTYPE_TEXTURE_MODULATIVE: return 8;
-	case  SHADOWTYPE_TEXTURE_ADDITIVE: return 9;
-	case  SHADOWTYPE_TEXTURE_ADDITIVE_INTEGRATED: return 10;
-	case  SHADOWTYPE_TEXTURE_MODULATIVE_INTEGRATED: return 11;
-	default: return 0;
-	}
-}
 
 //MARK: Basic Constructor which does abolutely nothing interesting at all 
 
@@ -124,20 +82,13 @@ mRoot(0),
 mSceneMgr(0),
 mWindow(0),
 mWorld(0),
-mStatsOn (true),
 mPaused (false),
-mShootSpeed (7.f),
-mImpulseForce (10.f),
 mDebugRayLine(0),
-mRayQuery(0),
-mGuiListener(0),
-mPickConstraint(0),
-mCollisionClosestRayResultCallback(0)
 {
 
 }
 // -------------------------------------------------------------------------
-void VSC::OB::Scene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Application *application)
+void VSC::OB::Scene::init(Ogre::Root *root, Ogre::RenderWindow *win)
 {
     /*
      *  A bit of OGRE reading ...
@@ -147,39 +98,30 @@ void VSC::OB::Scene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Ap
     
     mRoot = root;
     mWindow = win; 
-    mApplication = application;
-    
-    /*
-     *  IMPORTANT: Subclasses must have created a camera before calling VSC::OB::Scene::init
-     */
-    this->setCameraController(VSC::OB::CameraController::SPtr(new VSC::OB::CameraController));
-    this->getCameraController()->setCamera(mCamera);
-    this->getCameraController()->setCameraSpeed(0.3f);
-
-    /**
-     *  We have separate GUI and Input listeners, presumably to keep this agnostic to the interface type
-     */
-    mGuiListener = new VSC::OB::BetaGUIListener(this, win);
 
     /******************* CREATESHADOWS If not debug mode ***************************/
 #ifndef _DEBUG
     
-    mCurrentShadowTechnique = convertShadowTechniqueToInt(SHADOWTYPE_TEXTURE_ADDITIVE);
+    mCurrentShadowTechnique = SHADOWTYPE_TEXTURE_ADDITIVE;
 
     /**
      *  QUESTION: Where does mSceneMgr get set to something other than 0? ANSWER: In the subclasses (Demos) of course.
      *  NOTE: Ogre::SceneManager is an absolutely massive class http://www.ogre3d.org/docs/api/html/classOgre_1_1SceneManager.html
      */
+    
 	mSceneMgr->setShadowColour(ColourValue(0.5, 0.5, 0.5));
 
 	Ogre::PixelFormat pxlFmt = Ogre::PF_L8;
 	if (mRoot->getRenderSystem()->getCapabilities()->hasCapability(RSC_TEXTURE_FLOAT))
 	{
 		const bool isOpenGL = (Ogre::Root::getSingleton().getRenderSystem()->getName().find("GL") != Ogre::String::npos);
-		if (isOpenGL)// GL performs much better if you pick half-float format
+        
+        // GL performs much better if you pick half-float format
+		if (isOpenGL)
 			pxlFmt = Ogre::PF_FLOAT16_R;
 		else
-			pxlFmt = Ogre::PF_FLOAT32_R;// D3D is the opposite - if you ask for PF_FLOAT16_R you
+			pxlFmt = Ogre::PF_FLOAT32_R;
+        // D3D is the opposite - if you ask for PF_FLOAT16_R you
 		// get an integer format instead! You can ask for PF_FLOAT16_GR
 		// but the precision doesn't work well
 
@@ -205,7 +147,7 @@ void VSC::OB::Scene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Ap
 	mLiSPSMSetup->setOptimalAdjustFactor(1.1f);
 	mSceneMgr->setShadowCameraSetup(Ogre::ShadowCameraSetupPtr(mLiSPSMSetup));
 
-	mSceneMgr->setShadowTechnique(convertToShadowTechnique(mCurrentShadowTechnique));
+	mSceneMgr->setShadowTechnique(mCurrentShadowTechnique);
 	if (mRoot->getRenderSystem()->getCapabilities()->hasCapability(RSC_HWRENDER_TO_TEXTURE))
 	{
 		// In D3D, use a 1024x1024 shadow texture
@@ -221,11 +163,9 @@ void VSC::OB::Scene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Ap
     /******************* CREATE Queries ***************************/
     
     mRayQuery = mSceneMgr->createRayQuery(Ray());
-    
-    mRayQuery->setQueryMask(GEOMETRY_QUERY_MASK);
+    mRayQuery->setQueryMask(VSC::OB::QueryMaskGeometry);
     mRayQuery->setQueryTypeMask(SceneManager::ENTITY_TYPE_MASK);
-    
-    MovableObject::setDefaultQueryFlags (ANY_QUERY_MASK);
+    Ogre::MovableObject::setDefaultQueryFlags(VSC::OB::QueryMaskAny);
 
     mPickConstraint = 0;
     
@@ -233,45 +173,40 @@ void VSC::OB::Scene::init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Ap
      *  Nothing is enabled by default...
      */
     
-    mQuit = false;
     mPaused = false;
-    mWireFrame = false;
+    mDrawWireFrame = false;
     mDrawAabb = false;
     mDrawFeaturesText = false;
     mDrawContactPoints = false;
-    mNoDeactivation = false;
-    mNoHelpText = false;
-    mDrawText = false;
-    mProfileTimings = false;
-    mEnableSatComparison = false;
     mDisableBulletLCP = false;
     mEnableCCD = false;
+    mDrawText = false;
+    
+    mNoDeactivation = false;
+    mNoHelpText = false;
+    mProfileTimings = false;
+    mEnableSatComparison = false;
 
-}
-
-
-
-void VSC::OB::Scene::setCameraController(VSC::OB::CameraController::SPtr controller)
-{
-    mCameraController = controller;
-    this->setNextInputListener(mCameraController.get());
-    mCameraController->setOgreKeyBindings(this->getOgreKeyBindings());
 }
 
 // -------------------------------------------------------------------------
-void VSC::OB::Scene::setBasicLight()
+void VSC::OB::Scene::setupLights()
 {
     // Set ambient light
     mSceneMgr->setAmbientLight(ColourValue(0.4, 0.4, 0.4));
-
+    
+    Ogre::Light* l = 0;
+    
 	// Fixed light, dim
- 	mSunLight = mSceneMgr->createLight("Sun");
- 	mSunLight->setPosition(0.0, 30.5, 0.0);
- 	mSunLight->setCastShadows(false);
- 	mSunLight->setType(Light::LT_POINT);
- 	mSunLight->setDiffuseColour(g_minLightColour);
- 	mSunLight->setSpecularColour(0.2, 0.2, 0.2);
- 	mSunLight->setAttenuation(8000, 1, 0.0005, 0);
+    l = mSceneMgr->createLight("Sun");
+ 	l->setPosition(0.0, 30.5, 0.0);
+ 	l->setCastShadows(false);
+ 	l->setType(Ogre::Light::LT_POINT);
+ 	l->setDiffuseColour(g_minLightColour);
+ 	l->setSpecularColour(0.2, 0.2, 0.2);
+ 	l->setAttenuation(8000, 1, 0.0005, 0);
+    mLightMap.insert(LightMap::value_type("Sunlight", l))
+    
 
 	// Point light, movable, reddish
 	mLight = mSceneMgr->createLight("Spot");
@@ -298,110 +233,12 @@ void VSC::OB::Scene::setBasicLight()
 
 }
 
-
-void VSC::OB::Scene::setPhysicGUI()
-{
-    BetaGUI::GUI *gui = mGuiListener->getGui();
-
-    BetaGUI::Window *menuWindow = gui->addMenuWindow(Vector2(mWindow->getWidth(), 24));
-    menuWindow->hide ();
-
-    BetaGUI::Window *aWindow;
-     
-    /**-------------------------------------------------------------------
-     *  Time tab, play/pause, step
-     */
-    aWindow = menuWindow->addMenuWindowTab("Time", false, BetaGUI::WPT_NONE);
-    aWindow->addBoolButton(&mPaused, "Play/Pause", BetaGUI::WPT_HORIZONTAL);
-    aWindow->addBoolButton(&mDoOnestep, "Single Step", BetaGUI::WPT_HORIZONTAL);
-    aWindow->hide ();
-
-    /**-------------------------------------------------------------------
-     *  Setup effect for appears and slide in
-     */
-    const Vector2 screenRightTop (mWindow->getWidth () - aWindow->getSize ().x, 0);
-    const Vector2 screenRightOffTop (mWindow->getWidth () - aWindow->getSize ().x, - aWindow->getSize ().y);
-    gui->addEffect(new BetaGUI::MoveEffect(aWindow, 2, screenRightOffTop, screenRightTop, 0));
-    gui->addEffect(new BetaGUI::AlphaEffect(aWindow, 2, 0, 1, 0));
-
-    /**-------------------------------------------------------------------
-     *  Interaction tab
-     */
-    aWindow = menuWindow->addMenuWindowTab("Interaction");
-    aWindow->addRealButton(&mShootSpeed,
-        Vector4(0.1, 5.0, 0.0, 100.0),
-        "Shoot Speed:", BetaGUI::WPT_VERTICAL);
-    aWindow->addRealButton(&mImpulseForce,
-        Vector4(0.1, 5.0, 0.0, 100.0),
-        "Impulse Force:", BetaGUI::WPT_VERTICAL);
-    aWindow->hide ();
-
-    /**-------------------------------------------------------------------
-     *  Debug tab
-     */
-    aWindow = menuWindow->addMenuWindowTab("Debug");
-    aWindow->addBoolButton(&mWireFrame, "Draw Wireframe", BetaGUI::WPT_VERTICAL);
-    aWindow->addBoolButton(&mDrawAabb, "Draw Aabb", BetaGUI::WPT_VERTICAL);
-    aWindow->addBoolButton(&mDrawFeaturesText, "Draw Features Text", BetaGUI::WPT_VERTICAL);
-    aWindow->addBoolButton(&mDrawContactPoints, "Draw Contact Points", BetaGUI::WPT_VERTICAL);
-    aWindow->addBoolButton(&mNoDeactivation, "No Deactivation", BetaGUI::WPT_VERTICAL);
-    aWindow->addBoolButton(&mNoHelpText, "No Help Text", BetaGUI::WPT_VERTICAL);
-    aWindow->addBoolButton(&mDrawText, "Draw Text", BetaGUI::WPT_VERTICAL);
-    aWindow->addBoolButton(&mProfileTimings, "Profile Timings", BetaGUI::WPT_VERTICAL);
-    aWindow->addBoolButton(&mEnableSatComparison, "Enable Sat Comparison", BetaGUI::WPT_VERTICAL);
-    aWindow->addBoolButton(&mDisableBulletLCP, "Disable Bullet LCP", BetaGUI::WPT_VERTICAL);
-    aWindow->addBoolButton(&mEnableCCD, "Enable CCD", BetaGUI::WPT_VERTICAL);
-    aWindow->hide ();
-
-    /**-------------------------------------------------------------------
-     *  FPS tab
-     */
-    aWindow = menuWindow ->addMenuWindowTab("FPS", false, BetaGUI::WPT_NONE);
-    mFpsStaticText = aWindow->addStaticText("FPS Count", BetaGUI::WPT_VERTICAL);
-    aWindow->hide ();
-    // appears and slide in
-    const Vector2 screenRightBottom (mWindow->getWidth () - 360, mWindow->getHeight () - 24);
-    const Vector2 screenRightOffBottom (mWindow->getWidth () - 360, mWindow->getHeight ());
-    gui->addEffect(new BetaGUI::MoveEffect(aWindow, 2, screenRightOffBottom, screenRightBottom, 0));
-    gui->addEffect(new BetaGUI::AlphaEffect(aWindow, 2, 0, 1, 0));
-
-    /**-------------------------------------------------------------------
-     *  Help tab
-     */
-    aWindow = menuWindow->addMenuWindowTab("Help");
-    aWindow->addStaticText(mName + " Help Informations", BetaGUI::WPT_VERTICAL);
-    std::vector <String>::iterator keyIterator = mHelpKeys.begin();
-    for (; keyIterator < mHelpKeys.end(); ++keyIterator)
-    {
-        aWindow->addStaticText(*keyIterator, BetaGUI::WPT_VERTICAL); 
-    }
-    // appears and slide
-    const Vector2 halfWindowSize (aWindow->getSize ().x / 2, aWindow->getSize ().y / 2);
-    const Vector2 screenCentered ((mWindow->getWidth () / 2) - halfWindowSize.x,
-        (mWindow->getHeight () / 2) - halfWindowSize.y);
-    gui->addEffect(new BetaGUI::MoveEffect(aWindow, 2, -halfWindowSize, screenCentered, 0));
-    gui->addEffect(new BetaGUI::AlphaEffect(aWindow, 2, 0, 1, 0));
-    // disappears
-    gui->addEffect(new BetaGUI::AlphaEffect(aWindow, 2, 1, 0, 3));
-
-    /**-------------------------------------------------------------------
-     *  Quit button
-     */
-    menuWindow->addBoolButton(&mQuit, "Quit", BetaGUI::WPT_HORIZONTAL);
-    // appears and slide in
-    const Vector2 screenLeftTop (- menuWindow->getSize ().x, 0);
-    const Vector2 screenLeftOffTop (0, 0);
-    gui->addEffect(new BetaGUI::MoveEffect(menuWindow, 2, screenLeftTop, screenLeftOffTop, 0));
-    gui->addEffect(new BetaGUI::AlphaEffect(menuWindow, 2, 0, 1, 0));
-}
-
-
 void VSC::OB::Scene::getDebugLines()
 {
     if (mDebugRayLine == 0)
     {
         mDebugRayLine = new DebugLines();
-        mSceneMgr->getRootSceneNode ()->createChildSceneNode ()->attachObject (mDebugRayLine);
+        mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(mDebugRayLine);
     }
 }
 
@@ -409,8 +246,6 @@ void VSC::OB::Scene::getDebugLines()
 void VSC::OB::Scene::shutdown ()
 {
 
-    delete mGuiListener;
-    mGuiListener = 0;
 
     // OgreBullet physic delete 
     std::deque<OgreBulletDynamics::RigidBody *>::iterator itBody = mBodies.begin();
@@ -434,7 +269,6 @@ void VSC::OB::Scene::shutdown ()
         mSceneMgr->destroyEntity(*itEntity);
         assert (node->getParent());
         static_cast <SceneNode *> (node->getParent())->removeAndDestroyChild(node->getName());
-
         ++itEntity;
     }
     
@@ -458,368 +292,6 @@ void VSC::OB::Scene::shutdown ()
 
 }
 
-// MARK Interface
-
-
-//void VSC::OB::Scene::mouseButtonPressed(OIS::MouseButtonID buttonID)
-bool VSC::OB::Scene::mouseButtonPressed(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
-{
-    
-    if (mTraceUI) std::cout << "VSC::OB::Scene::mouseButtonPressed : " << position << " (" << buttonID << ")" << std::endl;
-    
-    switch (buttonID) 
-    {
-        case OIS::MB_Left:
-        {
-            // pick a body and try to drag it.
-            Ogre::Vector3 pickPos;
-            Ogre::Ray rayTo;
-            
-            OgreBulletDynamics::RigidBody* body = getBodyUnderCursorUsingBullet(pickPos, rayTo);
-            //OgreBulletDynamics::RigidBody* body = getBodyUnderCursorUsingOgre(pickPos, rayTo);
-            
-            if (body)
-            {
-                if (mTraceUI) std::cout << "VSC::OB::Scene::mouseButtonPressed Left button, detected body" << std::endl;
-                
-                if (!body->isStaticObject())
-                {
-                    mPickedBody = body;
-                    mPickedBody->disableDeactivation();		
-                    const Ogre::Vector3 localPivot (body->getCenterOfMassPivot(pickPos));
-                    
-                    OgreBulletDynamics::PointToPointConstraint *p2p  = new OgreBulletDynamics::PointToPointConstraint(body, localPivot);
-                    mWorld->addConstraint(p2p);					    
-                    
-                    //save mouse position for dragging
-                    mOldPickingPos = pickPos;
-                    const Ogre::Vector3 eyePos(mCamera->getDerivedPosition());
-                    mOldPickingDist = (pickPos - eyePos).length();
-                    
-                    if (mTraceUI) std::cout << "VSC::OB::Scene::mouseButtonPressed picked body " << mPickedBody << " at distance " << mOldPickingDist << std::endl;
-                    
-                    //very weak constraint for picking
-                    p2p->setTau (0.1f);
-                    mPickConstraint = p2p;
-                    
-                }
-                getDebugLines();
-                mDebugRayLine->addLine(rayTo.getOrigin(), pickPos);
-                mDebugRayLine->draw();
-                
-            }
-            
-            else
-            {
-                if (mTraceUI) std::cout << "VSC::OB::Scene::mouseButtonPressed Left button, detected no body" << std::endl;
-            }
-            
-            /*
-             *  Beta mouse hidden... 
-            if (mGuiListener->getGui()->injectMouse(position.x*mWindow->getWidth(), position.y*mWindow->getHeight(), true))
-            {
-                //mGuiListener->hideMouse();
-            }
-            else
-            {
-                //mGuiListener->showMouse ();
-            }
-             */
-            
-            return true;
-            
-        }
-            
-        case OIS::MB_Middle:
-        {
-            // small unique impulse under cursor.
-            Ogre::Vector3 pickPos;
-            Ogre::Ray rayTo;
-            OgreBulletDynamics::RigidBody * body = getBodyUnderCursorUsingBullet(pickPos, rayTo);
-            //getBodyUnderCursorUsingOgre(pickPos, rayTo);
-            if (body)
-            {  
-                if (!(body->isStaticObject() 
-                      || body->isKinematicObject()
-                      ))
-                {
-                    
-                    body->enableActiveState ();
-                    
-                    const Ogre::Vector3 relPos (pickPos - body->getCenterOfMassPosition());
-                    const Ogre::Vector3 impulse (rayTo.getDirection ());
-                    
-                    body->applyImpulse (impulse * mImpulseForce, relPos);		
-                    
-                }
-                
-                getDebugLines();
-                mDebugRayLine->addLine (rayTo.getOrigin(), pickPos);
-                mDebugRayLine->draw();	
-            }
-            
-            return true;
-        }
-            
-
-        case OIS::MB_Right:
-        {
-            break;
-        }
-            
-        default:
-        {
-            //std::cout << "Unknown mouse button pressed " << buttonID << std::endl;
-            break;
-        }
-    }
-    
-    return VSC::OB::InputListener::mouseButtonPressed(renderWindow, position, buttonID);
-}
-
-bool VSC::OB::Scene::mouseButtonReleased(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
-{
-    
-    if (mTraceUI) std::cout << "VSC::OB::Scene mouseButtonReleased : " << position << " (" << buttonID << ")" << std::endl;
-    
-    switch (buttonID) 
-    {
-        case OIS::MB_Left:
-        {
-            if (mPickConstraint)
-            {
-                // was dragging, but button released
-                // Remove constraint
-                mWorld->removeConstraint(mPickConstraint);
-                delete mPickConstraint;
-                
-                mPickConstraint = 0;
-                mPickedBody->forceActivationState();
-                mPickedBody->setDeactivationTime( 0.f );
-                mPickedBody = 0;	
-                
-                getDebugLines();
-                mDebugRayLine->addLine (Ogre::Vector3::ZERO, Ogre::Vector3::ZERO);	
-                mDebugRayLine->draw();  
-                mGuiListener->showMouse(); 
-            }
-            
-            return true;
-        }
-            
-        case OIS::MB_Middle:
-        {
-            return true; // middle button is handled by scene for shooting
-        }
-            
-        case OIS::MB_Right:
-        {
-            break;
-        }
-            
-        default:
-        {
-            std::cout << "Unknown mouse button released " << buttonID << std::endl;
-            break;
-        }
-    }
-    
-    return VSC::OB::InputListener::mouseButtonReleased(renderWindow, position, buttonID);
-}
-
-
-
-// -------------------------------------------------------------------------
-bool VSC::OB::Scene::mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement)
-{
-    if (mTraceUI) std::cout << "VSC::OB::Scene::mouseMoved position: " << position << ", movement: " << movement << "" << std::endl;
-    
-    if (this->getInputAdapter()->isMouseButtonPressed(OIS::MB_Left))
-    {
-        if (mPickConstraint)
-        {
-            if (mTraceUI) std::cout << "VSC::OB::Scene::mouseMoved Left button is pressed and constraint exists" << std::endl;
-            
-            Ogre::Viewport* viewport = mCamera->getViewport();
-            float normX = position.x / (float) viewport->getActualWidth();
-            float normY = 1.0 - (position.y / (float) viewport->getActualHeight());
-            
-            Ogre::Ray rayTo = mCamera->getCameraToViewportRay (normX, normY);
-            
-            //move the constraint pivot
-            OgreBulletDynamics::PointToPointConstraint * p2p = static_cast <OgreBulletDynamics::PointToPointConstraint *>(mPickConstraint);
-            
-            //keep it at the same picking distance
-            const Ogre::Vector3 eyePos(mCamera->getDerivedPosition());
-            Ogre::Vector3 dir = rayTo.getDirection () * mOldPickingDist;
-
-            const Ogre::Vector3 newPos (eyePos + dir);
-            p2p->setPivotB (newPos);    
-
-            setDebugText ("Dragging");
-
-            getDebugLines();
-            mDebugRayLine->addLine (mPickedBody->getWorldPosition (), newPos);
-            mDebugRayLine->draw();
-            
-        }
-        
-        else
-        {
-            if (mTraceUI) std::cout << "VSC::OB::Scene::mouseMoved Left button is pressed and constraint does not exists" << std::endl;
-        }
-        
-        return true;
-    }
-
-    return VSC::OB::InputListener::mouseMoved(renderWindow, position, movement);
-
-    /*
-    
-    if (mGuiListener->getGui()->injectMouse(position.x * mWindow->getWidth(), position.y * mWindow->getHeight(), 
-                                            this->getMouseAdapter()->isMouseButtonPressed(OIS::MB_Left)))
-    {
-        //mGuiListener->hideMouse();
-    }
-    
-    else 
-    {
-        //mGuiListener->showMouse();
-    }
-     
-     */
-
-}
-
-
-bool VSC::OB::Scene::mouseEntered(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position)
-{
-    if (mTraceUI) std::cout << "VSC::OB::Scene mouse entered " << position << std::endl;
-    
-    return false;
-}
-
-bool VSC::OB::Scene::mouseExited(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position)
-{
-    if (mTraceUI)  std::cout << "VSC::OB::Scene mouse exited " << position << std::endl;
-    
-    return false;
-}
-
-// -------------------------------------------------------------------------
-bool VSC::OB::Scene::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
-{
-    
-    if (mTraceUI) std::cout << "VSC::OB::Scene got key pressed code: " << key << std::endl; 
-    
-    static int count = 0;
-    // Scene Debug Options
-    
-    OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
-    VSC::Keyboard::Combination comb(key, modifier);
-    
-    bool handled = true;
-    
-    const VSC::OB::KeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
-    
-    BOOST_FOREACH (VSC::OB::KeyboardAction::Key actionKey, actionKeySet) 
-    {
-        switch(actionKey)
-        {
-            // Application Utils
-            
-            case VSC::OB::KeyboardAction::Quit:
-                mQuit = true;
-                break;
-                
-            case VSC::OB::KeyboardAction::SaveScreenShot:
-                mWindow->writeContentsToFile("OgreBulletScreenShot"+StringConverter::toString(count++)+".png");
-                break;
-                
-            // Scene Debug Options
-                
-            case VSC::OB::KeyboardAction::ToggleDisplayWireFrame:
-                mWireFrame = !mWireFrame;
-                if (mTraceUI) std::cout << "Wireframe is " << (mWireFrame ? "on" : "off") << std::endl;
-                break;
-            case VSC::OB::KeyboardAction::ToggleDisplayAABB:
-                mDrawAabb = !mDrawAabb;
-                if (mTraceUI) std::cout << "Draw AABB is " << (mDrawAabb ? "on" : "off") << std::endl;
-                break;
-            case VSC::OB::KeyboardAction::ToggleFeaturesText:
-                mDrawFeaturesText = !mDrawFeaturesText;
-                if (mTraceUI) std::cout << "Draw Features Text is " << (mDrawFeaturesText ? "on" : "off") << std::endl;
-                break;
-            case VSC::OB::KeyboardAction::ToggleDisplayContactPoints:
-                mDrawContactPoints = !mDrawContactPoints;
-                if (mTraceUI) std::cout << "Draw contact points is " << (mDrawContactPoints ? "on" : "off") << std::endl;
-                break;
-            case VSC::OB::KeyboardAction::ToggleDeactivation:
-                mNoDeactivation = !mNoDeactivation;
-                if (mTraceUI) std::cout << "No deactivation is " << (mNoDeactivation ? "on" : "off") << std::endl;
-                break;
-            case VSC::OB::KeyboardAction::ToggleHelpText:
-                mNoHelpText = !mNoHelpText;
-                if (mTraceUI) std::cout << "No help text is " << (mNoHelpText ? "on" : "off") << std::endl;
-                break;
-            case VSC::OB::KeyboardAction::ToggleDrawText:
-                mDrawText = !mDrawText;
-                if (mTraceUI) std::cout << "Draw text is " << (mDrawText ? "on" : "off") << std::endl;
-                break;
-            case VSC::OB::KeyboardAction::ToggleProfileTimings:
-                mProfileTimings = !mProfileTimings;
-                if (mTraceUI) std::cout << "Profile timings is " << (mProfileTimings ? "on" : "off") << std::endl;
-                break;
-            case VSC::OB::KeyboardAction::ToggleSatComparison:
-                mEnableSatComparison = !mEnableSatComparison;
-                if (mTraceUI) std::cout << "Enable sat comparison is " << (mEnableSatComparison ? "on" : "off") << std::endl;
-                break;
-            case VSC::OB::KeyboardAction::ToggleBulletLCP:
-                mDisableBulletLCP = !mDisableBulletLCP;
-                if (mTraceUI) std::cout << "Disable bullet LCP is " << (mDisableBulletLCP ? "on" : "off") << std::endl;
-                break;
-            case VSC::OB::KeyboardAction::ToggleCCD:
-                mEnableCCD = !mEnableCCD;
-                if (mTraceUI) std::cout << "Enable CCD is " << (mEnableCCD ? "on" : "off") << std::endl;
-                break;
-                
-                // pause
-            case VSC::OB::KeyboardAction::ToggleSimulationPause:
-                mPaused = !mPaused;
-                if (mTraceUI) std::cout << "Paused is " << (mPaused ? "on" : "off") << std::endl;
-                break;
-                // single step
-            case VSC::OB::KeyboardAction::SimulationStep:
-                mDoOnestep = !mDoOnestep;
-                if (mTraceUI) std::cout << "Do one step is " << (mDoOnestep ? "on" : "off") << std::endl;
-                break;
-                // faster Shoots
-            case VSC::OB::KeyboardAction::IncrementShootSpeed:
-                mShootSpeed += 5.0f;
-                if (mTraceUI) std::cout << "Shoot speed is " << mShootSpeed << std::endl;
-                break;
-                // Slower Shoots
-            case VSC::OB::KeyboardAction::DecrementShootSpeed:
-                mShootSpeed -= 5.0f;
-                if (mTraceUI) std::cout << "Shoot speed is " << mShootSpeed << std::endl;
-                break;
-                
-            default:
-                handled = false;
-                break;
-        }
-    }
-    
-    if (handled) return true;
-    
-    return VSC::OB::InputListener::keyPressed(renderWindow, key);
-}
-
-// -------------------------------------------------------------------------
-bool VSC::OB::Scene::keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
-{
-    return VSC::OB::InputListener::keyReleased(renderWindow, key);
-}
 
 bool VSC::OB::Scene::renderWindowChangedSize(Ogre::RenderWindow* renderWindow)
 {
@@ -974,12 +446,12 @@ bool VSC::OB::Scene::frameEnded(Real elapsedTime)
     DebugDrawer *debugDrawer = mWorld->getDebugDrawer();
 
     // Scene Debug Options
-    if (mWireFrame)
+    if (mDrawWireFrame)
     {
         const bool wasWireframeShapes = debugDrawer->doesDrawWireframe();
         debugDrawer->setDrawWireframe(!wasWireframeShapes);
         mWorld->setShowDebugShapes(!wasWireframeShapes);
-        mWireFrame = false;
+        mDrawWireFrame = false;
     }
     if (mDrawAabb) 
     {

@@ -1,8 +1,9 @@
 
-#ifndef _VSC_OGRE_BULLET_OBJECT_FACTORY_H_
-#define _VSC_OGRE_BULLET_OBJECT_FACTORY_H_
+#ifndef _VSC_OGRE_BULLET_BASE_SCENE_FACTORY_H_
+#define _VSC_OGRE_BULLET_BASE_SCENE_FACTORY_H_
 
-#include "VSCOBObject.h"
+#include "VSCOBScene.h"
+#include "VSCOBDynamicObject.h"
 
 #include "OgreBulletDynamics.h"
 #include "OgreBulletCollisions.h"
@@ -15,23 +16,17 @@ namespace VSC {
     
     namespace OB {
 
-        class ObjectFactory {
+        class BaseElementFactory : public Scene::ElementFactory {
             
         public:
             
-            ObjectFactory(OgreBulletDynamics::DynamicsWorld* world);
+            BaseElementFactory(Scene::WPtr scene);
             
-            Object::SPtr addPrimitive(Object::PrimitiveType primitiveType,
-                                      const Ogre::String instanceName,
-                                      const Ogre::Vector3 &pos,
-                                      const Ogre::Quaternion &q,
-                                      const Ogre::Vector3 &size,
-                                      const Ogre::Real bodyMass,
-                                      const Ogre::Real bodyFriction,
-                                      const Ogre::Real bodyRestitution);
+            DynamicObject::SPtr addPrimitive(VSC::OB::PrimitiveType primitiveType,
+                                             const DynamicObject::FactoryDespription& description);
             
             
-            
+            /*
             Object::SPtr addStaticTrimesh(const Ogre::String &instanceName,
                                           const Ogre::String &meshName,
                                           const Ogre::Vector3 &pos,
@@ -39,6 +34,7 @@ namespace VSC {
                                           const Ogre::Real bodyRestitution,
                                           const Ogre::Real bodyFriction,
                                           const bool castShadow = true);
+             */
             
             Object::SPtr addStaticPlane(const Ogre::Real bodyRestitution,
                                         const Ogre::Real bodyFriction);
@@ -46,9 +42,6 @@ namespace VSC {
             
             
         private:
-            
-            OgreBulletDynamics::DynamicsWorld*  mWorld;
-            Ogre::String                        mDefaultMaterialName;
             
             static int                          mNumberOfObjectsCreated;
             
@@ -58,5 +51,5 @@ namespace VSC {
     }
 }
 
-#endif //_VSC_OGRE_BULLET_OBJECT_FACTORY_H_
+#endif //_VSC_OGRE_BULLET_BASE_SCENE_FACTORY_H_
 

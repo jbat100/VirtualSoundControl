@@ -1,0 +1,121 @@
+
+#ifndef _VSC_OGRE_BULLET_SCENE_H_
+#define _VSC_OGRE_BULLET_SCENE_H_
+
+#include "OgreBulletDynamics.h"
+#include "VSCOBInputListener.h"
+#include "VSCOBKeyBindings.h"
+#include "VSCOBScene.h"
+#include "OIS.h"
+
+#include <boost/shared_ptr.hpp>
+
+
+namespace VSC {
+    
+    namespace OB {
+
+        /**
+         *  Used to translate user input to scene actions.
+         */
+         
+        class SceneController : public VSC::OB::InputListener, public VSC::OB::KeyBound
+        {
+        public:
+
+            /**--------------------------------------------------------------
+             *  Constructor/Destructor
+             */
+            SceneController();
+            virtual ~SceneController(){};
+
+            /**--------------------------------------------------------------
+             *  Ogre Frame Listener Forwarded messages from Application 
+             */
+            virtual bool frameStarted(Ogre::Real elapsedTime);
+            virtual bool frameEnded(Ogre::Real elapsedTime);
+
+            /**--------------------------------------------------------------
+             *  Dynamic actions
+             */
+            bool throwDynamicObject(KeyboardAction::Key key);  // returns true if something happened
+            bool dropDynamicObject(KeyboardAction::Key key);   // returns true if something happened
+            
+            /**--------------------------------------------------------------
+             *  Input listener callback overrides
+             */
+            virtual bool mouseButtonPressed(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
+            virtual bool mouseButtonReleased(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
+            virtual bool mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement);
+            virtual bool mouseEntered(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position);
+            virtual bool mouseExited(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position);
+            virtual bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+            virtual bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+            virtual bool renderWindowChangedSize(Ogre::RenderWindow* renderWindow);
+            
+            /**--------------------------------------------------------------
+             *  Scene Setter/Getter
+             */
+            
+            Scene::SPtr getScene(void);
+            void setScene(Scene::SPtr scene);
+            
+            /**--------------------------------------------------------------
+             *  Actions Setter/Getter
+             */
+            
+            float getShootSpeed(void);
+            void setShootSpeed(float speed);
+            
+            float getImpulseForce(void);
+            void setImplulseForce(float force);
+            
+        protected:
+            
+            /**--------------------------------------------------------------
+             *   Mouse picking Setters/Getters
+             */
+            
+            OgreBulletDynamics::RigidBody* getPickedBody(void);
+            void setPickedBody(OgreBulletDynamics::RigidBody* body);
+            
+            OgreBulletDynamics::TypedConstraint* getTypedConstraint(void);
+            void setTypedConstraint(OgreBulletDynamics::TypedConstraint* constraint);
+            
+            Ogre::Vector3 getOldPickingPosition(void);
+            void setOldPickingPosition(Ogre::Vector3 position);
+            
+            Ogre::Real getOldPickingDistance(void);
+            void setOldPickingDistance(Ogre::Real distance);
+            
+            OgreBulletCollisions::CollisionClosestRayResultCallback* getCollisionClosestRayResultCallback(void);
+            void setCollisionClosestRayResultCallback(OgreBulletCollisions::CollisionClosestRayResultCallback* callback);
+            
+        private:
+            
+            Scene::SPtr mScene;
+            
+            /**
+             *   Mouse picking, drag and drop
+             */
+            
+            OgreBulletDynamics::RigidBody                               *mPickedBody;
+            OgreBulletDynamics::TypedConstraint                         *mPickConstraint;
+            Ogre::Vector3                                               mOldPickingPosition;
+            Ogre::Real                                                  mOldPickingDistance;
+            OgreBulletCollisions::CollisionClosestRayResultCallback     *mCollisionClosestRayResultCallback;
+            Ogre::RaySceneQuery                                         *mRayQuery;
+            
+            float mShootSpeed;
+            float mImpulseForce;
+            
+            const static bool mTraceUI = true;
+            const static bool mTraceFrame = false;
+            
+        };
+        
+    }
+}
+
+#endif //_VSC_OGRE_BULLET_SCENE_H_
+

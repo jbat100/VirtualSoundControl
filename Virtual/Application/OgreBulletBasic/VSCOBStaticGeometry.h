@@ -2,6 +2,8 @@
 #ifndef _VSC_OGRE_BULLET_STATIC_GEOMETRY_H_
 #define _VSC_OGRE_BULLET_STATIC_GEOMETRY_H_
 
+#include "VSCOBScene.h"
+
 #include "OgreBulletDynamics.h"
 #include "OgreBulletCollisions.h"
 
@@ -18,18 +20,19 @@ namespace VSC {
          *  More of a container than a class...
          */
             
-        class StaticGeometry {
+        class StaticGeometry : public Scene::Element {
             
         public:
             
-            typedef boost::shared_ptr<StaticGeometry> SPtr;
+            typedef boost::shared_ptr<StaticGeometry>   SPtr;
+            typedef boost::weak_ptr<StaticGeometry>     WPtr;
             
             /*
              *  Constructor
              */
             
-            Object(Ogre::StaticGeometry* staticGeometry,
-                   OgreBulletDynamics::DynamicsWorld* world,
+            Object(Scene::WPtr scene,
+                   Ogre::StaticGeometry* staticGeometry,
                    OgreBulletDynamics::RigidBody* rigidBody,
                    OgreBulletCollisions::CollisionShape* collisionShape);
             
@@ -40,14 +43,12 @@ namespace VSC {
             Ogre::StaticGeometry*                   getGeometry(void);
             OgreBulletDynamics::RigidBody*          getRigidBody(void);
             OgreBulletCollisions::CollisionShape*   getCollisionShape(void);
-            OgreBulletDynamics::DynamicsWorld*      getWorld(void);
             
         private:
             
             Ogre::StaticGeometry*                   mStaticGeometry;
             OgreBulletDynamics::RigidBody*          mRigidBody;
             OgreBulletCollisions::CollisionShape*   mCollisionShape;
-            OgreBulletDynamics::DynamicsWorld*      mWorld;
         }
         
     }

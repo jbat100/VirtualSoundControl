@@ -17,6 +17,14 @@ namespace VSC {
             QueryMaskStaticGeometry         = 1<<4
         };
         
+        enum PrimitiveType {
+            PrimitiveNone = 0,
+            PrimitiveCube,
+            PrimitiveSphere,
+            PrimitiveCylinder,
+            PrimitiveCone
+        };
+        
     }
 }
 
