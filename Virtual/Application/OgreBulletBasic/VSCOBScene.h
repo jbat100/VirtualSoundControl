@@ -204,27 +204,35 @@ namespace VSC {
             
             bool isPaused(void) {return mPaused;}
             void pause(bool p) {mPaused = p;}
+            void togglePause(void) {mPaused = !mPaused;}
             
             bool drawingWireFrame(void) {return mDrawWireFrame;}
-            void drawWireFrame(bool draw) {mDrawWireFrame = draw;}
+            void drawWireFrame(bool draw);
+            void toggleDrawWireFrame(void) {drawWireFrame(!mDrawWireFrame);}
             
             bool drawingAabb(void) {return mDrawAabb;}
-            void drawAabb(bool draw) {mDrawAabb = draw;}
+            void drawAabb(bool draw);
+            void toggleDrawAabb(void) {mDrawAabb = !mDrawAabb;}
             
             bool drawingText(void) {return mDrawText;}
-            void drawText(bool draw) {mDrawText = draw;}
+            void drawText(bool draw);
+            void toggleDrawText(void) {mDrawText = !mDrawText;}
             
             bool drawingFeaturesText(void) {return mDrawFeaturesText;}
-            void drawFeaturesText(bool draw) {mDrawFeaturesText = draw;}
+            void drawFeaturesText(bool draw);
+            void toggleDrawFeaturesText(void) {mDrawFeaturesText = !mDrawFeaturesText;}
             
             bool drawingContactPoints(void) {return mDrawContactPoints;}
-            void drawContactPoints(bool draw) {mDrawContactPoints = draw;}
+            void drawContactPoints(bool draw);
+            void toggleDrawContactPoints(void) {mDrawContactPoints = !mDrawContactPoints;}
             
             bool bulletLCPIsEnabled(void) {return !mDisableBulletLCP;}
-            void enableBulletLCP(bool enable) {mDisableBulletLCP = !enable;}
+            void enableBulletLCP(bool enable);
+            void toggleBulletLCP(void) {mDisableBulletLCP = !mDisableBulletLCP;}
             
             bool ccdIsEnabled(void) {return mEnableCCD;}
-            void enableCCD(bool enable) {mEnableCCD = enable;}
+            void enableCCD(bool enable);
+            void toggleCCD(void) {mEnableCCD = !mEnableCCD;}
             
         protected:
             

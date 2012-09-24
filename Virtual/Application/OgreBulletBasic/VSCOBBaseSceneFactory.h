@@ -23,6 +23,8 @@ namespace VSC {
             
         public:
             
+            typedef boost::shared_ptr<BaseElementFactory> SPtr;
+            
             BaseElementFactory(Scene::WPtr scene);
             
             DynamicObject::WPtr addPrimitive(VSC::OB::PrimitiveType primitiveType,

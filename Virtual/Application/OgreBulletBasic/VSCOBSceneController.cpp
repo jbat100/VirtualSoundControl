@@ -18,6 +18,7 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "VSCOBCameraController.h"
 #include "VSCOBInputAdapter.h"
 #include "VSCOBKeyboardAction.h"
+#include "VSCOBDynamicObject.h"
 
 /*
  *  OgreBullet Shapes
@@ -151,7 +152,7 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
             
             if (element)
             {
-                if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed Left button, detected body" << std::endl;
+                if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed Left button, detected element" << std::endl;
                 
                 OgreBulletDynamics::RigidBody* body = element->getRigidBody();
                 
@@ -181,15 +182,14 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
                     
                 }
                 
-                scene->getDebugLines();
-                mDebugRayLine->addLine(rayTo.getOrigin(), pickPos);
-                mDebugRayLine->draw();
+                scene->getDebugRayLines()->addLine(rayTo.getOrigin(), pickPos);
+                scene->getDebugRayLines()->draw();
                 
             }
             
             else
             {
-                if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed Left button, detected no body" << std::endl;
+                if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed Left button, detected no element" << std::endl;
             }
             
             return true;
@@ -203,10 +203,20 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
             Ogre::Vector3 pickPos;
             Ogre::Ray rayTo;
             
-            OgreBulletDynamics::RigidBody * body = getBodyUnderCursorUsingBullet(pickPos, rayTo);
+            /*
+             *  Note this does not take into account the fact that one render window can contain multiple viewports
+             *  and happily converts renderWindow coord to viewport coord directly.
+             */
             
-            if (body)
-            {  
+            Scene::Element::WPtr e = scene->getElementAtViewportCoordinate(viewport, position, pickPos, rayTo);
+            Scene::Element::SPtr element = e.lock();
+            
+            if (element)
+            {
+                if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed Left button, detected element" << std::endl;
+                
+                OgreBulletDynamics::RigidBody* body = element->getRigidBody();
+                
                 if (!(body->isStaticObject() || body->isKinematicObject()))
                 {
                     
@@ -219,9 +229,8 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
                     
                 }
                 
-                scene->getDebugLines();
-                mDebugRayLine->addLine (rayTo.getOrigin(), pickPos);
-                mDebugRayLine->draw();	
+                scene->getDebugRayLines()->addLine (rayTo.getOrigin(), pickPos);
+                scene->getDebugRayLines()->draw();	
             }
             
             return true;
@@ -243,10 +252,12 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
     return VSC::OB::InputListener::mouseButtonPressed(renderWindow, position, buttonID);
 }
 
-bool VSC::OB::Scene::mouseButtonReleased(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
+bool VSC::OB::SceneController::mouseButtonReleased(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
     
     if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonReleased : " << position << " (" << buttonID << ")" << std::endl;
+    
+    Scene::SPtr scene = this->getScene().lock();
     
     switch (buttonID) 
     {
@@ -256,7 +267,7 @@ bool VSC::OB::Scene::mouseButtonReleased(Ogre::RenderWindow* renderWindow, const
             {
                 // was dragging, but button released
                 // Remove constraint
-                mWorld->removeConstraint(mPickConstraint);
+                scene->getDynamicsWorld()->removeConstraint(mPickConstraint);
                 delete mPickConstraint;
                 
                 mPickConstraint = 0;
@@ -264,10 +275,8 @@ bool VSC::OB::Scene::mouseButtonReleased(Ogre::RenderWindow* renderWindow, const
                 mPickedBody->setDeactivationTime( 0.f );
                 mPickedBody = 0;	
                 
-                getDebugLines();
-                mDebugRayLine->addLine (Ogre::Vector3::ZERO, Ogre::Vector3::ZERO);	
-                mDebugRayLine->draw();  
-                mGuiListener->showMouse(); 
+                scene->getDebugRayLines()->addLine (Ogre::Vector3::ZERO, Ogre::Vector3::ZERO);	
+                scene->getDebugRayLines()->draw();  
             }
             
             return true;
@@ -300,33 +309,32 @@ bool VSC::OB::SceneController::mouseMoved(Ogre::RenderWindow* renderWindow, cons
 {
     if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseMoved position: " << position << ", movement: " << movement << "" << std::endl;
     
+    Scene::SPtr scene = this->getScene().lock();
+    
     if (this->getInputAdapter()->isMouseButtonPressed(OIS::MB_Left))
     {
         if (mPickConstraint)
         {
             if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseMoved Left button is pressed and constraint exists" << std::endl;
             
-            Ogre::Viewport* viewport = mCamera->getViewport();
+            Ogre::Viewport* viewport = scene->getCamera()->getViewport();
             float normX = position.x / (float) viewport->getActualWidth();
             float normY = 1.0 - (position.y / (float) viewport->getActualHeight());
             
-            Ogre::Ray rayTo = mCamera->getCameraToViewportRay (normX, normY);
+            Ogre::Ray rayTo = scene->getCamera()->getCameraToViewportRay (normX, normY);
             
             //move the constraint pivot
             OgreBulletDynamics::PointToPointConstraint * p2p = static_cast <OgreBulletDynamics::PointToPointConstraint *>(mPickConstraint);
             
             //keep it at the same picking distance
-            const Ogre::Vector3 eyePos(mCamera->getDerivedPosition());
+            const Ogre::Vector3 eyePos(scene->getCamera()->getDerivedPosition());
             Ogre::Vector3 dir = rayTo.getDirection () * mOldPickingDist;
 
             const Ogre::Vector3 newPos (eyePos + dir);
             p2p->setPivotB (newPos);    
 
-            setDebugText ("Dragging");
-
-            getDebugLines();
-            mDebugRayLine->addLine (mPickedBody->getWorldPosition (), newPos);
-            mDebugRayLine->draw();
+            scene->getDebugRayLines()->addLine (mPickedBody->getWorldPosition (), newPos);
+            scene->getDebugRayLines()->draw();
             
         }
         
@@ -364,7 +372,8 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
     if (mTraceUI) std::cout << "VSC::OB::SceneController got key pressed code: " << key << std::endl; 
     
     static int count = 0;
-    // Scene Debug Options
+    
+    Scene::SPtr scene = this->getScene().lock();
     
     OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
     VSC::Keyboard::Combination comb(key, modifier);
@@ -377,37 +386,34 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
     {
         switch(actionKey)
         {
-            // Application Utils
-            
-            case VSC::OB::KeyboardAction::Quit:
-                mQuit = true;
-                break;
                 
             case VSC::OB::KeyboardAction::SaveScreenShot:
-                mWindow->writeContentsToFile("OgreBulletScreenShot"+StringConverter::toString(count++)+".png");
+                scene->getRenderWindow()->writeContentsToFile("OgreBulletScreenShot" + StringConverter::toString(count++) + ".png");
                 break;
                 
             // Scene Debug Options
                 
             case VSC::OB::KeyboardAction::ToggleDisplayWireFrame:
-                mDrawWireFrame = !mDrawWireFrame;
-                if (mTraceUI) std::cout << "Wireframe is " << (mDrawWireFrame ? "on" : "off") << std::endl;
+                scene->toggleDrawWireFrame();
+                if (mTraceUI) std::cout << "Wireframe is " << (scene->drawingWireFrame() ? "on" : "off") << std::endl;
                 break;
                 
             case VSC::OB::KeyboardAction::ToggleDisplayAABB:
-                mDrawAabb = !mDrawAabb;
-                if (mTraceUI) std::cout << "Draw AABB is " << (mDrawAabb ? "on" : "off") << std::endl;
+                scene->toggleDrawAabb();
+                if (mTraceUI) std::cout << "Draw AABB is " << (scene->drawingAabb() ? "on" : "off") << std::endl;
                 break;
                 
             case VSC::OB::KeyboardAction::ToggleFeaturesText:
-                mDrawFeaturesText = !mDrawFeaturesText;
-                if (mTraceUI) std::cout << "Draw Features Text is " << (mDrawFeaturesText ? "on" : "off") << std::endl;
+                scene->toggleDrawFeaturesText();
+                if (mTraceUI) std::cout << "Draw Features Text is " << (scene->drawingFeaturesText ? "on" : "off") << std::endl;
                 break;
                 
             case VSC::OB::KeyboardAction::ToggleDisplayContactPoints:
-                mDrawContactPoints = !mDrawContactPoints;
+                scene->toggleDrawContactPoints = !mDrawContactPoints;
                 if (mTraceUI) std::cout << "Draw contact points is " << (mDrawContactPoints ? "on" : "off") << std::endl;
                 break;
+                
+                /*
                 
             case VSC::OB::KeyboardAction::ToggleDeactivation:
                 mNoDeactivation = !mNoDeactivation;
@@ -418,11 +424,15 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
                 mNoHelpText = !mNoHelpText;
                 if (mTraceUI) std::cout << "No help text is " << (mNoHelpText ? "on" : "off") << std::endl;
                 break;
+                 
+                 */
                 
             case VSC::OB::KeyboardAction::ToggleDrawText:
-                mDrawText = !mDrawText;
-                if (mTraceUI) std::cout << "Draw text is " << (mDrawText ? "on" : "off") << std::endl;
+                scene->toggleDrawText();
+                if (mTraceUI) std::cout << "Draw text is " << (scene->drawingText() ? "on" : "off") << std::endl;
                 break;
+                
+                /*
                 
             case VSC::OB::KeyboardAction::ToggleProfileTimings:
                 mProfileTimings = !mProfileTimings;
@@ -433,27 +443,29 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
                 mEnableSatComparison = !mEnableSatComparison;
                 if (mTraceUI) std::cout << "Enable sat comparison is " << (mEnableSatComparison ? "on" : "off") << std::endl;
                 break;
+                 
+                 */
                 
             case VSC::OB::KeyboardAction::ToggleBulletLCP:
-                mDisableBulletLCP = !mDisableBulletLCP;
-                if (mTraceUI) std::cout << "Disable bullet LCP is " << (mDisableBulletLCP ? "on" : "off") << std::endl;
+                scene->toggleBulletLCP();
+                if (mTraceUI) std::cout << "Disable bullet LCP is " << (scene->bulletLCPIsEnabled() ? "on" : "off") << std::endl;
                 break;
                 
             case VSC::OB::KeyboardAction::ToggleCCD:
-                mEnableCCD = !mEnableCCD;
-                if (mTraceUI) std::cout << "Enable CCD is " << (mEnableCCD ? "on" : "off") << std::endl;
+                scene->toggleCCD();
+                if (mTraceUI) std::cout << "Enable CCD is " << (scene->ccdIsEnabled() ? "on" : "off") << std::endl;
                 break;
                 
                 // pause
             case VSC::OB::KeyboardAction::ToggleSimulationPause:
-                mPaused = !mPaused;
-                if (mTraceUI) std::cout << "Paused is " << (mPaused ? "on" : "off") << std::endl;
+                scene->togglePaused();
+                if (mTraceUI) std::cout << "Paused is " << (scene->isPaused() ? "on" : "off") << std::endl;
                 break;
                 
                 // single step
             case VSC::OB::KeyboardAction::SimulationStep:
-                mDoOnestep = !mDoOnestep;
-                if (mTraceUI) std::cout << "Do one step is " << (mDoOnestep ? "on" : "off") << std::endl;
+                scene->doOneStep();;
+                if (mTraceUI) std::cout << "Doing one step" << std::endl;
                 break;
                 
                 // faster Shoots
@@ -466,6 +478,26 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
             case VSC::OB::KeyboardAction::DecrementShootSpeed:
                 mShootSpeed -= 5.0f;
                 if (mTraceUI) std::cout << "Shoot speed is " << mShootSpeed << std::endl;
+                break;
+                
+            case VSC::OB::KeyboardAction::ShootCube:
+                this->throwDynamicObjectPrimitive(VSC::OB::PrimitiveCube,
+                                                  scene->getCamera()->getDerivedDirection().normalisedCopy()*mShootSpeed);
+                break;
+                
+            case VSC::OB::KeyboardAction::ShootSphere:
+                this->throwDynamicObjectPrimitive(VSC::OB::PrimitiveSphere,
+                                                  scene->getCamera()->getDerivedDirection().normalisedCopy()*mShootSpeed);
+                break;
+                
+            case VSC::OB::KeyboardAction::ShootCylinder:
+                this->throwDynamicObjectPrimitive(VSC::OB::PrimitiveCylinder,
+                                                  scene->getCamera()->getDerivedDirection().normalisedCopy()*mShootSpeed);
+                break;
+                
+            case VSC::OB::KeyboardAction::ShootCone:
+                this->throwDynamicObjectPrimitive(VSC::OB::PrimitiveCone,
+                                                  scene->getCamera()->getDerivedDirection().normalisedCopy()*mShootSpeed);
                 break;
                 
             default:
@@ -499,63 +531,52 @@ bool VSC::OB::SceneController::renderWindowChangedSize(Ogre::RenderWindow* rende
 }
 
 // -------------------------------------------------------------------------
-bool VSC::OB::Scene::throwDynamicObject(VSC::OB::KeyboardAction::Key key)
+void VSC::OB::SceneController::throwDynamicObjectPrimitive(VSC::OB::PrimitiveType primitiveType, const Ogre::Vector3& velocity)
 {
-    const float trowDist = 2.0f;
+    
+    const float throwDist = 2.0f;
+    
+    if (this->checkIfEnoughPlaceToAddObject(throwDist) == false)
+    {
+        // TODO throw exception ?
+        return false;
+    }
     
     bool handled = true;
     
-    switch(key)
+    Scene::SPtr scene = this->getScene().lock();
+    
+    BaseSceneFactory::SPtr sceneFactory = boost::dynamic_pointer_cast<BaseSceneFactory> scene->getElementFactory();
+    
+    VSC::OB::DynamicObject::FactoryDescription description;
+    description.position = scene->getCamera()->getDerivedPosition();
+    
+    VSC::OB::DynamicObject::WPtr object;
+    
+    switch(primitiveType)
     {
-        case VSC::OB::KeyboardAction::ShootCube: 
-            
-            if (this->checkIfEnoughPlaceToAddObject(trowDist))
-            {
-                const Ogre::Vector3 vec (mCamera->getDerivedPosition());
-                OgreBulletDynamics::RigidBody *body = addCube("cube", vec, Quaternion(0,0,0,1), 
-                                                              gCubeBodyBounds, gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
-                
-                body->setLinearVelocity(mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed);
-            }
+        case VSC::OB::PrimitiveCube:            
+            description.name = "Cube";
+            description.size = gCubeBodyBounds;
+            object = sceneFactory->addPrimitive(VSC::OB::PrimitiveCube, description);
             break;
             
         case VSC::OB::KeyboardAction::ShootSphere: 
-            
-            if (this->checkIfEnoughPlaceToAddObject(trowDist))
-            {
-                const Ogre::Vector3 vec (mCamera->getDerivedPosition());
-                OgreBulletDynamics::RigidBody *body = addSphere("sphere", vec, Quaternion(0,0,0,1), 
-                                                                gSphereBodyBounds, 
-                                                                gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
-                
-                body->setLinearVelocity(mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed);
-            }
+            description.name = "Sphere";
+            description.size = gSphereBodyBounds;
+            object = sceneFactory->addPrimitive(VSC::OB::PrimitiveSphere, description);
             break;
             
         case VSC::OB::KeyboardAction::ShootCylinder: 
-            
-            if (this->checkIfEnoughPlaceToAddObject(trowDist))
-            {
-                const Ogre::Vector3 vec (mCamera->getDerivedPosition());
-                OgreBulletDynamics::RigidBody *body = addCylinder("cylinder", vec, Quaternion(0,0,0,1), 
-                                                                  gCylinderBodyBounds, 
-                                                                  gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
-                
-                body->setLinearVelocity(mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed);
-            }
+            description.name = "Cylinder";
+            description.size = gCylinderBodyBounds;
+            object = sceneFactory->addPrimitive(VSC::OB::PrimitiveCylinder, description);
             break;
             
         case VSC::OB::KeyboardAction::ShootCone: 
-            
-            if (this->checkIfEnoughPlaceToAddObject(trowDist))
-            {
-                const Ogre::Vector3 vec (mCamera->getDerivedPosition());
-                OgreBulletDynamics::RigidBody *body = addCone("cone", vec, Quaternion(0,0,0,1), 
-                                                              gConeBodyBounds, 
-                                                              gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
-                
-                body->setLinearVelocity(mCamera->getDerivedDirection().normalisedCopy() * mShootSpeed);
-            }
+            description.name = "Cone";
+            description.size = gConeBodyBounds;
+            object = sceneFactory->addPrimitive(VSC::OB::PrimitiveCylinder, description);
             break;
             
         default:
@@ -563,76 +584,14 @@ bool VSC::OB::Scene::throwDynamicObject(VSC::OB::KeyboardAction::Key key)
             break;
     }
     
-    return handled;
-}
-
-// -------------------------------------------------------------------------
-bool VSC::OB::Scene::dropDynamicObject(VSC::OB::KeyboardAction::Key key)
-{
-    const float dropDist = 10.0f;
+    VSC::OB::DynamicObject::SPtr sObject = object.lock();
     
-    bool handled = true;
-    
-    switch(key)
+    if (sObject)
     {
-        case VSC::OB::KeyboardAction::DropCube: 
-            
-            if (this->checkIfEnoughPlaceToAddObject(dropDist))
-            {
-                const Ogre::Vector3 vec (mCamera->getDerivedPosition());
-                OgreBulletDynamics::RigidBody *body = addCube("cube", 
-                                                              vec + mCamera->getDerivedDirection().normalisedCopy() * 10, 
-                                                              Quaternion(0,0,0,1), 
-                                                              gCubeBodyBounds, gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
-                
-            }
-            break;
-            
-        case VSC::OB::KeyboardAction::DropSphere: 
-            
-            if (this->checkIfEnoughPlaceToAddObject(dropDist))
-            {
-                const Ogre::Vector3 vec (mCamera->getDerivedPosition());
-                OgreBulletDynamics::RigidBody *body = addSphere("sphere", 
-                                                                vec + mCamera->getDerivedDirection().normalisedCopy() * 10, 
-                                                                Quaternion(0,0,0,1), 
-                                                                gSphereBodyBounds, 
-                                                                gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
-                
-            }
-            break;
-            
-        case VSC::OB::KeyboardAction::DropCylinder : 
-            
-            if (this->checkIfEnoughPlaceToAddObject(dropDist))
-            {
-                const Ogre::Vector3 vec (mCamera->getDerivedPosition());
-                OgreBulletDynamics::RigidBody *body = addCylinder("Cylinder", vec, Quaternion(0,0,0,1), 
-                                                                  gCylinderBodyBounds, 
-                                                                  gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
-                
-            }
-            break;
-            
-        case VSC::OB::KeyboardAction::DropCone: 
-            
-            if (this->checkIfEnoughPlaceToAddObject(dropDist))
-            {
-                const Ogre::Vector3 vec (mCamera->getDerivedPosition());
-                OgreBulletDynamics::RigidBody *body = addCone("Cone", 
-                                                              vec + mCamera->getDerivedDirection().normalisedCopy() * 10, 
-                                                              Quaternion(0,0,0,1), 
-                                                              gConeBodyBounds, 
-                                                              gDynamicBodyRestitution, gDynamicBodyFriction, gDynamicBodyMass);
-            }
-            break;
-            
-        default:
-            handled = false;
-            break;
+        sObject->getRigidBody()->setLinearVelocity(velocity);
     }
-    
-    return handled;
 
 }
+
+
 

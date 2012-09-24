@@ -54,24 +54,9 @@ using namespace OIS;
  *  GLOBAL VARIABLES
  */
 
-size_t VSC::OB::Scene::mNumEntitiesInstanced = 0;
-
 // -------------------------------------------------------------------------
 const Ogre::ColourValue g_minLightColour(0.2, 0.1, 0.0);
 const Ogre::ColourValue g_maxLightColour(0.5, 0.3, 0.1);
-// -------------------------------------------------------------------------
-
-const float             gStaticBodyRestitution  = 0.1f;
-const float             gStaticBodyFriction     = 0.8f;
-
-const float             gDynamicBodyRestitution = 0.6f;
-const float             gDynamicBodyFriction    = 0.6f;
-const float             gDynamicBodyMass        = 1.0f;
-
-const Ogre::Vector3     gCubeBodyBounds      = Ogre::Vector3 (1, 1, 1);
-const Ogre::Vector3     gCylinderBodyBounds  = Ogre::Vector3 (0.5, 1, 0.5); 
-const Ogre::Vector3     gConeBodyBounds      = Ogre::Vector3 (1, 1, 1);
-const Real              gSphereBodyBounds    = 1.0f;
 // -------------------------------------------------------------------------
 
 void VSC::OB::Scene::Element::destroy()
@@ -154,7 +139,7 @@ mRoot(0),
 mSceneMgr(0),
 mWindow(0),
 mWorld(0),
-mPaused (false),
+mPaused(false),
 mDebugRayLine(0)
 {
 
@@ -298,7 +283,7 @@ void VSC::OB::Scene::setupLights()
 
 }
 
-void VSC::OB::Scene::getDebugLines()
+void VSC::OB::Scene::getDebugRayLines()
 {
     if (mDebugRayLine == 0)
     {
@@ -372,90 +357,97 @@ bool VSC::OB::Scene::frameStarted(Real elapsedTime)
     
     if (mTraceFrame) std::cout << "VSC::OB::Scene::frameStarted, elapsed time " << elapsedTime << std::endl;
     
-    if (mQuit)
-        return false;
-    
     this->getCameraController()->frameStarted(elapsedTime);
 
     // update physics
     if (!mPaused || mDoOnestep)
+    {
         mWorld->stepSimulation(elapsedTime);
+    }
+    
+    /*
+     *  This is were the serious shit is going to happen, tracking collisions and such
+     */
 
     mDoOnestep = false;
 
     return true;
 }
+
+void VSC::OB::Scene::drawWireFrame(bool draw)
+{
+    mDrawWireFrame = draw;
+    mWorld->getDebugDrawer()->setDrawWireframe(draw);
+    mWorld->setShowDebugShapes(draw);
+}
+
+void VSC::OB::Scene::drawAabb(bool draw)
+{
+    mDrawAabb = draw;
+    mWorld->getDebugDrawer()->setDrawAabb(draw);
+}
+
+void drawText(bool draw)
+{
+    mDrawText = draw;
+    mWorld->getDebugDrawer()->setDrawText(draw);
+}
+
+void drawFeaturesText(bool draw)
+{
+    mDrawFeaturesText = draw;
+    mWorld->getDebugDrawer()->setDrawFeaturesText(draw);
+}
+
+void drawContactPoints(bool draw)
+{
+    mDrawContactPoints = draw;
+    mWorld->getDebugDrawer()->setDrawContactPoints(draw);
+    mWorld->setShowDebugContactPoints(draw);
+}
+
+void enableBulletLCP(bool enable)
+{
+    mDisableBulletLCP = !enable;
+    mWorld->getDebugDrawer()->setDisableBulletLCP(mDisableBulletLCP);
+}
+
+void enableCCD(bool enable)
+{
+    mEnableCCD = enable;
+    mWorld->getDebugDrawer()->setEnableCCD(mEnableCCD);
+}
+
 // -------------------------------------------------------------------------
 bool VSC::OB::Scene::frameEnded(Real elapsedTime)
 {
     if (mTraceFrame) std::cout << "VSC::OB::Scene::frameEnded, elapsed time " << elapsedTime << std::endl;
-    
-    if (mQuit)
-        return false;
 
-    DebugDrawer *debugDrawer = mWorld->getDebugDrawer();
 
-    // Scene Debug Options
-    if (mDrawWireFrame)
-    {
-        const bool wasWireframeShapes = debugDrawer->doesDrawWireframe();
-        debugDrawer->setDrawWireframe(!wasWireframeShapes);
-        mWorld->setShowDebugShapes(!wasWireframeShapes);
-        mDrawWireFrame = false;
-    }
-    if (mDrawAabb) 
-    {
-        debugDrawer->setDrawAabb(!debugDrawer->doesDrawAabb());
-        mDrawAabb = false;
-    }
-    if ( mDrawFeaturesText)
-    {
-        debugDrawer->setDrawFeaturesText(!debugDrawer->doesDrawFeaturesText());
-        mDrawFeaturesText = false;
-    }
-    if ( mDrawContactPoints)
-    {
-        debugDrawer->setDrawContactPoints(!debugDrawer->doesDrawContactPoints());
-		mWorld->setShowDebugContactPoints(debugDrawer->doesDrawContactPoints());
-        mDrawContactPoints = false;
-    }
-    if ( mNoDeactivation)
+    /*
+    if (mNoDeactivation)
     {
         debugDrawer->setNoDeactivation(!debugDrawer->doesNoDeactivation());
         mNoDeactivation = false;
     }
-    if ( mNoHelpText)
+    if (mNoHelpText)
     {
         debugDrawer->setNoHelpText(!debugDrawer->doesNoHelpText());
         mNoHelpText = false;
     }
-    if ( mDrawText)
-    {
-        debugDrawer->setDrawText(!debugDrawer->doesDrawText());
-        mDrawText = false;
-    }
-    if ( mProfileTimings)
+    if (mProfileTimings)
     {
         debugDrawer->setProfileTimings(!debugDrawer->doesProfileTimings());
         mProfileTimings = false;
     }
-    if ( mEnableSatComparison)
+    if (mEnableSatComparison)
     {
         debugDrawer->setEnableSatComparison(!debugDrawer->doesEnableSatComparison());
         mEnableSatComparison = false;
     }
-    if ( mDisableBulletLCP)
-    {
-        debugDrawer->setDisableBulletLCP(!debugDrawer->doesDisableBulletLCP());
-        mDisableBulletLCP = false;
-    }
-    if ( mEnableCCD)
-    {
-        debugDrawer->setEnableCCD(!debugDrawer->doesEnableCCD());
-        mEnableCCD = false;
-    }
+     */
     
-    updateStats();
+    this->updateStats();
     
     return true;
 }
@@ -466,12 +458,13 @@ bool VSC::OB::Scene::checkIfEnoughPlaceToAddObject(float maxDist)
     Ogre::Vector3 pickPos;
     Ogre::Ray rayTo;
     OgreBulletDynamics::RigidBody * body = getBodyUnderCursorUsingBullet(pickPos, rayTo);
-        //getBodyUnderCursorUsingOgre(pickPos, rayTo);
+
     if (body)
     {          
         if ((pickPos - mCamera->getDerivedPosition ()).length () < maxDist)
             return false;
     }
+    
     return true;        
 }
 

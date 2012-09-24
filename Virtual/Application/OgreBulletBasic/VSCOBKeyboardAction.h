@@ -92,6 +92,9 @@ namespace VSC {
             
             static std::string stringForKey(Key key);
             
+            static bool actionThrowsDynamicObject(Key key);
+            static bool actionDropsDynamicObject(Key key);
+            
         };
         
     }

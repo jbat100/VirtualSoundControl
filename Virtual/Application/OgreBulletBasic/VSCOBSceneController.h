@@ -44,8 +44,7 @@ namespace VSC {
             /**--------------------------------------------------------------
              *  Dynamic actions
              */
-            bool throwDynamicObject(KeyboardAction::Key key);  // returns true if something happened
-            bool dropDynamicObject(KeyboardAction::Key key);   // returns true if something happened
+            void throwDynamicObjectPrimitive(VSC::OB::PrimitiveType primitiveType, const Ogre::Vector3& velocity)
             
             /**--------------------------------------------------------------
              *  Input listener callback overrides
