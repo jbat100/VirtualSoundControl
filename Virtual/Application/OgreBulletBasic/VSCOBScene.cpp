@@ -9,6 +9,7 @@ This source file is not LGPL, it's public source code that you can reuse.
  File modified for VSC project
  -----------------------------------------------------------------------------*/
 
+#include "VSCOB.h"
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
 #include "VSCOBBetaGUIListener.h"
@@ -73,15 +74,23 @@ const Ogre::Vector3     gConeBodyBounds      = Ogre::Vector3 (1, 1, 1);
 const Real              gSphereBodyBounds    = 1.0f;
 // -------------------------------------------------------------------------
 
+void VSC::OB::Scene::Element::destroy()
+{
+    Scene::SPtr scene = this->getScene().lock();
+    scene->getDynamicsWorld()->removeObject(mRigidBody);
+    
+    delete mRigidBody;
+    mRigidBody = 0;
+}
+
 void VSC::OB::Scene::ElementFactory::registerElement(Scene::Element::SPtr element)
 {
     /*
      *  TODO: check that the element is not already registered
      */
     
-    mElements.push_back(element);
-    VSC::OB::Scene::SPtr scene = this->getScene().lock();
-    scene->mElements.push_back(Scene::Element::WPtr(element));
+    mSElements.push_back(element);
+    mWElements.push_back(Scene::Element::WPtr(element));
 }
 
 void VSC::OB::Scene::ElementFactory::reset(void)
@@ -91,8 +100,8 @@ void VSC::OB::Scene::ElementFactory::reset(void)
      *  causing them to call their destroy() method.
      */
 
-    mElements.clear();
-    this->getScene().lock()->mElements.clear();
+    mWElements.clear();
+    mSElements.clear();
 }
 
 
@@ -102,21 +111,38 @@ void VSC::OB::Scene::ElementFactory::destroyElement(Scene::Element::WPtr element
      *  Remove the element from the scene
      */
     
-    Scene::SPtr scene = this->getScene().lock();
-    Scene::Elements::iterator it = std::find(scene->mElements.begin(), scene->mElements.end(), element);
-    
-    if (it != scene->mElements.end())
+    WElements::iterator wit = std::find(mWElements.begin(), mWElements.end(), element);
+    if (wit != mWElements.end())
     {
-        scene->mElements.erase(it);
+        mWElements.erase(wit);
     }
     
+    /*
+     *  Erasing the smart pointer (which should be the only one), should result in the 
+     *  element's destructor (and hence destroy() method) to be called, which should 
+     *  remove all associated ogre representation.
+     */
+    
+    SElements::iterator sit = std::find(mSElements.begin(), mSElements.end(), element.lock());
+    if (sit != mSElements.end())
+    {
+        mSElements.erase(sit);
+    }
     
 }
 
 
-void VSC::OB::Scene::ElementFactory::registerElement(Scene::Element::SPtr element)
+VSC::OB::Scene::Element::WPtr VSC::OB::Scene::ElementFactory::elementWithRigidBody(OgreBulletDynamics::RigidBody* rigidBody)
 {
+    BOOST_FOREACH (Scene::Element::SPtr element, mSElements)
+    {
+        if (element->getRigidBody() == rigidBody)
+        {
+            return Scene::Element::WPtr(element);
+        }
+    }
     
+    return Scene::Element::WPtr();
 }
 
 
@@ -129,7 +155,7 @@ mSceneMgr(0),
 mWindow(0),
 mWorld(0),
 mPaused (false),
-mDebugRayLine(0),
+mDebugRayLine(0)
 {
 
 }
@@ -207,15 +233,6 @@ void VSC::OB::Scene::init(Ogre::Root *root, Ogre::RenderWindow *win)
 		mSceneMgr->setShadowTextureSettings(512, 2, pxlFmt);
 	}
 #endif // _DEBUG
-
-    /******************* CREATE Queries ***************************/
-    
-    mRayQuery = mSceneMgr->createRayQuery(Ray());
-    mRayQuery->setQueryMask(VSC::OB::QueryMaskGeometry);
-    mRayQuery->setQueryTypeMask(SceneManager::ENTITY_TYPE_MASK);
-    Ogre::MovableObject::setDefaultQueryFlags(VSC::OB::QueryMaskAny);
-
-    mPickConstraint = 0;
     
     /**
      *  Nothing is enabled by default...
@@ -261,7 +278,7 @@ void VSC::OB::Scene::setupLights()
 	l->setPosition(100.0, 80.5,-10.0);
 	l->setSpotlightRange(Degree(30), Degree(50));
 	Ogre::Vector3 dir;
-	dir = -mLight->getPosition();
+	dir = -l->getPosition();
 	dir.normalise();
 	l->setDirection(dir);
 	l->setDiffuseColour(0.70, 0.70, 0.72);
@@ -272,7 +289,7 @@ void VSC::OB::Scene::setupLights()
 	l->setType(Light::LT_SPOTLIGHT);
 	l->setPosition(-100.0, 80.5, 10.0);
 	l->setSpotlightRange(Degree(30), Degree(50));
-	dir = -mLight2->getPosition();
+	dir = -l->getPosition();
 	dir.normalise();
 	l->setDirection(dir);
 	l->setDiffuseColour(0.72, 0.70, 0.70);
@@ -304,9 +321,6 @@ void VSC::OB::Scene::shutdown ()
     mWorld->setDebugDrawer(0);
     delete mWorld;
     
-    mSceneMgr->destroyQuery(mRayQuery);
-    mRayQuery = 0;
-    
     mSceneMgr->destroyCamera(mCamera->getName());
     mWindow->removeViewport(0);
     
@@ -322,55 +336,34 @@ void VSC::OB::Scene::shutdown ()
 }
 
 
-bool VSC::OB::Scene::renderWindowChangedSize(Ogre::RenderWindow* renderWindow)
+bool VSC::OB::Scene::resetCameraAspectRatio(void)
 {
-    if (renderWindow == mWindow)
-    {
-        Ogre::Viewport* vp = mCamera->getViewport();
-        mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
-        return true;
-    }
-    
-    return false;
+    Ogre::Viewport* vp = mCamera->getViewport();
+    mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+    return true;
 }
 
 // -------------------------------------------------------------------------
-VSC::OB::Scene::Element::WPtr VSC::OB::Scene::getElementUnderViewportPosition(Ogre::Vector2 position, Ogre::Vector3 &intersectionPoint, Ray &rayTo)
+VSC::OB::Scene::Element::WPtr VSC::OB::Scene::getElementAtViewportCoordinate(const Ogre::Viewport* v, Ogre::Vector2 p, Ogre::Vector3 &ip, Ogre::Ray &r)
 {
-    static const bool useBullet = true;
-    
-    /*
-    float absX = this->getInputAdapter()->getLastMousePosition().x;
-    float absY = this->getInputAdapter()->getLastMousePosition().y;
-    Ogre::Viewport* viewport = mCamera->getViewport();
-    float normX = absX / (float) viewport->getActualWidth();
-    float normY = 1.0 - (absY / (float) viewport->getActualHeight());
-    */
-    
-    /*
-     *  See http://www.ogre3d.org/docs/api/html/classOgre_1_1Viewport.html
-     *  It seems to me that these x/y coordinates should be 0-1 (normalised)
-     */
-    
-    if (useBullet)
+    if (viewport == mCamera->getViewport())
     {
-    
-        rayTo = mCamera->getCameraToViewportRay (position.x, position.y);
-
+        rayTo = mCamera->getCameraToViewportRay(position.x, position.y);
         CollisionClosestRayResultCallback callback(rayTo, mWorld, mCamera->getFarClipDistance());
-
         mWorld->launchRay(callback);
         
         if (callback->doesCollide())
         {
-            OgreBulletDynamics::RigidBody * body = static_cast <OgreBulletDynamics::RigidBody*>(callback->getCollidedObject());
+            OgreBulletDynamics::RigidBody* body = static_cast <OgreBulletDynamics::RigidBody*>(callback->getCollidedObject());
             intersectionPoint = callback->getCollisionPoint();
-            return body;
+            if (body)
+            {
+                return this->getElementFactory()->elementWithRigidBody(body);
+            }
         }
-        
     }
     
-    return 0;
+    return VSC::OB::Scene::Element::WPtr();
 }
 
 // -------------------------------------------------------------------------
@@ -487,14 +480,14 @@ bool VSC::OB::Scene::checkIfEnoughPlaceToAddObject(float maxDist)
 void VSC::OB::Scene::initWorld(const Ogre::Vector3 &gravityVector, const Ogre::AxisAlignedBox &bounds)
 {
     // Start Bullet
-    mWorld = new DynamicsWorld (mSceneMgr, bounds, gravityVector, true, true, 10000);
+    mWorld = new OgreBulletDynamics::DynamicsWorld (mSceneMgr, bounds, gravityVector, true, true, 10000);
 
     // add Debug info display tool
-    DebugDrawer *debugDrawer = new DebugDrawer();
+    OgreBulletCollisions::DebugDrawer *debugDrawer = new DebugDrawer();
 
     mWorld->setDebugDrawer(debugDrawer);
 
-    SceneNode *node = mSceneMgr->getRootSceneNode()->createChildSceneNode("DebugDrawer", Ogre::Vector3::ZERO);
+    Ogre::SceneNode *node = mSceneMgr->getRootSceneNode()->createChildSceneNode("DebugDrawer", Ogre::Vector3::ZERO);
     node->attachObject (static_cast<SimpleRenderable*>(debugDrawer));
 }
 

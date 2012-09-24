@@ -9,6 +9,9 @@ This source file is not LGPL, it's public source code that you can reuse.
  File modified for VSC project
  -----------------------------------------------------------------------------*/
 
+#include "VSCOBSceneController.h"
+
+#include "VSCOB.h"
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
 #include "VSCOBBetaGUIListener.h"
@@ -79,7 +82,6 @@ const Real              gSphereBodyBounds    = 1.0f;
 VSC::OB::SceneController::SceneController() :
 mShootSpeed (7.f),
 mImpulseForce (10.f),
-mDebugRayLine(0),
 mRayQuery(0),
 mPickConstraint(0),
 mCollisionClosestRayResultCallback(0),
@@ -87,6 +89,38 @@ mOldPickingPosition(Ogre::Vector3(0,0,0)),
 mOldPickingDistance(0)
 {
 
+}
+
+void VSC::OB::SceneController::setupWithScene(Scene::WPtr scene)
+{
+    this->shutdown();
+    
+    mScene = scene;
+    
+    Scene::SPtr s = mScene.lock();
+    
+    mRayQuery = s->getSceneManager()->createRayQuery(Ogre::Ray());
+    mRayQuery->setQueryMask(VSC::OB::QueryMaskGeometry);
+    mRayQuery->setQueryTypeMask(Ogre::SceneManager::ENTITY_TYPE_MASK);
+    Ogre::MovableObject::setDefaultQueryFlags(VSC::OB::QueryMaskAny);
+    
+    mPickConstraint = 0;
+    
+}
+
+void VSC::OB::SceneController::shutdown()
+{
+    Scene::SPtr s = mScene.lock();
+    
+    s->getSceneManager()->destroyQuery(mRayQuery);
+    mRayQuery = 0;
+    
+}
+
+Ogre::Vector2 VSC::OB::SceneController::normalizedViewportCoordinates(const Ogre::Vector2& absCoord)
+{
+    Ogre::Viewport* viewport = this->getScene().lock()->getCamera()->getViewport();
+    return Ogre::Vector2(absCoord.x / (float) viewport->getActualWidth(), 1.0 - (absCoord.y / (float) viewport->getActualHeight()));
 }
 
 // MARK Interface
@@ -97,6 +131,8 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
     
     if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed : " << position << " (" << buttonID << ")" << std::endl;
     
+    Scene::SPtr scene = this->getScene().lock();
+    
     switch (buttonID) 
     {
         case OIS::MB_Left:
@@ -105,25 +141,33 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
             Ogre::Vector3 pickPos;
             Ogre::Ray rayTo;
             
-            OgreBulletDynamics::RigidBody* body = getBodyUnderCursorUsingBullet(pickPos, rayTo);
-            //OgreBulletDynamics::RigidBody* body = getBodyUnderCursorUsingOgre(pickPos, rayTo);
+            /*
+             *  Note this does not take into account the fact that one render window can contain multiple viewports
+             *  and happily converts renderWindow coord to viewport coord directly.
+             */
             
-            if (body)
+            Scene::Element::WPtr e = scene->getElementAtViewportCoordinate(viewport, position, pickPos, rayTo);
+            Scene::Element::SPtr element = e.lock();
+            
+            if (element)
             {
                 if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed Left button, detected body" << std::endl;
+                
+                OgreBulletDynamics::RigidBody* body = element->getRigidBody();
                 
                 if (!body->isStaticObject())
                 {
                     mPickedBody = body;
-                    mPickedBody->disableDeactivation();		
+                    mPickedBody->disableDeactivation();
+                    
                     const Ogre::Vector3 localPivot (body->getCenterOfMassPivot(pickPos));
                     
                     OgreBulletDynamics::PointToPointConstraint *p2p  = new OgreBulletDynamics::PointToPointConstraint(body, localPivot);
-                    mWorld->addConstraint(p2p);					    
+                    scene->getDynamicsWorld()->addConstraint(p2p);
                     
                     //save mouse position for dragging
                     mOldPickingPos = pickPos;
-                    const Ogre::Vector3 eyePos(mCamera->getDerivedPosition());
+                    const Ogre::Vector3 eyePos(scene->getCamera()->getDerivedPosition());
                     mOldPickingDist = (pickPos - eyePos).length();
                     
                     if (mTraceUI) {
@@ -137,7 +181,7 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
                     
                 }
                 
-                getDebugLines();
+                scene->getDebugLines();
                 mDebugRayLine->addLine(rayTo.getOrigin(), pickPos);
                 mDebugRayLine->draw();
                 
@@ -158,8 +202,8 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
             
             Ogre::Vector3 pickPos;
             Ogre::Ray rayTo;
+            
             OgreBulletDynamics::RigidBody * body = getBodyUnderCursorUsingBullet(pickPos, rayTo);
-            //getBodyUnderCursorUsingOgre(pickPos, rayTo);
             
             if (body)
             {  
@@ -175,7 +219,7 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
                     
                 }
                 
-                getDebugLines();
+                scene->getDebugLines();
                 mDebugRayLine->addLine (rayTo.getOrigin(), pickPos);
                 mDebugRayLine->draw();	
             }
@@ -443,126 +487,15 @@ bool VSC::OB::SceneController::keyReleased(Ogre::RenderWindow* renderWindow, OIS
 
 bool VSC::OB::SceneController::renderWindowChangedSize(Ogre::RenderWindow* renderWindow)
 {
-    if (renderWindow == mWindow)
+    Scene::SPtr scene = this->getScene().lock();
+    
+    if (renderWindow == scene->getRenderWindow())
     {
-        Ogre::Viewport* vp = mCamera->getViewport();
-        mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+        scene->resetCameraAspectRatio();
         return true;
     }
     
     return false;
-}
-
-// -------------------------------------------------------------------------
-OgreBulletDynamics::RigidBody* VSC::OB::Scene::getBodyUnderCursorUsingBullet(Ogre::Vector3 &intersectionPoint, Ray &rayTo)
-{
-    
-    float absX = this->getInputAdapter()->getLastMousePosition().x;
-    float absY = this->getInputAdapter()->getLastMousePosition().y;
-    
-    Ogre::Viewport* viewport = mCamera->getViewport();
-    
-    float normX = absX / (float) viewport->getActualWidth();
-    float normY = 1.0 - (absY / (float) viewport->getActualHeight());
-    
-    /*
-     *  See http://www.ogre3d.org/docs/api/html/classOgre_1_1Viewport.html
-     *  It seems to me that these x/y coordinates should be 0-1 (normalised)
-     */
-    
-    rayTo = mCamera->getCameraToViewportRay (normX, normY);
-
-	delete mCollisionClosestRayResultCallback;
-	mCollisionClosestRayResultCallback = new CollisionClosestRayResultCallback(rayTo, mWorld, mCamera->getFarClipDistance());
-
-    mWorld->launchRay(*mCollisionClosestRayResultCallback);
-    
-    if (mCollisionClosestRayResultCallback->doesCollide ())
-    {
-        OgreBulletDynamics::RigidBody * body = static_cast <OgreBulletDynamics::RigidBody*>
-            (mCollisionClosestRayResultCallback->getCollidedObject());
-		
-		intersectionPoint = mCollisionClosestRayResultCallback->getCollisionPoint ();
-        setDebugText("Hit :" + body->getName());
-        return body;
-    }
-    
-    return 0;
-}
-
-// -------------------------------------------------------------------------
-OgreBulletDynamics::RigidBody* VSC::OB::Scene::getBodyUnderCursorUsingOgre(Ogre::Vector3 &intersectionPoint, Ray &rayTo)
-{
-    float absX = this->getInputAdapter()->getLastMousePosition().x;
-    float absY = this->getInputAdapter()->getLastMousePosition().y;
-    
-    Ogre::Viewport* viewport = mCamera->getViewport();
-    
-    float normX = absX / (float) viewport->getActualWidth();
-    float normY = 1.0 - (absY / (float) viewport->getActualHeight());
-    
-    //if (mTraceUI) std::cout << "VSC::OB::Scene::getBodyUnderCursorUsingOgre norm coord: (" << normX << "," << normY << ")" << std::endl;
-    //if (mTraceUI) std::cout << "VSC::OB::Scene::getBodyUnderCursorUsingOgre viewport is " << viewport << std::endl;
-    
-    rayTo = mCamera->getCameraToViewportRay (normX, normY);
-    
-    if (mTraceUI) std::cout << "VSC::OB::Scene::getBodyUnderCursorUsingOgre rayTo is " << &rayTo << std::endl;
-
-    mRayQuery->setRay (rayTo);
-    
-    const RaySceneQueryResult& result = mRayQuery->execute();
-    
-    if (!result.empty())
-    {
-        if (mTraceUI) std::cout << "VSC::OB::Scene::getBodyUnderCursorUsingOgre results has " << result.size() << " elements" << std::endl;
-        
-        RaySceneQueryResult::const_iterator i = result.begin();
-
-        mRayQuery->setSortByDistance (true, 1);//only one hit
-        
-        while((i != result.end()))
-        {
-            SceneNode *node = i->movable->getParentSceneNode() ;
-			intersectionPoint = node->_getDerivedPosition ();
-            const unsigned short num = node->numAttachedObjects();
-            
-            MovableObject* movable;
-            
-            for (unsigned short cur = 0; cur < num; cur++)
-            {
-                movable = node->getAttachedObject(cur);
-                
-                if (mTraceUI) std::cout << "VSC::OB::Scene::getBodyUnderCursorUsingOgre movable->getMovableType() " << movable->getMovableType() << std::endl;
-                
-                /*
-                 *  Does not work, use ray casts using bullet, for some reason to be investigated we are getting back a simple Ogre::MovableObject 
-                 *  (dynamic down cast does not work)
-                 */
-                
-                OgreBulletCollisions::Object *object = dynamic_cast <OgreBulletCollisions::Object*>(movable);
-                OgreBulletDynamics::RigidBody *body = dynamic_cast <OgreBulletDynamics::RigidBody*>(object);
-                
-                if (movable->getMovableType() == OgreBulletCollisions::Object::mMovableType)
-                {
-                    if (mTraceUI) std::cout << "VSC::OB::Scene::getBodyUnderCursorUsingOgre object " << movable << " is movable" << std::endl;
-                    setDebugText ("Hit :" + body->getName());
-                    return body;
-                }
-                else
-                {
-                    if (mTraceUI) std::cout << "VSC::OB::Scene::getBodyUnderCursorUsingOgre object " << movable << " is not movable" << std::endl;
-                }
-            }
-            ++i;
-        }	
-    }
-    
-    else
-    {
-        if (mTraceUI) std::cout << "VSC::OB::Scene::getBodyUnderCursorUsingOgre results is empty" << std::endl;
-    }
-    
-    return 0;
 }
 
 // -------------------------------------------------------------------------

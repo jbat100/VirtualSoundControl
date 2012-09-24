@@ -1,7 +1,18 @@
 
+#include "VSCOBDynamicObject.h"
+
 #include <boost/assert.hpp>
 
-VSC::OB::DynamicObject::FactoryDespription::FactoryDespription() // set defaults
+VSC::OB::DynamicObject::FactoryDespription::FactoryDespription() : // set defaults
+name("DefaultDynamic"),                                
+position(Ogre::Vector3::ZERO)                       
+orientation(Ogre::Quaternion(0.0,0.0,0.0,1.0)),     
+size(Ogre::Vector3(1.0,1.0,1.0)),                   
+bodyMass(1.0),                                      
+bodyFriction(0.6),                                  
+bodyRestitution(0.6),                               
+materialName("Bullet/box"),                         
+castsShadow(true),                                  
 {
 
 }
@@ -17,8 +28,7 @@ mEntity(entity)
 
 virtual void destroy(void)
 {
-    delete mRigidBody;
-    mRigidBody = 0;
+    Scene::Element::destroy(); // call base destroy() !!!
     
     SceneNode *node = static_cast<SceneNode*>(mEntity->getParentNode());
     node->detachObject(mEntity);

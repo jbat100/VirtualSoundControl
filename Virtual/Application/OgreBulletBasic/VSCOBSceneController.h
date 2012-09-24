@@ -1,6 +1,6 @@
 
-#ifndef _VSC_OGRE_BULLET_SCENE_H_
-#define _VSC_OGRE_BULLET_SCENE_H_
+#ifndef _VSC_OGRE_BULLET_SCENE_CONTROLLER_H_
+#define _VSC_OGRE_BULLET_SCENE_CONTROLLER_H_
 
 #include "OgreBulletDynamics.h"
 #include "VSCOBInputListener.h"
@@ -28,6 +28,12 @@ namespace VSC {
              */
             SceneController();
             virtual ~SceneController(){};
+            
+            /**--------------------------------------------------------------
+             *  Init for a given scene and shutdown
+             */
+            void setupWithScene(Scene::WPtr scene);
+            void shutdown();
 
             /**--------------------------------------------------------------
              *  Ogre Frame Listener Forwarded messages from Application 
@@ -54,11 +60,10 @@ namespace VSC {
             virtual bool renderWindowChangedSize(Ogre::RenderWindow* renderWindow);
             
             /**--------------------------------------------------------------
-             *  Scene Setter/Getter
+             *  Scene Getter
              */
             
             Scene::WPtr getScene(void);
-            void setScene(Scene::WPtr scene);
             
             /**--------------------------------------------------------------
              *  Actions Setter/Getter
@@ -69,6 +74,11 @@ namespace VSC {
             
             float getImpulseForce(void);
             void setImplulseForce(float force);
+            
+            /**--------------------------------------------------------------
+             *  Utilities
+             */
+            Ogre::Vector2 normalizedViewportCoordinates(const Ogre::Vector2& absoluteCoordinates);
             
         protected:
             
@@ -117,5 +127,5 @@ namespace VSC {
     }
 }
 
-#endif //_VSC_OGRE_BULLET_SCENE_H_
+#endif //_VSC_OGRE_BULLET_SCENE_CONTROLLER_H_
 

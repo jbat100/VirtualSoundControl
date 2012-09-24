@@ -60,38 +60,42 @@ namespace VSC {
                  *  deliberate design decision.
                  */
                 
-                Scene::WPtr                             getScene(void) {return mScene};
+                Scene::WPtr                             getScene(void) {return mScene;};
                 OgreBulletDynamics::RigidBody*          getRigidBody(void) {return mRigidBody;}
                 
+            protected:
+                
                 /*
-                 *  Destroy should perform all necessary operations to remove the element from the Scene and all associated
-                 *  Ogre/Bullet stuff which it is used by.
+                 *  Destroy should be overridden to perform all necessary operations to remove the element from the Scene 
+                 *  and all associated Ogre/Bullet stuff which it is used by. However subclasses should call the base implementation
+                 *  which removes the rigid body from the world.
                  */
                 
-                virtual void destroy(void) = 0;
+                virtual void destroy(void);
                 
             private:
                 
                 Scene::WPtr                             mScene;
                 OgreBulletDynamics::RigidBody*          mRigidBody;
                 
-            }
+            };
             
             /*
              *  Scene::Factory is used to generate Scene::Element and keep a shared_ptr to them. Like Elemet, it is meant 
              *  to be subclassed to be useful.
              */
             
-            friend class ElementFactory
+            class ElementFactory
             {
             public:
                 
-                typedef boost::shared_ptr<ElementFactory> SPtr;   
+                typedef boost::shared_ptr<ElementFactory> SPtr;
+                typedef std::vector<Scene::Element::WPtr> WElements;
                 
                 ElementFactory(Scene::WPtr scene) : mScene(scene) {}
                 virtual ~ElementFactory() { reset(); }
                 
-                Scene::WPtr getScene(void) {return mScene}; // no public setter, cannot change the element scene.
+                Scene::WPtr getScene(void) {return mScene;}; // no public setter, cannot change the element scene.
                 
                 /*
                  *  Reset should destroy all shared_ptr references to the Elements that the factory has created
@@ -105,7 +109,16 @@ namespace VSC {
                  */
                 void destroyElement(Scene::Element::WPtr element);
                 
+                /*
+                 *  Get element using the inner rigid body.
+                 */
                 Element::WPtr elementWithRigidBody(OgreBulletDynamics::RigidBody* rigidBody);
+                
+                /*
+                 *  Provide access the elements which have been created by the factory.
+                 */
+                const WElements& elements() {return mWElements;}
+                
                 
             protected:
                 
@@ -118,12 +131,15 @@ namespace VSC {
             private:
                 
                 Scene::WPtr mScene;
+                WElements mWElements;
                 
                 /*
-                 *  The smart pointers should not be spread to outside the class, use weak pointers instead
+                 *  The smart pointers should not be spread to outside the class, use weak pointers instead. Element
+                 *  Factory should be the only entity to hold smart pointers to elements
                  */
-                std::deque<Scene::Element::SPtr> mElements;
-            }
+                typedef std::vector<Scene::Element::SPtr> SElements;
+                SElements mSElements;
+            };
             
             typedef std::deque<Element::WPtr> Elements;
             
@@ -141,13 +157,16 @@ namespace VSC {
             virtual void shutdown();
             
             /**--------------------------------------------------------------
+             *  Camera
+             */
+            bool resetCameraAspectRatio(void);
+            
+            /**--------------------------------------------------------------
              *  Factory and Element weak_ptr container
              */
             
-            Factory::SPtr getFactory(void) {return mFactory;}
-            void setFactory(Factory::SPtr factory) {mFactory = factory;}
-            
-            const Elements& getElements();
+            ElementFactory::SPtr getElementFactory(void) {return mElementFactory;}
+            void setElementFactory(ElementFactory::SPtr factory) {mElementFactory = factory;}
 
             /**--------------------------------------------------------------
              *  MISC Info
@@ -164,7 +183,7 @@ namespace VSC {
              *  Dynamic actions and checks
              */
             bool checkIfEnoughPlaceToAddObject(float maxDist);
-            OgreBulletDynamics::RigidBody* getBodyUnderRenderWindowAt(Ogre::Vector2& pos, Ogre::Vector3 &intersectionPoint, Ogre::Ray &rayTo);
+            Element::WPtr getElementAtViewportCoordinate(const Ogre::Viewport* v, Ogre::Vector2& p, Ogre::Vector3 &ip, Ogre::Ray &r);
             
             /**--------------------------------------------------------------
              *  Ogre Getters
@@ -192,9 +211,6 @@ namespace VSC {
             bool drawingAabb(void) {return mDrawAabb;}
             void drawAabb(bool draw) {mDrawAabb = draw;}
             
-            bool drawingAabb(void) {return mDrawAabb;}
-            void drawAabb(bool draw) {mDrawAabb = draw;}
-            
             bool drawingText(void) {return mDrawText;}
             void drawText(bool draw) {mDrawText = draw;}
             
@@ -204,10 +220,10 @@ namespace VSC {
             bool drawingContactPoints(void) {return mDrawContactPoints;}
             void drawContactPoints(bool draw) {mDrawContactPoints = draw;}
             
-            bool bulletLCPIsEnabled(return !mDisableBulletLCP);
+            bool bulletLCPIsEnabled(void) {return !mDisableBulletLCP;}
             void enableBulletLCP(bool enable) {mDisableBulletLCP = !enable;}
             
-            bool ccdIsEnabled(return mEnableCCD);
+            bool ccdIsEnabled(void) {return mEnableCCD;}
             void enableCCD(bool enable) {mEnableCCD = enable;}
             
         protected:
@@ -228,7 +244,6 @@ namespace VSC {
         private:
             
             ElementFactory::SPtr                    mElementFactory;
-            Elements                                mElements;
             
             OgreBulletDynamics::DynamicsWorld       *mWorld;
             Ogre::RenderWindow                      *mWindow;
@@ -237,8 +252,6 @@ namespace VSC {
             Ogre::Camera                            *mCamera;
             LightMap                                mLightMap;
             Ogre::ShadowTechnique                   mCurrentShadowTechnique;
-            
-            std::deque<SceneElement::SPtr>          mSceneElements;
             
             bool mDoOnestep;
             bool mPaused;

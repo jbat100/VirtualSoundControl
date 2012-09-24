@@ -34,7 +34,8 @@ namespace VSC {
                 Ogre::String    name;
                 Ogre::Real      bodyRestitution;
                 Ogre::Real      bodyFriction;
-                Ogre::String    materialName;       // "BulletPlane"
+                Ogre::String    materialName;
+                
             }
             
             /**------------------------------------------------------------

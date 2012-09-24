@@ -1,7 +1,7 @@
 
+#include "VSCOBBaseSceneFactory.h"
 
-
-VSC::OB::DynamicObject::WPtr VSC::OB::ObjectFactory::addPrimitive(Object::PrimitiveType primitiveType,
+VSC::OB::DynamicObject::WPtr VSC::OB::BaseElementFactory::addPrimitive(Object::PrimitiveType primitiveType,
                                                                   const DynamicObject::FactoryDespription& description);
 {
     
@@ -75,7 +75,7 @@ VSC::OB::DynamicObject::WPtr VSC::OB::ObjectFactory::addPrimitive(Object::Primit
     
     mNumberOfObjectsCreated++;
     
-    DynamicObject::SPtr object(new VSC::OB::DynamicObject(this->getScene(), entity, rigidBody, collisionShape));
+    DynamicObject::SPtr object(new VSC::OB::DynamicObject(this->getScene(), entity, rigidBody));
     Scene::Element::SPtr element = boost::static_pointer_cast<Scene::Element>(object);
     this->registerElement(element);
 
@@ -83,7 +83,7 @@ VSC::OB::DynamicObject::WPtr VSC::OB::ObjectFactory::addPrimitive(Object::Primit
 }
 
 
-VSC::OB::DynamicObject::WPtr VSC::OB::ObjectFactory::addTrimesh(const Ogre::String& meshName,
+VSC::OB::DynamicObject::WPtr VSC::OB::BaseElementFactory::addTrimesh(const Ogre::String& meshName,
                                                                 const DynamicObject::FactoryDespription& description)
 {
     /*
@@ -112,7 +112,7 @@ VSC::OB::DynamicObject::WPtr VSC::OB::ObjectFactory::addTrimesh(const Ogre::Stri
     
     mNumberOfObjectsCreated++;
     
-    DynamicObject::SPtr object(new Object(this->getScene(), entity, sceneRigid, sceneTriMeshShape));
+    DynamicObject::SPtr object(new Object(this->getScene(), entity, sceneRigid));
     Scene::Element::SPtr element = boost::static_pointer_cast<Scene::Element>(object);
     this->registerElement(element);
     
@@ -120,7 +120,7 @@ VSC::OB::DynamicObject::WPtr VSC::OB::ObjectFactory::addTrimesh(const Ogre::Stri
 }
 
 
-VSC::OB::StaticGeometry::WPtr VSC::OB::Scene::addStaticPlane(const StaticGeometry::FactoryDespription& description)
+VSC::OB::StaticGeometry::WPtr VSC::OB::BaseElementFactory::addStaticPlane(const StaticGeometry::FactoryDespription& description)
 {
     // Use a load of meshes to represent the floor
     int i = 0;
@@ -164,7 +164,7 @@ VSC::OB::StaticGeometry::WPtr VSC::OB::Scene::addStaticPlane(const StaticGeometr
 
     mNumberOfObjectsCreated++;
     
-    StaticGeometry::SPtr geom(new Object(this->getScene(), s, rigidPlaneBody, shape));
+    StaticGeometry::SPtr geom(new Object(this->getScene(), s, rigidPlaneBody));
     Scene::Element::SPtr element = boost::static_pointer_cast<Scene::Element>(geom);
     this->registerElement(element);
 

@@ -1,6 +1,11 @@
 
+#include "VSCOBStaticObject.h"
 
-VSC::OB::StaticObject::FactoryDespription::FactoryDespription() // set defaults
+VSC::OB::StaticObject::FactoryDespription::FactoryDespription() : // set defaults
+name("DefaultStatic"),
+bodyRestitution(0.1f),
+bodyFriction(0.8f),
+materialName("BulletPlane")      // "BulletPlane"
 {
     
 }
@@ -14,10 +19,9 @@ mStaticGeometry(staticGeometry)
     
 }
 
-virtual void destroy(void)
+void VSC::OB::StaticObject::destroy(void)
 {
-    delete mRigidBody;
-    mRigidBody = 0;
+    Scene::Element::destroy();  // call base class destroy() !!!
     
     this->getScene().lock()->getSceneManager()->destroyStaticGeometry(mStaticGeometry);
     mStaticGeometry = 0;
