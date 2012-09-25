@@ -4,6 +4,7 @@
 #include "VSCOBOSXApplicationSetup.h"
 #include "VSCOBInputAdapter.h"
 #include "VSCOBCameraController.h"
+#include "VSCOBSceneController.h"
 
 #include "OgreResourceGroupManager.h"
 
@@ -12,19 +13,18 @@
 
 // -------------------------------------------------------------------------
 VSC::OB::Application::Application(std::vector<Scene::SPtr> bulletScenes) :
-    VSC::OB::ApplicationBase(),
+    ApplicationBase(),
     Ogre::FrameListener(),
     mBulletScenes(bulletScenes),
     mBulletScene(Scene::SPtr())
 {
     BOOST_ASSERT_MSG (!mBulletScenes.empty(), "Expected keyboard adapter");
     
-    BOOST_FOREACH (Scene::SPtr scene, mBulletScenes) 
-    {
-        // application bindings should be set in the base class constructor
-        //scene->setOgreKeyBindings(this->getOgreKeyBindings());
-    }
+    mSceneController = SceneController::SPtr(new SceneController());
+    mCameraController = CameraController::SPtr(new CameraController());
     
+    this->setNextInputListener(SceneController::WPtr(mSceneController));
+    mSceneController->setNextInputListener(CameraController::WPtr(mCameraController));
 }
 // -------------------------------------------------------------------------
 VSC::OB::Application::~Application()
@@ -83,7 +83,7 @@ bool VSC::OB::Application::switchToSceneWithName(Ogre::String sceneName)
 }
 
 // -------------------------------------------------------------------------
-bool VSC::OB::Application::switchToScene(VSC::OB::Scene::SPtr newScene)
+bool VSC::OB::Application::switchToScene(Scene::SPtr newScene)
 {
     
     if (mTraceScene && newScene) std::cout << "VSC::OB::Application switching scene to " << newScene << std::endl;
@@ -98,6 +98,7 @@ bool VSC::OB::Application::switchToScene(VSC::OB::Scene::SPtr newScene)
     if (mBulletScene)
     {
         if (mTraceScene && newScene) std::cout << "Shutting down old scene..." << std::endl;
+        mSceneController->shutdown();
         mBulletScene->shutdown();
     }
     
@@ -105,15 +106,13 @@ bool VSC::OB::Application::switchToScene(VSC::OB::Scene::SPtr newScene)
     {
         if (mTraceScene && newScene) std::cout << "Initializing new scene..." << std::endl;
         newScene->init(mRoot, mWindow);
+        this->getSceneController()->setScene()
     }
     
     else 
     {
         if (mTraceScene && newScene) std::cout << "Switched to null scene..." << std::endl;
     }
-    
-    //needs to be the scene controller
-    //this->setNextInputListener(newScene.get());
     
     mBulletScene = newScene;
     

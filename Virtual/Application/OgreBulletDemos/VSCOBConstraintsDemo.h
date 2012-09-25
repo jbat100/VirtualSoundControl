@@ -16,20 +16,14 @@ namespace VSC {
     
     namespace OB {
 
-        class Application;
-
-        // -------------------------------------------------------------------------
         class ConstraintsDemo : public Scene 
         {
         public:
 
-            ConstraintsDemo() : Scene()
-              {
-                  mName = "Constraints Demo";
-              };
-            virtual ~ConstraintsDemo(){};
+            ConstraintsDemo() : Scene() { setName("Constraints Demo"); }
+            virtual ~ConstraintsDemo(){}
 
-            void init(Ogre::Root *root, Ogre::RenderWindow *win, Application *application);
+            void init(Ogre::Root *root, Ogre::RenderWindow *win);
 
             bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
         };

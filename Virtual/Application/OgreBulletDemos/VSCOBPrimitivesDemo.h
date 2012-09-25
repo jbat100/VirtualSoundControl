@@ -16,16 +16,14 @@ namespace VSC {
     
     namespace OB {
 
-        class Application;
-
         class PrimitivesDemo : public Scene 
         {
         public:
             
-            PrimitivesDemo() : Scene() {mName = "Primitives Test Scene";};
-            virtual ~PrimitivesDemo(){};
+            PrimitivesDemo() : Scene() {setName("Primitives Test Scene");}
+            virtual ~PrimitivesDemo(){}
             
-            void init (Ogre::Root *root, Ogre::RenderWindow *win, Application *application);
+            void init (Ogre::Root *root, Ogre::RenderWindow *win);
             
             bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
         };

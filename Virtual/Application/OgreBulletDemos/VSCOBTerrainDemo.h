@@ -16,17 +16,15 @@ namespace VSC {
     
     namespace OB {
 
-        class Application;
-
         // -------------------------------------------------------------------------
         class TerrainDemo : public Scene 
         {
         public:
 
-            TerrainDemo() : Scene() {mName = "Terrain Test Scene";};
-            virtual ~TerrainDemo(){};
+            TerrainDemo() : Scene() {setName("Terrain Test Scene");}
+            virtual ~TerrainDemo(){}
 
-            void init(Ogre::Root *root, Ogre::RenderWindow *win, Application *application);
+            void init(Ogre::Root *root, Ogre::RenderWindow *win);
 
             bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
             bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);

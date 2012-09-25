@@ -29,7 +29,7 @@ const Ogre::Vector3    CameraStart            = Ogre::Vector3(0,-9,1);
 
 
 // -------------------------------------------------------------------------
-void VSC::OB::ConstraintsDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Application *application)
+void VSC::OB::ConstraintsDemo::init(Ogre::Root *root, Ogre::RenderWindow *win)
 {
     mHelpKeys.clear();
 
@@ -49,39 +49,12 @@ void VSC::OB::ConstraintsDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, V
     mCamera->rotate(Ogre::Vector3(1,0,0), Degree(90));
     mCamera->setFixedYawAxis(true, Ogre::Vector3::UNIT_Z);
 
-    VSC::OB::Scene::init(root, win, application);
+    VSC::OB::Scene::init(root, win);
 
-    // ------------------------
-    // add lights
-    setBasicLight();
+    setupLights();
     
-    // ------------------------
-    // Add the Gui
-    setPhysicGUI();
-    // ------------------------
-    // Start Bullet
     initWorld();
 
-    // ------------------------
-    // Add the ground
-    addGround();
-}
-// -------------------------------------------------------------------------
-bool VSC::OB::ConstraintsDemo::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
-{
-    bool handled = false;
-    
-    VSC::Keyboard::Combination comb(key, this->getInputAdapter()->getCurrentModifier());
-    const VSC::OB::KeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
-    
-    BOOST_FOREACH (VSC::OB::KeyboardAction::Key actionKey, actionKeySet)
-    {
-        if (!handled) handled = VSC::OB::Scene::throwDynamicObject(actionKey);
-        if (!handled) handled = VSC::OB::Scene::dropDynamicObject(actionKey);
-    }
-    
-    if (handled) return true;
-    
-    return VSC::OB::Scene::keyPressed(renderWindow, key);
+    this->getElementFactory()->addGround();
 }
 

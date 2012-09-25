@@ -18,13 +18,7 @@
 
 #import "VSCOBPrimitivesDemo.h"
 #import "VSCOBTriMeshDemo.h"
-#import "VSCOBVehiclesDemo.h"
 #import "VSCOBConstraintsDemo.h"
-#import "VSCOBTerrainDemo.h"
-#import "VSCOBRagdollDemo.h"
-
-
-using namespace OIS;
 
 @interface VSCAppDelegate () {
     
@@ -58,15 +52,14 @@ using namespace OIS;
     
     NSAssert(self.ogreView != nil, @"Expected OgreView");
     
-    ogreBulletScenes.push_back(new VSC::OB::PrimitivesDemo());
-    ogreBulletScenes.push_back(new VSC::OB::TriMeshDemo());
-	ogreBulletScenes.push_back(new VSC::OB::VehiclesDemo());
-	ogreBulletScenes.push_back(new VSC::OB::ConstraintsDemo());
-	ogreBulletScenes.push_back(new VSC::OB::TerrainDemo());
-	ogreBulletScenes.push_back(new VSC::OB::RagdollDemo());
+    VSC::OB::Application::Scenes scenes;
+    
+    scenes.push_back(VSC::OB::Scene::SPtr(new VSC::OB::PrimitivesDemo()));
+    scenes.push_back(VSC::OB::Scene::SPtr(new VSC::OB::TriMeshDemo()));
+	scenes.push_back(VSC::OB::Scene::SPtr(new VSC::OB::ConstraintsDemo()));
     
     // Create the application and try to run it
-    ogreBulletApplication = new VSC::OB::Application(ogreBulletScenes);
+    ogreBulletApplication = VSC::OB::Application::SPtr(new VSC::OB::Application(scenes));
     
     ogreBulletApplication->setupWithOgreView((__bridge void*)self.ogreView);
     
@@ -79,19 +72,10 @@ using namespace OIS;
 -(void) teardownOgreBulletApplication {
     
     /*
-     *  Cleanup
+     *  Cleanup, setting the smart pointer to nil should take care of everything...
      */
     
-    std::vector<VSC::OB::Scene*>::iterator it = ogreBulletScenes.begin();
-    while (it != ogreBulletScenes.end())
-    {
-        delete *it;
-        ++it;
-    }
-    
-    delete ogreBulletApplication;    
-    ogreBulletApplication = 0;
-    
+    ogreBulletApplication = VSC::OB::Application::SPtr();
     
 }
 

@@ -11,29 +11,30 @@
 
 #include <Ogre/Ogre.h>
 
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
+
 #include <vector>
 
 namespace VSC {
     
     namespace OB {
-
-        class Application;
-
-        /**
-         *  The test application, based on the Ogre example application for consistency
-         */
+        
         class Application : public ApplicationBase,  public Ogre::FrameListener
         {
             
         public:
             
-            typedef std::vector<Scene::SPtr> Scenes;
+            typedef boost::shared_ptr<Application>  SPtr;
+            typedef boost::weak_ptr<Application>    WPtr;
+            
+            typedef std::vector<Scene::SPtr>        Scenes;
             
             /*------------------------------------------------------
              *  Constructor / Destructor
              */
             
-            Application(std::vector<Scene::SPtr> scenes);
+            Application(Scenes scenes);
             ~Application();
             
             #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
@@ -55,8 +56,11 @@ namespace VSC {
              *  SceneController
              */
             
-            SceneController::SPtr getSceneController(void);
-            void setSceneController(SceneController::SPtr controller);
+            SceneController::SPtr getSceneController(void) {return mSceneController;}
+            void setSceneController(SceneController::SPtr controller) {mSceneController = controller;}
+            
+            CameraController::SPtr getCameraController(void) {return mCameraController;}
+            void setCameraController(CameraController::SPtr controller) {mCameraController = controller;}
             
             /*------------------------------------------------------
              *  VSCOgreInputListener override
@@ -86,6 +90,8 @@ namespace VSC {
             Scenes                  mBulletScenes;
             
             SceneController::SPtr   mSceneController;
+            
+            CameraController::SPtr  mCameraController;
             
             static const bool mTraceUI = true;
             static const bool mTraceFrame = false;

@@ -14,18 +14,16 @@ This source file is not LGPL, it's public source code that you can reuse.
 namespace VSC {
     
     namespace OB {
-        
-        class Application;
 
         // -------------------------------------------------------------------------
         class VehiclesDemo : public Scene 
         {
         public:
 
-            VehiclesDemo() : Scene() {mName = "Vehicle Test Scene";};
-            virtual ~VehiclesDemo(){};
+            VehiclesDemo() : Scene() {setName("Vehicle Test Scene");}
+            virtual ~VehiclesDemo(){}
 
-            void init(Ogre::Root *root, Ogre::RenderWindow *win, Application *application);
+            void init(Ogre::Root *root, Ogre::RenderWindow *win);
 
             bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
             bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);

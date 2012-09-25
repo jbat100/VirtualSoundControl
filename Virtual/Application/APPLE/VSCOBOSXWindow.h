@@ -20,7 +20,7 @@ namespace VSC { namespace OB {
 @property (nonatomic, strong) IBOutlet VSCOBOSXView* ogreView;
 @property (nonatomic, strong) IBOutlet NSPopUpButton* scenePopUpButton;
 
-@property (nonatomic, assign) VSC::OB::Application* ogreBulletApplication;
+@property (nonatomic, assign) VSC::OB::Application::WPtr ogreBulletApplication;
 
 - (IBAction)test1:(id)sender;
 - (IBAction)test2:(id)sender;

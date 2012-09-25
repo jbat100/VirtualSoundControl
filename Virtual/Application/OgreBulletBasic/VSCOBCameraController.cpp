@@ -31,7 +31,11 @@ bool VSC::OB::CameraController::mouseMoved(Ogre::RenderWindow* renderWindow, con
     
     //bool handled = true;
     
-    if (this->getInputAdapter()->isMouseButtonPressed(OIS::MB_Right))
+    InputAdapter::SPtr adapter = this->getInputAdapter().lock();
+    
+    BOOST_ASSERT_MSG(adapter, "Expected adapter");
+    
+    if (adapter && adapter->isMouseButtonPressed(OIS::MB_Right))
     {
         if (mTraceUI) std::cout << "VSC::OB::CameraController::mouseMoved RIGHT BUTTON PRESSED" << std::endl;
         mCameraRotX = Ogre::Degree(-movement.x * mMouseSensitivity);
@@ -51,11 +55,13 @@ bool VSC::OB::CameraController::keyPressed(Ogre::RenderWindow* renderWindow, OIS
     
     if (mTraceUI) std::cout << "VSC::OB::CameraController got key pressed code: " << key << " (W is " << OIS::KC_W << ")" << std::endl; 
     
+    InputAdapter::SPtr adapter = this->getInputAdapter().lock();
+    
     bool handled = true;
     
-    BOOST_ASSERT_MSG(this->getInputAdapter() != 0, "Expected adapter");
+    BOOST_ASSERT_MSG(adapter, "Expected adapter");
     
-    if (this->getInputAdapter() != 0) 
+    if (adapter) 
     {
         OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
         VSC::Keyboard::Combination comb(key, modifier);
@@ -106,12 +112,14 @@ bool VSC::OB::CameraController::keyReleased(Ogre::RenderWindow* renderWindow, OI
 {
     if (mTraceUI) std::cout << "VSC::OB::CameraController keyReleased : " << key << std::endl;
     
+    InputAdapter::SPtr adapter = this->getInputAdapter().lock();
+    
     bool handled = true;
     
-    BOOST_ASSERT_MSG(this->getInputAdapter(), "Expected adapter");
+    BOOST_ASSERT_MSG(adapter, "Expected adapter");
     BOOST_ASSERT_MSG(this->getOgreKeyBindings(), "Expected key bindings");
     
-    if (this->getInputAdapter() != 0) 
+    if (adapter) 
     {
         
         OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
@@ -162,9 +170,11 @@ bool VSC::OB::CameraController::frameStarted(Ogre::Real elapsedTime)
 
     if (mTraceFrame) std::cout << "VSC::OB::CameraController frameStarted" << std::endl;
     
-    BOOST_ASSERT_MSG(this->getInputAdapter() != 0, "Expected adapter");
+    InputAdapter::SPtr adapter = this->getInputAdapter().lock();
+    
+    BOOST_ASSERT_MSG(adapter, "Expected adapter");
 
-    if (this->getInputAdapter()->isMouseButtonPressed(OIS::MB_Right))
+    if (adapter && adapter->isMouseButtonPressed(OIS::MB_Right))
     {
         if (mTraceUI) std::cout << "VSC::OB::CameraController detected right mouse, yaw: " << mCameraRotX << ", pitch: " << mCameraRotY << std::endl;
         mCamera->yaw(mCameraRotX);

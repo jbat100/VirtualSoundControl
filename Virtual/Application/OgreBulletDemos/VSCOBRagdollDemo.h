@@ -22,10 +22,10 @@ namespace VSC {
         {
         public:
             
-            RagdollDemo() : Scene() {mName = "Ragdoll Demo";};
-            virtual ~RagdollDemo(){};
+            RagdollDemo() : Scene() {setName("Ragdoll Demo");}
+            virtual ~RagdollDemo(){}
             
-            void init(Ogre::Root *root, Ogre::RenderWindow *win, Application *application);
+            void init(Ogre::Root *root, Ogre::RenderWindow *win);
             
             bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
             

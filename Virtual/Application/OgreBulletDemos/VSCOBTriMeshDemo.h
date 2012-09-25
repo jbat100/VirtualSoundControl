@@ -16,17 +16,16 @@ namespace VSC {
     
     namespace OB {
 
-        class Application;
 
         // -------------------------------------------------------------------------
         class TriMeshDemo : public Scene 
         {
         public:
 
-            TriMeshDemo() : Scene() {mName = "Trimesh Static Scene test";};
-            virtual ~TriMeshDemo(){};
+            TriMeshDemo() : Scene() { setName("Trimesh Static Scene test"); }
+            virtual ~TriMeshDemo(){}
 
-            void init(Ogre::Root *root, Ogre::RenderWindow *win, Application *application);
+            void init(Ogre::Root *root, Ogre::RenderWindow *win);
 
             bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
 

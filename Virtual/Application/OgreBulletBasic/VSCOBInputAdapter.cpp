@@ -15,14 +15,14 @@ mLastMousePosition(Ogre::Vector2(0.0, 0.0))
 
 void VSC::OB::InputAdapter::addInputListener(InputListener::WPtr listener)
 {
-    BOOST_ASSERT_MSG(listener, "Expected listener");
+    BOOST_ASSERT_MSG(listener.lock(), "Expected listener");
     mInputListeners.insert(listener);
     listener.lock()->setInputAdapter(InputAdapter::WPtr(shared_from_this()));
 }
 
 void VSC::OB::InputAdapter::removeInputListener(InputListener::WPtr listener)
 {
-    BOOST_ASSERT_MSG(listener, "Expected listener");
+    BOOST_ASSERT_MSG(listener.lock(), "Expected listener");
     mInputListeners.erase(listener);
     listener.lock()->setInputAdapter(InputAdapter::WPtr());
 }

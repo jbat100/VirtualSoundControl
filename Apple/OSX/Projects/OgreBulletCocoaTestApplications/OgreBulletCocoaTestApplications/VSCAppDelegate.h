@@ -23,8 +23,7 @@ class VSC::OB::Application;
 
 @interface VSCAppDelegate : NSObject <NSApplicationDelegate> {
     
-    VSC::OB::Application* ogreBulletApplication;
-    std::vector<VSC::OB::Scene*> ogreBulletScenes;
+    VSC::OB::Application::SPtr ogreBulletApplication;
     
 }
 

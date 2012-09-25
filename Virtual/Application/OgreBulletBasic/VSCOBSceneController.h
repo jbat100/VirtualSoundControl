@@ -31,7 +31,7 @@ namespace VSC {
             /**--------------------------------------------------------------
              *  Constructor/Destructor
              */
-            SceneController();
+            SceneController() {}
             SceneController(Scene::WPtr scene);
             virtual ~SceneController(){};
             
@@ -68,7 +68,8 @@ namespace VSC {
              *  Scene Getter
              */
             
-            Scene::WPtr getScene(void);
+            Scene::WPtr getScene(void) {return mScene;}
+            void setScene(Scene::WPtr scene) {mScene = scene;}
             
             /**--------------------------------------------------------------
              *  Actions Setter/Getter

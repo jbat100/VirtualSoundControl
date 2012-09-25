@@ -207,7 +207,7 @@ namespace VSC {
             Ogre::Root* getRoot(void) {return mRoot;}
             Ogre::SceneManager* getSceneManager(void) {return mSceneMgr;}
             Ogre::Camera* getCamera(void) {return mCamera;}
-            const LightMap& getLightMap(void);
+            LightMap& getLightMap(void);
             
             /**--------------------------------------------------------------
              *  Stats Getters
@@ -255,8 +255,8 @@ namespace VSC {
             
         protected:
             
-            virtual void initWorld (const Ogre::Vector3 &gravityVector = Ogre::Vector3 (0,-9.81,0),
-                                    const Ogre::AxisAlignedBox &bounds = Ogre::AxisAlignedBox (Ogre::Vector3 (-10000, -10000, -10000),
+            virtual void initWorld (const Ogre::Vector3& gravityVector = Ogre::Vector3 (0,-9.81,0),
+                                    const Ogre::AxisAlignedBox& bounds = Ogre::AxisAlignedBox (Ogre::Vector3 (-10000, -10000, -10000),
                                                                                                Ogre::Vector3 (10000,  10000,  10000)));
             
             virtual void setupFactory();
@@ -267,6 +267,17 @@ namespace VSC {
             void setInfoText();
             void setDebugText(const Ogre::String &debugText) {mDebugText = debugText;}
             void getDebugLines();
+            void setName(Ogre::String name) {mName = name;}
+            
+            /*
+             *  Protected setters for world setup 
+             */
+            
+            void setDynamicsWorld(OgreBulletDynamics::DynamicsWorld* world);
+            void setRenderWindow(Ogre::RenderWindow* window);
+            void setRoot(Ogre::Root* root);
+            void setSceneManager(Ogre::SceneManager* manager);
+            void setCamera(Ogre::Camera* camera);
             
         private:
             

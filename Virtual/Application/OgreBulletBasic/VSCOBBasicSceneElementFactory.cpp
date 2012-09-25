@@ -97,7 +97,7 @@ VSC::OB::DynamicObject::WPtr VSC::OB::BasicSceneElementFactory::addPrimitive(Pri
 
 
 VSC::OB::DynamicObject::WPtr VSC::OB::BasicSceneElementFactory::addTrimesh(const Ogre::String& meshName,
-                                                                const DynamicObject::FactoryDespription& description)
+                                                                           const DynamicObject::FactoryDespription& description)
 {
     /*
      *  Create an Ogre::Entity with the specified mesh, and an associated scene node.

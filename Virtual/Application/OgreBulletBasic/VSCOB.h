@@ -9,7 +9,7 @@ namespace VSC {
 
         enum QueryMask
         {
-            QueryMaskNone                   = 0
+            QueryMaskNone                   = 0,
             QueryMaskAny					= 1<<0,
             QueryMaskRagdoll				= 1<<1,
             QueryMaskGeometry				= 1<<2,

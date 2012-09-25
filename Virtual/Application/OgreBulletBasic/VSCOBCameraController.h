@@ -31,7 +31,7 @@ namespace VSC {
              *  Ogre Frame Listener Events Forwarded by scene or viewport
              */
             
-            bool frameStarted(Ogre::Real elapsedTime);
+            virtual bool frameStarted(Ogre::Real elapsedTime);
 
             /**
              *  Input Listener Overrides, only need to override these

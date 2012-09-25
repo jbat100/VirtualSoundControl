@@ -83,7 +83,16 @@ void VSC::OB::Scene::ElementFactory::reset(void)
     /*
      *  Clearing the smart pointers in this container should deallocate the element,
      *  causing them to call their destroy() method.
+     *
+     *  Actually!!! NO!!! Because the weak pointers that we give away can very simply
+     *  be turned into smart pointers which spreads the ownership. So we have to 
+     *  ensure that the objects are properly removed from the scene.
      */
+    
+    BOOST_FOREACH (Scene::Element::SPtr element, mSElements)
+    {
+        element->destroy();
+    }
 
     mWElements.clear();
     mSElements.clear();
@@ -96,17 +105,13 @@ void VSC::OB::Scene::ElementFactory::destroyElement(Scene::Element::WPtr element
      *  Remove the element from the scene
      */
     
+    element.lock()->destroy();
+    
     WElements::iterator wit = std::find(mWElements.begin(), mWElements.end(), element);
     if (wit != mWElements.end())
     {
         mWElements.erase(wit);
     }
-    
-    /*
-     *  Erasing the smart pointer (which should be the only one), should result in the 
-     *  element's destructor (and hence destroy() method) to be called, which should 
-     *  remove all associated ogre representation.
-     */
     
     SElements::iterator sit = std::find(mSElements.begin(), mSElements.end(), element.lock());
     if (sit != mSElements.end())
@@ -239,7 +244,6 @@ void VSC::OB::Scene::init(Ogre::Root *root, Ogre::RenderWindow *win)
 
 }
 
-// -------------------------------------------------------------------------
 void VSC::OB::Scene::setupLights()
 {
     // Set ambient light
@@ -387,32 +391,32 @@ void VSC::OB::Scene::drawAabb(bool draw)
     mWorld->getDebugDrawer()->setDrawAabb(draw);
 }
 
-void drawText(bool draw)
+void VSC::OB::Scene::drawText(bool draw)
 {
     mDrawText = draw;
     mWorld->getDebugDrawer()->setDrawText(draw);
 }
 
-void drawFeaturesText(bool draw)
+void VSC::OB::Scene::drawFeaturesText(bool draw)
 {
     mDrawFeaturesText = draw;
     mWorld->getDebugDrawer()->setDrawFeaturesText(draw);
 }
 
-void drawContactPoints(bool draw)
+void VSC::OB::Scene::drawContactPoints(bool draw)
 {
     mDrawContactPoints = draw;
     mWorld->getDebugDrawer()->setDrawContactPoints(draw);
     mWorld->setShowDebugContactPoints(draw);
 }
 
-void enableBulletLCP(bool enable)
+void VSC::OB::Scene::enableBulletLCP(bool enable)
 {
     mDisableBulletLCP = !enable;
     mWorld->getDebugDrawer()->setDisableBulletLCP(mDisableBulletLCP);
 }
 
-void enableCCD(bool enable)
+void VSC::OB::Scene::enableCCD(bool enable)
 {
     mEnableCCD = enable;
     mWorld->getDebugDrawer()->setEnableCCD(mEnableCCD);
@@ -446,8 +450,6 @@ bool VSC::OB::Scene::frameEnded(Real elapsedTime)
         mEnableSatComparison = false;
     }
      */
-    
-    this->updateStats();
     
     return true;
 }

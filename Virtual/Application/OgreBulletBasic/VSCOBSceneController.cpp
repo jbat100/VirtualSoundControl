@@ -92,6 +92,18 @@ mOldPickingDistance(0)
 
 }
 
+VSC::OB::SceneController(Scene::WPtr scene)
+mShootSpeed (7.f),
+mImpulseForce (10.f),
+mRayQuery(0),
+mPickConstraint(0),
+mCollisionClosestRayResultCallback(0),
+mOldPickingPosition(Ogre::Vector3(0,0,0)),
+mOldPickingDistance(0)
+{
+    setupWithScene(scene);
+}
+
 void VSC::OB::SceneController::setupWithScene(Scene::WPtr scene)
 {
     this->shutdown();
