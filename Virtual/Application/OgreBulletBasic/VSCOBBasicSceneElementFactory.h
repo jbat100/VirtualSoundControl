@@ -1,10 +1,11 @@
 
-#ifndef _VSC_OGRE_BULLET_BASE_SCENE_FACTORY_H_
-#define _VSC_OGRE_BULLET_BASE_SCENE_FACTORY_H_
+#ifndef _VSC_OGRE_BULLET_BASIC_SCENE_ELEMENT_FACTORY_H_
+#define _VSC_OGRE_BULLET_BASIC_SCENE_ELEMENT_FACTORY_H_
 
+#include "VSCOB.h"
 #include "VSCOBScene.h"
 #include "VSCOBDynamicObject.h"
-#include "VSCOBStaticGeometry.h"
+#include "VSCOBStaticObject.h"
 
 #include "OgreBulletDynamics.h"
 #include "OgreBulletCollisions.h"
@@ -19,36 +20,34 @@ namespace VSC {
     
     namespace OB {
 
-        class BaseElementFactory : public Scene::ElementFactory {
+        class BasicSceneElementFactory : public Scene::ElementFactory {
             
         public:
             
-            typedef boost::shared_ptr<BaseElementFactory> SPtr;
+            typedef boost::shared_ptr<BasicSceneElementFactory> SPtr;
             
-            BaseElementFactory(Scene::WPtr scene);
+            BasicSceneElementFactory(Scene::WPtr scene);
+            
+            virtual void addGround(void);
             
             DynamicObject::WPtr addPrimitive(VSC::OB::PrimitiveType primitiveType,
                                              const DynamicObject::FactoryDespription& description);
-            
-            
             
             DynamicObject::WPtr addTrimesh(const Ogre::String& meshName,
                                            const DynamicObject::FactoryDespription& description);
              
             
-            StaticGeometry::WPtr addStaticPlane(const StaticGeometry::FactoryDespription& description);
-            
-            
+            StaticObject::WPtr addStaticPlane(const StaticObject::FactoryDescription& description);
             
         private:
             
             static int mNumberOfObjectsCreated;
             
             
-        }
+        };
         
     }
 }
 
-#endif //_VSC_OGRE_BULLET_BASE_SCENE_FACTORY_H_
+#endif //_VSC_OGRE_BULLET_BASIC_SCENE_ELEMENT_FACTORY_H_
 

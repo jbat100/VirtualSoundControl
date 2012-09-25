@@ -2,10 +2,11 @@
 #ifndef _VSC_OGRE_BULLET_APPLICATION_H_
 #define _VSC_OGRE_BULLET_APPLICATION_H_
 
-// Include the OgreBullet interface which includes Ogre itself
+
 #include "OgreBulletCollisions.h"
 #include "OgreBulletDynamics.h"
 #include "VSCOBScene.h"
+#include "VSCOBSceneController.h"
 #include "VSCOBApplicationBase.h"
 
 #include <Ogre/Ogre.h>
@@ -26,11 +27,13 @@ namespace VSC {
             
         public:
             
+            typedef std::vector<Scene::SPtr> Scenes;
+            
             /*------------------------------------------------------
              *  Constructor / Destructor
              */
             
-            Application(std::vector<Scene*> scenes);
+            Application(std::vector<Scene::SPtr> scenes);
             ~Application();
             
             #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
@@ -41,11 +44,19 @@ namespace VSC {
              *  Scenes stuff
              */
             
-            Scene* sceneWithName(Ogre::String name);
-            bool switchToScene(Scene *newScene);
+            Scene::SPtr sceneWithName(Ogre::String name);
+            bool switchToScene(Scene::SPtr newScene);
             bool switchToSceneWithName(Ogre::String sceneName);
-            Scene* getCurrentScene(void) {return mBulletScene;}
+            Scene::SPtr getCurrentScene(void) {return mBulletScene;}
             std::vector<Ogre::String> getSceneNames(void);
+            const Scenes& getScenes(void) {return mBulletScenes;}
+            
+            /*------------------------------------------------------
+             *  SceneController
+             */
+            
+            SceneController::SPtr getSceneController(void);
+            void setSceneController(SceneController::SPtr controller);
             
             /*------------------------------------------------------
              *  VSCOgreInputListener override
@@ -54,8 +65,6 @@ namespace VSC {
             virtual bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
 
         protected:
-            
-            const std::vector<Scene*>& getScenes() {return mBulletScenes;};
             
             // Override stuff from the base class
             void createScene(void){};	
@@ -73,8 +82,10 @@ namespace VSC {
             
         private:
             
-            Scene *mBulletScene;
-            std::vector<Scene*> mBulletScenes;
+            Scene::SPtr             mBulletScene;
+            Scenes                  mBulletScenes;
+            
+            SceneController::SPtr   mSceneController;
             
             static const bool mTraceUI = true;
             static const bool mTraceFrame = false;

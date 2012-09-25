@@ -11,18 +11,18 @@
 #include <boost/foreach.hpp>
 
 // -------------------------------------------------------------------------
-VSC::OB::Application::Application(std::vector<VSC::OB::Scene*> bulletScenes) :
+VSC::OB::Application::Application(std::vector<Scene::SPtr> bulletScenes) :
     VSC::OB::ApplicationBase(),
     Ogre::FrameListener(),
     mBulletScenes(bulletScenes),
-    mBulletScene(0)
+    mBulletScene(Scene::SPtr())
 {
     BOOST_ASSERT_MSG (!mBulletScenes.empty(), "Expected keyboard adapter");
     
-    BOOST_FOREACH (VSC::OB::Scene* scene, mBulletScenes) 
+    BOOST_FOREACH (Scene::SPtr scene, mBulletScenes) 
     {
         // application bindings should be set in the base class constructor
-        scene->setOgreKeyBindings(this->getOgreKeyBindings());
+        //scene->setOgreKeyBindings(this->getOgreKeyBindings());
     }
     
 }
@@ -32,13 +32,13 @@ VSC::OB::Application::~Application()
 
 }
 
-VSC::OB::Scene* VSC::OB::Application::sceneWithName(Ogre::String name)
+VSC::OB::Scene::SPtr VSC::OB::Application::sceneWithName(Ogre::String name)
 {
-    BOOST_FOREACH (VSC::OB::Scene* scene, mBulletScenes) 
+    BOOST_FOREACH (Scene::SPtr scene, mBulletScenes) 
     {
         if (name.compare(scene->getName()) == 0) return scene;
     }
-    return 0;
+    return Scene::SPtr();
 }
 
 bool VSC::OB::Application::setupWithOgreView(void* ogreView)
@@ -49,7 +49,7 @@ bool VSC::OB::Application::setupWithOgreView(void* ogreView)
     
     BOOST_ASSERT_MSG(mBulletScenes.size() != 0, "Expected keyboard adapter");
     
-    this->switchToScene (*mBulletScenes.begin());
+    this->switchToScene(*mBulletScenes.begin());
     
     BOOST_ASSERT_MSG(mRoot == &Ogre::Root::getSingleton(), "Expected mRoot to be Ogre::Root::getSingleton()");
     
@@ -62,7 +62,7 @@ std::vector<Ogre::String> VSC::OB::Application::getSceneNames(void)
 {
     std::vector<Ogre::String> sceneNames;
     
-    BOOST_FOREACH (VSC::OB::Scene* scene, mBulletScenes) 
+    BOOST_FOREACH (VSC::OB::Scene::SPtr scene, mBulletScenes) 
     {
         sceneNames.push_back(scene->getName());
     }
@@ -72,7 +72,7 @@ std::vector<Ogre::String> VSC::OB::Application::getSceneNames(void)
 
 bool VSC::OB::Application::switchToSceneWithName(Ogre::String sceneName)
 {
-    VSC::OB::Scene *scene = this->sceneWithName(sceneName);
+    VSC::OB::Scene::SPtr scene = this->sceneWithName(sceneName);
     
     if (scene) 
     {
@@ -83,7 +83,7 @@ bool VSC::OB::Application::switchToSceneWithName(Ogre::String sceneName)
 }
 
 // -------------------------------------------------------------------------
-bool VSC::OB::Application::switchToScene(VSC::OB::Scene *newScene)
+bool VSC::OB::Application::switchToScene(VSC::OB::Scene::SPtr newScene)
 {
     
     if (mTraceScene && newScene) std::cout << "VSC::OB::Application switching scene to " << newScene << std::endl;
@@ -104,7 +104,7 @@ bool VSC::OB::Application::switchToScene(VSC::OB::Scene *newScene)
     if (newScene)
     {
         if (mTraceScene && newScene) std::cout << "Initializing new scene..." << std::endl;
-        newScene->init(mRoot, mWindow, this);
+        newScene->init(mRoot, mWindow);
     }
     
     else 
@@ -112,7 +112,8 @@ bool VSC::OB::Application::switchToScene(VSC::OB::Scene *newScene)
         if (mTraceScene && newScene) std::cout << "Switched to null scene..." << std::endl;
     }
     
-    this->setNextInputListener(newScene);
+    //needs to be the scene controller
+    //this->setNextInputListener(newScene.get());
     
     mBulletScene = newScene;
     
@@ -127,7 +128,7 @@ bool VSC::OB::Application::frameStarted(const Ogre::FrameEvent& evt)
     
     if (mBulletScene && !mBulletScene->frameStarted(evt.timeSinceLastFrame))
     {
-        mBulletScene->shutdown ();
+        mBulletScene->shutdown();
         return false;
     }
     

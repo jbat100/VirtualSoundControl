@@ -7,6 +7,7 @@
 #include <Ogre/Ogre.h>
 
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 
 namespace VSC {
     
@@ -17,7 +18,8 @@ namespace VSC {
             
         public:
             
-            typedef boost::shared_ptr<VSC::OB::CameraController> SPtr;
+            typedef boost::shared_ptr<CameraController>     SPtr;
+            typedef boost::weak_ptr<CameraController>       WPtr;
 
             /**
              *  Constructor/Destructor

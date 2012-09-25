@@ -33,10 +33,19 @@ namespace VSC {
             
         public:
             
+            /*
+             *  Pointer typdefs
+             */
+            
             typedef boost::shared_ptr<Scene>    SPtr;
             typedef boost::weak_ptr<Scene>      WPtr; // Weak pointers are needed for Element and Factory objects
             
-            typedef std::map<std::string, Ogre::Light*> LightMap;
+            /*
+             *  Container typedefs
+             */
+            
+            typedef std::map<std::string, Ogre::Light*>     LightMap;
+            typedef std::map<std::string, std::string>      StatsMap;
             
             /*
              *  A Scene::Element represents an object in the scene, dynamic or static.
@@ -49,8 +58,8 @@ namespace VSC {
                 
             public:
                 
-                typedef boost::shared_ptr<Scene>    SPtr;   // Smart pointers are only used to reference Elements by Scene::Factory
-                typedef boost::weak_ptr<Scene>      WPtr;   // Weak pointers are used everywhere else
+                typedef boost::shared_ptr<Element>    SPtr;   // Smart pointers are only used to reference Elements by Scene::Factory
+                typedef boost::weak_ptr<Element>      WPtr;   // Weak pointers are used everywhere else
                 
                 Element(Scene::WPtr scene, OgreBulletDynamics::RigidBody* rigidBody) : mScene(scene), mRigidBody(rigidBody) {}
                 virtual ~Element() { destroy(); }
@@ -119,6 +128,10 @@ namespace VSC {
                  */
                 const WElements& elements() {return mWElements;}
                 
+                /*
+                 *  Abstract API for adding the stuff to the world. Used directly by VSC::OB::Scene 
+                 */
+                virtual void addGround(void) = 0;
                 
             protected:
                 
@@ -197,6 +210,12 @@ namespace VSC {
             const LightMap& getLightMap(void);
             
             /**--------------------------------------------------------------
+             *  Stats Getters
+             */
+            
+            const StatsMap& getUpdatedStatsMap(void);
+            
+            /**--------------------------------------------------------------
              *  Other Setters/Getters
              */
             
@@ -260,6 +279,8 @@ namespace VSC {
             Ogre::Camera                            *mCamera;
             LightMap                                mLightMap;
             Ogre::ShadowTechnique                   mCurrentShadowTechnique;
+            
+            StatsMap                                mStatsMap;
             
             bool mDoOnestep;
             bool mPaused;

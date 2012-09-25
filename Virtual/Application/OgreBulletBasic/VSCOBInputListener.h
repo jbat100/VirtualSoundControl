@@ -21,6 +21,9 @@ A basic test framework that minimize code in each test scene listener.
 #include <Ogre/Ogre.h>
 #include "OIS.h"
 
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
+
 namespace VSC {
     
     namespace OB {
@@ -32,6 +35,11 @@ namespace VSC {
             
         public:
             
+            typedef boost::shared_ptr<InputListener>    SPtr;
+            typedef boost::weak_ptr<InputListener>      WPtr;
+            
+            typedef boost::weak_ptr<InputAdapter>       InputAdapterPtr;
+            
             // the listener will be called when something happens, should not be nil
             InputListener(); 
             virtual ~InputListener(){}
@@ -41,15 +49,15 @@ namespace VSC {
             /*----------------------------------------------------------------
              *  This is the interface which I think should be used
              */
-            VSC::OB::InputAdapter*    getInputAdapter(void) {return mAdapter;}
-            void                    setInputAdapter(VSC::OB::InputAdapter* adapter);
+            InputAdapterPtr getInputAdapter(void) {return mAdapter;}
+            void setInputAdapter(InputAdapterPtr adapter);
             
             /*
              *  Responder chain, if the current listener does not respond to an interface event (returns false)
              *  then the call will be forwarded down the chain.
              */
-            VSC::OB::InputListener*   getNextInputListener(void) {return mNextInputListener;}
-            void                    setNextInputListener(VSC::OB::InputListener* next);
+            InputListener::WPtr getNextInputListener(void) {return mNextInputListener;}
+            void setNextInputListener(InputListener::WPtr next);
             
             /**--------------------------------------------------------------
              *  These methods are called by the input adapters when some 
@@ -76,10 +84,10 @@ namespace VSC {
             
         private:
             
-            VSC::OB::InputAdapter*                mAdapter;
-            VSC::OB::InputListener*               mNextInputListener;
+            InputAdapterPtr         mAdapter;
+            InputListener::WPtr     mNextInputListener;
             
-            static const bool                   mTraceUI = true;
+            static const bool mTraceUI = true;
             
         };
     }

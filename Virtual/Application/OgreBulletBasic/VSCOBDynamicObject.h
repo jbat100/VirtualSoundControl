@@ -45,7 +45,7 @@ namespace VSC {
                 Ogre::Real          bodyRestitution;    // 0.6f;
                 Ogre::String        materialName;       // "Bullet/box"
                 bool                castsShadow;        // true
-            }
+            };
             
             /**------------------------------------------------------------
              *  Constructor
@@ -70,7 +70,7 @@ namespace VSC {
         private:
             
             Ogre::Entity*                           mEntity;
-        }
+        };
         
     }
 }

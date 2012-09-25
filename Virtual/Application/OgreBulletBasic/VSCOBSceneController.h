@@ -2,14 +2,16 @@
 #ifndef _VSC_OGRE_BULLET_SCENE_CONTROLLER_H_
 #define _VSC_OGRE_BULLET_SCENE_CONTROLLER_H_
 
-#include "OgreBulletDynamics.h"
+#include "VSCOB.h"
 #include "VSCOBInputListener.h"
 #include "VSCOBKeyBindings.h"
 #include "VSCOBScene.h"
+
+#include "OgreBulletDynamics.h"
 #include "OIS.h"
 
 #include <boost/shared_ptr.hpp>
-
+#include <boost/weak_ptr.hpp>
 
 namespace VSC {
     
@@ -22,11 +24,15 @@ namespace VSC {
         class SceneController : public VSC::OB::InputListener, public VSC::OB::KeyBound
         {
         public:
+            
+            typedef boost::shared_ptr<SceneController>  SPtr;
+            typedef boost::weak_ptr<SceneController>    WPtr;
 
             /**--------------------------------------------------------------
              *  Constructor/Destructor
              */
             SceneController();
+            SceneController(Scene::WPtr scene);
             virtual ~SceneController(){};
             
             /**--------------------------------------------------------------
@@ -44,7 +50,7 @@ namespace VSC {
             /**--------------------------------------------------------------
              *  Dynamic actions
              */
-            void throwDynamicObjectPrimitive(VSC::OB::PrimitiveType primitiveType, const Ogre::Vector3& velocity)
+            void throwDynamicObjectPrimitive(PrimitiveType primitiveType, const Ogre::Vector3& velocity);
             
             /**--------------------------------------------------------------
              *  Input listener callback overrides

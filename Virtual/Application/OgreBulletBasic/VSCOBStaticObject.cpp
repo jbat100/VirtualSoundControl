@@ -1,7 +1,7 @@
 
 #include "VSCOBStaticObject.h"
 
-VSC::OB::StaticObject::FactoryDespription::FactoryDespription() : // set defaults
+VSC::OB::StaticObject::FactoryDescription::FactoryDescription() : // set defaults
 name("DefaultStatic"),
 bodyRestitution(0.1f),
 bodyFriction(0.8f),

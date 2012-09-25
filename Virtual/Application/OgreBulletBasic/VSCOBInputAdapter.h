@@ -3,10 +3,16 @@
 #define _VSC_OGRE_BULLET_INPUT_ADAPTER_H_
 
 #include "VSCUI.h"
+
 #include "OIS.h"
-#include <set>
 #include <Ogre/Ogre.h>
 
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
+
+#include <boost/enable_shared_from_this.hpp>
+
+#include <set>
 
 namespace VSC {
     
@@ -14,23 +20,27 @@ namespace VSC {
         
         class InputListener;
         
-        class InputAdapter
+        class InputAdapter : public boost::enable_shared_from_this<InputAdapter>
         {
             
         public:
             
+            typedef boost::shared_ptr<InputAdapter>     SPtr;
+            typedef boost::weak_ptr<InputAdapter>       WPtr;
+            
+            typedef boost::weak_ptr<InputListener>      InputListenerPtr;
+            typedef std::set<InputListenerPtr>          InputListeners;
+            
             InputAdapter(void);
             virtual ~InputAdapter(void) {}
-            
-            //friend class VSC::OB::InputListener;
             
             /*
              *  Add/Remove input listeners
              */
             
-            const std::set<VSC::OB::InputListener*>& getInputListeners(void) {return mInputListeners;}
-            void addInputListener(VSC::OB::InputListener* listener);
-            void removeInputListener(VSC::OB::InputListener* listener);
+            const InputListeners& getInputListeners(void) {return mInputListeners;}
+            void addInputListener(InputListenerPtr listener);
+            void removeInputListener(InputListenerPtr listener);
             
             bool areCoordinatesNormalized(void) {return mNormalizedCoordinates;}
             void normalizeCoordinates(bool norm) {mNormalizedCoordinates = norm;}
@@ -86,18 +96,18 @@ namespace VSC {
             
         private:
 
-            std::set<VSC::OB::InputListener*>     mInputListeners;
-            bool                                mNormalizedCoordinates;
-            bool                                mAllowRapidFireKeyPresses;
+            InputListeners                  mInputListeners;
+            bool                            mNormalizedCoordinates;
+            bool                            mAllowRapidFireKeyPresses;
             
-            Ogre::Vector2                       mLastMousePosition;
-            Ogre::Vector2                       mLastMouseMovement;
-            Ogre::Vector2                       mBufferedMouseMovement;
+            Ogre::Vector2                   mLastMousePosition;
+            Ogre::Vector2                   mLastMouseMovement;
+            Ogre::Vector2                   mBufferedMouseMovement;
             
-            VSC::KeyCodeSet                       mCurrentKeys;
-            VSC::MouseButtonSet                   mCurrentMouseButtons;
+            VSC::KeyCodeSet                 mCurrentKeys;
+            VSC::MouseButtonSet             mCurrentMouseButtons;
             
-            OIS::Keyboard::Modifier             mCurrentModifier;
+            OIS::Keyboard::Modifier         mCurrentModifier;
             
         };
         

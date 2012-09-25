@@ -36,7 +36,7 @@ namespace VSC {
                 Ogre::Real      bodyFriction;
                 Ogre::String    materialName;
                 
-            }
+            };
             
             /**------------------------------------------------------------
              *  Constructor
@@ -62,7 +62,7 @@ namespace VSC {
             
             Ogre::StaticGeometry*                   mStaticGeometry;
 
-        }
+        };
         
     }
 }

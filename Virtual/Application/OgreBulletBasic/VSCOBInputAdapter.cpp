@@ -13,18 +13,18 @@ mLastMousePosition(Ogre::Vector2(0.0, 0.0))
     
 }
 
-void VSC::OB::InputAdapter::addInputListener(VSC::OB::InputListener* listener)
+void VSC::OB::InputAdapter::addInputListener(InputListener::WPtr listener)
 {
     BOOST_ASSERT_MSG(listener, "Expected listener");
     mInputListeners.insert(listener);
-    listener->setInputAdapter(this);
+    listener.lock()->setInputAdapter(InputAdapter::WPtr(shared_from_this()));
 }
 
-void VSC::OB::InputAdapter::removeInputListener(VSC::OB::InputListener* listener)
+void VSC::OB::InputAdapter::removeInputListener(InputListener::WPtr listener)
 {
     BOOST_ASSERT_MSG(listener, "Expected listener");
     mInputListeners.erase(listener);
-    listener->setInputAdapter(this);
+    listener.lock()->setInputAdapter(InputAdapter::WPtr());
 }
 
 
@@ -45,9 +45,12 @@ void VSC::OB::InputAdapter::mouseMoved(Ogre::RenderWindow* renderWindow, const O
     mLastMouseMovement = movement;
     mBufferedMouseMovement += movement;
     
-    BOOST_FOREACH (VSC::OB::InputListener* inputListener, this->getInputListeners()) 
+    BOOST_FOREACH (InputListener::WPtr inputListener, this->getInputListeners())
     {
-        inputListener->mouseMoved(renderWindow, position, movement);
+        InputListener::SPtr sinputListener = inputListener.lock();
+        if (sinputListener) {
+            sinputListener->mouseMoved(renderWindow, position, movement);
+        }
     }
 }
 
@@ -68,9 +71,12 @@ void VSC::OB::InputAdapter::mouseButtonPressed(Ogre::RenderWindow* renderWindow,
     
     mLastMousePosition = position;
     
-    BOOST_FOREACH (VSC::OB::InputListener* inputListener, this->getInputListeners()) 
+    BOOST_FOREACH (VSC::OB::InputListener::WPtr inputListener, this->getInputListeners())
     {
-        inputListener->mouseButtonPressed(renderWindow, position, buttonID);
+        InputListener::SPtr sinputListener = inputListener.lock();
+        if (sinputListener) {
+            sinputListener->mouseButtonPressed(renderWindow, position, buttonID);
+        }
     }
 }
 
@@ -80,9 +86,12 @@ void VSC::OB::InputAdapter::mouseButtonReleased(Ogre::RenderWindow* renderWindow
     
     mLastMousePosition = position;
     
-    BOOST_FOREACH (VSC::OB::InputListener* inputListener, this->getInputListeners()) 
+    BOOST_FOREACH (VSC::OB::InputListener::WPtr inputListener, this->getInputListeners())
     {
-        inputListener->mouseButtonReleased(renderWindow, position, buttonID);
+        InputListener::SPtr sinputListener = inputListener.lock();
+        if (sinputListener) {
+            sinputListener->mouseButtonReleased(renderWindow, position, buttonID);
+        }
     }
 }
 
@@ -101,9 +110,12 @@ void VSC::OB::InputAdapter::keyPressed(Ogre::RenderWindow* renderWindow, OIS::Ke
     
     if (relayToListeners) 
     {
-        BOOST_FOREACH (VSC::OB::InputListener* inputListener, this->getInputListeners()) 
+        BOOST_FOREACH (VSC::OB::InputListener::WPtr inputListener, this->getInputListeners())
         {
-            inputListener->keyPressed(renderWindow, key);
+            InputListener::SPtr sinputListener = inputListener.lock();
+            if (sinputListener) {
+                sinputListener->keyPressed(renderWindow, key);
+            }
         }
     }
 
@@ -124,9 +136,12 @@ void VSC::OB::InputAdapter::keyReleased(Ogre::RenderWindow* renderWindow, OIS::K
     
     if (relayToListeners) 
     {
-        BOOST_FOREACH (VSC::OB::InputListener* inputListener, this->getInputListeners()) 
+        BOOST_FOREACH (VSC::OB::InputListener::WPtr inputListener, this->getInputListeners())
         {
-            inputListener->keyReleased(renderWindow, key);
+            InputListener::SPtr sinputListener = inputListener.lock();
+            if (sinputListener) {
+                sinputListener->keyReleased(renderWindow, key);
+            }
         }
     }
 }
@@ -135,20 +150,25 @@ void VSC::OB::InputAdapter::modifierChanged(Ogre::RenderWindow* renderWindow, OI
 {
     mCurrentModifier = modifier;
     
-    BOOST_FOREACH (VSC::OB::InputListener* inputListener, this->getInputListeners()) 
+    BOOST_FOREACH (VSC::OB::InputListener::WPtr inputListener, this->getInputListeners())
     {
-        inputListener->modifierChanged(renderWindow, modifier);
+        InputListener::SPtr sinputListener = inputListener.lock();
+        if (sinputListener) {
+            sinputListener->modifierChanged(renderWindow, modifier);
+        }
     }
     
 }
 
 void VSC::OB::InputAdapter::renderWindowChangedSize(Ogre::RenderWindow* renderWindow)
 {
-    //BOOST_ASSERT_MSG(listener, "Expected listener");
     
-    BOOST_FOREACH (VSC::OB::InputListener* inputListener, this->getInputListeners())
+    BOOST_FOREACH (VSC::OB::InputListener::WPtr inputListener, this->getInputListeners())
     {
-        inputListener->renderWindowChangedSize(renderWindow);
+        InputListener::SPtr sinputListener = inputListener.lock();
+        if (sinputListener) {
+            sinputListener->renderWindowChangedSize(renderWindow);
+        }
     }
 }
 

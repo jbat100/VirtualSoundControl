@@ -453,7 +453,7 @@ bool VSC::OB::Scene::frameEnded(Real elapsedTime)
 }
 
 // ------------------------------------------------------------------------- 
-bool VSC::OB::Scene::checkIfEnoughPlaceToAddObject(float maxDist)
+bool VSC::OB::Scene::checkIfEnoughPlaceToAddObject(float minDist)
 {
     Ogre::Vector3 pickPos;
     Ogre::Ray rayTo;
@@ -461,7 +461,7 @@ bool VSC::OB::Scene::checkIfEnoughPlaceToAddObject(float maxDist)
 
     if (body)
     {          
-        if ((pickPos - mCamera->getDerivedPosition ()).length () < maxDist)
+        if ((pickPos - mCamera->getDerivedPosition ()).length () < minDist)
             return false;
     }
     
@@ -473,10 +473,10 @@ bool VSC::OB::Scene::checkIfEnoughPlaceToAddObject(float maxDist)
 void VSC::OB::Scene::initWorld(const Ogre::Vector3 &gravityVector, const Ogre::AxisAlignedBox &bounds)
 {
     // Start Bullet
-    mWorld = new OgreBulletDynamics::DynamicsWorld (mSceneMgr, bounds, gravityVector, true, true, 10000);
+    mWorld = new OgreBulletDynamics::DynamicsWorld(mSceneMgr, bounds, gravityVector, true, true, 10000);
 
     // add Debug info display tool
-    OgreBulletCollisions::DebugDrawer *debugDrawer = new DebugDrawer();
+    OgreBulletCollisions::DebugDrawer *debugDrawer = new OgreBulletCollisions::DebugDrawer();
 
     mWorld->setDebugDrawer(debugDrawer);
 
@@ -491,30 +491,14 @@ void VSC::OB::Scene::addGround()
 }
 
 // -------------------------------------------------------------------------
-void VSC::OB::Scene::updateStats(void)
+const StatsMap& VSC::OB::Scene::getUpdatedStatsMap(void)
 {
-
-    // update stats when necessary
-    if (mFpsStaticText)
-    {
-        const RenderTarget::FrameStats& stats = mWindow->getStatistics();
-
-        static String avgFps = "Average FPS: ";
-        static String currFps = "Current FPS: ";
-        static String tris = "Triangle Count: ";
-
-        mFpsStaticText->setValue
-            (
-            avgFps + StringConverter::toString(stats.avgFPS) + " / " +
-            currFps + StringConverter::toString(stats.lastFPS) + " / " +
-            tris + StringConverter::toString(stats.triangleCount)
-            );
-    }
-
-    try {
-        OverlayElement* guiDbg = OverlayManager::getSingleton().getOverlayElement("Core/DebugText");
-        guiDbg->setCaption(mDebugText);
-    }
-    catch(...) {}
+    const Ogre::RenderTarget::FrameStats& stats = mWindow->getStatistics();
+    
+    mStatsMap["Average FPS"]    = Ogre::StringConverter::toString(stats.avgFPS);
+    mStatsMap["Current FPS"]    = Ogre::StringConverter::toString(stats.lastFPS);
+    mStatsMap["Triangle Count"] = Ogre::StringConverter::toString(stats.triangleCount);
+    
+    return mStatsMap;
 }
 
