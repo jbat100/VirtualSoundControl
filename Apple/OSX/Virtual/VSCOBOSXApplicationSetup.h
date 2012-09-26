@@ -5,6 +5,8 @@
 
 #import <Ogre/Ogre.h>
 
+#include "VSCOBApplicationBase.h"
+
 namespace VSC {
     
     namespace OB {
@@ -18,9 +20,7 @@ namespace VSC {
             
         public:
             
-            static bool setupApplicationWithOgreView(ApplicationBase* ogreApplication, void* ogreView);
-            static Ogre::RenderWindow* getRenderWindow(void* ogreView);
-            static OSXInputAdapter* createCocoaInputAdapter(void);
+            static bool setupApplicationWithOgreView(ApplicationBase::SPtr ogreApplication, void* ogreView);
 
         };
         

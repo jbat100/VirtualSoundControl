@@ -92,7 +92,7 @@ mOldPickingDistance(0)
 
 }
 
-VSC::OB::SceneController(Scene::WPtr scene)
+VSC::OB::SceneController::SceneController(Scene::WPtr scene) :
 mShootSpeed (7.f),
 mImpulseForce (10.f),
 mRayQuery(0),

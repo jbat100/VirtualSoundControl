@@ -31,7 +31,7 @@ namespace VSC {
             /**--------------------------------------------------------------
              *  Constructor/Destructor
              */
-            SceneController() {}
+            SceneController();
             SceneController(Scene::WPtr scene);
             virtual ~SceneController(){};
             

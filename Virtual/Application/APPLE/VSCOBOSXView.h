@@ -8,6 +8,8 @@
 
 #import "OgreOSXCocoaView.h"
 
+#include "VSCOBOSXInputAdapter.h"
+
 namespace VSC { namespace OB {
     class OSXInputAdapter;
 }}
@@ -17,6 +19,6 @@ namespace VSC { namespace OB {
     
 }
 
-@property (nonatomic, assign) VSC::OB::OSXInputAdapter* inputAdapter;
+@property (nonatomic, assign) VSC::OB::OSXInputAdapter::SPtr inputAdapter;
 
 @end

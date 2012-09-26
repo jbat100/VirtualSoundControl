@@ -73,7 +73,7 @@ VSC::OB::ApplicationBase::~ApplicationBase()
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 bool VSC::OB::ApplicationBase::setupWithOgreView(void* ogreView) {
     
-    VSC::OB::OSXApplicationSetup::setupApplicationWithOgreView(this, ogreView);
+    VSC::OB::OSXApplicationSetup::setupApplicationWithOgreView(shared_from_this(), ogreView);
     
     this->setupResources();
     this->chooseSceneManager();

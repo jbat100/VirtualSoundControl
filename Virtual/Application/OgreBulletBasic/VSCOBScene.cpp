@@ -287,13 +287,15 @@ void VSC::OB::Scene::setupLights()
 
 }
 
-void VSC::OB::Scene::getDebugRayLines()
+OgreBulletCollisions::DebugLines* VSC::OB::Scene::getDebugRayLines()
 {
     if (mDebugRayLine == 0)
     {
-        mDebugRayLine = new DebugLines();
+        mDebugRayLine = new OgreBulletCollisions::DebugLines();
         mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(mDebugRayLine);
     }
+    
+    return mDebugRayLine;
 }
 
 
@@ -333,18 +335,18 @@ bool VSC::OB::Scene::resetCameraAspectRatio(void)
 }
 
 // -------------------------------------------------------------------------
-VSC::OB::Scene::Element::WPtr VSC::OB::Scene::getElementAtViewportCoordinate(const Ogre::Viewport* v, Ogre::Vector2 p, Ogre::Vector3 &ip, Ogre::Ray &r)
+VSC::OB::Scene::Element::WPtr VSC::OB::Scene::getElementAtViewportCoordinate(const Ogre::Viewport* v, Ogre::Vector2& p, Ogre::Vector3 &ip, Ogre::Ray &r)
 {
-    if (viewport == mCamera->getViewport())
+    if (v == mCamera->getViewport())
     {
-        rayTo = mCamera->getCameraToViewportRay(position.x, position.y);
-        CollisionClosestRayResultCallback callback(rayTo, mWorld, mCamera->getFarClipDistance());
+        r = mCamera->getCameraToViewportRay(p.x, p.y);
+        CollisionClosestRayResultCallback callback(r, mWorld, mCamera->getFarClipDistance());
         mWorld->launchRay(callback);
         
-        if (callback->doesCollide())
+        if (callback.doesCollide())
         {
-            OgreBulletDynamics::RigidBody* body = static_cast <OgreBulletDynamics::RigidBody*>(callback->getCollidedObject());
-            intersectionPoint = callback->getCollisionPoint();
+            OgreBulletDynamics::RigidBody* body = static_cast <OgreBulletDynamics::RigidBody*>(callback.getCollidedObject());
+            ip = callback.getCollisionPoint();
             if (body)
             {
                 return this->getElementFactory()->elementWithRigidBody(body);
@@ -361,7 +363,7 @@ bool VSC::OB::Scene::frameStarted(Real elapsedTime)
     
     if (mTraceFrame) std::cout << "VSC::OB::Scene::frameStarted, elapsed time " << elapsedTime << std::endl;
     
-    this->getCameraController()->frameStarted(elapsedTime);
+    //this->getCameraController()->frameStarted(elapsedTime);
 
     // update physics
     if (!mPaused || mDoOnestep)
@@ -493,7 +495,7 @@ void VSC::OB::Scene::addGround()
 }
 
 // -------------------------------------------------------------------------
-const StatsMap& VSC::OB::Scene::getUpdatedStatsMap(void)
+const VSC::OB::SceneStatsMap& VSC::OB::Scene::getUpdatedStatsMap(void)
 {
     const Ogre::RenderTarget::FrameStats& stats = mWindow->getStatistics();
     

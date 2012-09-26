@@ -40,7 +40,9 @@
     
     _ogreBulletApplication = app;
     
-    std::vector<Ogre::String> sceneNames = app->getSceneNames();
+    VSC::OB::Application::SPtr sapp = app.lock();
+    
+    std::vector<Ogre::String> sceneNames = sapp->getSceneNames();
     
     NSMutableArray* sceneStrings = [NSMutableArray array];
     
@@ -56,9 +58,9 @@
      *  Set selected popup item to the current scene
      */
     
-    if (app->getCurrentScene()) 
+    if (sapp->getCurrentScene()) 
     {
-        Ogre::String selectedSceneName = app->getCurrentScene()->getName();
+        Ogre::String selectedSceneName = sapp->getCurrentScene()->getName();
         [self.scenePopUpButton selectItemWithTitle:[NSString stringWithStdString:selectedSceneName]];
     }
     
@@ -68,8 +70,10 @@
 
 - (IBAction)scenePopUpButtonChanged:(id)sender 
 {
+    VSC::OB::Application::SPtr sapp = self.ogreBulletApplication.lock();
+    
     NSString* sceneName = [self.scenePopUpButton titleOfSelectedItem];
-    bool success = self.ogreBulletApplication->switchToSceneWithName([sceneName stdString]);
+    bool success = sapp->switchToSceneWithName([sceneName stdString]);
     BOOST_ASSERT_MSG(success == true, "Expected  success");
 }
 

@@ -93,7 +93,9 @@ bool VSC::OB::Application::switchToScene(Scene::SPtr newScene)
      *  We need to reset the scene managers and everything...
      */
     
-    BOOST_ASSERT_MSG(this->getInputAdapter() != 0, "Expected  adapter");
+    InputAdapter::SPtr adapter = this->getInputAdapter().lock();
+    
+    BOOST_ASSERT_MSG(adapter, "Expected  adapter");
     
     if (mBulletScene)
     {
@@ -106,7 +108,7 @@ bool VSC::OB::Application::switchToScene(Scene::SPtr newScene)
     {
         if (mTraceScene && newScene) std::cout << "Initializing new scene..." << std::endl;
         newScene->init(mRoot, mWindow);
-        this->getSceneController()->setScene()
+        this->getSceneController()->setScene(Scene::WPtr(newScene));
     }
     
     else 
@@ -130,6 +132,8 @@ bool VSC::OB::Application::frameStarted(const Ogre::FrameEvent& evt)
         mBulletScene->shutdown();
         return false;
     }
+    
+    this->getCameraController()->frameStarted(evt.timeSinceLastFrame);
     
     return true;
 }

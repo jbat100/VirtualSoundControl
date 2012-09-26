@@ -72,15 +72,16 @@ namespace VSC {
                 Scene::WPtr                             getScene(void) {return mScene;};
                 OgreBulletDynamics::RigidBody*          getRigidBody(void) {return mRigidBody;}
                 
-            protected:
-                
                 /*
-                 *  Destroy should be overridden to perform all necessary operations to remove the element from the Scene 
+                 *  Destroy should be overridden to perform all necessary operations to remove the element from the Scene
                  *  and all associated Ogre/Bullet stuff which it is used by. However subclasses should call the base implementation
-                 *  which removes the rigid body from the world.
+                 *  which removes the rigid body from the OgreBulletDynamics::World.
                  */
                 
                 virtual void destroy(void);
+                
+            protected:
+                
                 
             private:
                 
@@ -197,6 +198,7 @@ namespace VSC {
              */
             bool checkIfEnoughPlaceToAddObject(float maxDist);
             Element::WPtr getElementAtViewportCoordinate(const Ogre::Viewport* v, Ogre::Vector2& p, Ogre::Vector3 &ip, Ogre::Ray &r);
+            OgreBulletCollisions::DebugLines* getDebugRayLines();
             
             /**--------------------------------------------------------------
              *  Ogre Getters

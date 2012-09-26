@@ -16,6 +16,9 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "Debug/OgreBulletCollisionsDebugDrawer.h"
 
 #include "VSCOBInputAdapter.h"
+#include "VSCOBBasicSceneElementFactory.h"
+#include "VSCOBDynamicObject.h"
+
 
 using namespace OIS;
 using namespace Ogre;
@@ -28,23 +31,24 @@ const Ogre::Vector3 CameraStart  = Ogre::Vector3(0,-9,1);
 
 
 // -------------------------------------------------------------------------
-void VSC::OB::TriMeshDemo::init(Ogre::Root *root, Ogre::RenderWindow *win, VSC::OB::Application *application)
+void VSC::OB::TriMeshDemo::init(Ogre::Root *root, Ogre::RenderWindow *win)
 {
+    
+    this->setSceneManager(root->createSceneManager(ST_GENERIC));
 
-    mSceneMgr = root->createSceneManager(ST_GENERIC);
+    this->setCamera(this->getSceneManager()->createCamera("Cam"));
 
-    mCamera = mSceneMgr->createCamera("Cam");
-    mCamera->setFOVy(Degree(90));
-    mCamera->setNearClipDistance(0.1);
-    mCamera->setFarClipDistance(100);
-    Viewport *vp = win->addViewport(mCamera);
+    this->getCamera()->setFOVy(Degree(90));
+    this->getCamera()->setNearClipDistance(0.1);
+    this->getCamera()->setFarClipDistance(100);
+    Viewport *vp = win->addViewport(this->getCamera());
     vp->setBackgroundColour(ColourValue(0,0,0));
     
     // Alter the camera aspect ratio to match the viewport
-    mCamera->setAspectRatio( Real(vp->getActualWidth()) / Real(vp->getActualHeight()));
-    mCamera->setPosition(CameraStart);
-    mCamera->rotate(Ogre::Vector3(1,0,0), Degree(90));
-    mCamera->setFixedYawAxis(true, Ogre::Vector3::UNIT_Z);
+    this->getCamera()->setAspectRatio( Real(vp->getActualWidth()) / Real(vp->getActualHeight()));
+    this->getCamera()->setPosition(CameraStart);
+    this->getCamera()->rotate(Ogre::Vector3(1,0,0), Degree(90));
+    this->getCamera()->setFixedYawAxis(true, Ogre::Vector3::UNIT_Z);
 
     VSC::OB::Scene::init(root, win);
 
@@ -80,7 +84,7 @@ void VSC::OB::TriMeshDemo::setupLights()
     l->setSpecularColour(0.5,0.5,0.3);
     this->getLightMap().insert(LightMap::value_type("Sun", l));
     
-    l = mSceneMgr->createLight("Spot");
+    l = this->getSceneManager()->createLight("Spot");
     l->setPosition(CameraStart + Ogre::Vector3(0,0,15));
     l->setType(Light::LT_SPOTLIGHT);
     l->setDirection(-0.40824828, -0.40824828, -0.81649655);

@@ -2,9 +2,15 @@
 #define _VSC_OGRE_BULLET_COCOA_INPUT_ADAPTER_H_
 
 #import <Cocoa/Cocoa.h>
+
+#include "VSCOBInputAdapter.h"
+
 #include <Ogre/Ogre.h>
 #include "OIS.h"
-#include "VSCOBInputAdapter.h"
+
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
+
 #include <set>
 
 namespace VSC {
@@ -15,7 +21,11 @@ namespace VSC {
 
         class OSXInputAdapter : public InputAdapter
         {
+            
         public:
+            
+            typedef boost::shared_ptr<OSXInputAdapter>  SPtr;
+            typedef boost::weak_ptr<OSXInputAdapter>    WPtr;
             
             OSXInputAdapter(void);
             

@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#include "VSCOBApplication.h"
+
 @class VSCOBOSXView;
 
 namespace VSC { namespace OB {

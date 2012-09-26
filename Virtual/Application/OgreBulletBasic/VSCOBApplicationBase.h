@@ -21,30 +21,39 @@ Description: Base class for all the OGRE examples
 #ifndef _VSC_OGRE_APPLICATION_H_
 #define _VSC_OGRE_APPLICATION_H_
 
-#include <Ogre/Ogre.h>
-#include <Ogre/OgreConfigFile.h>
 #include "VSCOBInputListener.h"
 #include "VSCOBKeyboardManager.h"
 #include "VSCOBKeyBindings.h"
+
+#include <Ogre/Ogre.h>
+#include <Ogre/OgreConfigFile.h>
+
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
+
+#include <boost/enable_shared_from_this.hpp>
 
 namespace VSC {
     
     namespace OB {
 
         class InputAdapter;
-        
-        #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-        class OSXApplicationSetup;
-        #endif
 
         /**
          *  Base class which manages the standard startup of an Ogre application.
          *  Designed to be subclassed for specific examples if required.
          */
-        class ApplicationBase : public InputListener, public KeyBound
+        class ApplicationBase : public InputListener, public KeyBound, public boost::enable_shared_from_this<ApplicationBase>
         {
             
         public:
+            
+            typedef boost::shared_ptr<ApplicationBase>  SPtr;
+            typedef boost::weak_ptr<ApplicationBase>    WPtr;
+            
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+            friend class OSXApplicationSetup;
+#endif
             
             /// Standard constructor
             ApplicationBase();

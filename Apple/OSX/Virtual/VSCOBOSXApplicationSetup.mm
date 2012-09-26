@@ -1,22 +1,4 @@
-/*
------------------------------------------------------------------------------
-This source file is part of OGRE
-(Object-oriented Graphics Rendering Engine)
-For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2006 Torus Knot Software Ltd
-Also see acknowledgements in Readme.html
-
-You may use this sample code for anything you like, it is not covered by the
-LGPL like the rest of the engine.
------------------------------------------------------------------------------
-*/
-/*
------------------------------------------------------------------------------
-Filename:    VSCOgreApplication.h
-Description: Base class for all the OGRE examples
------------------------------------------------------------------------------
-*/
 
 #import "VSCOBOSXApplicationSetup.h"
 
@@ -38,7 +20,7 @@ Description: Base class for all the OGRE examples
 
 #import "VSCOBOSXView.h"
 
-bool VSC::OB::OSXApplicationSetup::setupApplicationWithOgreView(VSC::OB::ApplicationBase* ogreApplication, void* rawOgreView)
+bool VSC::OB::OSXApplicationSetup::setupApplicationWithOgreView(ApplicationBase::SPtr obApplication, void* rawOgreView)
 {
     VSCOBOSXView* ogreView = (__bridge VSCOBOSXView*)rawOgreView;
     
@@ -61,13 +43,13 @@ bool VSC::OB::OSXApplicationSetup::setupApplicationWithOgreView(VSC::OB::Applica
      */
     
     // get the ogre root
-    ogreApplication->mRoot = OGRE_NEW Ogre::Root(pluginsPath + "plugins.cfg", workDir + "ogre.cfg", workDir + "ogre.log");
+    obApplication->mRoot = OGRE_NEW Ogre::Root(pluginsPath + "plugins.cfg", workDir + "ogre.cfg", workDir + "ogre.log");
     
     // set up the render system. Since this is running on Mac, our only option is OpenGL.
-    ogreApplication->mRoot->setRenderSystem(ogreApplication->mRoot->getRenderSystemByName("OpenGL Rendering Subsystem"));
+    obApplication->mRoot->setRenderSystem(obApplication->mRoot->getRenderSystemByName("OpenGL Rendering Subsystem"));
     
     // Initialise without an automatically created window
-    ogreApplication->mRoot->initialise(false);
+    obApplication->mRoot->initialise(false);
     
     // Ask for a new renderwindow passing in the ogreView in our nib file
     Ogre::NameValuePairList misc;
@@ -78,40 +60,25 @@ bool VSC::OB::OSXApplicationSetup::setupApplicationWithOgreView(VSC::OB::Applica
     
     // Actually create the render window
     NSRect frame = [ogreView frame];
-    ogreApplication->mRoot->createRenderWindow("ogre window", frame.size.width, frame.size.height, false, &misc);
+    obApplication->mRoot->createRenderWindow("ogre window", frame.size.width, frame.size.height, false, &misc);
     
-    ogreApplication->mWindow = VSC::OB::OSXApplicationSetup::getRenderWindow(rawOgreView);
+    obApplication->mWindow = [(__bridge OgreView*)rawOgreView ogreWindow];
     // This cast works so we do actually have a Ogre::OSXCocoaWindow here
-    std::cout << "mWindow is " << (void*)ogreApplication->mWindow;
+    std::cout << "mWindow is " << (void*)obApplication->mWindow;
     
-    VSC::OB::OSXInputAdapter* adapter = VSC::OB::OSXApplicationSetup::createCocoaInputAdapter();
+    OSXInputAdapter::SPtr adapter(new OSXInputAdapter());
     
     BOOST_ASSERT_MSG(adapter, "Expected adapter"); 
     
-    //ogreApplication->setInputAdapter(adapter);
+    adapter->addInputListener(obApplication);
     
-    adapter->addInputListener(ogreApplication);
-    
-    BOOST_ASSERT_MSG(ogreApplication->getInputAdapter() == adapter, "Expected adapter"); 
+    //BOOST_ASSERT_MSG(obApplication->getInputAdapter() == adapter, "Expected adapter");
     
     adapter->setCocoaView(ogreView);
-    
-    //adapter->addInputListener(ogreApplication);
     
     ogreView.inputAdapter = adapter;
     
     return true;
 }
 
-Ogre::RenderWindow* VSC::OB::OSXApplicationSetup::getRenderWindow(void* rawOgreView) 
-{
-    OgreView* ogreView = (__bridge OgreView*)rawOgreView;
-    BOOST_ASSERT_MSG( [ogreView isKindOfClass:[OgreView class]], "Expected ogreView to be of class OgreView" ); 
-    //Ogre::RenderWindow *mWindow = [ogreView ogreWindow];
-    return [ogreView ogreWindow];
-}
 
-VSC::OB::OSXInputAdapter* VSC::OB::OSXApplicationSetup::createCocoaInputAdapter(void)
-{
-    return new VSC::OB::OSXInputAdapter();
-}

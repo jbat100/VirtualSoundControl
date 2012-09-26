@@ -63,7 +63,7 @@ bool VSC::OB::CameraController::keyPressed(Ogre::RenderWindow* renderWindow, OIS
     
     if (adapter) 
     {
-        OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
+        OIS::Keyboard::Modifier modifier = adapter->getCurrentModifier();
         VSC::Keyboard::Combination comb(key, modifier);
         
         const VSC::OB::KeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
@@ -122,7 +122,7 @@ bool VSC::OB::CameraController::keyReleased(Ogre::RenderWindow* renderWindow, OI
     if (adapter) 
     {
         
-        OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
+        OIS::Keyboard::Modifier modifier = adapter->getCurrentModifier();
         VSC::Keyboard::Combination comb(key, modifier);
         
         const VSC::OB::KeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
