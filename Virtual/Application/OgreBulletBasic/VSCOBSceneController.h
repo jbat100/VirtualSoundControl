@@ -33,7 +33,7 @@ namespace VSC {
              */
             SceneController();
             SceneController(Scene::WPtr scene);
-            virtual ~SceneController(){};
+            virtual ~SceneController(){}
             
             /**--------------------------------------------------------------
              *  Init for a given scene and shutdown
@@ -44,8 +44,8 @@ namespace VSC {
             /**--------------------------------------------------------------
              *  Ogre Frame Listener Forwarded messages from Application 
              */
-            virtual bool frameStarted(Ogre::Real elapsedTime);
-            virtual bool frameEnded(Ogre::Real elapsedTime);
+            //virtual bool frameStarted(Ogre::Real elapsedTime);
+            //virtual bool frameEnded(Ogre::Real elapsedTime);
 
             /**--------------------------------------------------------------
              *  Dynamic actions

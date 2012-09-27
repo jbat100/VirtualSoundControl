@@ -34,6 +34,7 @@
 		106A58071608CCF600D905D8 /* VSCOBOSXView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 106A58031608CCF600D905D8 /* VSCOBOSXView.mm */; };
 		106A58081608CCF600D905D8 /* VSCOBOSXWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 106A58051608CCF600D905D8 /* VSCOBOSXWindow.mm */; };
 		1091F28415B07C0D00466854 /* VSCLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1091F28215B07C0D00466854 /* VSCLog.cpp */; };
+		10951E5916150788007764E7 /* VSCOBDynamicObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10849B55160B0BE40047D0EE /* VSCOBDynamicObject.cpp */; };
 		109D51B5155998EE0030C161 /* VSCException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109D51B3155998EE0030C161 /* VSCException.cpp */; };
 		10B60D2515505D6D006A6D6E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60D2415505D6D006A6D6E /* Cocoa.framework */; };
 		10B60D2F15505D6D006A6D6E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 10B60D2D15505D6D006A6D6E /* InfoPlist.strings */; };
@@ -88,7 +89,6 @@
 		10CFE74A156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE719156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp */; };
 		10D5533A15FA409F002AED81 /* NSString+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10D5533915FA409F002AED81 /* NSString+VSCAdditions.mm */; };
 		10E1B289156D2A630013B9F7 /* RenderSystem_GL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */; };
-		10E1B28E156D3AFE0013B9F7 /* BetaGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E1B28C156D3AFE0013B9F7 /* BetaGUI.cpp */; };
 		10E8557415E65048008FF635 /* VSCUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E8557215E65048008FF635 /* VSCUI.cpp */; };
 		10EB5A3B16050D7500F0939E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10EB5A3A16050D7500F0939E /* OpenGL.framework */; };
 		10ED088A1601CD8900053C07 /* VSCBound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10ED08881601CD8900053C07 /* VSCBound.cpp */; };
@@ -318,8 +318,6 @@
 		10D5533815FA409F002AED81 /* NSString+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+VSCAdditions.h"; path = "../../../Categories/NSString+VSCAdditions.h"; sourceTree = "<group>"; };
 		10D5533915FA409F002AED81 /* NSString+VSCAdditions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSString+VSCAdditions.mm"; path = "../../../Categories/NSString+VSCAdditions.mm"; sourceTree = "<group>"; };
 		10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = RenderSystem_GL.dylib; path = lib/RenderSystem_GL.dylib; sourceTree = OGRE_SDK; };
-		10E1B28C156D3AFE0013B9F7 /* BetaGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BetaGUI.cpp; path = ../../../../Virtual/Application/OgreBulletBasic/BetaGUI.cpp; sourceTree = "<group>"; };
-		10E1B28D156D3AFE0013B9F7 /* BetaGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BetaGUI.h; path = ../../../../Virtual/Application/OgreBulletBasic/BetaGUI.h; sourceTree = "<group>"; };
 		10E8557215E65048008FF635 /* VSCUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCUI.cpp; path = ../../../../Interface/VSCUI.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		10E8557315E65048008FF635 /* VSCUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCUI.h; path = ../../../../Interface/VSCUI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10EB5A3A16050D7500F0939E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -839,8 +837,6 @@
 		10E1B28B156D3AEB0013B9F7 /* BetaGUI */ = {
 			isa = PBXGroup;
 			children = (
-				10E1B28D156D3AFE0013B9F7 /* BetaGUI.h */,
-				10E1B28C156D3AFE0013B9F7 /* BetaGUI.cpp */,
 			);
 			name = BetaGUI;
 			sourceTree = "<group>";
@@ -967,7 +963,6 @@
 				10CFE748156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp in Sources */,
 				10CFE749156CD62000B24399 /* OgreBulletDynamicsWorld.cpp in Sources */,
 				10CFE74A156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp in Sources */,
-				10E1B28E156D3AFE0013B9F7 /* BetaGUI.cpp in Sources */,
 				1091F28415B07C0D00466854 /* VSCLog.cpp in Sources */,
 				10E8557415E65048008FF635 /* VSCUI.cpp in Sources */,
 				10D5533A15FA409F002AED81 /* NSString+VSCAdditions.mm in Sources */,
@@ -992,6 +987,7 @@
 				1013E973160BCD820014D566 /* VSCOBStaticObject.cpp in Sources */,
 				10407A00160D203F00050663 /* VSCOBSceneController.cpp in Sources */,
 				10407A05160D20C000050663 /* VSCOBBasicSceneElementFactory.cpp in Sources */,
+				10951E5916150788007764E7 /* VSCOBDynamicObject.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

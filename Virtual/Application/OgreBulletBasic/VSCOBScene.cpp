@@ -45,6 +45,8 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "OgreBulletDynamicsConstraint.h"
 #include "Constraints/OgreBulletDynamicsPoint2pointConstraint.h" 
 
+#include "VSCOBBasicSceneElementFactory.h"
+
 using namespace Ogre;
 using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
@@ -75,7 +77,6 @@ void VSC::OB::Scene::ElementFactory::registerElement(Scene::Element::SPtr elemen
      */
     
     mSElements.push_back(element);
-    mWElements.push_back(Scene::Element::WPtr(element));
 }
 
 void VSC::OB::Scene::ElementFactory::reset(void)
@@ -94,7 +95,6 @@ void VSC::OB::Scene::ElementFactory::reset(void)
         element->destroy();
     }
 
-    mWElements.clear();
     mSElements.clear();
 }
 
@@ -106,12 +106,6 @@ void VSC::OB::Scene::ElementFactory::destroyElement(Scene::Element::WPtr element
      */
     
     element.lock()->destroy();
-    
-    WElements::iterator wit = std::find(mWElements.begin(), mWElements.end(), element);
-    if (wit != mWElements.end())
-    {
-        mWElements.erase(wit);
-    }
     
     SElements::iterator sit = std::find(mSElements.begin(), mSElements.end(), element.lock());
     if (sit != mSElements.end())
@@ -244,6 +238,11 @@ void VSC::OB::Scene::init(Ogre::Root *root, Ogre::RenderWindow *win)
 
 }
 
+void VSC::OB::Scene::setupFactory()
+{
+    mElementFactory = ElementFactory::SPtr((ElementFactory*) new BasicSceneElementFactory(shared_from_this()));
+}
+
 void VSC::OB::Scene::setupLights()
 {
     // Set ambient light
@@ -366,7 +365,7 @@ bool VSC::OB::Scene::frameStarted(Real elapsedTime)
     //this->getCameraController()->frameStarted(elapsedTime);
 
     // update physics
-    if (!mPaused || mDoOnestep)
+    if (!mPaused || mDoOneStep)
     {
         mWorld->stepSimulation(elapsedTime);
     }
@@ -375,7 +374,7 @@ bool VSC::OB::Scene::frameStarted(Real elapsedTime)
      *  This is were the serious shit is going to happen, tracking collisions and such
      */
 
-    mDoOnestep = false;
+    mDoOneStep = false;
 
     return true;
 }
@@ -461,12 +460,21 @@ bool VSC::OB::Scene::checkIfEnoughPlaceToAddObject(float minDist)
 {
     Ogre::Vector3 pickPos;
     Ogre::Ray rayTo;
-    OgreBulletDynamics::RigidBody * body = getBodyUnderCursorUsingBullet(pickPos, rayTo);
-
-    if (body)
-    {          
-        if ((pickPos - mCamera->getDerivedPosition ()).length () < minDist)
-            return false;
+    
+    Ogre::Vector2 coord(0.5, 0.5);
+    Scene::Element::WPtr element = this->getElementAtViewportCoordinate(mCamera->getViewport(), coord, pickPos, rayTo);
+    
+    Scene::Element::SPtr selement = element.lock();
+    
+    if (selement)
+    {
+        OgreBulletDynamics::RigidBody *body = selement->getRigidBody();
+        
+        if (body)
+        {
+            if ((pickPos - mCamera->getDerivedPosition ()).length () < minDist)
+                return false;
+        }
     }
     
     return true;        
@@ -489,13 +497,7 @@ void VSC::OB::Scene::initWorld(const Ogre::Vector3 &gravityVector, const Ogre::A
 }
 
 // -------------------------------------------------------------------------
-void VSC::OB::Scene::addGround()
-{
-    this->addStaticPlane(gStaticBodyRestitution, gStaticBodyFriction);
-}
-
-// -------------------------------------------------------------------------
-const VSC::OB::SceneStatsMap& VSC::OB::Scene::getUpdatedStatsMap(void)
+const VSC::OB::Scene::StatsMap& VSC::OB::Scene::getUpdatedStatsMap(void)
 {
     const Ogre::RenderTarget::FrameStats& stats = mWindow->getStatistics();
     

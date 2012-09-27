@@ -27,7 +27,7 @@ namespace VSC {
 
             void init(Ogre::Root *root, Ogre::RenderWindow *win);
 
-            virtual bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+            //virtual bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
             
             virtual void setupLights();
 

@@ -28,13 +28,13 @@ namespace VSC {
             typedef boost::weak_ptr<DynamicObject>      WPtr;
             
             /*
-             *  FactoryDespription is designed to simplify the passing of arguments
+             *  FactoryDescription is designed to simplify the passing of arguments
              *  
              */
             
-            struct FactoryDespription
+            struct FactoryDescription
             {
-                FactoryDespription(); // see cpp for defaults
+                FactoryDescription(); // see cpp for defaults
                 
                 Ogre::String        name;               // "DefaultName"
                 Ogre::Vector3       position;           // Vector3::ZERO

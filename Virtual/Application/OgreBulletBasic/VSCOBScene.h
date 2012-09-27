@@ -28,7 +28,7 @@ namespace VSC {
          *  not however respond directly to user input. Use VSC::OB::SceneController for that.
          */
 
-        class Scene 
+        class Scene : public boost::enable_shared_from_this<Scene>
         {
             
         public:
@@ -100,7 +100,7 @@ namespace VSC {
             public:
                 
                 typedef boost::shared_ptr<ElementFactory> SPtr;
-                typedef std::vector<Scene::Element::WPtr> WElements;
+                typedef std::vector<Scene::Element::SPtr> SElements;
                 
                 ElementFactory(Scene::WPtr scene) : mScene(scene) {}
                 virtual ~ElementFactory() { reset(); }
@@ -127,7 +127,7 @@ namespace VSC {
                 /*
                  *  Provide access the elements which have been created by the factory.
                  */
-                const WElements& elements() {return mWElements;}
+                SElements& elements() {return mSElements;}
                 
                 /*
                  *  Abstract API for adding the stuff to the world. Used directly by VSC::OB::Scene 
@@ -145,13 +145,7 @@ namespace VSC {
             private:
                 
                 Scene::WPtr mScene;
-                WElements mWElements;
                 
-                /*
-                 *  The smart pointers should not be spread to outside the class, use weak pointers instead. Element
-                 *  Factory should be the only entity to hold smart pointers to elements
-                 */
-                typedef std::vector<Scene::Element::SPtr> SElements;
                 SElements mSElements;
             };
             
@@ -209,7 +203,7 @@ namespace VSC {
             Ogre::Root* getRoot(void) {return mRoot;}
             Ogre::SceneManager* getSceneManager(void) {return mSceneMgr;}
             Ogre::Camera* getCamera(void) {return mCamera;}
-            LightMap& getLightMap(void);
+            LightMap& getLightMap(void) {return mLightMap;}
             
             /**--------------------------------------------------------------
              *  Stats Getters
@@ -221,7 +215,7 @@ namespace VSC {
              *  Other Setters/Getters
              */
             
-            void doOneStep(); // steps through simulation/dynamics useful when paused
+            void doOneStep() {mDoOneStep = true;} // steps through simulation/dynamics useful when paused
             
             bool isPaused(void) {return mPaused;}
             void pause(bool p) {mPaused = p;}
@@ -263,8 +257,6 @@ namespace VSC {
             
             virtual void setupFactory();
             virtual void setupLights();
-            virtual void addGround();
-            virtual void updateStats();
             
             void setInfoText();
             void setDebugText(const Ogre::String &debugText) {mDebugText = debugText;}
@@ -275,11 +267,11 @@ namespace VSC {
              *  Protected setters for world setup 
              */
             
-            void setDynamicsWorld(OgreBulletDynamics::DynamicsWorld* world);
-            void setRenderWindow(Ogre::RenderWindow* window);
-            void setRoot(Ogre::Root* root);
-            void setSceneManager(Ogre::SceneManager* manager);
-            void setCamera(Ogre::Camera* camera);
+            void setDynamicsWorld(OgreBulletDynamics::DynamicsWorld* world) {mWorld = world;}
+            void setRenderWindow(Ogre::RenderWindow* window) {mWindow = window;}
+            void setRoot(Ogre::Root* root) {mRoot = root;}
+            void setSceneManager(Ogre::SceneManager* manager) {mSceneMgr = manager;}
+            void setCamera(Ogre::Camera* camera) {mCamera = camera;}
             
         private:
             
@@ -295,7 +287,7 @@ namespace VSC {
             
             StatsMap                                mStatsMap;
             
-            bool mDoOnestep;
+            bool mDoOneStep;
             bool mPaused;
             
             bool mDrawWireFrame;

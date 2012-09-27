@@ -49,10 +49,12 @@ void VSC::OB::ConstraintsDemo::init(Ogre::Root *root, Ogre::RenderWindow *win)
 
     VSC::OB::Scene::init(root, win);
 
-    setupLights();
+    this->setupLights();
     
-    initWorld();
+    this->initWorld();
 
+    this->setupFactory();
+    
     this->getElementFactory()->addGround();
 }
 

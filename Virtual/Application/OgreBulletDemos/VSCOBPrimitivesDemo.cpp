@@ -27,7 +27,8 @@ const Ogre::Vector3    CameraStart            = Ogre::Vector3(13,4.5,0);
 // -------------------------------------------------------------------------
 void VSC::OB::PrimitivesDemo::init(Ogre::Root *root, Ogre::RenderWindow *win)
 {
-
+    this->setSceneManager(root->createSceneManager(ST_GENERIC));
+    
     this->setCamera(this->getSceneManager()->createCamera("Cam"));
     //mCamera->setFOVy(Degree(90));
     this->getCamera()->setNearClipDistance(0.1);
@@ -42,7 +43,11 @@ void VSC::OB::PrimitivesDemo::init(Ogre::Root *root, Ogre::RenderWindow *win)
     VSC::OB::Scene::init(root, win);
 
     this->setupLights();
+    
     this->initWorld();
+    
+    this->setupFactory();
+    
     this->getElementFactory()->addGround();
 
 }

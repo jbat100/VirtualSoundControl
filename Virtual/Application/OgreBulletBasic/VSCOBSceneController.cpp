@@ -19,6 +19,7 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "VSCOBInputAdapter.h"
 #include "VSCOBKeyboardAction.h"
 #include "VSCOBDynamicObject.h"
+#include "VSCOBBasicSceneElementFactory.h"
 
 /*
  *  OgreBullet Shapes
@@ -159,7 +160,11 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
              *  and happily converts renderWindow coord to viewport coord directly.
              */
             
-            Scene::Element::WPtr e = scene->getElementAtViewportCoordinate(viewport, position, pickPos, rayTo);
+            Ogre::Viewport* viewport = scene->getCamera()->getViewport();
+            
+            Ogre::Vector2 pos = position;
+            
+            Scene::Element::WPtr e = scene->getElementAtViewportCoordinate(viewport, pos, pickPos, rayTo);
             Scene::Element::SPtr element = e.lock();
             
             if (element)
@@ -179,13 +184,13 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
                     scene->getDynamicsWorld()->addConstraint(p2p);
                     
                     //save mouse position for dragging
-                    mOldPickingPos = pickPos;
+                    mOldPickingPosition = pickPos;
                     const Ogre::Vector3 eyePos(scene->getCamera()->getDerivedPosition());
-                    mOldPickingDist = (pickPos - eyePos).length();
+                    mOldPickingDistance = (pickPos - eyePos).length();
                     
                     if (mTraceUI) {
                         std::cout << "VSC::OB::SceneController::mouseButtonPressed picked body " << mPickedBody;
-                        std::cout << " at distance " << mOldPickingDist << std::endl;
+                        std::cout << " at distance " << mOldPickingDistance << std::endl;
                     }
                     
                     //very weak constraint for picking
@@ -220,7 +225,10 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
              *  and happily converts renderWindow coord to viewport coord directly.
              */
             
-            Scene::Element::WPtr e = scene->getElementAtViewportCoordinate(viewport, position, pickPos, rayTo);
+            Ogre::Viewport* viewport = scene->getCamera()->getViewport();
+            Ogre::Vector2 pos = position;
+            
+            Scene::Element::WPtr e = scene->getElementAtViewportCoordinate(viewport, pos, pickPos, rayTo);
             Scene::Element::SPtr element = e.lock();
             
             if (element)
@@ -321,9 +329,11 @@ bool VSC::OB::SceneController::mouseMoved(Ogre::RenderWindow* renderWindow, cons
 {
     if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseMoved position: " << position << ", movement: " << movement << "" << std::endl;
     
-    Scene::SPtr scene = this->getScene().lock();
+    Scene::SPtr scene = (this->getScene()).lock();
     
-    if (this->getInputAdapter()->isMouseButtonPressed(OIS::MB_Left))
+    InputAdapter::SPtr adapter = this->getInputAdapter().lock();
+    
+    if (adapter->isMouseButtonPressed(OIS::MB_Left))
     {
         if (mPickConstraint)
         {
@@ -340,7 +350,7 @@ bool VSC::OB::SceneController::mouseMoved(Ogre::RenderWindow* renderWindow, cons
             
             //keep it at the same picking distance
             const Ogre::Vector3 eyePos(scene->getCamera()->getDerivedPosition());
-            Ogre::Vector3 dir = rayTo.getDirection () * mOldPickingDist;
+            Ogre::Vector3 dir = rayTo.getDirection () * mOldPickingDistance;
 
             const Ogre::Vector3 newPos (eyePos + dir);
             p2p->setPivotB (newPos);    
@@ -385,9 +395,17 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
     
     static int count = 0;
     
-    Scene::SPtr scene = this->getScene().lock();
+    Scene::SPtr scene = (this->getScene()).lock();
     
-    OIS::Keyboard::Modifier modifier = this->getInputAdapter()->getCurrentModifier();
+    InputAdapter::SPtr inputAdapter = this->getInputAdapter().lock();
+    
+    BOOST_ASSERT_MSG(inputAdapter, "Expected input adapter");
+    
+    if (!inputAdapter) {
+        return false;
+    }
+    
+    OIS::Keyboard::Modifier modifier = inputAdapter->getCurrentModifier();
     VSC::Keyboard::Combination comb(key, modifier);
     
     bool handled = true;
@@ -417,12 +435,12 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
                 
             case VSC::OB::KeyboardAction::ToggleFeaturesText:
                 scene->toggleDrawFeaturesText();
-                if (mTraceUI) std::cout << "Draw Features Text is " << (scene->drawingFeaturesText ? "on" : "off") << std::endl;
+                if (mTraceUI) std::cout << "Draw Features Text is " << (scene->drawingFeaturesText() ? "on" : "off") << std::endl;
                 break;
                 
             case VSC::OB::KeyboardAction::ToggleDisplayContactPoints:
-                scene->toggleDrawContactPoints = !mDrawContactPoints;
-                if (mTraceUI) std::cout << "Draw contact points is " << (mDrawContactPoints ? "on" : "off") << std::endl;
+                scene->toggleDrawContactPoints();
+                if (mTraceUI) std::cout << "Draw contact points is " << (scene->drawingContactPoints() ? "on" : "off") << std::endl;
                 break;
                 
                 /*
@@ -470,7 +488,7 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
                 
                 // pause
             case VSC::OB::KeyboardAction::ToggleSimulationPause:
-                scene->togglePaused();
+                scene->togglePause();
                 if (mTraceUI) std::cout << "Paused is " << (scene->isPaused() ? "on" : "off") << std::endl;
                 break;
                 
@@ -548,19 +566,20 @@ void VSC::OB::SceneController::throwDynamicObjectPrimitive(VSC::OB::PrimitiveTyp
     
     const float throwDist = 2.0f;
     
-    if (this->checkIfEnoughPlaceToAddObject(throwDist) == false)
+    Scene::SPtr scene = this->getScene().lock();
+    
+    if (scene->checkIfEnoughPlaceToAddObject(throwDist) == false)
     {
         // TODO throw exception ?
-        return false;
+        return; // false;
     }
     
     bool handled = true;
     
-    Scene::SPtr scene = this->getScene().lock();
-    
-    BaseSceneFactory::SPtr sceneFactory = boost::dynamic_pointer_cast<BaseSceneFactory> scene->getElementFactory();
+    BasicSceneElementFactory::SPtr sceneFactory = boost::dynamic_pointer_cast<BasicSceneElementFactory> (scene->getElementFactory());
     
     VSC::OB::DynamicObject::FactoryDescription description;
+    
     description.position = scene->getCamera()->getDerivedPosition();
     
     VSC::OB::DynamicObject::WPtr object;

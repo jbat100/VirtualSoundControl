@@ -52,13 +52,15 @@ void VSC::OB::TriMeshDemo::init(Ogre::Root *root, Ogre::RenderWindow *win)
 
     VSC::OB::Scene::init(root, win);
 
-    setupLights();
+    this->setupLights();
 
-    initWorld(Ogre::Vector3(0, 0, -9.81));
+    this->initWorld(Ogre::Vector3(0, 0, -9.81));
+    
+    this->setupFactory();
 
     BasicSceneElementFactory::SPtr factory = boost::dynamic_pointer_cast<BasicSceneElementFactory>(this->getElementFactory());
     
-    DynamicObject::FactoryDespription description;
+    DynamicObject::FactoryDescription description;
     
     description.name = "TriMesh";
     description.position = Ogre::Vector3(0,0,19);

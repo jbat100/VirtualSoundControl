@@ -26,15 +26,15 @@ namespace VSC {
             
             typedef boost::shared_ptr<BasicSceneElementFactory> SPtr;
             
-            BasicSceneElementFactory(Scene::WPtr scene);
+            BasicSceneElementFactory(Scene::WPtr scene) : Scene::ElementFactory(scene) {}
             
             virtual void addGround(void);
             
             DynamicObject::WPtr addPrimitive(VSC::OB::PrimitiveType primitiveType,
-                                             const DynamicObject::FactoryDespription& description);
+                                             const DynamicObject::FactoryDescription& description);
             
             DynamicObject::WPtr addTrimesh(const Ogre::String& meshName,
-                                           const DynamicObject::FactoryDespription& description);
+                                           const DynamicObject::FactoryDescription& description);
              
             
             StaticObject::WPtr addStaticPlane(const StaticObject::FactoryDescription& description);
