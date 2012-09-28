@@ -177,14 +177,20 @@ bool VSC::OB::CameraController::frameStarted(Ogre::Real elapsedTime)
     if (adapter && adapter->isMouseButtonPressed(OIS::MB_Right))
     {
         if (mTraceUI) std::cout << "VSC::OB::CameraController detected right mouse, yaw: " << mCameraRotX << ", pitch: " << mCameraRotY << std::endl;
-        mCamera->yaw(mCameraRotX);
-        mCamera->pitch(mCameraRotY);
-        mCameraRotX = 0;
-        mCameraRotY = 0;
+        
+        if (mCamera) {
+            mCamera->yaw(mCameraRotX);
+            mCamera->pitch(mCameraRotY);
+            mCameraRotX = 0;
+            mCameraRotY = 0;
+            mCamera->moveRelative(mCameraTrans);
+        }
+        
+        else {
+            if (mTraceUI) std::cout << "VSC::OB::CameraController has no camera " << std::endl;
+        }
     }
-
-    mCamera->moveRelative(mCameraTrans);
-
+    
     return true;
 }
 

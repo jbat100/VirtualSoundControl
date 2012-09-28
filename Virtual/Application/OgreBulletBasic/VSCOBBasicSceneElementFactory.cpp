@@ -167,6 +167,8 @@ VSC::OB::StaticObject::WPtr VSC::OB::BasicSceneElementFactory::addStaticPlane(co
     
     Scene::SPtr scene = this->getScene().lock();
     
+    BOOST_ASSERT_MSG(scene->getSceneManager(), "Expected scene manager");
+    
     Ogre::String name = description.name + "_" + Ogre::StringConverter::toString(mNumberOfObjectsCreated);
     Ogre::StaticGeometry* s = scene->getSceneManager()->createStaticGeometry(name);
     
@@ -180,11 +182,19 @@ VSC::OB::StaticObject::WPtr VSC::OB::BasicSceneElementFactory::addStaticPlane(co
         for (Ogre::Real x = -80.0; x <= 80.0; x += 20.0)
         {
             Ogre::String entityName = name + "_ogreplane_" + Ogre::StringConverter::toString(i++);
-            Ogre::Entity* entity = scene->getSceneManager()->createEntity(name, "plane.mesh");
-			entity->setMaterialName(description.materialName);
-            entity->setQueryFlags(VSC::OB::QueryMaskStaticGeometry);
-            entity->setCastShadows(false);
-            s->addEntity(entity, Ogre::Vector3(x,0,z));
+            try {
+                Ogre::Entity* entity = scene->getSceneManager()->createEntity(entityName, "plane.mesh");
+                entity->setMaterialName(description.materialName);
+                entity->setQueryFlags(VSC::OB::QueryMaskStaticGeometry);
+                entity->setCastShadows(false);
+                s->addEntity(entity, Ogre::Vector3(x,0,z));
+            }
+            catch (std::exception &e) {
+                std::cout << "Got std::exception > " << e.what() << std::endl;
+            }
+            catch (...) {
+                std::cout << "Got unknown exception" << std::endl;
+            }
             
             /*
              *  Who takes charge of destroying the entities, the scene manager all by himself?

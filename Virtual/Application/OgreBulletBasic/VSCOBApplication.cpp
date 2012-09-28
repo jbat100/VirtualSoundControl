@@ -21,6 +21,9 @@ VSC::OB::Application::Application(std::vector<Scene::SPtr> bulletScenes) :
     BOOST_ASSERT_MSG (!mBulletScenes.empty(), "Expected keyboard adapter");
     
     mSceneController = SceneController::SPtr(new SceneController());
+    
+    mSceneController->setOgreKeyBindings(this->getKeyboardManager()->generateDefaultBindings());
+    
     mCameraController = CameraController::SPtr(new CameraController());
     
     this->setNextInputListener(SceneController::WPtr(mSceneController));
@@ -109,6 +112,7 @@ bool VSC::OB::Application::switchToScene(Scene::SPtr newScene)
         if (mTraceScene && newScene) std::cout << "Initializing new scene..." << std::endl;
         newScene->init(mRoot, mWindow);
         this->getSceneController()->setScene(Scene::WPtr(newScene));
+        this->getCameraController()->setCamera(newScene->getCamera());
     }
     
     else 

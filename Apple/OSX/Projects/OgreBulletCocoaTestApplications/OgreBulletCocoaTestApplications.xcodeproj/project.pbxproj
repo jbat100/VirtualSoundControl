@@ -448,7 +448,6 @@
 		10B60D1515505D6D006A6D6E = {
 			isa = PBXGroup;
 			children = (
-				10E1B28B156D3AEB0013B9F7 /* BetaGUI */,
 				10CFE6AC156CD5F700B24399 /* OgreBullet */,
 				109D51B2155998CA0030C161 /* VSC */,
 				10B60F0E155086D0006A6D6E /* Ogre */,
@@ -832,13 +831,6 @@
 				10CFE719156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp */,
 			);
 			path = Prefab;
-			sourceTree = "<group>";
-		};
-		10E1B28B156D3AEB0013B9F7 /* BetaGUI */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = BetaGUI;
 			sourceTree = "<group>";
 		};
 		10F4EE0F1557F482000E4591 /* VSCOgreBulletDemoApplication */ = {
