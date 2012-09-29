@@ -17,6 +17,7 @@
 		1033869E156E77E100CEB288 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1033869D156E77E100CEB288 /* Carbon.framework */; };
 		10407A00160D203F00050663 /* VSCOBSceneController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104079FC160D203E00050663 /* VSCOBSceneController.cpp */; };
 		10407A05160D20C000050663 /* VSCOBBasicSceneElementFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10407A03160D20C000050663 /* VSCOBBasicSceneElementFactory.cpp */; };
+		104198F916171F2600D1742D /* VSCIMSceneCollisionListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104198F516171F2600D1742D /* VSCIMSceneCollisionListener.cpp */; };
 		106A57E01608CAA500D905D8 /* VSCOBApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57CA1608CAA500D905D8 /* VSCOBApplication.cpp */; };
 		106A57E11608CAA500D905D8 /* VSCOBApplicationBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57CC1608CAA500D905D8 /* VSCOBApplicationBase.cpp */; };
 		106A57E31608CAA500D905D8 /* VSCOBCameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106A57D01608CAA500D905D8 /* VSCOBCameraController.cpp */; };
@@ -150,6 +151,8 @@
 		104079FD160D203E00050663 /* VSCOBSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBSceneController.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBSceneController.h; sourceTree = "<group>"; };
 		10407A03160D20C000050663 /* VSCOBBasicSceneElementFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBBasicSceneElementFactory.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBBasicSceneElementFactory.cpp; sourceTree = "<group>"; };
 		10407A04160D20C000050663 /* VSCOBBasicSceneElementFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBBasicSceneElementFactory.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBBasicSceneElementFactory.h; sourceTree = "<group>"; };
+		104198F516171F2600D1742D /* VSCIMSceneCollisionListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCIMSceneCollisionListener.cpp; path = ../../../../../Mapping/VSCIMSceneCollisionListener.cpp; sourceTree = "<group>"; };
+		104198F616171F2600D1742D /* VSCIMSceneCollisionListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMSceneCollisionListener.h; path = ../../../../../Mapping/VSCIMSceneCollisionListener.h; sourceTree = "<group>"; };
 		106A57CA1608CAA500D905D8 /* VSCOBApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBApplication.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBApplication.cpp; sourceTree = "<group>"; };
 		106A57CB1608CAA500D905D8 /* VSCOBApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBApplication.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBApplication.h; sourceTree = "<group>"; };
 		106A57CC1608CAA500D905D8 /* VSCOBApplicationBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBApplicationBase.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBApplicationBase.cpp; sourceTree = "<group>"; };
@@ -416,6 +419,16 @@
 			name = Core;
 			sourceTree = "<group>";
 		};
+		104198F316171E9200D1742D /* VSC Mapping */ = {
+			isa = PBXGroup;
+			children = (
+				104198F516171F2600D1742D /* VSCIMSceneCollisionListener.cpp */,
+				104198F616171F2600D1742D /* VSCIMSceneCollisionListener.h */,
+			);
+			name = "VSC Mapping";
+			path = OgreBulletCocoaTestApplications;
+			sourceTree = "<group>";
+		};
 		104982E91556B6DE0031A1EC /* VSCOgreBulletBasicApplication */ = {
 			isa = PBXGroup;
 			children = (
@@ -452,6 +465,7 @@
 				109D51B2155998CA0030C161 /* VSC */,
 				10B60F0E155086D0006A6D6E /* Ogre */,
 				10B60EF1155080F3006A6D6E /* OIS */,
+				104198F316171E9200D1742D /* VSC Mapping */,
 				10B60D2A15505D6D006A6D6E /* OgreBulletCocoaTestApplications */,
 				10B60D2315505D6D006A6D6E /* Frameworks */,
 				10B60D2115505D6D006A6D6E /* Products */,
@@ -980,6 +994,7 @@
 				10407A00160D203F00050663 /* VSCOBSceneController.cpp in Sources */,
 				10407A05160D20C000050663 /* VSCOBBasicSceneElementFactory.cpp in Sources */,
 				10951E5916150788007764E7 /* VSCOBDynamicObject.cpp in Sources */,
+				104198F916171F2600D1742D /* VSCIMSceneCollisionListener.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -151,6 +151,113 @@ namespace VSC {
             
             typedef std::deque<Element::WPtr> Elements;
             
+            /*
+             *  Collisions, used for tracking and informing Collision listeners
+             */
+            
+            class CollisionDetector; // forward declaration allowing friend status to be declared
+            
+            class Collision
+            {
+                
+            public:
+                
+                friend class Scene, CollisionDetector;
+                
+                typedef boost::shared_ptr<Collision>    SPtr;
+                typedef boost::weak_ptr<Collision>      WPtr;
+                
+                enum State {
+                    StateNone = 0,
+                    StatePossible,
+                    StateOngoing,
+                    StateInvalid
+                };
+                
+                Scene::WPtr getScene(void) {return mScene;}
+                
+                Scene::Element::WPtr getFirstElement(void) {return mFirstElement;}
+                Scene::Element::WPtr getSecondElement(void) {return mSecondElement;}
+                
+                State getState(void) {return state;}
+                
+            protected:
+                
+                void setScene(Scene::WPtr scene);
+                
+                void setFirstElement(Scene::Element::WPtr element) {mFirstElement = element;}
+                void setSecondElement(Scene::Element::WPtr element) {mSecondElement = element;}
+                
+                void setState(State state) {mState = state;}
+                
+            private:
+                
+                Scene::WPtr             mScene;
+                
+                Scene::Element::WPtr    mFirstElement;
+                Scene::Element::WPtr    mSecondElement;
+                
+                State                   mState;
+                
+            };
+    
+            
+            class CollisionListener
+            {
+                
+            public:
+                
+                typedef boost::shared_ptr<CollisionListener>    SPtr;
+                typedef boost::weak_ptr<CollisionListener>      WPtr;
+                
+                virtual void collisionProspectDetected(Scene::Collision::SPtr collision) {}
+                virtual void collisionProspectUpdated(Scene::Collision::SPtr collision) {}
+                
+                virtual void collisionDetected(Scene::Collision::SPtr collision) {}
+                virtual void collisionUpdated(Scene::Collision::SPtr collision) {}
+                
+                virtual void collisionEnded(Scene::Collision::SPtr collision) {}
+                
+            };
+            
+            class CollisionDetector
+            {
+                
+            public:
+                
+                typedef boost::shared_ptr<CollisionDetector>    SPtr;
+                typedef boost::weak_ptr<CollisionDetector>      WPtr;
+                
+                typedef std::vector<Collision::SPtr>            Collisions;
+                typedef std::vector<CollisionListener::SPtr>    Listeners;
+                
+                CollisionDetector(Scene::WPtr scene) : mScene(scene) {}
+                
+                const Collisions&   getCollisions(void) {return mCollisions;}
+                const Listeners&    getListeners(void) {return mListeners;}
+                
+                void addListener(CollisionListener::SPtr listener);
+                void removeListener(CollisionListener::SPtr listener);
+                
+                Collision::SPtr getCollisionForElementPair(Scene::Element::SPtr first, Scene::Element::SPtr second);
+                
+                Scene::WPtr getScene(void) {return mScene;}
+                
+                virtual void updateCollisions();
+                
+            protected:
+                
+                void addCollision(Collision::SPtr collision);
+                void removeCollision(Collision::SPtr collision);
+                
+            private:
+                
+                Collisions      mCollisions;
+                Listeners       mListeners;
+                
+                Scene::WPtr     mScene;
+                
+            };
 
             /**--------------------------------------------------------------
              *  Constructor/Destructor/Initialization 

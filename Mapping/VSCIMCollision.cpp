@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#include "VSCCollision.h"
+//#include "VSCCollision.h"
 
 /*
  

@@ -13,7 +13,7 @@
 #include <boost/shared_ptr.hpp>
 #include <list>
 
-#include "VSCIObject.h"
+//#include "VSCIObject.h"
 
 class VSCICollision;
 typedef boost::shared_ptr<VSCCollision> VSCCollisionPtr;

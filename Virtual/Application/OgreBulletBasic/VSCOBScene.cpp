@@ -1,13 +1,6 @@
-/***************************************************************************
-This source file is part of OGREBULLET
-(Object-oriented Graphics Rendering Engine Bullet Wrapper)
-For the latest info, see http://www.ogre3d.org/phpBB2addons/viewforum.php?f=10
-Copyright (c) 2007 tuan.kuranes@gmail.com (Use it Freely, even Statically, but have to contribute any changes)
-This source file is not LGPL, it's public source code that you can reuse.
------------------------------------------------------------------------------*/
-/***************************************************************************
- File modified for VSC project
- -----------------------------------------------------------------------------*/
+/*
+ *  VSC Stuff
+ */
 
 #include "VSCOB.h"
 #include "VSCOBApplication.h"
@@ -16,9 +9,10 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "VSCOBCameraController.h"
 #include "VSCOBInputAdapter.h"
 #include "VSCOBKeyboardAction.h"
+#include "VSCOBBasicSceneElementFactory.h"
 
 /*
- *  OgreBullet Shapes
+ *  OgreBullet Stuff
  */
 #include "OgreBulletCollisionsShape.h"
 #include "Shapes/OgreBulletCollisionsBoxShape.h"
@@ -33,9 +27,6 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "Shapes/OgreBulletCollisionsMinkowskiSumShape.h"
 #include "Shapes/OgreBulletCollisionsTrimeshShape.h"
 
-/**
- *  
- */
 #include "Utils/OgreBulletCollisionsMeshToShapeConverter.h"
 #include "OgreBulletCollisionsRay.h"
 #include "Debug/OgreBulletCollisionsDebugLines.h"
@@ -45,7 +36,10 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "OgreBulletDynamicsConstraint.h"
 #include "Constraints/OgreBulletDynamicsPoint2pointConstraint.h" 
 
-#include "VSCOBBasicSceneElementFactory.h"
+/*
+ *  Bullet Stuff
+ */
+#include "btBulletCollisionCommon.h"
 
 using namespace Ogre;
 using namespace OgreBulletCollisions;
@@ -61,6 +55,8 @@ const Ogre::ColourValue g_minLightColour(0.2, 0.1, 0.0);
 const Ogre::ColourValue g_maxLightColour(0.5, 0.3, 0.1);
 // -------------------------------------------------------------------------
 
+//MARK: - Elements
+
 void VSC::OB::Scene::Element::destroy()
 {
     Scene::SPtr scene = this->getScene().lock();
@@ -69,6 +65,8 @@ void VSC::OB::Scene::Element::destroy()
     delete mRigidBody;
     mRigidBody = 0;
 }
+
+//MARK: Element Factory
 
 void VSC::OB::Scene::ElementFactory::registerElement(Scene::Element::SPtr element)
 {
@@ -129,8 +127,94 @@ VSC::OB::Scene::Element::WPtr VSC::OB::Scene::ElementFactory::elementWithRigidBo
     return Scene::Element::WPtr();
 }
 
+//MARK: - Collisions Detector
 
-//MARK: Basic Constructor which does abolutely nothing interesting at all
+  
+void CollisionDetector::addListener(CollisionListener::SPtr listener)
+{
+    Collisions::iterator it = std::find(mListeners.begin(), mListeners.end(), listener);
+    if (it == mListeners.end()) {
+        mListeners.push_back(listener);
+    }
+}
+
+void CollisionDetector::removeListener(CollisionListener::SPtr listener)
+{
+    Collisions::iterator it = std::find(mListeners.begin(), mListeners.end(), listener);
+    if (it == mListeners.end()) {
+        mListeners.erase(listener);
+    }
+}
+
+Scene::Collision::SPtr CollisionDetector::getCollisionForElementPair(Scene::Element::SPtr first, Scene::Element::SPtr second)
+{
+    BOOST_FOREACH(Scene::Collision::SPtr collision, mCollisions)
+    {
+        if (collision->getFirstElement() == first && collision->getSecondElement() == second) {
+            return collision;
+        }
+        if (collision->getFirstElement() == second && collision->getSecondElement() == first) {
+            return collision;
+        }
+    }
+    return Scene::Collision::SPtr();
+}
+
+void CollisionDetector::updateCollisions()
+{
+    // http://bulletphysics.org/mediawiki-1.5.8/index.php/Collision_Callbacks_and_Triggers
+    
+	int numManifolds = this->getDynamicsWorld()->getDispatcher()->getNumManifolds();
+    
+	for (int i=0;i<numManifolds;i++)
+	{
+		btPersistentManifold* contactManifold = this->getDynamicsWorld()->getDispatcher()->getManifoldByIndexInternal(i);
+        
+		btCollisionObject* obA = static_cast<btCollisionObject*>(contactManifold->getBody0());
+		btCollisionObject* obB = static_cast<btCollisionObject*>(contactManifold->getBody1());
+        
+        OgreBulletCollisions::Object* collisionObjectA this->getDynamicsWorld()->findObject(obA);
+        OgreBulletCollisions::Object* collisionObjectB this->getDynamicsWorld()->findObject(obB);
+        
+        OgreBulletDynamics::RigidBody* rigidBodyA = dynamic_cast<OgreBulletDynamics::RigidBody*>(collisionObjectA);
+        OgreBulletDynamics::RigidBody* rigidBodyB = dynamic_cast<OgreBulletDynamics::RigidBody*>(collisionObjectB);
+        
+        if (rigidBodyA && rigidBodyB) {
+            
+        }
+        
+		int numContacts = contactManifold->getNumContacts();
+		for (int j=0;j<numContacts;j++)
+		{
+			btManifoldPoint& pt = contactManifold->getContactPoint(j);
+            btVector3 ptA = pt.getPositionWorldOnA();
+			btVector3 ptB = pt.getPositionWorldOnB();
+		}
+        
+		//you can un-comment out this line, and then all points are removed
+		//contactManifold->clearManifold();
+	}
+    
+}
+
+void CollisionDetector::addCollision(Collision::SPtr collision)
+{
+    Collisions::iterator it = std::find(mCollisions.begin(), mCollisions.end(), collision);
+    if (it == mCollisions.end()) {
+        mCollisions.push_back(collision);
+    }
+}
+
+void CollisionDetector::removeCollision(Collision::SPtr collision)
+{
+    Collisions::iterator it = std::find(mCollisions.begin(), mCollisions.end(), collision);
+    if (it == mCollisions.end()) {
+        mCollisions.erase(collision);
+    }
+}
+
+
+//MARK: - Basic Constructor which does abolutely nothing interesting at all
 
 VSC::OB::Scene::Scene() :
 mCamera(0),
@@ -153,7 +237,7 @@ void VSC::OB::Scene::init(Ogre::Root *root, Ogre::RenderWindow *win)
      */
     
     mRoot = root;
-    mWindow = win; 
+    mWindow = win;
 
     /******************* CREATESHADOWS If not debug mode ***************************/
 #ifndef _DEBUG
