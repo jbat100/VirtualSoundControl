@@ -156,7 +156,7 @@ namespace VSC {
              *  Constructor/Destructor/Initialization 
              */
             Scene();
-            virtual ~Scene(){};
+            virtual ~Scene(){ shutdown(); };
             virtual void init(Ogre::Root *root, Ogre::RenderWindow *win);
 
             /**--------------------------------------------------------------

@@ -163,8 +163,9 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
             Ogre::Viewport* viewport = scene->getCamera()->getViewport();
             
             Ogre::Vector2 pos = position;
+            Ogre::Vector2 normPos = Ogre::Vector2( pos.x / viewport->getActualWidth(), 1.0 - (pos.y / viewport->getActualHeight()) );
             
-            Scene::Element::WPtr e = scene->getElementAtViewportCoordinate(viewport, pos, pickPos, rayTo);
+            Scene::Element::WPtr e = scene->getElementAtViewportCoordinate(viewport, normPos, pickPos, rayTo);
             Scene::Element::SPtr element = e.lock();
             
             if (element)
@@ -408,14 +409,14 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
     OIS::Keyboard::Modifier modifier = inputAdapter->getCurrentModifier();
     VSC::Keyboard::Combination comb(key, modifier);
     
-    bool handled = true;
-    
     BOOST_ASSERT_MSG(this->getOgreKeyBindings(), "Expected key bindings");
     
     const VSC::OB::KeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
     
     BOOST_FOREACH (VSC::OB::KeyboardAction::Key actionKey, actionKeySet) 
     {
+        bool handled = true;
+        
         switch(actionKey)
         {
                 
@@ -536,9 +537,9 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
                 handled = false;
                 break;
         }
+        
+        if (handled) return true;
     }
-    
-    if (handled) return true;
     
     return VSC::OB::InputListener::keyPressed(renderWindow, key);
 }

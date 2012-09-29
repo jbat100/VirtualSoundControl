@@ -60,8 +60,9 @@ bool VSC::OB::CameraController::keyPressed(Ogre::RenderWindow* renderWindow, OIS
     bool handled = true;
     
     BOOST_ASSERT_MSG(adapter, "Expected adapter");
+    BOOST_ASSERT_MSG(this->getOgreKeyBindings(), "Expected key bindings");
     
-    if (adapter) 
+    if (adapter && this->getOgreKeyBindings())
     {
         OIS::Keyboard::Modifier modifier = adapter->getCurrentModifier();
         VSC::Keyboard::Combination comb(key, modifier);
@@ -183,12 +184,15 @@ bool VSC::OB::CameraController::frameStarted(Ogre::Real elapsedTime)
             mCamera->pitch(mCameraRotY);
             mCameraRotX = 0;
             mCameraRotY = 0;
-            mCamera->moveRelative(mCameraTrans);
         }
         
         else {
             if (mTraceUI) std::cout << "VSC::OB::CameraController has no camera " << std::endl;
         }
+    }
+    
+    if (mCamera) {
+        mCamera->moveRelative(mCameraTrans);
     }
     
     return true;

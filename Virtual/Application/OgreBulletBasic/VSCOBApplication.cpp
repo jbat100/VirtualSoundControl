@@ -21,10 +21,10 @@ VSC::OB::Application::Application(std::vector<Scene::SPtr> bulletScenes) :
     BOOST_ASSERT_MSG (!mBulletScenes.empty(), "Expected keyboard adapter");
     
     mSceneController = SceneController::SPtr(new SceneController());
-    
-    mSceneController->setOgreKeyBindings(this->getKeyboardManager()->generateDefaultBindings());
+    mSceneController->setOgreKeyBindings(this->getOgreKeyBindings());
     
     mCameraController = CameraController::SPtr(new CameraController());
+    mCameraController->setOgreKeyBindings(this->getOgreKeyBindings());
     
     this->setNextInputListener(SceneController::WPtr(mSceneController));
     mSceneController->setNextInputListener(CameraController::WPtr(mCameraController));

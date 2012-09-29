@@ -84,8 +84,8 @@ namespace VSC {
              *  Other Setters/Getters
              */
             
-            KeyboardManager::SPtr    getKeyboardManager(void) const;
-            void                            setKeyboardManager(KeyboardManager::SPtr manager);
+            KeyboardManager::SPtr    getKeyboardManager(void) const {return mKeyboardManager;}
+            void                     setKeyboardManager(KeyboardManager::SPtr manager) {mKeyboardManager = manager;}
             
             /*
              *  InputListener override
