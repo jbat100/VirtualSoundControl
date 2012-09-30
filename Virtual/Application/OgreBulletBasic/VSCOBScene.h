@@ -61,7 +61,9 @@ namespace VSC {
                 typedef boost::shared_ptr<Element>    SPtr;   // Smart pointers are only used to reference Elements by Scene::Factory
                 typedef boost::weak_ptr<Element>      WPtr;   // Weak pointers are used everywhere else
                 
-                Element(Scene::WPtr scene, OgreBulletDynamics::RigidBody* rigidBody) : mScene(scene), mRigidBody(rigidBody) {}
+                Element(Scene::WPtr scene, OgreBulletDynamics::RigidBody* rigidBody) :
+                mScene(scene), mRigidBody(rigidBody) {}
+                
                 virtual ~Element() { destroy(); }
                 
                 /*
@@ -100,7 +102,7 @@ namespace VSC {
             public:
                 
                 typedef boost::shared_ptr<ElementFactory> SPtr;
-                typedef std::vector<Scene::Element::SPtr> SElements;
+                typedef std::vector<Scene::Element::SPtr> Elements;
                 
                 ElementFactory(Scene::WPtr scene) : mScene(scene) {}
                 virtual ~ElementFactory() { reset(); }
@@ -117,17 +119,17 @@ namespace VSC {
                  *  internal shared_ptr container (which calls the Element's destructor and therefore it's destroy()
                  *  method, which should in theory do its cleaning up duties).
                  */
-                void destroyElement(Scene::Element::WPtr element);
+                void destroyElement(Scene::Element::SPtr element);
                 
                 /*
                  *  Get element using the inner rigid body.
                  */
-                Element::WPtr elementWithRigidBody(OgreBulletDynamics::RigidBody* rigidBody);
+                Element::SPtr getElementWithRigidBody(OgreBulletDynamics::RigidBody* rigidBody);
                 
                 /*
                  *  Provide access the elements which have been created by the factory.
                  */
-                SElements& elements() {return mSElements;}
+                Elements& elements() {return mElements;}
                 
                 /*
                  *  Abstract API for adding the stuff to the world. Used directly by VSC::OB::Scene 
@@ -146,7 +148,7 @@ namespace VSC {
                 
                 Scene::WPtr mScene;
                 
-                SElements mSElements;
+                Elements mElements;
             };
             
             typedef std::deque<Element::WPtr> Elements;
@@ -174,30 +176,38 @@ namespace VSC {
                     StateInvalid
                 };
                 
-                Scene::WPtr getScene(void) {return mScene;}
+                Collision();
                 
-                Scene::Element::WPtr getFirstElement(void) {return mFirstElement;}
-                Scene::Element::WPtr getSecondElement(void) {return mSecondElement;}
+                Scene::SPtr getScene(void) {return mScene.lock();}
+                
+                Scene::Element::SPtr getFirstElement(void) {return mFirstElement.lock();}
+                Scene::Element::SPtr getSecondElement(void) {return mSecondElement.lock();}
                 
                 State getState(void) {return state;}
+                
+                btPersistentManifold* getContactManifold(void) {return mContactManifold;}
                 
             protected:
                 
                 void setScene(Scene::WPtr scene);
                 
-                void setFirstElement(Scene::Element::WPtr element) {mFirstElement = element;}
-                void setSecondElement(Scene::Element::WPtr element) {mSecondElement = element;}
+                void setFirstElement(Element::SPtr element) {mFirstElement = Element::WPtr(element);}
+                void setSecondElement(Element::SPtr element) {mSecondElement = Element::WPtr(element);}
                 
                 void setState(State state) {mState = state;}
+                
+                void setPersistentManifold(btPersistentManifold* manifold) {mPersistentManifold = manifold;}
                 
             private:
                 
                 Scene::WPtr             mScene;
                 
-                Scene::Element::WPtr    mFirstElement;
-                Scene::Element::WPtr    mSecondElement;
+                Element::WPtr    mFirstElement;
+                Element::WPtr    mSecondElement;
                 
                 State                   mState;
+                
+                btPersistentManifold*   mPersistentManifold;
                 
             };
     
@@ -298,7 +308,7 @@ namespace VSC {
              *  Dynamic actions and checks
              */
             bool checkIfEnoughPlaceToAddObject(float maxDist);
-            Element::WPtr getElementAtViewportCoordinate(const Ogre::Viewport* v, Ogre::Vector2& p, Ogre::Vector3 &ip, Ogre::Ray &r);
+            Element::SPtr getElementAtViewportCoordinate(const Ogre::Viewport* v, Ogre::Vector2& p, Ogre::Vector3 &ip, Ogre::Ray &r);
             OgreBulletCollisions::DebugLines* getDebugRayLines();
             
             /**--------------------------------------------------------------

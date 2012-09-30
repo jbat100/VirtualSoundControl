@@ -165,8 +165,7 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
             Ogre::Vector2 pos = position;
             Ogre::Vector2 normPos = Ogre::Vector2( pos.x / viewport->getActualWidth(), 1.0 - (pos.y / viewport->getActualHeight()) );
             
-            Scene::Element::WPtr e = scene->getElementAtViewportCoordinate(viewport, normPos, pickPos, rayTo);
-            Scene::Element::SPtr element = e.lock();
+            Scene::Element::SPtr element = scene->getElementAtViewportCoordinate(viewport, normPos, pickPos, rayTo);
             
             if (element)
             {
@@ -229,8 +228,7 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
             Ogre::Viewport* viewport = scene->getCamera()->getViewport();
             Ogre::Vector2 pos = position;
             
-            Scene::Element::WPtr e = scene->getElementAtViewportCoordinate(viewport, pos, pickPos, rayTo);
-            Scene::Element::SPtr element = e.lock();
+            Scene::Element::SPtr element = scene->getElementAtViewportCoordinate(viewport, pos, pickPos, rayTo);
             
             if (element)
             {

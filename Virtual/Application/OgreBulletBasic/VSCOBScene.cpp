@@ -114,23 +114,23 @@ void VSC::OB::Scene::ElementFactory::destroyElement(Scene::Element::WPtr element
 }
 
 
-VSC::OB::Scene::Element::WPtr VSC::OB::Scene::ElementFactory::elementWithRigidBody(OgreBulletDynamics::RigidBody* rigidBody)
+VSC::OB::Scene::Element::SPtr VSC::OB::Scene::ElementFactory::getElementWithRigidBody(OgreBulletDynamics::RigidBody* rigidBody)
 {
     BOOST_FOREACH (Scene::Element::SPtr element, mSElements)
     {
         if (element->getRigidBody() == rigidBody)
         {
-            return Scene::Element::WPtr(element);
+            return element;
         }
     }
     
-    return Scene::Element::WPtr();
+    return Scene::Element::SPtr();
 }
 
 //MARK: - Collisions Detector
 
   
-void CollisionDetector::addListener(CollisionListener::SPtr listener)
+void VSC::OB::CollisionDetector::addListener(CollisionListener::SPtr listener)
 {
     Collisions::iterator it = std::find(mListeners.begin(), mListeners.end(), listener);
     if (it == mListeners.end()) {
@@ -138,7 +138,7 @@ void CollisionDetector::addListener(CollisionListener::SPtr listener)
     }
 }
 
-void CollisionDetector::removeListener(CollisionListener::SPtr listener)
+void VSC::OB::CollisionDetector::removeListener(CollisionListener::SPtr listener)
 {
     Collisions::iterator it = std::find(mListeners.begin(), mListeners.end(), listener);
     if (it == mListeners.end()) {
@@ -146,7 +146,8 @@ void CollisionDetector::removeListener(CollisionListener::SPtr listener)
     }
 }
 
-Scene::Collision::SPtr CollisionDetector::getCollisionForElementPair(Scene::Element::SPtr first, Scene::Element::SPtr second)
+VSC::OB::Scene::Collision::SPtr VSC::OB::CollisionDetector::getCollisionForElementPair(Scene::Element::SPtr first,
+                                                                                       Scene::Element::SPtr second)
 {
     BOOST_FOREACH(Scene::Collision::SPtr collision, mCollisions)
     {
@@ -160,15 +161,34 @@ Scene::Collision::SPtr CollisionDetector::getCollisionForElementPair(Scene::Elem
     return Scene::Collision::SPtr();
 }
 
-void CollisionDetector::updateCollisions()
+void VSC::OB::CollisionDetector::updateCollisions()
 {
     // http://bulletphysics.org/mediawiki-1.5.8/index.php/Collision_Callbacks_and_Triggers
     
+    Scene::SPtr scene = this->getScene().lock();
+    
+    /*
+     *  Create a local collisions group so that the difference with the previous one can be 
+     *  computed so as to send the appropriate collision ended callbacks to the listeners.
+     */
+    
+    Collisions localCollisions;
+    Collisions obsoleteCollisions;
+    Collisions newCollisions;
+    
 	int numManifolds = this->getDynamicsWorld()->getDispatcher()->getNumManifolds();
+    
+    /*
+     *  Get current collisions and collision prospects.
+     */
     
 	for (int i=0;i<numManifolds;i++)
 	{
 		btPersistentManifold* contactManifold = this->getDynamicsWorld()->getDispatcher()->getManifoldByIndexInternal(i);
+        
+        /*
+         *  Map back collision objects to scene elements
+         */
         
 		btCollisionObject* obA = static_cast<btCollisionObject*>(contactManifold->getBody0());
 		btCollisionObject* obB = static_cast<btCollisionObject*>(contactManifold->getBody1());
@@ -179,17 +199,48 @@ void CollisionDetector::updateCollisions()
         OgreBulletDynamics::RigidBody* rigidBodyA = dynamic_cast<OgreBulletDynamics::RigidBody*>(collisionObjectA);
         OgreBulletDynamics::RigidBody* rigidBodyB = dynamic_cast<OgreBulletDynamics::RigidBody*>(collisionObjectB);
         
-        if (rigidBodyA && rigidBodyB) {
-            
+        /*
+         *  Get existing collision for element pair or create one.
+         */
+        
+        Collision::SPtr collision = Collision::SPtr();
+        
+        if (rigidBodyA && rigidBodyB)
+        {
+            Scene::Element::SPtr elementA = scene->getElementFactory()->getElementWithRigidBody(rigidBodyA);
+            Scene::Element::SPtr elementB = scene->getElementFactory()->getElementWithRigidBody(rigidBodyB);
+            if (elementA && elementB) collision = this->getCollisionForElementPair(elementA, elementB);
         }
         
-		int numContacts = contactManifold->getNumContacts();
+        /*
+         *  If a collision does not already exist then create one...
+         */
+        
+        if (!collision)
+        {
+            collision = Collision::SPtr();
+            collision->setFirstElement(elementA);
+            collision->setSecondElement(elementB);
+            collision->setmPersistentManifold(contactManifold);
+        }
+        
+        localCollisions.push_back(collision);
+        
+        /*
+         
+        int numContacts = contactManifold->getNumContacts();
 		for (int j=0;j<numContacts;j++)
 		{
 			btManifoldPoint& pt = contactManifold->getContactPoint(j);
-            btVector3 ptA = pt.getPositionWorldOnA();
-			btVector3 ptB = pt.getPositionWorldOnB();
+			if (pt.getDistance()<0.f)
+			{
+				const btVector3& ptA = pt.getPositionWorldOnA();
+				const btVector3& ptB = pt.getPositionWorldOnB();
+				const btVector3& normalOnB = pt.m_normalWorldOnB;
+			}
 		}
+         
+         */
         
 		//you can un-comment out this line, and then all points are removed
 		//contactManifold->clearManifold();
@@ -197,7 +248,7 @@ void CollisionDetector::updateCollisions()
     
 }
 
-void CollisionDetector::addCollision(Collision::SPtr collision)
+void VSC::OB::CollisionDetector::addCollision(Collision::SPtr collision)
 {
     Collisions::iterator it = std::find(mCollisions.begin(), mCollisions.end(), collision);
     if (it == mCollisions.end()) {
@@ -205,7 +256,7 @@ void CollisionDetector::addCollision(Collision::SPtr collision)
     }
 }
 
-void CollisionDetector::removeCollision(Collision::SPtr collision)
+void VSC::OB::CollisionDetector::removeCollision(Collision::SPtr collision)
 {
     Collisions::iterator it = std::find(mCollisions.begin(), mCollisions.end(), collision);
     if (it == mCollisions.end()) {
@@ -418,7 +469,10 @@ bool VSC::OB::Scene::resetCameraAspectRatio(void)
 }
 
 // -------------------------------------------------------------------------
-VSC::OB::Scene::Element::WPtr VSC::OB::Scene::getElementAtViewportCoordinate(const Ogre::Viewport* v, Ogre::Vector2& p, Ogre::Vector3 &ip, Ogre::Ray &r)
+VSC::OB::Scene::Element::SPtr VSC::OB::Scene::getElementAtViewportCoordinate(const Ogre::Viewport* v,
+                                                                             Ogre::Vector2& p,
+                                                                             Ogre::Vector3 &ip,
+                                                                             Ogre::Ray &r)
 {
     if (v == mCamera->getViewport())
     {
@@ -432,12 +486,12 @@ VSC::OB::Scene::Element::WPtr VSC::OB::Scene::getElementAtViewportCoordinate(con
             ip = callback.getCollisionPoint();
             if (body)
             {
-                return this->getElementFactory()->elementWithRigidBody(body);
+                return this->getElementFactory()->getElementWithRigidBody(body);
             }
         }
     }
     
-    return VSC::OB::Scene::Element::WPtr();
+    return Element::Ptr();
 }
 
 // -------------------------------------------------------------------------
@@ -546,13 +600,11 @@ bool VSC::OB::Scene::checkIfEnoughPlaceToAddObject(float minDist)
     Ogre::Ray rayTo;
     
     Ogre::Vector2 coord(0.5, 0.5);
-    Scene::Element::WPtr element = this->getElementAtViewportCoordinate(mCamera->getViewport(), coord, pickPos, rayTo);
-    
-    Scene::Element::SPtr selement = element.lock();
+    Scene::Element::SPtr element = this->getElementAtViewportCoordinate(mCamera->getViewport(), coord, pickPos, rayTo);
     
     if (selement)
     {
-        OgreBulletDynamics::RigidBody *body = selement->getRigidBody();
+        OgreBulletDynamics::RigidBody *body = element->getRigidBody();
         
         if (body)
         {
