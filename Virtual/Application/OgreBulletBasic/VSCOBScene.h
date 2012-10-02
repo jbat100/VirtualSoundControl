@@ -171,8 +171,9 @@ namespace VSC {
                 
                 enum State {
                     StateNone = 0,
-                    StatePossible,
+                    StateClose,
                     StateOngoing,
+                    StateEnded,
                     StateInvalid
                 };
                 
@@ -198,12 +199,21 @@ namespace VSC {
                 
                 void setPersistentManifold(btPersistentManifold* manifold) {mPersistentManifold = manifold;}
                 
+                /*  
+                 *  Used by friend class CollisionDetector once the collision is no longer valid. Smart pointers
+                 *  to the collision object might keep it alive but it's internals will be nulled. Listeners
+                 *  should purge their smart pointers to invalidated objects on every callback to allow memory
+                 *  to be cleaned up.
+                 */
+                
+                void invalidate();
+                
             private:
                 
                 Scene::WPtr             mScene;
                 
-                Element::WPtr    mFirstElement;
-                Element::WPtr    mSecondElement;
+                Element::WPtr           mFirstElement;
+                Element::WPtr           mSecondElement;
                 
                 State                   mState;
                 
@@ -241,7 +251,7 @@ namespace VSC {
                 typedef std::vector<Collision::SPtr>            Collisions;
                 typedef std::vector<CollisionListener::SPtr>    Listeners;
                 
-                CollisionDetector(Scene::WPtr scene) : mScene(scene) {}
+                CollisionDetector(Scene::WPtr scene) : mScene(scene), mDistanceThreshold(0.1) {}
                 
                 const Collisions&   getCollisions(void) {return mCollisions;}
                 const Listeners&    getListeners(void) {return mListeners;}
@@ -266,6 +276,8 @@ namespace VSC {
                 Listeners       mListeners;
                 
                 Scene::WPtr     mScene;
+                
+                Ogre::Real      mDistanceThreshold;
                 
             };
 

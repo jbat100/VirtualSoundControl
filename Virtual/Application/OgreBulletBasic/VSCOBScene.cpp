@@ -173,7 +173,6 @@ void VSC::OB::CollisionDetector::updateCollisions()
      */
     
     Collisions localCollisions;
-    Collisions obsoleteCollisions;
     Collisions newCollisions;
     
 	int numManifolds = this->getDynamicsWorld()->getDispatcher()->getNumManifolds();
@@ -218,13 +217,17 @@ void VSC::OB::CollisionDetector::updateCollisions()
         
         if (!collision)
         {
-            collision = Collision::SPtr();
+            collision = Collision::SPtr(new Collision());
             collision->setFirstElement(elementA);
             collision->setSecondElement(elementB);
-            collision->setmPersistentManifold(contactManifold);
+            collision->setPersistentManifold(contactManifold);
+            collision->setState(Collision::StateClose);
+            newCollisions.push_back(collision);
         }
-        
-        localCollisions.push_back(collision);
+        else
+        {
+            localCollisions.push_back(collision);
+        }
         
         /*
          
@@ -245,6 +248,68 @@ void VSC::OB::CollisionDetector::updateCollisions()
 		//you can un-comment out this line, and then all points are removed
 		//contactManifold->clearManifold();
 	}
+    
+    /*
+     *  Cycle through current collisions and invalidate the ones which are no longer part
+     *  of the current scene (not in localManifolds), after having sent a callback to the
+     *  listeners. Using while so that collisions can be removed from mCollisions during
+     *  iteration.
+     */
+    
+    Collisions::iterator currentColIt = mCollisions.begin();
+    
+    while (currentColIt != mCollisions.end()) 
+    {
+        Collisions::SPtr collision = *currentColIt;
+        Collisions::iterator it = std::find(localCollisions.begin(), localCollisions.end(), collision);
+        
+        /*
+         *  Collision no longer exists
+         */
+        
+        if (it == localCollisions.end())
+        {
+            collision->setState(Collision::StateEnded);
+            BOOST_FOREACH (CollisionListener::SPtr listener, mListeners)
+            {
+                if (listener)
+                {
+                    listener->collisionEnded(collision);
+                }
+            }
+            /*
+             *  After the callbacks have been made, invalidate the collision and remove from the list
+             */
+            collision->invalidate();
+            currentColIt = mCollisions->erase(currentColIt);
+        }
+        
+        else
+        {
+            currentColIt++;
+        }
+    }
+    
+    /*
+     *  First send the collision start callbacks and add the new collisions to the current ones
+     */
+    
+    BOOST_FOREACH (Collision::SPtr collision, newCollisions)
+    {
+        
+    }
+    
+    /*
+     *  Cycle through the current, still valid collisions (which now contain the new collisions) and 
+     *  send update callbacks
+     */
+    
+    BOOST_FOREACH (Collision::SPtr collision, mCollisions)
+    {
+
+    }
+    
+    
     
 }
 
