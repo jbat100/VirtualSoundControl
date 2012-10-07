@@ -87,7 +87,7 @@ namespace VSC {
             InputAdapterPtr         mAdapter;
             InputListener::WPtr     mNextInputListener;
             
-            static const bool mTraceUI = true;
+            static const bool mTraceUI = false;
             
         };
     }

@@ -77,7 +77,7 @@ namespace VSC {
             float                               mMouseSensitivity;
             float                               mCameraSpeed;
             
-            const static bool                   mTraceUI = true;
+            const static bool                   mTraceUI = false;
             const static bool                   mTraceFrame = false;
             
         };

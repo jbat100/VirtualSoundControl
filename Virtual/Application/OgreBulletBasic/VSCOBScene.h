@@ -53,12 +53,15 @@ namespace VSC {
              *  representation in the scene.
              */
             
+            class ElementFactory;
+            
             class Element
             {
                 
             public:
                 
                 friend class Scene;
+                friend class ElementFactory;
                 
                 typedef boost::shared_ptr<Element>    SPtr;   // Smart pointers are only used to reference Elements by Scene::Factory
                 typedef boost::weak_ptr<Element>      WPtr;   // Weak pointers are used everywhere else
@@ -73,11 +76,14 @@ namespace VSC {
                  *  deliberate design decision.
                  */
                 
-                Scene::WPtr                             getScene(void) {return mScene;};
-                OgreBulletDynamics::RigidBody*          getRigidBody(void) {return mRigidBody;}
+                Scene::WPtr                             getScene(void) const {return mScene;};
+                OgreBulletDynamics::RigidBody*          getRigidBody(void) const {return mRigidBody;}
                 
-                bool                                    silentCollisions() {return mSilentCollisions;}
-                bool                                    setSilentCollisions(bool silent) {mSilentCollisions = silent;}
+                bool                                    silentCollisions() const {return mSilentCollisions;}
+                void                                    setSilentCollisions(bool silent) {mSilentCollisions = silent;}
+                
+                std::string                             getName(void) const  {return mName;}
+                int                                     getIdentifier(void) const {return mIdentifier;}
                 
             protected:
                 
@@ -87,7 +93,10 @@ namespace VSC {
                  *  which removes the rigid body from the OgreBulletDynamics::World.
                  */
                 
-                virtual void destroy(void);
+                virtual void                            destroy(void);
+                
+                void                                    setName(std::string n) {mName = n;}
+                void                                    setIdentifier(int i) {mIdentifier = i;}
                 
                 
             private:
@@ -95,6 +104,9 @@ namespace VSC {
                 Scene::WPtr                             mScene;
                 OgreBulletDynamics::RigidBody*          mRigidBody;
                 bool                                    mSilentCollisions;
+                
+                std::string                             mName;
+                int                                     mIdentifier;
                 
             };
             
@@ -162,8 +174,8 @@ namespace VSC {
                 
                 Scene::SPtr getScene(void) {return mScene.lock();}
                 
-                Scene::Element::SPtr getFirstElement(void) {return mFirstElement.lock();}
-                Scene::Element::SPtr getSecondElement(void) {return mSecondElement.lock();}
+                Scene::Element::SPtr getFirstElement(void) const {return mFirstElement.lock();}
+                Scene::Element::SPtr getSecondElement(void) const {return mSecondElement.lock();}
                 
                 State getState(void) {return mState;}
                 
@@ -338,7 +350,7 @@ namespace VSC {
             const StatsMap& getUpdatedStatsMap(void);
             
             /**--------------------------------------------------------------
-             *  Elements
+             * Elements
              */
             
             /*
@@ -367,7 +379,14 @@ namespace VSC {
              *  Registering an element will add a shared_ptr to the element to the factory's private container
              *  and will add a weak_ptr to the scenes private container
              */
-            void registerElement(Scene::Element::SPtr element);
+            void registerElement(Scene::Element::SPtr element, std::string name, int identifier);
+            
+            /**--------------------------------------------------------------
+             *  Collisions
+             */
+            
+            CollisionDetector::SPtr getCollisionDetector(void) {return mCollisionDetector;}
+            void setCollisionDetector(CollisionDetector::SPtr detector);
             
             /**--------------------------------------------------------------
              *  Other Setters/Getters
@@ -434,8 +453,8 @@ namespace VSC {
         private:
             
             ElementFactory::SPtr                    mElementFactory;
-            
             Elements                                mElements;
+            CollisionDetector::SPtr                 mCollisionDetector;
             
             OgreBulletDynamics::DynamicsWorld       *mWorld;
             Ogre::RenderWindow                      *mWindow;
@@ -466,7 +485,7 @@ namespace VSC {
             static size_t mNumEntitiesInstanced;
             
             static const bool mTraceFrame = false;
-            static const bool mTraceUI = true;
+            static const bool mTraceUI = false;
             
             /*
              *  Useful?
@@ -480,6 +499,8 @@ namespace VSC {
         };
         
         std::ostream& operator << (std::ostream& stream, const Scene::Collision& collision);
+        
+        std::ostream& operator << (std::ostream& stream, const Scene::Element& element);
         
     }
 }

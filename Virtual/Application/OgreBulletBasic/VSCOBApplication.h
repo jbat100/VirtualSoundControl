@@ -9,6 +9,8 @@
 #include "VSCOBSceneController.h"
 #include "VSCOBApplicationBase.h"
 
+#include "VSCIMSceneCollisionListener.h"
+
 #include <Ogre/Ogre.h>
 
 #include <boost/shared_ptr.hpp>
@@ -53,7 +55,7 @@ namespace VSC {
             const Scenes& getScenes(void) {return mBulletScenes;}
             
             /*------------------------------------------------------
-             *  SceneController
+             *  Scene Controllers
              */
             
             SceneController::SPtr getSceneController(void) {return mSceneController;}
@@ -61,6 +63,13 @@ namespace VSC {
             
             CameraController::SPtr getCameraController(void) {return mCameraController;}
             void setCameraController(CameraController::SPtr controller) {mCameraController = controller;}
+            
+            /*------------------------------------------------------
+             *  Collision Listeners
+             */
+            
+            IM::CollisionListener::SPtr     getCollisionListener(void) {return mCollisionListener;}
+            void setCollisionListener(IM::CollisionListener::SPtr listener) {mCollisionListener = listener;}
             
             /*------------------------------------------------------
              *  VSCOgreInputListener override
@@ -86,12 +95,14 @@ namespace VSC {
             
         private:
             
-            Scene::SPtr             mBulletScene;
-            Scenes                  mBulletScenes;
+            Scene::SPtr                     mBulletScene;
+            Scenes                          mBulletScenes;
             
-            SceneController::SPtr   mSceneController;
+            SceneController::SPtr           mSceneController;
             
-            CameraController::SPtr  mCameraController;
+            CameraController::SPtr          mCameraController;
+            
+            IM::CollisionListener::SPtr     mCollisionListener;
             
             static const bool mTraceUI = true;
             static const bool mTraceFrame = false;

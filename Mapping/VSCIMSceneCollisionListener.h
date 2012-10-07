@@ -11,8 +11,8 @@
 
 #include "VSCOBScene.h"
 
-#include <boost/shared_ptr>
-#include <boost/weak_ptr>
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 
 namespace VSC {
     
@@ -22,15 +22,16 @@ namespace VSC {
             
         public:
             
-            typedef boost::shared_ptr<CollisionListener> 
+            typedef boost::shared_ptr<CollisionListener>    SPtr;
+            typedef boost::weak_ptr<CollisionListener>      WPtr;
             
-            virtual void collisionProspectDetected(Scene::Collision::SPtr collision);
-            virtual void collisionProspectUpdated(Scene::Collision::SPtr collision);
-            virtual void collisionProspectEnded(Scene::Collision::SPtr collision);
+            virtual void collisionProspectDetected(OB::Scene::Collision::SPtr collision);
+            virtual void collisionProspectUpdated(OB::Scene::Collision::SPtr collision);
+            virtual void collisionProspectEnded(OB::Scene::Collision::SPtr collision);
             
-            virtual void collisionDetected(Scene::Collision::SPtr collision);
-            virtual void collisionUpdated(Scene::Collision::SPtr collision);
-            virtual void collisionEnded(Scene::Collision::SPtr collision);
+            virtual void collisionDetected(OB::Scene::Collision::SPtr collision);
+            virtual void collisionUpdated(OB::Scene::Collision::SPtr collision);
+            virtual void collisionEnded(OB::Scene::Collision::SPtr collision);
             
         private:
             

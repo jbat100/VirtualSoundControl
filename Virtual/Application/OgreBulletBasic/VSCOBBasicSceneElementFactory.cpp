@@ -38,7 +38,9 @@ void VSC::OB::BasicSceneElementFactory::addGround()
     
     description.name = "Ground";
     
-    this->addStaticPlane(description);
+    StaticObject::SPtr obj = this->addStaticPlane(description);
+    
+    obj->setSilentCollisions(true);
 }
 
 VSC::OB::DynamicObject::SPtr VSC::OB::BasicSceneElementFactory::addPrimitive(PrimitiveType primitiveType,
@@ -115,12 +117,13 @@ VSC::OB::DynamicObject::SPtr VSC::OB::BasicSceneElementFactory::addPrimitive(Pri
     rigidBody->setShape(node, collisionShape, description.bodyRestitution,
                         description.bodyFriction, description.bodyMass, description.position, description.orientation);
     
-    mNumberOfObjectsCreated++;
     
     DynamicObject::SPtr object(new VSC::OB::DynamicObject(this->getScene(), entity, rigidBody));
     Scene::Element::SPtr element = boost::static_pointer_cast<Scene::Element>(object);
     
-    scene->registerElement(element);
+    scene->registerElement(element, description.name, mNumberOfObjectsCreated);
+    
+    mNumberOfObjectsCreated++;
 
     return object;
 }
@@ -155,12 +158,12 @@ VSC::OB::DynamicObject::SPtr VSC::OB::BasicSceneElementFactory::addTrimesh(const
     OgreBulletDynamics::RigidBody *sceneRigid = new OgreBulletDynamics::RigidBody(rigidBodyName, world);
     sceneRigid->setStaticShape(node, sceneTriMeshShape, description.bodyRestitution, description.bodyFriction, description.position);
     
-    mNumberOfObjectsCreated++;
-    
     DynamicObject::SPtr object(new DynamicObject(this->getScene(), entity, sceneRigid));
     Scene::Element::SPtr element = boost::static_pointer_cast<Scene::Element>(object);
     
-    scene->registerElement(element);
+    scene->registerElement(element, description.name, mNumberOfObjectsCreated);
+    
+    mNumberOfObjectsCreated++;
     
     return object;
 }
@@ -219,12 +222,13 @@ VSC::OB::StaticObject::SPtr VSC::OB::BasicSceneElementFactory::addStaticPlane(co
     OgreBulletCollisions::CollisionShape *shape = new OgreBulletCollisions::StaticPlaneCollisionShape (Ogre::Vector3(0,1,0), 0);
     OgreBulletDynamics::RigidBody *rigidPlaneBody = new OgreBulletDynamics::RigidBody(rigidBodyName, scene->getDynamicsWorld());
     rigidPlaneBody->setStaticShape(shape, description.bodyRestitution, description.bodyFriction);
-
-    mNumberOfObjectsCreated++;
     
     StaticObject::SPtr geom(new StaticObject(this->getScene(), s, rigidPlaneBody));
     Scene::Element::SPtr element = boost::static_pointer_cast<Scene::Element>(geom);
-    scene->registerElement(element);
+    
+    scene->registerElement(element, description.name, mNumberOfObjectsCreated);
+    
+    mNumberOfObjectsCreated++;
 
     return geom;
 }

@@ -114,7 +114,14 @@ void VSC::OB::Scene::Collision::invalidate()
 
 std::ostream& VSC::OB::operator << (std::ostream& stream, const Scene::Collision& collision)
 {
-    stream << "Collision with element: " << *collision->getFirstElement() << " and element: " << *collision->getSecondElement() << std::endl;
+    stream << "Collision with element: " << *collision.getFirstElement() << " and element: " << *collision.getSecondElement() << std::endl;
+    
+    return stream;
+}
+
+std::ostream& VSC::OB::operator << (std::ostream& stream, const Scene::Element& element)
+{
+    stream << element.getName() << "_" << element.getIdentifier();
     
     return stream;
 }
@@ -133,7 +140,7 @@ void VSC::OB::Scene::CollisionDetector::addListener(CollisionListener::SPtr list
 void VSC::OB::Scene::CollisionDetector::removeListener(CollisionListener::SPtr listener)
 {
     Listeners::iterator it = std::find(mListeners.begin(), mListeners.end(), listener);
-    if (it == mListeners.end()) {
+    if (it != mListeners.end()) {
         mListeners.erase(it);
     }
 }
@@ -427,7 +434,7 @@ void VSC::OB::Scene::CollisionDetector::addCollision(Collision::SPtr collision)
 void VSC::OB::Scene::CollisionDetector::removeCollision(Collision::SPtr collision)
 {
     Collisions::iterator it = std::find(mCollisions.begin(), mCollisions.end(), collision);
-    if (it == mCollisions.end()) {
+    if (it != mCollisions.end()) {
         mCollisions.erase(it);
     }
 }
@@ -524,6 +531,8 @@ void VSC::OB::Scene::init(Ogre::Root *root, Ogre::RenderWindow *win)
 	}
 #endif // _DEBUG
     
+    this->setCollisionDetector(CollisionDetector::SPtr(new CollisionDetector(Scene::WPtr(shared_from_this()))));
+    
     /**
      *  Nothing is enabled by default...
      */
@@ -603,8 +612,15 @@ OgreBulletCollisions::DebugLines* VSC::OB::Scene::getDebugRayLines()
     return mDebugRayLine;
 }
 
-void VSC::OB::Scene::registerElement(Element::SPtr element)
+void VSC::OB::Scene::setCollisionDetector(CollisionDetector::SPtr detector)
 {
+    mCollisionDetector = detector;
+}
+
+void VSC::OB::Scene::registerElement(Element::SPtr element, std::string name, int identifier)
+{
+    element->setName(name);
+    element->setIdentifier(identifier);
     mElements.push_back(element);
 }
 
@@ -737,6 +753,10 @@ bool VSC::OB::Scene::frameStarted(Real elapsedTime)
     /*
      *  This is were the serious shit is going to happen, tracking collisions and such
      */
+    
+    if (this->getCollisionDetector()) {
+        this->getCollisionDetector()->updateCollisions();
+    }
 
     mDoOneStep = false;
 

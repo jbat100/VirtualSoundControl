@@ -41,6 +41,8 @@ VSC::OB::Application::Application(std::vector<Scene::SPtr> bulletScenes) :
     
     this->setNextInputListener(SceneController::WPtr(mSceneController));
     mSceneController->setNextInputListener(CameraController::WPtr(mCameraController));
+    
+    this->setCollisionListener(IM::CollisionListener::SPtr(new IM::CollisionListener));
 }
 // -------------------------------------------------------------------------
 VSC::OB::Application::~Application()
@@ -116,6 +118,7 @@ bool VSC::OB::Application::switchToScene(Scene::SPtr newScene)
     if (mBulletScene)
     {
         if (mTraceScene && newScene) std::cout << "Shutting down old scene..." << std::endl;
+        mBulletScene->getCollisionDetector()->removeListener(this->getCollisionListener());
         mSceneController->shutdown();
         mBulletScene->shutdown();
     }
@@ -126,6 +129,7 @@ bool VSC::OB::Application::switchToScene(Scene::SPtr newScene)
         newScene->init(mRoot, mWindow);
         this->getSceneController()->setScene(Scene::WPtr(newScene));
         this->getCameraController()->setCamera(newScene->getCamera());
+        newScene->getCollisionDetector()->addListener(this->getCollisionListener());
     }
     
     else 
