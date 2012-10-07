@@ -230,10 +230,7 @@ void VSC::OB::OSXInputAdapter::mouseMoved(Ogre::RenderWindow* renderWindow, NSEv
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     Ogre::Vector2 movement = this->adaptedMouseMovementForEvent(theEvent);
     
-    
-    
     VSC::OB::InputAdapter::mouseMoved(renderWindow, location, movement);
-    
 }
 
 

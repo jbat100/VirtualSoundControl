@@ -5,6 +5,36 @@
 #include <string>
 #include <set>
 
+std::ostream& VSC::operator << (std::ostream& stream, const VSC::Keyboard::Combination& comb)
+{
+    stream << "Combination: (";
+    
+    switch (comb.code)
+    {
+        case OIS::KC_W:
+            stream << "W";
+            break;
+        default:
+            stream << "Unknown code";
+            break;
+    }
+    
+    stream << " : ";
+    
+    if (comb.modifier == 0)
+    {
+        stream << "No modifier";
+    }
+    else
+    {
+        stream << "Unknown modifier";
+    }
+    
+    stream << ")";
+    
+    return stream;
+};
+
 const VSC::Keyboard::Combination  VSC::Keyboard::NullCombination = VSC::Keyboard::Combination(OIS::KC_UNASSIGNED, (OIS::Keyboard::Modifier)0);
 
 

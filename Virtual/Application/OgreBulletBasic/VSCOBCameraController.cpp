@@ -69,6 +69,8 @@ bool VSC::OB::CameraController::keyPressed(Ogre::RenderWindow* renderWindow, OIS
         
         const VSC::OB::KeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
         
+        if (mTraceUI) std::cout << "actionKeySet has " << actionKeySet.size() << " elements" << std::endl;
+        
         BOOST_FOREACH (VSC::OB::KeyboardAction::Key actionKey, actionKeySet) 
         {
             switch(actionKey)

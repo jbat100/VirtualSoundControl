@@ -41,7 +41,7 @@ void VSC::OB::BasicSceneElementFactory::addGround()
     this->addStaticPlane(description);
 }
 
-VSC::OB::DynamicObject::WPtr VSC::OB::BasicSceneElementFactory::addPrimitive(PrimitiveType primitiveType,
+VSC::OB::DynamicObject::SPtr VSC::OB::BasicSceneElementFactory::addPrimitive(PrimitiveType primitiveType,
                                                                              const DynamicObject::FactoryDescription& description)
 {
     
@@ -51,6 +51,8 @@ VSC::OB::DynamicObject::WPtr VSC::OB::BasicSceneElementFactory::addPrimitive(Pri
      *  Create an Ogre entity, and attach it to a node. Why no mention of size ?
      *  Create a corresponding OgreBulletCollisions::BoxCollisionShape which just represents the shape
      */
+    
+    VSC::OB::Scene::SPtr scene = this->getScene().lock();
     
     Ogre::Entity *entity = 0;
     OgreBulletCollisions::CollisionShape* collisionShape = 0;
@@ -88,7 +90,7 @@ VSC::OB::DynamicObject::WPtr VSC::OB::BasicSceneElementFactory::addPrimitive(Pri
             
         default:
             // TODO throw exception
-            return DynamicObject::WPtr();
+            return DynamicObject::SPtr();
             break;
     }
     
@@ -96,7 +98,7 @@ VSC::OB::DynamicObject::WPtr VSC::OB::BasicSceneElementFactory::addPrimitive(Pri
 	entity->setCastShadows(description.castsShadow);
     entity->setMaterialName(description.materialName);
     
-    Ogre::SceneNode *node = this->getScene().lock()->getSceneManager()->getRootSceneNode()->createChildSceneNode();
+    Ogre::SceneNode *node = scene->getSceneManager()->getRootSceneNode()->createChildSceneNode();
     node->attachObject(entity);
     
     /*
@@ -106,7 +108,7 @@ VSC::OB::DynamicObject::WPtr VSC::OB::BasicSceneElementFactory::addPrimitive(Pri
      */
     
     Ogre::String fullRigidBodyName = rigidBodyName + Ogre::StringConverter::toString(mNumberOfObjectsCreated);
-    OgreBulletDynamics::DynamicsWorld* world = this->getScene().lock()->getDynamicsWorld();
+    OgreBulletDynamics::DynamicsWorld* world = scene->getDynamicsWorld();
     
     OgreBulletDynamics::RigidBody *rigidBody = new OgreBulletDynamics::RigidBody(fullRigidBodyName, world);
     
@@ -117,23 +119,26 @@ VSC::OB::DynamicObject::WPtr VSC::OB::BasicSceneElementFactory::addPrimitive(Pri
     
     DynamicObject::SPtr object(new VSC::OB::DynamicObject(this->getScene(), entity, rigidBody));
     Scene::Element::SPtr element = boost::static_pointer_cast<Scene::Element>(object);
-    this->registerElement(element);
+    
+    scene->registerElement(element);
 
-    return DynamicObject::WPtr(object);
+    return object;
 }
 
 
-VSC::OB::DynamicObject::WPtr VSC::OB::BasicSceneElementFactory::addTrimesh(const Ogre::String& meshName,
+VSC::OB::DynamicObject::SPtr VSC::OB::BasicSceneElementFactory::addTrimesh(const Ogre::String& meshName,
                                                                            const DynamicObject::FactoryDescription& description)
 {
+    VSC::OB::Scene::SPtr scene = this->getScene().lock();
+    
     /*
      *  Create an Ogre::Entity with the specified mesh, and an associated scene node.
      */
     
     Ogre::String entityName = description.name + "_" + Ogre::StringConverter::toString(mNumberOfObjectsCreated);
-    Ogre::Entity *entity = this->getScene().lock()->getSceneManager()->createEntity(entityName, meshName);
+    Ogre::Entity *entity = scene->getSceneManager()->createEntity(entityName, meshName);
     entity->setCastShadows(description.castsShadow);
-    Ogre::SceneNode *node = this->getScene().lock()->getSceneManager()->getRootSceneNode()->createChildSceneNode();
+    Ogre::SceneNode *node = scene->getSceneManager()->getRootSceneNode()->createChildSceneNode();
     node->attachObject(entity);
 
     /*
@@ -145,7 +150,7 @@ VSC::OB::DynamicObject::WPtr VSC::OB::BasicSceneElementFactory::addTrimesh(const
     OgreBulletCollisions::TriangleMeshCollisionShape *sceneTriMeshShape = trimeshConverter->createTrimesh();
     delete trimeshConverter;
     
-    OgreBulletDynamics::DynamicsWorld* world = this->getScene().lock()->getDynamicsWorld();
+    OgreBulletDynamics::DynamicsWorld* world = scene->getDynamicsWorld();
     Ogre::String rigidBodyName = "RigidTrimesh_" + entityName;
     OgreBulletDynamics::RigidBody *sceneRigid = new OgreBulletDynamics::RigidBody(rigidBodyName, world);
     sceneRigid->setStaticShape(node, sceneTriMeshShape, description.bodyRestitution, description.bodyFriction, description.position);
@@ -154,18 +159,19 @@ VSC::OB::DynamicObject::WPtr VSC::OB::BasicSceneElementFactory::addTrimesh(const
     
     DynamicObject::SPtr object(new DynamicObject(this->getScene(), entity, sceneRigid));
     Scene::Element::SPtr element = boost::static_pointer_cast<Scene::Element>(object);
-    this->registerElement(element);
     
-    return DynamicObject::WPtr(object);
+    scene->registerElement(element);
+    
+    return object;
 }
 
 
-VSC::OB::StaticObject::WPtr VSC::OB::BasicSceneElementFactory::addStaticPlane(const StaticObject::FactoryDescription& description)
+VSC::OB::StaticObject::SPtr VSC::OB::BasicSceneElementFactory::addStaticPlane(const StaticObject::FactoryDescription& description)
 {
     // Use a load of meshes to represent the floor
     int i = 0;
     
-    Scene::SPtr scene = this->getScene().lock();
+    VSC::OB::Scene::SPtr scene = this->getScene().lock();
     
     BOOST_ASSERT_MSG(scene->getSceneManager(), "Expected scene manager");
     
@@ -218,8 +224,8 @@ VSC::OB::StaticObject::WPtr VSC::OB::BasicSceneElementFactory::addStaticPlane(co
     
     StaticObject::SPtr geom(new StaticObject(this->getScene(), s, rigidPlaneBody));
     Scene::Element::SPtr element = boost::static_pointer_cast<Scene::Element>(geom);
-    this->registerElement(element);
+    scene->registerElement(element);
 
-    return StaticObject::WPtr(geom);;
+    return geom;
 }
 

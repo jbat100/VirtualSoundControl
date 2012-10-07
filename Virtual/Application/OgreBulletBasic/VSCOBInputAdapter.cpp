@@ -5,7 +5,8 @@
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
-VSC::OB::InputAdapter::InputAdapter(void) : 
+VSC::OB::InputAdapter::InputAdapter(void) :
+mCurrentModifier((OIS::Keyboard::Modifier)0),
 mNormalizedCoordinates(false),
 mLastMouseMovement(Ogre::Vector2(0.0, 0.0)),
 mLastMousePosition(Ogre::Vector2(0.0, 0.0))

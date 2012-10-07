@@ -1,10 +1,14 @@
-    
+
+#include "OIS.h"
+
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
 #include "VSCOBOSXApplicationSetup.h"
 #include "VSCOBInputAdapter.h"
 #include "VSCOBCameraController.h"
 #include "VSCOBSceneController.h"
+
+#include "VSCUI.h"
 
 #include "OgreResourceGroupManager.h"
 
@@ -19,6 +23,15 @@ VSC::OB::Application::Application(std::vector<Scene::SPtr> bulletScenes) :
     mBulletScene(Scene::SPtr())
 {
     BOOST_ASSERT_MSG (!mBulletScenes.empty(), "Expected keyboard adapter");
+    
+    VSC::Keyboard::Combination testComb(OIS::KC_W, (OIS::Keyboard::Modifier)0);
+    
+    const KeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(testComb);
+    
+    BOOST_FOREACH (KeyboardAction::Key key, actionKeySet)
+    {
+        std::cout << "Registered action for input " << testComb << " is " << key << std::endl;
+    }
     
     mSceneController = SceneController::SPtr(new SceneController());
     mSceneController->setOgreKeyBindings(this->getOgreKeyBindings());

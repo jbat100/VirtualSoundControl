@@ -404,8 +404,19 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
         return false;
     }
     
+    /*
+    VSC::Keyboard::Combination testComb(OIS::KC_W, (OIS::Keyboard::Modifier)0);
+    const KeyboardAction::KeySet& testActionKeySet = this->getOgreKeyBindings()->getActionsForInput(testComb);
+    BOOST_FOREACH (KeyboardAction::Key key, testActionKeySet)
+    {
+        std::cout << "Registered action for input " << testComb << " is " << key << std::endl;
+    }
+     */
+    
     OIS::Keyboard::Modifier modifier = inputAdapter->getCurrentModifier();
     VSC::Keyboard::Combination comb(key, modifier);
+    
+    std::cout << "Actual input is " << comb << std::endl;
     
     BOOST_ASSERT_MSG(this->getOgreKeyBindings(), "Expected key bindings");
     
@@ -583,7 +594,7 @@ void VSC::OB::SceneController::throwDynamicObjectPrimitive(VSC::OB::PrimitiveTyp
     
     description.position = scene->getCamera()->getDerivedPosition();
     
-    VSC::OB::DynamicObject::WPtr object;
+    VSC::OB::DynamicObject::SPtr object;
     
     switch(primitiveType)
     {
@@ -616,11 +627,9 @@ void VSC::OB::SceneController::throwDynamicObjectPrimitive(VSC::OB::PrimitiveTyp
             break;
     }
     
-    VSC::OB::DynamicObject::SPtr sObject = object.lock();
-    
-    if (sObject)
+    if (object)
     {
-        sObject->getRigidBody()->setLinearVelocity(velocity);
+        object->getRigidBody()->setLinearVelocity(velocity);
     }
 
 }

@@ -68,7 +68,9 @@ bool VSC::OB::OSXApplicationSetup::setupApplicationWithOgreView(ApplicationBase:
     
     OSXInputAdapter::SPtr adapter(new OSXInputAdapter());
     
-    BOOST_ASSERT_MSG(adapter, "Expected adapter"); 
+    BOOST_ASSERT_MSG(adapter, "Expected adapter");
+    
+    adapter->allowRapidFireKeyPresses(false);
     
     adapter->addInputListener(obApplication);
     

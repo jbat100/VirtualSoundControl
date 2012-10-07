@@ -30,14 +30,14 @@ namespace VSC {
             
             virtual void addGround(void);
             
-            DynamicObject::WPtr addPrimitive(VSC::OB::PrimitiveType primitiveType,
+            DynamicObject::SPtr addPrimitive(VSC::OB::PrimitiveType primitiveType,
                                              const DynamicObject::FactoryDescription& description);
             
-            DynamicObject::WPtr addTrimesh(const Ogre::String& meshName,
+            DynamicObject::SPtr addTrimesh(const Ogre::String& meshName,
                                            const DynamicObject::FactoryDescription& description);
              
             
-            StaticObject::WPtr addStaticPlane(const StaticObject::FactoryDescription& description);
+            StaticObject::SPtr addStaticPlane(const StaticObject::FactoryDescription& description);
             
         private:
             

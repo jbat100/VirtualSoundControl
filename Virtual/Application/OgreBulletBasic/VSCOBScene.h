@@ -58,6 +58,8 @@ namespace VSC {
                 
             public:
                 
+                friend class Scene;
+                
                 typedef boost::shared_ptr<Element>    SPtr;   // Smart pointers are only used to reference Elements by Scene::Factory
                 typedef boost::weak_ptr<Element>      WPtr;   // Weak pointers are used everywhere else
                 
@@ -74,6 +76,9 @@ namespace VSC {
                 Scene::WPtr                             getScene(void) {return mScene;};
                 OgreBulletDynamics::RigidBody*          getRigidBody(void) {return mRigidBody;}
                 
+                
+            protected:
+                
                 /*
                  *  Destroy should be overridden to perform all necessary operations to remove the element from the Scene
                  *  and all associated Ogre/Bullet stuff which it is used by. However subclasses should call the base implementation
@@ -82,8 +87,6 @@ namespace VSC {
                 
                 virtual void destroy(void);
                 
-            protected:
-                
                 
             private:
                 
@@ -91,6 +94,8 @@ namespace VSC {
                 OgreBulletDynamics::RigidBody*          mRigidBody;
                 
             };
+            
+            typedef std::vector<Element::SPtr> Elements;
             
             /*
              *  Scene::Factory is used to generate Scene::Element and keep a shared_ptr to them. Like Elemet, it is meant 
@@ -102,34 +107,11 @@ namespace VSC {
             public:
                 
                 typedef boost::shared_ptr<ElementFactory> SPtr;
-                typedef std::vector<Scene::Element::SPtr> Elements;
                 
                 ElementFactory(Scene::WPtr scene) : mScene(scene) {}
-                virtual ~ElementFactory() { reset(); }
+                virtual ~ElementFactory() { }
                 
                 Scene::WPtr getScene(void) {return mScene;}; // no public setter, cannot change the element scene.
-                
-                /*
-                 *  Reset should destroy all shared_ptr references to the Elements that the factory has created
-                 */
-                void reset(void);
-                
-                /*
-                 *  destroyElement() should remove the element from the scene, simply by erasing it from the 
-                 *  internal shared_ptr container (which calls the Element's destructor and therefore it's destroy()
-                 *  method, which should in theory do its cleaning up duties).
-                 */
-                void destroyElement(Scene::Element::SPtr element);
-                
-                /*
-                 *  Get element using the inner rigid body.
-                 */
-                Element::SPtr getElementWithRigidBody(OgreBulletDynamics::RigidBody* rigidBody);
-                
-                /*
-                 *  Provide access the elements which have been created by the factory.
-                 */
-                Elements& elements() {return mElements;}
                 
                 /*
                  *  Abstract API for adding the stuff to the world. Used directly by VSC::OB::Scene 
@@ -138,20 +120,12 @@ namespace VSC {
                 
             protected:
                 
-                /*
-                 *  Registering an element will add a shared_ptr to the element to the factory's private container
-                 *  and will add a weak_ptr to the scenes private container
-                 */
-                void registerElement(Scene::Element::SPtr element);
                 
             private:
                 
                 Scene::WPtr mScene;
                 
-                Elements mElements;
             };
-            
-            typedef std::deque<Element::WPtr> Elements;
             
             /*
              *  Collisions, used for tracking and informing Collision listeners
@@ -164,29 +138,35 @@ namespace VSC {
                 
             public:
                 
-                friend class Scene, CollisionDetector;
+                friend class Scene;
+                friend class CollisionDetector;
                 
-                typedef boost::shared_ptr<Collision>    SPtr;
-                typedef boost::weak_ptr<Collision>      WPtr;
+                typedef boost::shared_ptr<Collision>        SPtr;
+                typedef boost::weak_ptr<Collision>          WPtr;
+                
+                //typedef std::vector<btPersistentManifold*>  PersistentManifolds;
                 
                 enum State {
                     StateNone = 0,
+                    StateCreated,
                     StateClose,
                     StateOngoing,
                     StateEnded,
                     StateInvalid
                 };
                 
-                Collision();
+                Collision() {}
                 
                 Scene::SPtr getScene(void) {return mScene.lock();}
                 
                 Scene::Element::SPtr getFirstElement(void) {return mFirstElement.lock();}
                 Scene::Element::SPtr getSecondElement(void) {return mSecondElement.lock();}
                 
-                State getState(void) {return state;}
+                State getState(void) {return mState;}
                 
-                btPersistentManifold* getContactManifold(void) {return mContactManifold;}
+                //const PersistentManifolds& getPersistentManifolds(void) {return mPersistentManifolds;}
+                
+                btPersistentManifold* getPersistentManifold(void) {return mPersistentManifold;}
                 
             protected:
                 
@@ -196,6 +176,14 @@ namespace VSC {
                 void setSecondElement(Element::SPtr element) {mSecondElement = Element::WPtr(element);}
                 
                 void setState(State state) {mState = state;}
+                
+                /*
+                 *  On each physics update the manifolds for the object will be cleared and repopulated
+                 *  with the current dynamics world manifolds.
+                 */
+                
+                //void addPersistentManifold(btPersistentManifold* manifold);
+                //void clearPersistentManifolds();
                 
                 void setPersistentManifold(btPersistentManifold* manifold) {mPersistentManifold = manifold;}
                 
@@ -219,9 +207,12 @@ namespace VSC {
                 
                 btPersistentManifold*   mPersistentManifold;
                 
+                //PersistentManifolds     mPersistentManifolds;
+                
             };
-    
             
+            typedef std::vector<Collision::SPtr>            Collisions;
+    
             class CollisionListener
             {
                 
@@ -232,13 +223,15 @@ namespace VSC {
                 
                 virtual void collisionProspectDetected(Scene::Collision::SPtr collision) {}
                 virtual void collisionProspectUpdated(Scene::Collision::SPtr collision) {}
+                virtual void collisionProspectEnded(Scene::Collision::SPtr collision) {}
                 
                 virtual void collisionDetected(Scene::Collision::SPtr collision) {}
                 virtual void collisionUpdated(Scene::Collision::SPtr collision) {}
-                
                 virtual void collisionEnded(Scene::Collision::SPtr collision) {}
                 
             };
+            
+            typedef std::vector<CollisionListener::SPtr>    Listeners;
             
             class CollisionDetector
             {
@@ -248,9 +241,6 @@ namespace VSC {
                 typedef boost::shared_ptr<CollisionDetector>    SPtr;
                 typedef boost::weak_ptr<CollisionDetector>      WPtr;
                 
-                typedef std::vector<Collision::SPtr>            Collisions;
-                typedef std::vector<CollisionListener::SPtr>    Listeners;
-                
                 CollisionDetector(Scene::WPtr scene) : mScene(scene), mDistanceThreshold(0.1) {}
                 
                 const Collisions&   getCollisions(void) {return mCollisions;}
@@ -259,7 +249,7 @@ namespace VSC {
                 void addListener(CollisionListener::SPtr listener);
                 void removeListener(CollisionListener::SPtr listener);
                 
-                Collision::SPtr getCollisionForElementPair(Scene::Element::SPtr first, Scene::Element::SPtr second);
+                Collisions getCollisionsForElementPair(Scene::Element::SPtr first, Scene::Element::SPtr second);
                 
                 Scene::WPtr getScene(void) {return mScene;}
                 
@@ -269,6 +259,8 @@ namespace VSC {
                 
                 void addCollision(Collision::SPtr collision);
                 void removeCollision(Collision::SPtr collision);
+                
+                Collision::SPtr getCollisionsForPersistentManifold(btPersistentManifold* manifold);
                 
             private:
                 
@@ -285,7 +277,7 @@ namespace VSC {
              *  Constructor/Destructor/Initialization 
              */
             Scene();
-            virtual ~Scene(){ shutdown(); };
+            virtual ~Scene(){ /* shutdown(); // calling shutdown in destructor causes problems */  };
             virtual void init(Ogre::Root *root, Ogre::RenderWindow *win);
 
             /**--------------------------------------------------------------
@@ -339,6 +331,38 @@ namespace VSC {
              */
             
             const StatsMap& getUpdatedStatsMap(void);
+            
+            /**--------------------------------------------------------------
+             *  Elements
+             */
+            
+            /*
+             *  Reset should destroy all shared_ptr references to the Elements that the factory has created
+             */
+            void destroyAllElements(void);
+            
+            /*
+             *  destroyElement() should remove the element from the scene, simply by erasing it from the
+             *  internal shared_ptr container (which calls the Element's destructor and therefore it's destroy()
+             *  method, which should in theory do its cleaning up duties).
+             */
+            void destroyElement(Scene::Element::SPtr element);
+            
+            /*
+             *  Get element using the inner rigid body.
+             */
+            Element::SPtr getElementWithRigidBody(OgreBulletDynamics::RigidBody* rigidBody);
+            
+            /*
+             *  Provide access the elements which have been created by the factory.
+             */
+            Elements& elements() {return mElements;}
+            
+            /*
+             *  Registering an element will add a shared_ptr to the element to the factory's private container
+             *  and will add a weak_ptr to the scenes private container
+             */
+            void registerElement(Scene::Element::SPtr element);
             
             /**--------------------------------------------------------------
              *  Other Setters/Getters
@@ -405,6 +429,8 @@ namespace VSC {
         private:
             
             ElementFactory::SPtr                    mElementFactory;
+            
+            Elements                                mElements;
             
             OgreBulletDynamics::DynamicsWorld       *mWorld;
             Ogre::RenderWindow                      *mWindow;

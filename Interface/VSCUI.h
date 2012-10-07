@@ -5,6 +5,7 @@
 #include <boost/bimap.hpp>
 #include <string>
 #include <set>
+#include <ostream>
 #include "OIS.h"
 
 namespace VSC {
@@ -33,6 +34,8 @@ namespace VSC {
         static const Combination  NullCombination;
         
     };
+    
+    std::ostream& operator << (std::ostream& stream, const Keyboard::Combination& comb);
     
 }
 

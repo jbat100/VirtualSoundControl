@@ -97,6 +97,8 @@ namespace VSC {
             
         };
         
+        std::ostream& operator << (std::ostream& stream, const KeyboardAction::Key& key);
+        
     }
 }
 

@@ -23,7 +23,7 @@ namespace VSC {
         public:
 
             TriMeshDemo() : Scene() { setName("Trimesh Static Scene test"); }
-            virtual ~TriMeshDemo(){}
+            virtual ~TriMeshDemo() {}
 
             void init(Ogre::Root *root, Ogre::RenderWindow *win);
 

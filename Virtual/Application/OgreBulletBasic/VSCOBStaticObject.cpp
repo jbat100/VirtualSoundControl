@@ -23,7 +23,12 @@ void VSC::OB::StaticObject::destroy(void)
 {
     Scene::Element::destroy();  // call base class destroy() !!!
     
-    this->getScene().lock()->getSceneManager()->destroyStaticGeometry(mStaticGeometry);
-    mStaticGeometry = 0;
+    Scene::SPtr scene = this->getScene().lock();
+    
+    if (scene)
+    {
+        scene->getSceneManager()->destroyStaticGeometry(mStaticGeometry);
+        mStaticGeometry = 0;
+    }
 }
 
