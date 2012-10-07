@@ -112,6 +112,13 @@ void VSC::OB::Scene::Collision::invalidate()
     mPersistentManifold = 0;
 }
 
+std::ostream& VSC::OB::operator << (std::ostream& stream, const Scene::Collision& collision)
+{
+    stream << "Collision with element: " << *collision->getFirstElement() << " and element: " << *collision->getSecondElement() << std::endl;
+    
+    return stream;
+}
+
 //MARK: - Collisions Detector
 
 
@@ -258,7 +265,7 @@ void VSC::OB::Scene::CollisionDetector::updateCollisions()
                 
                 BOOST_ASSERT_MSG(elementA && elementB, "Expected elements");
                 
-                if (elementA && elementB)
+                if (elementA && elementB && !elementA->silentCollisions() && !elementB->silentCollisions())
                 {
                     collision = Collision::SPtr(new Collision());
                     collision->setFirstElement(elementA);

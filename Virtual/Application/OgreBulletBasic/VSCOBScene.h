@@ -64,7 +64,7 @@ namespace VSC {
                 typedef boost::weak_ptr<Element>      WPtr;   // Weak pointers are used everywhere else
                 
                 Element(Scene::WPtr scene, OgreBulletDynamics::RigidBody* rigidBody) :
-                mScene(scene), mRigidBody(rigidBody) {}
+                mScene(scene), mRigidBody(rigidBody), mSilentCollisions(false) {}
                 
                 virtual ~Element() { destroy(); }
                 
@@ -76,6 +76,8 @@ namespace VSC {
                 Scene::WPtr                             getScene(void) {return mScene;};
                 OgreBulletDynamics::RigidBody*          getRigidBody(void) {return mRigidBody;}
                 
+                bool                                    silentCollisions() {return mSilentCollisions;}
+                bool                                    setSilentCollisions(bool silent) {mSilentCollisions = silent;}
                 
             protected:
                 
@@ -92,6 +94,7 @@ namespace VSC {
                 
                 Scene::WPtr                             mScene;
                 OgreBulletDynamics::RigidBody*          mRigidBody;
+                bool                                    mSilentCollisions;
                 
             };
             
@@ -210,6 +213,8 @@ namespace VSC {
                 //PersistentManifolds     mPersistentManifolds;
                 
             };
+            
+            
             
             typedef std::vector<Collision::SPtr>            Collisions;
     
@@ -473,6 +478,8 @@ namespace VSC {
             bool mEnableSatComparison;
             
         };
+        
+        std::ostream& operator << (std::ostream& stream, const Scene::Collision& collision);
         
     }
 }
