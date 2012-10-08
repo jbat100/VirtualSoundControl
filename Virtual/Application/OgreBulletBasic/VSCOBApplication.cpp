@@ -178,7 +178,8 @@ bool VSC::OB::Application::frameEnded(const Ogre::FrameEvent& evt)
 // -------------------------------------------------------------------------
 void VSC::OB::Application::setupResources(void)
 {
-	VSC::OB::ApplicationBase::setupResources(); 
+	VSC::OB::ApplicationBase::setupResources();
+    
 	Ogre::ResourceGroupManager *rsm = Ogre::ResourceGroupManager::getSingletonPtr();
 	Ogre::StringVector groups = rsm->getResourceGroups();        
 	Ogre::FileInfoListPtr finfo =  Ogre::ResourceGroupManager::getSingleton().findResourceFileInfo ("Bootstrap", "axes.mesh");
