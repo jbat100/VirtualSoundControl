@@ -10,73 +10,78 @@
 #ifndef _VSC_MIDI_CONTROL_CENTER_H_
 #define _VSC_MIDI_CONTROL_CENTER_H_
 
-#include <list>
-#include <boost/shared_ptr.hpp>
-#include <boost/thread/mutex.hpp>
-
-
-#include "RtMidi.h"
-
 #include "VSCSound.h"
 #include "VSCMIDI.h"
 #include "VSCMIDIController.h"
 
-class VSCMIDIControlCenter;
+#include "RtMidi.h"
 
-typedef boost::shared_ptr<VSCMIDIControlCenter> VSCMIDIControlCenterPtr;
+#include <list>
+#include <boost/shared_ptr.hpp>
+#include <boost/thread/mutex.hpp>
 
-/**
- *  VSCMIDIControlCenter should be used for:
- *
- *  - Getting available MIDI input and output ports.
- *  - Periodically sending controller values on a background thread.
- */
+namespace VSC {
+    
+    namespace MIDI {
+        
+        
+        /**
+         *  ControlCenter should be used for:
+         *
+         *  - Getting available MIDI input and output ports.
+         *  - Periodically sending controller values on a background thread.
+         */
+        
+        class ControlCenter {
+            
+        public:
+            
+            typedef boost::shared_ptr<ControlCenter> SPtr;
+            
+            enum State {
+                StateNone = 0,
+                StateStopped,
+                StatePeriodicBroadcasting
+            };
+            
+            typedef std::vector<Controller::SPtr> ControllerList;
+            
+            ControlCenter(void);
+            ~ControlCenter(void);
+            
+            void addController(Controller controller);
+            void removeController(Controller controller);
+            const Controllers& getControllers(void) const;
+            
+            State getState(void);
+            
+            void broadcastNow(void);
+            void startPeriodicBroadcasting(void);
+            void stopPeriodicBroadcasting(void);
+            
+            VSC::Sound::TimeInterval getBroadcastInterval(void) const;
+            void setBroadcastInterval(const VSC::Sound::TimeInterval interval);
+            
+        protected:
+            
+            void setState(State state);
+            
+        private:
+            
+            Controllers                 mControllers;
+            
+            State                       mState;
+            VSC::Sound::TimeInterval    mBroadcastInterval;
+            
+            // static boost::mutex         mSingletonMutex;
+            
+            
+        };
+        
 
-class VSCMIDIControlCenter {
+        
+    }
     
-public:
-    
-    enum State {
-        StateNone = 0,
-        StateStopped,
-        StatePeriodicBroadcasting
-    };
-    
-    typedef std::list<VSCMIDIControllerPtr> ControllerList;
-    
-    VSCMIDIControlCenter(void);
-    ~VSCMIDIControlCenter(void);
-    
-    static VSCMIDIControlCenterPtr defaultCenter(void);
-    
-    void addController(VSCMIDIControllerPtr controller);
-    void removeController(VSCMIDIControllerPtr controller);
-    const ControllerList& getControllerList(void) const;
-    
-    State getState(void);
-    
-    void broadcastNow(void);
-    void startPeriodicBroadcasting(void);
-    void stopPeriodicBroadcasting(void);
-    
-    VSCSTimeInterval getBroadcastInterval(void) const;
-    void setBroadcastInterval(const VSCSTimeInterval interval);
-    
-protected:
-    
-    void setState(State state);
-    
-private:
-    
-    ControllerList _controllerList;
-    
-    State _state;
-    VSCSTimeInterval _broadcastInterval;
-    
-    static boost::mutex _singletonMutex;
-
-    
-};
-
+}
 
 #endif

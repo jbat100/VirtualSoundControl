@@ -13,21 +13,24 @@
 
 #include "RtError.h"
 
-boost::mutex VSCMIDIControlCenter::_singletonMutex;
 
 #pragma mark - Constructor/Destructor
 
-VSCMIDIControlCenter::VSCMIDIControlCenter(void) {
+VSC::MIDI::ControlCenter::ControlCenter(void) {
     
 
     
 }
 
-VSCMIDIControlCenter::~VSCMIDIControlCenter(void) {
+VSC::MIDI::ControlCenter::~ControlCenter(void) {
     
     // using smart pointer for _midiOut so no need to delete
     
 }
+
+/*
+
+boost::mutex VSCMIDIControlCenter::_singletonMutex;
 
 VSCMIDIControlCenterPtr VSCMIDIControlCenter::defaultCenter(void) {
     
@@ -44,46 +47,47 @@ VSCMIDIControlCenterPtr VSCMIDIControlCenter::defaultCenter(void) {
     
 }
 
+ */
 
 #pragma mark - MIDI Controllers 
 
-void VSCMIDIControlCenter::addController(VSCMIDIControllerPtr controller) {
-    ControllerList::iterator it = std::find(_controllerList.begin(), _controllerList.end(), controller);
-    if (it == _controllerList.end()) {
-        _controllerList.push_back(controller);
+void VSC::MIDI::ControlCenter::addController(VSCMIDIControllerPtr controller) {
+    Controllers::iterator it = std::find(mControllers.begin(), mControllers.end(), controller);
+    if (it == mControllers.end()) {
+        mControllers.push_back(controller);
     }
 }
 
-void VSCMIDIControlCenter::removeController(VSCMIDIControllerPtr controller) {
-    ControllerList::iterator it = std::find(_controllerList.begin(), _controllerList.end(), controller);
-    if (it != _controllerList.end()) {
-        _controllerList.erase(it);
+void VSC::MIDI::ControlCenter::removeController(VSCMIDIControllerPtr controller) {
+    Controllers::iterator it = std::find(mControllers.begin(), mControllers.end(), controller);
+    if (it != mControllers.end()) {
+        mControllers.erase(it);
     }
 }
 
-const VSCMIDIControlCenter::ControllerList& VSCMIDIControlCenter::getControllerList(void) const {
-    return _controllerList;
+const VSC::MIDI::Controllers& VSC::MIDI::ControlCenter::getControllerList(void) const {
+    return mControllers;
 }
 
 #pragma mark - Broadcasting 
 
-VSCSTimeInterval VSCMIDIControlCenter::getBroadcastInterval(void) const {
-    return _broadcastInterval;
+VSC::Sound::TimeInterval VSC::MIDI::ControlCenter::getBroadcastInterval(void) const {
+    return mBroadcastInterval;
 }
 
-void VSCMIDIControlCenter::setBroadcastInterval(const VSCSTimeInterval interval) {
-    _broadcastInterval = interval;
+void VSC::MIDI::ControlCenter::setBroadcastInterval(const VSC::Sound::TimeInterval  interval) {
+    mBroadcastInterval = interval;
 }
 
-void VSCMIDIControlCenter::broadcastNow(void) {
+void VSC::MIDI::ControlCenter::broadcastNow(void) {
     
 }
 
-void VSCMIDIControlCenter::startPeriodicBroadcasting(void) {
+void VSC::MIDI::ControlCenter::startPeriodicBroadcasting(void) {
     
 }
 
-void VSCMIDIControlCenter::stopPeriodicBroadcasting(void) {
+void VSC::MIDI::ControlCenter::stopPeriodicBroadcasting(void) {
     
 }
 

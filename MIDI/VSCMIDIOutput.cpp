@@ -14,13 +14,13 @@
 
 #include <iostream>
 
-VSCMIDIOutput::VSCMIDIOutput(void) {
+VSC::MIDI::Output::Output(void) {
     
     this->createRtMidiOut();
     
 }
 
-VSCMIDIOutput::VSCMIDIOutput(VSCMIDIOutputPort outputPort) {
+VSC::MIDI::Output::Output(OutputPort outputPort) {
     
     this->createRtMidiOut();
     
@@ -28,11 +28,11 @@ VSCMIDIOutput::VSCMIDIOutput(VSCMIDIOutputPort outputPort) {
     
 }
 
-void VSCMIDIOutput::createRtMidiOut(void) {
+void VSC::MIDI::Output::createRtMidiOut(void) {
     
     // RtMidiOut constructor
     try {
-        _midiOut = RtMidiOutPtr(new RtMidiOut());
+        mMIDIOut = RtMidiOutPtr(new RtMidiOut());
     }
     catch ( RtError &error ) {
         throw VSCMIDIException(error.getMessage());
@@ -41,39 +41,39 @@ void VSCMIDIOutput::createRtMidiOut(void) {
 }
 
 
-VSCMIDIOutputPort VSCMIDIOutput::getOutputPort(void) const {
-    return _outputPort;
+VSC::MIDI::OutputPort VSC::MIDI::Output::getOutputPort(void) const {
+    return mOutputPort;
 }
 
-void VSCMIDIOutput::setOutputPort(VSCMIDIOutputPort const& port) {
+void VSC::MIDI::Output::setOutputPort(OutputPort const& port) {
     
-    if (port != VSCMIDIOutputPortVoid && _midiOut) {
+    if (port != OutputPortVoid && mMIDIOut) {
         
-        _midiOut->closePort();
+        mMIDIOut->closePort();
         
         if (port.isVirtual) {
             try {
-                _midiOut->openVirtualPort(port.name);
+                mMIDIOut->openVirtualPort(port.name);
             } catch (RtError &error) {
                 error.printMessage();
-                _outputPort = VSCMIDIOutputPortVoid;
+                mOutputPort = OutputPortVoid;
                 throw VSCMIDIException(error.getMessage());
             }
-            _outputPort = port;
+            mOutputPort = port;
             std::cout << "Successfully opened " << port << std::endl;
             return;
         }
         
         else {
             try {
-                if (port.name.size() > 0) _midiOut->openPort(port.number);
-                else _midiOut->openPort(port.number, port.name);
+                if (port.name.size() > 0) mMIDIOut->openPort(port.number);
+                else mMIDIOut->openPort(port.number, port.name);
             } catch (RtError &error) {
                 error.printMessage();
-                _outputPort = VSCMIDIOutputPortVoid;
+                mOutputPort = OutputPortVoid;
                 throw VSCMIDIException(error.getMessage());
             }
-            _outputPort = port;
+            mOutputPort = port;
             std::cout << "Successfully opened " << port << std::endl;
         }
         
@@ -81,32 +81,32 @@ void VSCMIDIOutput::setOutputPort(VSCMIDIOutputPort const& port) {
     
     else {
         
-        if (_midiOut) {
-            _outputPort = VSCMIDIOutputPortVoid;
-            _midiOut->closePort();
+        if (mMIDIOut) {
+            mOutputPort = OutputPortVoid;
+            mMIDIOut->closePort();
         }
         
         else {
-            _outputPort = VSCMIDIOutputPortVoid;
-            throw VSCMIDIException("Expected non nil _midiOut");
+            mOutputPort = OutputPortVoid;
+            throw VSCMIDIException("Expected non nil mMIDIOut");
         }
     }
     
     
 }
 
-bool VSCMIDIOutput::sendMessage(VSCMIDI::Message& m) {
+bool VSC::MIDI::Output::sendMessage(VSCMIDI::Message& m) {
     
-    if (_midiOut && _outputPort != VSCMIDIOutputPortVoid) {
+    if (mMIDIOut && mOutputPort != OutputPortVoid) {
         std::cout << *this << " sending " << VSCMIDI::messageDescription(m) << std::endl;
-        _midiOut->sendMessage(&m);
+        mMIDIOut->sendMessage(&m);
     }
     
     return false;
     
 }
 
-std::ostream& operator<<(std::ostream& output, const VSCMIDIOutput& p) {
+std::ostream& VSC::MIDI::operator<<(std::ostream& output, const Output& p) {
     output << "VSCMIDIOutput (" << p.getOutputPort() << ")";
     return output;
 }

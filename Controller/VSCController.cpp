@@ -10,30 +10,30 @@
 #include "VSCController.h"
 #include "VSCException.h"
 
-VSCController::VSCController(void) {
+VSC::Controller::Controller(void) {
     this->setValueRange(ValueRange(0.0, 1.0));
 }
 
-VSCSFloat VSCController::getCurrentControlValue(void) const {
+VSC::Float VSC::Controller::getCurrentControlValue(void) const {
     throw VSCSCalledPureVirtualFunctionException();
 }
 
-VSCController::State VSCController::getState(void) const {
-    return _state;
+VSC::Controller::State VSC::Controller::getState(void) const {
+    return mState;
 }
 
-void VSCController::setState(State state) {
-    _state = state;
+void VSC::Controller::setState(State state) {
+    mState = state;
 }
 
-bool VSCController::valueIsValid(const VSCSFloat val) const {
-    return (val > _valueRange.first && val < _valueRange.first + _valueRange.second) ? true : false;
+bool VSC::Controller::valueIsValid(const VSC::Float val) const {
+    return (val > mValueRange.first && val < mValueRange.first + mValueRange.second) ? true : false;
 }
 
-VSCController::ValueRange VSCController::getValueRange(void) const {
-    return _valueRange;
+VSC::Controller::ValueRange VSC::Controller::getValueRange(void) const {
+    return mValueRange;
 }
 
-void VSCController::setValueRange(ValueRange valueRange) {
-    _valueRange = valueRange;
+void VSC::Controller::setValueRange(ValueRange valueRange) {
+    mValueRange = valueRange;
 }

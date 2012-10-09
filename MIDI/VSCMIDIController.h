@@ -10,10 +10,6 @@
 #ifndef _VSC_MIDI_CONTROLLER_H_
 #define _VSC_MIDI_CONTROLLER_H_
 
-#include <set>
-#include <boost/shared_ptr.hpp>
-#include <boost/enable_shared_from_this.hpp>
-
 #include "VSCSound.h"
 #include "VSCMIDI.h"
 #include "VSCMIDIOutput.h"
@@ -21,48 +17,78 @@
 
 #include "RtMidi.h"
 
-/*
- *  A detailed table of midi messages can be found here http://www.midi.org/techspecs/midimessages.php
- *
- *  A bit of background information from wiki of MIDI messages http://en.wikipedia.org/wiki/MIDI_1.0
- * 
- */
+#include <set>
+#include <boost/shared_ptr.hpp>
+#include <boost/enable_shared_from_this.hpp>
 
-
-class VSCMIDIController {
+namespace VSC {
     
-public:
+    namespace MIDI {
     
-    typedef std::set<unsigned int> ControlIdentifiers;
+        
+        /*
+         *  A detailed table of midi messages can be found here http://www.midi.org/techspecs/midimessages.php
+         *
+         *  A bit of background information from wiki of MIDI messages http://en.wikipedia.org/wiki/MIDI_1.0
+         *
+         */
+        
+        
+        class ControllerBinding {
+            
+        public:
+            
+            typedef boost::shared_ptr<ControllerBinding> SPtr;
+            
+            enum Mode {
+                ModeNone = 0,
+                ModeControlLowResolution,
+                ModeControlHighResolution,
+                ModeChannelAftertouch,
+                ModePolyphonicAftertouch,
+                ModePitchWheel
+            };
+            
+            ControllerBinding(void);
+            
+            bool sendCurrentValue(void);
+            
+            void setController(VSC::Controller::SPtr c);
+            VSC::Controller::SPtr getController(void);
+            
+            void setOutput(Output::SPtr o);
+            Output::SPtr getMIDIOutput(void);
+            
+            void setMIDIChannel(const unsigned int chan);
+            unsigned int getMIDIChannel(void) const;
+            
+            /*
+             *  Mode specific
+             */
+            
+            void setControlNumber(const ControlNumber num);
+            ControlNumber getControlNumber(void) const;
+            
+            void setMIDIPitch(unsigned int pitch);
+            unsigned int getMIDIPitch(void);
+            
+        private:
+            
+            Output::SPtr            mMIDIOutput;
+            VSC::Controller::SPtr   mController;
+            
+            unsigned int            mMIDIChannel;
+            ControlNumber           mControlNumber;
+            
+            Mode                    mMode;
+            unsigned int            mMIDIPitch;
+        };
+        
+        typedef std::vector<ControllerBinding::SPtr> ControllerBindings;
+        
+    }
     
-    VSCMIDIController(void);
-
-    void setController(VSCControllerPtr c);
-    VSCControllerPtr getController(void);
-    
-    void setMIDIOutput(VSCMIDIOutputPtr o);
-    VSCMIDIOutputPtr getMIDIOutput(void);
-    
-    void setMIDIChannel(const unsigned int chan);
-    unsigned int getMIDIChannel(void) const;
-    
-    void setControlChannel(const unsigned int chan);
-    unsigned int getControlChannel(void) const;
-    
-    bool sendControllerValue(void);
-    bool sendValue(unsigned int val);
-    
-private:
-    
-    VSCMIDIOutputPtr _midiOutput;
-    VSCControllerPtr _controller;
-
-    unsigned int _midiChannel;
-    unsigned int _controlChannel;
-    
-};
-
-typedef boost::shared_ptr<VSCMIDIController> VSCMIDIControllerPtr;
+}
 
 #endif
 
