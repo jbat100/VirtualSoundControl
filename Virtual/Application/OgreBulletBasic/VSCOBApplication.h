@@ -9,7 +9,7 @@
 #include "VSCOBSceneController.h"
 #include "VSCOBApplicationBase.h"
 
-#include "VSCIMSceneCollisionMapper.h"
+#include "VSCIMCollisionMapper.h"
 
 #include <Ogre/Ogre.h>
 

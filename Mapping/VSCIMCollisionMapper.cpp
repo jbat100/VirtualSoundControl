@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#include "VSCIMSceneCollisionMapper.h"
+#include "VSCIMCollisionMapper.h"
 
 void VSC::IM::CollisionMapper::collisionProspectDetected(OB::Scene::Collision::SPtr collision)
 {

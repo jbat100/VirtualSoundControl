@@ -6,4 +6,6 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#include <iostream>
+#include "VSCIMAction.h"
+
+
