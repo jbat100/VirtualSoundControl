@@ -7,7 +7,7 @@
  *
  */
 
-#include "VSCMIDIController.h"
+#include "VSCMIDIOutput.h"
 #include "VSCException.h"
 
 #include "RtError.h"
@@ -95,10 +95,10 @@ void VSC::MIDI::Output::setOutputPort(OutputPort const& port) {
     
 }
 
-bool VSC::MIDI::Output::sendMessage(VSCMIDI::Message& m) {
+bool VSC::MIDI::Output::sendMessage(Message& m) {
     
     if (mMIDIOut && mOutputPort != OutputPortVoid) {
-        std::cout << *this << " sending " << VSCMIDI::messageDescription(m) << std::endl;
+        std::cout << *this << " sending " << messageDescription(m) << std::endl;
         mMIDIOut->sendMessage(&m);
     }
     

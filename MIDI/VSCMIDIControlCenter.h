@@ -12,7 +12,7 @@
 
 #include "VSCSound.h"
 #include "VSCMIDI.h"
-#include "VSCMIDIController.h"
+#include "VSCMIDIControllerBinding.h"
 
 #include "RtMidi.h"
 
@@ -28,7 +28,6 @@ namespace VSC {
         /**
          *  ControlCenter should be used for:
          *
-         *  - Getting available MIDI input and output ports.
          *  - Periodically sending controller values on a background thread.
          */
         
@@ -44,18 +43,18 @@ namespace VSC {
                 StatePeriodicBroadcasting
             };
             
-            typedef std::vector<Controller::SPtr> ControllerList;
-            
             ControlCenter(void);
             ~ControlCenter(void);
             
-            void addController(Controller controller);
-            void removeController(Controller controller);
-            const Controllers& getControllers(void) const;
+            void addControllerBinding(ControllerBinding::SPtr binding);
+            void removeControllerBinding(ControllerBinding::SPtr binding);
+            
+            const ControllerBindings& getControllerBindings(void) const;
             
             State getState(void);
             
             void broadcastNow(void);
+            
             void startPeriodicBroadcasting(void);
             void stopPeriodicBroadcasting(void);
             
@@ -68,7 +67,7 @@ namespace VSC {
             
         private:
             
-            Controllers                 mControllers;
+            ControllerBindings          mControllerBindings;
             
             State                       mState;
             VSC::Sound::TimeInterval    mBroadcastInterval;

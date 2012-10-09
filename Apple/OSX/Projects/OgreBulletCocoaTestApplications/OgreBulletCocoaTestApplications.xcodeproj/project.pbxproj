@@ -18,10 +18,10 @@
 		1033869E156E77E100CEB288 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1033869D156E77E100CEB288 /* Carbon.framework */; };
 		10407A00160D203F00050663 /* VSCOBSceneController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104079FC160D203E00050663 /* VSCOBSceneController.cpp */; };
 		10407A05160D20C000050663 /* VSCOBBasicSceneElementFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10407A03160D20C000050663 /* VSCOBBasicSceneElementFactory.cpp */; };
-		104198F916171F2600D1742D /* VSCIMSceneCollisionListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104198F516171F2600D1742D /* VSCIMSceneCollisionListener.cpp */; };
+		104198F916171F2600D1742D /* VSCIMSceneCollisionMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104198F516171F2600D1742D /* VSCIMSceneCollisionMapper.cpp */; };
 		105BAD2216231C860031EE91 /* VSCMIDI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105BAD1A16231C860031EE91 /* VSCMIDI.cpp */; };
 		105BAD2316231C860031EE91 /* VSCMIDIControlCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105BAD1C16231C860031EE91 /* VSCMIDIControlCenter.cpp */; };
-		105BAD2416231C860031EE91 /* VSCMIDIController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105BAD1E16231C860031EE91 /* VSCMIDIController.cpp */; };
+		105BAD2416231C860031EE91 /* VSCMIDIControllerBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105BAD1E16231C860031EE91 /* VSCMIDIControllerBinding.cpp */; };
 		105BAD2516231C860031EE91 /* VSCMIDIOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105BAD2016231C860031EE91 /* VSCMIDIOutput.cpp */; };
 		105BAD2716231CA50031EE91 /* libstk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 105BAD2616231CA50031EE91 /* libstk.a */; };
 		105BAD2A16232B180031EE91 /* VSCSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105BAD2816232B180031EE91 /* VSCSound.cpp */; };
@@ -167,14 +167,14 @@
 		104079FD160D203E00050663 /* VSCOBSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBSceneController.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBSceneController.h; sourceTree = "<group>"; };
 		10407A03160D20C000050663 /* VSCOBBasicSceneElementFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBBasicSceneElementFactory.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBBasicSceneElementFactory.cpp; sourceTree = "<group>"; };
 		10407A04160D20C000050663 /* VSCOBBasicSceneElementFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBBasicSceneElementFactory.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBBasicSceneElementFactory.h; sourceTree = "<group>"; };
-		104198F516171F2600D1742D /* VSCIMSceneCollisionListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCIMSceneCollisionListener.cpp; path = ../../../../../Mapping/VSCIMSceneCollisionListener.cpp; sourceTree = "<group>"; };
-		104198F616171F2600D1742D /* VSCIMSceneCollisionListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMSceneCollisionListener.h; path = ../../../../../Mapping/VSCIMSceneCollisionListener.h; sourceTree = "<group>"; };
+		104198F516171F2600D1742D /* VSCIMSceneCollisionMapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCIMSceneCollisionMapper.cpp; path = ../../../../../Mapping/VSCIMSceneCollisionMapper.cpp; sourceTree = "<group>"; };
+		104198F616171F2600D1742D /* VSCIMSceneCollisionMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMSceneCollisionMapper.h; path = ../../../../../Mapping/VSCIMSceneCollisionMapper.h; sourceTree = "<group>"; };
 		105BAD1A16231C860031EE91 /* VSCMIDI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDI.cpp; path = ../../../../MIDI/VSCMIDI.cpp; sourceTree = "<group>"; };
 		105BAD1B16231C860031EE91 /* VSCMIDI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDI.h; path = ../../../../MIDI/VSCMIDI.h; sourceTree = "<group>"; };
 		105BAD1C16231C860031EE91 /* VSCMIDIControlCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDIControlCenter.cpp; path = ../../../../MIDI/VSCMIDIControlCenter.cpp; sourceTree = "<group>"; };
 		105BAD1D16231C860031EE91 /* VSCMIDIControlCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDIControlCenter.h; path = ../../../../MIDI/VSCMIDIControlCenter.h; sourceTree = "<group>"; };
-		105BAD1E16231C860031EE91 /* VSCMIDIController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDIController.cpp; path = ../../../../MIDI/VSCMIDIController.cpp; sourceTree = "<group>"; };
-		105BAD1F16231C860031EE91 /* VSCMIDIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDIController.h; path = ../../../../MIDI/VSCMIDIController.h; sourceTree = "<group>"; };
+		105BAD1E16231C860031EE91 /* VSCMIDIControllerBinding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDIControllerBinding.cpp; path = ../../../../MIDI/VSCMIDIControllerBinding.cpp; sourceTree = "<group>"; };
+		105BAD1F16231C860031EE91 /* VSCMIDIControllerBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDIControllerBinding.h; path = ../../../../MIDI/VSCMIDIControllerBinding.h; sourceTree = "<group>"; };
 		105BAD2016231C860031EE91 /* VSCMIDIOutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDIOutput.cpp; path = ../../../../MIDI/VSCMIDIOutput.cpp; sourceTree = "<group>"; };
 		105BAD2116231C860031EE91 /* VSCMIDIOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDIOutput.h; path = ../../../../MIDI/VSCMIDIOutput.h; sourceTree = "<group>"; };
 		105BAD2616231CA50031EE91 /* libstk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libstk.a; path = "../../../../../../Libraries/stk-4.4.3/lib/libstk.a"; sourceTree = "<group>"; };
@@ -473,8 +473,8 @@
 		104198F316171E9200D1742D /* VSC Mapping */ = {
 			isa = PBXGroup;
 			children = (
-				104198F516171F2600D1742D /* VSCIMSceneCollisionListener.cpp */,
-				104198F616171F2600D1742D /* VSCIMSceneCollisionListener.h */,
+				104198F516171F2600D1742D /* VSCIMSceneCollisionMapper.cpp */,
+				104198F616171F2600D1742D /* VSCIMSceneCollisionMapper.h */,
 			);
 			name = "VSC Mapping";
 			path = OgreBulletCocoaTestApplications;
@@ -518,8 +518,8 @@
 				105BAD1B16231C860031EE91 /* VSCMIDI.h */,
 				105BAD1C16231C860031EE91 /* VSCMIDIControlCenter.cpp */,
 				105BAD1D16231C860031EE91 /* VSCMIDIControlCenter.h */,
-				105BAD1E16231C860031EE91 /* VSCMIDIController.cpp */,
-				105BAD1F16231C860031EE91 /* VSCMIDIController.h */,
+				105BAD1E16231C860031EE91 /* VSCMIDIControllerBinding.cpp */,
+				105BAD1F16231C860031EE91 /* VSCMIDIControllerBinding.h */,
 				105BAD2016231C860031EE91 /* VSCMIDIOutput.cpp */,
 				105BAD2116231C860031EE91 /* VSCMIDIOutput.h */,
 			);
@@ -1089,10 +1089,10 @@
 				10407A00160D203F00050663 /* VSCOBSceneController.cpp in Sources */,
 				10407A05160D20C000050663 /* VSCOBBasicSceneElementFactory.cpp in Sources */,
 				10951E5916150788007764E7 /* VSCOBDynamicObject.cpp in Sources */,
-				104198F916171F2600D1742D /* VSCIMSceneCollisionListener.cpp in Sources */,
+				104198F916171F2600D1742D /* VSCIMSceneCollisionMapper.cpp in Sources */,
 				105BAD2216231C860031EE91 /* VSCMIDI.cpp in Sources */,
 				105BAD2316231C860031EE91 /* VSCMIDIControlCenter.cpp in Sources */,
-				105BAD2416231C860031EE91 /* VSCMIDIController.cpp in Sources */,
+				105BAD2416231C860031EE91 /* VSCMIDIControllerBinding.cpp in Sources */,
 				105BAD2516231C860031EE91 /* VSCMIDIOutput.cpp in Sources */,
 				105BAD2A16232B180031EE91 /* VSCSound.cpp in Sources */,
 				105BAD2E16232B530031EE91 /* VSCController.cpp in Sources */,

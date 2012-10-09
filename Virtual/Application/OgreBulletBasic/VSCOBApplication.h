@@ -9,7 +9,7 @@
 #include "VSCOBSceneController.h"
 #include "VSCOBApplicationBase.h"
 
-#include "VSCIMSceneCollisionListener.h"
+#include "VSCIMSceneCollisionMapper.h"
 
 #include <Ogre/Ogre.h>
 
@@ -68,8 +68,8 @@ namespace VSC {
              *  Collision Listeners
              */
             
-            IM::CollisionListener::SPtr     getCollisionListener(void) {return mCollisionListener;}
-            void setCollisionListener(IM::CollisionListener::SPtr listener) {mCollisionListener = listener;}
+            IM::CollisionMapper::SPtr     getCollisionMapper(void) {return mCollisionMapper;}
+            void setCollisionMapper(IM::CollisionMapper::SPtr listener) {mCollisionMapper = listener;}
             
             /*------------------------------------------------------
              *  VSCOgreInputListener override
@@ -102,7 +102,7 @@ namespace VSC {
             
             CameraController::SPtr          mCameraController;
             
-            IM::CollisionListener::SPtr     mCollisionListener;
+            IM::CollisionMapper::SPtr       mCollisionMapper;
             
             static const bool mTraceUI = true;
             static const bool mTraceFrame = false;

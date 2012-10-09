@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#ifndef _VSC_IM_COLLISION_LISTENER_H_
-#define _VSC_IM_COLLISION_LISTENER_H_
+#ifndef _VSC_IM_COLLISION_MAPPER_H_
+#define _VSC_IM_COLLISION_MAPPER_H_
 
 #include "VSCOBScene.h"
 
@@ -18,12 +18,12 @@ namespace VSC {
     
     namespace IM {
         
-        class CollisionListener : public VSC::OB::Scene::CollisionListener {
+        class CollisionMapper : public VSC::OB::Scene::CollisionListener {
             
         public:
             
-            typedef boost::shared_ptr<CollisionListener>    SPtr;
-            typedef boost::weak_ptr<CollisionListener>      WPtr;
+            typedef boost::shared_ptr<CollisionMapper>    SPtr;
+            typedef boost::weak_ptr<CollisionMapper>      WPtr;
             
             virtual void collisionProspectDetected(OB::Scene::Collision::SPtr collision);
             virtual void collisionProspectUpdated(OB::Scene::Collision::SPtr collision);
@@ -44,4 +44,4 @@ namespace VSC {
 }
 
 
-#endif // _VSC_IM_COLLISION_LISTENER_H_
+#endif // _VSC_IM_COLLISION_MAPPER_H_

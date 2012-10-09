@@ -82,6 +82,8 @@ namespace VSC {
             
             Mode                    mMode;
             unsigned int            mMIDIPitch;
+            
+            MessageGenerator::SPtr  mMessageGenerator;
         };
         
         typedef std::vector<ControllerBinding::SPtr> ControllerBindings;

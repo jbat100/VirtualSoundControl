@@ -51,22 +51,22 @@ VSCMIDIControlCenterPtr VSCMIDIControlCenter::defaultCenter(void) {
 
 #pragma mark - MIDI Controllers 
 
-void VSC::MIDI::ControlCenter::addController(VSCMIDIControllerPtr controller) {
-    Controllers::iterator it = std::find(mControllers.begin(), mControllers.end(), controller);
-    if (it == mControllers.end()) {
-        mControllers.push_back(controller);
+void VSC::MIDI::ControlCenter::addControllerBinding(ControllerBinding::SPtr controller) {
+    ControllerBindings::iterator it = std::find(mControllerBindings.begin(), mControllerBindings.end(), controller);
+    if (it == mControllerBindings.end()) {
+        mControllerBindings.push_back(controller);
     }
 }
 
-void VSC::MIDI::ControlCenter::removeController(VSCMIDIControllerPtr controller) {
-    Controllers::iterator it = std::find(mControllers.begin(), mControllers.end(), controller);
-    if (it != mControllers.end()) {
-        mControllers.erase(it);
+void VSC::MIDI::ControlCenter::removeControllerBinding(ControllerBinding::SPtr controller) {
+    ControllerBindings::iterator it = std::find(mControllerBindings.begin(), mControllerBindings.end(), controller);
+    if (it != mControllerBindings.end()) {
+        mControllerBindings.erase(it);
     }
 }
 
-const VSC::MIDI::Controllers& VSC::MIDI::ControlCenter::getControllerList(void) const {
-    return mControllers;
+const VSC::MIDI::ControllerBindings& VSC::MIDI::ControlCenter::getControllerBindings(void) const {
+    return mControllerBindings;
 }
 
 #pragma mark - Broadcasting 
@@ -84,6 +84,8 @@ void VSC::MIDI::ControlCenter::broadcastNow(void) {
 }
 
 void VSC::MIDI::ControlCenter::startPeriodicBroadcasting(void) {
+    
+    // use boost asio !!
     
 }
 
