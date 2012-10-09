@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		1013E96F160BC5F90014D566 /* VSCOB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1013E96D160BC5F90014D566 /* VSCOB.cpp */; };
 		1013E973160BCD820014D566 /* VSCOBStaticObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1013E971160BCD820014D566 /* VSCOBStaticObject.cpp */; };
-		101C8E161624BFE30026F0D7 /* VSCIMAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101C8E141624BFE30026F0D7 /* VSCIMAction.cpp */; };
+		101C8E191624CA460026F0D7 /* VSCIMCollisionAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101C8E181624CA460026F0D7 /* VSCIMCollisionAction.cpp */; };
+		101C8E1C1624CB2E0026F0D7 /* VSCIMCollisionActionChain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101C8E1A1624CB2E0026F0D7 /* VSCIMCollisionActionChain.cpp */; };
 		103006931624763A002A30ED /* VSC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103006911624763A002A30ED /* VSC.cpp */; };
 		1033868C156E48AC00CEB288 /* Plugin_BSPSceneManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948C156E483000E70049 /* Plugin_BSPSceneManager.dylib */; };
 		1033868D156E48AC00CEB288 /* Plugin_CgProgramManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */; };
@@ -154,8 +155,10 @@
 		1013E96E160BC5F90014D566 /* VSCOB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOB.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOB.h; sourceTree = "<group>"; };
 		1013E971160BCD820014D566 /* VSCOBStaticObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBStaticObject.cpp; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBStaticObject.cpp; sourceTree = "<group>"; };
 		1013E972160BCD820014D566 /* VSCOBStaticObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBStaticObject.h; path = ../../../../../Virtual/Application/OgreBulletBasic/VSCOBStaticObject.h; sourceTree = "<group>"; };
-		101C8E141624BFE30026F0D7 /* VSCIMAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCIMAction.cpp; path = ../../../../../Mapping/VSCIMAction.cpp; sourceTree = "<group>"; };
-		101C8E151624BFE30026F0D7 /* VSCIMAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMAction.h; path = ../../../../../Mapping/VSCIMAction.h; sourceTree = "<group>"; };
+		101C8E171624CA310026F0D7 /* VSCIMCollisionAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMCollisionAction.h; path = ../../../../../Mapping/VSCIMCollisionAction.h; sourceTree = "<group>"; };
+		101C8E181624CA460026F0D7 /* VSCIMCollisionAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCIMCollisionAction.cpp; path = ../../../../../Mapping/VSCIMCollisionAction.cpp; sourceTree = "<group>"; };
+		101C8E1A1624CB2E0026F0D7 /* VSCIMCollisionActionChain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCIMCollisionActionChain.cpp; path = ../../../../../Mapping/VSCIMCollisionActionChain.cpp; sourceTree = "<group>"; };
+		101C8E1B1624CB2E0026F0D7 /* VSCIMCollisionActionChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMCollisionActionChain.h; path = ../../../../../Mapping/VSCIMCollisionActionChain.h; sourceTree = "<group>"; };
 		103006911624763A002A30ED /* VSC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSC.cpp; path = ../../../../Generic/VSC.cpp; sourceTree = "<group>"; };
 		103006921624763A002A30ED /* VSC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSC.h; path = ../../../../Generic/VSC.h; sourceTree = "<group>"; };
 		10338694156E5BB100CEB288 /* OgreOSXCocoaContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaContext.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaContext.h; sourceTree = "<group>"; };
@@ -478,8 +481,10 @@
 			children = (
 				104198F516171F2600D1742D /* VSCIMCollisionMapper.cpp */,
 				104198F616171F2600D1742D /* VSCIMCollisionMapper.h */,
-				101C8E141624BFE30026F0D7 /* VSCIMAction.cpp */,
-				101C8E151624BFE30026F0D7 /* VSCIMAction.h */,
+				101C8E181624CA460026F0D7 /* VSCIMCollisionAction.cpp */,
+				101C8E171624CA310026F0D7 /* VSCIMCollisionAction.h */,
+				101C8E1A1624CB2E0026F0D7 /* VSCIMCollisionActionChain.cpp */,
+				101C8E1B1624CB2E0026F0D7 /* VSCIMCollisionActionChain.h */,
 			);
 			name = "VSC Mapping";
 			path = OgreBulletCocoaTestApplications;
@@ -1102,7 +1107,8 @@
 				105BAD2A16232B180031EE91 /* VSCSound.cpp in Sources */,
 				105BAD2E16232B530031EE91 /* VSCController.cpp in Sources */,
 				103006931624763A002A30ED /* VSC.cpp in Sources */,
-				101C8E161624BFE30026F0D7 /* VSCIMAction.cpp in Sources */,
+				101C8E191624CA460026F0D7 /* VSCIMCollisionAction.cpp in Sources */,
+				101C8E1C1624CB2E0026F0D7 /* VSCIMCollisionActionChain.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

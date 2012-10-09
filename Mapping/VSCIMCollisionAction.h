@@ -12,6 +12,8 @@
 
 #include <boost/shared_ptr.hpp>
 
+#include <vector>
+
 namespace VSC {
     
     namespace IM {
@@ -29,6 +31,8 @@ namespace VSC {
             virtual void perform(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision) = 0;
             
         };
+
+        typedef std::vector<CollisionAction::SPtr> CollisionActions;
 
     }
     
