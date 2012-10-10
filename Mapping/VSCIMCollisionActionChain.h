@@ -4,10 +4,11 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#ifndef _VSC_IM_ACTION_H_
-#define _VSC_IM_ACTION_H_
+#ifndef _VSC_IM_COLLISION_ACTION_CHAIN_H_
+#define _VSC_IM_COLLISION_ACTION_CHAIN_H_
 
 #include "VSCOBScene.h"
+#include "VSCIMCollisionAction.h"
 
 #include <boost/shared_ptr.hpp>
 
@@ -25,6 +26,13 @@ namespace VSC {
             
             void perform(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision);
             
+            unsigned int numberOfActions(void);
+            
+            void appendAction(CollisionAction::SPtr action);
+            void prependAction(CollisionAction::SPtr action);
+            
+            void insertActionAtIndex(CollisionAction::SPtr action, unsigned int index);
+            
         private:
             
             CollisionActions    mActions;
@@ -34,4 +42,4 @@ namespace VSC {
     
 }
 
-#endif // _VSC_IM_ACTION_H_
+#endif // _VSC_IM_COLLISION_ACTION_CHAIN_H_

@@ -6,6 +6,6 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#include "VSCIMAction.h"
+#include "VSCIMCollisionAction.h"
 
 
