@@ -7,6 +7,7 @@
 #include "VSCTaskQueue.h"
 
 #include <boost/foreach.hpp>
+#include <boost/assert.hpp>
 
 VSC::TaskQueue::TaskQueue() :
 mState(StateStopped),
@@ -159,21 +160,41 @@ void VSC::TaskQueue::stepExecution()
      *  Get the tasks that need to be dequeued
      */
     
-    Tasks dequeuedTasks;
-    Tasks localTasks;
+    Tasks localRunningTasks;
     
     {
         /*
          *  Locked scope to protect mQueuedTasks which is accessible from external threads
          */
+        
         boost::lock_guard<boost::mutex> lock(mMutex);
+        
+        /*
+         *  Purge cancelled tasks from mQueuedTasks and promote to running the tasks which
+         *  have reached their execution start time
+         */
+        
         Tasks::iterator it = mQueuedTasks.begin();
         while (it != mQueuedTasks.end())
         {
             Task::SPtr task = *it;
+            
+            Task::State taskState = task->getState();
+            
+            if (taskState == Task::StateCancelled)
+            {
+                it = mQueuedTasks.erase(it);
+                continue;
+            }
+            
+            BOOST_ASSERT(taskState == Task::StateWaiting);
+            
             if (task->getExecutionStartTime() < mLastStepTime)
             {
-                dequeuedTasks.push_back(task);
+                task->setState(Task::StateRunning);
+                Tasks::iterator checkIt = std::find(mRunningTasks.begin(), mRunningTasks.end(), task);
+                BOOST_ASSERT(checkIt == mRunningTasks.end());
+                if (checkIt == mRunningTasks.end()) mRunningTasks.push_back(task);
                 it = mQueuedTasks.erase(it);
             }
             else
@@ -182,31 +203,30 @@ void VSC::TaskQueue::stepExecution()
             }
         }
         
-        BOOST_FOREACH(Task::SPtr task, dequeuedTasks)
+        /*
+         *  Remove cancelled and ended running tasks (likely cancelled or ended)
+         */
+        
+        it = mRunningTasks.begin();
+        while (it != mRunningTasks.end())
         {
-            Tasks::iterator checkIt = std::find(mRunningTasks.begin(), mRunningTasks.end(), task);
-            if (checkIt == mRunningTasks.end())
-            {
-                mRunningTasks.push_back(task);
-            }
+            Task::SPtr task = *it;            
+            if (task->getState() != Task::StateRunning) it = mRunningTasks.erase(it);
+            else ++it;
         }
         
-        localTasks = mRunningTasks;
+        localRunningTasks = mRunningTasks;
     }
     
-    Tasks::iterator it = localTasks.begin();
-    while (it != localTasks.end())
+    /*
+     *  After having unlocked the mutex we iterate over the copy of the 
+     *  running task list and execute them.
+     */
+    
+    BOOST_FOREACH(Task::SPtr task, localRunningTasks)
     {
-        Task::SPtr task = *it;
         bool ended = task->stepExecution();
-        if (ended)
-        {
-            it = mRunningTasks.erase(it);
-        }
-        else
-        {
-            ++it;
-        }
+        if (ended) {/* */}
     }
     
 }

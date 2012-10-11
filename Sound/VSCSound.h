@@ -40,14 +40,6 @@ namespace VSC {
         
         /*-------------------------------------------------------------------------------------------*/
         
-        typedef double Float;
-        
-        typedef std::vector<Float> Floats;
-        
-        /*-------------------------------------------------------------------------------------------*/
-        
-        typedef Float Time;             // absolute time (seconds)
-        typedef Float TimeInterval;     // absolute time interval (seconds)
         typedef Float ControlValue;     // VSC sound control value (for MIDI, OSC ...)
         
         

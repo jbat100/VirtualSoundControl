@@ -33,11 +33,6 @@ namespace VSC {
             
             CollisionAction() {}
             
-            /*
-             *  perform() will call the protected internalPerform after the specified delay, on the same
-             *  thread (using boost asio ?)
-             */
-            
             virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
                                                       OB::Scene::Collision::SPtr collision) = 0;
             

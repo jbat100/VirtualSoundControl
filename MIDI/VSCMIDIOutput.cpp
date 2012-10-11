@@ -18,6 +18,8 @@ VSC::MIDI::Output::Output(void) {
     
     this->createRtMidiOut();
     
+    mMessageGenerator = MessageGenerator::SPtr(new MessageGenerator);
+    
 }
 
 VSC::MIDI::Output::Output(OutputPort outputPort) {
@@ -25,6 +27,8 @@ VSC::MIDI::Output::Output(OutputPort outputPort) {
     this->createRtMidiOut();
     
     this->setOutputPort(outputPort); // will throw if does not succeed
+    
+    mMessageGenerator = MessageGenerator::SPtr(new MessageGenerator);
     
 }
 
@@ -93,6 +97,40 @@ void VSC::MIDI::Output::setOutputPort(OutputPort const& port) {
     }
     
     
+}
+
+bool VSC::MIDI::Output::sendNoteOn(unsigned int channel, unsigned int pitch, unsigned int velocity)
+{
+    Message m = mMessageGenerator->messageForNote(channel, pitch, velocity, true);
+    this->sendMessage(m);
+    
+    return true;
+}
+
+bool VSC::MIDI::Output::sendNoteOff(unsigned int channel, unsigned int pitch, unsigned int velocity)
+{
+    Message m = mMessageGenerator->messageForNote(channel, pitch, velocity, false);
+    this->sendMessage(m);
+    
+    return true;
+}
+
+bool VSC::MIDI::Output::sendControlChange(unsigned int channel, ControlNumber controlNumber, unsigned int value)
+{
+    Message m = mMessageGenerator->messageForControlChange(channel, controlNumber, value);
+    this->sendMessage(m);
+    
+    return true;
+}
+
+bool VSC::MIDI::Output::sendPolyphonicAftertouch(unsigned int channel, unsigned int pitch, unsigned int pressure)
+{
+    return false;
+}
+
+bool VSC::MIDI::Output::sendChannelAftertouch(unsigned int channel, unsigned int pressure)
+{
+    return false;
 }
 
 bool VSC::MIDI::Output::sendMessage(Message& m) {
