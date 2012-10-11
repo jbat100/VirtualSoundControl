@@ -8,6 +8,8 @@
 
 #include "VSCIMCollisionActionChain.h"
 #include "VSCException.h"
+#include "VSCTask.h"
+#include "VSCTaskQueue.h"
 
 #include <boost/foreach.hpp>
 
@@ -16,7 +18,16 @@ void VSC::IM::CollisionActionChain::perform(OB::Scene::Element::SPtr element, OB
 {
     BOOST_FOREACH(CollisionAction::SPtr action, mActions)
     {
-        action->perform(element, collision);
+        if (action->getTaskQueue())
+        {
+            Task::SPtr task = action->createTaskForCollision(element, collision);
+            action->getTaskQueue()->enqueueTask(task);
+        }
+        else
+        {
+            // throw ?
+        }
+        
     }
 }
 

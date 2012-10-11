@@ -9,6 +9,8 @@
 #define _VSC_IM_COLLISION_ACTION_H_
 
 #include "VSC.h"
+#include "VSCTask.h"
+#include "VSCTaskQueue.h"
 #include "VSCOBScene.h"
 
 #include <boost/shared_ptr.hpp>
@@ -29,26 +31,26 @@ namespace VSC {
             
             typedef boost::shared_ptr<CollisionAction> SPtr;
             
-            CollisionAction() : mPerformed(false) {}
+            CollisionAction() {}
             
             /*
              *  perform() will call the protected internalPerform after the specified delay, on the same
              *  thread (using boost asio ?)
              */
             
-            void perform(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision, Float delay = 0.0);
+            virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
+                                                      OB::Scene::Collision::SPtr collision) = 0;
             
-            bool hasBeenPerformed(void) {return mPerformed;}
+            void setDelay(TimeDuration delay) {mDelay = delay;}
+            TimeDuration getDelay(void) {return mDelay;}
             
-        protected:
-            
-            virtual void internalPerform(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision) = 0;
-            
-            void setPerformed(bool performed) {mPerformed = performed;}
+            TaskQueue::SPtr getTaskQueue(void) {return mTaskQueue;}
+            void setTaskQueue(TaskQueue::SPtr queue) {mTaskQueue = queue;}
             
         private:
             
-            bool mPerformed;
+            TimeDuration        mDelay;
+            TaskQueue::SPtr     mTaskQueue;
             
         };
 

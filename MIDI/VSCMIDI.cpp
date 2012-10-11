@@ -9,13 +9,38 @@
 
 #include "VSCMIDI.h"
 #include "VSCException.h"
+#include "VSCTaskQueue.h"
+
+#include <boost/thread.hpp>
+
 #include <limits>
 #include <assert.h>
+
+boost::once_flag midiSingletonInitilizedFlag = BOOST_ONCE_INIT;
+static VSC::TaskQueue::SPtr midiTaskQueue;
 
 #pragma mark - MIDI Ports
 
 const VSC::MIDI::OutputPort     VSC::MIDI::OutputPortVoid   = {std::numeric_limits<unsigned int>::max(), "", false};
 const VSC::MIDI::InputPort      VSC::MIDI::InputPortVoid    = {std::numeric_limits<unsigned int>::max(), "", false};
+
+namespace VSC {
+    namespace MIDI {
+        void InitialiseSingletonMIDITaskQueue();
+    }
+}
+
+
+void VSC::MIDI::InitialiseSingletonMIDITaskQueue()
+{
+    midiTaskQueue = TaskQueue::SPtr(new TaskQueue);
+}
+
+VSC::TaskQueue::SPtr VSC::MIDI::SingletonMIDITaskQueue()
+{
+    boost::call_once(&InitialiseSingletonMIDITaskQueue, midiSingletonInitilizedFlag);
+    return midiTaskQueue;
+}
 
 
 std::ostream& VSC::MIDI::operator<<(std::ostream& output, const OutputPort& p) {

@@ -11,6 +11,7 @@
 #define _VSC_MIDI_H_
 
 #include "VSCSound.h"
+#include "VSCTaskQueue.h"
 
 #include "RtMidi.h"
 
@@ -24,6 +25,8 @@
 namespace VSC {
     
     namespace MIDI {
+        
+        TaskQueue::SPtr SingletonMIDITaskQueue();
         
         struct OutputPort {
             unsigned int number;

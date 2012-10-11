@@ -8,6 +8,7 @@
 #define _VSC_IM_COLLISION_ACTION_CHAIN_H_
 
 #include "VSCOBScene.h"
+#include "VSCTaskQueue.h"
 #include "VSCIMCollisionAction.h"
 
 #include <boost/shared_ptr.hpp>
@@ -36,6 +37,7 @@ namespace VSC {
         private:
             
             CollisionActions    mActions;
+            
         };
 
     }

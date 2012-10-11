@@ -4,15 +4,35 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#include "VSCIMCollisionMIDIAction.h"
+#include "VSCIMCollisionMIDIActions.h"
 
 
 VSC::IM::CollisionMIDIAction::CollisionMIDIAction()
 {
+    this->setTaskQueue(MIDI::SingletonMIDITaskQueue());
+}
+
+VSC::IM::CollisionMIDIAction::CollisionMIDIAction(MIDI::OutputChannel::SPtr outputChannel) :
+mOutputChannel(outputChannel)
+{
+    this->setTaskQueue(MIDI::SingletonMIDITaskQueue());
+}
+
+
+VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAction::createTaskForCollision(OB::Scene::Element::SPtr element,
+                                                                           OB::Scene::Collision::SPtr collision)
+{
     
 }
 
-VSC::IM::CollisionMIDIAction::CollisionMIDIAction(OutputChannel::SPtr outputChannel)
+VSC::Task::SPtr VSC::IM::CollisionMIDINoteOffAction::createTaskForCollision(OB::Scene::Element::SPtr element,
+                                                                            OB::Scene::Collision::SPtr collision)
+{
+    
+}
+
+VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAndOffAction::createTaskForCollision(OB::Scene::Element::SPtr element,
+                                                                                 OB::Scene::Collision::SPtr collision)
 {
     
 }
