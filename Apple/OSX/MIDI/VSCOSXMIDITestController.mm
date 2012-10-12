@@ -1,16 +1,16 @@
 //
-//  VSCMIDITestController.m
+//  VSCOSXMIDITestController.m
 //  EnveloppeEditor
 //
 //  Created by Jonathan Thorpe on 3/21/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCMIDITestController.h"
+#import "VSCOSXMIDITestController.h"
 
 #import "VSCEnveloppeEditorWindowController.h"
-#import "VSCMIDITest.h"
-#import "VSCMIDITestView.h"
+#import "VSCOSXMIDITest.h"
+#import "VSCOSXMIDITestView.h"
 #import "NSString+VSCAdditions.h"
 
 #include "VSCMIDI.h"
@@ -30,28 +30,25 @@ NSString* const VSCMIDIPortSelectedColumnIdentifier     = @"MIDIPortSelected";
 const unsigned int VSCDefaultGenericControlNumber = 16;
 NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
 
-@implementation VSCMIDITestController
+@implementation VSCOSXMIDITestController
 
-@synthesize midiTestView = _midiTestView;
-@synthesize midiTest = _midiTest;
-@synthesize enveloppeEditorWindowController = _enveloppeEditorWindowController;
-
-@synthesize controlChannels = _controlChannels;
 
 -(id) init {
     
     if ((self = [super init])) {
         
-        self.controlChannels = [NSArray arrayWithObjects:
-                                [NSNumber numberWithInt:(int)VSCMIDI::ControlBankSelect],
-                                [NSNumber numberWithInt:(int)VSCMIDI::ControlModulationWheel],
-                                [NSNumber numberWithInt:(int)VSCMIDI::ControlBreath],
-                                [NSNumber numberWithInt:(int)VSCMIDI::ControlFoot],
-                                [NSNumber numberWithInt:(int)VSCMIDI::ControlChannelVolume],
-                                [NSNumber numberWithInt:(int)VSCMIDI::ControlBalance],
-                                [NSNumber numberWithInt:(int)VSCMIDI::ControlPan], 
-                                [NSNumber numberWithInt:(int)VSCMIDI::ControlExpression], 
-                                [NSNumber numberWithInt:(int)-1], nil]; // -1 -> other
+        self.controlChannels = @[
+        
+        [@(int)VSC::MIDI::ControlBankSelect],
+        [@(int)VSC::MIDI::ControlModulationWheel],
+        [@(int)VSC::MIDI::ControlBreath],
+        [@(int)VSC::MIDI::ControlFoot],
+        [@(int)VSC::MIDI::ControlChannelVolume],
+        [@(int)VSC::MIDI::ControlBalance],
+        [@(int)VSC::MIDI::ControlPan],
+        [@(int)VSC::MIDI::ControlExpression],
+        
+        ]; // -1 -> other
         
     }
     
@@ -61,7 +58,7 @@ NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
 
 #pragma mark - KVO
 
--(void) setMidiTest:(VSCMIDITest *)midiTest {
+-(void) setMidiTest:(VSCOSXMIDITest*)midiTest {
     
     [_midiTest removeObserver:self forKeyPath:@"controlChannel"];
     _midiTest = midiTest;

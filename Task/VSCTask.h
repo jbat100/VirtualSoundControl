@@ -37,7 +37,14 @@ namespace VSC {
             StateEnded
         };
         
-        Task(const Time& executionStartTime);
+        class Payload  {
+        public:
+            virtual ~Payload() {} // makes class polymorphic
+            typedef boost::shared_ptr<Payload> SPtr;
+        };
+        
+        Task(const Time& executionStartTime, Payload::SPtr payload);
+        virtual ~Task() {}
         
         const Time& getExecutionStartTime(void) const {return mExecutionStartTime;} // constant so no need for mutex
         
@@ -48,6 +55,8 @@ namespace VSC {
     protected:
         
         void setState(State state);
+        
+        Payload::SPtr getPayload(void) {return mPayload;}
         
         /*
          *  Once the stepExecution function has been called, the Task should transition into 
@@ -63,6 +72,8 @@ namespace VSC {
         boost::mutex    mMutex;
         
         Time            mExecutionStartTime;
+        
+        Payload::SPtr   mPayload;
         
     };
     

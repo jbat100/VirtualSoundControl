@@ -5,89 +5,132 @@
  */
 
 #include "VSCMIDITasks.h"
+#include "VSCException.h"
+
+#include <boost/shared_ptr.hpp>
+#include <boost/assert.hpp>
+
+boost::once_flag midiSingletonInitilizedFlag = BOOST_ONCE_INIT;
+static VSC::TaskQueue::SPtr midiTaskQueue = VSC::TaskQueue::SPtr();
+
+namespace VSC {
+    namespace MIDI {
+        void InitialiseSingletonMIDITaskQueue();
+    }
+}
+
+void VSC::MIDI::InitialiseSingletonMIDITaskQueue()
+{
+    midiTaskQueue = TaskQueue::SPtr(new TaskQueue);
+}
+
+VSC::TaskQueue::SPtr VSC::MIDI::SingletonMIDITaskQueue()
+{
+    boost::call_once(&InitialiseSingletonMIDITaskQueue, midiSingletonInitilizedFlag);
+    BOOST_ASSERT(midiTaskQueue);
+    return midiTaskQueue;
+}
 
 // MARK: Note On
 
-VSC::MIDI::MIDINoteOnTask::MIDINoteOnTask(Output::SPtr output,
-                                          unsigned int channel,
-                                          unsigned int pitch,
-                                          unsigned int velocity) :
-MIDITask(output),
-mChannel(channel),
-mPitch(pitch),
-mVelocity(velocity) {}
+VSC::MIDI::MIDINoteOnTask::MIDINoteOnTask(const Time& executionStartTime, Task::Payload::SPtr payload) : MIDITask(executionStartTime, payload)
+{
+    MIDINoteOnTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDINoteOnTask::Payload>(payload);
+    
+    if (!midiPayload)
+    {
+        throw VSCInvalidArgumentException("Payload for MIDINoteOnTask should be MIDINoteOnTask::Payload");
+    }
+}
 
 bool VSC::MIDI::MIDINoteOnTask::stepExecution(void)
 {
-    output->sendNoteOn(mChannel, mPitch, mVelocity);
+    MIDINoteOnTask::Payload::SPtr midiPayload = boost::static_pointer_cast<MIDINoteOnTask::Payload>(this->getPayload());
+    
+    midiPayload->midiOutput->sendNoteOn(midiPayload->channel, midiPayload->pitch, midiPayload->velocity);
     this->setState(StateEnded);
+    
     return true;
 }
 
 // MARK: Note Off
 
-VSC::MIDI::MIDINoteOffTask::MIDINoteOffTask(Output::SPtr output,
-                                            unsigned int channel,
-                                            unsigned int pitch,
-                                            unsigned int velocity) :
-MIDITask(output),
-mChannel(channel),
-mPitch(pitch),
-mVelocity(velocity) {}
+VSC::MIDI::MIDINoteOffTask::MIDINoteOffTask(const Time& executionStartTime, Task::Payload::SPtr payload) : MIDITask(executionStartTime, payload)
+{
+    MIDINoteOffTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDINoteOffTask::Payload>(payload);
+    
+    if (!midiPayload)
+    {
+        throw VSCInvalidArgumentException("Payload for MIDINoteOffTask should be MIDINoteOffTask::Payload");
+    }
+}
 
 bool VSC::MIDI::MIDINoteOffTask::stepExecution(void)
 {
-    output->sendNoteOff(mChannel, mPitch, mVelocity);
+    MIDINoteOffTask::Payload::SPtr midiPayload = boost::static_pointer_cast<MIDINoteOffTask::Payload>(this->getPayload());
+    
+    midiPayload->midiOutput->sendNoteOff(midiPayload->channel, midiPayload->pitch, midiPayload->velocity);
     this->setState(StateEnded);
+    
     return true;
 }
 
 // MARK: Note On And Off
 
-VSC::MIDI::MIDINoteOnAndOffTask::MIDINoteOnAndOffTask(Output::SPtr output,
-                                                      unsigned int channel,
-                                                      unsigned int pitch,
-                                                      unsigned int onVelocity,
-                                                      unsigned int offVelocity,
-                                                      TimeDuration duration) :
-MIDITask(output),
-mChannel(channel),
-mPitch(pitch),
-mOnVelocity(onVelocity),
-mOffVelocity(offVelocity),
-mDuration(duration)
-mSentNoteOn(false) {}
+VSC::MIDI::MIDINoteOnAndOffTask::MIDINoteOnAndOffTask(const Time& executionStartTime, Task::Payload::SPtr payload) :
+MIDITask(executionStartTime, payload),
+mSentNoteOn(false)
+{
+    MIDINoteOnAndOffTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDINoteOnAndOffTask::Payload>(payload);
+    
+    if (!midiPayload)
+    {
+        throw VSCInvalidArgumentException("Payload for MIDINoteOnAndOffTask should be MIDINoteOnAndOffTask::Payload");
+    }
+}
+
 
 bool VSC::MIDI::MIDINoteOnAndOffTask::stepExecution(void)
 {
-    if (!sentNoteOn)
+    
+    MIDINoteOnAndOffTask::Payload::SPtr midiPayload = boost::static_pointer_cast<MIDINoteOnAndOffTask::Payload>(this->getPayload());
+    
+    if (!mSentNoteOn)
     {
-        output->sendNoteOn(mChannel, mPitch, mOnVelocity);
+        midiPayload->midiOutput->sendNoteOn(midiPayload->channel, midiPayload->pitch, midiPayload->onVelocity);
+        mSentNoteOn = true;
     }
     
-    if (mDuration > this->getDurationSinceExecutionTime())
+    if (midiPayload->duration < this->getDurationSinceExecutionTime())
     {
-        return false;
+        midiPayload->midiOutput->sendNoteOff(midiPayload->channel, midiPayload->pitch, midiPayload->offVelocity);
+        this->setState(StateEnded);
+        
+        return true;
     }
-    
-    output->sendNoteOff(mChannel, mPitch, mVelocity);
-    this->setState(StateEnded);
-    return true;
+
+    return false;
 }
 
 // MARK: Control Change
 
-VSC::MIDI::MIDIControlChangeTask::MIDIControlChangeTask(Output::SPtr output,
-                                                        unsigned int channel,
-                                                        ControlNumber controlNumber,
-                                                        unsigned int value) :
-MIDITask(output),
-mChannel(channel),
-mControlNumber(controlNumber),
-mValue(value) {}
+VSC::MIDI::MIDIControlChangeTask::MIDIControlChangeTask(const Time& executionStartTime, Task::Payload::SPtr payload) : MIDITask(executionStartTime, payload)
+{
+    MIDIControlChangeTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDIControlChangeTask::Payload>(payload);
+    
+    if (!midiPayload)
+    {
+        throw VSCInvalidArgumentException("Payload for MIDIControlChangeTask should be MIDIControlChangeTask::Payload");
+    }
+}
 
 bool VSC::MIDI::MIDIControlChangeTask::stepExecution(void)
 {
+    MIDIControlChangeTask::Payload::SPtr midiPayload = boost::static_pointer_cast<MIDIControlChangeTask::Payload>(this->getPayload());
     
+    midiPayload->midiOutput->sendNoteOff(midiPayload->channel, midiPayload->controlNumber, midiPayload->value);
+    this->setState(StateEnded);
+    
+    return true;
 }
 

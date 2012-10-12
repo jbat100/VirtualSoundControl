@@ -1,5 +1,5 @@
 //
-//  VSCMIDITest.h
+//  VSCOSXMIDITest.h
 //  EnveloppeEditor
 //
 //  Created by Jonathan Thorpe on 3/20/12.
@@ -11,27 +11,17 @@
 #include "VSCMIDI.h"
 #include "VSCMIDIOutput.h"
 
-@interface VSCMIDITest : NSObject  {  
+@interface VSCOSXMIDITest : NSObject  {  
     
-    @private
-
-    VSCMIDIPtr _midi;
-    VSCMIDIOutputPtr _midiOutput;
 
 }
 
 @property (nonatomic, assign) unsigned int midiChannel;
-@property (nonatomic, assign) unsigned int controlChannel;
 @property (nonatomic, assign) unsigned int controlValue;
 @property (nonatomic, assign) unsigned int pitchValue;
 @property (nonatomic, assign) unsigned int velocityValue;
 
-@property (nonatomic, assign) float autoControlUpdateFrequency;
-
--(VSCMIDIPtr) getMidi;
-
--(VSCMIDIOutputPtr) getMidiOutput;
--(void) setMidiOutput:(VSCMIDIOutputPtr)midiOutput;
+@property (nonatomic, assign) VSC::MIDI::Output::SPtr midiOut;
 
 -(void) sendMidiControlMessage;
 -(void) sendMidiNoteOnMessage;

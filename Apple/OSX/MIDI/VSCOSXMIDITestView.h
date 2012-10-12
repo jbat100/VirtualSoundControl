@@ -1,5 +1,5 @@
 //
-//  VSCMIDITestView.h
+//  VSCOSXMIDITestView.h
 //  EnveloppeEditor
 //
 //  Created by Jonathan Thorpe on 3/9/12.
@@ -8,14 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class VSCMIDITest;
+@class VSCOSXMIDITest;
 
-@interface VSCMIDITestView : NSView <NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate> {
+@interface VSCOSXMIDITestView : NSView <NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate> {
     
     
 }
 
-@property (nonatomic, weak) VSCMIDITest* midiTest;
+@property (nonatomic, weak) VSCOSXMIDITest* midiTest;
 
 @property (nonatomic, strong) IBOutlet NSTableView* midiInputsTable;
 @property (nonatomic, strong) IBOutlet NSTableView* midiOutputsTable;

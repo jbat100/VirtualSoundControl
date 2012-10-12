@@ -11,9 +11,13 @@
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 
+#include <vector>
+
 namespace VSC {
     
     typedef double                              Float;
+    
+    typedef std::vector<Float>                  Floats;
     
     typedef boost::posix_time::time_duration    TimeDuration;
     

@@ -16,31 +16,10 @@
 #include <limits>
 #include <assert.h>
 
-boost::once_flag midiSingletonInitilizedFlag = BOOST_ONCE_INIT;
-static VSC::TaskQueue::SPtr midiTaskQueue;
-
 #pragma mark - MIDI Ports
 
 const VSC::MIDI::OutputPort     VSC::MIDI::OutputPortVoid   = {std::numeric_limits<unsigned int>::max(), "", false};
 const VSC::MIDI::InputPort      VSC::MIDI::InputPortVoid    = {std::numeric_limits<unsigned int>::max(), "", false};
-
-namespace VSC {
-    namespace MIDI {
-        void InitialiseSingletonMIDITaskQueue();
-    }
-}
-
-
-void VSC::MIDI::InitialiseSingletonMIDITaskQueue()
-{
-    midiTaskQueue = TaskQueue::SPtr(new TaskQueue);
-}
-
-VSC::TaskQueue::SPtr VSC::MIDI::SingletonMIDITaskQueue()
-{
-    boost::call_once(&InitialiseSingletonMIDITaskQueue, midiSingletonInitilizedFlag);
-    return midiTaskQueue;
-}
 
 
 std::ostream& VSC::MIDI::operator<<(std::ostream& output, const OutputPort& p) {
@@ -57,7 +36,6 @@ std::ostream& VSC::MIDI::operator<<(std::ostream& output, const InputPort& p) {
     return output;
 }
 
-
 bool VSC::MIDI::OutputPort::operator!=(const OutputPort& p) const {
     return !(*this == p);
 }
@@ -67,6 +45,12 @@ bool VSC::MIDI::OutputPort::operator==(const OutputPort& p) const {
     return true;
 }
 
+bool VSC::MIDI::OutputPort::operator<(const OutputPort& p) const {
+    if (number != p.number) return number < p.number;
+    if (isVirtual != p.isVirtual) return isVirtual;
+    return p.name.compare(name) < 0;
+}
+
 bool VSC::MIDI::InputPort::operator!=(const InputPort& p) const {
     return !(*this == p);
 }
@@ -74,6 +58,12 @@ bool VSC::MIDI::InputPort::operator!=(const InputPort& p) const {
 bool VSC::MIDI::InputPort::operator==(const InputPort& p) const {
     if (p.isVirtual != isVirtual || p.number != number || p.name.compare(name) != 0) return false;
     return true;
+}
+
+bool VSC::MIDI::InputPort::operator<(const InputPort& p) const {
+    if (number != p.number) return number < p.number;
+    if (isVirtual != p.isVirtual) return isVirtual;
+    return p.name.compare(name) < 0;
 }
 
 #pragma mark - MIDI Messages
@@ -316,19 +306,19 @@ VSC::MIDI::Message VSC::MIDI::MessageGenerator::messageForControlChange(unsigned
     
 }
 
-VSC::MIDI::MessagePair VSC::MIDI::MessageGenerator::messagePairForControlChange(unsigned int channel, ControlNumber control, Sound::Float value)
+VSC::MIDI::MessagePair VSC::MIDI::MessageGenerator::messagePairForControlChange(unsigned int channel, ControlNumber control, Float value)
 {
     return MessagePair(Message(3, 0), Message(3, 0));
 }
 
 
-VSC::MIDI::Message VSC::MIDI::MessageGenerator::messageForPitchWheel(unsigned int channel, Sound::Float value)
+VSC::MIDI::Message VSC::MIDI::MessageGenerator::messageForPitchWheel(unsigned int channel, Float value)
 {
     return Message(3, 0);
 }
 
 
-bool VSC::MIDI::MessageGenerator::floatValueToBytePair(Sound::Float value, unsigned char& MSB, unsigned char& LSB)
+bool VSC::MIDI::MessageGenerator::floatValueToBytePair(Float value, unsigned char& MSB, unsigned char& LSB)
 {
     return false;
 }

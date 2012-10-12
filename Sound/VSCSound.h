@@ -14,9 +14,10 @@
 #ifndef _VSC_SOUND_H_
 #define _VSC_SOUND_H_
 
+#include "VSC.h"
+
 #include <boost/shared_ptr.hpp>
 
-//#include <climits>
 #include <vector>
 #include <string>
 
@@ -37,10 +38,6 @@ namespace VSC {
          */
         const unsigned int kAllChannels = UINT_MAX;
         const unsigned int kVoidChannel = UINT_MAX - 1;
-        
-        /*-------------------------------------------------------------------------------------------*/
-        
-        typedef Float ControlValue;     // VSC sound control value (for MIDI, OSC ...)
         
         
         /*-------------------------------------------------------------------------------------------

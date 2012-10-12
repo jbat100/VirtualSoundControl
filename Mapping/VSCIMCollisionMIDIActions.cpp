@@ -6,6 +6,7 @@
 
 #include "VSCIMCollisionMIDIActions.h"
 
+#include "VSCMIDITasks.h"
 
 VSC::IM::CollisionMIDIAction::CollisionMIDIAction()
 {
@@ -22,17 +23,17 @@ mOutputChannel(outputChannel)
 VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAction::createTaskForCollision(OB::Scene::Element::SPtr element,
                                                                            OB::Scene::Collision::SPtr collision)
 {
-    
+    return Task::SPtr();
 }
 
 VSC::Task::SPtr VSC::IM::CollisionMIDINoteOffAction::createTaskForCollision(OB::Scene::Element::SPtr element,
                                                                             OB::Scene::Collision::SPtr collision)
 {
-    
+    return Task::SPtr();
 }
 
 VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAndOffAction::createTaskForCollision(OB::Scene::Element::SPtr element,
                                                                                  OB::Scene::Collision::SPtr collision)
 {
-    
+    return Task::SPtr();
 }

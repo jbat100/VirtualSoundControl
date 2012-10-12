@@ -1,37 +1,23 @@
 //
-//  VSCMIDITest.m
+//  VSCOSXMIDITest.m
 //  EnveloppeEditor
 //
 //  Created by Jonathan Thorpe on 3/20/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCMIDITest.h"
+#import "VSCOSXMIDITest.h"
 
-@interface VSCMIDITest () 
 
--(void) setMidi:(VSCMIDIPtr)midi;
-
-@end
-
-@implementation VSCMIDITest
-
-@synthesize midiChannel = _midiChannel;
-@synthesize controlChannel = _controlChannel;
-@synthesize controlValue = _controlValue;
-@synthesize pitchValue = _pitchValue;
-@synthesize velocityValue = _velocityValue;
-@synthesize autoControlUpdateFrequency = _autoControlUpdateFrequency;
+@implementation VSCOSXMIDITest
 
 -(id) init {
     
     if ((self = [super init])) {
         self.midiChannel = 1;
-        self.controlChannel = 1;
         self.controlValue = 80;
         self.pitchValue = 80;
         self.velocityValue = 80;
-        [self setMidi:VSCMIDIPtr(new VSCMIDI())];
     }
     
     return self;

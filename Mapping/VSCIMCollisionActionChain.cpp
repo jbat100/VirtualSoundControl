@@ -21,7 +21,10 @@ void VSC::IM::CollisionActionChain::perform(OB::Scene::Element::SPtr element, OB
         if (action->getTaskQueue())
         {
             Task::SPtr task = action->createTaskForCollision(element, collision);
-            action->getTaskQueue()->enqueueTask(task);
+            if (task)
+            {
+                action->getTaskQueue()->enqueueTask(task);
+            }
         }
         else
         {

@@ -12,8 +12,9 @@
 #include <boost/assert.hpp>
 #include <boost/thread.hpp>
 
-VSC::Task::Task(const Time& executionStartTime) :
+VSC::Task::Task(const Time& executionStartTime, Payload::SPtr payload) :
 mExecutionStartTime(executionStartTime),
+mPayload(payload),
 mState(StateWaiting)
 {
     
@@ -34,6 +35,6 @@ VSC::Task::State VSC::Task::getState(void)
 
 void VSC::Task::setState(State state)
 {
-    //boost::lock_guard<boost::mutex> lock(mMutex);
+    boost::lock_guard<boost::mutex> lock(mMutex);
     mState = state;
 }

@@ -58,8 +58,8 @@ namespace VSC {
             void startPeriodicBroadcasting(void);
             void stopPeriodicBroadcasting(void);
             
-            VSC::Sound::TimeInterval getBroadcastInterval(void) const;
-            void setBroadcastInterval(const VSC::Sound::TimeInterval interval);
+            TimeDuration getBroadcastInterval(void) const;
+            void setBroadcastInterval(const TimeDuration& interval);
             
         protected:
             
@@ -70,7 +70,7 @@ namespace VSC {
             ControllerBindings          mControllerBindings;
             
             State                       mState;
-            VSC::Sound::TimeInterval    mBroadcastInterval;
+            TimeDuration                mBroadcastInterval;
             
             // static boost::mutex         mSingletonMutex;
             

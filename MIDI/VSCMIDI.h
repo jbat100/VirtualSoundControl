@@ -26,14 +26,13 @@ namespace VSC {
     
     namespace MIDI {
         
-        TaskQueue::SPtr SingletonMIDITaskQueue();
-        
         struct OutputPort {
             unsigned int number;
             std::string name;
             bool isVirtual;
             bool operator!=(const OutputPort& p) const;
             bool operator==(const OutputPort& p) const;
+            bool operator<(const OutputPort& p) const;
         };
         
         std::ostream& operator<<(std::ostream& output, const OutputPort& p);
@@ -44,6 +43,7 @@ namespace VSC {
             bool isVirtual;
             bool operator!=(const InputPort& p) const;
             bool operator==(const InputPort& p) const;
+            bool operator<(const InputPort& p) const;
         };
         
         std::ostream& operator<<(std::ostream& output, const InputPort& p);
@@ -149,7 +149,7 @@ namespace VSC {
              *  value ranges from 0.00000 to 1.00000
              */
             
-            MessagePair messagePairForControlChange(unsigned int channel, ControlNumber control, Sound::Float value);
+            MessagePair messagePairForControlChange(unsigned int channel, ControlNumber control, Float value);
             
             /*
              *  Pitch wheel messages have MSB/LSB within one MIDI message
@@ -157,7 +157,7 @@ namespace VSC {
              *  value ranges from 0.00000 to 1.00000
              */
             
-            Message messageForPitchWheel(unsigned int channel, Sound::Float value);
+            Message messageForPitchWheel(unsigned int channel, Float value);
             
         private:
             
@@ -165,7 +165,7 @@ namespace VSC {
              *  Expects a float value within [0.0, 1.0]
              */
             
-            bool floatValueToBytePair(Sound::Float value, unsigned char& MSB, unsigned char& LSB);
+            bool floatValueToBytePair(Float value, unsigned char& MSB, unsigned char& LSB);
             
             ControlNumbers mValidControlNumbers;
             

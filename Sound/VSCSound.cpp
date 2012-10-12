@@ -19,22 +19,22 @@ VSC::Sound::Pitch::Pitch() : mReferenceAFrequency(440.0)
     computeMidiNoteFrequencies();
 }
 
-VSC::Sound::Float VSC::Sound::Pitch::logFrequencyToFrequency(Float logFreq)
+VSC::Float VSC::Sound::Pitch::logFrequencyToFrequency(Float logFreq)
 {
 	return std::pow(10.0, logFreq);
 }
 
-VSC::Sound::Float VSC::Sound::Pitch::frequencyToLogFrequency(Float freq)
+VSC::Float VSC::Sound::Pitch::frequencyToLogFrequency(Float freq)
 {
 	return std::log10(freq);
 }
 
-VSC::Sound::Float VSC::Sound::Pitch::frequencyForMidiNote(Float midiNote)
+VSC::Float VSC::Sound::Pitch::frequencyForMidiNote(Float midiNote)
 {
 	return frequencyForMidiNote((unsigned int)midiNote);
 }
 
-VSC::Sound::Float VSC::Sound::Pitch::frequencyForMidiNote(unsigned int midiNote)
+VSC::Float VSC::Sound::Pitch::frequencyForMidiNote(unsigned int midiNote)
 {
 	BOOST_ASSERT_MSG(midiNote >= 0 && midiNote < 127, "MIDI note should be in range [0-127]");
 	return mMIDINoteFrequencies[midiNote];
@@ -46,7 +46,7 @@ void VSC::Sound::Pitch::setReferenceAFrequency(Float f)
     computeMidiNoteFrequencies();
 }
 
-VSC::Sound::Float VSC::Sound::Pitch::getReferenceAFrequency(void)
+VSC::Float VSC::Sound::Pitch::getReferenceAFrequency(void)
 {
 	return mReferenceAFrequency;
 }

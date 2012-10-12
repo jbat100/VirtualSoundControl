@@ -1,20 +1,20 @@
 //
-//  VSCMIDITestWindowController.m
+//  VSCOSXMIDITestWindowController.m
 //  EnveloppeEditor
 //
 //  Created by Jonathan Thorpe on 3/19/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCMIDITestWindowController.h"
+#import "VSCOSXMIDITestWindowController.h"
 
-#import "VSCMIDITestController.h"
+#import "VSCOSXMIDITestController.h"
 
-@interface VSCMIDITestWindowController ()
+@interface VSCOSXMIDITestWindowController ()
 
 @end
 
-@implementation VSCMIDITestWindowController
+@implementation VSCOSXMIDITestWindowController
 
 @synthesize midiTestController = _midiTestController;
 

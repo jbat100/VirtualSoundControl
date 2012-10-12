@@ -22,7 +22,7 @@ VSC::MIDI::Output::Output(void) {
     
 }
 
-VSC::MIDI::Output::Output(OutputPort outputPort) {
+VSC::MIDI::Output::Output(const OutputPort& outputPort) {
     
     this->createRtMidiOut();
     
@@ -32,7 +32,19 @@ VSC::MIDI::Output::Output(OutputPort outputPort) {
     
 }
 
+VSC::MIDI::Output::~Output()
+{
+    mOutputPort = OutputPortVoid;
+    
+    if (mMIDIOut) {
+        mMIDIOut->closePort();
+        mMIDIOut = RtMidiOutPtr();
+    }
+}
+
 void VSC::MIDI::Output::createRtMidiOut(void) {
+    
+    boost::lock_guard<boost::mutex> lock(mMutex);
     
     // RtMidiOut constructor
     try {
@@ -44,12 +56,19 @@ void VSC::MIDI::Output::createRtMidiOut(void) {
     
 }
 
+void VSC::MIDI::Output::reinitialize()
+{
+    this->setOutputPort(mOutputPort);
+}
 
-VSC::MIDI::OutputPort VSC::MIDI::Output::getOutputPort(void) const {
+
+const VSC::MIDI::OutputPort& VSC::MIDI::Output::getOutputPort(void) const {
     return mOutputPort;
 }
 
 void VSC::MIDI::Output::setOutputPort(OutputPort const& port) {
+    
+    boost::lock_guard<boost::mutex> lock(mMutex);
     
     if (port != OutputPortVoid && mMIDIOut) {
         
@@ -135,9 +154,12 @@ bool VSC::MIDI::Output::sendChannelAftertouch(unsigned int channel, unsigned int
 
 bool VSC::MIDI::Output::sendMessage(Message& m) {
     
+    boost::lock_guard<boost::mutex> lock(mMutex);
+    
     if (mMIDIOut && mOutputPort != OutputPortVoid) {
         std::cout << *this << " sending " << messageDescription(m) << std::endl;
         mMIDIOut->sendMessage(&m);
+        return true;
     }
     
     return false;

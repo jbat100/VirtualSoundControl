@@ -7,18 +7,26 @@
  *
  */
 
-#ifndef _VSC_MIDI_H_
-#define _VSC_MIDI_H_
+#ifndef _VSC_MIDI_TASK_H_
+#define _VSC_MIDI_TASK_H_
 
 #include "VSC.h"
 #include "VSCMIDI.h"
 #include "VSCMIDIOutput.h"
 #include "VSCTask.h"
 
+#include <boost/shared_ptr.hpp>
 
 namespace VSC {
     
     namespace MIDI {
+        
+        /*
+         *  Singleton MIDI task queue, all midi tasks should be queue through here
+         *  to avoid concurrent MIDI operations.
+         */
+        
+        TaskQueue::SPtr SingletonMIDITaskQueue();
         
         /*
          *  Base MIDI Task
@@ -29,7 +37,7 @@ namespace VSC {
             
         public:
             
-            MIDITask(Output::SPtr output) : Task(), mMIDIOutput(output) {}
+            MIDITask(const Time& executionStartTime, Task::Payload::SPtr payload) : Task(executionStartTime, payload) {}
             
             Output::SPtr getMIDIOutput(void) {return mMIDIOutput;}
         
@@ -48,20 +56,20 @@ namespace VSC {
             
         public:
             
-            MIDINoteOnTask(Output::SPtr output,
-                           unsigned int channel,
-                           unsigned int pitch,
-                           unsigned int velocity);
+            class Payload : public Task::Payload {
+            public:
+                typedef boost::shared_ptr<Payload> SPtr;
+                Output::SPtr midiOutput;
+                unsigned int channel;
+                unsigned int pitch;
+                unsigned int velocity;
+            };
+            
+            MIDINoteOnTask(const Time& executionStartTime, Task::Payload::SPtr payload);
             
         protected:
             
             virtual bool stepExecution(void);
-            
-        private:
-            
-            unsigned int mChannel;
-            unsigned int mPitch;
-            unsigned int mVelocity;
             
         };
         
@@ -74,20 +82,20 @@ namespace VSC {
             
         public:
             
-            MIDINoteOffTask(Output::SPtr output,
-                            unsigned int channel,
-                            unsigned int pitch,
-                            unsigned int velocity);
+            class Payload : public Task::Payload {
+            public:
+                typedef boost::shared_ptr<Payload> SPtr;
+                Output::SPtr midiOutput;
+                unsigned int channel;
+                unsigned int pitch;
+                unsigned int velocity;
+            };
+            
+            MIDINoteOffTask(const Time& executionStartTime, Task::Payload::SPtr payload);
             
         protected:
             
             virtual bool stepExecution(void);
-            
-        private:
-            
-            unsigned int mChannel;
-            unsigned int mPitch;
-            unsigned int mVelocity;
             
         };
         
@@ -100,12 +108,18 @@ namespace VSC {
             
         public:
             
-            MIDINoteOnAndOffTask(Output::SPtr output,
-                                 unsigned int channel,
-                                 unsigned int pitch,
-                                 unsigned int onVelocity,
-                                 unsigned int offVelocity,
-                                 TimeDuration duration);
+            class Payload : public Task::Payload {
+            public:
+                typedef boost::shared_ptr<Payload> SPtr;
+                Output::SPtr midiOutput;
+                unsigned int channel;
+                unsigned int pitch;
+                unsigned int onVelocity;
+                unsigned int offVelocity;
+                TimeDuration duration;
+            };
+            
+            MIDINoteOnAndOffTask(const Time& executionStartTime, Task::Payload::SPtr payload);
             
         protected:
             
@@ -113,14 +127,7 @@ namespace VSC {
             
         private:
             
-            unsigned int mChannel;
-            unsigned int mPitch;
-            unsigned int mOnVelocity;
-            unsigned int mOffVelocity;
-            
-            TimeDuration mDuration;
-            
-            bool        mSentNoteOn;
+            bool mSentNoteOn;
             
         };
         
@@ -133,21 +140,20 @@ namespace VSC {
             
         public:
             
-            MIDIControlChangeTask(Output::SPtr output,
-                                  unsigned int channel,
-                                  ControlNumber controlNumber,
-                                  unsigned int value);
+            class Payload : public Task::Payload {
+            public:
+                typedef boost::shared_ptr<Payload> SPtr;
+                Output::SPtr midiOutput;
+                unsigned int channel;
+                ControlNumber controlNumber;
+                unsigned int value;
+            };
+            
+            MIDIControlChangeTask(const Time& executionStartTime, Task::Payload::SPtr payload);
             
         protected:
             
             virtual bool stepExecution(void);
-            
-        private:
-            
-            unsigned int    mChannel;
-            unsigned int    mValue;
-            
-            ControlNumber   mControlNumber;
             
         };
         

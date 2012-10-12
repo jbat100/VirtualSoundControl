@@ -71,11 +71,11 @@ const VSC::MIDI::ControllerBindings& VSC::MIDI::ControlCenter::getControllerBind
 
 #pragma mark - Broadcasting 
 
-VSC::Sound::TimeInterval VSC::MIDI::ControlCenter::getBroadcastInterval(void) const {
+VSC::TimeDuration VSC::MIDI::ControlCenter::getBroadcastInterval(void) const {
     return mBroadcastInterval;
 }
 
-void VSC::MIDI::ControlCenter::setBroadcastInterval(const VSC::Sound::TimeInterval  interval) {
+void VSC::MIDI::ControlCenter::setBroadcastInterval(const VSC::TimeDuration&  interval) {
     mBroadcastInterval = interval;
 }
 

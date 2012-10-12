@@ -1,21 +1,21 @@
 //
-//  VSCMIDITestView.m
+//  VSCOSXMIDITestView.m
 //  EnveloppeEditor
 //
 //  Created by Jonathan Thorpe on 3/9/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCMIDITestView.h"
+#import "VSCOSXMIDITestView.h"
 #import "NSString+VSCAdditions.h"
-#import "VSCMIDITest.h"
+#import "VSCOSXMIDITest.h"
 
 #include <list>
 #include <iterator>
 #include "VSCMIDI.h"
 
 
-@implementation VSCMIDITestView
+@implementation VSCOSXMIDITestView
 
 @synthesize midiTest;
 

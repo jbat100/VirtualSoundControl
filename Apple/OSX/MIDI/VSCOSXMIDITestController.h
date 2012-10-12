@@ -1,5 +1,5 @@
 //
-//  VSCMIDITestController.h
+//  VSCOSXMIDITestController.h
 //  EnveloppeEditor
 //
 //  Created by Jonathan Thorpe on 3/21/12.
@@ -8,17 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class VSCMIDITestView;
-@class VSCMIDITest;
+@class VSCOSXMIDITestView;
+@class VSCOSXMIDITest;
 
-#import "VSCEnveloppeEditorWindowController.h"
 
-@interface VSCMIDITestController : NSObject <NSTableViewDelegate, NSTableViewDataSource, NSComboBoxDelegate, NSComboBoxDataSource>
+@interface VSCOSXMIDITestController : NSObject <NSTableViewDelegate, NSTableViewDataSource, NSComboBoxDelegate, NSComboBoxDataSource>
 
-@property (nonatomic, strong) IBOutlet VSCMIDITest* midiTest;
-@property (nonatomic, strong) IBOutlet VSCMIDITestView* midiTestView;
-
-@property (nonatomic, strong) VSCEnveloppeEditorWindowController* enveloppeEditorWindowController;
+@property (nonatomic, strong) IBOutlet VSCOSXMIDITest* midiTest;
+@property (nonatomic, strong) IBOutlet VSCOSXMIDITestView* midiTestView;
 
 @property (nonatomic, strong) NSArray* controlChannels; 
 
