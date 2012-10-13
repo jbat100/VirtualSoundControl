@@ -1,12 +1,13 @@
 //
-//  VSCOBOSXWindow.m
+//  VSCOBOSXSceneWindow.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 7/12/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCOBOSXWindow.h"
+#import "VSCOBOSXSceneWindowController.h"
+#import "VSCOBOSXSceneView.h"
 #import "NSString+VSCAdditions.h"
 
 #include "VSCOBApplication.h"
@@ -17,14 +18,11 @@
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
-#import "VSCOBOSXView.h" // include last!
+#import "VSCOBOSXSceneView.h" // include last!
 
-@implementation VSCOBOSXWindow
+@implementation VSCOBOSXSceneWindow
 
-@synthesize ogreView = _ogreView;
-@synthesize ogreBulletApplication = _ogreBulletApplication;
-@synthesize scenePopUpButton = _scenePopUpButton;
-
+/*
 -(BOOL)acceptsFirstResponder {
     return YES;
 }
@@ -32,6 +30,7 @@
 -(BOOL)acceptsFirstMouse:(NSEvent *)theEvent {
     return YES;
 }
+ */
 
 #pragma mark - Custom Setters
 
@@ -90,11 +89,11 @@
 
 - (IBAction)test1:(id)sender {
     BOOL accepts = [self.ogreView acceptsFirstResponder];
-    NSLog(@"VSCOBOSXView %@ accept first responder", accepts ? @"DOES" : @"DOES NOT");
+    NSLog(@"VSCOBOSXSceneView %@ accept first responder", accepts ? @"DOES" : @"DOES NOT");
     
     if (accepts) {
         BOOL isFirstResponder = [self firstResponder] != self.ogreView;
-        NSLog(@"VSCOBOSXView %@ first responder", isFirstResponder ? @"IS" : @"IS NOT");
+        NSLog(@"VSCOBOSXSceneView %@ first responder", isFirstResponder ? @"IS" : @"IS NOT");
     }
 }
 
@@ -107,7 +106,7 @@
         [self.ogreView becomeFirstResponder];
     }
     isFirstResponder = [self firstResponder] != self.ogreView;
-     NSLog(@"VSCOBOSXView %@ first responder", isFirstResponder ? @"IS" : @"IS NOT");
+     NSLog(@"VSCOBOSXSceneView %@ first responder", isFirstResponder ? @"IS" : @"IS NOT");
 }
 
 - (IBAction)test3:(id)sender {

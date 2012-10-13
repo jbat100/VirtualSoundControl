@@ -18,13 +18,13 @@
 
 #include "OgreOSXCocoaWindow.h"
 
-#import "VSCOBOSXView.h"
+#import "VSCOBOSXSceneView.h"
 
 bool VSC::OB::OSXApplicationSetup::setupApplicationWithOgreView(ApplicationBase::SPtr obApplication, void* rawOgreView)
 {
-    VSCOBOSXView* ogreView = (__bridge VSCOBOSXView*)rawOgreView;
+    VSCOBOSXSceneView* ogreView = (__bridge VSCOBOSXSceneView*)rawOgreView;
     
-    BOOST_ASSERT_MSG( [ogreView isKindOfClass:[VSCOBOSXView class]], "Expected ogreView to be of class OgreView" ); 
+    BOOST_ASSERT_MSG( [ogreView isKindOfClass:[VSCOBOSXSceneView class]], "Expected ogreView to be of class OgreView" ); 
     
     // get platform-specific working directory
     Ogre::String workDir = Ogre::StringUtil::BLANK;

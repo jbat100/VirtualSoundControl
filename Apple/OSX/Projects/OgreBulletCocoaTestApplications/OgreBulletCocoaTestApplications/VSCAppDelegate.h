@@ -6,31 +6,16 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#include "OgrePrerequisites.h"
-#include "VSCOBApplication.h"
-#include "VSCOBScene.h"
+#import "VSCApplicationManager.h"
 
-#import "OgreOSXCocoaView.h"
 #import <Cocoa/Cocoa.h>
 
-#include <vector>
 
-class VSC::OB::Scene;
-class VSC::OB::Application;
+@interface VSCAppDelegate : NSObject <NSApplicationDelegate> 
 
-@class VSCOBOSXWindow;
-@class VSCOBOSXView;
+@property (nonatomic, strong) VSCApplicationManager* applicationManager;
 
-@interface VSCAppDelegate : NSObject <NSApplicationDelegate> {
-    
-    VSC::OB::Application::SPtr ogreBulletApplication;
-    
-}
-
-@property (assign) IBOutlet VSCOBOSXWindow *window;
-@property (assign) IBOutlet VSCOBOSXView *ogreView;
-
--(void) startRendering;
--(void) stopRendering;
+-(void) setupOgreBulletApplication;
+-(void) teardownOgreBulletApplication;
 
 @end

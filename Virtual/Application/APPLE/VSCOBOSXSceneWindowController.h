@@ -1,5 +1,5 @@
 //
-//  VSCOBOSXWindow.h
+//  VSCOBOSXSceneWindow.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 7/12/12.
@@ -10,16 +10,19 @@
 
 #include "VSCOBApplication.h"
 
-@class VSCOBOSXView;
+@class VSCOBOSXSceneView;
 
-namespace VSC { namespace OB {
-    class Application;
-}}
+namespace VSC {
+    namespace OB {
+        class Application;
+    }
+}
 
 
-@interface VSCOBOSXWindow : NSWindow
+@interface VSCOBOSXSceneWindowController : NSWindowController
 
-@property (nonatomic, strong) IBOutlet VSCOBOSXView* ogreView;
+@property (nonatomic, strong) IBOutletCollection(VSCOBOSXSceneView) NSArray* ogreViews;
+
 @property (nonatomic, strong) IBOutlet NSPopUpButton* scenePopUpButton;
 
 @property (nonatomic, assign) VSC::OB::Application::WPtr ogreBulletApplication;

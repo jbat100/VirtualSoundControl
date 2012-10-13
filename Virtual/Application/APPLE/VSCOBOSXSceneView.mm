@@ -1,5 +1,5 @@
 //
-//  VSCOBOSXView.m
+//  VSCOBOSXSceneView.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 6/22/12.
@@ -11,9 +11,9 @@
 #include "VSCOBOSXInputAdapter.h"
 #include <boost/assert.hpp>
 
-#import "VSCOBOSXView.h"
+#import "VSCOBOSXSceneView.h"
 
-@implementation VSCOBOSXView
+@implementation VSCOBOSXSceneView
 
 static const bool mTraceUI = false;
 

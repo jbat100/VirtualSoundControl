@@ -13,29 +13,15 @@
 
 #import "VSCOBScene.h"
 #import "VSCOBApplication.h"
-#import "VSCOBOSXWindow.h"
+#import "VSCOBOSXSceneWindow.h"
 #import "VSCOBOSXApplicationSetup.h"
 
 #import "VSCOBPrimitivesDemo.h"
 #import "VSCOBTriMeshDemo.h"
 #import "VSCOBConstraintsDemo.h"
 
-@interface VSCAppDelegate () {
-    
-    NSTimer* renderTimer;
-    
-}
-
--(void) setupOgreBulletApplication;
--(void) teardownOgreBulletApplication;
-
-@end
-
 
 @implementation VSCAppDelegate
-
-@synthesize window = _window;
-@synthesize ogreView = _ogreView;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -79,39 +65,5 @@
     
 }
 
--(void) startRendering {
-    
-    if (renderTimer == nil) {
-        
-        // create a timer that causes OGRE to render at 50fps
-        renderTimer = [NSTimer scheduledTimerWithTimeInterval:0.02 target:self 
-                                                     selector:@selector(renderCallback) 
-                                                     userInfo:NULL 
-                                                      repeats:YES];
-        
-    }
-    
-}
-
--(void) stopRendering {
-    
-    [renderTimer invalidate];
-    renderTimer = nil;
-    
-}
-
--(void) renderCallback {
-    
-    /*
-     *  The singleton accessed here is the one created in the ogreApplicationCocoaSetup call to setup
-     *
-     *  see http://www.ogre3d.org/docs/api/html/classOgre_1_1Root.html#_details
-     */
-    
-    //std::cout << "In renderCallback ..." << std::endl;
-    
-    Ogre::Root::getSingleton().renderOneFrame();
-    
-}
 
 @end
