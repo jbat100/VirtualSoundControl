@@ -1,5 +1,5 @@
 //
-//  VSCApplicationManager.h
+//  VSCOSXApplicationManager.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 10/13/12.
@@ -7,22 +7,21 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "VSCApplicationManagerProtocol.h"
-#import "VSCOBOSXSceneWindow.h"
-#import "VSCOSXMIDIWindowController.h"
+#import "VSCOSXApplicationManagerProtocol.h"
 
 #include "OgrePrerequisites.h"
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
 
+@class VSCOBOSXSceneWindowController;
+@class VSCOSXMIDIWindowController;
 
-@interface VSCApplicationManager : NSObject <VSCApplicationManagerProtocol>
+@interface VSCOSXApplicationManager : NSObject <VSCOSXApplicationManagerProtocol>
 
 @property (nonatomic, assign) VSC::MIDI::OutputManager::SPtr midiOutputManager;
 @property (nonatomic, assign) VSC::OB::Application::SPtr ogreBulletApplication;
 
-@property (nonatomic, strong) IBOutlet 
-
-@property (nonatomic, strong) VSCOBOSXSceneWindow *window;
+@property (nonatomic, strong) VSCOBOSXSceneWindowController *ogreBulletSceneWindowController;
+@property (nonatomic, strong) VSCOSXMIDIWindowController *midiWindowController;
 
 @end

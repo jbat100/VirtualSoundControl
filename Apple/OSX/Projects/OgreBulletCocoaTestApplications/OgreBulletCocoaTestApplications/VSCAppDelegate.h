@@ -6,14 +6,13 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCApplicationManager.h"
-
 #import <Cocoa/Cocoa.h>
 
+@class VSCOSXApplicationManager;
 
 @interface VSCAppDelegate : NSObject <NSApplicationDelegate> 
 
-@property (nonatomic, strong) VSCApplicationManager* applicationManager;
+@property (nonatomic, strong) VSCOSXApplicationManager* applicationManager;
 
 -(void) setupOgreBulletApplication;
 -(void) teardownOgreBulletApplication;

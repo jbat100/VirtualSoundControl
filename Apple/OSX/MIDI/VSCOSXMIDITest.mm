@@ -8,6 +8,9 @@
 
 #import "VSCOSXMIDITest.h"
 
+#include "VSCMIDI.h"
+#include "VSCMIDIOutput.h"
+#include "VSCMIDIOutputManager.h"
 
 @implementation VSCOSXMIDITest
 
@@ -18,51 +21,31 @@
         self.controlValue = 80;
         self.pitchValue = 80;
         self.velocityValue = 80;
+        self.controlNumber = VSC::MIDI::ControlBreath;
     }
     
     return self;
     
 }
 
--(VSCMIDIPtr) getMidi {
-    return _midi;
-}
-
--(void) setMidi:(VSCMIDIPtr)midi {
-    _midi = midi;
-}
-
--(void) setMidiOutput:(VSCMIDIOutputPtr)output {
-    _midiOutput = output;
-    
-}
-
--(VSCMIDIOutputPtr) getMidiOutput {
-    return _midiOutput;
-}
-
-
 -(void) sendMidiControlMessage {
-    VSCMIDI::Message m = VSCMIDI::messageForControl(self.midiChannel, self.controlChannel, self.controlValue);
-    if (_midiOutput) {
-        //std::cout << "Sending " << VSCMIDI::messageDescription(m) << std::endl;
-        _midiOutput->sendMessage(m);
+    if(self.midiOutput)
+    {
+        self.midiOutput->sendControlChange(self.midiChannel, self.controlNumber, self.controlValue);
     }
 }
 
 -(void) sendMidiNoteOnMessage {
-    VSCMIDI::Message m = VSCMIDI::messageForNote(self.midiChannel, self.pitchValue, self.velocityValue, true);
-    if (_midiOutput) {
-        //std::cout << "Sending " << VSCMIDI::messageDescription(m) << std::endl;
-        _midiOutput->sendMessage(m);
+    if(self.midiOutput)
+    {
+        self.midiOutput->sendNoteOn(self.midiChannel, self.pitchValue, self.velocityValue);
     }
 }
 
 -(void) sendMidiNoteOffMessage {
-    VSCMIDI::Message m = VSCMIDI::messageForNote(self.midiChannel, self.pitchValue, self.velocityValue, false);
-    if (_midiOutput) {
-        //std::cout << "Sending " << VSCMIDI::messageDescription(m) << std::endl;
-        _midiOutput->sendMessage(m);
+    if(self.midiOutput)
+    {
+        self.midiOutput->sendNoteOff(self.midiChannel, self.pitchValue, self.velocityValue);
     }
 }
 

@@ -12,7 +12,7 @@
 @class VSCOSXMIDITest;
 
 
-@interface VSCOSXMIDITestController : NSObject <NSTableViewDelegate, NSTableViewDataSource, NSComboBoxDelegate, NSComboBoxDataSource>
+@interface VSCOSXMIDITestController : NSObject <NSComboBoxDelegate, NSComboBoxDataSource>
 
 @property (nonatomic, strong) IBOutlet VSCOSXMIDITest* midiTest;
 @property (nonatomic, strong) IBOutlet VSCOSXMIDITestView* midiTestView;
@@ -33,5 +33,24 @@
 
 -(IBAction) showEnveloppeEditor:(id)sender;
 -(IBAction) fireEnveloppe:(id)sender;
+
+@property (nonatomic, strong) IBOutlet NSTextField* midiOutputTextField;
+
+@property (nonatomic, strong) IBOutlet NSTextField* midiChannelTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* controlChannelTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* controlValueTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* notePitchTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* noteVelocityTextField;
+@property (nonatomic, strong) IBOutlet NSButton* sendMidiControlButton;
+@property (nonatomic, strong) IBOutlet NSButton* sendMidiNoteOnButton;
+@property (nonatomic, strong) IBOutlet NSButton* sendMidiNoteOffButton;
+
+@property (nonatomic, strong) IBOutlet NSSlider* rtControlSlider;
+@property (nonatomic, strong) IBOutlet NSComboBox* rtControlChannelComboBox;
+@property (nonatomic, strong) IBOutlet NSButton* rtSendControlMessageButton;
+@property (nonatomic, strong) IBOutlet NSTextField* rtControlValueTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* rtControlChannelTextField;
+
+@property (nonatomic, strong) IBOutlet NSButton* envFireButton;
 
 @end

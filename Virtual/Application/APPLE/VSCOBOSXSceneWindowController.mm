@@ -7,11 +7,15 @@
 //
 
 #import "VSCOBOSXSceneWindowController.h"
+#import "VSCOSXApplicationManager.h"
 #import "VSCOBOSXSceneView.h"
+
 #import "NSString+VSCAdditions.h"
+#import "NSArray+VSCAdditions.h"
 
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
+
 #include <Ogre/Ogre.h>
 
 #include <vector>
@@ -20,7 +24,29 @@
 
 #import "VSCOBOSXSceneView.h" // include last!
 
-@implementation VSCOBOSXSceneWindow
+@interface VSCOBOSXSceneWindowController ()
+
+- (void) updateSceneChoice;
+
+@end
+
+@implementation VSCOBOSXSceneWindowController
+
+- (id)initWithWindow:(NSWindow *)window
+{
+    self = [super initWithWindow:window];
+    if (self) {
+        // Initialization code here.
+    }
+    
+    return self;
+}
+
+- (void)windowDidLoad
+{
+    [super windowDidLoad];
+    [self updateSceneChoice];
+}
 
 /*
 -(BOOL)acceptsFirstResponder {
@@ -34,18 +60,23 @@
 
 #pragma mark - Custom Setters
 
-- (void) setOgreBulletApplication:(VSC::OB::Application::WPtr)app {
-    // update the popup button with the scenes
+- (void) setApplicationManager:(id<VSCOSXApplicationManagerProtocol>) manager
+{
+    _applicationManager = manager;
+    [self updateSceneChoice];
     
-    _ogreBulletApplication = app;
+}
+
+- (void) updateSceneChoice {
     
-    VSC::OB::Application::SPtr sapp = app.lock();
+    if (self.applicationManager == nil || !self.applicationManager.ogreBulletApplication) {
+        [self.scenePopUpButton removeAllItems];
+    }
     
-    std::vector<Ogre::String> sceneNames = sapp->getSceneNames();
+    std::vector<Ogre::String> sceneNames = self.applicationManager.ogreBulletApplication->getSceneNames();
     
     NSMutableArray* sceneStrings = [NSMutableArray array];
-    
-    BOOST_FOREACH (Ogre::String sceneName, sceneNames) 
+    BOOST_FOREACH (Ogre::String sceneName, sceneNames)
     {
         [sceneStrings addObject:[NSString stringWithStdString:sceneName]];
     }
@@ -57,9 +88,9 @@
      *  Set selected popup item to the current scene
      */
     
-    if (sapp->getCurrentScene()) 
+    if (self.applicationManager.ogreBulletApplication->getCurrentScene())
     {
-        Ogre::String selectedSceneName = sapp->getCurrentScene()->getName();
+        Ogre::String selectedSceneName = self.applicationManager.ogreBulletApplication->getCurrentScene()->getName();
         [self.scenePopUpButton selectItemWithTitle:[NSString stringWithStdString:selectedSceneName]];
     }
     
@@ -69,10 +100,8 @@
 
 - (IBAction)scenePopUpButtonChanged:(id)sender 
 {
-    VSC::OB::Application::SPtr sapp = self.ogreBulletApplication.lock();
-    
     NSString* sceneName = [self.scenePopUpButton titleOfSelectedItem];
-    bool success = sapp->switchToSceneWithName([sceneName stdString]);
+    bool success = self.applicationManager.ogreBulletApplication->switchToSceneWithName([sceneName stdString]);
     BOOST_ASSERT_MSG(success == true, "Expected  success");
 }
 
@@ -88,25 +117,22 @@
 
 
 - (IBAction)test1:(id)sender {
-    BOOL accepts = [self.ogreView acceptsFirstResponder];
+    
+    VSCOBOSXSceneView* ogreBulletSceneView = [self.ogreBulletSceneViews firstObject];
+    
+    BOOST_ASSERT(ogreBulletSceneView);
+    
+    BOOL accepts = [ogreBulletSceneView acceptsFirstResponder];
     NSLog(@"VSCOBOSXSceneView %@ accept first responder", accepts ? @"DOES" : @"DOES NOT");
     
     if (accepts) {
-        BOOL isFirstResponder = [self firstResponder] != self.ogreView;
+        BOOL isFirstResponder = [self.window firstResponder] != ogreBulletSceneView;
         NSLog(@"VSCOBOSXSceneView %@ first responder", isFirstResponder ? @"IS" : @"IS NOT");
     }
 }
 
 - (IBAction)test2:(id)sender {
-    BOOL isFirstResponder = [self firstResponder] != self.ogreView;
-    if (isFirstResponder) {
-        [self.ogreView resignFirstResponder];
-    }
-    else {
-        [self.ogreView becomeFirstResponder];
-    }
-    isFirstResponder = [self firstResponder] != self.ogreView;
-     NSLog(@"VSCOBOSXSceneView %@ first responder", isFirstResponder ? @"IS" : @"IS NOT");
+
 }
 
 - (IBAction)test3:(id)sender {

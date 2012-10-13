@@ -11,6 +11,8 @@
 		1013E973160BCD820014D566 /* VSCOBStaticObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1013E971160BCD820014D566 /* VSCOBStaticObject.cpp */; };
 		101C8E191624CA460026F0D7 /* VSCIMCollisionAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101C8E181624CA460026F0D7 /* VSCIMCollisionAction.cpp */; };
 		101C8E1C1624CB2E0026F0D7 /* VSCIMCollisionActionChain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101C8E1A1624CB2E0026F0D7 /* VSCIMCollisionActionChain.cpp */; };
+		101EBB441629AE79006601A2 /* NSArray+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB431629AE79006601A2 /* NSArray+VSCAdditions.mm */; };
+		101EBB471629BEC5006601A2 /* VSCOBOSXSceneWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 101EBB461629BEC5006601A2 /* VSCOBOSXSceneWindow.xib */; };
 		102671CA16258622002D34B2 /* VSCIMCollisionMIDIActions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 102671C816258622002D34B2 /* VSCIMCollisionMIDIActions.cpp */; };
 		102671CE16258781002D34B2 /* VSCIMCollisionMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 102671CC16258781002D34B2 /* VSCIMCollisionMapping.cpp */; };
 		102671D11625B4E6002D34B2 /* VSCMIDIOutputChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 102671CF1625B4E6002D34B2 /* VSCMIDIOutputChannel.cpp */; };
@@ -114,8 +116,8 @@
 		10E1B289156D2A630013B9F7 /* RenderSystem_GL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */; };
 		10E8557415E65048008FF635 /* VSCUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E8557215E65048008FF635 /* VSCUI.cpp */; };
 		10EB5A3B16050D7500F0939E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10EB5A3A16050D7500F0939E /* OpenGL.framework */; };
-		10EB5E5E16298E0B00E0F030 /* VSCApplicationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10EB5E5D16298E0B00E0F030 /* VSCApplicationManager.mm */; };
-		10EB5E621629902500E0F030 /* VSCOSXMIDIWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10EB5E611629902500E0F030 /* VSCOSXMIDIWindowController.xib */; };
+		10EB5E5E16298E0B00E0F030 /* VSCOSXApplicationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10EB5E5D16298E0B00E0F030 /* VSCOSXApplicationManager.mm */; };
+		10EB5E621629902500E0F030 /* VSCOSXMIDIWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10EB5E611629902500E0F030 /* VSCOSXMIDIWindow.xib */; };
 		10ED088A1601CD8900053C07 /* VSCBound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10ED08881601CD8900053C07 /* VSCBound.cpp */; };
 		10EF8DAC1626CBB700EB8FDE /* VSCTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10EF8DA81626CBB700EB8FDE /* VSCTask.cpp */; };
 		10EF8DAD1626CBB700EB8FDE /* VSCTaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10EF8DAA1626CBB700EB8FDE /* VSCTaskQueue.cpp */; };
@@ -170,6 +172,9 @@
 		101C8E181624CA460026F0D7 /* VSCIMCollisionAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCIMCollisionAction.cpp; path = ../../../../../Mapping/VSCIMCollisionAction.cpp; sourceTree = "<group>"; };
 		101C8E1A1624CB2E0026F0D7 /* VSCIMCollisionActionChain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCIMCollisionActionChain.cpp; path = ../../../../../Mapping/VSCIMCollisionActionChain.cpp; sourceTree = "<group>"; };
 		101C8E1B1624CB2E0026F0D7 /* VSCIMCollisionActionChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMCollisionActionChain.h; path = ../../../../../Mapping/VSCIMCollisionActionChain.h; sourceTree = "<group>"; };
+		101EBB421629AE79006601A2 /* NSArray+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+VSCAdditions.h"; path = "../../../Categories/NSArray+VSCAdditions.h"; sourceTree = "<group>"; };
+		101EBB431629AE79006601A2 /* NSArray+VSCAdditions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSArray+VSCAdditions.mm"; path = "../../../Categories/NSArray+VSCAdditions.mm"; sourceTree = "<group>"; };
+		101EBB461629BEC5006601A2 /* VSCOBOSXSceneWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOBOSXSceneWindow.xib; path = ../../../../../Virtual/Application/APPLE/VSCOBOSXSceneWindow.xib; sourceTree = "<group>"; };
 		102671C816258622002D34B2 /* VSCIMCollisionMIDIActions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCIMCollisionMIDIActions.cpp; path = ../../../../../Mapping/VSCIMCollisionMIDIActions.cpp; sourceTree = "<group>"; };
 		102671C916258622002D34B2 /* VSCIMCollisionMIDIActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMCollisionMIDIActions.h; path = ../../../../../Mapping/VSCIMCollisionMIDIActions.h; sourceTree = "<group>"; };
 		102671CC16258781002D34B2 /* VSCIMCollisionMapping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCIMCollisionMapping.cpp; path = ../../../../../Mapping/VSCIMCollisionMapping.cpp; sourceTree = "<group>"; };
@@ -251,10 +256,10 @@
 		10B60D2715505D6D006A6D6E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		10B60D2815505D6D006A6D6E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		10B60D2915505D6D006A6D6E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		10B60D2C15505D6D006A6D6E /* OgreBulletCocoaTestApplications-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OgreBulletCocoaTestApplications-Info.plist"; sourceTree = "<group>"; };
+		10B60D2C15505D6D006A6D6E /* OgreBulletCocoaTestApplications-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "OgreBulletCocoaTestApplications-Info.plist"; path = "OgreBulletCocoaTestApplications/OgreBulletCocoaTestApplications-Info.plist"; sourceTree = "<group>"; };
 		10B60D2E15505D6D006A6D6E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		10B60D3015505D6D006A6D6E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		10B60D3215505D6D006A6D6E /* OgreBulletCocoaTestApplications-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OgreBulletCocoaTestApplications-Prefix.pch"; sourceTree = "<group>"; };
+		10B60D3015505D6D006A6D6E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = OgreBulletCocoaTestApplications/main.m; sourceTree = "<group>"; };
+		10B60D3215505D6D006A6D6E /* OgreBulletCocoaTestApplications-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "OgreBulletCocoaTestApplications-Prefix.pch"; path = "OgreBulletCocoaTestApplications/OgreBulletCocoaTestApplications-Prefix.pch"; sourceTree = "<group>"; };
 		10B60D3415505D6D006A6D6E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		10B60D3615505D6D006A6D6E /* VSCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCAppDelegate.h; path = OgreBulletCocoaTestApplications/VSCAppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10B60D3715505D6D006A6D6E /* VSCAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCAppDelegate.mm; path = OgreBulletCocoaTestApplications/VSCAppDelegate.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -388,10 +393,10 @@
 		10E8557215E65048008FF635 /* VSCUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCUI.cpp; path = ../../../../Interface/VSCUI.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		10E8557315E65048008FF635 /* VSCUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCUI.h; path = ../../../../Interface/VSCUI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10EB5A3A16050D7500F0939E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		10EB5E5C16298E0B00E0F030 /* VSCApplicationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCApplicationManager.h; path = ../../Application/VSCApplicationManager.h; sourceTree = "<group>"; };
-		10EB5E5D16298E0B00E0F030 /* VSCApplicationManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCApplicationManager.mm; path = ../../Application/VSCApplicationManager.mm; sourceTree = "<group>"; };
-		10EB5E6016298FC000E0F030 /* VSCApplicationManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCApplicationManagerProtocol.h; path = ../../Application/VSCApplicationManagerProtocol.h; sourceTree = "<group>"; };
-		10EB5E611629902500E0F030 /* VSCOSXMIDIWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXMIDIWindowController.xib; path = ../../MIDI/VSCOSXMIDIWindowController.xib; sourceTree = "<group>"; };
+		10EB5E5C16298E0B00E0F030 /* VSCOSXApplicationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXApplicationManager.h; path = ../../Application/VSCOSXApplicationManager.h; sourceTree = "<group>"; };
+		10EB5E5D16298E0B00E0F030 /* VSCOSXApplicationManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXApplicationManager.mm; path = ../../Application/VSCOSXApplicationManager.mm; sourceTree = "<group>"; };
+		10EB5E6016298FC000E0F030 /* VSCOSXApplicationManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXApplicationManagerProtocol.h; path = ../../Application/VSCOSXApplicationManagerProtocol.h; sourceTree = "<group>"; };
+		10EB5E611629902500E0F030 /* VSCOSXMIDIWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXMIDIWindow.xib; path = ../../MIDI/VSCOSXMIDIWindow.xib; sourceTree = "<group>"; };
 		10ED08841601CC2700053C07 /* VSCBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCBindings.cpp; path = ../../../../Interface/VSCBindings.cpp; sourceTree = "<group>"; };
 		10ED08851601CC2700053C07 /* VSCBindings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; name = VSCBindings.hpp; path = ../../../../Interface/VSCBindings.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		10ED08881601CD8900053C07 /* VSCBound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCBound.cpp; path = ../../../../Interface/VSCBound.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -461,6 +466,7 @@
 				106A58031608CCF600D905D8 /* VSCOBOSXSceneView.mm */,
 				106A58041608CCF600D905D8 /* VSCOBOSXSceneWindowController.h */,
 				106A58051608CCF600D905D8 /* VSCOBOSXSceneWindowController.mm */,
+				101EBB461629BEC5006601A2 /* VSCOBOSXSceneWindow.xib */,
 			);
 			name = Cocoa;
 			sourceTree = "<group>";
@@ -498,6 +504,32 @@
 				1013E972160BCD820014D566 /* VSCOBStaticObject.h */,
 			);
 			name = Core;
+			sourceTree = "<group>";
+		};
+		101EBB401629AE6B006601A2 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				101EBB421629AE79006601A2 /* NSArray+VSCAdditions.h */,
+				101EBB431629AE79006601A2 /* NSArray+VSCAdditions.mm */,
+				10D5533815FA409F002AED81 /* NSString+VSCAdditions.h */,
+				10D5533915FA409F002AED81 /* NSString+VSCAdditions.mm */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		101EBB451629B807006601A2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				10B60D3615505D6D006A6D6E /* VSCAppDelegate.h */,
+				10B60D3715505D6D006A6D6E /* VSCAppDelegate.mm */,
+				10B60D3915505D6D006A6D6E /* MainMenu.xib */,
+				10B60D2C15505D6D006A6D6E /* OgreBulletCocoaTestApplications-Info.plist */,
+				10B60D2D15505D6D006A6D6E /* InfoPlist.strings */,
+				10B60D3015505D6D006A6D6E /* main.m */,
+				10B60D3215505D6D006A6D6E /* OgreBulletCocoaTestApplications-Prefix.pch */,
+				10B60D3315505D6D006A6D6E /* Credits.rtf */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		102671C6162583D6002D34B2 /* Actions */ = {
@@ -549,8 +581,6 @@
 			children = (
 				103006911624763A002A30ED /* VSC.cpp */,
 				103006921624763A002A30ED /* VSC.h */,
-				10D5533815FA409F002AED81 /* NSString+VSCAdditions.h */,
-				10D5533915FA409F002AED81 /* NSString+VSCAdditions.mm */,
 				10E8557215E65048008FF635 /* VSCUI.cpp */,
 				10E8557315E65048008FF635 /* VSCUI.h */,
 				10ED08881601CD8900053C07 /* VSCBound.cpp */,
@@ -587,6 +617,7 @@
 		109D51B2155998CA0030C161 /* VSC */ = {
 			isa = PBXGroup;
 			children = (
+				101EBB401629AE6B006601A2 /* Categories */,
 				10EB5E5A16298CD200E0F030 /* Application */,
 				10B60D2A15505D6D006A6D6E /* OB */,
 				104198F316171E9200D1742D /* IM */,
@@ -681,11 +712,6 @@
 				10F69488156E456500E70049 /* Plugins_d.cfg */,
 				10F69489156E456500E70049 /* Plugins.cfg */,
 				10F4EE0D1557E775000E4591 /* resources.cfg */,
-				10B60D2C15505D6D006A6D6E /* OgreBulletCocoaTestApplications-Info.plist */,
-				10B60D2D15505D6D006A6D6E /* InfoPlist.strings */,
-				10B60D3015505D6D006A6D6E /* main.m */,
-				10B60D3215505D6D006A6D6E /* OgreBulletCocoaTestApplications-Prefix.pch */,
-				10B60D3315505D6D006A6D6E /* Credits.rtf */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1020,7 +1046,7 @@
 				10D7AE931628767F00DE0F72 /* VSCOSXMIDITestView.mm */,
 				10D7AE941628767F00DE0F72 /* VSCOSXMIDIWindowController.h */,
 				10D7AE951628767F00DE0F72 /* VSCOSXMIDIWindowController.mm */,
-				10EB5E611629902500E0F030 /* VSCOSXMIDIWindowController.xib */,
+				10EB5E611629902500E0F030 /* VSCOSXMIDIWindow.xib */,
 			);
 			name = Cocoa;
 			sourceTree = "<group>";
@@ -1028,12 +1054,10 @@
 		10EB5E5A16298CD200E0F030 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				10B60D3615505D6D006A6D6E /* VSCAppDelegate.h */,
-				10B60D3715505D6D006A6D6E /* VSCAppDelegate.mm */,
-				10B60D3915505D6D006A6D6E /* MainMenu.xib */,
-				10EB5E5C16298E0B00E0F030 /* VSCApplicationManager.h */,
-				10EB5E5D16298E0B00E0F030 /* VSCApplicationManager.mm */,
-				10EB5E6016298FC000E0F030 /* VSCApplicationManagerProtocol.h */,
+				10EB5E5C16298E0B00E0F030 /* VSCOSXApplicationManager.h */,
+				10EB5E5D16298E0B00E0F030 /* VSCOSXApplicationManager.mm */,
+				10EB5E6016298FC000E0F030 /* VSCOSXApplicationManagerProtocol.h */,
+				101EBB451629B807006601A2 /* Supporting Files */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -1129,7 +1153,8 @@
 				10F4EE0E1557E775000E4591 /* resources.cfg in Resources */,
 				10F6948A156E456500E70049 /* Plugins_d.cfg in Resources */,
 				10F6948B156E456500E70049 /* Plugins.cfg in Resources */,
-				10EB5E621629902500E0F030 /* VSCOSXMIDIWindowController.xib in Resources */,
+				10EB5E621629902500E0F030 /* VSCOSXMIDIWindow.xib in Resources */,
+				101EBB471629BEC5006601A2 /* VSCOBOSXSceneWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1223,7 +1248,8 @@
 				10D7AE9B1628767F00DE0F72 /* VSCOSXMIDITestView.mm in Sources */,
 				10D7AE9C1628767F00DE0F72 /* VSCOSXMIDIWindowController.mm in Sources */,
 				10D7AEA01628792900DE0F72 /* VSCOSXMIDITestController.mm in Sources */,
-				10EB5E5E16298E0B00E0F030 /* VSCApplicationManager.mm in Sources */,
+				10EB5E5E16298E0B00E0F030 /* VSCOSXApplicationManager.mm in Sources */,
+				101EBB441629AE79006601A2 /* NSArray+VSCAdditions.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1236,6 +1262,7 @@
 				10B60D2E15505D6D006A6D6E /* en */,
 			);
 			name = InfoPlist.strings;
+			path = OgreBulletCocoaTestApplications;
 			sourceTree = "<group>";
 		};
 		10B60D3315505D6D006A6D6E /* Credits.rtf */ = {
@@ -1244,6 +1271,7 @@
 				10B60D3415505D6D006A6D6E /* en */,
 			);
 			name = Credits.rtf;
+			path = OgreBulletCocoaTestApplications;
 			sourceTree = "<group>";
 		};
 		10B60D3915505D6D006A6D6E /* MainMenu.xib */ = {

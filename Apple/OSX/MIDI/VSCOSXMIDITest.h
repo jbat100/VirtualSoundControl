@@ -10,6 +10,7 @@
 
 #include "VSCMIDI.h"
 #include "VSCMIDIOutput.h"
+#include "VSCMIDIOutputManager.h"
 
 @interface VSCOSXMIDITest : NSObject  {  
     
@@ -20,8 +21,11 @@
 @property (nonatomic, assign) unsigned int controlValue;
 @property (nonatomic, assign) unsigned int pitchValue;
 @property (nonatomic, assign) unsigned int velocityValue;
+@property (nonatomic, assign) VSC::MIDI::ControlNumber controlNumber;
 
-@property (nonatomic, assign) VSC::MIDI::Output::SPtr midiOut;
+@property (nonatomic, assign) VSC::MIDI::OutputManager::SPtr midiOutputManager;
+
+@property (nonatomic, assign) VSC::MIDI::Output::SPtr midiOutput;
 
 -(void) sendMidiControlMessage;
 -(void) sendMidiNoteOnMessage;

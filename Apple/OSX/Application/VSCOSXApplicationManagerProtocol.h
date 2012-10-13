@@ -1,5 +1,5 @@
 //
-//  VSCApplicationManagerProtocol.h
+//  VSCOSXApplicationManagerProtocol.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 10/13/12.
@@ -9,17 +9,16 @@
 #import <Foundation/Foundation.h>
 
 #include "VSCMIDI.h"
-#include "VSCMIDIOutputManager.h";
+#include "VSCMIDIOutputManager.h"
+#include "VSCOBApplication.h"
 
 @class VSCOBOSXSceneWindow;
 @class VSCOBOSXSceneView;
 
-@protocol VSCApplicationManagerProtocol <NSObject>
+@protocol VSCOSXApplicationManagerProtocol <NSObject>
 
 @property(nonatomic, assign) VSC::MIDI::OutputManager::SPtr midiOutputManager;
-
-@property (nonatomic, assign) IBOutlet VSCOBOSXSceneWindow *window;
-@property (nonatomic, assign) IBOutlet VSCOBOSXSceneView *ogreView;
+@property(nonatomic, assign) VSC::OB::Application::SPtr ogreBulletApplication;
 
 -(void) startOgreRendering;
 -(void) stopOgreRendering;

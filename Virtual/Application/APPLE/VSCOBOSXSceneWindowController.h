@@ -8,24 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "VSCOBApplication.h"
+#include "VSCOSXApplicationManagerProtocol.h"
+#include "VSCOBScene.h"
 
 @class VSCOBOSXSceneView;
 
-namespace VSC {
-    namespace OB {
-        class Application;
-    }
-}
-
-
 @interface VSCOBOSXSceneWindowController : NSWindowController
 
-@property (nonatomic, strong) IBOutletCollection(VSCOBOSXSceneView) NSArray* ogreViews;
-
+@property (nonatomic, strong) IBOutletCollection(VSCOBOSXSceneView) NSArray* ogreBulletSceneViews;
 @property (nonatomic, strong) IBOutlet NSPopUpButton* scenePopUpButton;
 
-@property (nonatomic, assign) VSC::OB::Application::WPtr ogreBulletApplication;
+@property (nonatomic, assign) VSC::OB::Scene::SPtr ogreBulletScene;
+
+@property (nonatomic, weak) id<VSCOSXApplicationManagerProtocol> applicationManager;
 
 - (IBAction)test1:(id)sender;
 - (IBAction)test2:(id)sender;
