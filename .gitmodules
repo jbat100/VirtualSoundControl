@@ -1,6 +1,3 @@
-[submodule "Apple/Submodules"]
-	path = Apple/Submodules
-	url = https://github.com/joshaber/JAListView
 [submodule "Apple/Submodules/JAListView"]
 	path = Apple/Submodules/JAListView
 	url = https://github.com/joshaber/JAListView
