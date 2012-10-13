@@ -43,36 +43,50 @@ VSC::MIDI::OutputManager::OutputManager()
     mPortManager = PortManager::SPtr(new PortManager);
 }
 
+void VSC::MIDI::OutputManager::refreshOutputs(void)
+{
+    boost::lock_guard<Mutex> lock(mMutex);
+    
+    BOOST_ASSERT(mPortManager);
+    
+    if (mPortManager) {
+        
+        mPortManager->refreshInputPorts();
+        
+        OutputPorts ports = mPortManager->getOutputPorts();
+        
+        BOOST_FOREACH(const OutputPort& outputPort, ports)
+        {
+            Output::SPtr output = this->getOutputForPort(outputPort);
+            if (!output)
+            {
+                output = Output::SPtr(new Output(outputPort));
+                mOutputs.push_back(output);
+            }
+        }
+        
+    }
+    
+}
+
 VSC::MIDI::Output::SPtr VSC::MIDI::OutputManager::getFirstOutput(void)
 {
+    boost::lock_guard<Mutex> lock(mMutex);
+    
     Output::SPtr output = Output::SPtr();
     
-    BOOST_FOREACH(OutputMap::value_type mapValue, mOutputMap)
-    {
-        const OutputPort& port = mapValue.first;
-        if (!output || port.number < output->getOutputPort().number) {
-            output = mapValue.second;
-        }
-    }
+    if (mOutputs.size() > 0) output = *(mOutputs.begin());
     
     return output;
 }
 
 VSC::MIDI::Output::SPtr VSC::MIDI::OutputManager::getOutputForPort(const OutputPort& port)
 {
-    OutputMap::iterator it = mOutputMap.find(port);
-    if (it != mOutputMap.end())
+    boost::lock_guard<Mutex> lock(mMutex);
+    
+    BOOST_FOREACH(Output::SPtr output, mOutputs)
     {
-        return (*it).second;
-    }
-    else
-    {
-        Output::SPtr output = Output::SPtr(new Output(port));
-        if (output)
-        {
-            mOutputMap[port] = output;
-        }
-        return output;
+        if (output->getOutputPort() == port) return output;
     }
     return Output::SPtr();
 }

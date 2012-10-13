@@ -23,12 +23,6 @@
 @property (nonatomic, assign) unsigned int velocityValue;
 @property (nonatomic, assign) VSC::MIDI::ControlNumber controlNumber;
 
-@property (nonatomic, assign) VSC::MIDI::OutputManager::SPtr midiOutputManager;
-
 @property (nonatomic, assign) VSC::MIDI::Output::SPtr midiOutput;
-
--(void) sendMidiControlMessage;
--(void) sendMidiNoteOnMessage;
--(void) sendMidiNoteOffMessage;
 
 @end

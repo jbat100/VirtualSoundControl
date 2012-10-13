@@ -7,23 +7,66 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
 #import "VSCOSXApplicationManagerProtocol.h"
+#import "JAListView.h"
+
+#include "VSCMIDIOutput.h"
 
 @class VSCOSXMIDITestController;
 @class VSCOSXMIDITest;
 
-@interface VSCOSXMIDIWindowController : NSWindowController <NSTableViewDelegate, NSTableViewDataSource>
+@interface VSCOSXMIDIWindowController : NSWindowController <JAListViewDataSource, JAListViewDelegate, NSComboBoxDelegate, NSComboBoxDataSource>
 
-@property (nonatomic, strong) IBOutlet VSCOSXMIDITestController* midiTestController;
-@property (nonatomic, strong) IBOutlet VSCOSXMIDITest* midiTest;
+@property (weak) IBOutlet id<VSCOSXApplicationManagerProtocol> applicationManager;
 
-@property (nonatomic, strong) IBOutlet NSTableView* midiInputsTable;
-@property (nonatomic, strong) IBOutlet NSTableView* midiOutputsTable;
+/*
+ *  MIDI Inputs/Outputs
+ */
 
+@property (nonatomic, strong) IBOutlet JAListView* midiOutputsListView;
 @property (nonatomic, strong) IBOutlet NSButton* refreshInputsButton;
 @property (nonatomic, strong) IBOutlet NSButton* refreshOutputsButton;
 
-@property (weak) IBOutlet id<VSCOSXApplicationManagerProtocol> applicationManager;
+-(IBAction) refreshInputs:(id)sender;
+-(IBAction) refreshOutputs:(id)sender;
+
+/*
+ *  MIDI Testing 
+ */
+
+@property (nonatomic, assign) VSC::MIDI::Output::SPtr testMIDIOutput;
+
+@property (nonatomic, strong) IBOutlet VSCOSXMIDITest* midiTest;
+
+@property (nonatomic, strong) IBOutlet NSButton* createMidiOutputButton;
+@property (nonatomic, strong) IBOutlet NSTextField* midiOutputTextField;
+
+@property (nonatomic, strong) IBOutlet NSTextField* midiChannelTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* controlChannelTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* controlValueTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* notePitchTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* noteVelocityTextField;
+@property (nonatomic, strong) IBOutlet NSButton* sendMidiControlButton;
+@property (nonatomic, strong) IBOutlet NSButton* sendMidiNoteOnButton;
+@property (nonatomic, strong) IBOutlet NSButton* sendMidiNoteOffButton;
+
+@property (nonatomic, strong) IBOutlet NSSlider* rtControlSlider;
+@property (nonatomic, strong) IBOutlet NSComboBox* rtControlChannelComboBox;
+@property (nonatomic, strong) IBOutlet NSButton* rtSendControlMessageButton;
+@property (nonatomic, strong) IBOutlet NSTextField* rtControlValueTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* rtControlChannelTextField;
+
+@property (nonatomic, strong) IBOutlet NSButton* envFireButton;
+@property (nonatomic, strong) IBOutlet NSTextField* envUpdateFrequencyTextField;
+
+-(IBAction) sendMidiControlMessage:(id)sender;
+-(IBAction) sendMidiNoteOnMessage:(id)sender;
+-(IBAction) sendMidiNoteOffMessage:(id)sender;
+
+-(IBAction) controlSliderChangedValue:(id)sender;
+
+-(IBAction) showEnveloppeEditor:(id)sender;
+-(IBAction) fireEnveloppe:(id)sender;
+
 
 @end

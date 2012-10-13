@@ -14,9 +14,11 @@
 #include "VSCMIDI.h"
 
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 #include <boost/thread.hpp>
 
 #include <set>
+#include <vector>
 
 namespace VSC {
     
@@ -30,7 +32,15 @@ namespace VSC {
             
             friend class OutputManager;
             
-            typedef boost::shared_ptr<Output> SPtr;
+            typedef boost::shared_ptr<Output>   SPtr;
+            typedef boost::weak_ptr<Output>     WPtr;
+            
+            enum State {
+                StateNone = 0,
+                StateClosed,
+                StateOpened,
+                StateUnknown
+            };
             
             virtual ~Output();
             
@@ -45,7 +55,10 @@ namespace VSC {
             bool sendPolyphonicAftertouch(unsigned int channel, unsigned int pitch, unsigned int pressure);
             bool sendChannelAftertouch(unsigned int channel, unsigned int pressure);
             
-            void reinitialize(); // If operations fail try reinitialize
+            void open();
+            void close();
+            
+            State getState(void) {return mState;}
             
         protected:
             
@@ -59,6 +72,8 @@ namespace VSC {
             
             void setOutputPort(const OutputPort& port);     // throws if the output port could not be established
             
+            void setState(State state) {mState = state;}
+            
         private:
             
             typedef  boost::shared_ptr<RtMidiOut>    RtMidiOutPtr;
@@ -66,15 +81,19 @@ namespace VSC {
             OutputPort              mOutputPort;
             RtMidiOutPtr            mMIDIOut;
             
+            State                   mState;
+            
             MessageGenerator::SPtr  mMessageGenerator;
             
             void createRtMidiOut(void);
             
-            boost::mutex            mMutex;
+            boost::mutex  mMutex;
             
         };
         
         std::ostream& operator<<(std::ostream& output, const Output& p);
+        
+        typedef std::vector<Output::SPtr> Outputs;
 
     }
     

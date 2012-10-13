@@ -13,6 +13,14 @@
 		101C8E1C1624CB2E0026F0D7 /* VSCIMCollisionActionChain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101C8E1A1624CB2E0026F0D7 /* VSCIMCollisionActionChain.cpp */; };
 		101EBB441629AE79006601A2 /* NSArray+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB431629AE79006601A2 /* NSArray+VSCAdditions.mm */; };
 		101EBB471629BEC5006601A2 /* VSCOBOSXSceneWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 101EBB461629BEC5006601A2 /* VSCOBOSXSceneWindow.xib */; };
+		101EBB781629DBCE006601A2 /* JAListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB5A1629DBCE006601A2 /* JAListView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		101EBB7A1629DBCE006601A2 /* JAListViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB611629DBCE006601A2 /* JAListViewItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		101EBB7B1629DBCE006601A2 /* JAObjectListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB631629DBCE006601A2 /* JAObjectListView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		101EBB7C1629DBCE006601A2 /* JAObjectListViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB651629DBCE006601A2 /* JAObjectListViewItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		101EBB7D1629DBCE006601A2 /* JASectionedListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB671629DBCE006601A2 /* JASectionedListView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		101EBB7F1629DBCE006601A2 /* NSIndexPath+JAListViewExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB6A1629DBCE006601A2 /* NSIndexPath+JAListViewExtensions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		101EBB871629DE75006601A2 /* VSCOSXMIDIOuputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 101EBB841629DE74006601A2 /* VSCOSXMIDIOuputView.xib */; };
+		101EBB881629DE75006601A2 /* VSCOSXMIDIOutputView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB861629DE75006601A2 /* VSCOSXMIDIOutputView.mm */; };
 		102671CA16258622002D34B2 /* VSCIMCollisionMIDIActions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 102671C816258622002D34B2 /* VSCIMCollisionMIDIActions.cpp */; };
 		102671CE16258781002D34B2 /* VSCIMCollisionMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 102671CC16258781002D34B2 /* VSCIMCollisionMapping.cpp */; };
 		102671D11625B4E6002D34B2 /* VSCMIDIOutputChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 102671CF1625B4E6002D34B2 /* VSCMIDIOutputChannel.cpp */; };
@@ -112,7 +120,6 @@
 		10D7AE991628767F00DE0F72 /* VSCOSXMIDITest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10D7AE8F1628767F00DE0F72 /* VSCOSXMIDITest.mm */; };
 		10D7AE9B1628767F00DE0F72 /* VSCOSXMIDITestView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10D7AE931628767F00DE0F72 /* VSCOSXMIDITestView.mm */; };
 		10D7AE9C1628767F00DE0F72 /* VSCOSXMIDIWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10D7AE951628767F00DE0F72 /* VSCOSXMIDIWindowController.mm */; };
-		10D7AEA01628792900DE0F72 /* VSCOSXMIDITestController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10D7AE9F1628792900DE0F72 /* VSCOSXMIDITestController.mm */; };
 		10E1B289156D2A630013B9F7 /* RenderSystem_GL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */; };
 		10E8557415E65048008FF635 /* VSCUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E8557215E65048008FF635 /* VSCUI.cpp */; };
 		10EB5A3B16050D7500F0939E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10EB5A3A16050D7500F0939E /* OpenGL.framework */; };
@@ -175,6 +182,31 @@
 		101EBB421629AE79006601A2 /* NSArray+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+VSCAdditions.h"; path = "../../../Categories/NSArray+VSCAdditions.h"; sourceTree = "<group>"; };
 		101EBB431629AE79006601A2 /* NSArray+VSCAdditions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSArray+VSCAdditions.mm"; path = "../../../Categories/NSArray+VSCAdditions.mm"; sourceTree = "<group>"; };
 		101EBB461629BEC5006601A2 /* VSCOBOSXSceneWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOBOSXSceneWindow.xib; path = ../../../../../Virtual/Application/APPLE/VSCOBOSXSceneWindow.xib; sourceTree = "<group>"; };
+		101EBB4A1629DBCE006601A2 /* Demo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Demo-Info.plist"; path = "../../../Submodules/JAListView/Demo-Info.plist"; sourceTree = "<group>"; };
+		101EBB4B1629DBCE006601A2 /* DemoSectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoSectionView.h; path = ../../../Submodules/JAListView/DemoSectionView.h; sourceTree = "<group>"; };
+		101EBB4C1629DBCE006601A2 /* DemoSectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemoSectionView.m; path = ../../../Submodules/JAListView/DemoSectionView.m; sourceTree = "<group>"; };
+		101EBB4D1629DBCE006601A2 /* DemoSectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DemoSectionView.xib; path = ../../../Submodules/JAListView/DemoSectionView.xib; sourceTree = "<group>"; };
+		101EBB4E1629DBCE006601A2 /* DemoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoView.h; path = ../../../Submodules/JAListView/DemoView.h; sourceTree = "<group>"; };
+		101EBB4F1629DBCE006601A2 /* DemoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemoView.m; path = ../../../Submodules/JAListView/DemoView.m; sourceTree = "<group>"; };
+		101EBB501629DBCE006601A2 /* DemoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DemoView.xib; path = ../../../Submodules/JAListView/DemoView.xib; sourceTree = "<group>"; };
+		101EBB561629DBCE006601A2 /* JAEdgeInsets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAEdgeInsets.h; path = ../../../Submodules/JAListView/JAEdgeInsets.h; sourceTree = "<group>"; };
+		101EBB591629DBCE006601A2 /* JAListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAListView.h; path = ../../../Submodules/JAListView/JAListView.h; sourceTree = "<group>"; };
+		101EBB5A1629DBCE006601A2 /* JAListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAListView.m; path = ../../../Submodules/JAListView/JAListView.m; sourceTree = "<group>"; };
+		101EBB5E1629DBCE006601A2 /* JAListViewAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAListViewAppDelegate.h; path = ../../../Submodules/JAListView/JAListViewAppDelegate.h; sourceTree = "<group>"; };
+		101EBB5F1629DBCE006601A2 /* JAListViewAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAListViewAppDelegate.m; path = ../../../Submodules/JAListView/JAListViewAppDelegate.m; sourceTree = "<group>"; };
+		101EBB601629DBCE006601A2 /* JAListViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAListViewItem.h; path = ../../../Submodules/JAListView/JAListViewItem.h; sourceTree = "<group>"; };
+		101EBB611629DBCE006601A2 /* JAListViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAListViewItem.m; path = ../../../Submodules/JAListView/JAListViewItem.m; sourceTree = "<group>"; };
+		101EBB621629DBCE006601A2 /* JAObjectListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAObjectListView.h; path = ../../../Submodules/JAListView/JAObjectListView.h; sourceTree = "<group>"; };
+		101EBB631629DBCE006601A2 /* JAObjectListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAObjectListView.m; path = ../../../Submodules/JAListView/JAObjectListView.m; sourceTree = "<group>"; };
+		101EBB641629DBCE006601A2 /* JAObjectListViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAObjectListViewItem.h; path = ../../../Submodules/JAListView/JAObjectListViewItem.h; sourceTree = "<group>"; };
+		101EBB651629DBCE006601A2 /* JAObjectListViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAObjectListViewItem.m; path = ../../../Submodules/JAListView/JAObjectListViewItem.m; sourceTree = "<group>"; };
+		101EBB661629DBCE006601A2 /* JASectionedListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JASectionedListView.h; path = ../../../Submodules/JAListView/JASectionedListView.h; sourceTree = "<group>"; };
+		101EBB671629DBCE006601A2 /* JASectionedListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASectionedListView.m; path = ../../../Submodules/JAListView/JASectionedListView.m; sourceTree = "<group>"; };
+		101EBB691629DBCE006601A2 /* NSIndexPath+JAListViewExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSIndexPath+JAListViewExtensions.h"; path = "../../../Submodules/JAListView/NSIndexPath+JAListViewExtensions.h"; sourceTree = "<group>"; };
+		101EBB6A1629DBCE006601A2 /* NSIndexPath+JAListViewExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSIndexPath+JAListViewExtensions.m"; path = "../../../Submodules/JAListView/NSIndexPath+JAListViewExtensions.m"; sourceTree = "<group>"; };
+		101EBB841629DE74006601A2 /* VSCOSXMIDIOuputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXMIDIOuputView.xib; path = ../../MIDI/VSCOSXMIDIOuputView.xib; sourceTree = "<group>"; };
+		101EBB861629DE75006601A2 /* VSCOSXMIDIOutputView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXMIDIOutputView.mm; path = ../../MIDI/VSCOSXMIDIOutputView.mm; sourceTree = "<group>"; };
+		101EBB8A162A1E1E006601A2 /* VSCOSXMIDIOutputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXMIDIOutputView.h; path = ../../MIDI/VSCOSXMIDIOutputView.h; sourceTree = "<group>"; };
 		102671C816258622002D34B2 /* VSCIMCollisionMIDIActions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCIMCollisionMIDIActions.cpp; path = ../../../../../Mapping/VSCIMCollisionMIDIActions.cpp; sourceTree = "<group>"; };
 		102671C916258622002D34B2 /* VSCIMCollisionMIDIActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMCollisionMIDIActions.h; path = ../../../../../Mapping/VSCIMCollisionMIDIActions.h; sourceTree = "<group>"; };
 		102671CC16258781002D34B2 /* VSCIMCollisionMapping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCIMCollisionMapping.cpp; path = ../../../../../Mapping/VSCIMCollisionMapping.cpp; sourceTree = "<group>"; };
@@ -383,12 +415,10 @@
 		10D7AE8A1628554D00DE0F72 /* VSCMIDIOutputManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDIOutputManager.h; path = ../../../../MIDI/VSCMIDIOutputManager.h; sourceTree = "<group>"; };
 		10D7AE8E1628767F00DE0F72 /* VSCOSXMIDITest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOSXMIDITest.h; path = ../../MIDI/VSCOSXMIDITest.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10D7AE8F1628767F00DE0F72 /* VSCOSXMIDITest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOSXMIDITest.mm; path = ../../MIDI/VSCOSXMIDITest.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		10D7AE901628767F00DE0F72 /* VSCOSXMIDITestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOSXMIDITestController.h; path = ../../MIDI/VSCOSXMIDITestController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10D7AE921628767F00DE0F72 /* VSCOSXMIDITestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOSXMIDITestView.h; path = ../../MIDI/VSCOSXMIDITestView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10D7AE931628767F00DE0F72 /* VSCOSXMIDITestView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOSXMIDITestView.mm; path = ../../MIDI/VSCOSXMIDITestView.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10D7AE941628767F00DE0F72 /* VSCOSXMIDIWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOSXMIDIWindowController.h; path = ../../MIDI/VSCOSXMIDIWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10D7AE951628767F00DE0F72 /* VSCOSXMIDIWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOSXMIDIWindowController.mm; path = ../../MIDI/VSCOSXMIDIWindowController.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		10D7AE9F1628792900DE0F72 /* VSCOSXMIDITestController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXMIDITestController.mm; path = ../../MIDI/VSCOSXMIDITestController.mm; sourceTree = "<group>"; };
 		10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = RenderSystem_GL.dylib; path = lib/RenderSystem_GL.dylib; sourceTree = OGRE_SDK; };
 		10E8557215E65048008FF635 /* VSCUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCUI.cpp; path = ../../../../Interface/VSCUI.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		10E8557315E65048008FF635 /* VSCUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCUI.h; path = ../../../../Interface/VSCUI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -532,6 +562,43 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		101EBB491629DB9C006601A2 /* JAListView */ = {
+			isa = PBXGroup;
+			children = (
+				101EBB891629DEAE006601A2 /* Demo */,
+				101EBB561629DBCE006601A2 /* JAEdgeInsets.h */,
+				101EBB591629DBCE006601A2 /* JAListView.h */,
+				101EBB5A1629DBCE006601A2 /* JAListView.m */,
+				101EBB601629DBCE006601A2 /* JAListViewItem.h */,
+				101EBB611629DBCE006601A2 /* JAListViewItem.m */,
+				101EBB621629DBCE006601A2 /* JAObjectListView.h */,
+				101EBB631629DBCE006601A2 /* JAObjectListView.m */,
+				101EBB641629DBCE006601A2 /* JAObjectListViewItem.h */,
+				101EBB651629DBCE006601A2 /* JAObjectListViewItem.m */,
+				101EBB661629DBCE006601A2 /* JASectionedListView.h */,
+				101EBB671629DBCE006601A2 /* JASectionedListView.m */,
+				101EBB691629DBCE006601A2 /* NSIndexPath+JAListViewExtensions.h */,
+				101EBB6A1629DBCE006601A2 /* NSIndexPath+JAListViewExtensions.m */,
+			);
+			name = JAListView;
+			sourceTree = "<group>";
+		};
+		101EBB891629DEAE006601A2 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				101EBB4A1629DBCE006601A2 /* Demo-Info.plist */,
+				101EBB4B1629DBCE006601A2 /* DemoSectionView.h */,
+				101EBB4C1629DBCE006601A2 /* DemoSectionView.m */,
+				101EBB4D1629DBCE006601A2 /* DemoSectionView.xib */,
+				101EBB4E1629DBCE006601A2 /* DemoView.h */,
+				101EBB4F1629DBCE006601A2 /* DemoView.m */,
+				101EBB501629DBCE006601A2 /* DemoView.xib */,
+				101EBB5E1629DBCE006601A2 /* JAListViewAppDelegate.h */,
+				101EBB5F1629DBCE006601A2 /* JAListViewAppDelegate.m */,
+			);
+			name = Demo;
+			sourceTree = "<group>";
+		};
 		102671C6162583D6002D34B2 /* Actions */ = {
 			isa = PBXGroup;
 			children = (
@@ -633,6 +700,7 @@
 		10B60D1515505D6D006A6D6E = {
 			isa = PBXGroup;
 			children = (
+				101EBB491629DB9C006601A2 /* JAListView */,
 				109D51B2155998CA0030C161 /* VSC */,
 				10CFE6AC156CD5F700B24399 /* OgreBullet */,
 				10B60F0E155086D0006A6D6E /* Ogre */,
@@ -1038,10 +1106,11 @@
 		10D7AE8D1628766100DE0F72 /* Cocoa */ = {
 			isa = PBXGroup;
 			children = (
+				101EBB841629DE74006601A2 /* VSCOSXMIDIOuputView.xib */,
+				101EBB8A162A1E1E006601A2 /* VSCOSXMIDIOutputView.h */,
+				101EBB861629DE75006601A2 /* VSCOSXMIDIOutputView.mm */,
 				10D7AE8E1628767F00DE0F72 /* VSCOSXMIDITest.h */,
 				10D7AE8F1628767F00DE0F72 /* VSCOSXMIDITest.mm */,
-				10D7AE9F1628792900DE0F72 /* VSCOSXMIDITestController.mm */,
-				10D7AE901628767F00DE0F72 /* VSCOSXMIDITestController.h */,
 				10D7AE921628767F00DE0F72 /* VSCOSXMIDITestView.h */,
 				10D7AE931628767F00DE0F72 /* VSCOSXMIDITestView.mm */,
 				10D7AE941628767F00DE0F72 /* VSCOSXMIDIWindowController.h */,
@@ -1131,6 +1200,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				English,
 			);
 			mainGroup = 10B60D1515505D6D006A6D6E;
 			productRefGroup = 10B60D2115505D6D006A6D6E /* Products */;
@@ -1155,6 +1225,7 @@
 				10F6948B156E456500E70049 /* Plugins.cfg in Resources */,
 				10EB5E621629902500E0F030 /* VSCOSXMIDIWindow.xib in Resources */,
 				101EBB471629BEC5006601A2 /* VSCOBOSXSceneWindow.xib in Resources */,
+				101EBB871629DE75006601A2 /* VSCOSXMIDIOuputView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1247,9 +1318,15 @@
 				10D7AE991628767F00DE0F72 /* VSCOSXMIDITest.mm in Sources */,
 				10D7AE9B1628767F00DE0F72 /* VSCOSXMIDITestView.mm in Sources */,
 				10D7AE9C1628767F00DE0F72 /* VSCOSXMIDIWindowController.mm in Sources */,
-				10D7AEA01628792900DE0F72 /* VSCOSXMIDITestController.mm in Sources */,
 				10EB5E5E16298E0B00E0F030 /* VSCOSXApplicationManager.mm in Sources */,
 				101EBB441629AE79006601A2 /* NSArray+VSCAdditions.mm in Sources */,
+				101EBB781629DBCE006601A2 /* JAListView.m in Sources */,
+				101EBB7A1629DBCE006601A2 /* JAListViewItem.m in Sources */,
+				101EBB7B1629DBCE006601A2 /* JAObjectListView.m in Sources */,
+				101EBB7C1629DBCE006601A2 /* JAObjectListViewItem.m in Sources */,
+				101EBB7D1629DBCE006601A2 /* JASectionedListView.m in Sources */,
+				101EBB7F1629DBCE006601A2 /* NSIndexPath+JAListViewExtensions.m in Sources */,
+				101EBB881629DE75006601A2 /* VSCOSXMIDIOutputView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

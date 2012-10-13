@@ -28,25 +28,4 @@
     
 }
 
--(void) sendMidiControlMessage {
-    if(self.midiOutput)
-    {
-        self.midiOutput->sendControlChange(self.midiChannel, self.controlNumber, self.controlValue);
-    }
-}
-
--(void) sendMidiNoteOnMessage {
-    if(self.midiOutput)
-    {
-        self.midiOutput->sendNoteOn(self.midiChannel, self.pitchValue, self.velocityValue);
-    }
-}
-
--(void) sendMidiNoteOffMessage {
-    if(self.midiOutput)
-    {
-        self.midiOutput->sendNoteOff(self.midiChannel, self.pitchValue, self.velocityValue);
-    }
-}
-
 @end

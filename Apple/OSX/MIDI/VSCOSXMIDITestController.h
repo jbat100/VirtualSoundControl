@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#include "VSCMIDIOutputManager.h"
+
 @class VSCOSXMIDITestView;
 @class VSCOSXMIDITest;
 
@@ -17,13 +19,11 @@
 @property (nonatomic, strong) IBOutlet VSCOSXMIDITest* midiTest;
 @property (nonatomic, strong) IBOutlet VSCOSXMIDITestView* midiTestView;
 
-@property (nonatomic, strong) NSArray* controlChannels; 
+@property (nonatomic, assign) VSC::MIDI::OutputManager::SPtr midiOutputManager;
+
+@property (nonatomic, assign) VSC::MIDI::Output::SPtr midiOutput;
 
 -(void) setupView;
-
--(IBAction) refreshInputs:(id)sender;
--(IBAction) refreshOutputs:(id)sender;
--(IBAction) setMidiOutputWithRowSelection:(id)sender;
 
 -(IBAction) sendMidiControlMessage:(id)sender;
 -(IBAction) sendMidiNoteOnMessage:(id)sender;
@@ -37,10 +37,11 @@
 @property (nonatomic, strong) IBOutlet NSTextField* midiOutputTextField;
 
 @property (nonatomic, strong) IBOutlet NSTextField* midiChannelTextField;
-@property (nonatomic, strong) IBOutlet NSTextField* controlChannelTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* controlNumberTextField;
 @property (nonatomic, strong) IBOutlet NSTextField* controlValueTextField;
 @property (nonatomic, strong) IBOutlet NSTextField* notePitchTextField;
 @property (nonatomic, strong) IBOutlet NSTextField* noteVelocityTextField;
+
 @property (nonatomic, strong) IBOutlet NSButton* sendMidiControlButton;
 @property (nonatomic, strong) IBOutlet NSButton* sendMidiNoteOnButton;
 @property (nonatomic, strong) IBOutlet NSButton* sendMidiNoteOffButton;

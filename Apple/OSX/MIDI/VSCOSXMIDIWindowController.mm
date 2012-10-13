@@ -7,8 +7,13 @@
 //
 
 #import "VSCOSXMIDIWindowController.h"
-
 #import "VSCOSXMIDITestController.h"
+#import "VSCOSXMIDIOutputView.h"
+
+#import "NSString+VSCAdditions.h"
+
+#include "VSCMIDIOutputManager.h"
+#include "VSCException.h"
 
 @interface VSCOSXMIDIWindowController ()
 
@@ -31,120 +36,135 @@
 {
     [super windowDidLoad];
     
-    [self.midiTestController setupView];
+    self.midiOutputsListView.canCallDataSourceInParallel = YES;
+    [self.midiOutputsListView reloadData];
+    
+    NSArray* formatters = @[self.midiChannelTextField.formatter,
+    //self.midiTestView.controlNumberTextField.formatter,
+    self.notePitchTextField.formatter,
+    self.noteVelocityTextField.formatter,
+    self.controlValueTextField.formatter];
+    
+    for (NSNumberFormatter* formatter in formatters) {
+        
+        [formatter setAllowsFloats:NO];
+        
+        if (formatter == self.midiChannelTextField.formatter) [formatter setMinimum:[NSNumber numberWithUnsignedInt:1]];
+        else [formatter setMinimum:[NSNumber numberWithUnsignedInt:0]];
+        
+        if (formatter == self.midiChannelTextField.formatter) [formatter setMaximum:[NSNumber numberWithUnsignedInt:16]];
+        else [formatter setMaximum:[NSNumber numberWithUnsignedInt:127]];
+        
+    }
+    
+    
+    for (NSNumber* number in self.controlChannels) {
+        int controlNumber = [number intValue];
+        try {
+            std::string controlString = VSC::MIDI::controlNumberToString((VSC::MIDI::ControlNumber)controlNumber);
+            [self.rtControlChannelComboBox addItemWithObjectValue:[NSString stringWithStdString:controlString]];
+        } catch (VSCMIDIException& exception) {
+            [self.midiTestView.rtControlChannelComboBox addItemWithObjectValue:VSCMIDIOtherControlChannelDescriptorString];
+        }
+    }
+    
+    
+    //[self.midiTestView.rtControlChannelComboBox setUsesDataSource:YES];
+    [self.rtControlChannelComboBox setHasVerticalScroller:YES];
+    [self.rtControlChannelComboBox setNumberOfVisibleItems:10];
+    //[self.midiTestView.rtControlChannelComboBox reloadData];
     
 }
 
 -(IBAction) refreshInputs:(id)sender {
-    //NSAssert(midiTest, @"_midi is NULL");
-    if ([self.midiTest getMidi]) {
-        [self.midiTest getMidi]->refreshInputPorts();
-        //const VSCMIDI::OutputPortList l = [self.midiTest getMidi]->getOutputPorts();
-        std::cout << [self.midiTest getMidi]->outputPortDescription() << std::endl;
-    }
-    [self.midiTestView.midiInputsTable reloadData];
+    
+
 }
 
 -(IBAction) refreshOutputs:(id)sender {
-    NSAssert([self.midiTest getMidi], @"_midi is NULL");
-    if ([self.midiTest getMidi]) {
-        [self.midiTest getMidi]->refreshOutputPorts();
-        std::cout << [self.midiTest getMidi]->outputPortDescription();
+    
+    if (self.applicationManager.midiOutputManager)
+    {
+        self.applicationManager.midiOutputManager->refreshOutputs();
     }
-    [self.midiTestView.midiOutputsTable reloadData];
-}
-
--(IBAction) setMidiOutputWithRowSelection:(id)sender {
-    NSAssert([self.midiTest getMidi], @"_midi is NULL");
-    if ([self.midiTest getMidi]) {
-        
-        NSInteger rowIndex = [self.midiTestView.midiOutputsTable selectedRow];
-        
-        if (rowIndex < 0) {
-            return;
-        }
-        
-        const std::list<VSCMIDIOutputPort> portList = [self.midiTest getMidi]->getOutputPorts();
-        std::list<VSCMIDIOutputPort>::const_iterator portIt = [self.midiTest getMidi]->getOutputPorts().begin();
-        std::advance(portIt, rowIndex);
-        VSCMIDIOutputPort outputPort = *portIt;
-        [self.midiTest setMidiOutput:VSCMIDIOutputPtr(new VSCMIDIOutput(outputPort))];
-        
-        [self updateMidiOutputTextField];
-        [self.midiTestView.midiOutputsTable reloadData];
-        
-    }
+    
+    [self.midiOutputsListView reloadData];
     
 }
 
 
+#pragma mark - JAListViewDataSource
 
-#pragma mark - NSTableView Delegate/Datasource
-
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
-    
-    if (aTableView == self.midiTestView.midiInputsTable) {
-        return [self.midiTest getMidi]->getInputPorts().size();
-    }
-    
-    else if (aTableView == self.midiTestView.midiOutputsTable) {
-        return [self.midiTest getMidi]->getOutputPorts().size();
+- (NSUInteger)numberOfItemsInListView:(JAListView *)listView
+{
+    if (self.applicationManager.midiOutputManager)
+    {
+        return (NSUInteger)self.applicationManager.midiOutputManager->getOutputs().size();
     }
     
     return 0;
 }
 
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex {
-    
-    NSString* columnIdentifier = [aTableColumn identifier];
-    
-    if (aTableView == self.midiTestView.midiInputsTable) {
+- (JAListViewItem *)listView:(JAListView *)listView viewAtIndex:(NSUInteger)index
+{
+    if (listView == self.midiOutputsListView) {
         
-        const std::list<VSCMIDIInputPort> portList = [self.midiTest getMidi]->getInputPorts();
-        std::list<VSCMIDIInputPort>::const_iterator portIt = [self.midiTest getMidi]->getInputPorts().begin();
-        std::advance(portIt, rowIndex);
-        
-        if ([columnIdentifier isEqualToString:VSCMIDIPortNameColumnIdentifier]) {
-            return [NSString stringWithStdString:portIt->name];
-        }
-        else if ([columnIdentifier isEqualToString:VSCMIDIPortNumberColumnIdentifier]) {
-            return [NSNumber numberWithUnsignedInt:portIt->number];
-        }
-        else if ([columnIdentifier isEqualToString:VSCMIDIPortVirtualColumnIdentifier]) {
-            return portIt->isVirtual ? @"Yes" : @"No";
-        }
-        else if ([columnIdentifier isEqualToString:VSCMIDIPortSelectedColumnIdentifier]) {
-            return @"No";
-        }
-        
-    }
-    
-    if (aTableView == self.midiTestView.midiOutputsTable) {
-        
-        const std::list<VSCMIDIOutputPort> portList = [self.midiTest getMidi]->getOutputPorts();
-        std::list<VSCMIDIOutputPort>::const_iterator portIt = [self.midiTest getMidi]->getOutputPorts().begin();
-        std::advance(portIt, rowIndex);
-        
-        if ([columnIdentifier isEqualToString:VSCMIDIPortNameColumnIdentifier]) {
-            return [NSString stringWithStdString:portIt->name];
-        }
-        else if ([columnIdentifier isEqualToString:VSCMIDIPortNumberColumnIdentifier]) {
-            return [NSNumber numberWithUnsignedInt:portIt->number];
-        }
-        else if ([columnIdentifier isEqualToString:VSCMIDIPortVirtualColumnIdentifier]) {
-            //return portIt->isVirtual ? @"Yes" : @"No";
-        }
-        else if ([columnIdentifier isEqualToString:VSCMIDIPortSelectedColumnIdentifier]) {
-            //return @"No";
-            if ([self.midiTest getMidiOutput]) {
-                if ([self.midiTest getMidiOutput]->getOutputPort() == (*portIt)) return [NSNumber numberWithBool:YES];
-                else return [NSNumber numberWithBool:NO];
+        if (self.applicationManager.midiOutputManager)
+        {
+            const VSC::MIDI::Outputs& outputs = self.applicationManager.midiOutputManager->getOutputs();
+            
+            if ((NSUInteger)outputs.size() > index)
+            {
+                VSCOSXMIDIOutputView* outputView = [VSCOSXMIDIOutputView midiOutputView];
+                outputView.midiOutput = outputs.at(index);
+                return outputView;
             }
         }
         
     }
     
-    return @"";
+    return nil;
+}
+
+#pragma mark - JAListViewDelegate
+
+#pragma mark - UI Callbacks
+
+
+-(IBAction) sendMidiControlMessage:(id)sender {
+    if(self.midiOutput)
+    {
+        self.midiOutput->sendControlChange(self.midiChannel, self.controlNumber, self.controlValue);
+    }
+}
+
+-(IBAction) sendMidiNoteOnMessage:(id)sender {
+    if(self.midiOutput)
+    {
+        self.midiOutput->sendNoteOn(self.midiChannel, self.pitchValue, self.velocityValue);
+    }
+}
+
+-(IBAction) sendMidiNoteOffMessage:(id)sender {
+    if(self.midiOutput)
+    {
+        self.midiOutput->sendNoteOff(self.midiChannel, self.pitchValue, self.velocityValue);
+    }
+}
+
+-(IBAction) controlSliderChangedValue:(id)sender {
+    
+    if (sender == self.midiTestView.rtControlSlider) {
+        int val = [(NSSlider*)self.rtControlSlider intValue];
+        if (val >= 0 && val <= 127) {
+            //unsigned int uval = (unsigned int)val;
+            if (self.midiOutput)
+            {
+                self.midiOutput->sendControlChange(self.midiTest.midiChannel, self.midiTest.controlNumber, self.midiTest.controlValue);
+            }
+        }
+    }
+    
 }
 
 

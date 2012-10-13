@@ -37,16 +37,6 @@ NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
     
     if ((self = [super init])) {
         
-        self.controlChannels = @[
-        @((int)VSC::MIDI::ControlBankSelect),
-        @((int)VSC::MIDI::ControlModulationWheel),
-        @((int)VSC::MIDI::ControlBreath),
-        @((int)VSC::MIDI::ControlChannelVolume),
-        @((int)VSC::MIDI::ControlBalance),
-        @((int)VSC::MIDI::ControlPan),
-        @((int)VSC::MIDI::ControlExpression),
-        ]; 
-        
     }
     
     return self;
@@ -105,12 +95,11 @@ NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     
-    NSArray* formatters = [NSArray arrayWithObjects:
-                           self.midiTestView.midiChannelTextField.formatter,
-                           self.midiTestView.controlChannelTextField.formatter,
+    NSArray* formatters = @[self.midiTestView.midiChannelTextField.formatter,
+                           //self.midiTestView.controlNumberTextField.formatter,
                            self.midiTestView.notePitchTextField.formatter,
                            self.midiTestView.noteVelocityTextField.formatter,
-                           self.midiTestView.controlValueTextField.formatter, nil];
+                           self.midiTestView.controlValueTextField.formatter];
     
     for (NSNumberFormatter* formatter in formatters) {
         
@@ -124,19 +113,11 @@ NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
         
     }
     
-    [self updateMidiOutputTextField];
-    
-    [self.midiTest ]->refreshInputPorts();
-    [self.midiTest getMidi]->refreshOutputPorts();
-    
-    [self.midiTestView.midiInputsTable reloadData];
-    [self.midiTestView.midiOutputsTable reloadData];
-    
     
     for (NSNumber* number in self.controlChannels) {
         int controlNumber = [number intValue];
         try {
-            std::string controlString = [self.midiTest getMidi]->controlNumberString((VSCMIDI::ControlNumber)controlNumber);
+            std::string controlString = VSC::MIDI::controlNumberToString((VSC::MIDI::ControlNumber)controlNumber);
             [self.midiTestView.rtControlChannelComboBox addItemWithObjectValue:[NSString stringWithStdString:controlString]]; 
         } catch (VSCMIDIException& exception) {
             [self.midiTestView.rtControlChannelComboBox addItemWithObjectValue:VSCMIDIOtherControlChannelDescriptorString]; 
@@ -151,27 +132,6 @@ NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
     
 }
 
--(void) updateMidiOutputTextField {
-    
-    if ([self.midiTest getMidiOutput]) {
-        
-        const VSCMIDIOutputPort p = [self.midiTest getMidiOutput]->getOutputPort();
-        
-        if (p == VSCMIDIOutputPortVoid) {
-            [[self.midiTestView midiOutputTextField] setStringValue:@"Midi output void"];
-        }
-        
-        else {
-            [[self.midiTestView midiOutputTextField] setStringValue:[NSString stringWithFormat:@"Midi output with name \"%@\", number %u (%@)", 
-                                                        [NSString stringWithStdString:p.name], p.number, p.isVirtual ? @"virtual" : @"non-virtual"]];
-        }
-        
-    }
-   
-    else {
-        [[self.midiTestView midiOutputTextField] setStringValue:@"No midi output"];
-    }
-}
 
 #pragma mark - NSButton Callbacks
 
@@ -190,12 +150,12 @@ NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
 -(IBAction) controlSliderChangedValue:(id)sender {
     
     if (sender == self.midiTestView.rtControlSlider) {
-        int val = (unsigned int)[(NSSlider*)self.midiTestView.rtControlSlider intValue];
+        int val = [(NSSlider*)self.rtControlSlider intValue];
         if (val >= 0 && val <= 127) {
-            unsigned int uval = (unsigned int)val;
-            if ([self.midiTest getMidiOutput]) {
-                VSCMIDI::Message m = VSCMIDI::messageForControl(self.midiTest.midiChannel, self.midiTest.controlChannel, uval);
-                [self.midiTest getMidiOutput]->sendMessage(m);
+            //unsigned int uval = (unsigned int)val;
+            if (self.midiOutput)
+            {
+                self.midiOutput->sendControlChange(self.midiTest.midiChannel, self.midiTest.controlNumber, self.midiTest.controlValue);
             }
         }
     }
@@ -203,6 +163,8 @@ NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
 }
 
 -(IBAction) showEnveloppeEditor:(id)sender {
+    
+    /*
     
     if (self.enveloppeEditorWindowController == nil) {
         self.enveloppeEditorWindowController = [[VSCEnveloppeEditorWindowController alloc] 
@@ -214,12 +176,16 @@ NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
     }
     
     [self.enveloppeEditorWindowController showWindow:self];
+     
+     */
     
 }
 
 #pragma mark - NSComboBox Delegate/DataSource
 
 -(void)comboBoxSelectionDidChange:(NSNotification *)notification {
+    
+    /*
     
     if ([notification object] == self.midiTestView.rtControlChannelComboBox) {
         NSInteger index = [self.midiTestView.rtControlChannelComboBox indexOfSelectedItem];
@@ -238,6 +204,8 @@ NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
         }
         
     }
+     
+     */
     
 }
 

@@ -11,6 +11,7 @@
 #include "VSCMIDIOutput.h"
 
 #include <boost/shared_ptr.hpp>
+#include <boost/thread.hpp>
 #include <map>
 
 namespace VSC {
@@ -28,18 +29,23 @@ namespace VSC {
             
             static OutputManager::SPtr singletonManager(void);
             
-            PortManager::SPtr getPortManager(void) {return mPortManager;}
+            void refreshOutputs(void);
             
-            Output::SPtr getOutputForPort(const OutputPort& port);
             Output::SPtr getFirstOutput(void);
+            const Outputs& getOutputs(void);
+            
+        protected:
+            
+            PortManager::SPtr getPortManager(void) {return mPortManager;}
+            Output::SPtr getOutputForPort(const OutputPort& port);
             
         private:
             
-            typedef std::map<OutputPort, Output::SPtr> OutputMap;
+            typedef boost::recursive_mutex Mutex;
             
-            OutputMap           mOutputMap;
-            
-            PortManager::SPtr   mPortManager;
+            Outputs                 mOutputs;
+            PortManager::SPtr       mPortManager;
+            Mutex                   mMutex;
             
         };
 
