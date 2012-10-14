@@ -6,11 +6,11 @@
 //  Copyright 2010 Maybe Apps. All rights reserved.
 //
 
-#import "VSCOSXMIDIOutputView.h"
+#import "VSCOSXMIDIOutputJAView.h"
 
 #import "NSString+VSCAdditions.h"
 
-@interface VSCOSXMIDIOutputView ()
+@interface VSCOSXMIDIOutputJAView ()
 
 - (void)drawBackground;
 
@@ -19,7 +19,7 @@
 @end
 
 
-@implementation VSCOSXMIDIOutputView
+@implementation VSCOSXMIDIOutputJAView
 
 @synthesize selected = _selected;
 @synthesize midiOutput = _midiOutput;
@@ -27,7 +27,7 @@
 //@synthesize textField;
 //@synthesize shadowTextField;
 
-+ (VSCOSXMIDIOutputView *)demoView {
++ (VSCOSXMIDIOutputJAView *)demoView {
     
     static NSNib *nib = nil;
     if(nib == nil) {

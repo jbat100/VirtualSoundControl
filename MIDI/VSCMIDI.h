@@ -115,6 +115,8 @@ namespace VSC {
             
             const ControlNumbers& getValidControlNumbers() {return mValidControlNumbers;}
             
+            bool controlNumberIsValid(const ControlNumber& number);
+            
             /*
              *  Note On/Off messages
              */

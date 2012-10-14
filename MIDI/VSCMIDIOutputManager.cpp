@@ -43,6 +43,11 @@ VSC::MIDI::OutputManager::OutputManager()
     mPortManager = PortManager::SPtr(new PortManager);
 }
 
+VSC::MIDI::OutputManager::~OutputManager()
+{
+    
+}
+
 void VSC::MIDI::OutputManager::refreshOutputs(void)
 {
     boost::lock_guard<Mutex> lock(mMutex);
@@ -69,6 +74,13 @@ void VSC::MIDI::OutputManager::refreshOutputs(void)
     
 }
 
+const VSC::MIDI::Outputs& VSC::MIDI::OutputManager::getOutputs(void)
+{
+    boost::lock_guard<Mutex> lock(mMutex);
+    
+    return mOutputs;
+}
+
 VSC::MIDI::Output::SPtr VSC::MIDI::OutputManager::getFirstOutput(void)
 {
     boost::lock_guard<Mutex> lock(mMutex);
@@ -78,6 +90,18 @@ VSC::MIDI::Output::SPtr VSC::MIDI::OutputManager::getFirstOutput(void)
     if (mOutputs.size() > 0) output = *(mOutputs.begin());
     
     return output;
+}
+
+VSC::MIDI::Output::SPtr VSC::MIDI::OutputManager::getOutputWithDescription(const std::string& description)
+{
+    boost::lock_guard<Mutex> lock(mMutex);
+    
+    BOOST_FOREACH(Output::SPtr output, mOutputs)
+    {
+        if (output->getDescription().compare(description) == 0) return output;
+    }
+    
+    return Output::SPtr();
 }
 
 VSC::MIDI::Output::SPtr VSC::MIDI::OutputManager::getOutputForPort(const OutputPort& port)

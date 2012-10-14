@@ -208,6 +208,12 @@ VSC::MIDI::MessageGenerator::MessageGenerator()
     mValidControlNumbers.push_back(ControlUndefined15);
 }
 
+bool VSC::MIDI::MessageGenerator::controlNumberIsValid(const ControlNumber& number)
+{
+    ControlNumbers::iterator it = std::find(mValidControlNumbers.begin(), mValidControlNumbers.end(), number);
+    return it != mValidControlNumbers.end();
+}
+
 VSC::MIDI::Message VSC::MIDI::MessageGenerator::messageForNote(unsigned int channel,
                                                                unsigned int pitch,
                                                                unsigned int velocity,

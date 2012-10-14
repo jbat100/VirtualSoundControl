@@ -14,7 +14,7 @@
 
 @property (nonatomic, strong) VSCOSXApplicationManager* applicationManager;
 
--(void) setupOgreBulletApplication;
--(void) teardownOgreBulletApplication;
+-(IBAction)showMIDIWindow:(id)sender;
+-(IBAction)showSceneWindow:(id)sender;
 
 @end

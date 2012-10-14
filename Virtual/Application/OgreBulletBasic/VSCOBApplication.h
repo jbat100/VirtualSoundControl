@@ -36,7 +36,7 @@ namespace VSC {
              *  Constructor / Destructor
              */
             
-            Application(Scenes scenes);
+            Application(const Scenes& scenes);
             ~Application();
             
             #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE

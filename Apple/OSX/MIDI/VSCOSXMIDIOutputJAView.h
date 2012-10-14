@@ -11,14 +11,14 @@
 
 #include "VSCMIDIOutput.h"
 
-@interface VSCOSXMIDIOutputView : JAListViewItem {
+@interface VSCOSXMIDIOutputJAView : JAListViewItem {
     //NSGradient *gradient;
     //BOOL selected;
     //NSTextField *textField;
     //NSTextField *shadowTextField;
 }
 
-+(VSCOSXMIDIOutputView*) midiOutputView;
++(VSCOSXMIDIOutputJAView*) midiOutputView;
 
 @property (retain) IBOutlet NSTextField *numberTextField;
 @property (retain) IBOutlet NSTextField *nameTextField;

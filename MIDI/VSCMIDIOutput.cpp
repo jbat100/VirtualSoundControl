@@ -14,15 +14,9 @@
 
 #include <iostream>
 
-VSC::MIDI::Output::Output(void) : mState(StateClosed) {
-    
-    this->createRtMidiOut();
-    
-    mMessageGenerator = MessageGenerator::SPtr(new MessageGenerator);
-    
-}
-
 VSC::MIDI::Output::Output(const OutputPort& outputPort) : mState(StateClosed) {
+    
+    if (outputPort == OutputPortVoid) throw VSCMIDIException("Expected non OutputPortVoid");
     
     this->createRtMidiOut();
     
@@ -36,6 +30,19 @@ VSC::MIDI::Output::~Output()
 {
     close();
     mOutputPort = OutputPortVoid;
+}
+
+std::string VSC::MIDI::Output::getDescription(void)
+{
+    BOOST_ASSERT(mOutputPort != OutputPortVoid);
+    
+    if (mOutputPort == OutputPortVoid) return "Invalid (void) MIDI Output";
+    
+    std::stringstream stream;
+    
+    stream << mOutputPort.number << " - " << mOutputPort.name << mOutputPort.name << (mOutputPort.isVirtual ? " (Virtual)" : "");
+    
+    return stream.str();
 }
 
 void VSC::MIDI::Output::createRtMidiOut(void) {
@@ -57,6 +64,9 @@ void VSC::MIDI::Output::open()
 {
     
     boost::lock_guard<boost::mutex> lock(mMutex);
+    
+    BOOST_ASSERT(mOutputPort != OutputPortVoid);
+    BOOST_ASSERT(mMIDIOut);
     
     if (mOutputPort != OutputPortVoid && mMIDIOut) {
         
@@ -114,6 +124,16 @@ void VSC::MIDI::Output::close()
         mMIDIOut = RtMidiOutPtr();
         mState = StateClosed;
     }
+}
+
+const VSC::MIDI::ControlNumbers& VSC::MIDI::Output::getValidControlNumbers(void)
+{
+    return mMessageGenerator->getValidControlNumbers();
+}
+
+bool VSC::MIDI::Output::controlNumberIsValid(const ControlNumber& number)
+{
+    return mMessageGenerator->controlNumberIsValid(number);
 }
 
 

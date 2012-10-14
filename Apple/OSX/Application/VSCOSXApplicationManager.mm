@@ -29,9 +29,17 @@
     
     if ((self = [super init])) {
         
-        self.ogreBulletSceneWindowController = [[VSCOBOSXSceneWindowController alloc] initWithWindowNibName:@"VSCOBOSXSceneWindowController"];
+        self.ogreBulletSceneWindowController = [[VSCOBOSXSceneWindowController alloc] initWithWindowNibName:@"VSCOBOSXSceneWindow"];
         
-        self.midiWindowController = [[VSCOSXMIDIWindowController alloc] initWithWindowNibName:@"VSCOSXMIDIWindowController"];
+        BOOST_ASSERT(self.ogreBulletSceneWindowController);
+        
+        NSWindow* w = self.ogreBulletSceneWindowController.window;
+        
+        NSLog(@"OgreBulletSceneWindow: %@", w);
+        
+        self.midiWindowController = [[VSCOSXMIDIWindowController alloc] initWithWindowNibName:@"VSCOSXMIDIWindow"];
+        
+        BOOST_ASSERT(self.midiWindowController);
         
     }
     
@@ -46,7 +54,10 @@
      *  A bit hacky for now, plan on making this better
      */
     
-    VSCOBOSXSceneView* sceneView = [self.ogreBulletSceneWindowController.ogreBulletSceneViews firstObject];
+    //VSCOBOSXSceneView* sceneView = [self.ogreBulletSceneWindowController.ogreBulletSceneViews firstObject];
+    
+    VSCOBOSXSceneView* sceneView = self.ogreBulletSceneWindowController.ogreBulletSceneView;
+    
     BOOST_ASSERT(sceneView);
     
     _ogreBulletApplication->setupWithOgreView((__bridge void*)sceneView);

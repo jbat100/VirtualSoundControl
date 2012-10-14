@@ -10,10 +10,11 @@
 #import "VSCOSXApplicationManagerProtocol.h"
 #import "JAListView.h"
 
+#include "VSCMIDI.h"
 #include "VSCMIDIOutput.h"
 
-@class VSCOSXMIDITestController;
-@class VSCOSXMIDITest;
+//@class VSCOSXMIDITestController;
+//@class VSCOSXMIDITest;
 
 @interface VSCOSXMIDIWindowController : NSWindowController <JAListViewDataSource, JAListViewDelegate, NSComboBoxDelegate, NSComboBoxDataSource>
 
@@ -36,28 +37,25 @@
 
 @property (nonatomic, assign) VSC::MIDI::Output::SPtr testMIDIOutput;
 
-@property (nonatomic, strong) IBOutlet VSCOSXMIDITest* midiTest;
+@property (nonatomic, strong) IBOutlet NSPopUpButton* midiOutputPopUpButton;
+@property (nonatomic, strong) IBOutlet NSPopUpButton* controlNumberPopUpButton;
 
-@property (nonatomic, strong) IBOutlet NSButton* createMidiOutputButton;
-@property (nonatomic, strong) IBOutlet NSTextField* midiOutputTextField;
-
-@property (nonatomic, strong) IBOutlet NSTextField* midiChannelTextField;
-@property (nonatomic, strong) IBOutlet NSTextField* controlChannelTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* channelTextField;
 @property (nonatomic, strong) IBOutlet NSTextField* controlValueTextField;
-@property (nonatomic, strong) IBOutlet NSTextField* notePitchTextField;
-@property (nonatomic, strong) IBOutlet NSTextField* noteVelocityTextField;
-@property (nonatomic, strong) IBOutlet NSButton* sendMidiControlButton;
-@property (nonatomic, strong) IBOutlet NSButton* sendMidiNoteOnButton;
-@property (nonatomic, strong) IBOutlet NSButton* sendMidiNoteOffButton;
+@property (nonatomic, strong) IBOutlet NSTextField* pitchTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* velocityTextField;
+@property (nonatomic, strong) IBOutlet NSSlider* controlValueSlider;
 
-@property (nonatomic, strong) IBOutlet NSSlider* rtControlSlider;
-@property (nonatomic, strong) IBOutlet NSComboBox* rtControlChannelComboBox;
-@property (nonatomic, strong) IBOutlet NSButton* rtSendControlMessageButton;
-@property (nonatomic, strong) IBOutlet NSTextField* rtControlValueTextField;
-@property (nonatomic, strong) IBOutlet NSTextField* rtControlChannelTextField;
 
-@property (nonatomic, strong) IBOutlet NSButton* envFireButton;
-@property (nonatomic, strong) IBOutlet NSTextField* envUpdateFrequencyTextField;
+@property (nonatomic, assign) unsigned int channel;
+@property (nonatomic, assign) unsigned int controlValue;
+@property (nonatomic, assign) unsigned int pitch;
+@property (nonatomic, assign) unsigned int velocity;
+
+@property (nonatomic, assign) VSC::MIDI::ControlNumber controlNumber;
+
+-(IBAction) midiOutputSelected:(id)sender;
+-(IBAction) controlNumberSelected:(id)sender;
 
 -(IBAction) sendMidiControlMessage:(id)sender;
 -(IBAction) sendMidiNoteOnMessage:(id)sender;

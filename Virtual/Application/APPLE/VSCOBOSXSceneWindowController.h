@@ -15,7 +15,10 @@
 
 @interface VSCOBOSXSceneWindowController : NSWindowController
 
-@property (nonatomic, strong) IBOutletCollection(VSCOBOSXSceneView) NSArray* ogreBulletSceneViews;
+//@property (nonatomic, strong) IBOutletCollection(VSCOBOSXSceneView) NSArray* ogreBulletSceneViews;
+
+@property (nonatomic, strong) IBOutlet VSCOBOSXSceneView* ogreBulletSceneView;
+
 @property (nonatomic, strong) IBOutlet NSPopUpButton* scenePopUpButton;
 
 @property (nonatomic, assign) VSC::OB::Scene::SPtr ogreBulletScene;
@@ -25,6 +28,8 @@
 - (IBAction)test1:(id)sender;
 - (IBAction)test2:(id)sender;
 - (IBAction)test3:(id)sender;
+
+- (IBAction)showMidiWindow:(id)sender;
 
 - (IBAction)scenePopUpButtonChanged:(id)sender;
 

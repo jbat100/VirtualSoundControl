@@ -8,14 +8,19 @@
 
 #import "VSCOSXMIDIWindowController.h"
 #import "VSCOSXMIDITestController.h"
-#import "VSCOSXMIDIOutputView.h"
+#import "VSCOSXMIDIOutputJAView.h"
+#import "VSCOSXMIDITest.h"
 
 #import "NSString+VSCAdditions.h"
 
 #include "VSCMIDIOutputManager.h"
 #include "VSCException.h"
 
+NSString* const VSCOSXMIDINoSelectedChannelMenuItemString = @"No Selected MIDI Output";
+
 @interface VSCOSXMIDIWindowController ()
+
+-(void) updateTestMIDIOutputs;
 
 @end
 
@@ -39,44 +44,122 @@
     self.midiOutputsListView.canCallDataSourceInParallel = YES;
     [self.midiOutputsListView reloadData];
     
-    NSArray* formatters = @[self.midiChannelTextField.formatter,
-    //self.midiTestView.controlNumberTextField.formatter,
-    self.notePitchTextField.formatter,
-    self.noteVelocityTextField.formatter,
+    BOOST_ASSERT(self.channelTextField.formatter);
+    BOOST_ASSERT(self.pitchTextField.formatter);
+    BOOST_ASSERT(self.velocityTextField.formatter);
+    BOOST_ASSERT(self.controlValueTextField.formatter);
+    
+    NSArray* formatters = @[
+    self.channelTextField.formatter,
+    self.pitchTextField.formatter,
+    self.velocityTextField.formatter,
     self.controlValueTextField.formatter];
     
     for (NSNumberFormatter* formatter in formatters) {
         
         [formatter setAllowsFloats:NO];
         
-        if (formatter == self.midiChannelTextField.formatter) [formatter setMinimum:[NSNumber numberWithUnsignedInt:1]];
+        if (formatter == self.channelTextField.formatter) [formatter setMinimum:[NSNumber numberWithUnsignedInt:1]];
         else [formatter setMinimum:[NSNumber numberWithUnsignedInt:0]];
         
-        if (formatter == self.midiChannelTextField.formatter) [formatter setMaximum:[NSNumber numberWithUnsignedInt:16]];
+        if (formatter == self.channelTextField.formatter) [formatter setMaximum:[NSNumber numberWithUnsignedInt:16]];
         else [formatter setMaximum:[NSNumber numberWithUnsignedInt:127]];
         
     }
     
+    [self.controlValueSlider setMinValue:0.0];
+    [self.controlValueSlider setMaxValue:127.0];
     
-    for (NSNumber* number in self.controlChannels) {
-        int controlNumber = [number intValue];
-        try {
-            std::string controlString = VSC::MIDI::controlNumberToString((VSC::MIDI::ControlNumber)controlNumber);
-            [self.rtControlChannelComboBox addItemWithObjectValue:[NSString stringWithStdString:controlString]];
-        } catch (VSCMIDIException& exception) {
-            [self.midiTestView.rtControlChannelComboBox addItemWithObjectValue:VSCMIDIOtherControlChannelDescriptorString];
-        }
-    }
-    
-    
-    //[self.midiTestView.rtControlChannelComboBox setUsesDataSource:YES];
-    [self.rtControlChannelComboBox setHasVerticalScroller:YES];
-    [self.rtControlChannelComboBox setNumberOfVisibleItems:10];
-    //[self.midiTestView.rtControlChannelComboBox reloadData];
+    [self updateControlNumbers];
     
 }
 
--(IBAction) refreshInputs:(id)sender {
+-(void) updateControlNumbers {
+    
+    [self.controlNumberPopUpButton removeAllItems];
+    
+    //[self.controlNumberPopUpButton addItemWithTitle:VSCOSXMIDINoSelectedChannelMenuItemString];
+    
+    if (self.testMIDIOutput) {
+        
+        const VSC::MIDI::ControlNumbers& validControlNumbers = self.testMIDIOutput->getValidControlNumbers();
+        
+        BOOST_FOREACH(const VSC::MIDI::ControlNumber& controlNumber, validControlNumbers)
+        {
+            std::string name = VSC::MIDI::controlNumberToString(controlNumber);
+            BOOST_ASSERT(!name.empty());
+            NSString* title = [NSString stringWithFormat:@"%u - %@", (unsigned int)controlNumber, [NSString stringWithStdString:name]];
+            [self.controlNumberPopUpButton addItemWithTitle:title];
+        }
+    }
+    
+}
+
+-(IBAction) controlNumberSelected:(id)sender
+{
+    NSString* title = [[self.controlNumberPopUpButton selectedItem] title];
+    
+    if (self.testMIDIOutput)
+    {
+    
+        NSUInteger separatorLocation = [title rangeOfString:@" - "].location;
+        BOOST_ASSERT(separatorLocation != NSNotFound);
+        if (separatorLocation == NSNotFound) return;
+        
+        NSInteger number = [[title substringToIndex:separatorLocation] integerValue];
+        BOOST_ASSERT(self.testMIDIOutput->controlNumberIsValid((VSC::MIDI::ControlNumber)number));
+        self.controlNumber = (VSC::MIDI::ControlNumber)number;
+    }
+}
+
+-(void) updateTestMIDIOutputs
+{
+    
+    [self.midiOutputPopUpButton removeAllItems];
+    
+    [self.midiOutputPopUpButton addItemWithTitle:VSCOSXMIDINoSelectedChannelMenuItemString];
+    
+    if (self.applicationManager.midiOutputManager) {
+        
+        const VSC::MIDI::Outputs& outputs = self.applicationManager.midiOutputManager->getOutputs();
+        
+        BOOST_FOREACH(const VSC::MIDI::Output::SPtr& output, outputs)
+        {
+            NSString* title = [NSString stringWithStdString:output->getDescription()];
+            [self.midiOutputPopUpButton addItemWithTitle:title];
+        }
+        
+        if (self.testMIDIOutput)
+        {
+            VSC::MIDI::Outputs::const_iterator it = std::find(outputs.begin(), outputs.end(), self.testMIDIOutput);
+            if (it != outputs.end())
+            {
+                NSString* title = [NSString stringWithStdString:(*it)->getDescription()];
+                [self.midiOutputPopUpButton selectItemWithTitle:title];
+            }
+        }
+    }
+    
+}
+
+
+-(IBAction) midiOutputSelected:(id)sender
+{
+    
+    if (self.applicationManager.midiOutputManager) {
+        
+        std::string description = [[[self.midiOutputPopUpButton selectedItem] title] stdString];
+        
+        VSC::MIDI::Output::SPtr selectedOutput = self.applicationManager.midiOutputManager->getOutputWithDescription(description);
+        
+        self.testMIDIOutput = selectedOutput;
+    }
+    
+}
+
+
+-(IBAction) refreshInputs:(id)sender
+{
     
 
 }
@@ -90,6 +173,7 @@
     
     [self.midiOutputsListView reloadData];
     
+    [self updateTestMIDIOutputs];
 }
 
 
@@ -115,7 +199,7 @@
             
             if ((NSUInteger)outputs.size() > index)
             {
-                VSCOSXMIDIOutputView* outputView = [VSCOSXMIDIOutputView midiOutputView];
+                VSCOSXMIDIOutputJAView* outputView = [VSCOSXMIDIOutputJAView midiOutputView];
                 outputView.midiOutput = outputs.at(index);
                 return outputView;
             }
@@ -132,42 +216,46 @@
 
 
 -(IBAction) sendMidiControlMessage:(id)sender {
-    if(self.midiOutput)
+    if(self.testMIDIOutput)
     {
-        self.midiOutput->sendControlChange(self.midiChannel, self.controlNumber, self.controlValue);
+        self.testMIDIOutput->sendControlChange(self.channel, self.controlNumber, self.controlValue);
     }
 }
 
 -(IBAction) sendMidiNoteOnMessage:(id)sender {
-    if(self.midiOutput)
+    if(self.testMIDIOutput)
     {
-        self.midiOutput->sendNoteOn(self.midiChannel, self.pitchValue, self.velocityValue);
+        self.testMIDIOutput->sendNoteOn(self.channel, self.pitch, self.velocity);
     }
 }
 
 -(IBAction) sendMidiNoteOffMessage:(id)sender {
-    if(self.midiOutput)
+    if(self.testMIDIOutput)
     {
-        self.midiOutput->sendNoteOff(self.midiChannel, self.pitchValue, self.velocityValue);
+        self.testMIDIOutput->sendNoteOff(self.channel, self.pitch, self.velocity);
     }
 }
 
 -(IBAction) controlSliderChangedValue:(id)sender {
     
-    if (sender == self.midiTestView.rtControlSlider) {
-        int val = [(NSSlider*)self.rtControlSlider intValue];
-        if (val >= 0 && val <= 127) {
-            //unsigned int uval = (unsigned int)val;
-            if (self.midiOutput)
-            {
-                self.midiOutput->sendControlChange(self.midiTest.midiChannel, self.midiTest.controlNumber, self.midiTest.controlValue);
-            }
+    if (sender == self.controlValueSlider) {
+        if (self.testMIDIOutput)
+        {
+            self.testMIDIOutput->sendControlChange(self.channel, self.controlNumber, self.controlValue);
         }
     }
     
 }
 
+-(IBAction) showEnveloppeEditor:(id)sender
+{
+    
+}
 
+-(IBAction) fireEnveloppe:(id)sender
+{
+    
+}
 
  
 

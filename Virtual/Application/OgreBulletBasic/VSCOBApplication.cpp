@@ -16,7 +16,7 @@
 #include <boost/foreach.hpp>
 
 // -------------------------------------------------------------------------
-VSC::OB::Application::Application(std::vector<Scene::SPtr> bulletScenes) :
+VSC::OB::Application::Application(const std::vector<Scene::SPtr>& bulletScenes) :
     ApplicationBase(),
     Ogre::FrameListener(),
     mBulletScenes(bulletScenes),
@@ -43,6 +43,15 @@ VSC::OB::Application::Application(std::vector<Scene::SPtr> bulletScenes) :
     mSceneController->setNextInputListener(CameraController::WPtr(mCameraController));
     
     this->setCollisionMapper(IM::CollisionMapper::SPtr(new IM::CollisionMapper));
+    
+    /*
+     
+    if (mBulletScenes.size() > 0)
+    {
+        this->switchToScene(*(mBulletScenes.begin()));
+    }
+     
+     */
 }
 // -------------------------------------------------------------------------
 VSC::OB::Application::~Application()

@@ -9,14 +9,27 @@
 
 #import "VSCAppDelegate.h"
 #import "VSCOSXApplicationManager.h"
+#import "VSCOBOSXSceneWindowController.h"
+#import "VSCOSXMIDIWindowController.h"
 
 #import "VSCOBScene.h"
 #import "VSCOBApplication.h"
-
 #import "VSCOBPrimitivesDemo.h"
 #import "VSCOBTriMeshDemo.h"
 #import "VSCOBConstraintsDemo.h"
 
+#import "VSCMIDI.h"
+#import "VSCMIDIOutput.h"
+#import "VSCMIDIOutputManager.h"
+
+//#import "OgreOSXCocoaView.h"
+
+@interface VSCAppDelegate ()
+
+-(void) setupOgreBulletApplication;
+-(void) teardownOgreBulletApplication;
+
+@end
 
 @implementation VSCAppDelegate
 
@@ -24,12 +37,36 @@
 {
     self.applicationManager = [[VSCOSXApplicationManager alloc] init];
     
+    BOOST_ASSERT(self.applicationManager.ogreBulletSceneWindowController.ogreBulletSceneView);
+    
+    self.applicationManager.midiOutputManager = VSC::MIDI::OutputManager::singletonManager();
+    
     [self setupOgreBulletApplication];
+    
+    [self showSceneWindow:nil];
+    
+    [self.applicationManager startOgreRendering];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification 
 {
+    [self.applicationManager stopOgreRendering];
+    
     [self teardownOgreBulletApplication];
+}
+
+-(IBAction)showMIDIWindow:(id)sender
+{
+    [self.applicationManager.midiWindowController showWindow:sender];
+}
+
+-(IBAction)showSceneWindow:(id)sender
+{
+    VSC::OB::Scene::SPtr currentScene = self.applicationManager.ogreBulletApplication->getCurrentScene();
+    
+    self.applicationManager.ogreBulletSceneWindowController.ogreBulletScene = currentScene;
+    
+    [self.applicationManager.ogreBulletSceneWindowController showWindow:sender];
 }
 
 
@@ -43,9 +80,9 @@
     
     VSC::OB::Application::SPtr ogreBulletApplication = VSC::OB::Application::SPtr(new VSC::OB::Application(scenes));
     
-    self.applicationManager.ogreBulletApplication = ogreBulletApplication;
+    self.applicationManager.ogreBulletApplication = ogreBulletApplication; // this calls setupWithOgreView()
     
-    [self.applicationManager startOgreRendering];
+    //ogreBulletApplication->setupWithOgreView((__bridge void*)self.applicationManager.ogreBulletSceneWindowController.ogreBulletSceneView);
     
 }
 

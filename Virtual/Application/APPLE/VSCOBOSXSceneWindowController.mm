@@ -9,6 +9,7 @@
 #import "VSCOBOSXSceneWindowController.h"
 #import "VSCOSXApplicationManager.h"
 #import "VSCOBOSXSceneView.h"
+#import "VSCAppDelegate.h"
 
 #import "NSString+VSCAdditions.h"
 #import "NSArray+VSCAdditions.h"
@@ -71,6 +72,7 @@
     
     if (self.applicationManager == nil || !self.applicationManager.ogreBulletApplication) {
         [self.scenePopUpButton removeAllItems];
+        return;
     }
     
     std::vector<Ogre::String> sceneNames = self.applicationManager.ogreBulletApplication->getSceneNames();
@@ -116,17 +118,22 @@
 }
 
 
+- (IBAction)showMidiWindow:(id)sender
+{
+    [(VSCAppDelegate*)[NSApplication sharedApplication].delegate showMIDIWindow:sender];
+}
+
 - (IBAction)test1:(id)sender {
     
-    VSCOBOSXSceneView* ogreBulletSceneView = [self.ogreBulletSceneViews firstObject];
+    //VSCOBOSXSceneView* ogreBulletSceneView = [self.ogreBulletSceneViews firstObject];
     
-    BOOST_ASSERT(ogreBulletSceneView);
+    BOOST_ASSERT(self.ogreBulletSceneView);
     
-    BOOL accepts = [ogreBulletSceneView acceptsFirstResponder];
+    BOOL accepts = [self.ogreBulletSceneView acceptsFirstResponder];
     NSLog(@"VSCOBOSXSceneView %@ accept first responder", accepts ? @"DOES" : @"DOES NOT");
     
     if (accepts) {
-        BOOL isFirstResponder = [self.window firstResponder] != ogreBulletSceneView;
+        BOOL isFirstResponder = [self.window firstResponder] != self.ogreBulletSceneView;
         NSLog(@"VSCOBOSXSceneView %@ first responder", isFirstResponder ? @"IS" : @"IS NOT");
     }
 }

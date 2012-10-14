@@ -92,9 +92,14 @@ class VSCNotImplementedException : public VSCBaseException
  */
 class VSCInternalInconsistencyException : public VSCBaseException
 {
+    
+public:
+    
+    VSCInternalInconsistencyException(std::string additionalInfo) : VSCBaseException(additionalInfo) {}
+    
     virtual const char* what() const throw()
     {
-        return "Called Pure Virtual Function";
+        return "Internal Inconsistency";
     }
 };
 

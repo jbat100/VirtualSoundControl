@@ -46,6 +46,8 @@ namespace VSC {
             
             const OutputPort& getOutputPort(void) const;
             
+            std::string getDescription(void);
+            
             // cannot send const (because RtMidi takes not const so would need to be copied)
             bool sendMessage(Message& m);
             
@@ -60,6 +62,9 @@ namespace VSC {
             
             State getState(void) {return mState;}
             
+            const ControlNumbers& getValidControlNumbers(void);
+            bool controlNumberIsValid(const ControlNumber& number);
+            
         protected:
             
             /*
@@ -67,7 +72,6 @@ namespace VSC {
              *  be used to access them. One output object per port with internal mutex protection.
              */
             
-            Output(void);
             Output(const OutputPort& outputPort);
             
             void setOutputPort(const OutputPort& port);     // throws if the output port could not be established
