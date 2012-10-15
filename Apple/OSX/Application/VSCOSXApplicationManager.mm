@@ -30,16 +30,15 @@
     if ((self = [super init])) {
         
         self.ogreBulletSceneWindowController = [[VSCOBOSXSceneWindowController alloc] initWithWindowNibName:@"VSCOBOSXSceneWindow"];
-        
         BOOST_ASSERT(self.ogreBulletSceneWindowController);
+        self.ogreBulletSceneWindowController.applicationManager = self;
         
         NSWindow* w = self.ogreBulletSceneWindowController.window;
-        
         NSLog(@"OgreBulletSceneWindow: %@", w);
         
         self.midiWindowController = [[VSCOSXMIDIWindowController alloc] initWithWindowNibName:@"VSCOSXMIDIWindow"];
-        
         BOOST_ASSERT(self.midiWindowController);
+        self.midiWindowController.applicationManager = self;
         
     }
     
@@ -50,23 +49,24 @@
     
     _ogreBulletApplication = application;
     
-    /*
-     *  A bit hacky for now, plan on making this better
-     */
     
-    //VSCOBOSXSceneView* sceneView = [self.ogreBulletSceneWindowController.ogreBulletSceneViews firstObject];
-    
-    VSCOBOSXSceneView* sceneView = self.ogreBulletSceneWindowController.ogreBulletSceneView;
-    
-    BOOST_ASSERT(sceneView);
-    
-    _ogreBulletApplication->setupWithOgreView((__bridge void*)sceneView);
-    
-    /*
-     *  Set the windows scene to the application's scene
-     */
-    
-    self.ogreBulletSceneWindowController.ogreBulletScene = application->getCurrentScene();
+    if (_ogreBulletApplication)
+    {
+        /*
+         *  A bit hacky for now, plan on making this better
+         */
+        //VSCOBOSXSceneView* sceneView = [self.ogreBulletSceneWindowController.ogreBulletSceneViews firstObject];
+        VSCOBOSXSceneView* sceneView = self.ogreBulletSceneWindowController.ogreBulletSceneView;
+        
+        BOOST_ASSERT(sceneView);
+        
+        _ogreBulletApplication->setupWithOgreView((__bridge void*)sceneView);
+        
+        /*
+         *  Set the windows scene to the application's scene
+         */
+        self.ogreBulletSceneWindowController.ogreBulletScene = _ogreBulletApplication->getCurrentScene();
+    }
     
 }
 

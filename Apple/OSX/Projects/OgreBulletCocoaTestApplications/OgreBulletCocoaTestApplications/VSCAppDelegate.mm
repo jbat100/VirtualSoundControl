@@ -36,14 +36,16 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     self.applicationManager = [[VSCOSXApplicationManager alloc] init];
-    
     BOOST_ASSERT(self.applicationManager.ogreBulletSceneWindowController.ogreBulletSceneView);
     
     self.applicationManager.midiOutputManager = VSC::MIDI::OutputManager::singletonManager();
+    BOOST_ASSERT(self.applicationManager.midiOutputManager);
     
     [self setupOgreBulletApplication];
     
-    [self showSceneWindow:nil];
+    //[self showSceneWindow:nil];
+    
+    [self showMIDIWindow:nil];
     
     [self.applicationManager startOgreRendering];
 }

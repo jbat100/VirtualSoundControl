@@ -48,6 +48,8 @@ namespace VSC {
             PortManager::SPtr       mPortManager;
             Mutex                   mMutex;
             
+            static const bool       mTrace = true;
+            
         };
 
     }

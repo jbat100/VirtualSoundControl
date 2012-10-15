@@ -16,25 +16,40 @@
 #include "VSCMIDIOutputManager.h"
 #include "VSCException.h"
 
-NSString* const VSCOSXMIDINoSelectedChannelMenuItemString = @"No Selected MIDI Output";
+NSString* const VSCOSXMIDINoSelectedChannelMenuItemString = @"No selected MIDI output";
+NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control number (set output)";
 
 @interface VSCOSXMIDIWindowController ()
 
 -(void) updateTestMIDIOutputs;
+-(void) initTest;
 
 @end
 
 @implementation VSCOSXMIDIWindowController
 
 
+#pragma mark - NSWindowController
+
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (self) {
         // Initialization code here.
+        [self initTest];
     }
     
     return self;
+}
+
+-(void) initTest {
+    
+    self.channel = 1;
+    self.controlValue = 64;
+    self.pitch = 64;
+    self.velocity = 64;
+    self.controlNumber = VSC::MIDI::ControlInvalid;
+    
 }
 
 - (void)windowDidLoad
@@ -70,15 +85,26 @@ NSString* const VSCOSXMIDINoSelectedChannelMenuItemString = @"No Selected MIDI O
     [self.controlValueSlider setMinValue:0.0];
     [self.controlValueSlider setMaxValue:127.0];
     
+    [self updateTestMIDIOutputs];
     [self updateControlNumbers];
     
 }
 
+#pragma mark - Setters
+
+-(void) setTestMIDIOutput:(VSC::MIDI::Output::SPtr)testMIDIOutput {
+    
+    _testMIDIOutput = testMIDIOutput;
+    
+    [self updateControlNumbers];
+    
+}
+
+#pragma mark - Interface
+
 -(void) updateControlNumbers {
     
     [self.controlNumberPopUpButton removeAllItems];
-    
-    //[self.controlNumberPopUpButton addItemWithTitle:VSCOSXMIDINoSelectedChannelMenuItemString];
     
     if (self.testMIDIOutput) {
         
@@ -91,26 +117,18 @@ NSString* const VSCOSXMIDINoSelectedChannelMenuItemString = @"No Selected MIDI O
             NSString* title = [NSString stringWithFormat:@"%u - %@", (unsigned int)controlNumber, [NSString stringWithStdString:name]];
             [self.controlNumberPopUpButton addItemWithTitle:title];
         }
+        
+        
+    }
+    
+    else {
+        
+        [self.controlNumberPopUpButton addItemWithTitle:VSCOSXMIDINoValidControlNumberItemString];
+        
     }
     
 }
 
--(IBAction) controlNumberSelected:(id)sender
-{
-    NSString* title = [[self.controlNumberPopUpButton selectedItem] title];
-    
-    if (self.testMIDIOutput)
-    {
-    
-        NSUInteger separatorLocation = [title rangeOfString:@" - "].location;
-        BOOST_ASSERT(separatorLocation != NSNotFound);
-        if (separatorLocation == NSNotFound) return;
-        
-        NSInteger number = [[title substringToIndex:separatorLocation] integerValue];
-        BOOST_ASSERT(self.testMIDIOutput->controlNumberIsValid((VSC::MIDI::ControlNumber)number));
-        self.controlNumber = (VSC::MIDI::ControlNumber)number;
-    }
-}
 
 -(void) updateTestMIDIOutputs
 {
@@ -142,6 +160,30 @@ NSString* const VSCOSXMIDINoSelectedChannelMenuItemString = @"No Selected MIDI O
     
 }
 
+#pragma mark - UI Callbacks
+
+-(IBAction) controlNumberSelected:(id)sender
+{
+    NSString* title = [[self.controlNumberPopUpButton selectedItem] title];
+    
+    if ([title isEqualToString:VSCOSXMIDINoValidControlNumberItemString]) {
+        return;
+    }
+    
+    if (self.testMIDIOutput)
+    {
+        
+        NSUInteger separatorLocation = [title rangeOfString:@" - "].location;
+        BOOST_ASSERT(separatorLocation != NSNotFound);
+        if (separatorLocation == NSNotFound) return;
+        
+        NSInteger number = [[title substringToIndex:separatorLocation] integerValue];
+        BOOST_ASSERT(self.testMIDIOutput->controlNumberIsValid((VSC::MIDI::ControlNumber)number));
+        self.controlNumber = (VSC::MIDI::ControlNumber)number;
+    }
+}
+
+
 
 -(IBAction) midiOutputSelected:(id)sender
 {
@@ -157,62 +199,30 @@ NSString* const VSCOSXMIDINoSelectedChannelMenuItemString = @"No Selected MIDI O
     
 }
 
-
 -(IBAction) refreshInputs:(id)sender
 {
     
-
+    
 }
 
 -(IBAction) refreshOutputs:(id)sender {
     
+    NSLog(@"Refreshing outputs");
+    
     if (self.applicationManager.midiOutputManager)
     {
         self.applicationManager.midiOutputManager->refreshOutputs();
+        NSLog(@"Refreshed outputs");
+    }
+    else
+    {
+        NSLog(@"No MIDI output manager");
     }
     
     [self.midiOutputsListView reloadData];
     
     [self updateTestMIDIOutputs];
 }
-
-
-#pragma mark - JAListViewDataSource
-
-- (NSUInteger)numberOfItemsInListView:(JAListView *)listView
-{
-    if (self.applicationManager.midiOutputManager)
-    {
-        return (NSUInteger)self.applicationManager.midiOutputManager->getOutputs().size();
-    }
-    
-    return 0;
-}
-
-- (JAListViewItem *)listView:(JAListView *)listView viewAtIndex:(NSUInteger)index
-{
-    if (listView == self.midiOutputsListView) {
-        
-        if (self.applicationManager.midiOutputManager)
-        {
-            const VSC::MIDI::Outputs& outputs = self.applicationManager.midiOutputManager->getOutputs();
-            
-            if ((NSUInteger)outputs.size() > index)
-            {
-                VSCOSXMIDIOutputJAView* outputView = [VSCOSXMIDIOutputJAView midiOutputView];
-                outputView.midiOutput = outputs.at(index);
-                return outputView;
-            }
-        }
-        
-    }
-    
-    return nil;
-}
-
-#pragma mark - JAListViewDelegate
-
-#pragma mark - UI Callbacks
 
 
 -(IBAction) sendMidiControlMessage:(id)sender {
@@ -257,6 +267,40 @@ NSString* const VSCOSXMIDINoSelectedChannelMenuItemString = @"No Selected MIDI O
     
 }
 
+#pragma mark - JAListViewDataSource
+
+- (NSUInteger)numberOfItemsInListView:(JAListView *)listView
+{
+    if (self.applicationManager.midiOutputManager)
+    {
+        return (NSUInteger)self.applicationManager.midiOutputManager->getOutputs().size();
+    }
+    
+    return 0;
+}
+
+- (JAListViewItem *)listView:(JAListView *)listView viewAtIndex:(NSUInteger)index
+{
+    if (listView == self.midiOutputsListView) {
+        
+        if (self.applicationManager.midiOutputManager)
+        {
+            const VSC::MIDI::Outputs& outputs = self.applicationManager.midiOutputManager->getOutputs();
+            
+            if ((NSUInteger)outputs.size() > index)
+            {
+                VSCOSXMIDIOutputJAView* outputView = [VSCOSXMIDIOutputJAView midiOutputView];
+                outputView.midiOutput = outputs.at(index);
+                return outputView;
+            }
+        }
+        
+    }
+    
+    return nil;
+}
+
+#pragma mark - JAListViewDelegate
  
 
 @end

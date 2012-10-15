@@ -7,8 +7,9 @@
 //
 
 #import "VSCOSXMIDIOutputJAView.h"
-
 #import "NSString+VSCAdditions.h"
+
+#include <boost/assert.hpp>
 
 @interface VSCOSXMIDIOutputJAView ()
 
@@ -27,11 +28,14 @@
 //@synthesize textField;
 //@synthesize shadowTextField;
 
-+ (VSCOSXMIDIOutputJAView *)demoView {
+#pragma mark - Static Builder
+
++(VSCOSXMIDIOutputJAView*) midiOutputView {
     
     static NSNib *nib = nil;
     if(nib == nil) {
         nib = [[NSNib alloc] initWithNibNamed:NSStringFromClass(self) bundle:nil];
+        BOOST_ASSERT_MSG(nib != nil, "Could not create nib");
     }
     
     NSArray *objects = nil;
@@ -42,18 +46,20 @@
         }
     }
     
-    NSAssert1(NO, @"No view of class %@ found.", NSStringFromClass(self));
+    BOOST_ASSERT_MSG(false, "Could not load object from nib");
     
     return nil;
 }
 
 
-#pragma mark NSView
+#pragma mark - NSView
 
 - (void)drawRect:(NSRect)rect {
     [super drawRect:rect];
     [self drawBackground];
 }
+
+#pragma mark - Setters/Getters
 
 -(VSC::MIDI::Output::WPtr) midiOutput {
     return _midiOutput;
@@ -63,6 +69,8 @@
     _midiOutput = midiOutput;
     [self refresh];
 }
+
+#pragma mark - Interface
 
 
 -(void) refresh {
@@ -95,8 +103,27 @@
     
 }
 
+#pragma mark - UI Callback
 
-#pragma mark API
+-(IBAction) mainAction:(id)sender
+{
+    VSC::MIDI::Output::SPtr output = self.midiOutput.lock();
+    
+    if (output->getState() == VSC::MIDI::Output::StateOpened) {
+        output->close();
+        [self refresh];
+    }
+    else if (output->getState() == VSC::MIDI::Output::StateClosed) {
+        output->open();
+        [self refresh];
+    }
+    else {
+        output->open();
+        [self refresh];
+    }
+}
+
+#pragma mark - Drawing
 
 - (void)drawBackground {
     

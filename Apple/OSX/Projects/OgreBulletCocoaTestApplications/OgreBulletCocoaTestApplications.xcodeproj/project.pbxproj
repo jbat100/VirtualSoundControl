@@ -20,7 +20,7 @@
 		101EBB7D1629DBCE006601A2 /* JASectionedListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB671629DBCE006601A2 /* JASectionedListView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		101EBB7F1629DBCE006601A2 /* NSIndexPath+JAListViewExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB6A1629DBCE006601A2 /* NSIndexPath+JAListViewExtensions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		101EBB881629DE75006601A2 /* VSCOSXMIDIOutputJAView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB861629DE75006601A2 /* VSCOSXMIDIOutputJAView.mm */; };
-		101EBB8C162AB52A006601A2 /* VSCOSXMIDIOuputJAView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 101EBB8B162AB52A006601A2 /* VSCOSXMIDIOuputJAView.xib */; };
+		101EBB8C162AB52A006601A2 /* VSCOSXMIDIOutputJAView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 101EBB8B162AB52A006601A2 /* VSCOSXMIDIOutputJAView.xib */; };
 		101EBB8E162B2E2C006601A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 101EBB8D162B2E2C006601A2 /* QuartzCore.framework */; };
 		101EBB90162B2E3C006601A2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 101EBB8F162B2E3B006601A2 /* CoreGraphics.framework */; };
 		101EBB92162B3022006601A2 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 101EBB91162B3022006601A2 /* ApplicationServices.framework */; };
@@ -207,7 +207,7 @@
 		101EBB6A1629DBCE006601A2 /* NSIndexPath+JAListViewExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSIndexPath+JAListViewExtensions.m"; path = "../../../Submodules/JAListView/NSIndexPath+JAListViewExtensions.m"; sourceTree = "<group>"; };
 		101EBB861629DE75006601A2 /* VSCOSXMIDIOutputJAView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXMIDIOutputJAView.mm; path = ../../MIDI/VSCOSXMIDIOutputJAView.mm; sourceTree = "<group>"; };
 		101EBB8A162A1E1E006601A2 /* VSCOSXMIDIOutputJAView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXMIDIOutputJAView.h; path = ../../MIDI/VSCOSXMIDIOutputJAView.h; sourceTree = "<group>"; };
-		101EBB8B162AB52A006601A2 /* VSCOSXMIDIOuputJAView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXMIDIOuputJAView.xib; path = ../../MIDI/VSCOSXMIDIOuputJAView.xib; sourceTree = "<group>"; };
+		101EBB8B162AB52A006601A2 /* VSCOSXMIDIOutputJAView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXMIDIOutputJAView.xib; path = ../../MIDI/VSCOSXMIDIOutputJAView.xib; sourceTree = "<group>"; };
 		101EBB8D162B2E2C006601A2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		101EBB8F162B2E3B006601A2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		101EBB91162B3022006601A2 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
@@ -1112,7 +1112,7 @@
 		10D7AE8D1628766100DE0F72 /* Cocoa */ = {
 			isa = PBXGroup;
 			children = (
-				101EBB8B162AB52A006601A2 /* VSCOSXMIDIOuputJAView.xib */,
+				101EBB8B162AB52A006601A2 /* VSCOSXMIDIOutputJAView.xib */,
 				101EBB8A162A1E1E006601A2 /* VSCOSXMIDIOutputJAView.h */,
 				101EBB861629DE75006601A2 /* VSCOSXMIDIOutputJAView.mm */,
 				10D7AE941628767F00DE0F72 /* VSCOSXMIDIWindowController.h */,
@@ -1227,7 +1227,7 @@
 				10F6948B156E456500E70049 /* Plugins.cfg in Resources */,
 				10EB5E621629902500E0F030 /* VSCOSXMIDIWindow.xib in Resources */,
 				101EBB471629BEC5006601A2 /* VSCOBOSXSceneWindow.xib in Resources */,
-				101EBB8C162AB52A006601A2 /* VSCOSXMIDIOuputJAView.xib in Resources */,
+				101EBB8C162AB52A006601A2 /* VSCOSXMIDIOutputJAView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

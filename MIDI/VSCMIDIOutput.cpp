@@ -29,6 +29,9 @@ VSC::MIDI::Output::Output(const OutputPort& outputPort) : mState(StateClosed) {
 VSC::MIDI::Output::~Output()
 {
     close();
+    
+    mMIDIOut = RtMidiOutPtr();
+    
     mOutputPort = OutputPortVoid;
 }
 
@@ -121,7 +124,6 @@ void VSC::MIDI::Output::close()
 {
     if (mMIDIOut) {
         mMIDIOut->closePort();
-        mMIDIOut = RtMidiOutPtr();
         mState = StateClosed;
     }
 }

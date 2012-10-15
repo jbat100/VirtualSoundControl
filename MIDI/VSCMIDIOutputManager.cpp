@@ -56,7 +56,7 @@ void VSC::MIDI::OutputManager::refreshOutputs(void)
     
     if (mPortManager) {
         
-        mPortManager->refreshInputPorts();
+        mPortManager->refreshOutputPorts();
         
         OutputPorts ports = mPortManager->getOutputPorts();
         
@@ -69,6 +69,8 @@ void VSC::MIDI::OutputManager::refreshOutputs(void)
                 mOutputs.push_back(output);
             }
         }
+        
+        if (mTrace) std::cout << "Refreshed outputs (got " << mOutputs.size() << " output(s))" << std::endl;
         
     }
     

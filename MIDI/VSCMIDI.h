@@ -62,6 +62,7 @@ namespace VSC {
          */
         
         enum ControlNumber {
+            ControlInvalid                      = 999,
             ControlBankSelect                   = 0,
             ControlModulationWheel              = 1,
             ControlBreath                       = 2,
