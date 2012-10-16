@@ -234,21 +234,33 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
 -(IBAction) sendMidiControlMessage:(id)sender {
     if(self.testMIDIOutput)
     {
-        self.testMIDIOutput->sendControlChange(self.channel, self.controlNumber, self.controlValue);
+        try {
+            self.testMIDIOutput->sendControlChange(self.channel, self.controlNumber, self.controlValue);
+        } catch (VSCInvalidArgumentException& e) {
+            std::cerr << e.what() << "Additional Info: " << e.getValueForKey(VSCBaseExceptionAdditionalInfoKey);
+        }
     }
 }
 
 -(IBAction) sendMidiNoteOnMessage:(id)sender {
     if(self.testMIDIOutput)
     {
-        self.testMIDIOutput->sendNoteOn(self.channel, self.pitch, self.velocity);
+        try {
+            self.testMIDIOutput->sendNoteOn(self.channel, self.pitch, self.velocity);
+        } catch (VSCInvalidArgumentException& e) {
+            std::cerr << e.what() << "Additional Info: " << e.getValueForKey(VSCBaseExceptionAdditionalInfoKey);
+        }
     }
 }
 
 -(IBAction) sendMidiNoteOffMessage:(id)sender {
     if(self.testMIDIOutput)
     {
-        self.testMIDIOutput->sendNoteOff(self.channel, self.pitch, self.velocity);
+        try {
+            self.testMIDIOutput->sendNoteOff(self.channel, self.pitch, self.velocity);
+        } catch (VSCInvalidArgumentException& e) {
+            std::cerr << e.what() << "Additional Info: " << e.getValueForKey(VSCBaseExceptionAdditionalInfoKey);
+        }
     }
 }
 
@@ -257,7 +269,11 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
     if (sender == self.controlValueSlider) {
         if (self.testMIDIOutput)
         {
-            self.testMIDIOutput->sendControlChange(self.channel, self.controlNumber, self.controlValue);
+            try {
+                self.testMIDIOutput->sendControlChange(self.channel, self.controlNumber, self.controlValue);
+            } catch (VSCInvalidArgumentException& e) {
+                std::cerr << e.what() << "Additional Info: " << e.getValueForKey(VSCBaseExceptionAdditionalInfoKey);
+            }
         }
     }
     
