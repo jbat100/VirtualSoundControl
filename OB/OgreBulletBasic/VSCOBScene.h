@@ -4,7 +4,6 @@
 
 #include "OgreBulletDynamics.h"
 #include "VSCOBInputListener.h"
-#include "VSCOBBetaGUIListener.h"
 #include "VSCOBKeyboardAction.h"
 #include "VSCOBKeyBindings.h"
 #include "VSCOBCameraController.h"
@@ -27,9 +26,16 @@ namespace VSC {
          *  to represent it. It offers APIs to create and control elements (through its factory). It does
          *  not however respond directly to user input. Use VSC::OB::SceneController for that.
          */
+        
+        class Application;
 
         class Scene : public boost::enable_shared_from_this<Scene>
         {
+            
+        private:
+            
+            typedef boost::shared_ptr<Application>  Application_SPtr;
+            typedef boost::weak_ptr<Application>    Application_WPtr;
             
         public:
             
@@ -295,7 +301,8 @@ namespace VSC {
              */
             Scene();
             virtual ~Scene(){ /* shutdown(); // calling shutdown in destructor causes problems */  };
-            virtual void init(Ogre::Root *root, Ogre::RenderWindow *win);
+            
+            virtual void init(Application_SPtr application);
 
             /**--------------------------------------------------------------
              *  Setup/Teardown 
@@ -303,9 +310,9 @@ namespace VSC {
             virtual void shutdown();
             
             /**--------------------------------------------------------------
-             *  Camera
+             *  Application
              */
-            bool resetCameraAspectRatio(void);
+            Application_SPtr getApplication(void) {return mApplication.lock();}
             
             /**--------------------------------------------------------------
              *  Factory and Element weak_ptr container
@@ -337,10 +344,7 @@ namespace VSC {
              */
             
             OgreBulletDynamics::DynamicsWorld* getDynamicsWorld(void) {return mWorld;}
-            Ogre::RenderWindow* getRenderWindow(void) {return mWindow;}
-            Ogre::Root* getRoot(void) {return mRoot;}
-            Ogre::SceneManager* getSceneManager(void) {return mSceneMgr;}
-            Ogre::Camera* getCamera(void) {return mCamera;}
+            Ogre::SceneManager* getSceneManager(void) {return mSceneManager;}
             LightMap& getLightMap(void) {return mLightMap;}
             
             /**--------------------------------------------------------------
@@ -447,24 +451,37 @@ namespace VSC {
             void setDynamicsWorld(OgreBulletDynamics::DynamicsWorld* world) {mWorld = world;}
             void setRenderWindow(Ogre::RenderWindow* window) {mWindow = window;}
             void setRoot(Ogre::Root* root) {mRoot = root;}
-            void setSceneManager(Ogre::SceneManager* manager) {mSceneMgr = manager;}
-            void setCamera(Ogre::Camera* camera) {mCamera = camera;}
+
+            
+            
+            virtual void createSceneManager(void);
             
         private:
+            
+            Application_WPtr                        mApplication;
             
             ElementFactory::SPtr                    mElementFactory;
             Elements                                mElements;
             CollisionDetector::SPtr                 mCollisionDetector;
             
-            OgreBulletDynamics::DynamicsWorld       *mWorld;
-            Ogre::RenderWindow                      *mWindow;
-            Ogre::Root                              *mRoot;
-            Ogre::SceneManager                      *mSceneMgr;
-            Ogre::Camera                            *mCamera;
+            OgreBulletDynamics::DynamicsWorld*      mWorld;
+            Ogre::RenderWindow*                     mWindow;
+            Ogre::Root*                             mRoot;
+            Ogre::SceneManager*                     mSceneManager;
+            Ogre::Camera*                           mCamera;
             LightMap                                mLightMap;
             Ogre::ShadowTechnique                   mCurrentShadowTechnique;
             
             StatsMap                                mStatsMap;
+            
+            OgreBulletCollisions::DebugLines*       mDebugRayLine;
+            Ogre::String                            mDebugText;
+            Ogre::String                            mName;
+            
+            static size_t                           mNumEntitiesInstanced;
+            
+            static const bool                       mTraceFrame = false;
+            static const bool                       mTraceUI = false;
             
             bool mDoOneStep;
             bool mPaused;
@@ -477,15 +494,6 @@ namespace VSC {
             
             bool mDisableBulletLCP;
             bool mEnableCCD;
-            
-            OgreBulletCollisions::DebugLines    *mDebugRayLine;
-            Ogre::String                        mDebugText;
-            Ogre::String                        mName;
-            
-            static size_t mNumEntitiesInstanced;
-            
-            static const bool mTraceFrame = false;
-            static const bool mTraceUI = false;
             
             /*
              *  Useful?

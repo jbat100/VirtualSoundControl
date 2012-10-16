@@ -445,7 +445,7 @@ void VSC::OB::Scene::CollisionDetector::removeCollision(Collision::SPtr collisio
 VSC::OB::Scene::Scene() :
 mCamera(0),
 mRoot(0),
-mSceneMgr(0),
+mSceneManager(0),
 mWindow(0),
 mWorld(0),
 mPaused(false),
@@ -456,19 +456,27 @@ mDebugRayLine(0)
 
 // -------------------------------------------------------------------------
 
-void VSC::OB::Scene::init(Ogre::Root *root, Ogre::RenderWindow *win)
+void VSC::OB::Scene::init(Application_SPtr application)
 {
+    BOOST_ASSERT(application);
+    if(!application) return;
+    
+    mApplication = Application_WPtr(application);
+    
     /*
      *  A bit of OGRE reading ...
      *  - Ogre::Root http://www.ogre3d.org/docs/api/html/classOgre_1_1Root.html
      *  - Ogre::RenderWindow http://www.ogre3d.org/docs/api/html/classOgre_1_1RenderWindow.html
      */
     
-    mRoot = root;
-    mWindow = win;
+    Ogre::Root* root = application->getRoot();
+    Ogre::SceneManager* sceneManager = this->getSceneManager();
+    
+    BOOST_ASSERT(root);
+    BOOST_ASSERT(sceneManager);
+    if (!(root && sceneManage)) return;
 
-    /******************* CREATESHADOWS If not debug mode ***************************/
-#ifndef _DEBUG
+#ifndef _DEBUG // Create shadows if not debug mode
     
     // Should we set the shadow technique once and for all? http://www.ogre3d.org/docs/manual/manual_70.html
     
@@ -479,11 +487,11 @@ void VSC::OB::Scene::init(Ogre::Root *root, Ogre::RenderWindow *win)
      *  NOTE: Ogre::SceneManager is an absolutely massive class http://www.ogre3d.org/docs/api/html/classOgre_1_1SceneManager.html
      */
     
-	mSceneMgr->setShadowColour(Ogre::ColourValue(0.5, 0.5, 0.5));
+	sceneManager->setShadowColour(Ogre::ColourValue(0.5, 0.5, 0.5));
 
 	Ogre::PixelFormat pxlFmt = Ogre::PF_L8;
     
-	if (mRoot->getRenderSystem()->getCapabilities()->hasCapability(RSC_TEXTURE_FLOAT))
+	if (root->getRenderSystem()->getCapabilities()->hasCapability(RSC_TEXTURE_FLOAT))
 	{
 		const bool isOpenGL = (Ogre::Root::getSingleton().getRenderSystem()->getName().find("GL") != Ogre::String::npos);
         
@@ -501,10 +509,9 @@ void VSC::OB::Scene::init(Ogre::Root *root, Ogre::RenderWindow *win)
 	{
 		String CUSTOM_CASTER_MATERIAL("Ogre/DepthShadowmap/Caster/Float");
 		String CUSTOM_RECEIVER_MATERIAL("Ogre/DepthShadowmap/Receiver/Float");
-		mSceneMgr->setShadowTextureSelfShadow(true);
-		mSceneMgr->setShadowTextureCasterMaterial(CUSTOM_CASTER_MATERIAL);
-		mSceneMgr->setShadowTextureReceiverMaterial(CUSTOM_RECEIVER_MATERIAL + "/PCF");
-		//mSceneMgr->setShadowTextureReceiverMaterial(CUSTOM_RECEIVER_MATERIAL);
+		sceneManager->setShadowTextureSelfShadow(true);
+		sceneManager->setShadowTextureCasterMaterial(CUSTOM_CASTER_MATERIAL);
+		sceneManager->setShadowTextureReceiverMaterial(CUSTOM_RECEIVER_MATERIAL + "/PCF");
 	}
 
 	/**
@@ -516,22 +523,23 @@ void VSC::OB::Scene::init(Ogre::Root *root, Ogre::RenderWindow *win)
 	mLiSPSMSetup->setUseAggressiveFocusRegion(true);
 	//mLiSPSMSetup->setUseSimpleOptimalAdjust(true);
 	mLiSPSMSetup->setOptimalAdjustFactor(1.1f);
-	mSceneMgr->setShadowCameraSetup(Ogre::ShadowCameraSetupPtr(mLiSPSMSetup));
+	sceneManager->setShadowCameraSetup(Ogre::ShadowCameraSetupPtr(mLiSPSMSetup));
 
-	mSceneMgr->setShadowTechnique(mCurrentShadowTechnique);
-	if (mRoot->getRenderSystem()->getCapabilities()->hasCapability(RSC_HWRENDER_TO_TEXTURE))
+	sceneManager->setShadowTechnique(mCurrentShadowTechnique);
+	if (root->getRenderSystem()->getCapabilities()->hasCapability(RSC_HWRENDER_TO_TEXTURE))
 	{
 		// In D3D, use a 1024x1024 shadow texture
-		mSceneMgr->setShadowTextureSettings(2048, 2, pxlFmt);
+		sceneManager->setShadowTextureSettings(2048, 2, pxlFmt);
 	}
 	else
 	{
 		// Use 512x512 texture in GL since we can't go higher than the window res
-		mSceneMgr->setShadowTextureSettings(512, 2, pxlFmt);
+		sceneManager->setShadowTextureSettings(512, 2, pxlFmt);
 	}
 #endif // _DEBUG
     
-    this->setCollisionDetector(CollisionDetector::SPtr(new CollisionDetector(Scene::WPtr(shared_from_this()))));
+    Scene::WPtr weakThis = Scene::WPtr(shared_from_this());
+    this->setCollisionDetector(CollisionDetector::SPtr(new CollisionDetector(weakThis)));
     
     /**
      *  Nothing is enabled by default...
@@ -561,12 +569,12 @@ void VSC::OB::Scene::setupFactory()
 void VSC::OB::Scene::setupLights()
 {
     // Set ambient light
-    mSceneMgr->setAmbientLight(ColourValue(0.4, 0.4, 0.4));
+    sceneManager->setAmbientLight(ColourValue(0.4, 0.4, 0.4));
     
     Ogre::Light* l = 0;
     
 	// Fixed light, dim
-    l = mSceneMgr->createLight("Sunlight");
+    l = sceneManager->createLight("Sunlight");
  	l->setPosition(0.0, 30.5, 0.0);
  	l->setCastShadows(false);
  	l->setType(Ogre::Light::LT_POINT);
@@ -576,7 +584,7 @@ void VSC::OB::Scene::setupLights()
     mLightMap.insert(LightMap::value_type("Sunlight", l));
 
 	// Point light, movable, reddish
-	l = mSceneMgr->createLight("Spot1");
+	l = sceneManager->createLight("Spot1");
 	l->setType(Light::LT_SPOTLIGHT);
 	l->setPosition(100.0, 80.5,-10.0);
 	l->setSpotlightRange(Degree(30), Degree(50));
@@ -588,7 +596,7 @@ void VSC::OB::Scene::setupLights()
 	l->setSpecularColour(0.1, 0.1, 0.3);
     mLightMap.insert(LightMap::value_type("Spot1", l));
 
-	l = mSceneMgr->createLight("Spot2");
+	l = sceneManager->createLight("Spot2");
 	l->setType(Light::LT_SPOTLIGHT);
 	l->setPosition(-100.0, 80.5, 10.0);
 	l->setSpotlightRange(Degree(30), Degree(50));
@@ -606,7 +614,7 @@ OgreBulletCollisions::DebugLines* VSC::OB::Scene::getDebugRayLines()
     if (mDebugRayLine == 0)
     {
         mDebugRayLine = new OgreBulletCollisions::DebugLines();
-        mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(mDebugRayLine);
+        sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(mDebugRayLine);
     }
     
     return mDebugRayLine;
@@ -679,15 +687,15 @@ void VSC::OB::Scene::shutdown ()
         mWorld = 0;
     }
     
-    if (mSceneMgr) {
+    if (sceneManager) {
         if (mCamera) {
-            mSceneMgr->destroyCamera(mCamera->getName());
+            sceneManager->destroyCamera(mCamera->getName());
         }
         mCamera = 0;
         if (mRoot) {
-            mRoot->destroySceneManager(mSceneMgr);
+            mRoot->destroySceneManager(sceneManager);
         }
-        mSceneMgr = 0;
+        sceneManager = 0;
     }
     
     if (mWindow) {
@@ -867,14 +875,14 @@ bool VSC::OB::Scene::checkIfEnoughPlaceToAddObject(float minDist)
 void VSC::OB::Scene::initWorld(const Ogre::Vector3 &gravityVector, const Ogre::AxisAlignedBox &bounds)
 {
     // Start Bullet
-    mWorld = new OgreBulletDynamics::DynamicsWorld(mSceneMgr, bounds, gravityVector, true, true, 10000);
+    mWorld = new OgreBulletDynamics::DynamicsWorld(sceneManager, bounds, gravityVector, true, true, 10000);
 
     // add Debug info display tool
     OgreBulletCollisions::DebugDrawer *debugDrawer = new OgreBulletCollisions::DebugDrawer();
 
     mWorld->setDebugDrawer(debugDrawer);
 
-    Ogre::SceneNode *node = mSceneMgr->getRootSceneNode()->createChildSceneNode("DebugDrawer", Ogre::Vector3::ZERO);
+    Ogre::SceneNode *node = sceneManager->getRootSceneNode()->createChildSceneNode("DebugDrawer", Ogre::Vector3::ZERO);
     node->attachObject (static_cast<SimpleRenderable*>(debugDrawer));
 }
 

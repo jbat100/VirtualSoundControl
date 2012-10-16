@@ -22,7 +22,7 @@ namespace VSC {
     
     namespace OB {
         
-        class Application : public ApplicationBase,  public Ogre::FrameListener
+        class Application : public InputListener, public KeyBound, public Ogre::FrameListener, public boost::enable_shared_from_this<ApplicationBase>
         {
             
         public:
@@ -32,6 +32,23 @@ namespace VSC {
             
             typedef std::vector<Scene::SPtr>        Scenes;
             
+            /*
+             *  Bridge pattern to implement platform dependent functionality
+             */
+            
+            class Bridge {
+                
+            public:
+                
+                typedef boost::shared_ptr<Bridge>   SPtr;
+                
+                const std::string getResourcePath(void) {return mResourcePath;}
+                
+            private:
+                
+                std::string mResourcePath;
+            };
+            
             /*------------------------------------------------------
              *  Constructor / Destructor
              */
@@ -39,20 +56,18 @@ namespace VSC {
             Application(const Scenes& scenes);
             ~Application();
             
-            #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-            bool setupWithOgreView(void* ogreView);
-            #endif   
+            bool init(void);
             
             /*------------------------------------------------------
              *  Scenes stuff
              */
             
+            void addScene(Scene::SPtr scene);
+            void removeScene(Scene::SPtr scene);
             Scene::SPtr sceneWithName(Ogre::String name);
-            bool switchToScene(Scene::SPtr newScene);
-            bool switchToSceneWithName(Ogre::String sceneName);
-            Scene::SPtr getCurrentScene(void) {return mBulletScene;}
-            std::vector<Ogre::String> getSceneNames(void);
-            const Scenes& getScenes(void) {return mBulletScenes;}
+            const Scenes& getScenes(void) {return mScenes;}
+            
+            void setActiveScene(Scene::SPtr scene);
             
             /*------------------------------------------------------
              *  Scene Controllers
@@ -68,7 +83,7 @@ namespace VSC {
              *  Collision Listeners
              */
             
-            IM::CollisionMapper::SPtr     getCollisionMapper(void) {return mCollisionMapper;}
+            IM::CollisionMapper::SPtr getCollisionMapper(void) {return mCollisionMapper;}
             void setCollisionMapper(IM::CollisionMapper::SPtr listener) {mCollisionMapper = listener;}
             
             /*------------------------------------------------------
@@ -76,17 +91,31 @@ namespace VSC {
              */
             
             virtual bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+            
+            /*
+             *  Ogre Setters/Getters
+             */
+            
+            Ogre::Root* getRoot(void) {return mRoot;}
+            
+            /*
+             *  Other Setters/Getters
+             */
+            
+            KeyboardManager::SPtr getKeyboardManager(void) const {return mKeyboardManager;}
+            void setKeyboardManager(KeyboardManager::SPtr manager) {mKeyboardManager = manager;}
+
 
         protected:
             
-            // Override stuff from the base class
-            void createScene(void){};	
-            void chooseSceneManager(void){};
-            void createCamera(void){};
-            void createViewports(void){};
 
-            void createFrameListener(void);
-            // Add the standard resources, plus our own pack
+            virtual bool createOgreRoot(void);
+            virtual void setupResources(void);
+            
+            virtual void createResourceListener(void); 
+            virtual void loadResources(void);
+
+
             void setupResources(void);
             void loadResources(void);
 
@@ -95,18 +124,22 @@ namespace VSC {
             
         private:
             
-            Scene::SPtr                     mBulletScene;
-            Scenes                          mBulletScenes;
+            Bridge::SPtr                    mBridge;
+            
+            Scene::SPtr                     mActiveScene;
+            Scenes                          mScenes;
             
             SceneController::SPtr           mSceneController;
-            
             CameraController::SPtr          mCameraController;
-            
             IM::CollisionMapper::SPtr       mCollisionMapper;
             
-            static const bool mTraceUI = true;
-            static const bool mTraceFrame = false;
-            static const bool mTraceScene = true;
+            Ogre::Root*                     mRoot;
+            
+            KeyboardManager::SPtr           mKeyboardManager;
+            
+            static const bool               mTraceUI = true;
+            static const bool               mTraceFrame = false;
+            static const bool               mTraceScene = true;
 
 
         };

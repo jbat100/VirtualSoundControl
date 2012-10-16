@@ -33,25 +33,8 @@ namespace VSC {
             typedef boost::shared_ptr<ApplicationBase>  SPtr;
             typedef boost::weak_ptr<ApplicationBase>    WPtr;
             
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-            friend class OSXApplicationSetup;
-#endif
-            
-            /// Standard constructor
             ApplicationBase();
-            /// Standard destructor
             virtual ~ApplicationBase();
-            
-            #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-            friend class OSXApplicationSetup;
-            virtual bool setupWithOgreView(void* ogreView);
-            #else   
-            /// Start the example
-            virtual void go(void);
-            // These internal methods package up the stages in the startup process
-            /** Sets up the application - returns false if the user chooses to abandon configuration. */
-            virtual bool setup(void);
-            #endif
             
             /*
              *  Ogre Setters/Getters
@@ -82,7 +65,7 @@ namespace VSC {
             
             /** Configures the application - returns false if the user chooses to abandon configuration. */
             virtual bool createOgreRoot(void);
-            virtual void createSceneManager(void);
+            
             virtual void createCamera(void);
 
             
