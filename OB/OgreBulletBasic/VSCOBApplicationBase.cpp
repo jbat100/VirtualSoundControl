@@ -25,7 +25,6 @@ Description: Base class for all the OGRE examples
 #include <Ogre/OSX/macUtils.h>
 #endif
 
-#include "VSCOBOSXApplicationSetup.h"
 #include "VSCOBApplicationBase.h"
 #include "VSCOBInputAdapter.h"
 
@@ -165,7 +164,7 @@ bool VSC::OB::ApplicationBase::configure(void)
     }
 }
 
-void VSC::OB::ApplicationBase::chooseSceneManager(void)
+void VSC::OB::ApplicationBase::createSceneManager(void)
 {
     // Create the SceneManager, in this case a generic one
     mSceneMgr = mRoot->createSceneManager(ST_GENERIC, "ExampleSMInstance");

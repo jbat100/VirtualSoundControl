@@ -1,22 +1,4 @@
-/*
------------------------------------------------------------------------------
-This source file is part of OGRE
-(Object-oriented Graphics Rendering Engine)
-For the latest info, see http://www.ogre3d.org/
 
-Copyright (c) 2000-2006 Torus Knot Software Ltd
-Also see acknowledgements in Readme.html
-
-You may use this sample code for anything you like, it is not covered by the
-LGPL like the rest of the engine.
------------------------------------------------------------------------------
-*/
-/*
------------------------------------------------------------------------------
-Filename:    VSCOgreApplication.h
-Description: Base class for all the OGRE examples
------------------------------------------------------------------------------
-*/
 
 #ifndef _VSC_OGRE_APPLICATION_H_
 #define _VSC_OGRE_APPLICATION_H_
@@ -94,12 +76,6 @@ namespace VSC {
 
         protected:
             
-            Ogre::Root                      *mRoot;
-            Ogre::Camera                    *mCamera;
-            Ogre::SceneManager              *mSceneMgr;
-            Ogre::RenderWindow              *mWindow;
-            Ogre::String                    mResourcePath;
-            
             /*
              *  NOTE: This is probably where the fun is in terms of making the application run on Cocoa
              */
@@ -110,6 +86,7 @@ namespace VSC {
             virtual void createCamera(void);
             virtual void destroyScene(void){}    // Optional to override this
             virtual void createViewports(void);
+            
             virtual void setupResources(void); // Method which will define the source of resources (other than current folder)
             virtual void createResourceListener(void); // Optional override method where you can create resource listeners (e.g. for loading screens)
             /// Optional override method where you can perform resource group loading
@@ -118,7 +95,13 @@ namespace VSC {
             
         private:
             
-            KeyboardManager::SPtr   mKeyboardManager;
+            Ogre::Root                      *mRoot;
+            Ogre::Camera                    *mCamera;
+            Ogre::SceneManager              *mSceneMgr;
+            Ogre::RenderWindow              *mWindow;
+            Ogre::String                    mResourcePath;
+            
+            KeyboardManager::SPtr mKeyboardManager;
             
             static const bool mTraceUI = true;
 
