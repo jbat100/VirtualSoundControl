@@ -43,7 +43,7 @@ std::string VSC::MIDI::Output::getDescription(void)
     
     std::stringstream stream;
     
-    stream << mOutputPort.number << " - " << mOutputPort.name << mOutputPort.name << (mOutputPort.isVirtual ? " (Virtual)" : "");
+    stream << mOutputPort.number << " - " << mOutputPort.name << (mOutputPort.isVirtual ? " (Virtual)" : "");
     
     return stream.str();
 }

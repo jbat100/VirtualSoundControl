@@ -31,6 +31,8 @@
 -(IBAction) refreshInputs:(id)sender;
 -(IBAction) refreshOutputs:(id)sender;
 
+-(void) updateMIDIOutputInterface;
+
 /*
  *  MIDI Testing 
  */

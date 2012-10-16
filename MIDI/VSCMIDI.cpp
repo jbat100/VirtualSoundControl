@@ -294,7 +294,7 @@ VSC::MIDI::Message VSC::MIDI::MessageGenerator::messageForControlChange(unsigned
     if (channel > 16 || channel < 1) 
         throw VSCInvalidArgumentException("Channel must be > 0 and < 17");
     if (control > 127) 
-        throw VSCInvalidArgumentException("Pitch must < 128");
+        throw VSCInvalidArgumentException("Control must < 128");
     if (value > 127) 
         throw VSCInvalidArgumentException("Pressure must < 128");
     

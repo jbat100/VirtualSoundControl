@@ -21,6 +21,7 @@
 #import "VSCMIDI.h"
 #import "VSCMIDIOutput.h"
 #import "VSCMIDIOutputManager.h"
+#import "VSCException.h"
 
 //#import "OgreOSXCocoaView.h"
 
@@ -35,11 +36,32 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    /*
+     *  Create application manager, and setup midi output manager
+     */
+    
     self.applicationManager = [[VSCOSXApplicationManager alloc] init];
     BOOST_ASSERT(self.applicationManager.ogreBulletSceneWindowController.ogreBulletSceneView);
     
     self.applicationManager.midiOutputManager = VSC::MIDI::OutputManager::singletonManager();
     BOOST_ASSERT(self.applicationManager.midiOutputManager);
+    
+    
+    /*
+     *  Refresh outputs and open them all
+     */
+    
+    self.applicationManager.midiOutputManager->refreshOutputs();
+    
+    const VSC::MIDI::Outputs& outputs = self.applicationManager.midiOutputManager->getOutputs();
+    BOOST_FOREACH(VSC::MIDI::Output::SPtr output, outputs)
+    {
+        try {
+            output->open();
+        } catch (VSCMIDIException& e) {
+            std::cerr << e.what() << " - Additional info: " << e.getValueForKey(VSCBaseExceptionAdditionalInfoKey) << std::endl;
+        }
+    }
     
     [self setupOgreBulletApplication];
     

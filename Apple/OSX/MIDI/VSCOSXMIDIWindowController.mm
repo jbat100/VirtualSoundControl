@@ -21,7 +21,6 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
 
 @interface VSCOSXMIDIWindowController ()
 
--(void) updateTestMIDIOutputs;
 -(void) initTest;
 
 @end
@@ -85,7 +84,7 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
     [self.controlValueSlider setMinValue:0.0];
     [self.controlValueSlider setMaxValue:127.0];
     
-    [self updateTestMIDIOutputs];
+    [self updateMIDIOutputInterface];
     [self updateControlNumbers];
     
 }
@@ -130,8 +129,17 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
 }
 
 
--(void) updateTestMIDIOutputs
+-(void) updateMIDIOutputInterface
 {
+    /*
+     *  Main output tab
+     */
+    
+    [self.midiOutputsListView reloadData];
+    
+    /*
+     *  Test output
+     */
     
     [self.midiOutputPopUpButton removeAllItems];
     
@@ -219,9 +227,7 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
         NSLog(@"No MIDI output manager");
     }
     
-    [self.midiOutputsListView reloadData];
-    
-    [self updateTestMIDIOutputs];
+    [self updateMIDIOutputInterface];
 }
 
 
