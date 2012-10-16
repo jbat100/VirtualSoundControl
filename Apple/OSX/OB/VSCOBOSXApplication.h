@@ -1,30 +1,23 @@
 
 
-#ifndef _VSC_OGRE_APPLICATION_COCOA_SETUP_H_
-#define _VSC_OGRE_APPLICATION_COCOA_SETUP_H_
+#ifndef _VSC_OB_OSX_APPLICATION_H_
+#define _VSC_OB_OSX_APPLICATION_H_
 
 #import <Ogre/Ogre.h>
 
-#include "VSCOBApplicationBase.h"
+#include "VSCOBApplication.h"
 
 namespace VSC {
     
     namespace OB {
 
-        class ApplicationBase;
-        class InputListener;
-        class OSXInputAdapter;
-
-        class OSXApplicationSetup
-        {
+        class OSXApplication : public Application {
             
-        public:
             
-            static bool setupApplicationWithOgreView(ApplicationBase::SPtr ogreApplication, void* ogreView);
-
-        };
+            
+        }
         
     }
 }
 
-#endif//_VSC_OGRE_APPLICATION_COCOA_SETUP_H_
+#endif//_VSC_OB_OSX_APPLICATION_H_

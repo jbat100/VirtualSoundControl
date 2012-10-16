@@ -1,6 +1,6 @@
 
 
-#import "VSCOBOSXApplication.h"
+#import "VSCOBOSXApplicationSetup.h"
 
 #import <Cocoa/Cocoa.h>
 
@@ -19,12 +19,6 @@
 #include "OgreOSXCocoaWindow.h"
 
 #import "VSCOBOSXSceneView.h"
-
-
-
-
-
-
 
 bool VSC::OB::OSXApplicationSetup::setupApplicationWithOgreView(ApplicationBase::SPtr obApplication, void* rawOgreView)
 {

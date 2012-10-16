@@ -37,21 +37,8 @@ mSceneMgr(0),
 mWindow(0)
 {
     
-    /*
-     *  Provide a cross platform solution for locating the configuration files
-     *  On windows files are searched for in the current working directory, on OS X however
-     *  you must provide the full path, the helper function macBundlePath does this for us.
-     *
-     *  Ultimately, this should probably be done through a public API by the master Application
-     *  offering configurable resourced file paths.
-     */
-    
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     mResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";
-#else
-    mResourcePath = "";
-#endif
-    std::cout << "Resource path is : " << mResourcePath << std::endl;
+
     
     /*
      *  Create a default keyboard manager and set bindings to default
@@ -69,7 +56,6 @@ VSC::OB::ApplicationBase::~ApplicationBase()
         OGRE_DELETE mRoot;
 }
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 bool VSC::OB::ApplicationBase::setupWithOgreView(void* ogreView) {
     
     VSC::OB::OSXApplicationSetup::setupApplicationWithOgreView(shared_from_this(), ogreView);
@@ -86,83 +72,8 @@ bool VSC::OB::ApplicationBase::setupWithOgreView(void* ogreView) {
     return true;
     
 }
-#else
-/// Start the example
-void VSC::OB::ApplicationBase::go(void)
-{    
-    if (!setup())
-        return;
-    mRoot->startRendering();
-    // clean up
-    destroyScene();
-}
-// These internal methods package up the stages in the startup process
-/** Sets up the application - returns false if the user chooses to abandon configuration. */
-bool VSC::OB::ApplicationBase::setup(void)
-{
-    
-    
-    if (mSetupType == SetupTypeDefault) {
-        String pluginsPath;
-        String pluginsName = "plugins.cfg";
-        
-        // only use plugins.cfg if not static
-        #ifndef OGRE_STATIC_LIB
-        #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-        #ifdef _DEBUG
-        pluginsName = "plugins_d.cfg";
-        #else
-        pluginsName = "plugins.cfg";
-        #endif
-        #endif
-        pluginsPath = mResourcePath + pluginsName;
-        #endif
-        mRoot = OGRE_NEW Root(pluginsPath, mResourcePath + "ogre.cfg", mResourcePath + "Ogre.log");
-        setupResources();
-        bool carryOn = configure();
-        if (!carryOn) return false;
-        
-        chooseSceneManager();
-        createCamera();
-        createViewports();
-        
-        // Set default mipmap level (NB some APIs ignore this)
-        TextureManager::getSingleton().setDefaultNumMipmaps(5);
-        
-        createResourceListener(); // Create any resource listeners (for loading screens)
-        loadResources();
-        createScene();
-        createFrameListener();
-    }
-    
-    
-    return true;
-    
-}
-#endif
 
-/*
- *  NOTE: This is probably where the fun is in terms of making the application run on Cocoa
- */
 
-/** Configures the application - returns false if the user chooses to abandon configuration. */
-bool VSC::OB::ApplicationBase::configure(void)
-{
-    // Show the configuration dialog and initialise the system
-    // You can skip this and use root.restoreConfig() to load configuration
-    // settings if you were sure there are valid ones saved in ogre.cfg
-    if(mRoot->showConfigDialog())
-    {
-        // If returned true, user clicked OK so initialise
-        // Here we choose to let the system create a default rendering window by passing 'true'
-        mWindow = mRoot->initialise(true);
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
 
 void VSC::OB::ApplicationBase::createSceneManager(void)
 {

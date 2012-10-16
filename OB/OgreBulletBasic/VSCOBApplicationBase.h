@@ -81,10 +81,11 @@ namespace VSC {
              */
             
             /** Configures the application - returns false if the user chooses to abandon configuration. */
-            virtual bool configure(void);
-            virtual void chooseSceneManager(void);
+            virtual bool createOgreRoot(void);
+            virtual void createSceneManager(void);
             virtual void createCamera(void);
-            virtual void destroyScene(void){}    // Optional to override this
+
+            
             virtual void createViewports(void);
             
             virtual void setupResources(void); // Method which will define the source of resources (other than current folder)
