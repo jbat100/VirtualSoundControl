@@ -14,7 +14,7 @@
 namespace VSC {
     
     template<typename Context, typename Vector2>
-    class InterfaceAdapter : public boost::enable_shared_from_this<InterfaceAdapter<Context, Vector2> >
+    class InterfaceAdapter : public boost::enable_shared_from_this< InterfaceAdapter<Context, Vector2> >
     {
         
     public:
@@ -61,6 +61,40 @@ namespace VSC {
         };
         
         typedef std::vector<typename Responder::WPtr> Responders;
+        
+        class ResponderChain : public Responder {
+            
+        public:
+            
+            typedef boost::shared_ptr<ResponderChain>   SPtr;
+            typedef boost::weak_ptr<ResponderChain>     WPtr;
+            
+            ResponderChain() {}
+            virtual ~ResponderChain() {}
+            
+            const Responders& getResponders(void);
+            
+            void appendResponder(typename Responder::SPtr responder);
+            void prependResponder(typename Responder::SPtr responder);
+            void insertResponderAfterResponder(typename Responder::SPtr newResponder, typename Responder::SPtr responder);
+            void insertResponderBeforeResponder(typename Responder::SPtr newResponder, typename Responder::SPtr responder);
+            
+            virtual void removeResponder(typename Responder::SPtr responder);
+            virtual void removeAllResponders(void);
+            
+            bool containsResponder(typename Responder::SPtr responder);
+            
+        protected:
+            
+            virtual void chainSceneControllers(void);
+            
+            virtual void insertResponder(typename Responder::SPtr responder, typename Responders::iterator it);
+            
+        private:
+            
+            Responders    mResponders;
+            
+        };
         
         
         InterfaceAdapter(void);
@@ -133,9 +167,9 @@ namespace VSC {
         
         OIS::Keyboard::Modifier         mCurrentModifier;
         
-        Vector2                    mLastMousePosition;
-        Vector2                    mLastMouseMovement;
-        Vector2                    mBufferedMouseMovement;
+        Vector2                         mLastMousePosition;
+        Vector2                         mLastMouseMovement;
+        Vector2                         mBufferedMouseMovement;
         
     };
     

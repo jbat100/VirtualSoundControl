@@ -14,9 +14,9 @@ namespace VSC {
     
     namespace OB {
         
-        class InterfaceAdapter
+        class VSC::InterfaceAdapter<Ogre::RenderWindow, Ogre::Vector2> InterfaceAdapter;
 
-        class InterfaceResponder : public
+        class VSC::InterfaceAdapter<Ogre::RenderWindow, Ogre::Vector2>::Responder Responder;
         
     }
 }

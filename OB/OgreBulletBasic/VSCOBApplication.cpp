@@ -213,6 +213,8 @@ void VSC::OB::Application::setupResources(void)
 // -------------------------------------------------------------------------
 void VSC::OB::Application::loadResources(void)
 {
+    ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+    
 	Ogre::ResourceGroupManager *rsm = Ogre::ResourceGroupManager::getSingletonPtr();
 	Ogre::StringVector groups = rsm->getResourceGroups();      
 	for (Ogre::StringVector::iterator it = groups.begin(); it != groups.end(); ++it)

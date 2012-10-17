@@ -1,5 +1,6 @@
 
 #include "VSCInterfaceAdapter.h"
+#include "VSCException.h"
 
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
@@ -344,5 +345,110 @@ bool VSC::InterfaceAdapter<Context, Vector2>::Responder::modifierChanged(const C
 }
 
 
+// MARK: ResponderChain
+
+template<typename Context, typename Vector2>
+void VSC::InterfaceAdapter<Context, Vector2>::ResponderChain::appendResponder(typename Responder::SPtr responder)
+{
+    typename Responders::iterator it = mResponders.end();
+    this->insertResponder(responder, it);
+}
+
+template<typename Context, typename Vector2>
+void VSC::InterfaceAdapter<Context, Vector2>::ResponderChain::prependResponder(typename Responder::SPtr responder)
+{
+    typename Responders::iterator it = mResponders.begin();
+    this->insertResponder(responder, it);
+}
+
+template<typename Context, typename Vector2>
+void VSC::InterfaceAdapter<Context, Vector2>::ResponderChain::insertResponderAfterResponder(typename Responder::SPtr newResponder,
+                                                                                            typename Responder::SPtr responder)
+{
+    BOOST_ASSERT(responder);
+    
+    if (responder) {
+        typename Responders::const_iterator it = std::find(mResponders.begin(), mResponders.end(), responder);
+        BOOST_ASSERT(it != mResponders.end());
+        if (it != mResponders.end()) this->insertResponder(responder, ++it);
+    }
+}
+
+template<typename Context, typename Vector2>
+void VSC::InterfaceAdapter<Context, Vector2>::ResponderChain::insertResponderBeforeResponder(typename Responder::SPtr newResponder,
+                                                                                             typename Responder::SPtr responder)
+{
+    BOOST_ASSERT(responder);
+    
+    if (responder) {
+        typename Responders::const_iterator it = std::find(mResponders.begin(), mResponders.end(), responder);
+        BOOST_ASSERT(it != mResponders.end());
+        if (it != mResponders.end()) this->insertResponder(responder, it);
+    }
+}
+
+template<typename Context, typename Vector2>
+void VSC::InterfaceAdapter<Context, Vector2>::ResponderChain::removeResponder(typename Responder::SPtr responder)
+{
+    BOOST_ASSERT(responder);
+    
+    if (responder) {
+        typename Responders::const_iterator it = std::find(mResponders.begin(), mResponders.end(), responder);
+        BOOST_ASSERT(it != mResponders.end());
+        if (it != mResponders.end()) mResponders.erase(it);
+    }
+}
+
+template<typename Context, typename Vector2>
+void VSC::InterfaceAdapter<Context, Vector2>::ResponderChain::removeAllResponders(void)
+{
+    mResponders.clear();
+}
+
+template<typename Context, typename Vector2>
+void VSC::InterfaceAdapter<Context, Vector2>::ResponderChain::chainSceneControllers(void)
+{
+    if (mResponders.size() < 1) return;
+    
+    typename Responders::iterator it = mResponders.begin();
+    typename Responders::iterator nextIt = it; ++nextIt;
+    
+    this->setNextResponder((*it).lock());
+    
+    while (nextIt != mResponders.end()) {
+        typename Responder::SPtr responder = (*it)->lock();
+        typename Responder::SPtr nextResponder = (*nextIt)->lock();
+        responder->setNextResponder(nextResponder);
+    }
+}
+
+template<typename Context, typename Vector2>
+void VSC::InterfaceAdapter<Context, Vector2>::ResponderChain::insertResponder(typename Responder::SPtr responder, typename Responders::iterator it)
+{
+    BOOST_ASSERT(responder);
+    
+    if (this->containsResponder(responder))
+        throw VSCInvalidArgumentException("Cannot insert a responder in a chain which already contains it");
+
+    
+    if (responder) {
+        mResponders.insert(it, Responder::WPtr(responder));
+        this->chainSceneControllers();
+    }
+}
+
+template<typename Context, typename Vector2>
+bool VSC::InterfaceAdapter<Context, Vector2>::ResponderChain::containsResponder(typename Responder::SPtr responder)
+{
+    BOOST_ASSERT(responder);
+    
+    if (responder) {
+        typename Responders::const_iterator it = std::find(mResponders.begin(), mResponders.end(), responder);
+        return it != mResponders.end();
+    }
+    
+    return false;
+    
+}
 
 
