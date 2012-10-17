@@ -56,8 +56,8 @@ namespace VSC {
              *  Responder chain, if the current listener does not respond to an interface event (returns false)
              *  then the call will be forwarded down the chain.
              */
-            InputListener::WPtr getNextInputListener(void) {return mNextInputListener;}
-            void setNextInputListener(InputListener::WPtr next);
+            InputListener::SPtr getNextInputListener(void) {return mNextInputListener.lock();}
+            void setNextInputListener(InputListener::SPtr next);
             
             /**--------------------------------------------------------------
              *  These methods are called by the input adapters when some 

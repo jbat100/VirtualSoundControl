@@ -79,17 +79,17 @@ namespace VSC {
              *  Protected creators
              */
             
-            virtual void createCamera(void) = 0;
-            virtual void createRenderWindow(void) = 0;
-            virtual void createDebugRayLines(void) = 0;
+            virtual void createCamera(void);
+            virtual void createRenderWindow(void);
+            virtual void createDebugRayLines(void);
             
             /*
              *  Protected destructors
              */
             
-            virtual void destroyCamera(void) = 0;
-            virtual void destroyRenderWindow(void) = 0;
-            virtual void destroyDebugRayLines(void) = 0;
+            virtual void destroyCamera(void);
+            virtual void destroyRenderWindow(void);
+            virtual void destroyDebugRayLines(void);
             
         private:
             

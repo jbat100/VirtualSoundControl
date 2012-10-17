@@ -21,7 +21,7 @@ namespace VSC {
          *  Used to translate user input to scene actions.
          */
          
-        class SceneController : public VSC::OB::InputListener, public VSC::OB::KeyBound
+        class SceneController : public InputListener, public KeyBound
         {
         public:
             
@@ -38,8 +38,8 @@ namespace VSC {
             /**--------------------------------------------------------------
              *  Init for a given scene and shutdown
              */
-            void setupWithScene(Scene::WPtr scene);
-            void shutdown();
+            virtual void setupWithScene(Scene::WPtr scene);
+            virtual void shutdown();
 
             /**--------------------------------------------------------------
              *  Ogre Frame Listener Forwarded messages from Application 
@@ -128,6 +128,42 @@ namespace VSC {
             const static bool mTraceUI = false;
             const static bool mTraceFrame = false;
             
+        };
+        
+        typedef std::vector<SceneController::SPtr> SceneControllers;
+        
+        /*
+         *  The controller should be owned by the interface system (e.g. NSWindowController for OS X)
+         */
+        
+        class SceneControllerChain : public InputListener
+        {
+        public:
+            
+            void setupWithScene(Scene::SPtr scene);
+            void shutdown();
+
+            const SceneControllers& getSceneControllers(void) {return mSceneControllers;}
+            
+            void appendSceneController(SceneController::SPtr controller);
+            void prependSceneController(SceneController::SPtr controller);
+            void insertSceneControllerAfterSceneController(SceneController::SPtr controller);
+            void insertSceneControllerBeforeSceneController(SceneController::SPtr controller);
+            
+            void removeSceneController(SceneController::SPtr controller);
+            void removeAllSceneControllers(void);
+            
+        protected:
+            
+            void chainSceneControllers(void);
+            
+            void insertSceneController(SceneController::SPtr controller, SceneControllers::iterator it);
+            
+        private:
+            
+            Scene::WPtr         mScene;
+            
+            SceneControllers    mSceneControllers;
         };
         
     }

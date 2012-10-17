@@ -33,9 +33,9 @@ void VSC::OB::InputListener::setInputAdapter(InputAdapter::WPtr adapter)
     }
 }
 
-void VSC::OB::InputListener::setNextInputListener(InputListener::WPtr next)
+void VSC::OB::InputListener::setNextInputListener(InputListener::SPtr next)
 {
-    mNextInputListener = next;
+    mNextInputListener = InputListener::WPtr(next);
     
     InputListener::SPtr nextInputListener = mNextInputListener.lock();
     

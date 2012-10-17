@@ -146,6 +146,7 @@
 		10F69491156E483000E70049 /* Plugin_CgProgramManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */; };
 		10F69492156E483000E70049 /* Plugin_OctreeSceneManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */; };
 		10F69493156E483000E70049 /* Plugin_ParticleFX.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */; };
+		10F907D8162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F907D0162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -461,6 +462,8 @@
 		10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_CgProgramManager.dylib; path = lib/Plugin_CgProgramManager.dylib; sourceTree = OGRE_SDK; };
 		10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_OctreeSceneManager.dylib; path = lib/Plugin_OctreeSceneManager.dylib; sourceTree = OGRE_SDK; };
 		10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_ParticleFX.dylib; path = lib/Plugin_ParticleFX.dylib; sourceTree = OGRE_SDK; };
+		10F907D0162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCInterfaceAdapter.cpp; path = ../../../../Interface/VSCInterfaceAdapter.cpp; sourceTree = "<group>"; };
+		10F907D1162ECFF8006C9C0B /* VSCInterfaceAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCInterfaceAdapter.h; path = ../../../../Interface/VSCInterfaceAdapter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -674,12 +677,6 @@
 			children = (
 				103006911624763A002A30ED /* VSC.cpp */,
 				103006921624763A002A30ED /* VSC.h */,
-				10E8557215E65048008FF635 /* VSCUI.cpp */,
-				10E8557315E65048008FF635 /* VSCUI.h */,
-				10ED08881601CD8900053C07 /* VSCBound.cpp */,
-				10ED08891601CD8900053C07 /* VSCBound.hpp */,
-				10ED08841601CC2700053C07 /* VSCBindings.cpp */,
-				10ED08851601CC2700053C07 /* VSCBindings.hpp */,
 				109D51B3155998EE0030C161 /* VSCException.cpp */,
 				109D51B4155998EE0030C161 /* VSCException.h */,
 				1091F27C15B0645D00466854 /* VSCNSLog.h */,
@@ -710,6 +707,7 @@
 		109D51B2155998CA0030C161 /* VSC */ = {
 			isa = PBXGroup;
 			children = (
+				10F907CE162ECFE7006C9C0B /* Interface */,
 				101EBB401629AE6B006601A2 /* Categories */,
 				10EB5E5A16298CD200E0F030 /* Application */,
 				10B60D2A15505D6D006A6D6E /* OB */,
@@ -1189,6 +1187,21 @@
 			name = Demos;
 			sourceTree = "<group>";
 		};
+		10F907CE162ECFE7006C9C0B /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				10E8557215E65048008FF635 /* VSCUI.cpp */,
+				10E8557315E65048008FF635 /* VSCUI.h */,
+				10ED08881601CD8900053C07 /* VSCBound.cpp */,
+				10ED08891601CD8900053C07 /* VSCBound.hpp */,
+				10ED08841601CC2700053C07 /* VSCBindings.cpp */,
+				10ED08851601CC2700053C07 /* VSCBindings.hpp */,
+				10F907D0162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp */,
+				10F907D1162ECFF8006C9C0B /* VSCInterfaceAdapter.h */,
+			);
+			name = Interface;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1357,6 +1370,7 @@
 				105CDA58162DAD2E00532AD0 /* VSCOBDisplay.cpp in Sources */,
 				105CDA5D162DAD5600532AD0 /* VSCOBOSXDisplayBridge.mm in Sources */,
 				105CDA5E162DAD5600532AD0 /* VSCOBOSXSceneBridge.mm in Sources */,
+				10F907D8162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

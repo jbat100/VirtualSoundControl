@@ -10,9 +10,6 @@
 
 #include "VSCOBOSXInputAdapter.h"
 
-namespace VSC { namespace OB {
-    class OSXInputAdapter;
-}}
 
 @interface VSCOBOSXSceneView : OgreView {
     

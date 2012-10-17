@@ -1,13 +1,3 @@
-/***************************************************************************
-This source file is part of OGREBULLET
-(Object-oriented Graphics Rendering Engine Bullet Wrapper)
-For the latest info, see http://www.ogre3d.org/phpBB2addons/viewforum.php?f=10
-Copyright (c) 2007 tuan.kuranes@gmail.com (Use it Freely, even Statically, but have to contribute any changes)
-This source file is not LGPL, it's public source code that you can reuse.
------------------------------------------------------------------------------*/
-/***************************************************************************
- File modified for VSC project
- -----------------------------------------------------------------------------*/
 
 #include "VSCOBSceneController.h"
 
@@ -634,5 +624,101 @@ void VSC::OB::SceneController::throwDynamicObjectPrimitive(VSC::OB::PrimitiveTyp
 
 }
 
+// MARK: SceneControllerChain
 
+void VSC::OB::SceneControllerChain::setupWithScene(Scene::SPtr scene)
+{
+    BOOST_FOREACH(SceneController::SPtr controller, mSceneControllers)
+    {
+        BOOST_ASSERT(controller);
+        if (controller) {
+            controller->setupWithScene(scene);
+        }
+    }
+}
+
+void VSC::OB::SceneControllerChain::shutdown()
+{
+    this->removeAllSceneControllers();
+}
+
+void VSC::OB::SceneControllerChain::appendSceneController(SceneController::SPtr controller)
+{
+
+}
+
+void VSC::OB::SceneControllerChain::prependSceneController(SceneController::SPtr controller)
+{
+    
+}
+
+void VSC::OB::SceneControllerChain::insertSceneControllerAfterSceneController(SceneController::SPtr controller)
+{
+    
+}
+
+void VSC::OB::SceneControllerChain::insertSceneControllerBeforeSceneController(SceneController::SPtr controller)
+{
+    
+}
+
+void VSC::OB::SceneControllerChain::removeSceneController(SceneController::SPtr controller)
+{
+    BOOST_ASSERT(controller);
+    
+    if (controller)
+    {
+        controller->shutdown();
+        SceneControllers::iterator it = std::find(mSceneControllers.begin(), mSceneControllers.end(), controller);
+        if (it != mSceneControllers.end())
+        {
+            mSceneControllers.erase(it);
+        }
+    }
+}
+
+void VSC::OB::SceneControllerChain::removeAllSceneControllers(void)
+{
+    BOOST_FOREACH(SceneController::SPtr controller, mSceneControllers)
+    {
+        BOOST_ASSERT(controller);
+        if (controller) {
+            controller->shutdown();
+        }
+    }
+    
+    mSceneControllers.clear();
+}
+
+void VSC::OB::SceneControllerChain::insertSceneController(SceneController::SPtr controller,
+                                                          SceneControllers::iterator it)
+{
+    BOOST_ASSERT(controller);
+    
+    if (controller) {
+        Scene::SPtr scene = mScene.lock();
+        if (scene) controller->setupWithScene(scene);
+        mOutputControllers.insert(it, controller);
+        this->chainSceneControllers();
+    }
+}
+
+void VSC::OB::SceneControllerChain::chainSceneControllers(void)
+{
+    if (mSceneControllers.size() > 0)
+    {
+        SceneController::SPtr sceneController = *(mSceneControllers.begin());
+        InputListener::SPtr inputListener = boost::static_pointer_cast<InputListener>(sceneController);
+        this->setNextInputListener(inputListener);
+        
+        SceneControllers::iterator it = mSceneControllers.begin();
+        SceneControllers::iterator nextIt = ++it;
+        
+        while (nextIt != mSceneControllers.end())
+        {
+                
+        }
+        
+    }
+}
 
