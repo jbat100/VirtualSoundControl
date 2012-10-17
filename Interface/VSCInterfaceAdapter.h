@@ -13,8 +13,8 @@
 
 namespace VSC {
     
-    template<typename ContextType, typename Vector2DType>
-    class InterfaceAdapter : public boost::enable_shared_from_this<InputAdapter>
+    template<typename Context, typename Vector2>
+    class InterfaceAdapter : public boost::enable_shared_from_this<InterfaceAdapter<Context, Vector2> >
     {
         
     public:
@@ -29,13 +29,39 @@ namespace VSC {
             typedef boost::shared_ptr<Responder>    SPtr;
             typedef boost::weak_ptr<Responder>      WPtr;
             
-            virtual void keyPressed(const ContextType* context, OIS::KeyCode key);
-            virtual void keyReleased(const ContextType* context, OIS::KeyCode key);
-            virtual void modifierChanged(const ContextType* context, OIS::Keyboard::Modifier modifier);
+            Responder() : mAdapter(InterfaceAdapter::WPtr()), mNextResponder(Responder::WPtr()) {}
+            virtual ~Responder() {}
             
-        }
+            void setInterfaceAdapter(InterfaceAdapter::SPtr adapter); //{mAdapter = InterfaceAdapter::WPtr(adapter);}
+            InterfaceAdapter::SPtr getInterfaceAdapter(void); //{return mAdapter.lock();}
+            
+            Responder::SPtr getNextResponder(void) {return mNextResponder.lock();}
+            void setNextResponder(Responder::SPtr responder); // {mNextResponder = Responder::WPtr(responder);}
+            
+            virtual bool contextChanged(const Context* context);
+            
+            virtual bool modifierChanged(const Context* context, OIS::Keyboard::Modifier modifier);
+            
+            virtual bool keyPressed(const Context* context, OIS::KeyCode key);
+            virtual bool keyReleased(const Context* context, OIS::KeyCode key);
+            
+            virtual bool mouseMoved(const Context* context, const Vector2& position, const Vector2& movement);
+            virtual bool mouseEntered(const Context* context, const Vector2& position);
+            virtual bool mouseExited(const Context* context, const Vector2& position);
+            virtual bool mouseButtonPressed(const Context* context, const Vector2& position, OIS::MouseButtonID buttonID);
+            virtual bool mouseButtonReleased(const Context* context, const Vector2& position, OIS::MouseButtonID buttonID);
+            
+        private:
+            
+            InterfaceAdapter::WPtr  mAdapter;
+            Responder::WPtr         mNextResponder;
+            
+            static const bool       mTraceUI;
+            
+        };
         
-        typedef std::vector<Responder::WPtr> Responders;
+        typedef std::vector<typename Responder::WPtr> Responders;
+        
         
         InterfaceAdapter(void);
         virtual ~InterfaceAdapter(void) {}
@@ -45,8 +71,8 @@ namespace VSC {
          */
         
         const Responders& getResponders(void) {return mResponders;}
-        void addResponder(Responder::SPtr responder);
-        void removeResponder(Responder::SPtr responder);
+        void addResponder(typename Responder::SPtr responder);
+        void removeResponder(typename Responder::SPtr responder);
         
         /*
          *  Bool Setter/Getters
@@ -71,42 +97,45 @@ namespace VSC {
          */
         
         bool isMouseButtonPressed(OIS::MouseButtonID) const;
-        const Vector2DType& getLastMousePosition() const {return mLastMousePosition;}
-        const Vector2DType& getLastMouseMovement() const {return mLastMouseMovement;}
-        const Vector2DType& getBufferedMouseMovement() const {return mBufferedMouseMovement;}
+        const Vector2& getLastMousePosition() const {return mLastMousePosition;}
+        const Vector2& getLastMouseMovement() const {return mLastMouseMovement;}
+        const Vector2& getBufferedMouseMovement() const {return mBufferedMouseMovement;}
         void resetBufferedMouseMovement() {mBufferedMouseMovement = 0;}
         
     protected:
         
+        void contextChanged(const Context* context);
+        
         /*
          *  Keyboard input
          */
-        void keyPressed(const ContextType* context, OIS::KeyCode key);
-        void keyReleased(const ContextType* context, OIS::KeyCode key);
-        void modifierChanged(const ContextType* context, OIS::Keyboard::Modifier modifier);
+        void keyPressed(const Context* context, OIS::KeyCode key);
+        void keyReleased(const Context* context, OIS::KeyCode key);
+        void modifierChanged(const Context* context, OIS::Keyboard::Modifier modifier);
         
         /*
          *  Mouse input
          */
-        void mouseMoved(const ContextType* context, const Vector2DType& position, const Vector2DType& movement);
-        void mouseEntered(const ContextType* context, const Vector2DType& position);
-        void mouseExited(const ContextType* context, const Vector2DType& position);
-        void mouseButtonPressed(const ContextType* context, const Vector2DType& position, OIS::MouseButtonID buttonID);
-        void mouseButtonReleased(const ContextType* context, const Vector2DType& position, OIS::MouseButtonID buttonID);
+        void mouseMoved(const Context* context, const Vector2& position, const Vector2& movement);
+        void mouseEntered(const Context* context, const Vector2& position);
+        void mouseExited(const Context* context, const Vector2& position);
+        void mouseButtonPressed(const Context* context, const Vector2& position, OIS::MouseButtonID buttonID);
+        void mouseButtonReleased(const Context* context, const Vector2& position, OIS::MouseButtonID buttonID);
         
     private:
 
         Responders                      mResponders;
         bool                            mAllowRapidFireKeyPresses;
+        bool                            mNormalizedCoordinates;
         
         VSC::KeyCodeSet                 mCurrentKeys;
         VSC::MouseButtonSet             mCurrentMouseButtons;
         
         OIS::Keyboard::Modifier         mCurrentModifier;
         
-        Vector2DType                    mLastMousePosition;
-        Vector2DType                    mLastMouseMovement;
-        Vector2DType                    mBufferedMouseMovement;
+        Vector2                    mLastMousePosition;
+        Vector2                    mLastMouseMovement;
+        Vector2                    mBufferedMouseMovement;
         
     };
     
