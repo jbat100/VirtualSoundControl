@@ -2,6 +2,8 @@
 #ifndef _VSC_OB_DISPLAY_H_
 #define _VSC_OB_DISPLAY_H_
 
+#include "VSC.h"
+
 #include <Ogre/Ogre.h>
 
 #include <boost/shared_ptr.hpp>
@@ -9,6 +11,7 @@
 
 #include <map>
 #include <string>
+#include <vector>
 
 
 namespace VSC {
@@ -26,6 +29,8 @@ namespace VSC {
             typedef boost::weak_ptr<Scene>      Scene_WPtr;
             
         public:
+            
+            friend class Scene;
             
             typedef boost::shared_ptr<Display>  SPtr;
             typedef boost::weak_ptr<Display>    WPtr; 
@@ -49,6 +54,8 @@ namespace VSC {
              *  Scene
              */
             Scene_SPtr getScene(void) {return mScene.lock();}
+            
+            bool checkSpaceInFront(Float minDist);
             
             /**--------------------------------------------------------------
              *  Camera
@@ -88,16 +95,6 @@ namespace VSC {
              */
             
             virtual void createCamera(void);
-            virtual void createRenderWindow(void);
-            virtual void createDebugRayLines(void);
-            
-            /*
-             *  Protected destructors
-             */
-            
-            virtual void destroyCamera(void);
-            virtual void destroyRenderWindow(void);
-            virtual void destroyDebugRayLines(void);
             
         private:
             
@@ -112,6 +109,8 @@ namespace VSC {
             static const bool                       mTrace = true;
             
         };
+        
+        typedef std::vector<Display::SPtr> Displays;
         
     }
 }

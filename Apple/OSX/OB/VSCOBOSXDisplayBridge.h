@@ -1,7 +1,7 @@
 
 
-#ifndef _VSC_OGRE_APPLICATION_COCOA_SETUP_H_
-#define _VSC_OGRE_APPLICATION_COCOA_SETUP_H_
+#ifndef _VSC_OB_DISPLAY_BRIDGE_H_
+#define _VSC_OB_DISPLAY_BRIDGE_H_
 
 
 #include "VSCOBDisplay.h"
@@ -15,7 +15,7 @@ namespace VSC {
     
     namespace OB {
 
-        class OSXDisplay : public Display
+        class OSXDisplayBridge : public Display::Bridge
         {
             
         public:
@@ -27,4 +27,4 @@ namespace VSC {
     }
 }
 
-#endif//_VSC_OGRE_APPLICATION_COCOA_SETUP_H_
+#endif //_VSC_OB_DISPLAY_BRIDGE_H_

@@ -50,6 +50,7 @@ namespace VSC {
              *  Constructor / Destructor
              */
             
+            Application();
             ~Application();
             
             bool init(void); // call init before doing anything

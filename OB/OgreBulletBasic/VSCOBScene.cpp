@@ -444,7 +444,7 @@ void VSC::OB::Scene::CollisionDetector::removeCollision(Collision::SPtr collisio
 
 VSC::OB::Scene::Scene() :
 mSceneManager(0),
-mWorld(0),
+mDynamicsWorld(0),
 mPaused(false),
 mDebugRayLine(0)
 {
@@ -678,14 +678,14 @@ void VSC::OB::Scene::shutdown ()
     
     this->destroyAllElements();
     
-    if (mWorld) {
-        if (mWorld->getDebugDrawer()) {
-            delete mWorld->getDebugDrawer();
-            mWorld->setDebugDrawer(0);
+    if (mDynamicsWorld) {
+        if (mDynamicsWorld->getDebugDrawer()) {
+            delete mDynamicsWorld->getDebugDrawer();
+            mDynamicsWorld->setDebugDrawer(0);
         }
-        mWorld->setDebugDrawer(0);
-        delete mWorld;
-        mWorld = 0;
+        mDynamicsWorld->setDebugDrawer(0);
+        delete mDynamicsWorld;
+        mDynamicsWorld = 0;
     }
     
     if (sceneManager) {
@@ -724,8 +724,8 @@ VSC::OB::Scene::Element::SPtr VSC::OB::Display::getElementAtDisplayCoordinate(Di
     if (!camera) return Element::SPtr();
     
     r = camera->getCameraToViewportRay(p.x, p.y);
-    CollisionClosestRayResultCallback callback(r, mWorld, camera->getFarClipDistance());
-    mWorld->launchRay(callback);
+    CollisionClosestRayResultCallback callback(r, mDynamicsWorld, camera->getFarClipDistance());
+    mDynamicsWorld->launchRay(callback);
     
     if (callback.doesCollide())
     {
@@ -749,7 +749,7 @@ bool VSC::OB::Scene::frameStarted(Real elapsedTime)
     
     if (!mPaused || mDoOneStep)
     {
-        mWorld->stepSimulation(elapsedTime);
+        mDynamicsWorld->stepSimulation(elapsedTime);
     }
     
     if (this->getCollisionDetector()) {
@@ -764,45 +764,45 @@ bool VSC::OB::Scene::frameStarted(Real elapsedTime)
 void VSC::OB::Scene::drawWireFrame(bool draw)
 {
     mDrawWireFrame = draw;
-    mWorld->getDebugDrawer()->setDrawWireframe(draw);
-    mWorld->setShowDebugShapes(draw);
+    mDynamicsWorld->getDebugDrawer()->setDrawWireframe(draw);
+    mDynamicsWorld->setShowDebugShapes(draw);
 }
 
 void VSC::OB::Scene::drawAabb(bool draw)
 {
     mDrawAabb = draw;
-    mWorld->getDebugDrawer()->setDrawAabb(draw);
+    mDynamicsWorld->getDebugDrawer()->setDrawAabb(draw);
 }
 
 void VSC::OB::Scene::drawText(bool draw)
 {
     mDrawText = draw;
-    mWorld->getDebugDrawer()->setDrawText(draw);
+    mDynamicsWorld->getDebugDrawer()->setDrawText(draw);
 }
 
 void VSC::OB::Scene::drawFeaturesText(bool draw)
 {
     mDrawFeaturesText = draw;
-    mWorld->getDebugDrawer()->setDrawFeaturesText(draw);
+    mDynamicsWorld->getDebugDrawer()->setDrawFeaturesText(draw);
 }
 
 void VSC::OB::Scene::drawContactPoints(bool draw)
 {
     mDrawContactPoints = draw;
-    mWorld->getDebugDrawer()->setDrawContactPoints(draw);
-    mWorld->setShowDebugContactPoints(draw);
+    mDynamicsWorld->getDebugDrawer()->setDrawContactPoints(draw);
+    mDynamicsWorld->setShowDebugContactPoints(draw);
 }
 
 void VSC::OB::Scene::enableBulletLCP(bool enable)
 {
     mDisableBulletLCP = !enable;
-    mWorld->getDebugDrawer()->setDisableBulletLCP(mDisableBulletLCP);
+    mDynamicsWorld->getDebugDrawer()->setDisableBulletLCP(mDisableBulletLCP);
 }
 
 void VSC::OB::Scene::enableCCD(bool enable)
 {
     mEnableCCD = enable;
-    mWorld->getDebugDrawer()->setEnableCCD(mEnableCCD);
+    mDynamicsWorld->getDebugDrawer()->setEnableCCD(mEnableCCD);
 }
 
 // -------------------------------------------------------------------------
@@ -865,12 +865,12 @@ bool VSC::OB::Scene::checkIfEnoughPlaceToAddObject(float minDist)
 void VSC::OB::Scene::initWorld(const Ogre::Vector3 &gravityVector, const Ogre::AxisAlignedBox &bounds)
 {
     // Start Bullet
-    mWorld = new OgreBulletDynamics::DynamicsWorld(sceneManager, bounds, gravityVector, true, true, 10000);
+    mDynamicsWorld = new OgreBulletDynamics::DynamicsWorld(sceneManager, bounds, gravityVector, true, true, 10000);
 
     // add Debug info display tool
     OgreBulletCollisions::DebugDrawer *debugDrawer = new OgreBulletCollisions::DebugDrawer();
 
-    mWorld->setDebugDrawer(debugDrawer);
+    mDynamicsWorld->setDebugDrawer(debugDrawer);
 
     Ogre::SceneNode *node = sceneManager->getRootSceneNode()->createChildSceneNode("DebugDrawer", Ogre::Vector3::ZERO);
     node->attachObject (static_cast<SimpleRenderable*>(debugDrawer));

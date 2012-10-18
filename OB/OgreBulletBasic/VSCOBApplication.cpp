@@ -1,10 +1,6 @@
 
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
-#include "VSCOBInputAdapter.h"
-#include "VSCOBCameraController.h"
-#include "VSCOBSceneController.h"
-#include "VSCUI.h"
 
 #ifdef __APPLE__
 #include "VSCOBOSXApplicationBridge.h"
@@ -14,6 +10,9 @@
 
 #include "OIS.h"
 #include "OgreResourceGroupManager.h"
+
+#include <Ogre/Ogre.h>
+#include <Ogre/OgreConfigFile.h>
 
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
@@ -25,7 +24,7 @@ Ogre::FrameListener(),
 mInitialised(false)
 {
 #ifdef __APPLE__
-    mBridge = Bridge::SPtr(new VSCOBOSXApplicationBridge);
+    mBridge = Bridge::SPtr(new OSXApplicationBridge);
 #endif
 }
 // -------------------------------------------------------------------------

@@ -2,11 +2,9 @@
 #ifndef _VSC_OGRE_BULLET_SCENE_H_
 #define _VSC_OGRE_BULLET_SCENE_H_
 
+#include "VSCOBDisplay.h"
+
 #include "OgreBulletDynamics.h"
-#include "VSCOBInputListener.h"
-#include "VSCOBKeyboardAction.h"
-#include "VSCOBKeyBindings.h"
-#include "VSCOBCameraController.h"
 #include "OIS.h"
 
 #include <boost/shared_ptr.hpp>
@@ -56,7 +54,26 @@ namespace VSC {
             
             class Bridge {
                 
-            }
+            public:
+                
+                typedef boost::shared_ptr<Bridge>   SPtr;
+                
+                Bridge(Scene::SPtr scene) { mScene = Scene::WPtr(scene); }
+                virtual ~Bridge();
+                
+                Scene::SPtr getScene(void) {return mScene.lock();}
+                
+            protected:
+                
+                void registerDisplay(Display::SPtr display);
+                
+            private:
+                
+                Scene::WPtr mScene;
+                
+            };
+            
+            friend class Bridge;
             
             /*
              *  A Scene::Element represents an object in the scene, dynamic or static.
@@ -339,7 +356,7 @@ namespace VSC {
              *  Ogre Getters
              */
             
-            OgreBulletDynamics::DynamicsWorld* getDynamicsWorld(void) {return mWorld;}
+            OgreBulletDynamics::DynamicsWorld* getDynamicsWorld(void) {return mDynamicsWorld;}
             Ogre::SceneManager* getSceneManager(void) {return mSceneManager;}
             LightMap& getLightMap(void) {return mLightMap;}
             
@@ -448,8 +465,7 @@ namespace VSC {
              *  Protected setters for world setup 
              */
             
-            void setDynamicsWorld(OgreBulletDynamics::DynamicsWorld* world) {mWorld = world;}
-            void setRenderWindow(Ogre::RenderWindow* window) {mWindow = window;}
+            void setDynamicsWorld(OgreBulletDynamics::DynamicsWorld* world) {mDynamicsWorld = world;}
             
             virtual void createSceneManager(void);
             
@@ -461,7 +477,7 @@ namespace VSC {
             Elements                                mElements;
             CollisionDetector::SPtr                 mCollisionDetector;
             
-            OgreBulletDynamics::DynamicsWorld*      mWorld;
+            OgreBulletDynamics::DynamicsWorld*      mDynamicsWorld;
             Ogre::SceneManager*                     mSceneManager;
             LightMap                                mLightMap;
             Ogre::ShadowTechnique                   mCurrentShadowTechnique;
