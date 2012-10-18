@@ -38,6 +38,14 @@
     self = [super initWithWindow:window];
     if (self) {
         // Initialization code here.
+        
+        
+        self.keyboardManager = VSC::OB::KeyboardManager::SPtr(new VSC::OB::KeyboardManager());
+        
+        self.sceneController = VSC::OB::SceneController::SPtr(new SceneController());
+        
+        self.cameraController = CameraController::SPtr(new CameraController());
+        
     }
     
     return self;

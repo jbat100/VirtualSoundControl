@@ -443,10 +443,7 @@ void VSC::OB::Scene::CollisionDetector::removeCollision(Collision::SPtr collisio
 //MARK: - Basic Constructor which does abolutely nothing interesting at all
 
 VSC::OB::Scene::Scene() :
-mCamera(0),
-mRoot(0),
 mSceneManager(0),
-mWindow(0),
 mWorld(0),
 mPaused(false),
 mDebugRayLine(0)
@@ -454,7 +451,11 @@ mDebugRayLine(0)
 
 }
 
-// -------------------------------------------------------------------------
+void VSC::OB::Scene::createSceneManager(void)
+{
+    // Create the SceneManager, in this case a generic one
+    mSceneManager = mRoot->createSceneManager(ST_GENERIC, "ExampleSMInstance");
+}
 
 void VSC::OB::Scene::init(Application_SPtr application)
 {
@@ -710,36 +711,32 @@ void VSC::OB::Scene::shutdown ()
 }
 
 
-bool VSC::OB::Scene::resetCameraAspectRatio(void)
+VSC::OB::Scene::Element::SPtr VSC::OB::Display::getElementAtDisplayCoordinate(Display::SPtr display,
+                                                                              const Ogre::Vector2& p,
+                                                                              Ogre::Vector3& ip,
+                                                                              Ogre::Ray& r)
 {
-    Ogre::Viewport* vp = mCamera->getViewport();
-    mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
-    return true;
-}
-
-// -------------------------------------------------------------------------
-
-VSC::OB::Scene::Element::SPtr VSC::OB::Scene::getElementAtViewportCoordinate(const Ogre::Viewport* v,
-                                                                             Ogre::Vector2& p,
-                                                                             Ogre::Vector3 &ip,
-                                                                             Ogre::Ray &r)
-{
-    if (v == mCamera->getViewport())
+    BOOST_ASSERT(display);
+    if (!display) return Element::SPtr();
+    
+    Ogre::Camera* camera = display->getCamera();
+    BOOST_ASSERT(camera);
+    if (!camera) return Element::SPtr();
+    
+    r = camera->getCameraToViewportRay(p.x, p.y);
+    CollisionClosestRayResultCallback callback(r, mWorld, camera->getFarClipDistance());
+    mWorld->launchRay(callback);
+    
+    if (callback.doesCollide())
     {
-        r = mCamera->getCameraToViewportRay(p.x, p.y);
-        CollisionClosestRayResultCallback callback(r, mWorld, mCamera->getFarClipDistance());
-        mWorld->launchRay(callback);
-        
-        if (callback.doesCollide())
+        OgreBulletDynamics::RigidBody* body = static_cast <OgreBulletDynamics::RigidBody*>(callback.getCollidedObject());
+        ip = callback.getCollisionPoint();
+        if (body)
         {
-            OgreBulletDynamics::RigidBody* body = static_cast <OgreBulletDynamics::RigidBody*>(callback.getCollidedObject());
-            ip = callback.getCollisionPoint();
-            if (body)
-            {
-                return this->getElementWithRigidBody(body);
-            }
+            return this->getElementWithRigidBody(body);
         }
     }
+
     
     return Element::SPtr();
 }
@@ -750,17 +747,10 @@ bool VSC::OB::Scene::frameStarted(Real elapsedTime)
     
     if (mTraceFrame) std::cout << "VSC::OB::Scene::frameStarted, elapsed time " << elapsedTime << std::endl;
     
-    //this->getCameraController()->frameStarted(elapsedTime);
-
-    // update physics
     if (!mPaused || mDoOneStep)
     {
         mWorld->stepSimulation(elapsedTime);
     }
-    
-    /*
-     *  This is were the serious shit is going to happen, tracking collisions and such
-     */
     
     if (this->getCollisionDetector()) {
         this->getCollisionDetector()->updateCollisions();

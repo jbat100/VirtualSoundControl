@@ -1,41 +1,32 @@
 
-#include "OIS.h"
-
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
 #include "VSCOBInputAdapter.h"
 #include "VSCOBCameraController.h"
 #include "VSCOBSceneController.h"
-
 #include "VSCUI.h"
 
+#ifdef __APPLE__
+#include "VSCOBOSXApplicationBridge.h"
+#else
+#error "Unsuported Platform"
+#endif
+
+#include "OIS.h"
 #include "OgreResourceGroupManager.h"
 
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
 
-
-VSC::OB::Application::Application(const std::vector<Scene::SPtr>& bulletScenes) :
+VSC::OB::Application::Application() :
 mRoot(0),
 Ogre::FrameListener(),
-mScenes(bulletScenes)
+mInitialised(false)
 {
-    
-    mKeyboardManager = VSC::OB::KeyboardManager::SPtr(new VSC::OB::KeyboardManager());
-    this->setOgreKeyBindings(mKeyboardManager->generateDefaultBindings());
-    
-    mSceneController = SceneController::SPtr(new SceneController());
-    mSceneController->setOgreKeyBindings(this->getOgreKeyBindings());
-    
-    mCameraController = CameraController::SPtr(new CameraController());
-    mCameraController->setOgreKeyBindings(this->getOgreKeyBindings());
-    
-    this->setNextInputListener(SceneController::WPtr(mSceneController));
-    mSceneController->setNextInputListener(CameraController::WPtr(mCameraController));
-    
-    this->setCollisionMapper(IM::CollisionMapper::SPtr(new IM::CollisionMapper));
-    
+#ifdef __APPLE__
+    mBridge = Bridge::SPtr(new VSCOBOSXApplicationBridge);
+#endif
 }
 // -------------------------------------------------------------------------
 VSC::OB::Application::~Application()
@@ -55,61 +46,53 @@ VSC::OB::Scene::SPtr VSC::OB::Application::sceneWithName(Ogre::String name)
 
 bool VSC::OB::Application::init()
 {
+    BOOST_ASSERT(mBridge);
+    if (!mBridge) return false;
+    
+    mRoot = mBridge->createOgreRoot();
+    BOOST_ASSERT(mRoot);
+    
     this->setupResources();
-    
     Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-    
     this->createResourceListener(); // Create any resource listeners (for loading screens)
-    
     this->loadResources();
     
     mRoot->addFrameListener(this);
     
+    this->internalInit();
+    
+    mInitialised = true;
+    
     return true;
 }
 
-
-
-// -------------------------------------------------------------------------
-bool VSC::OB::Application::switchToScene(Scene::SPtr newScene)
+void addScene(Scene::SPtr scene)
 {
+    BOOST_ASSERT(scene);
+    if (!scene) return;
     
-    if (mTraceScene && newScene) std::cout << "VSC::OB::Application switching scene to " << newScene << std::endl;
-    if (mTraceScene && !newScene) std::cout << "VSC::OB::Application switching scene to NULL" << std::endl;
-    
-    /*
-     *  We need to reset the scene managers and everything...
-     */
-    
-    InputAdapter::SPtr adapter = this->getInputAdapter().lock();
-    
-    BOOST_ASSERT_MSG(adapter, "Expected  adapter");
-    
-    if (mActiveScene)
+    Scenes::const_iterator it = std::find(mScenes.begin(), mScenes.end(), scene);
+    BOOST_ASSERT_MSG(it == mScenes.end(), "Scene already added to application");
+    if(it == mScenes.end())
     {
-        if (mTraceScene && newScene) std::cout << "Shutting down old scene..." << std::endl;
-        mActiveScene->getCollisionDetector()->removeListener(this->getCollisionMapper());
-        mSceneController->shutdown();
-        mActiveScene->shutdown();
+        scene->init(shared_from_this());
+        mScenes.push_back(scene);
     }
     
-    if (newScene)
+}
+
+void removeScene(Scene::SPtr scene)
+{
+    BOOST_ASSERT(scene);
+    if (!scene) return;
+    
+    Scenes::const_iterator it = std::find(mScenes.begin(), mScenes.end(), scene);
+    BOOST_ASSERT_MSG(it != mScenes.end(), "Scene already not in application");
+    if(it != mScenes.end())
     {
-        if (mTraceScene && newScene) std::cout << "Initializing new scene..." << std::endl;
-        newScene->init(mRoot, mWindow);
-        this->getSceneController()->setScene(Scene::WPtr(newScene));
-        this->getCameraController()->setCamera(newScene->getCamera());
-        newScene->getCollisionDetector()->addListener(this->getCollisionMapper());
+        scene->shutdown();
+        mScenes.erase(scene);
     }
-    
-    else 
-    {
-        if (mTraceScene && newScene) std::cout << "Switched to null scene..." << std::endl;
-    }
-    
-    mActiveScene = newScene;
-    
-    return true;
 }
 
 
@@ -117,15 +100,10 @@ bool VSC::OB::Application::frameStarted(const Ogre::FrameEvent& evt)
 {
     if (mTraceFrame) std::cout << "VSC::OB::Application frameStarted " << &evt << std::endl;
 
-    //BOOST_ASSERT_MSG (mActiveScene, "Expected mActiveScene");
-    
-    if (mActiveScene && !mActiveScene->frameStarted(evt.timeSinceLastFrame))
+    BOOST_FOREACH(Scene::SPtr scene, this->getScenes())
     {
-        mActiveScene->shutdown();
-        return false;
+        scene->frameStarted(evt.timeSinceLastFrame)
     }
-    
-    this->getCameraController()->frameStarted(evt.timeSinceLastFrame);
     
     return true;
 }
@@ -136,10 +114,9 @@ bool VSC::OB::Application::frameEnded(const Ogre::FrameEvent& evt)
     
     if (mTraceFrame) std::cout << "VSC::OB::Application::frameEnded" << std::endl;
     
-    if (mActiveScene && !mActiveScene->frameEnded(evt.timeSinceLastFrame))
+    BOOST_FOREACH(Scene::SPtr scene, this->getScenes())
     {
-        mActiveScene->shutdown();
-        return false;
+        scene->frameEnded(evt.timeSinceLastFrame)
     }
 
     return true; 
@@ -171,7 +148,7 @@ void VSC::OB::Application::setupResources(void)
             typeName = i->first;
             archName = i->second;
             try {
-                Ogre::ResourceGroupManager::getSingleton().addResourceLocation(archName, typeName, secName);
+                rsm->addResourceLocation(archName, typeName, secName);
             } catch (Ogre::Exception& e) {
                 std::cout << "Exception : " << e.getFullDescription() << std::endl;
             }
@@ -181,7 +158,7 @@ void VSC::OB::Application::setupResources(void)
     /*-------------------------------------------------------------------------------------*/
     
 	Ogre::StringVector groups = rsm->getResourceGroups();        
-	Ogre::FileInfoListPtr finfo =  Ogre::ResourceGroupManager::getSingleton().findResourceFileInfo ("Bootstrap", "axes.mesh");
+	Ogre::FileInfoListPtr finfo =  rsm->findResourceFileInfo ("Bootstrap", "axes.mesh");
     
 	const bool isSDK =  (!finfo->empty()) && 
     Ogre::StringUtil::startsWith (finfo->begin()->archive->getName(), "../../media/packs/ogrecore.zip", true);
@@ -210,12 +187,13 @@ void VSC::OB::Application::setupResources(void)
 	}
 }
 
-// -------------------------------------------------------------------------
+
 void VSC::OB::Application::loadResources(void)
 {
-    ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+    Ogre::ResourceGroupManager *rsm = Ogre::ResourceGroupManager::getSingletonPtr();
     
-	Ogre::ResourceGroupManager *rsm = Ogre::ResourceGroupManager::getSingletonPtr();
+    rsm->initialiseAllResourceGroups(); // is this necessary given what follows ?
+    
 	Ogre::StringVector groups = rsm->getResourceGroups();      
 	for (Ogre::StringVector::iterator it = groups.begin(); it != groups.end(); ++it)
 	{
@@ -223,11 +201,4 @@ void VSC::OB::Application::loadResources(void)
 	}
 }
 
-// -------------------------------------------------------------------------
 
-bool VSC::OB::Application::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
-{
-    if (mTraceUI) std::cout << "VSC::OB::Application::keyPressed " << key << std::endl;
-    
-    return VSC::OB::InputListener::keyPressed(renderWindow, key);
-}

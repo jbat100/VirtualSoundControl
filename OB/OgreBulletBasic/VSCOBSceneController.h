@@ -3,7 +3,7 @@
 #define _VSC_OGRE_BULLET_SCENE_CONTROLLER_H_
 
 #include "VSCOB.h"
-#include "VSCOBInputListener.h"
+#include "VSCOBInterface.h"
 #include "VSCOBKeyBindings.h"
 #include "VSCOBScene.h"
 
@@ -21,7 +21,7 @@ namespace VSC {
          *  Used to translate user input to scene actions.
          */
          
-        class SceneController : public InputListener, public KeyBound
+        class SceneController : public InterfaceResponder, public KeyBound
         {
         public:
             
@@ -55,14 +55,14 @@ namespace VSC {
             /**--------------------------------------------------------------
              *  Input listener callback overrides
              */
-            virtual bool mouseButtonPressed(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
-            virtual bool mouseButtonReleased(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID);
-            virtual bool mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement);
-            virtual bool mouseEntered(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position);
-            virtual bool mouseExited(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position);
-            virtual bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
-            virtual bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
-            virtual bool renderWindowChangedSize(Ogre::RenderWindow* renderWindow);
+            virtual bool mouseButtonPressed(const Ogre::RenderWindow* renderWindow, const Ogre::Vector2& p, OIS::MouseButtonID buttonID);
+            virtual bool mouseButtonReleased(const Ogre::RenderWindow* renderWindow, const Ogre::Vector2& p, OIS::MouseButtonID buttonID);
+            virtual bool mouseMoved(const Ogre::RenderWindow* renderWindow, const Ogre::Vector2& p, const Ogre::Vector2& movement);
+            virtual bool mouseEntered(const Ogre::RenderWindow* renderWindow, const Ogre::Vector2& p);
+            virtual bool mouseExited(const Ogre::RenderWindow* renderWindow, const Ogre::Vector2& p);
+            virtual bool keyPressed(const Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+            virtual bool keyReleased(const Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+            virtual bool contextChanged(const Ogre::RenderWindow* renderWindow);
             
             /**--------------------------------------------------------------
              *  Scene Getter
@@ -136,34 +136,24 @@ namespace VSC {
          *  The controller should be owned by the interface system (e.g. NSWindowController for OS X)
          */
         
-        class SceneControllerChain : public InputListener
+        class SceneControllerChain : public InterfaceResponderChain
         {
         public:
             
             void setupWithScene(Scene::SPtr scene);
             void shutdown();
-
-            const SceneControllers& getSceneControllers(void) {return mSceneControllers;}
             
-            void appendSceneController(SceneController::SPtr controller);
-            void prependSceneController(SceneController::SPtr controller);
-            void insertSceneControllerAfterSceneController(SceneController::SPtr controller);
-            void insertSceneControllerBeforeSceneController(SceneController::SPtr controller);
-            
-            void removeSceneController(SceneController::SPtr controller);
-            void removeAllSceneControllers(void);
+            virtual void removeResponder(InterfaceResponder::SPtr responder);
+            virtual void removeAllResponders(void);
             
         protected:
             
-            void chainSceneControllers(void);
-            
-            void insertSceneController(SceneController::SPtr controller, SceneControllers::iterator it);
+            virtual void insertResponder(InterfaceResponder::SPtr responder, InterfaceResponders::iterator it);
             
         private:
             
             Scene::WPtr         mScene;
-            
-            SceneControllers    mSceneControllers;
+
         };
         
     }

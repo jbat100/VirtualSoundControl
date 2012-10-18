@@ -423,7 +423,8 @@ void VSC::InterfaceAdapter<Context, Vector2>::ResponderChain::chainSceneControll
 }
 
 template<typename Context, typename Vector2>
-void VSC::InterfaceAdapter<Context, Vector2>::ResponderChain::insertResponder(typename Responder::SPtr responder, typename Responders::iterator it)
+void VSC::InterfaceAdapter<Context, Vector2>::ResponderChain::insertResponder(typename Responder::SPtr responder,
+                                                                              typename Responders::iterator it)
 {
     BOOST_ASSERT(responder);
     

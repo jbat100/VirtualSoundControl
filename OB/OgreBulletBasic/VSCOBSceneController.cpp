@@ -624,101 +624,40 @@ void VSC::OB::SceneController::throwDynamicObjectPrimitive(VSC::OB::PrimitiveTyp
 
 }
 
-// MARK: SceneControllerChain
+// MARK: - SceneControllerChain
 
-void VSC::OB::SceneControllerChain::setupWithScene(Scene::SPtr scene)
+void VSC::OB::SceneControllerChain::removeResponder(InterfaceResponder::SPtr responder)
 {
-    BOOST_FOREACH(SceneController::SPtr controller, mSceneControllers)
+    SceneController::SPtr sceneController = boost::dynamic_pointer_cast<SceneController>(responder);
+    BOOST_ASSERT(sceneController);
+    if (sceneController)
     {
-        BOOST_ASSERT(controller);
-        if (controller) {
-            controller->setupWithScene(scene);
-        }
+        sceneController->shutdown();
     }
+    InterfaceResponderChain::removeResponder(responder);
 }
 
-void VSC::OB::SceneControllerChain::shutdown()
+void VSC::OB::SceneControllerChain::removeAllResponders(void)
 {
-    this->removeAllSceneControllers();
-}
-
-void VSC::OB::SceneControllerChain::appendSceneController(SceneController::SPtr controller)
-{
-
-}
-
-void VSC::OB::SceneControllerChain::prependSceneController(SceneController::SPtr controller)
-{
-    
-}
-
-void VSC::OB::SceneControllerChain::insertSceneControllerAfterSceneController(SceneController::SPtr controller)
-{
-    
-}
-
-void VSC::OB::SceneControllerChain::insertSceneControllerBeforeSceneController(SceneController::SPtr controller)
-{
-    
-}
-
-void VSC::OB::SceneControllerChain::removeSceneController(SceneController::SPtr controller)
-{
-    BOOST_ASSERT(controller);
-    
-    if (controller)
+    BOOST_FOREACH(InterfaceResponder::SPtr responder, this->getResponders())
     {
-        controller->shutdown();
-        SceneControllers::iterator it = std::find(mSceneControllers.begin(), mSceneControllers.end(), controller);
-        if (it != mSceneControllers.end())
+        SceneController::SPtr sceneController = boost::dynamic_pointer_cast<SceneController>(responder);
+        BOOST_ASSERT(sceneController);
+        if (sceneController)
         {
-            mSceneControllers.erase(it);
+            sceneController->shutdown();
         }
     }
+    InterfaceResponderChain::removeAllResponders();
 }
 
-void VSC::OB::SceneControllerChain::removeAllSceneControllers(void)
-{
-    BOOST_FOREACH(SceneController::SPtr controller, mSceneControllers)
-    {
-        BOOST_ASSERT(controller);
-        if (controller) {
-            controller->shutdown();
-        }
-    }
-    
-    mSceneControllers.clear();
-}
 
-void VSC::OB::SceneControllerChain::insertSceneController(SceneController::SPtr controller,
-                                                          SceneControllers::iterator it)
+void VSC::OB::SceneControllerChain::insertResponder(InterfaceResponder::SPtr responder, InterfaceResponders::iterator it)
 {
-    BOOST_ASSERT(controller);
-    
-    if (controller) {
-        Scene::SPtr scene = mScene.lock();
-        if (scene) controller->setupWithScene(scene);
-        mOutputControllers.insert(it, controller);
-        this->chainSceneControllers();
-    }
-}
-
-void VSC::OB::SceneControllerChain::chainSceneControllers(void)
-{
-    if (mSceneControllers.size() > 0)
-    {
-        SceneController::SPtr sceneController = *(mSceneControllers.begin());
-        InputListener::SPtr inputListener = boost::static_pointer_cast<InputListener>(sceneController);
-        this->setNextInputListener(inputListener);
-        
-        SceneControllers::iterator it = mSceneControllers.begin();
-        SceneControllers::iterator nextIt = ++it;
-        
-        while (nextIt != mSceneControllers.end())
-        {
-                
-        }
-        
+    SceneController::SPtr sceneController = boost::dynamic_pointer_cast<SceneController>(responder);
+    BOOST_ASSERT(sceneController);
+    if (sceneController) {
+        InterfaceResponderChain::insertResponder(responder, it);
     }
 }
 

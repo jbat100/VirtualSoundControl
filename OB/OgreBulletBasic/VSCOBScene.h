@@ -39,6 +39,8 @@ namespace VSC {
             
         public:
             
+            friend class Application;
+            
             /*
              *  Pointer typdefs
              */
@@ -50,8 +52,11 @@ namespace VSC {
              *  Container typedefs
              */
             
-            typedef std::map<std::string, Ogre::Light*>     LightMap;
-            typedef std::map<std::string, std::string>      StatsMap;
+            typedef std::map<std::string, Ogre::Light*> LightMap;
+            
+            class Bridge {
+                
+            }
             
             /*
              *  A Scene::Element represents an object in the scene, dynamic or static.
@@ -232,8 +237,6 @@ namespace VSC {
                 
             };
             
-            
-            
             typedef std::vector<Collision::SPtr>            Collisions;
     
             class CollisionListener
@@ -302,13 +305,6 @@ namespace VSC {
             Scene();
             virtual ~Scene(){ /* shutdown(); // calling shutdown in destructor causes problems */  };
             
-            virtual void init(Application_SPtr application);
-
-            /**--------------------------------------------------------------
-             *  Setup/Teardown 
-             */
-            virtual void shutdown();
-            
             /**--------------------------------------------------------------
              *  Application
              */
@@ -346,12 +342,6 @@ namespace VSC {
             OgreBulletDynamics::DynamicsWorld* getDynamicsWorld(void) {return mWorld;}
             Ogre::SceneManager* getSceneManager(void) {return mSceneManager;}
             LightMap& getLightMap(void) {return mLightMap;}
-            
-            /**--------------------------------------------------------------
-             *  Stats Getters
-             */
-            
-            const StatsMap& getUpdatedStatsMap(void);
             
             /**--------------------------------------------------------------
              * Elements
@@ -432,9 +422,19 @@ namespace VSC {
             
         protected:
             
-            virtual void initWorld (const Ogre::Vector3& gravityVector = Ogre::Vector3 (0,-9.81,0),
-                                    const Ogre::AxisAlignedBox& bounds = Ogre::AxisAlignedBox (Ogre::Vector3 (-10000, -10000, -10000),
-                                                                                               Ogre::Vector3 (10000,  10000,  10000)));
+            /*
+             *  init and shutdown are protected as they should be called  
+             */
+            
+            void init(Application_SPtr application);
+            void shutdown();
+            
+            virtual void internalInit(void) {} // for subclasses to provide additional init steps (called by init())
+            virtual void internalShutdown(void) {} // for subclasses to provide additional shutdown steps (called by shutdown())
+            
+            virtual void initWorld (const Ogre::Vector3& gravityVector = Ogre::Vector3(0,-9.81,0),
+                                    const Ogre::AxisAlignedBox& bounds = Ogre::AxisAlignedBox (Ogre::Vector3(-10000, -10000, -10000),
+                                                                                               Ogre::Vector3(10000,  10000,  10000)));
             
             virtual void setupFactory();
             virtual void setupLights();
@@ -450,9 +450,6 @@ namespace VSC {
             
             void setDynamicsWorld(OgreBulletDynamics::DynamicsWorld* world) {mWorld = world;}
             void setRenderWindow(Ogre::RenderWindow* window) {mWindow = window;}
-            void setRoot(Ogre::Root* root) {mRoot = root;}
-
-            
             
             virtual void createSceneManager(void);
             
@@ -465,14 +462,9 @@ namespace VSC {
             CollisionDetector::SPtr                 mCollisionDetector;
             
             OgreBulletDynamics::DynamicsWorld*      mWorld;
-            Ogre::RenderWindow*                     mWindow;
-            Ogre::Root*                             mRoot;
             Ogre::SceneManager*                     mSceneManager;
-            Ogre::Camera*                           mCamera;
             LightMap                                mLightMap;
             Ogre::ShadowTechnique                   mCurrentShadowTechnique;
-            
-            StatsMap                                mStatsMap;
             
             OgreBulletCollisions::DebugLines*       mDebugRayLine;
             Ogre::String                            mDebugText;

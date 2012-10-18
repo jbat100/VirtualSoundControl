@@ -1,6 +1,6 @@
 
-#ifndef _VSC_OGRE_BULLET_SCENE_H_
-#define _VSC_OGRE_BULLET_SCENE_H_
+#ifndef _VSC_OB_DISPLAY_H_
+#define _VSC_OB_DISPLAY_H_
 
 #include <Ogre/Ogre.h>
 
@@ -17,7 +17,7 @@ namespace VSC {
         
         class Scene;
 
-        class Display
+        class Display : public boost::enable_shared_from_this<Display>
         {
             
         private:
@@ -29,6 +29,8 @@ namespace VSC {
             
             typedef boost::shared_ptr<Display>  SPtr;
             typedef boost::weak_ptr<Display>    WPtr; 
+            
+            typedef std::map<std::string, std::string>  StatsMap;
             
             /**--------------------------------------------------------------
              *  Constructor/Destructor/Initialization 
@@ -63,8 +65,14 @@ namespace VSC {
              *  Ogre Getters
              */
 
-            Ogre::RenderWindow* getRenderWindow(void) {return mWindow;}
+            Ogre::RenderWindow* getRenderWindow(void) {return mRenderWindow;}
             Ogre::Camera* getCamera(void) {return mCamera;}
+            
+            /**--------------------------------------------------------------
+             *  Stats Getters
+             */
+            
+            const StatsMap& getUpdatedStatsMap(void);
             
         protected:
             
@@ -72,7 +80,7 @@ namespace VSC {
              *  Protected setters
              */
             
-            void setRenderWindow(Ogre::RenderWindow* window) {mWindow = window;}
+            void setRenderWindow(Ogre::RenderWindow* window) {mRenderWindow = window;}
             void setCamera(Ogre::Camera* camera) {mCamera = camera;}
             
             /*
@@ -95,16 +103,18 @@ namespace VSC {
             
             Scene_WPtr                              mScene;
             
-            Ogre::RenderWindow                      *mWindow;
-            Ogre::Camera                            *mCamera;
+            Ogre::RenderWindow*                     mRenderWindow;
+            Ogre::Camera*                           mCamera;
             Ogre::ShadowTechnique                   mCurrentShadowTechnique;
+            
+            StatsMap                                mStatsMap;
 
-            static const bool mTrace = true;
+            static const bool                       mTrace = true;
             
         };
         
     }
 }
 
-#endif //_VSC_OGRE_BULLET_SCENE_H_
+#endif //_VSC_OB_DISPLAY_H_
 
