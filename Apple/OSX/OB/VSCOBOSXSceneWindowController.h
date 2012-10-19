@@ -9,7 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 #include "VSCOSXApplicationManagerProtocol.h"
+
 #include "VSCOBScene.h"
+#include "VSCOBKeyboardManager.h"
 
 @class VSCOBOSXSceneView;
 
@@ -17,11 +19,10 @@
 
 //@property (nonatomic, strong) IBOutletCollection(VSCOBOSXSceneView) NSArray* ogreBulletSceneViews;
 
-@property (nonatomic, strong) IBOutlet VSCOBOSXSceneView* ogreBulletSceneView;
-
+@property (nonatomic, strong) IBOutlet VSCOBOSXSceneView* sceneView;
 @property (nonatomic, strong) IBOutlet NSPopUpButton* scenePopUpButton;
 
-@property (nonatomic, assign) VSC::OB::Scene::SPtr ogreBulletScene;
+@property (nonatomic, assign) VSC::OB::Scene::SPtr scene;
 
 @property (nonatomic, weak) id<VSCOSXApplicationManagerProtocol> applicationManager;
 

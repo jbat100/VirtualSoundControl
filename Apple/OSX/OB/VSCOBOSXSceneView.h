@@ -8,17 +8,16 @@
 
 #import "OgreOSXCocoaView.h"
 
-#include "VSCOBOSXInputAdapter.h"
-
-#include "VSCOBSceneController.h"
-#include "VSCOBDisplayController.h"
+#include "VSCOBKeyBindings.h"
+#include "VSCOBScene.h"
 
 
-@interface VSCOBOSXSceneView : OgreView {
-    
-    
-}
 
-@property (nonatomic, assign) VSC::OB::OSXInputAdapter::SPtr inputAdapter;
+@interface VSCOBOSXSceneView : OgreView 
+
+@property (nonatomic, assign) VSC::OB::KeyBindings::SPtr keyBindings;
+
+@property (nonatomic, assign) VSC::OB::Scene::WPtr scene;
+
 
 @end

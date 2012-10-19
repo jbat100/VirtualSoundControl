@@ -39,12 +39,11 @@
     if (self) {
         // Initialization code here.
         
+        VSC::OB::KeyboardManager::SPtr keyboardManager = VSC::OB::KeyboardManager::SPtr(new VSC::OB::KeyboardManager());
         
-        self.keyboardManager = VSC::OB::KeyboardManager::SPtr(new VSC::OB::KeyboardManager());
+        self.keyBindings = keyboardManager->generateDefaultBindings();
         
-        self.sceneController = VSC::OB::SceneController::SPtr(new SceneController());
-        
-        self.cameraController = CameraController::SPtr(new CameraController());
+        self.sceneController = VSC::OB::SceneController::SPtr(new VSC::OB::SceneController());
         
     }
     
@@ -57,15 +56,14 @@
     [self updateSceneChoice];
 }
 
-/*
+
 -(BOOL)acceptsFirstResponder {
-    return YES;
+    return NO;
 }
 
 -(BOOL)acceptsFirstMouse:(NSEvent *)theEvent {
-    return YES;
+    return NO;
 }
- */
 
 #pragma mark - Custom Setters
 

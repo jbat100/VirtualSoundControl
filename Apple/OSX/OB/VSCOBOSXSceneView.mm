@@ -6,24 +6,39 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-
+#import "VSCOBOSXSceneView.h"
 
 #include "VSCOBOSXInputAdapter.h"
+#include "VSCOBSceneController.h"
+#include "VSCOBDisplayController.h"
+
 #include <boost/assert.hpp>
 
-#import "VSCOBOSXSceneView.h"
+@interface VSCOBOSXSceneView ()
+
+@property (nonatomic, assign) VSC::OB::OSXInputAdapter::SPtr inputAdapter;
+
+@property (nonatomic, assign) VSC::OB::InterfaceResponderChain::SPtr interfaceResponderChain;
+
+@property (nonatomic, assign) VSC::OB::SceneController::SPtr sceneController;
+@property (nonatomic, assign) VSC::OB::DisplayController::SPtr displayController;
+
+@end
 
 @implementation VSCOBOSXSceneView
 
 static const bool mTraceUI = false;
-
-@synthesize inputAdapter = _inputAdapter;
 
 - (id)initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];
     
     if (self) {
+        
+        self.interfaceResponderChain = VSC::OB::InterfaceResponderChain::SPtr(new VSC::OB::InterfaceResponderChain);
+        
+        self.sceneController = VSC::OB::SceneController::SPtr(new VSC::OB::SceneController);
+        self.displayController = VSC::OB::DisplayController::SPtr(new VSC::OB::DisplayController);
         
         // Initialization code here.
         
