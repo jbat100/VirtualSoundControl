@@ -14,7 +14,7 @@
 #include <boost/assert.hpp>
 
 
-VSC::OB::Display::SPtr VSC::OB::OSXSceneBridge::createDisplayWithView(void* view) {
+void VSC::OB::OSXSceneBridge::setupDisplayWithView(Display::SPtr display, void* view) {
     
     if (!view) throw VSCInvalidArgumentException("Expected non nil view");
     VSCOBOSXSceneView* sceneView = (__bridge VSCOBOSXSceneView*)view;
@@ -22,22 +22,20 @@ VSC::OB::Display::SPtr VSC::OB::OSXSceneBridge::createDisplayWithView(void* view
     
     Scene::SPtr scene = this->getScene();
     BOOST_ASSERT(scene);
-    if(!scene) return Display::SPtr();
+    if(!scene) return;
     
     Application::SPtr application = scene->getApplication();
     BOOST_ASSERT(application);
-    if(!application) return Display::SPtr();
+    if(!application) return;
     
     Ogre::Root* root = application->getOgreRoot();
     BOOST_ASSERT(root);
-    if(!root) return Display::SPtr();
-    
-    Display::SPtr display = Display::SPtr(new Display);
+    if(!root) return;
  
     // Ask for a new renderwindow passing in the ogreView in our nib file
     Ogre::NameValuePairList misc;
     // Pass the handle to the ogreView in our nib
-    misc["externalWindowHandle"] = Ogre::StringConverter::toString((size_t)ogreView);
+    misc["externalWindowHandle"] = Ogre::StringConverter::toString((size_t)sceneView);
     // Tell OGRE that we're using cocoa, so it doesn't need to make a window for us
     misc["macAPI"] = "cocoa";
 
@@ -48,7 +46,7 @@ VSC::OB::Display::SPtr VSC::OB::OSXSceneBridge::createDisplayWithView(void* view
 
     Ogre::RenderWindow* window = [sceneView ogreWindow];
     // This cast works so we do actually have a Ogre::OSXCocoaWindow here
-    std::cout << "mWindow is " << (void*)obApplication->mWindow;
+    std::cout << "mWindow is " << (void*)window;
     
     display->setRenderWindow(window);
     

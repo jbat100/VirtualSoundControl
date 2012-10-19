@@ -16,7 +16,7 @@ namespace VSC {
         
         typedef VSC::InterfaceAdapter<Ogre::RenderWindow, Ogre::Vector2>::ResponderChain InterfaceResponderChain;
         
-        typedef std::vector<InterfaceResponder> InterfaceResponders;
+        typedef std::vector<InterfaceResponder::SPtr> InterfaceResponders;
     }
 }
 

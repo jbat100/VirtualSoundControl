@@ -39,6 +39,8 @@ namespace VSC {
                 
             protected:
                 
+                Bridge();
+                
                 void setOgreResourcePath(std::string resourcePath);
                 
             private:
@@ -59,8 +61,8 @@ namespace VSC {
              *  Scenes stuff
              */
             
-            void addScene(Scene::SPtr scene);
-            void removeScene(Scene::SPtr scene);
+            Scene::SPtr createScene(void);
+            void closeScene(Scene::SPtr scene);
             Scene::SPtr sceneWithName(Ogre::String name);
             const Scenes& getScenes(void) {return mScenes;}
             
@@ -69,7 +71,7 @@ namespace VSC {
              *  Ogre Setters/Getters
              */
             
-            Ogre::Root* getRoot(void) {return mRoot;}
+            Ogre::Root* getOgreRoot(void) {return mRoot;}
 
             const std::string& getOgreResourcePath(void);
             
@@ -77,7 +79,7 @@ namespace VSC {
             
             Bridge::SPtr getBridge(void) {return mBridge;}
             
-            virtual void interalInit(void) {} // will be called by init() after base init is done
+            virtual void internalInit(void) {} // will be called by init() after base init is done
             
             virtual void setupResources(void);
             virtual void createResourceListener(void); 

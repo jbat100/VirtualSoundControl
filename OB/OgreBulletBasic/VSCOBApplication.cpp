@@ -65,32 +65,29 @@ bool VSC::OB::Application::init()
     return true;
 }
 
-void addScene(Scene::SPtr scene)
+VSC::OB::Scene::SPtr VSC::OB::Application::createScene()
 {
+    Scene::SPtr scene = Scene::SPtr(new Scene(shared_from_this()));
     BOOST_ASSERT(scene);
-    if (!scene) return;
-    
-    Scenes::const_iterator it = std::find(mScenes.begin(), mScenes.end(), scene);
-    BOOST_ASSERT_MSG(it == mScenes.end(), "Scene already added to application");
-    if(it == mScenes.end())
+    if (scene)
     {
-        scene->init(shared_from_this());
+        scene->init();
         mScenes.push_back(scene);
     }
-    
+    return scene;
 }
 
-void removeScene(Scene::SPtr scene)
+void VSC::OB::Application::closeScene(Scene::SPtr scene)
 {
     BOOST_ASSERT(scene);
     if (!scene) return;
     
-    Scenes::const_iterator it = std::find(mScenes.begin(), mScenes.end(), scene);
+    Scenes::iterator it = std::find(mScenes.begin(), mScenes.end(), scene);
     BOOST_ASSERT_MSG(it != mScenes.end(), "Scene already not in application");
     if(it != mScenes.end())
     {
         scene->shutdown();
-        mScenes.erase(scene);
+        mScenes.erase(it);
     }
 }
 
@@ -101,7 +98,7 @@ bool VSC::OB::Application::frameStarted(const Ogre::FrameEvent& evt)
 
     BOOST_FOREACH(Scene::SPtr scene, this->getScenes())
     {
-        scene->frameStarted(evt.timeSinceLastFrame)
+        scene->frameStarted(evt.timeSinceLastFrame);
     }
     
     return true;
@@ -115,7 +112,7 @@ bool VSC::OB::Application::frameEnded(const Ogre::FrameEvent& evt)
     
     BOOST_FOREACH(Scene::SPtr scene, this->getScenes())
     {
-        scene->frameEnded(evt.timeSinceLastFrame)
+        scene->frameEnded(evt.timeSinceLastFrame);
     }
 
     return true; 
@@ -126,11 +123,13 @@ void VSC::OB::Application::setupResources(void)
 {
     Ogre::ResourceGroupManager *rsm = Ogre::ResourceGroupManager::getSingletonPtr();
     
+    std::string resourcePath = this->getBridge()->getOgreResourcePath();
+    
     /*-------------------------------------------------------------------------------------*/
     
     // Load resource paths from config file
     Ogre::ConfigFile cf;
-    cf.load(mResourcePath + "resources.cfg");
+    cf.load(resourcePath + "resources.cfg");
     
     // Go through all sections & settings in the file
     Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
@@ -157,10 +156,7 @@ void VSC::OB::Application::setupResources(void)
     /*-------------------------------------------------------------------------------------*/
     
 	Ogre::StringVector groups = rsm->getResourceGroups();        
-	Ogre::FileInfoListPtr finfo =  rsm->findResourceFileInfo ("Bootstrap", "axes.mesh");
-    
-	const bool isSDK =  (!finfo->empty()) && 
-    Ogre::StringUtil::startsWith (finfo->begin()->archive->getName(), "../../media/packs/ogrecore.zip", true);
+	//Ogre::FileInfoListPtr finfo =  rsm->findResourceFileInfo ("Bootstrap", "axes.mesh");
 
 	const Ogre::String resName ("OgreBullet");
 	{
@@ -176,6 +172,7 @@ void VSC::OB::Application::setupResources(void)
              */
             
             baseName = "/Library/VirtualSoundControl/Ogrebullet/Media";
+            
             rsm->addResourceLocation(baseName, "FileSystem", resName);
 			rsm->addResourceLocation(baseName + "/textures", "FileSystem", resName);
 			rsm->addResourceLocation(baseName + "/overlays", "FileSystem", resName);

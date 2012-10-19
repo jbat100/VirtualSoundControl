@@ -57,6 +57,13 @@ const Ogre::ColourValue g_minLightColour(0.2, 0.1, 0.0);
 const Ogre::ColourValue g_maxLightColour(0.5, 0.3, 0.1);
 // -------------------------------------------------------------------------
 
+//MARK: - Bridge
+
+void VSC::OB::Scene::Bridge::registerDisplay(Display::SPtr display)
+{
+    
+}
+
 //MARK: - Elements
 
 void VSC::OB::Scene::Element::destroy()
@@ -559,7 +566,20 @@ void VSC::OB::Scene::init(Application_SPtr application)
     mNoHelpText = false;
     mProfileTimings = false;
     mEnableSatComparison = false;
+    
+    this->internalInit();
 
+}
+
+void VSC::OB::Scene::internalInit()
+{
+    this->setupLights();
+    
+    this->initWorld();
+    
+    this->setupFactory();
+    
+    this->getElementFactory()->addGround();
 }
 
 void VSC::OB::Scene::setupFactory()
@@ -608,6 +628,41 @@ void VSC::OB::Scene::setupLights()
 	l->setSpecularColour(0.3, 0.1, 0.1);
     mLightMap.insert(LightMap::value_type("Spot2", l));
 
+}
+
+Display::SPtr VSC::OB::Scene::createDisplay()
+{
+    return Display::SPtr(new Display(shared_from_this()));
+}
+
+VSC::OB::Display::SPtr VSC::OB::Scene::createDisplayWithView(void* view)
+{
+    Display::SPtr display = this->createDisplay();
+    BOOST_ASSERT(display);
+    
+    if (display)
+    {
+        this->getBridge()->setupDisplayWithView(display, view);
+        display->init();
+        mDisplays.push_back(display);
+    }
+    
+    return display;
+}
+
+void VSC::OB::Scene::destroyDisplay(Display::SPtr display)
+{
+    BOOST_ASSERT(display);
+    if (display)
+    {
+        Displays::iterator it = std::find(mDisplays.begin(), mDisplays.end(), display);
+        BOOST_ASSERT(it != mDisplays.end());
+        if (it != mDisplays.end())
+        {
+            display->shutdown();
+            mDisplays.erase(it);
+        }
+    }
 }
 
 OgreBulletCollisions::DebugLines* VSC::OB::Scene::getDebugRayLines()
@@ -671,6 +726,8 @@ VSC::OB::Scene::Element::SPtr VSC::OB::Scene::getElementWithRigidBody(OgreBullet
 
 void VSC::OB::Scene::shutdown ()
 {
+    this->internalShutdown();
+    
     /*
      *  It is important to reset the element factory before destroying the scene manager
      *  as it will use it when performing the reset.
@@ -710,11 +767,16 @@ void VSC::OB::Scene::shutdown ()
 
 }
 
+void VSC::OB::Scene::internalShutdown()
+{
+    
+}
 
-VSC::OB::Scene::Element::SPtr VSC::OB::Display::getElementAtDisplayCoordinate(Display::SPtr display,
-                                                                              const Ogre::Vector2& p,
-                                                                              Ogre::Vector3& ip,
-                                                                              Ogre::Ray& r)
+
+VSC::OB::Scene::Element::SPtr VSC::OB::Scene::getElementAtDisplayCoordinate(Display::SPtr display,
+                                                                            const Ogre::Vector2& p,
+                                                                            Ogre::Vector3& ip,
+                                                                            Ogre::Ray& r)
 {
     BOOST_ASSERT(display);
     if (!display) return Element::SPtr();

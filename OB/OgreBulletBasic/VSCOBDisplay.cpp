@@ -2,14 +2,28 @@
 #include "VSCOBDisplay.h"
 #include "VSCOB.h"
 #include "VSCOBScene.h"
+#include "VSCOBApplication.h"
+#include "VSCException.h"
 
 #include <Ogre/Ogre.h>
 
-void VSC::OB::Display::Display() :
-mWindow(0),
+VSC::OB::Display::Display(Scene::SPtr scene) :
+mRenderWindow(0),
 mCamera(0)
 {
-    
+    if (!scene) throw VSCInvalidArgumentException("Excpected non-NULL scene");
+    mScene = Scene::WPtr(scene);
+}
+
+void VSC::OB::Display::init()
+{
+    this->createCamera();
+}
+
+void VSC::OB::Display::shutdown()
+{
+    this->destroyCamera();
+    this->destroyRenderWindow();
 }
 
 void VSC::OB::Display::createCamera(void)
@@ -23,9 +37,32 @@ void VSC::OB::Display::createCamera(void)
     mCamera->setNearClipDistance(5);
 }
 
+void VSC::OB::Display::destroyCamera(void)
+{
+    BOOST_ASSERT(this->getScene()->getSceneManager());
+    BOOST_ASSERT(this->getCamera());
+    
+    this->getScene()->getSceneManager()->destroyCamera(this->getCamera());
+    
+    this->setCamera(0);
+}
+
+void VSC::OB::Display::destroyRenderWindow(void)
+{
+    BOOST_ASSERT(this->getScene()->getSceneManager());
+    BOOST_ASSERT(this->getRenderWindow());
+    
+    this->getScene()->getApplication()->getOgreRoot()->destroyRenderTarget(this->getRenderWindow());
+    
+    this->setRenderWindow(0);
+}
+
 bool VSC::OB::Display::resetCameraAspectRatio(void)
 {
-    Ogre::Viewport* vp = mCamera->getViewport();
+    BOOST_ASSERT(this->getCamera());
+    if (!this->getCamera()) return false;
+    
+    Ogre::Viewport* vp = this->getCamera()->getViewport();
     mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
     return true;
 }
@@ -38,12 +75,12 @@ bool VSC::OB::Display::checkSpaceInFront(Float minDist)
     Ogre::Ray rayTo;
     Ogre::Vector2 coord(0.5, 0.5);
     
-    Scene::Ptr scene = this->getScene();
+    Scene::SPtr scene = this->getScene();
     
     BOOST_ASSERT(scene);
     
     if (scene) {
-        Scene::Element::SPtr element = scene->getElementAtDisplayCoordinate(mCamera->getViewport(), coord, pickPos, rayTo);
+        Scene::Element::SPtr element = scene->getElementAtDisplayCoordinate(shared_from_this(), coord, pickPos, rayTo);
         if (element)
         {
             OgreBulletDynamics::RigidBody *body = element->getRigidBody();

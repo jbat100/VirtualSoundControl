@@ -13,11 +13,15 @@ namespace VSC {
 
         class OSXApplicationBridge : public Application::Bridge {
             
-            OSXApplicationBridge();
+            friend class Application;
             
             virtual Ogre::Root* createOgreRoot();
             
-        }
+        protected:
+            
+            OSXApplicationBridge();
+            
+        };
         
     }
 }

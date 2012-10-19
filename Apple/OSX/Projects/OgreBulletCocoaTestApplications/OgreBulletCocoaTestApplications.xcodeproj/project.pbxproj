@@ -45,9 +45,8 @@
 		105BAD4016232D470031EE91 /* libboost_thread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 105BAD3C16232D470031EE91 /* libboost_thread.a */; };
 		105CDA10162D9D6F00532AD0 /* VSCOB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CD9EE162D9D6E00532AD0 /* VSCOB.cpp */; };
 		105CDA11162D9D6F00532AD0 /* VSCOBApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CD9F0162D9D6F00532AD0 /* VSCOBApplication.cpp */; };
-		105CDA12162D9D6F00532AD0 /* VSCOBApplicationBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CD9F2162D9D6F00532AD0 /* VSCOBApplicationBase.cpp */; };
 		105CDA13162D9D6F00532AD0 /* VSCOBBasicSceneElementFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CD9F4162D9D6F00532AD0 /* VSCOBBasicSceneElementFactory.cpp */; };
-		105CDA15162D9D6F00532AD0 /* VSCOBCameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CD9F8162D9D6F00532AD0 /* VSCOBCameraController.cpp */; };
+		105CDA15162D9D6F00532AD0 /* VSCOBDisplayController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CD9F8162D9D6F00532AD0 /* VSCOBDisplayController.cpp */; };
 		105CDA16162D9D6F00532AD0 /* VSCOBDynamicObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CD9FA162D9D6F00532AD0 /* VSCOBDynamicObject.cpp */; };
 		105CDA18162D9D6F00532AD0 /* VSCOBInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CD9FE162D9D6F00532AD0 /* VSCOBInterface.cpp */; };
 		105CDA19162D9D6F00532AD0 /* VSCOBKeyBindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA00162D9D6F00532AD0 /* VSCOBKeyBindings.cpp */; };
@@ -248,12 +247,10 @@
 		105CD9EF162D9D6E00532AD0 /* VSCOB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOB.h; path = ../../../../../OB/OgreBulletBasic/VSCOB.h; sourceTree = "<group>"; };
 		105CD9F0162D9D6F00532AD0 /* VSCOBApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBApplication.cpp; path = ../../../../../OB/OgreBulletBasic/VSCOBApplication.cpp; sourceTree = "<group>"; };
 		105CD9F1162D9D6F00532AD0 /* VSCOBApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBApplication.h; path = ../../../../../OB/OgreBulletBasic/VSCOBApplication.h; sourceTree = "<group>"; };
-		105CD9F2162D9D6F00532AD0 /* VSCOBApplicationBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBApplicationBase.cpp; path = ../../../../../OB/OgreBulletBasic/VSCOBApplicationBase.cpp; sourceTree = "<group>"; };
-		105CD9F3162D9D6F00532AD0 /* VSCOBApplicationBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBApplicationBase.h; path = ../../../../../OB/OgreBulletBasic/VSCOBApplicationBase.h; sourceTree = "<group>"; };
 		105CD9F4162D9D6F00532AD0 /* VSCOBBasicSceneElementFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBBasicSceneElementFactory.cpp; path = ../../../../../OB/OgreBulletBasic/VSCOBBasicSceneElementFactory.cpp; sourceTree = "<group>"; };
 		105CD9F5162D9D6F00532AD0 /* VSCOBBasicSceneElementFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBBasicSceneElementFactory.h; path = ../../../../../OB/OgreBulletBasic/VSCOBBasicSceneElementFactory.h; sourceTree = "<group>"; };
-		105CD9F8162D9D6F00532AD0 /* VSCOBCameraController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBCameraController.cpp; path = ../../../../../OB/OgreBulletBasic/VSCOBCameraController.cpp; sourceTree = "<group>"; };
-		105CD9F9162D9D6F00532AD0 /* VSCOBCameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBCameraController.h; path = ../../../../../OB/OgreBulletBasic/VSCOBCameraController.h; sourceTree = "<group>"; };
+		105CD9F8162D9D6F00532AD0 /* VSCOBDisplayController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBDisplayController.cpp; path = ../../../../../OB/OgreBulletBasic/VSCOBDisplayController.cpp; sourceTree = "<group>"; };
+		105CD9F9162D9D6F00532AD0 /* VSCOBDisplayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBDisplayController.h; path = ../../../../../OB/OgreBulletBasic/VSCOBDisplayController.h; sourceTree = "<group>"; };
 		105CD9FA162D9D6F00532AD0 /* VSCOBDynamicObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBDynamicObject.cpp; path = ../../../../../OB/OgreBulletBasic/VSCOBDynamicObject.cpp; sourceTree = "<group>"; };
 		105CD9FB162D9D6F00532AD0 /* VSCOBDynamicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBDynamicObject.h; path = ../../../../../OB/OgreBulletBasic/VSCOBDynamicObject.h; sourceTree = "<group>"; };
 		105CD9FE162D9D6F00532AD0 /* VSCOBInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBInterface.cpp; path = ../../../../../OB/OgreBulletBasic/VSCOBInterface.cpp; sourceTree = "<group>"; };
@@ -530,12 +527,10 @@
 				105CD9EF162D9D6E00532AD0 /* VSCOB.h */,
 				105CD9F0162D9D6F00532AD0 /* VSCOBApplication.cpp */,
 				105CD9F1162D9D6F00532AD0 /* VSCOBApplication.h */,
-				105CD9F2162D9D6F00532AD0 /* VSCOBApplicationBase.cpp */,
-				105CD9F3162D9D6F00532AD0 /* VSCOBApplicationBase.h */,
 				105CD9F4162D9D6F00532AD0 /* VSCOBBasicSceneElementFactory.cpp */,
 				105CD9F5162D9D6F00532AD0 /* VSCOBBasicSceneElementFactory.h */,
-				105CD9F8162D9D6F00532AD0 /* VSCOBCameraController.cpp */,
-				105CD9F9162D9D6F00532AD0 /* VSCOBCameraController.h */,
+				105CD9F8162D9D6F00532AD0 /* VSCOBDisplayController.cpp */,
+				105CD9F9162D9D6F00532AD0 /* VSCOBDisplayController.h */,
 				105CDA56162DAD2E00532AD0 /* VSCOBDisplay.cpp */,
 				105CDA57162DAD2E00532AD0 /* VSCOBDisplay.h */,
 				105CD9FA162D9D6F00532AD0 /* VSCOBDynamicObject.cpp */,
@@ -1341,9 +1336,8 @@
 				101EBB881629DE75006601A2 /* VSCOSXMIDIOutputJAView.mm in Sources */,
 				105CDA10162D9D6F00532AD0 /* VSCOB.cpp in Sources */,
 				105CDA11162D9D6F00532AD0 /* VSCOBApplication.cpp in Sources */,
-				105CDA12162D9D6F00532AD0 /* VSCOBApplicationBase.cpp in Sources */,
 				105CDA13162D9D6F00532AD0 /* VSCOBBasicSceneElementFactory.cpp in Sources */,
-				105CDA15162D9D6F00532AD0 /* VSCOBCameraController.cpp in Sources */,
+				105CDA15162D9D6F00532AD0 /* VSCOBDisplayController.cpp in Sources */,
 				105CDA16162D9D6F00532AD0 /* VSCOBDynamicObject.cpp in Sources */,
 				105CDA18162D9D6F00532AD0 /* VSCOBInterface.cpp in Sources */,
 				105CDA19162D9D6F00532AD0 /* VSCOBKeyBindings.cpp in Sources */,

@@ -60,7 +60,7 @@ namespace VSC {
             
         };
         
-        typedef std::vector<typename Responder::WPtr> Responders;
+        typedef std::vector<typename Responder::SPtr> Responders;
         
         class ResponderChain : public Responder {
             

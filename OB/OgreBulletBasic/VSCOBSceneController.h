@@ -32,7 +32,6 @@ namespace VSC {
              *  Constructor/Destructor
              */
             SceneController();
-            SceneController(Scene::WPtr scene);
             virtual ~SceneController(){}
             
             /**--------------------------------------------------------------
@@ -69,7 +68,6 @@ namespace VSC {
              */
             
             Scene::WPtr getScene(void) {return mScene;}
-            void setScene(Scene::WPtr scene) {mScene = scene;}
             
             /**--------------------------------------------------------------
              *  Actions Setter/Getter
@@ -145,6 +143,8 @@ namespace VSC {
             
             virtual void removeResponder(InterfaceResponder::SPtr responder);
             virtual void removeAllResponders(void);
+            
+            Scene::SPtr getScene(return mScene.lock());
             
         protected:
             

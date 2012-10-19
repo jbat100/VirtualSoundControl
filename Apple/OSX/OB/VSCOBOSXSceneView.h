@@ -10,6 +10,9 @@
 
 #include "VSCOBOSXInputAdapter.h"
 
+#include "VSCOBSceneController.h"
+#include "VSCOBDisplayController.h"
+
 
 @interface VSCOBOSXSceneView : OgreView {
     

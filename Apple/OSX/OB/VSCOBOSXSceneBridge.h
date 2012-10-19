@@ -17,7 +17,7 @@ namespace VSC {
             
         public:
             
-            Display::SPtr createDisplayWithView(void* view);
+            virtual void setupDisplayWithView(Display::SPtr, void* view);
 
         };
         

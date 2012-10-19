@@ -4,8 +4,6 @@
 #include "VSCOB.h"
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
-#include "VSCOBBetaGUIListener.h"
-#include "VSCOBCameraController.h"
 #include "VSCOBInputAdapter.h"
 #include "VSCOBKeyboardAction.h"
 #include "VSCOBDynamicObject.h"
@@ -81,18 +79,6 @@ mOldPickingPosition(Ogre::Vector3(0,0,0)),
 mOldPickingDistance(0)
 {
 
-}
-
-VSC::OB::SceneController::SceneController(Scene::WPtr scene) :
-mShootSpeed (7.f),
-mImpulseForce (10.f),
-mRayQuery(0),
-mPickConstraint(0),
-mCollisionClosestRayResultCallback(0),
-mOldPickingPosition(Ogre::Vector3(0,0,0)),
-mOldPickingDistance(0)
-{
-    setupWithScene(scene);
 }
 
 void VSC::OB::SceneController::setupWithScene(Scene::WPtr scene)
@@ -393,15 +379,6 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
     if (!inputAdapter) {
         return false;
     }
-    
-    /*
-    VSC::Keyboard::Combination testComb(OIS::KC_W, (OIS::Keyboard::Modifier)0);
-    const KeyboardAction::KeySet& testActionKeySet = this->getOgreKeyBindings()->getActionsForInput(testComb);
-    BOOST_FOREACH (KeyboardAction::Key key, testActionKeySet)
-    {
-        std::cout << "Registered action for input " << testComb << " is " << key << std::endl;
-    }
-     */
     
     OIS::Keyboard::Modifier modifier = inputAdapter->getCurrentModifier();
     VSC::Keyboard::Combination comb(key, modifier);

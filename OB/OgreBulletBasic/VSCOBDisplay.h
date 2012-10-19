@@ -37,18 +37,6 @@ namespace VSC {
             
             typedef std::map<std::string, std::string>  StatsMap;
             
-            /**--------------------------------------------------------------
-             *  Constructor/Destructor/Initialization 
-             */
-            Display();
-            virtual ~Display();
-            
-            /*
-             *  Init and shutdown are not virtual but will call virtual functions
-             */
-            
-            void init(Scene_SPtr scene);
-            void shutdown();
             
             /**--------------------------------------------------------------
              *  Scene
@@ -83,6 +71,19 @@ namespace VSC {
             
         protected:
             
+            /**--------------------------------------------------------------
+             *  Constructor/Destructor/Initialization
+             */
+            Display(Scene_SPtr scene);
+            virtual ~Display();
+            
+            /*
+             *  Init and shutdown are not virtual but will call virtual functions
+             */
+            
+            void init();
+            void shutdown();
+            
             /*
              *  Protected setters
              */
@@ -95,6 +96,9 @@ namespace VSC {
              */
             
             virtual void createCamera(void);
+            
+            virtual void destroyCamera(void);
+            virtual void destroyRenderWindow(void);
             
         private:
             

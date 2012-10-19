@@ -56,14 +56,19 @@ namespace VSC {
                 
             public:
                 
+                friend class Scene;
+                
                 typedef boost::shared_ptr<Bridge>   SPtr;
                 
-                Bridge(Scene::SPtr scene) { mScene = Scene::WPtr(scene); }
                 virtual ~Bridge();
+                
+                virtual void setupDisplayWithView(Display::SPtr display, void* view) = 0;
                 
                 Scene::SPtr getScene(void) {return mScene.lock();}
                 
             protected:
+                
+                Bridge(Scene::SPtr scene) { mScene = Scene::WPtr(scene); }
                 
                 void registerDisplay(Display::SPtr display);
                 
@@ -316,11 +321,7 @@ namespace VSC {
                 
             };
 
-            /**--------------------------------------------------------------
-             *  Constructor/Destructor/Initialization 
-             */
-            Scene();
-            virtual ~Scene(){ /* shutdown(); // calling shutdown in destructor causes problems */  };
+            virtual ~Scene() { /* shutdown(); // calling shutdown in destructor causes problems */  };
             
             /**--------------------------------------------------------------
              *  Application
@@ -349,7 +350,7 @@ namespace VSC {
              *  Dynamic actions and checks
              */
             bool checkIfEnoughPlaceToAddObject(float maxDist);
-            Element::SPtr getElementAtViewportCoordinate(const Ogre::Viewport* v, Ogre::Vector2& p, Ogre::Vector3 &ip, Ogre::Ray &r);
+            Element::SPtr getElementAtDisplayCoordinate(Display::SPtr display, Ogre::Vector2& p, Ogre::Vector3 &ip, Ogre::Ray &r);
             OgreBulletCollisions::DebugLines* getDebugRayLines();
             
             /**--------------------------------------------------------------
@@ -359,6 +360,13 @@ namespace VSC {
             OgreBulletDynamics::DynamicsWorld* getDynamicsWorld(void) {return mDynamicsWorld;}
             Ogre::SceneManager* getSceneManager(void) {return mSceneManager;}
             LightMap& getLightMap(void) {return mLightMap;}
+            
+            /**--------------------------------------------------------------
+             *  Displays
+             */
+            
+            Display::SPtr createDisplayWithView(void* view); // view is platform dependent
+            void destroyDisplay(Display::SPtr display);
             
             /**--------------------------------------------------------------
              * Elements
@@ -439,15 +447,15 @@ namespace VSC {
             
         protected:
             
-            /*
-             *  init and shutdown are protected as they should be called  
-             */
+            Scene(Application_SPtr application);
             
-            void init(Application_SPtr application);
+            void init();
             void shutdown();
             
-            virtual void internalInit(void) {} // for subclasses to provide additional init steps (called by init())
-            virtual void internalShutdown(void) {} // for subclasses to provide additional shutdown steps (called by shutdown())
+            virtual Display::SPtr createDisplay();
+            
+            virtual void internalInit(void); // for subclasses to provide additional init steps (called by init())
+            virtual void internalShutdown(void); // for subclasses to provide additional shutdown steps (called by shutdown())
             
             virtual void initWorld (const Ogre::Vector3& gravityVector = Ogre::Vector3(0,-9.81,0),
                                     const Ogre::AxisAlignedBox& bounds = Ogre::AxisAlignedBox (Ogre::Vector3(-10000, -10000, -10000),
@@ -472,6 +480,10 @@ namespace VSC {
         private:
             
             Application_WPtr                        mApplication;
+            
+            Bridge::SPtr                            mBridge;
+            
+            Displays                                mDisplays;
             
             ElementFactory::SPtr                    mElementFactory;
             Elements                                mElements;
