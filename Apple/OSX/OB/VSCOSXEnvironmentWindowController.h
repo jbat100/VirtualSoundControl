@@ -13,13 +13,13 @@
 #include "VSCOBScene.h"
 #include "VSCOBKeyboardManager.h"
 
-@class VSCOBOSXSceneView;
+@class VSCOBOSXSceneDisplayView;
 
-@interface VSCOBOSXSceneWindowController : NSWindowController
+@interface VSCOSXEnvironmentWindowController : NSWindowController
 
-//@property (nonatomic, strong) IBOutletCollection(VSCOBOSXSceneView) NSArray* ogreBulletSceneViews;
+//@property (nonatomic, strong) IBOutletCollection(VSCOBOSXSceneDisplayView) NSArray* ogreBulletSceneViews;
 
-@property (nonatomic, strong) IBOutlet VSCOBOSXSceneView* sceneView;
+@property (nonatomic, strong) IBOutlet VSCOBOSXSceneDisplayView* sceneView;
 @property (nonatomic, strong) IBOutlet NSPopUpButton* scenePopUpButton;
 
 @property (nonatomic, assign) VSC::OB::Scene::SPtr scene;

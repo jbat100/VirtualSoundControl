@@ -12,19 +12,19 @@
 #include "VSCOBApplicationBase.h"
 #include "VSCException.h"
 #include "VSCOBInputListener.h"
-#include "VSCOBOSXInputAdapter.h"
+#include "VSCOBOSXInterfaceAdapter.h"
 
 #include <boost/assert.hpp>
 
 #include "OgreOSXCocoaWindow.h"
 
-#import "VSCOBOSXSceneView.h"
+#import "VSCOBOSXSceneDisplayView.h"
 
 bool VSC::OB::OSXApplicationSetup::setupApplicationWithOgreView(ApplicationBase::SPtr obApplication, void* rawOgreView)
 {
-    VSCOBOSXSceneView* ogreView = (__bridge VSCOBOSXSceneView*)rawOgreView;
+    VSCOBOSXSceneDisplayView* ogreView = (__bridge VSCOBOSXSceneDisplayView*)rawOgreView;
     
-    BOOST_ASSERT_MSG( [ogreView isKindOfClass:[VSCOBOSXSceneView class]], "Expected ogreView to be of class OgreView" ); 
+    BOOST_ASSERT_MSG( [ogreView isKindOfClass:[VSCOBOSXSceneDisplayView class]], "Expected ogreView to be of class OgreView" ); 
     
     // get platform-specific working directory
     Ogre::String workDir = Ogre::StringUtil::BLANK;
@@ -66,7 +66,7 @@ bool VSC::OB::OSXApplicationSetup::setupApplicationWithOgreView(ApplicationBase:
     // This cast works so we do actually have a Ogre::OSXCocoaWindow here
     std::cout << "mWindow is " << (void*)obApplication->mWindow;
     
-    OSXInputAdapter::SPtr adapter(new OSXInputAdapter());
+    OSXInterfaceAdapter::SPtr adapter(new OSXInterfaceAdapter());
     
     BOOST_ASSERT_MSG(adapter, "Expected adapter");
     

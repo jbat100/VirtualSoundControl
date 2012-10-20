@@ -9,19 +9,22 @@
 
 #import "VSCAppDelegate.h"
 #import "VSCOSXApplicationManager.h"
-#import "VSCOBOSXSceneWindowController.h"
+#import "VSCOSXEnvironmentWindowController.h"
 #import "VSCOSXMIDIWindowController.h"
 
-#import "VSCOBScene.h"
-#import "VSCOBApplication.h"
-#import "VSCOBPrimitivesDemo.h"
-#import "VSCOBTriMeshDemo.h"
-#import "VSCOBConstraintsDemo.h"
+#include "VSCOBScene.h"
+#include "VSCOBApplication.h"
+#include "VSCOBPrimitivesDemo.h"
+#include "VSCOBTriMeshDemo.h"
+#include "VSCOBConstraintsDemo.h"
 
-#import "VSCMIDI.h"
-#import "VSCMIDIOutput.h"
-#import "VSCMIDIOutputManager.h"
-#import "VSCException.h"
+#include "VSCMIDI.h"
+#include "VSCMIDIOutput.h"
+#include "VSCMIDIOutputManager.h"
+#include "VSCException.h"
+
+#include <boost/assert.hpp>
+#include <boost/foreach.hpp>
 
 //#import "OgreOSXCocoaView.h"
 
@@ -41,10 +44,19 @@
      */
     
     self.applicationManager = [[VSCOSXApplicationManager alloc] init];
-    BOOST_ASSERT(self.applicationManager.ogreBulletSceneWindowController.ogreBulletSceneView);
+    BOOST_ASSERT(self.applicationManager);
+
     
-    self.applicationManager.midiOutputManager = VSC::MIDI::OutputManager::singletonManager();
-    BOOST_ASSERT(self.applicationManager.midiOutputManager);
+    self.ogreBulletSceneWindowController = [[VSCOSXEnvironmentWindowController alloc] initWithWindowNibName:@"VSCOBOSXSceneWindow"];
+    BOOST_ASSERT(self.ogreBulletSceneWindowController);
+    self.ogreBulletSceneWindowController.applicationManager = self;
+    
+    NSWindow* w = self.ogreBulletSceneWindowController.window;
+    NSLog(@"OgreBulletSceneWindow: %@", w);
+    
+    self.midiWindowController = [[VSCOSXMIDIWindowController alloc] initWithWindowNibName:@"VSCOSXMIDIWindow"];
+    BOOST_ASSERT(self.midiWindowController);
+    self.midiWindowController.applicationManager = self;
     
     
     /*

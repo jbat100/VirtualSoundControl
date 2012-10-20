@@ -1,31 +1,29 @@
 //
-//  VSCOBOSXSceneView.m
+//  VSCOBOSXSceneDisplayView.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 6/22/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCOBOSXSceneView.h"
+#import "VSCOBOSXSceneDisplayView.h"
 
-#include "VSCOBOSXInputAdapter.h"
+#include "VSCOBOSXInterfaceAdapter.h"
 #include "VSCOBSceneController.h"
 #include "VSCOBDisplayController.h"
 
 #include <boost/assert.hpp>
 
-@interface VSCOBOSXSceneView ()
+@interface VSCOBOSXSceneDisplayView ()
 
-@property (nonatomic, assign) VSC::OB::OSXInputAdapter::SPtr inputAdapter;
-
-@property (nonatomic, assign) VSC::OB::InterfaceResponderChain::SPtr interfaceResponderChain;
+@property (nonatomic, assign) VSC::OB::OSXInterfaceAdapter::SPtr inputAdapter;
 
 @property (nonatomic, assign) VSC::OB::SceneController::SPtr sceneController;
 @property (nonatomic, assign) VSC::OB::DisplayController::SPtr displayController;
 
 @end
 
-@implementation VSCOBOSXSceneView
+@implementation VSCOBOSXSceneDisplayView
 
 static const bool mTraceUI = false;
 
@@ -39,6 +37,14 @@ static const bool mTraceUI = false;
         
         self.sceneController = VSC::OB::SceneController::SPtr(new VSC::OB::SceneController);
         self.displayController = VSC::OB::DisplayController::SPtr(new VSC::OB::DisplayController);
+        
+        self.interfaceResponderChain->appendResponder(boost::static_pointer_cast<VSC::OB::InterfaceResponder>(self.sceneController));
+        self.interfaceResponderChain->appendResponder(boost::static_pointer_cast<VSC::OB::InterfaceResponder>(self.displayController));
+        
+        self.inputAdapter = VSC::OB::OSXInterfaceAdapter::SPtr(new VSC::OB::OSXInterfaceAdapter());
+        self.inputAdapter->allowRapidFireKeyPresses(false);
+        self.inputAdapter->addInputListener(self.interfaceResponderChain);
+        self.inputAdapter->setCocoaView(self);
         
         // Initialization code here.
         
@@ -72,6 +78,27 @@ static const bool mTraceUI = false;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
+}
+
+#pragma mark - Custom Setters
+
+-(void) setDisplay:(VSC::OB::Display::WPtr)display
+{
+    _display = display;
+    
+    VSC::OB::Display::SPtr sdisplay = display.lock();
+    
+    if (sdisplay)
+    {
+        self.sceneController->setupWithScene(sdisplay->getScene());
+        self.displayController->setupWithDisplay(sdisplay);
+    }
+    else
+    {
+        self.sceneController->shutdown();
+        self.displayController->shutdown();
+    }
+
 }
 
 #pragma mark - NSResponder Stuff

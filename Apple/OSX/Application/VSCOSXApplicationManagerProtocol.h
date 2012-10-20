@@ -8,17 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-#include "VSCMIDI.h"
-#include "VSCMIDIOutputManager.h"
-#include "VSCOBApplication.h"
+#include "VSCGlobalApplication.h"
 
-@class VSCOBOSXSceneWindow;
-@class VSCOBOSXSceneView;
 
 @protocol VSCOSXApplicationManagerProtocol <NSObject>
 
-@property(nonatomic, assign) VSC::MIDI::OutputManager::SPtr midiOutputManager;
-@property(nonatomic, assign) VSC::OB::Application::SPtr ogreBulletApplication;
+@property(nonatomic, assign) VSC::GlobalApplication::SPtr application;
 
 -(void) startOgreRendering;
 -(void) stopOgreRendering;

@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCOBOSXSceneWindowController.h"
+#import "VSCOSXEnvironmentWindowController.h"
 #import "VSCOSXApplicationManager.h"
-#import "VSCOBOSXSceneView.h"
+#import "VSCOBOSXSceneDisplayView.h"
 #import "VSCAppDelegate.h"
 
 #import "NSString+VSCAdditions.h"
@@ -23,15 +23,15 @@
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
-#import "VSCOBOSXSceneView.h" // include last!
+#import "VSCOBOSXSceneDisplayView.h" // include last!
 
-@interface VSCOBOSXSceneWindowController ()
+@interface VSCOSXEnvironmentWindowController ()
 
 - (void) updateSceneChoice;
 
 @end
 
-@implementation VSCOBOSXSceneWindowController
+@implementation VSCOSXEnvironmentWindowController
 
 - (id)initWithWindow:(NSWindow *)window
 {
@@ -131,16 +131,16 @@
 
 - (IBAction)test1:(id)sender {
     
-    //VSCOBOSXSceneView* ogreBulletSceneView = [self.ogreBulletSceneViews firstObject];
+    //VSCOBOSXSceneDisplayView* ogreBulletSceneView = [self.ogreBulletSceneViews firstObject];
     
     BOOST_ASSERT(self.ogreBulletSceneView);
     
     BOOL accepts = [self.ogreBulletSceneView acceptsFirstResponder];
-    NSLog(@"VSCOBOSXSceneView %@ accept first responder", accepts ? @"DOES" : @"DOES NOT");
+    NSLog(@"VSCOBOSXSceneDisplayView %@ accept first responder", accepts ? @"DOES" : @"DOES NOT");
     
     if (accepts) {
         BOOL isFirstResponder = [self.window firstResponder] != self.ogreBulletSceneView;
-        NSLog(@"VSCOBOSXSceneView %@ first responder", isFirstResponder ? @"IS" : @"IS NOT");
+        NSLog(@"VSCOBOSXSceneDisplayView %@ first responder", isFirstResponder ? @"IS" : @"IS NOT");
     }
 }
 

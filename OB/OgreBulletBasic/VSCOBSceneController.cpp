@@ -81,11 +81,11 @@ mOldPickingDistance(0)
 
 }
 
-void VSC::OB::SceneController::setupWithScene(Scene::WPtr scene)
+void VSC::OB::SceneController::setupWithScene(Scene::SPtr scene)
 {
     this->shutdown();
     
-    mScene = scene;
+    mScene = Scene::WPtr(scene);
     
     Scene::SPtr s = mScene.lock();
     
@@ -100,10 +100,15 @@ void VSC::OB::SceneController::setupWithScene(Scene::WPtr scene)
 
 void VSC::OB::SceneController::shutdown()
 {
-    Scene::SPtr s = mScene.lock();
+    Scene::SPtr s = this->getScene();
     
-    s->getSceneManager()->destroyQuery(mRayQuery);
-    mRayQuery = 0;
+    BOOST_ASSERT(this->getScene());
+    
+    if (s)
+    {
+        s->getSceneManager()->destroyQuery(mRayQuery);
+        mRayQuery = 0;
+    }
     
 }
 
@@ -121,7 +126,7 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
     
     if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed : " << position << " (" << buttonID << ")" << std::endl;
     
-    Scene::SPtr scene = this->getScene().lock();
+    Scene::SPtr scene = this->getScene();
     
     switch (buttonID) 
     {
@@ -252,7 +257,7 @@ bool VSC::OB::SceneController::mouseButtonReleased(Ogre::RenderWindow* renderWin
     
     if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonReleased : " << position << " (" << buttonID << ")" << std::endl;
     
-    Scene::SPtr scene = this->getScene().lock();
+    Scene::SPtr scene = this->getScene();
     
     switch (buttonID) 
     {
@@ -304,7 +309,7 @@ bool VSC::OB::SceneController::mouseMoved(Ogre::RenderWindow* renderWindow, cons
 {
     if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseMoved position: " << position << ", movement: " << movement << "" << std::endl;
     
-    Scene::SPtr scene = (this->getScene()).lock();
+    Scene::SPtr scene = this->getScene();
     
     InputAdapter::SPtr adapter = this->getInputAdapter().lock();
     
@@ -370,7 +375,7 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
     
     static int count = 0;
     
-    Scene::SPtr scene = (this->getScene()).lock();
+    Scene::SPtr scene = this->getScene();
     
     InputAdapter::SPtr inputAdapter = this->getInputAdapter().lock();
     
@@ -528,7 +533,7 @@ bool VSC::OB::SceneController::keyReleased(Ogre::RenderWindow* renderWindow, OIS
 
 bool VSC::OB::SceneController::renderWindowChangedSize(Ogre::RenderWindow* renderWindow)
 {
-    Scene::SPtr scene = this->getScene().lock();
+    Scene::SPtr scene = this->getScene();
     
     if (renderWindow == scene->getRenderWindow())
     {
@@ -545,7 +550,7 @@ void VSC::OB::SceneController::throwDynamicObjectPrimitive(VSC::OB::PrimitiveTyp
     
     const float throwDist = 2.0f;
     
-    Scene::SPtr scene = this->getScene().lock();
+    Scene::SPtr scene = this->getScene();
     
     if (scene->checkIfEnoughPlaceToAddObject(throwDist) == false)
     {

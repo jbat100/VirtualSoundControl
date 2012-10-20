@@ -3,7 +3,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "VSCOBInputAdapter.h"
+#include "VSCOBInterface.h"
 
 #include <Ogre/Ogre.h>
 #include "OIS.h"
@@ -17,23 +17,21 @@ namespace VSC {
     
     namespace OB {
 
-        class InputListener;
-
-        class OSXInputAdapter : public InputAdapter
+        class OSXInterfaceAdapter : public InterfaceAdapter
         {
             
         public:
             
-            typedef boost::shared_ptr<OSXInputAdapter>  SPtr;
-            typedef boost::weak_ptr<OSXInputAdapter>    WPtr;
+            typedef boost::shared_ptr<OSXInterfaceAdapter>  SPtr;
+            typedef boost::weak_ptr<OSXInterfaceAdapter>    WPtr;
             
-            OSXInputAdapter(void);
+            OSXInterfaceAdapter(void);
             
             /*
              *  Slots for forwarding the appropriate NSResponder callbacks
              */
             
-            void renderWindowChangedSize(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
+            void contextChanged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
             
             void keyUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
             void keyDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);

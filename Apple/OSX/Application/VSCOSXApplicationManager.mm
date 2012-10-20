@@ -8,9 +8,11 @@
 
 #import "VSCOSXApplicationManager.h"
 #import "VSCOSXMIDIWindowController.h"
-#import "VSCOBOSXSceneWindowController.h"
-#import "VSCOBOSXSceneView.h"
+#import "VSCOSXEnvironmentWindowController.h"
+#import "VSCOBOSXSceneDisplayView.h"
 #import "NSArray+VSCAdditions.h"
+
+#include <Ogre/Ogre.h>
 
 #include <boost/assert.hpp>
 
@@ -22,53 +24,20 @@
 
 @implementation VSCOSXApplicationManager
 
-@synthesize midiOutputManager = _midiOutputManager;
-@synthesize ogreBulletApplication = _ogreBulletApplication;
+@synthesize application = _application;
 
 -(id) init {
     
     if ((self = [super init])) {
         
-        self.ogreBulletSceneWindowController = [[VSCOBOSXSceneWindowController alloc] initWithWindowNibName:@"VSCOBOSXSceneWindow"];
-        BOOST_ASSERT(self.ogreBulletSceneWindowController);
-        self.ogreBulletSceneWindowController.applicationManager = self;
+        self.application = VSC::GlobalApplication::SPtr(new VSC::GlobalApplication);
         
-        NSWindow* w = self.ogreBulletSceneWindowController.window;
-        NSLog(@"OgreBulletSceneWindow: %@", w);
-        
-        self.midiWindowController = [[VSCOSXMIDIWindowController alloc] initWithWindowNibName:@"VSCOSXMIDIWindow"];
-        BOOST_ASSERT(self.midiWindowController);
-        self.midiWindowController.applicationManager = self;
-        
+        self.application->init();
     }
     
     return self;    
 }
 
--(void) setOgreBulletApplication:(VSC::OB::Application::SPtr)application {
-    
-    _ogreBulletApplication = application;
-    
-    
-    if (_ogreBulletApplication)
-    {
-        /*
-         *  A bit hacky for now, plan on making this better
-         */
-        //VSCOBOSXSceneView* sceneView = [self.ogreBulletSceneWindowController.ogreBulletSceneViews firstObject];
-        VSCOBOSXSceneView* sceneView = self.ogreBulletSceneWindowController.ogreBulletSceneView;
-        
-        BOOST_ASSERT(sceneView);
-        
-        _ogreBulletApplication->setupWithOgreView((__bridge void*)sceneView);
-        
-        /*
-         *  Set the windows scene to the application's scene
-         */
-        self.ogreBulletSceneWindowController.ogreBulletScene = _ogreBulletApplication->getCurrentScene();
-    }
-    
-}
 
 -(void) startOgreRendering {
     
@@ -100,8 +69,16 @@
      */
     
     //std::cout << "In renderCallback ..." << std::endl;
+    //Ogre::Root::getSingleton().renderOneFrame();
     
-    Ogre::Root::getSingleton().renderOneFrame();
+    Ogre::Root* root = Ogre::Root::getSingletonPtr();
+    
+    BOOST_ASSERT(root);
+    
+    if (root)
+    {
+        root->renderOneFrame();
+    }
     
 }
 

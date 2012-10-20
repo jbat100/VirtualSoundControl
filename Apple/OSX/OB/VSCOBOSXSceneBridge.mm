@@ -2,7 +2,7 @@
 
 #import "VSCOBOSXSceneBridge.h"
 #import "OgreOSXCocoaWindow.h"
-#import "VSCOBOSXSceneView.h"
+#import "VSCOBOSXSceneDisplayView.h"
 
 #include "VSCException.h"
 #include "VSCApplication.h"
@@ -17,8 +17,8 @@
 void VSC::OB::OSXSceneBridge::setupDisplayWithView(Display::SPtr display, void* view) {
     
     if (!view) throw VSCInvalidArgumentException("Expected non nil view");
-    VSCOBOSXSceneView* sceneView = (__bridge VSCOBOSXSceneView*)view;
-    if ([sceneView isKindOfClass:[VSCOBOSXSceneView class]] == false) throw VSCInvalidArgumentException("Expected non nil view");
+    VSCOBOSXSceneDisplayView* sceneView = (__bridge VSCOBOSXSceneDisplayView*)view;
+    if ([sceneView isKindOfClass:[VSCOBOSXSceneDisplayView class]] == false) throw VSCInvalidArgumentException("Expected non nil view");
     
     Scene::SPtr scene = this->getScene();
     BOOST_ASSERT(scene);

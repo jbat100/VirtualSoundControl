@@ -37,7 +37,7 @@ namespace VSC {
             /**--------------------------------------------------------------
              *  Init for a given scene and shutdown
              */
-            virtual void setupWithScene(Scene::WPtr scene);
+            virtual void setupWithScene(Scene::SPtr scene);
             virtual void shutdown();
 
             /**--------------------------------------------------------------
@@ -67,7 +67,7 @@ namespace VSC {
              *  Scene Getter
              */
             
-            Scene::WPtr getScene(void) {return mScene;}
+            Scene::SPtr getScene(void) {return mScene.lock();}
             
             /**--------------------------------------------------------------
              *  Actions Setter/Getter

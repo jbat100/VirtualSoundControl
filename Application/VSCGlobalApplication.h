@@ -2,7 +2,7 @@
 #ifndef _VSC_GLOBAL_APPLICATION_H_
 #define _VSC_GLOBAL_APPLICATION_H_
 
-
+#include "VSCEnvironment.h"
 #include "VSCOBApplication.h"
 #include "VSCIMCollisionMapper.h"
 #include "VSCMIDIOutputManager.h"
@@ -14,7 +14,7 @@
 
 namespace VSC {
     
-    class GlobalApplication
+    class GlobalApplication : public boost::enable_shared_from_this<GlobalApplication>
     {
         
     public:
@@ -24,23 +24,34 @@ namespace VSC {
         
         GlobalApplication();
         
-        void initialize();
+        void init();
+        
+        template<typename OBApplicationSubclass>
+        void createOBApplication();
         
         MIDI::OutputManager::SPtr   getMIDIOutputManager(void) {return mMIDIOutputManager;}
         OB::Application::SPtr       getOBApplication(void) {return mOBApplication;}
-        IM::CollisionMapper::SPtr   getIMCollisionMapper(void) {return mCollisionMapper;}
+        
+        const Environments&         getEnvironments(void) {return mEnvironments;}
+        
+        template<typename EnvironmentSubclass>
+        Environment::SPtr createEnvironment(void);
+        
+        void destroyEnvironment(Environment::SPtr environment);
         
     protected:
         
+        virtual void internalInit(void) {}
+        
         void setMIDIOutputManager(MIDI::OutputManager::SPtr manager) {mMIDIOutputManager = manager;}
         void setOBApplication(OB::Application::SPtr application) {mOBApplication = application;}
-        void setIMCollisionMapper(IM::CollisionMapper::SPtr mapper) {mIMCollisionMapper = mapper;}
         
     private:
         
-        MIDI::OutputManager::SPtr  mMIDIOutputManager;
-        OB::Application::SPtr      mOBApplication;
-        IM::CollisionMapper::SPtr  mIMCollisionMapper;
+        MIDI::OutputManager::SPtr   mMIDIOutputManager;
+        OB::Application::SPtr       mOBApplication;
+        
+        Environments                mEnvironments;
   
     };
 

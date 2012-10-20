@@ -61,8 +61,11 @@ namespace VSC {
              *  Scenes stuff
              */
             
+            template<typename SceneSubclass>
             Scene::SPtr createScene(void);
-            void closeScene(Scene::SPtr scene);
+            
+            void destroyScene(Scene::SPtr scene);
+            
             Scene::SPtr sceneWithName(Ogre::String name);
             const Scenes& getScenes(void) {return mScenes;}
             

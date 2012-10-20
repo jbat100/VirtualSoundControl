@@ -8,11 +8,17 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class VSCOSXApplicationManager;
+#include "VSCOSXApplicationManagerProtocol.h"
+
+@class VSCOSXEnvironmentWindowController;
+@class VSCOSXMIDIWindowController;
 
 @interface VSCAppDelegate : NSObject <NSApplicationDelegate> 
 
-@property (nonatomic, strong) VSCOSXApplicationManager* applicationManager;
+@property (nonatomic, strong) id<VSCOSXApplicationManagerProtocol> applicationManager;
+
+@property (nonatomic, strong) VSCOSXEnvironmentWindowController *ogreBulletSceneWindowController;
+@property (nonatomic, strong) VSCOSXMIDIWindowController *midiWindowController;
 
 -(IBAction)showMIDIWindow:(id)sender;
 -(IBAction)showSceneWindow:(id)sender;

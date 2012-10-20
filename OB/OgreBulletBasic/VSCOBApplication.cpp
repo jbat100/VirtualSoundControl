@@ -65,19 +65,28 @@ bool VSC::OB::Application::init()
     return true;
 }
 
+template<typename SceneSubclass>
 VSC::OB::Scene::SPtr VSC::OB::Application::createScene()
 {
-    Scene::SPtr scene = Scene::SPtr(new Scene(shared_from_this()));
-    BOOST_ASSERT(scene);
+    SceneSubclass* sceneSub = new SceneSubclass(shared_from_this());
+    Scene* scene = dynamic_cast<Scene*>(sceneSub);
+    
     if (scene)
     {
-        scene->init();
-        mScenes.push_back(scene);
+        Scene::SPtr sscene = Scene::SPtr(scene);
+        sscene->init();
+        mScenes.push_back(sscene);
+        return sscene;
     }
-    return scene;
+    else
+    {
+        delete sceneSub;
+    }
+    
+    return Scene::SPtr();
 }
 
-void VSC::OB::Application::closeScene(Scene::SPtr scene)
+void VSC::OB::Application::destroyScene(Scene::SPtr scene)
 {
     BOOST_ASSERT(scene);
     if (!scene) return;

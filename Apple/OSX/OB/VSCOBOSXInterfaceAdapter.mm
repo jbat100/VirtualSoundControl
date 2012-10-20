@@ -1,5 +1,5 @@
 
-#include "VSCOBOSXInputAdapter.h"
+#include "VSCOBOSXInterfaceAdapter.h"
 #include "VSCOBScene.h"
 #include "OgreOSXCocoaView.h"
 
@@ -8,13 +8,13 @@
 
 using namespace OIS;
 
-VSC::OB::OSXInputAdapter::OSXInputAdapter(void) :
+VSC::OB::OSXInterfaceAdapter::OSXInterfaceAdapter(void) :
 mCocoaView(0)
 {
     this->populateKeyConversionMap();
 }
 
-Ogre::Vector2 VSC::OB::OSXInputAdapter::adaptedMouseLocationForEvent(NSEvent* theEvent) {
+Ogre::Vector2 VSC::OB::OSXInterfaceAdapter::adaptedMouseLocationForEvent(NSEvent* theEvent) {
     
     BOOST_ASSERT_MSG(mCocoaView, "Expected mCocoaView" ); 
     
@@ -24,15 +24,15 @@ Ogre::Vector2 VSC::OB::OSXInputAdapter::adaptedMouseLocationForEvent(NSEvent* th
     return Ogre::Vector2(locationInView.x,locationInView.y);
 }
 
-Ogre::Vector2 VSC::OB::OSXInputAdapter::adaptedMouseMovementForEvent(NSEvent* theEvent) {
+Ogre::Vector2 VSC::OB::OSXInterfaceAdapter::adaptedMouseMovementForEvent(NSEvent* theEvent) {
     return Ogre::Vector2([theEvent deltaX],[theEvent deltaY]);
 }
 
-OIS::MouseButtonID VSC::OB::OSXInputAdapter::mouseButtonIdForEvent(NSEvent* theEvent) {
+OIS::MouseButtonID VSC::OB::OSXInterfaceAdapter::mouseButtonIdForEvent(NSEvent* theEvent) {
     
     NSInteger mouseButton = [theEvent buttonNumber];
     
-    if (mTraceUI) std::cout << "VSC::OB::OSXInputAdapter::mouseButtonIdForEvent, mouseButton is " << mouseButton << std::endl; 
+    if (mTraceUI) std::cout << "VSC::OB::OSXInterfaceAdapter::mouseButtonIdForEvent, mouseButton is " << mouseButton << std::endl; 
     
     switch (mouseButton) {
         //case 1 << 0:
@@ -50,7 +50,7 @@ OIS::MouseButtonID VSC::OB::OSXInputAdapter::mouseButtonIdForEvent(NSEvent* theE
     return OIS::MouseButtonID(mouseButton-1);
 }
 
-void VSC::OB::OSXInputAdapter::populateKeyConversionMap(void) {
+void VSC::OB::OSXInterfaceAdapter::populateKeyConversionMap(void) {
     
     //std::cout << "0x" << std::hex << this << " Populating keyConversionMap" << std::endl;
     
@@ -171,7 +171,7 @@ void VSC::OB::OSXInputAdapter::populateKeyConversionMap(void) {
 }
 
 
-OIS::KeyCode VSC::OB::OSXInputAdapter::keyCodeForEvent(NSEvent* s) {
+OIS::KeyCode VSC::OB::OSXInterfaceAdapter::keyCodeForEvent(NSEvent* s) {
     
     unsigned short keyCode = (unsigned short)[s keyCode];
     if (mTrace) std::cout << "Finding ois for keyCode " << std::hex << keyCode << std::endl;
@@ -186,7 +186,7 @@ OIS::KeyCode VSC::OB::OSXInputAdapter::keyCodeForEvent(NSEvent* s) {
     
 }
 
-OIS::Keyboard::Modifier VSC::OB::OSXInputAdapter::modiferForCocoaModifierFlags(NSUInteger m) {
+OIS::Keyboard::Modifier VSC::OB::OSXInterfaceAdapter::modiferForCocoaModifierFlags(NSUInteger m) {
     
     OIS::Keyboard::Modifier oisMod = (OIS::Keyboard::Modifier)0;
     
@@ -198,22 +198,22 @@ OIS::Keyboard::Modifier VSC::OB::OSXInputAdapter::modiferForCocoaModifierFlags(N
     
 }
 
-void VSC::OB::OSXInputAdapter::renderWindowChangedSize(Ogre::RenderWindow* renderWindow, NSEvent* theEvent)
+void VSC::OB::OSXInterfaceAdapter::contextChanged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent)
 {
-    VSC::OB::InputAdapter::renderWindowChangedSize(renderWindow);
+    InterfaceAdapter::contextChanged(renderWindow);
 }
 
-void VSC::OB::OSXInputAdapter::keyUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInterfaceAdapter::keyUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     OIS::KeyCode key = this->keyCodeForEvent(theEvent);
     this->keyReleased(renderWindow, key);
 }
 
-void VSC::OB::OSXInputAdapter::keyDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInterfaceAdapter::keyDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     OIS::KeyCode key = this->keyCodeForEvent(theEvent);
     this->keyPressed(renderWindow, key);
 }
 
-void VSC::OB::OSXInputAdapter::mouseEntered(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInterfaceAdapter::mouseEntered(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     Ogre::Vector2 movement = this->adaptedMouseMovementForEvent(theEvent);
@@ -221,20 +221,20 @@ void VSC::OB::OSXInputAdapter::mouseEntered(Ogre::RenderWindow* renderWindow, NS
     
 }
 
-void VSC::OB::OSXInputAdapter::mouseExited(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInterfaceAdapter::mouseExited(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     
 }
 
-void VSC::OB::OSXInputAdapter::mouseMoved(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInterfaceAdapter::mouseMoved(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     Ogre::Vector2 movement = this->adaptedMouseMovementForEvent(theEvent);
     
-    VSC::OB::InputAdapter::mouseMoved(renderWindow, location, movement);
+    InterfaceAdapter::mouseMoved(renderWindow, location, movement);
 }
 
 
-void VSC::OB::OSXInputAdapter::mouseDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInterfaceAdapter::mouseDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     
@@ -245,7 +245,7 @@ void VSC::OB::OSXInputAdapter::mouseDown(Ogre::RenderWindow* renderWindow, NSEve
     
 }
 
-void VSC::OB::OSXInputAdapter::mouseUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInterfaceAdapter::mouseUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     
@@ -256,17 +256,17 @@ void VSC::OB::OSXInputAdapter::mouseUp(Ogre::RenderWindow* renderWindow, NSEvent
     
 }
 
-void VSC::OB::OSXInputAdapter::mouseDragged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInterfaceAdapter::mouseDragged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     Ogre::Vector2 movement = this->adaptedMouseMovementForEvent(theEvent);
     
-    VSC::OB::InputAdapter::mouseMoved(renderWindow, location, movement);
+    InterfaceAdapter::mouseMoved(renderWindow, location, movement);
     
 }
 
 
-void VSC::OB::OSXInputAdapter::otherMouseDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInterfaceAdapter::otherMouseDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     //this->mouseDown(theEvent);
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     //OIS::MouseButtonID mouseButtonID = this->mouseButtonIdForEvent(theEvent);
@@ -274,11 +274,11 @@ void VSC::OB::OSXInputAdapter::otherMouseDown(Ogre::RenderWindow* renderWindow, 
     this->mouseButtonPressed(renderWindow, location, mouseButtonID);
 }
 
-void VSC::OB::OSXInputAdapter::otherMouseDragged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInterfaceAdapter::otherMouseDragged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     this->mouseMoved(renderWindow, theEvent);
 }
 
-void VSC::OB::OSXInputAdapter::otherMouseUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInterfaceAdapter::otherMouseUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     //this->mouseUp(theEvent);
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     //OIS::MouseButtonID mouseButtonID = this->mouseButtonIdForEvent(theEvent);
@@ -287,7 +287,7 @@ void VSC::OB::OSXInputAdapter::otherMouseUp(Ogre::RenderWindow* renderWindow, NS
 }
 
 
-void VSC::OB::OSXInputAdapter::rightMouseDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInterfaceAdapter::rightMouseDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     //this->mouseDown(theEvent);
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     //OIS::MouseButtonID mouseButtonID = this->mouseButtonIdForEvent(theEvent);
@@ -295,11 +295,11 @@ void VSC::OB::OSXInputAdapter::rightMouseDown(Ogre::RenderWindow* renderWindow, 
     this->mouseButtonPressed(renderWindow, location, mouseButtonID);
 }
 
-void VSC::OB::OSXInputAdapter::rightMouseDragged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInterfaceAdapter::rightMouseDragged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     this->mouseMoved(renderWindow, theEvent);
 }
 
-void VSC::OB::OSXInputAdapter::rightMouseUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInterfaceAdapter::rightMouseUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     //this->mouseUp(theEvent);
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
     //OIS::MouseButtonID mouseButtonID = this->mouseButtonIdForEvent(theEvent);
@@ -308,7 +308,7 @@ void VSC::OB::OSXInputAdapter::rightMouseUp(Ogre::RenderWindow* renderWindow, NS
 }
 
 
-void VSC::OB::OSXInputAdapter::scrollWheel(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+void VSC::OB::OSXInterfaceAdapter::scrollWheel(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     
 }
 
