@@ -12,16 +12,18 @@
 #import "VSCOSXEnvironmentWindowController.h"
 #import "VSCOSXMIDIWindowController.h"
 
+#include "VSCGlobalApplication.h"
+
 #include "VSCOBScene.h"
 #include "VSCOBApplication.h"
-#include "VSCOBPrimitivesDemo.h"
-#include "VSCOBTriMeshDemo.h"
-#include "VSCOBConstraintsDemo.h"
+#include "VSCOBResourceManager.h"
 
 #include "VSCMIDI.h"
 #include "VSCMIDIOutput.h"
 #include "VSCMIDIOutputManager.h"
 #include "VSCException.h"
+
+#include <Ogre/OSX/macUtils.h>
 
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
@@ -30,8 +32,6 @@
 
 @interface VSCAppDelegate ()
 
--(void) setupOgreBulletApplication;
--(void) teardownOgreBulletApplication;
 
 @end
 
@@ -39,6 +39,14 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    VSC::GlobalApplication::SPtr globalApplication = VSC::GlobalApplication::singletonGlobalApplication();
+    
+    std::string resourcePath = Ogre::macBundlePath() + "/Contents/Resources/";
+    
+    VSC::OB::ResourceManager::SPtr resourceManager = VSC::OB::ResourceManager::SPtr(new VSC::OB::ResourceManager(resourcePath));
+    VSC::OB::Application::SPtr obApplication = VSC::OB::Application::singletonApplication();
+    obApplication->init(resourceManager);
+    
     /*
      *  Create application manager, and setup midi output manager
      */
@@ -46,26 +54,19 @@
     self.applicationManager = [[VSCOSXApplicationManager alloc] init];
     BOOST_ASSERT(self.applicationManager);
 
-    
-    self.ogreBulletSceneWindowController = [[VSCOSXEnvironmentWindowController alloc] initWithWindowNibName:@"VSCOBOSXSceneWindow"];
-    BOOST_ASSERT(self.ogreBulletSceneWindowController);
-    self.ogreBulletSceneWindowController.applicationManager = self;
-    
-    NSWindow* w = self.ogreBulletSceneWindowController.window;
-    NSLog(@"OgreBulletSceneWindow: %@", w);
+    self.environmentWindowController = [[VSCOSXEnvironmentWindowController alloc] initWithWindowNibName:@"VSCOBOSXSceneWindow"];
+    BOOST_ASSERT(self.environmentWindowController);
     
     self.midiWindowController = [[VSCOSXMIDIWindowController alloc] initWithWindowNibName:@"VSCOSXMIDIWindow"];
     BOOST_ASSERT(self.midiWindowController);
-    self.midiWindowController.applicationManager = self;
-    
     
     /*
      *  Refresh outputs and open them all
      */
     
-    self.applicationManager.midiOutputManager->refreshOutputs();
+    self.midiWindowController.midiOutputManager = VSC::MIDI::OutputManager::singletonManager();
     
-    const VSC::MIDI::Outputs& outputs = self.applicationManager.midiOutputManager->getOutputs();
+    const VSC::MIDI::Outputs& outputs = VSC::MIDI::OutputManager::singletonManager()->getOutputs();
     BOOST_FOREACH(VSC::MIDI::Output::SPtr output, outputs)
     {
         try {
@@ -75,11 +76,12 @@
         }
     }
     
-    [self setupOgreBulletApplication];
-    
-    //[self showSceneWindow:nil];
-    
     [self showMIDIWindow:nil];
+    
+    VSC::Environment::SPtr environment = globalApplication->createEnvironment<VSC::Environment>();
+    
+    VSC::OB::Scene::SPtr scene = obApplication->createScene<VSC::OB::Scene>();
+    
     
     [self.applicationManager startOgreRendering];
 }
@@ -88,49 +90,20 @@
 {
     [self.applicationManager stopOgreRendering];
     
-    [self teardownOgreBulletApplication];
 }
 
 -(IBAction)showMIDIWindow:(id)sender
 {
-    [self.applicationManager.midiWindowController showWindow:sender];
+    [self.midiWindowController showWindow:sender];
 }
 
--(IBAction)showSceneWindow:(id)sender
+-(IBAction)showEnvironmentWindow:(id)sender
 {
-    VSC::OB::Scene::SPtr currentScene = self.applicationManager.ogreBulletApplication->getCurrentScene();
-    
-    self.applicationManager.ogreBulletSceneWindowController.ogreBulletScene = currentScene;
-    
-    [self.applicationManager.ogreBulletSceneWindowController showWindow:sender];
+    [self.environmentWindowController showWindow:sender];
 }
 
 
--(void) setupOgreBulletApplication {
-    
-    VSC::OB::Application::Scenes scenes;
-    
-    scenes.push_back(VSC::OB::Scene::SPtr(new VSC::OB::PrimitivesDemo()));
-    scenes.push_back(VSC::OB::Scene::SPtr(new VSC::OB::TriMeshDemo()));
-	scenes.push_back(VSC::OB::Scene::SPtr(new VSC::OB::ConstraintsDemo()));
-    
-    VSC::OB::Application::SPtr ogreBulletApplication = VSC::OB::Application::SPtr(new VSC::OB::Application(scenes));
-    
-    self.applicationManager.ogreBulletApplication = ogreBulletApplication; // this calls setupWithOgreView()
-    
-    //ogreBulletApplication->setupWithOgreView((__bridge void*)self.applicationManager.ogreBulletSceneWindowController.ogreBulletSceneView);
-    
-}
 
--(void) teardownOgreBulletApplication {
-    
-    /*
-     *  Cleanup, setting the smart pointer to nil should take care of everything...
-     */
-    
-    self.applicationManager.ogreBulletApplication = VSC::OB::Application::SPtr();
-    
-}
 
 
 @end

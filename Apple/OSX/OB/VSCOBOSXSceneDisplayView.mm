@@ -9,12 +9,18 @@
 #import "VSCOBOSXSceneDisplayView.h"
 
 #include "VSCOBOSXInterfaceAdapter.h"
+
+#include "VSCOBApplication.h"
 #include "VSCOBSceneController.h"
 #include "VSCOBDisplayController.h"
+#include "VSCOBKeyBindings.h"
+#include "VSCOBKeyboardManager.h"
 
 #include <boost/assert.hpp>
 
 @interface VSCOBOSXSceneDisplayView ()
+
+@property (nonatomic, assign) VSC::OB::Display::WPtr display;
 
 @property (nonatomic, assign) VSC::OB::OSXInterfaceAdapter::SPtr inputAdapter;
 
@@ -33,17 +39,25 @@ static const bool mTraceUI = false;
     
     if (self) {
         
+        VSC::OB::Display::SPtr d = VSC::OB::Application::singletonApplication()->createDisplayWithView<VSC::OB::Display>((__bridge void*)self);
+        self.display = VSC::OB::Display::WPtr(d);
+        
+        VSC::OB::KeyboardManager::SPtr keyboardManager = VSC::OB::KeyboardManager::SPtr(new VSC::OB::KeyboardManager());
+        VSC::OB::KeyBindings::SPtr keyBindings = keyboardManager->generateDefaultBindings();
+        
         self.interfaceResponderChain = VSC::OB::InterfaceResponderChain::SPtr(new VSC::OB::InterfaceResponderChain);
         
         self.sceneController = VSC::OB::SceneController::SPtr(new VSC::OB::SceneController);
         self.displayController = VSC::OB::DisplayController::SPtr(new VSC::OB::DisplayController);
+        
+        self.displayController->setupWithDisplay(self.display.lock());
         
         self.interfaceResponderChain->appendResponder(boost::static_pointer_cast<VSC::OB::InterfaceResponder>(self.sceneController));
         self.interfaceResponderChain->appendResponder(boost::static_pointer_cast<VSC::OB::InterfaceResponder>(self.displayController));
         
         self.inputAdapter = VSC::OB::OSXInterfaceAdapter::SPtr(new VSC::OB::OSXInterfaceAdapter());
         self.inputAdapter->allowRapidFireKeyPresses(false);
-        self.inputAdapter->addInputListener(self.interfaceResponderChain);
+        self.inputAdapter->addResponder(self.interfaceResponderChain);
         self.inputAdapter->setCocoaView(self);
         
         // Initialization code here.
@@ -56,7 +70,7 @@ static const bool mTraceUI = false;
                                                            queue:nil
                                                       usingBlock:^(NSNotification *)
         {
-            if (self.inputAdapter) self.inputAdapter->renderWindowChangedSize([self ogreWindow], nil);
+            if (self.inputAdapter) self.inputAdapter->contextChanged([self ogreWindow], nil);
         }
          ];
         
@@ -65,7 +79,7 @@ static const bool mTraceUI = false;
                                                            queue:nil
                                                       usingBlock:^(NSNotification *)
          {
-             if (self.inputAdapter) self.inputAdapter->renderWindowChangedSize([self ogreWindow], nil);
+             if (self.inputAdapter) self.inputAdapter->contextChanged([self ogreWindow], nil);
          }
          ];
         
@@ -82,23 +96,29 @@ static const bool mTraceUI = false;
 
 #pragma mark - Custom Setters
 
--(void) setDisplay:(VSC::OB::Display::WPtr)display
+-(void) setScene:(VSC::OB::Scene::WPtr)scene
 {
-    _display = display;
+    VSC::OB::Scene::SPtr currentScene = _scene.lock();
+    VSC::OB::Scene::SPtr newScene = scene.lock();
     
-    VSC::OB::Display::SPtr sdisplay = display.lock();
+    if (currentScene != newScene) {
+        
+        _scene = scene;
+        
+        if (newScene)
+        {
+            self.display.lock()->setupWithScene(newScene);
+            self.sceneController->setupWithScene(newScene);
+            
+        }
+        else
+        {
+            self.display.lock()->shutdown();
+            self.sceneController->shutdown();
+        }
+        
+    }
     
-    if (sdisplay)
-    {
-        self.sceneController->setupWithScene(sdisplay->getScene());
-        self.displayController->setupWithDisplay(sdisplay);
-    }
-    else
-    {
-        self.sceneController->shutdown();
-        self.displayController->shutdown();
-    }
-
 }
 
 #pragma mark - NSResponder Stuff

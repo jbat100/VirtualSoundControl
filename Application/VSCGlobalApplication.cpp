@@ -2,34 +2,27 @@
 #include "VSCGlobalApplication.h"
 
 #include <boost/assert.hpp>
+#include <boost/thread.hpp>
 
-VSC::GlobalApplication::GlobalApplication()
+boost::once_flag globalApplicationSingletonInitilizedFlag = BOOST_ONCE_INIT;
+
+void VSC::GlobalApplication::InitializeSingletonGlobalApplication()
 {
-    
+    BOOST_ASSERT(!mGlobalApplicationSingleton);
+    mGlobalApplicationSingleton = VSC::GlobalApplication::SPtr (new VSC::GlobalApplication);
+    mGlobalApplicationSingleton->init();
+}
+
+VSC::GlobalApplication::SPtr VSC::GlobalApplication::singletonGlobalApplication()
+{
+    boost::call_once(&GlobalApplication::InitializeSingletonGlobalApplication, globalApplicationSingletonInitilizedFlag);
+    BOOST_ASSERT(mGlobalApplicationSingleton);
+    return mGlobalApplicationSingleton;
 }
 
 void VSC::GlobalApplication::init()
 {
     
-    this->setMIDIOutputManager(VSC::MIDI::OutputManager::singletonManager());
-    
-    this->internalInit();
-}
-
-template<typename OBApplicationSubclass>
-void VSC::GlobalApplication::createOBApplication()
-{
-    BOOST_ASSERT_MSG(!mOBApplication, "VSC::GlobalApplication::createOBApplication() should only be called once!");
-    if(!mOBApplication) return;
-    
-    OBApplicationSubclass* applicationSubclass = new OBApplicationSubclass;
-    VSC::OB::Application* application = dynamic_cast<VSC::OB::Application*>(applicationSubclass);
-    
-    BOOST_ASSERT(application);
-    
-    if (application) {
-        mOBApplication = VSC::OB::Application::SPtr(application);
-    }
     
 }
 

@@ -10,28 +10,23 @@
 
 #include "VSCOSXApplicationManagerProtocol.h"
 
-#include "VSCOBScene.h"
-#include "VSCOBKeyboardManager.h"
+#include "VSCEnvironment.h"
 
 @class VSCOBOSXSceneDisplayView;
 
 @interface VSCOSXEnvironmentWindowController : NSWindowController
 
-//@property (nonatomic, strong) IBOutletCollection(VSCOBOSXSceneDisplayView) NSArray* ogreBulletSceneViews;
-
 @property (nonatomic, strong) IBOutlet VSCOBOSXSceneDisplayView* sceneView;
 @property (nonatomic, strong) IBOutlet NSPopUpButton* scenePopUpButton;
 
-@property (nonatomic, assign) VSC::OB::Scene::SPtr scene;
+@property (nonatomic, assign) VSC::Environment::SPtr environment;
 
-@property (nonatomic, weak) id<VSCOSXApplicationManagerProtocol> applicationManager;
+-(void) reloadInterface;
 
 - (IBAction)test1:(id)sender;
 - (IBAction)test2:(id)sender;
 - (IBAction)test3:(id)sender;
 
 - (IBAction)showMidiWindow:(id)sender;
-
-- (IBAction)scenePopUpButtonChanged:(id)sender;
 
 @end

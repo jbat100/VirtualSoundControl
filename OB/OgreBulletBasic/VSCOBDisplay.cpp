@@ -7,42 +7,80 @@
 
 #include <Ogre/Ogre.h>
 
-VSC::OB::Display::Display(Scene::SPtr scene) :
+const Ogre::Vector3 CameraStart = Ogre::Vector3(13,4.5,0);
+
+VSC::OB::Display::Display() :
 mRenderWindow(0),
 mCamera(0)
 {
-    if (!scene) throw VSCInvalidArgumentException("Excpected non-NULL scene");
-    mScene = Scene::WPtr(scene);
+
 }
 
-void VSC::OB::Display::init()
+VSC::OB::Display::~Display()
 {
+    this->destroyRenderWindow();
+}
+
+void VSC::OB::Display::setupWithScene(Scene::SPtr scene)
+{
+    this->shutdown();
+    
+    if (!scene) throw VSCInvalidArgumentException("Excpected non-NULL scene");
+    mScene = Scene::WPtr(scene);
+    
+    BOOST_ASSERT(mRenderWindow);
     this->createCamera();
+    
+    BOOST_ASSERT(mCamera);
+    this->createViewport();
+    
+    this->resetCameraAspectRatio();
+    
+    this->internalSetup();
 }
 
 void VSC::OB::Display::shutdown()
 {
     this->destroyCamera();
-    this->destroyRenderWindow();
+    this->internalShutdown();
 }
 
 void VSC::OB::Display::createCamera(void)
 {
     // Create the camera
     this->setCamera( this->getScene()->getSceneManager()->createCamera("Camera") );
+    
     // Position it at 500 in Z direction
-    mCamera->setPosition(Ogre::Vector3(0,0,500));
+    //mCamera->setPosition(Ogre::Vector3(0,0,500));
+    
+    mCamera->setPosition(CameraStart);
+    
     // Look back along -Z
     mCamera->lookAt(Ogre::Vector3(0,0,-300));
     mCamera->setNearClipDistance(5);
+    
+}
+
+void VSC::OB::Display::createViewport(void)
+{
+    // Create one viewport, entire window
+    Ogre::Viewport* viewport = this->getRenderWindow()->addViewport(this->getCamera());
+    viewport->setBackgroundColour(Ogre::ColourValue(0,0,0));
 }
 
 void VSC::OB::Display::destroyCamera(void)
 {
-    BOOST_ASSERT(this->getScene()->getSceneManager());
-    BOOST_ASSERT(this->getCamera());
+    /*
+     *  Shutdown can be called when there is no 
+     */
     
-    this->getScene()->getSceneManager()->destroyCamera(this->getCamera());
+    //BOOST_ASSERT(this->getScene()->getSceneManager());
+    //BOOST_ASSERT(this->getCamera());
+    
+    if (this->getScene()->getSceneManager() && this->getCamera())
+    {
+        this->getScene()->getSceneManager()->destroyCamera(this->getCamera());
+    }
     
     this->setCamera(0);
 }

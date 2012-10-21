@@ -16,16 +16,40 @@
 
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
+#include <boost/thread.hpp>
 
+void VSC::OB::Application::Bridge::setDisplayRenderWindow(Display::SPtr display, Ogre::RenderWindow* renderWindow)
+{
+    if (this->getApplication()) this->getApplication()->setDisplayRenderWindow(display, renderWindow);
+}
+
+void VSC::OB::Application::setDisplayRenderWindow(Display::SPtr display, Ogre::RenderWindow* renderWindow)
+{
+    display->setRenderWindow(renderWindow);
+}
+
+boost::once_flag applicationSingletonInitilizedFlag = BOOST_ONCE_INIT;
+
+void VSC::OB::Application::InitialiseSingletonApplication()
+{
+    BOOST_ASSERT(!singletonApplication);
+    mSingletonApplication = VSC::OB::Application::SPtr (new VSC::OB::Application);
+}
+
+
+VSC::OB::Application::SPtr VSC::OB::Application::singletonApplication(void)
+{
+    boost::call_once(&Application::InitialiseSingletonApplication, applicationSingletonInitilizedFlag);
+    BOOST_ASSERT(mSingletonApplication);
+    return mSingletonApplication;
+}
 
 VSC::OB::Application::Application() :
 mRoot(0),
 Ogre::FrameListener(),
 mInitialised(false)
 {
-#ifdef __APPLE__
-    mBridge = Bridge::SPtr(new OSXApplicationBridge);
-#endif
+
 }
 // -------------------------------------------------------------------------
 VSC::OB::Application::~Application()
@@ -43,22 +67,29 @@ VSC::OB::Scene::SPtr VSC::OB::Application::sceneWithName(Ogre::String name)
     return Scene::SPtr();
 }
 
-bool VSC::OB::Application::init()
+bool VSC::OB::Application::init(ResourceManager::SPtr resourceManager)
 {
+    BOOST_ASSERT(mInitialised == false);
+    if (mInitialised) return false;
+    
+#ifdef __APPLE__
+    mBridge = Bridge::SPtr(new OSXApplicationBridge(shared_from_this()));
+#endif
+    
     BOOST_ASSERT(mBridge);
     if (!mBridge) return false;
     
     mRoot = mBridge->createOgreRoot();
     BOOST_ASSERT(mRoot);
     
-    this->setupResources();
-    Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-    this->createResourceListener(); // Create any resource listeners (for loading screens)
-    this->loadResources();
+    BOOST_ASSERT(resourceManager);
+    if (!resourceManager) return false;
+    mResourceManager = resourceManager;
+    
+    mResourceManager->setupResources();
+    mResourceManager->loadResources();
     
     mRoot->addFrameListener(this);
-    
-    this->internalInit();
     
     mInitialised = true;
     
@@ -70,6 +101,7 @@ VSC::OB::Scene::SPtr VSC::OB::Application::createScene()
 {
     SceneSubclass* sceneSub = new SceneSubclass(shared_from_this());
     Scene* scene = dynamic_cast<Scene*>(sceneSub);
+    BOOST_ASSERT(scene);
     
     if (scene)
     {
@@ -100,6 +132,44 @@ void VSC::OB::Application::destroyScene(Scene::SPtr scene)
     }
 }
 
+template<typename DisplaySubclass>
+VSC::OB::Display::SPtr VSC::OB::Application::createDisplayWithView(void* view)
+{
+    BOOST_ASSERT(mBridge);
+    if (!mBridge) return Display::SPtr();
+    
+    DisplaySubclass* displaySub = new DisplaySubclass();
+    Display* display = dynamic_cast<Display*>(displaySub);
+    BOOST_ASSERT(display);
+    
+    if (display)
+    {
+        Display::SPtr sDisplay = Display::SPtr(display);
+        mBridge->setupDisplayWithView(sDisplay, view);
+        mDisplays.push_back(sDisplay);
+        return sDisplay;
+    }
+    else
+    {
+        delete display;
+    }
+    
+    return Display::SPtr();
+}
+
+void VSC::OB::Application::destroyDisplay(Display::SPtr display)
+{
+    BOOST_ASSERT(display);
+    if (!display) return;
+    
+    Displays::iterator it = std::find(mDisplays.begin(), mDisplays.end(), display);
+    BOOST_ASSERT_MSG(it != mDisplays.end(), "Display not in application");
+    if(it != mDisplays.end())
+    {
+        display->shutdown();
+        mDisplays.erase(it);
+    }
+}
 
 bool VSC::OB::Application::frameStarted(const Ogre::FrameEvent& evt)
 {
@@ -127,83 +197,5 @@ bool VSC::OB::Application::frameEnded(const Ogre::FrameEvent& evt)
     return true; 
 }
 
-
-void VSC::OB::Application::setupResources(void)
-{
-    Ogre::ResourceGroupManager *rsm = Ogre::ResourceGroupManager::getSingletonPtr();
-    
-    std::string resourcePath = this->getBridge()->getOgreResourcePath();
-    
-    /*-------------------------------------------------------------------------------------*/
-    
-    // Load resource paths from config file
-    Ogre::ConfigFile cf;
-    cf.load(resourcePath + "resources.cfg");
-    
-    // Go through all sections & settings in the file
-    Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
-    
-    Ogre::String secName, typeName, archName;
-    
-    while (seci.hasMoreElements())
-    {
-        secName = seci.peekNextKey();
-        Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
-        Ogre::ConfigFile::SettingsMultiMap::iterator i;
-        for (i = settings->begin(); i != settings->end(); ++i)
-        {
-            typeName = i->first;
-            archName = i->second;
-            try {
-                rsm->addResourceLocation(archName, typeName, secName);
-            } catch (Ogre::Exception& e) {
-                std::cout << "Exception : " << e.getFullDescription() << std::endl;
-            }
-        }
-    }
-    
-    /*-------------------------------------------------------------------------------------*/
-    
-	Ogre::StringVector groups = rsm->getResourceGroups();        
-	//Ogre::FileInfoListPtr finfo =  rsm->findResourceFileInfo ("Bootstrap", "axes.mesh");
-
-	const Ogre::String resName ("OgreBullet");
-	{
-		if (std::find(groups.begin(), groups.end(), resName) == groups.end())
-		{
-
-			rsm->createResourceGroup(resName);
-            Ogre::String baseName;
-            
-            /*
-             *  Hacky temporary stuff by jonathan (given the path to the executable is not known when using workspaces),
-             *  The ogrebullet media folder needs to be copied to "/Library/VirtualSoundControl/Ogrebullet/Media"
-             */
-            
-            baseName = "/Library/VirtualSoundControl/Ogrebullet/Media";
-            
-            rsm->addResourceLocation(baseName, "FileSystem", resName);
-			rsm->addResourceLocation(baseName + "/textures", "FileSystem", resName);
-			rsm->addResourceLocation(baseName + "/overlays", "FileSystem", resName);
-			rsm->addResourceLocation(baseName + "/materials", "FileSystem", resName);
-			rsm->addResourceLocation(baseName + "/models", "FileSystem", resName);
-			rsm->addResourceLocation(baseName + "/gui", "FileSystem", resName);
-		}
-	}
-}
-
-
-void VSC::OB::Application::loadResources(void)
-{
-    Ogre::ResourceGroupManager *rsm = Ogre::ResourceGroupManager::getSingletonPtr();
-    
-    rsm->initialiseAllResourceGroups(); // is this necessary given what follows ?
-    
-	Ogre::StringVector groups = rsm->getResourceGroups();      
-	for (Ogre::StringVector::iterator it = groups.begin(); it != groups.end(); ++it)
-	{
-		rsm->initialiseResourceGroup((*it));
-	}
-}
 
 

@@ -368,6 +368,8 @@ namespace VSC {
             Display::SPtr createDisplayWithView(void* view); // view is platform dependent
             void destroyDisplay(Display::SPtr display);
             
+            const Displays& getDisplays(void) {return mDisplays;}
+            
             /**--------------------------------------------------------------
              * Elements
              */
@@ -525,6 +527,8 @@ namespace VSC {
             bool mEnableSatComparison;
             
         };
+        
+        typedef std::vector<Scene::SPtr> Scenes;
         
         std::ostream& operator << (std::ostream& stream, const Scene::Collision& collision);
         

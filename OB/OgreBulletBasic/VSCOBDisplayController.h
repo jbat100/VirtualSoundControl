@@ -100,7 +100,7 @@ namespace VSC {
             
         };
         
-        typedef std::vector<DisplayController::SPtr> SceneControllers;
+        typedef std::vector<DisplayController::SPtr> DisplayControllers;
         
         class DisplayControllerChain : public InterfaceResponderChain
         {
@@ -121,7 +121,9 @@ namespace VSC {
             
         private:
             
-            Display::WPtr         mDisplay;
+            DisplayControllers  mDisplayControllers;
+            
+            Display::WPtr       mDisplay;
             
         };
         

@@ -19,6 +19,7 @@ namespace VSC {
     namespace OB {
         
         class Scene;
+        class Application;
 
         class Display : public boost::enable_shared_from_this<Display>
         {
@@ -31,11 +32,19 @@ namespace VSC {
         public:
             
             friend class Scene;
+            friend class Application;
             
             typedef boost::shared_ptr<Display>  SPtr;
             typedef boost::weak_ptr<Display>    WPtr; 
             
             typedef std::map<std::string, std::string>  StatsMap;
+            
+            /*
+             *  Init and shutdown are not virtual but will call virtual functions
+             */
+            
+            void setupWithScene(Scene_SPtr scene);
+            void shutdown();
             
             
             /**--------------------------------------------------------------
@@ -74,15 +83,11 @@ namespace VSC {
             /**--------------------------------------------------------------
              *  Constructor/Destructor/Initialization
              */
-            Display(Scene_SPtr scene);
+            Display();
             virtual ~Display();
             
-            /*
-             *  Init and shutdown are not virtual but will call virtual functions
-             */
-            
-            void init();
-            void shutdown();
+            virtual void internalSetup() {}          // for subclasses, will be called by setupWithScene()
+            virtual void internalShutdown() {}       // for subclasses, will be called by shutdown()
             
             /*
              *  Protected setters
@@ -96,7 +101,7 @@ namespace VSC {
              */
             
             virtual void createCamera(void);
-            
+            virtual void createViewport(void);
             virtual void destroyCamera(void);
             virtual void destroyRenderWindow(void);
             

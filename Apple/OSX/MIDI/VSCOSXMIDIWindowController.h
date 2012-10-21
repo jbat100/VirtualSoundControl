@@ -12,13 +12,14 @@
 
 #include "VSCMIDI.h"
 #include "VSCMIDIOutput.h"
+#include "VSCMIDIOutputManager.h"
 
 //@class VSCOSXMIDITestController;
 //@class VSCOSXMIDITest;
 
 @interface VSCOSXMIDIWindowController : NSWindowController <JAListViewDataSource, JAListViewDelegate, NSComboBoxDelegate, NSComboBoxDataSource>
 
-@property (weak) IBOutlet id<VSCOSXApplicationManagerProtocol> applicationManager;
+@property (nonatomic, assign) VSC::MIDI::OutputManager::SPtr midiOutputManager;
 
 /*
  *  MIDI Inputs/Outputs

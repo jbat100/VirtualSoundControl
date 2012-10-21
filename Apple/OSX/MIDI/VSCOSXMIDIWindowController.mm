@@ -13,8 +13,11 @@
 
 #import "NSString+VSCAdditions.h"
 
+#include "VSCMIDI.h"
 #include "VSCMIDIOutputManager.h"
 #include "VSCException.h"
+
+#include <boost/foreach.hpp>
 
 NSString* const VSCOSXMIDINoSelectedChannelMenuItemString = @"No selected MIDI output";
 NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control number (set output)";
@@ -145,9 +148,10 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
     
     [self.midiOutputPopUpButton addItemWithTitle:VSCOSXMIDINoSelectedChannelMenuItemString];
     
-    if (self.applicationManager.midiOutputManager) {
+    if (self.midiOutputManager)
+    {
         
-        const VSC::MIDI::Outputs& outputs = self.applicationManager.midiOutputManager->getOutputs();
+        const VSC::MIDI::Outputs& outputs = self.midiOutputManager->getOutputs();
         
         BOOST_FOREACH(const VSC::MIDI::Output::SPtr& output, outputs)
         {
@@ -196,11 +200,11 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
 -(IBAction) midiOutputSelected:(id)sender
 {
     
-    if (self.applicationManager.midiOutputManager) {
+    if (self.midiOutputManager) {
         
         std::string description = [[[self.midiOutputPopUpButton selectedItem] title] stdString];
         
-        VSC::MIDI::Output::SPtr selectedOutput = self.applicationManager.midiOutputManager->getOutputWithDescription(description);
+        VSC::MIDI::Output::SPtr selectedOutput = self.midiOutputManager->getOutputWithDescription(description);
         
         self.testMIDIOutput = selectedOutput;
     }
@@ -217,9 +221,9 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
     
     NSLog(@"Refreshing outputs");
     
-    if (self.applicationManager.midiOutputManager)
+    if (self.midiOutputManager)
     {
-        self.applicationManager.midiOutputManager->refreshOutputs();
+        self.midiOutputManager->refreshOutputs();
         NSLog(@"Refreshed outputs");
     }
     else
@@ -293,9 +297,9 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
 
 - (NSUInteger)numberOfItemsInListView:(JAListView *)listView
 {
-    if (self.applicationManager.midiOutputManager)
+    if (self.midiOutputManager)
     {
-        return (NSUInteger)self.applicationManager.midiOutputManager->getOutputs().size();
+        return (NSUInteger)self.midiOutputManager->getOutputs().size();
     }
     
     return 0;
@@ -305,9 +309,9 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
 {
     if (listView == self.midiOutputsListView) {
         
-        if (self.applicationManager.midiOutputManager)
+        if (self.midiOutputManager)
         {
-            const VSC::MIDI::Outputs& outputs = self.applicationManager.midiOutputManager->getOutputs();
+            const VSC::MIDI::Outputs& outputs = self.midiOutputManager->getOutputs();
             
             if ((NSUInteger)outputs.size() > index)
             {

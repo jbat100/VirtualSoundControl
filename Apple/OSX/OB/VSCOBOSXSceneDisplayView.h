@@ -9,14 +9,15 @@
 #import "OgreOSXCocoaView.h"
 
 #include "VSCOBKeyBindings.h"
+#include "VSCOBScene.h"
 #include "VSCOBDisplay.h"
 #include "VSCOBInterface.h"
 
-
-
 @interface VSCOBOSXSceneDisplayView : OgreView 
 
-@property (nonatomic, assign) VSC::OB::Display::WPtr display;
+@property (nonatomic, assign) VSC::OB::Scene::WPtr scene;
 @property (nonatomic, assign) VSC::OB::InterfaceResponderChain::SPtr interfaceResponderChain;
+
+@property (readonly, nonatomic, assign) VSC::OB::Display::WPtr display;
 
 @end

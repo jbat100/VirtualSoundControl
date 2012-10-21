@@ -1,6 +1,6 @@
 
-#ifndef _VSC_OGRE_KEY_BINDINGS_H_
-#define _VSC_OGRE_KEY_BINDINGS_H_
+#ifndef _VSC_OB_KEY_BINDINGS_H_
+#define _VSC_OB_KEY_BINDINGS_H_
 
 #include "VSCUI.h"  
 #include "VSCBindings.hpp"
@@ -50,5 +50,5 @@ namespace VSC {
  
  
 
-#endif//_VSC_OGRE_KEY_BINDINGS_H_
+#endif//_VSC_OB_KEY_BINDINGS_H_
 

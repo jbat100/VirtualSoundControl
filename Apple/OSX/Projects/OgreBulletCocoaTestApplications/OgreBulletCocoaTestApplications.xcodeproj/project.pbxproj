@@ -26,6 +26,7 @@
 		102671D11625B4E6002D34B2 /* VSCMIDIOutputChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 102671CF1625B4E6002D34B2 /* VSCMIDIOutputChannel.cpp */; };
 		103006931624763A002A30ED /* VSC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103006911624763A002A30ED /* VSC.cpp */; };
 		103203481632BBE7006ED4FF /* VSCEnvironment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103203461632BBE7006ED4FF /* VSCEnvironment.cpp */; };
+		1032034B16346495006ED4FF /* VSCOBResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1032034916346494006ED4FF /* VSCOBResourceManager.cpp */; };
 		1033868C156E48AC00CEB288 /* Plugin_BSPSceneManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948C156E483000E70049 /* Plugin_BSPSceneManager.dylib */; };
 		1033868D156E48AC00CEB288 /* Plugin_CgProgramManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */; };
 		1033868E156E48AC00CEB288 /* Plugin_OctreeSceneManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */; };
@@ -221,6 +222,8 @@
 		103006921624763A002A30ED /* VSC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSC.h; path = ../../../../Generic/VSC.h; sourceTree = "<group>"; };
 		103203461632BBE7006ED4FF /* VSCEnvironment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCEnvironment.cpp; path = ../../../../Application/VSCEnvironment.cpp; sourceTree = "<group>"; };
 		103203471632BBE7006ED4FF /* VSCEnvironment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCEnvironment.h; path = ../../../../Application/VSCEnvironment.h; sourceTree = "<group>"; };
+		1032034916346494006ED4FF /* VSCOBResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBResourceManager.cpp; path = ../../../../../OB/OgreBulletBasic/VSCOBResourceManager.cpp; sourceTree = "<group>"; };
+		1032034A16346495006ED4FF /* VSCOBResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBResourceManager.h; path = ../../../../../OB/OgreBulletBasic/VSCOBResourceManager.h; sourceTree = "<group>"; };
 		10338694156E5BB100CEB288 /* OgreOSXCocoaContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaContext.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaContext.h; sourceTree = "<group>"; };
 		10338695156E5BB100CEB288 /* OgreOSXCocoaWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaWindow.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaWindow.h; sourceTree = "<group>"; };
 		10338696156E5BB100CEB288 /* OgreOSXCocoaWindowDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaWindowDelegate.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaWindowDelegate.h; sourceTree = "<group>"; };
@@ -546,6 +549,8 @@
 				105CDA03162D9D6F00532AD0 /* VSCOBKeyboardAction.h */,
 				105CDA04162D9D6F00532AD0 /* VSCOBKeyboardManager.cpp */,
 				105CDA05162D9D6F00532AD0 /* VSCOBKeyboardManager.h */,
+				1032034916346494006ED4FF /* VSCOBResourceManager.cpp */,
+				1032034A16346495006ED4FF /* VSCOBResourceManager.h */,
 				105CDA08162D9D6F00532AD0 /* VSCOBScene.cpp */,
 				105CDA09162D9D6F00532AD0 /* VSCOBScene.h */,
 				105CDA0A162D9D6F00532AD0 /* VSCOBSceneController.cpp */,
@@ -1365,6 +1370,7 @@
 				105CDA5E162DAD5600532AD0 /* VSCOBOSXSceneBridge.mm in Sources */,
 				10F907D8162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp in Sources */,
 				103203481632BBE7006ED4FF /* VSCEnvironment.cpp in Sources */,
+				1032034B16346495006ED4FF /* VSCOBResourceManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

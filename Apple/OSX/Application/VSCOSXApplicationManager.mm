@@ -7,9 +7,7 @@
 //
 
 #import "VSCOSXApplicationManager.h"
-#import "VSCOSXMIDIWindowController.h"
-#import "VSCOSXEnvironmentWindowController.h"
-#import "VSCOBOSXSceneDisplayView.h"
+#import "VSCOBApplication.h"
 #import "NSArray+VSCAdditions.h"
 
 #include <Ogre/Ogre.h>
@@ -31,7 +29,6 @@
     if ((self = [super init])) {
         
         self.application = VSC::GlobalApplication::SPtr(new VSC::GlobalApplication);
-        
         self.application->init();
     }
     

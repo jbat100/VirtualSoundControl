@@ -6,6 +6,7 @@
 #import <Ogre/Ogre.h>
 
 #include "VSCOBApplication.h"
+#include "VSCOBDisplay.h"
 
 namespace VSC {
     
@@ -15,7 +16,11 @@ namespace VSC {
             
             friend class Application;
             
+            OSXApplicationBridge(Application::SPtr application) : Application::Bridge(application) {}
+            
             virtual Ogre::Root* createOgreRoot();
+            
+            virtual void setupDisplayWithView(Display::SPtr display, void* view);
             
         protected:
             

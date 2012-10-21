@@ -22,17 +22,9 @@ namespace VSC {
         typedef boost::shared_ptr<GlobalApplication>  SPtr;
         typedef boost::weak_ptr<GlobalApplication>    WPtr;
         
-        GlobalApplication();
+        static GlobalApplication::SPtr singletonGlobalApplication(void);
         
-        void init();
-        
-        template<typename OBApplicationSubclass>
-        void createOBApplication();
-        
-        MIDI::OutputManager::SPtr   getMIDIOutputManager(void) {return mMIDIOutputManager;}
-        OB::Application::SPtr       getOBApplication(void) {return mOBApplication;}
-        
-        const Environments&         getEnvironments(void) {return mEnvironments;}
+        const Environments& getEnvironments(void) {return mEnvironments;}
         
         template<typename EnvironmentSubclass>
         Environment::SPtr createEnvironment(void);
@@ -41,17 +33,16 @@ namespace VSC {
         
     protected:
         
-        virtual void internalInit(void) {}
+        GlobalApplication();
         
-        void setMIDIOutputManager(MIDI::OutputManager::SPtr manager) {mMIDIOutputManager = manager;}
-        void setOBApplication(OB::Application::SPtr application) {mOBApplication = application;}
+        void init();
         
     private:
         
-        MIDI::OutputManager::SPtr   mMIDIOutputManager;
-        OB::Application::SPtr       mOBApplication;
+        static GlobalApplication::SPtr mGlobalApplicationSingleton;
+        static void InitializeSingletonGlobalApplication();
         
-        Environments                mEnvironments;
+        Environments mEnvironments;
   
     };
 

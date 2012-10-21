@@ -17,10 +17,10 @@
 
 @property (nonatomic, strong) id<VSCOSXApplicationManagerProtocol> applicationManager;
 
-@property (nonatomic, strong) VSCOSXEnvironmentWindowController *ogreBulletSceneWindowController;
+@property (nonatomic, strong) VSCOSXEnvironmentWindowController *environmentWindowController;
 @property (nonatomic, strong) VSCOSXMIDIWindowController *midiWindowController;
 
 -(IBAction)showMIDIWindow:(id)sender;
--(IBAction)showSceneWindow:(id)sender;
+-(IBAction)showEnvironmentWindow:(id)sender;
 
 @end

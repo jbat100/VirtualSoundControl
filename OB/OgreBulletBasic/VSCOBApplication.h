@@ -3,6 +3,8 @@
 #define _VSC_OB_APPLICATION_H_
 
 #include "VSCOBScene.h"
+#include "VSCOBDisplay.h"
+#include "VSCOBResourceManager.h"
 
 #include <Ogre/Ogre.h>
 
@@ -23,8 +25,6 @@ namespace VSC {
             typedef boost::shared_ptr<Application>  SPtr;
             typedef boost::weak_ptr<Application>    WPtr;
             
-            typedef std::vector<Scene::SPtr>        Scenes;
-            
             /*
              *  Bridge pattern to implement platform dependent functionality
              */
@@ -34,40 +34,59 @@ namespace VSC {
             public:
                 
                 typedef boost::shared_ptr<Bridge>   SPtr;
-                const std::string& getOgreResourcePath(void) {return mOgreResourcePath;}
-                virtual Ogre::Root* createOgreRoot();
+                
+                virtual Ogre::Root* createOgreRoot() = 0;
+                
+                virtual void setupDisplayWithView(Display::SPtr display, void* view) = 0;
                 
             protected:
                 
-                Bridge();
+                Bridge(Application::SPtr application) : mApplication(Application::WPtr(application)) {}
                 
-                void setOgreResourcePath(std::string resourcePath);
+                Application::SPtr getApplication(void) {return mApplication.lock();}
+                
+                void setDisplayRenderWindow(Display::SPtr display, Ogre::RenderWindow* renderWindow);
                 
             private:
                 
-                std::string mOgreResourcePath; // used as cache, can be overridden in getter
+                Application::WPtr mApplication;
+
             };
             
-            /*------------------------------------------------------
-             *  Constructor / Destructor
-             */
+            friend class Bridge;
             
-            Application();
+            static Application::SPtr singletonApplication(void);
+            
             ~Application();
             
-            bool init(void); // call init before doing anything
+            bool init(ResourceManager::SPtr resourceManager); // call init before doing anything
             
             /*------------------------------------------------------
-             *  Scenes stuff
+             *  Resource Manager
+             */
+            
+            ResourceManager::SPtr getResourceManager(void);
+            
+            /*------------------------------------------------------
+             *  Scenes
              */
             
             template<typename SceneSubclass>
             Scene::SPtr createScene(void);
             
             void destroyScene(Scene::SPtr scene);
-            
             Scene::SPtr sceneWithName(Ogre::String name);
             const Scenes& getScenes(void) {return mScenes;}
+            
+            /*------------------------------------------------------
+             *  Displays
+             */
+            
+            template<typename DisplaySubclass>
+            Display::SPtr createDisplayWithView(void* view);
+            
+            void destroyDisplay(Display::SPtr scene);
+            const Displays& getDisplays(void) {return mDisplays;}
             
             
             /*------------------------------------------------------
@@ -80,9 +99,9 @@ namespace VSC {
             
         protected:
             
-            Bridge::SPtr getBridge(void) {return mBridge;}
+            Application();
             
-            virtual void internalInit(void) {} // will be called by init() after base init is done
+            Bridge::SPtr getBridge(void) {return mBridge;}
             
             virtual void setupResources(void);
             virtual void createResourceListener(void); 
@@ -93,8 +112,16 @@ namespace VSC {
             
         private:
             
+            static void                     InitialiseSingletonApplication();
+            static Application::SPtr        mSingletonApplication;
+            
+            void                            setDisplayRenderWindow(Display::SPtr display, Ogre::RenderWindow* renderWindow);
+            
             Bridge::SPtr                    mBridge;
+            
             Scenes                          mScenes;
+            Displays                        mDisplays;
+            ResourceManager::SPtr           mResourceManager;
             
             Ogre::Root*                     mRoot;
             
