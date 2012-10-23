@@ -7,12 +7,16 @@
 //
 
 #import "VSCOSXApplicationManager.h"
-#import "VSCOBApplication.h"
 #import "NSArray+VSCAdditions.h"
+
+#include"VSCGlobalApplication.h"
+#include"VSCOBApplication.h"
 
 #include <Ogre/Ogre.h>
 
 #include <boost/assert.hpp>
+
+NSString* const VSCOSXUIRequestShowMIDIWindowNotification = @"com.vsc.osx.ui-request.show-midi-window";
 
 @interface VSCOSXApplicationManager ()
 
@@ -28,8 +32,7 @@
     
     if ((self = [super init])) {
         
-        self.application = VSC::GlobalApplication::SPtr(new VSC::GlobalApplication);
-        self.application->init();
+        self.application = VSC::GlobalApplication::singletonGlobalApplication();
     }
     
     return self;    

@@ -68,6 +68,12 @@ void VSC::OB::Display::createViewport(void)
     viewport->setBackgroundColour(Ogre::ColourValue(0,0,0));
 }
 
+Ogre::Vector2 VSC::OB::Display::normalizedViewportCoordinates(const Ogre::Vector2& absCoord)
+{
+    Ogre::Viewport* v = this->getCamera()->getViewport();
+    return Ogre::Vector2(absCoord.x / (float) v->getActualWidth(), 1.0 - (absCoord.y / (float) v->getActualHeight()));
+}
+
 void VSC::OB::Display::destroyCamera(void)
 {
     /*

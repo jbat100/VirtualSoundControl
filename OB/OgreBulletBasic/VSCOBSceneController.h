@@ -49,19 +49,29 @@ namespace VSC {
             /**--------------------------------------------------------------
              *  Dynamic actions
              */
-            void throwDynamicObjectPrimitive(PrimitiveType primitiveType, const Ogre::Vector3& velocity);
+            bool throwDynamicObjectPrimitive(Ogre::RenderWindow* renderWindow,
+                                             PrimitiveType primitiveType, const Ogre::Vector3& velocity);
             
             /**--------------------------------------------------------------
              *  Input listener callback overrides
              */
-            virtual bool mouseButtonPressed(const Ogre::RenderWindow* renderWindow, const Ogre::Vector2& p, OIS::MouseButtonID buttonID);
-            virtual bool mouseButtonReleased(const Ogre::RenderWindow* renderWindow, const Ogre::Vector2& p, OIS::MouseButtonID buttonID);
-            virtual bool mouseMoved(const Ogre::RenderWindow* renderWindow, const Ogre::Vector2& p, const Ogre::Vector2& movement);
-            virtual bool mouseEntered(const Ogre::RenderWindow* renderWindow, const Ogre::Vector2& p);
-            virtual bool mouseExited(const Ogre::RenderWindow* renderWindow, const Ogre::Vector2& p);
-            virtual bool keyPressed(const Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
-            virtual bool keyReleased(const Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
-            virtual bool contextChanged(const Ogre::RenderWindow* renderWindow);
+            virtual bool mouseButtonPressed(Ogre::RenderWindow* renderWindow,
+                                            const Ogre::Vector2& p, OIS::MouseButtonID buttonID);
+            
+            virtual bool mouseButtonReleased(Ogre::RenderWindow* renderWindow,
+                                             const Ogre::Vector2& p, OIS::MouseButtonID buttonID);
+            
+            virtual bool mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& p, const Ogre::Vector2& movement);
+            
+            virtual bool mouseEntered(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& p);
+            
+            virtual bool mouseExited(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& p);
+            
+            virtual bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+            
+            virtual bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+            
+            virtual bool contextChanged(Ogre::RenderWindow* renderWindow);
             
             /**--------------------------------------------------------------
              *  Scene Getter
@@ -144,7 +154,7 @@ namespace VSC {
             virtual void removeResponder(InterfaceResponder::SPtr responder);
             virtual void removeAllResponders(void);
             
-            Scene::SPtr getScene(return mScene.lock());
+            Scene::SPtr getScene() {return mScene.lock();}
             
         protected:
             

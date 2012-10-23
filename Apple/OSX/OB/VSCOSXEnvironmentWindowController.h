@@ -27,6 +27,4 @@
 - (IBAction)test2:(id)sender;
 - (IBAction)test3:(id)sender;
 
-- (IBAction)showMidiWindow:(id)sender;
-
 @end

@@ -4,7 +4,7 @@
 #include "VSCOB.h"
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
-#include "VSCOBInputAdapter.h"
+#include "VSCOBInterface.h"
 #include "VSCOBKeyboardAction.h"
 #include "VSCOBDynamicObject.h"
 #include "VSCOBBasicSceneElementFactory.h"
@@ -112,11 +112,6 @@ void VSC::OB::SceneController::shutdown()
     
 }
 
-Ogre::Vector2 VSC::OB::SceneController::normalizedViewportCoordinates(const Ogre::Vector2& absCoord)
-{
-    Ogre::Viewport* viewport = this->getScene().lock()->getCamera()->getViewport();
-    return Ogre::Vector2(absCoord.x / (float) viewport->getActualWidth(), 1.0 - (absCoord.y / (float) viewport->getActualHeight()));
-}
 
 // MARK Interface
 
@@ -127,11 +122,15 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
     if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed : " << position << " (" << buttonID << ")" << std::endl;
     
     Scene::SPtr scene = this->getScene();
+    BOOST_ASSERT(scene);
+    Display::SPtr display = scene->getApplication()->getDisplayWithRenderWindow(renderWindow);
     
     switch (buttonID) 
     {
         case OIS::MB_Left:
         {
+            if (!display) break;
+            
             // pick a body and try to drag it.
             Ogre::Vector3 pickPos;
             Ogre::Ray rayTo;
@@ -141,12 +140,12 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
              *  and happily converts renderWindow coord to viewport coord directly.
              */
             
-            Ogre::Viewport* viewport = scene->getCamera()->getViewport();
+            Ogre::Viewport* v = display->getCamera()->getViewport();
             
             Ogre::Vector2 pos = position;
-            Ogre::Vector2 normPos = Ogre::Vector2( pos.x / viewport->getActualWidth(), 1.0 - (pos.y / viewport->getActualHeight()) );
+            Ogre::Vector2 normPos = Ogre::Vector2( pos.x / v->getActualWidth(), 1.0 - (pos.y / v->getActualHeight()) );
             
-            Scene::Element::SPtr element = scene->getElementAtViewportCoordinate(viewport, normPos, pickPos, rayTo);
+            Scene::Element::SPtr element = scene->getElementAtDisplayCoordinate(display, normPos, pickPos, rayTo);
             
             if (element)
             {
@@ -166,7 +165,7 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
                     
                     //save mouse position for dragging
                     mOldPickingPosition = pickPos;
-                    const Ogre::Vector3 eyePos(scene->getCamera()->getDerivedPosition());
+                    const Ogre::Vector3 eyePos(display->getCamera()->getDerivedPosition());
                     mOldPickingDistance = (pickPos - eyePos).length();
                     
                     if (mTraceUI) {
@@ -180,8 +179,8 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
                     
                 }
                 
-                scene->getDebugRayLines()->addLine(rayTo.getOrigin(), pickPos);
-                scene->getDebugRayLines()->draw();
+                scene->getDebugLines()->addLine(rayTo.getOrigin(), pickPos);
+                scene->getDebugLines()->draw();
                 
             }
             
@@ -196,8 +195,9 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
             
         case OIS::MB_Middle:
         {
-            // small unique impulse under cursor.
+            if (!display) break;
             
+            // small unique impulse under cursor.
             Ogre::Vector3 pickPos;
             Ogre::Ray rayTo;
             
@@ -206,10 +206,10 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
              *  and happily converts renderWindow coord to viewport coord directly.
              */
             
-            Ogre::Viewport* viewport = scene->getCamera()->getViewport();
+            Ogre::Viewport* v = display->getCamera()->getViewport();
             Ogre::Vector2 pos = position;
             
-            Scene::Element::SPtr element = scene->getElementAtViewportCoordinate(viewport, pos, pickPos, rayTo);
+            Scene::Element::SPtr element = scene->getElementAtDisplayCoordinate(display, pos, pickPos, rayTo);
             
             if (element)
             {
@@ -229,8 +229,8 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
                     
                 }
                 
-                scene->getDebugRayLines()->addLine (rayTo.getOrigin(), pickPos);
-                scene->getDebugRayLines()->draw();	
+                scene->getDebugLines()->addLine(rayTo.getOrigin(), pickPos);
+                scene->getDebugLines()->draw();	
             }
             
             return true;
@@ -249,13 +249,18 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
         }
     }
     
-    return VSC::OB::InputListener::mouseButtonPressed(renderWindow, position, buttonID);
+    return VSC::OB::InterfaceResponder::mouseButtonPressed(renderWindow, position, buttonID);
 }
 
-bool VSC::OB::SceneController::mouseButtonReleased(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
+bool VSC::OB::SceneController::mouseButtonReleased(Ogre::RenderWindow* renderWindow,
+                                                   const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
     
-    if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonReleased : " << position << " (" << buttonID << ")" << std::endl;
+    if (mTraceUI)
+    {
+        std::cout << "VSC::OB::SceneController::mouseButtonReleased : ";
+        std::cout << position << " (" << buttonID << ")" << std::endl;
+    }
     
     Scene::SPtr scene = this->getScene();
     
@@ -275,8 +280,8 @@ bool VSC::OB::SceneController::mouseButtonReleased(Ogre::RenderWindow* renderWin
                 mPickedBody->setDeactivationTime( 0.f );
                 mPickedBody = 0;	
                 
-                scene->getDebugRayLines()->addLine (Ogre::Vector3::ZERO, Ogre::Vector3::ZERO);	
-                scene->getDebugRayLines()->draw();  
+                scene->getDebugLines()->addLine (Ogre::Vector3::ZERO, Ogre::Vector3::ZERO);	
+                scene->getDebugLines()->draw();  
             }
             
             return true;
@@ -299,44 +304,55 @@ bool VSC::OB::SceneController::mouseButtonReleased(Ogre::RenderWindow* renderWin
         }
     }
     
-    return VSC::OB::InputListener::mouseButtonReleased(renderWindow, position, buttonID);
+    return VSC::OB::InterfaceResponder::mouseButtonReleased(renderWindow, position, buttonID);
 }
 
 
 
 // -------------------------------------------------------------------------
-bool VSC::OB::SceneController::mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement)
+bool VSC::OB::SceneController::mouseMoved(Ogre::RenderWindow* renderWindow,
+                                          const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
-    if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseMoved position: " << position << ", movement: " << movement << "" << std::endl;
+    if (mTraceUI)
+    {
+        std::cout << "VSC::OB::SceneController::mouseMoved position: ";
+        std::cout << position << ", movement: " << movement << "" << std::endl;
+    }
     
     Scene::SPtr scene = this->getScene();
+    BOOST_ASSERT(scene);
+    Display::SPtr display = scene->getApplication()->getDisplayWithRenderWindow(renderWindow);
     
-    InputAdapter::SPtr adapter = this->getInputAdapter().lock();
+    InterfaceAdapter::SPtr adapter = this->getInterfaceAdapter();
     
     if (adapter->isMouseButtonPressed(OIS::MB_Left))
     {
         if (mPickConstraint)
         {
-            if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseMoved Left button is pressed and constraint exists" << std::endl;
+            if (mTraceUI)
+            {
+                std::cout << "VSC::OB::SceneController::mouseMoved Left button is pressed and constraint exists" << std::endl;
+            }
             
-            Ogre::Viewport* viewport = scene->getCamera()->getViewport();
-            float normX = position.x / (float) viewport->getActualWidth();
-            float normY = 1.0 - (position.y / (float) viewport->getActualHeight());
+            Ogre::Viewport* v = display->getCamera()->getViewport();
+            float normX = position.x / (float) v->getActualWidth();
+            float normY = 1.0 - (position.y / (float) v->getActualHeight());
             
-            Ogre::Ray rayTo = scene->getCamera()->getCameraToViewportRay (normX, normY);
+            Ogre::Ray rayTo = display->getCamera()->getCameraToViewportRay (normX, normY);
             
             //move the constraint pivot
-            OgreBulletDynamics::PointToPointConstraint * p2p = static_cast <OgreBulletDynamics::PointToPointConstraint *>(mPickConstraint);
+            OgreBulletDynamics::PointToPointConstraint * p2p =
+            static_cast <OgreBulletDynamics::PointToPointConstraint *>(mPickConstraint);
             
             //keep it at the same picking distance
-            const Ogre::Vector3 eyePos(scene->getCamera()->getDerivedPosition());
+            const Ogre::Vector3 eyePos(display->getCamera()->getDerivedPosition());
             Ogre::Vector3 dir = rayTo.getDirection () * mOldPickingDistance;
 
             const Ogre::Vector3 newPos (eyePos + dir);
             p2p->setPivotB (newPos);    
 
-            scene->getDebugRayLines()->addLine (mPickedBody->getWorldPosition (), newPos);
-            scene->getDebugRayLines()->draw();
+            scene->getDebugLines()->addLine (mPickedBody->getWorldPosition (), newPos);
+            scene->getDebugLines()->draw();
             
         }
         
@@ -348,7 +364,7 @@ bool VSC::OB::SceneController::mouseMoved(Ogre::RenderWindow* renderWindow, cons
         return true;
     }
 
-    return VSC::OB::InputListener::mouseMoved(renderWindow, position, movement);
+    return VSC::OB::InterfaceResponder::mouseMoved(renderWindow, position, movement);
 
 }
 
@@ -376,14 +392,14 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
     static int count = 0;
     
     Scene::SPtr scene = this->getScene();
+    BOOST_ASSERT(scene);
+    Display::SPtr display = scene->getApplication()->getDisplayWithRenderWindow(renderWindow);
     
-    InputAdapter::SPtr inputAdapter = this->getInputAdapter().lock();
+    InterfaceAdapter::SPtr inputAdapter = this->getInterfaceAdapter();
     
     BOOST_ASSERT_MSG(inputAdapter, "Expected input adapter");
     
-    if (!inputAdapter) {
-        return false;
-    }
+    if (!inputAdapter) return false;
     
     OIS::Keyboard::Modifier modifier = inputAdapter->getCurrentModifier();
     VSC::Keyboard::Combination comb(key, modifier);
@@ -402,7 +418,14 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
         {
                 
             case VSC::OB::KeyboardAction::SaveScreenShot:
-                scene->getRenderWindow()->writeContentsToFile("OgreBulletScreenShot" + StringConverter::toString(count++) + ".png");
+            {
+                if (renderWindow)
+                {
+                    Ogre::RenderWindow* w = (Ogre::RenderWindow*)renderWindow;
+                    w->writeContentsToFile("OgreBulletScreenShot" + StringConverter::toString(count++) + ".png");
+                    // baaad
+                }
+            }
                 break;
                 
             // Scene Debug Options
@@ -495,23 +518,35 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
                 break;
                 
             case VSC::OB::KeyboardAction::ShootCube:
-                this->throwDynamicObjectPrimitive(VSC::OB::PrimitiveCube,
-                                                  scene->getCamera()->getDerivedDirection().normalisedCopy()*mShootSpeed);
+                if (display)
+                {
+                    this->throwDynamicObjectPrimitive(renderWindow, VSC::OB::PrimitiveCube,
+                                                      display->getCamera()->getDerivedDirection().normalisedCopy()*mShootSpeed);
+                }
                 break;
                 
             case VSC::OB::KeyboardAction::ShootSphere:
-                this->throwDynamicObjectPrimitive(VSC::OB::PrimitiveSphere,
-                                                  scene->getCamera()->getDerivedDirection().normalisedCopy()*mShootSpeed);
+                if (display)
+                {
+                    this->throwDynamicObjectPrimitive(renderWindow, VSC::OB::PrimitiveSphere,
+                                                      display->getCamera()->getDerivedDirection().normalisedCopy()*mShootSpeed);
+                }
                 break;
                 
             case VSC::OB::KeyboardAction::ShootCylinder:
-                this->throwDynamicObjectPrimitive(VSC::OB::PrimitiveCylinder,
-                                                  scene->getCamera()->getDerivedDirection().normalisedCopy()*mShootSpeed);
+                if (display)
+                {
+                    this->throwDynamicObjectPrimitive(renderWindow, VSC::OB::PrimitiveCylinder,
+                                                      display->getCamera()->getDerivedDirection().normalisedCopy()*mShootSpeed);
+                }
                 break;
                 
             case VSC::OB::KeyboardAction::ShootCone:
-                this->throwDynamicObjectPrimitive(VSC::OB::PrimitiveCone,
-                                                  scene->getCamera()->getDerivedDirection().normalisedCopy()*mShootSpeed);
+                if (display)
+                {
+                    this->throwDynamicObjectPrimitive(renderWindow, VSC::OB::PrimitiveCone,
+                                                      display->getCamera()->getDerivedDirection().normalisedCopy()*mShootSpeed);
+                }
                 break;
                 
             default:
@@ -522,22 +557,24 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
         if (handled) return true;
     }
     
-    return VSC::OB::InputListener::keyPressed(renderWindow, key);
+    return VSC::OB::InterfaceResponder::keyPressed(renderWindow, key);
 }
 
 // -------------------------------------------------------------------------
 bool VSC::OB::SceneController::keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
-    return VSC::OB::InputListener::keyReleased(renderWindow, key);
+    return VSC::OB::InterfaceResponder::keyReleased(renderWindow, key);
 }
 
-bool VSC::OB::SceneController::renderWindowChangedSize(Ogre::RenderWindow* renderWindow)
+bool VSC::OB::SceneController::contextChanged(Ogre::RenderWindow* renderWindow)
 {
     Scene::SPtr scene = this->getScene();
+    BOOST_ASSERT(scene);
+    Display::SPtr display = scene->getApplication()->getDisplayWithRenderWindow(renderWindow);
     
-    if (renderWindow == scene->getRenderWindow())
+    if (display)
     {
-        scene->resetCameraAspectRatio();
+        display->resetCameraAspectRatio();
         return true;
     }
     
@@ -545,17 +582,23 @@ bool VSC::OB::SceneController::renderWindowChangedSize(Ogre::RenderWindow* rende
 }
 
 // -------------------------------------------------------------------------
-void VSC::OB::SceneController::throwDynamicObjectPrimitive(VSC::OB::PrimitiveType primitiveType, const Ogre::Vector3& velocity)
+bool VSC::OB::SceneController::throwDynamicObjectPrimitive(Ogre::RenderWindow* renderWindow,
+                                                           VSC::OB::PrimitiveType primitiveType,
+                                                           const Ogre::Vector3& velocity)
 {
     
     const float throwDist = 2.0f;
     
     Scene::SPtr scene = this->getScene();
+    BOOST_ASSERT(scene);
+    Display::SPtr display = scene->getApplication()->getDisplayWithRenderWindow(renderWindow);
     
-    if (scene->checkIfEnoughPlaceToAddObject(throwDist) == false)
+    if(!display) return false;
+    
+    if (display->checkIfEnoughPlaceToAddObject(throwDist) == false)
     {
         // TODO throw exception ?
-        return; // false;
+        return false; // false;
     }
     
     bool handled = true;
@@ -564,7 +607,7 @@ void VSC::OB::SceneController::throwDynamicObjectPrimitive(VSC::OB::PrimitiveTyp
     
     VSC::OB::DynamicObject::FactoryDescription description;
     
-    description.position = scene->getCamera()->getDerivedPosition();
+    description.position = display->getCamera()->getDerivedPosition();
     
     VSC::OB::DynamicObject::SPtr object;
     
@@ -603,6 +646,9 @@ void VSC::OB::SceneController::throwDynamicObjectPrimitive(VSC::OB::PrimitiveTyp
     {
         object->getRigidBody()->setLinearVelocity(velocity);
     }
+    
+    if (handled) return true;
+    return false;
 
 }
 

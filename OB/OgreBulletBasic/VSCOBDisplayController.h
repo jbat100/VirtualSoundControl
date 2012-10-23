@@ -51,10 +51,10 @@ namespace VSC {
              *  These can be overriden further to provide special camera control...
              */
             
-            virtual bool mouseMoved(const Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement);
-            virtual bool keyPressed(const Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
-            virtual bool keyReleased(const Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
-            virtual bool contextChanged(const Ogre::RenderWindow* renderWindow);
+            virtual bool mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement);
+            virtual bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+            virtual bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
+            virtual bool contextChanged(Ogre::RenderWindow* renderWindow);
             
             virtual bool renderWindowChangedSize(Ogre::RenderWindow* renderWindow);
             

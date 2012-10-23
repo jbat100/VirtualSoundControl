@@ -46,6 +46,8 @@
 - (void)windowDidLoad
 {
     [super windowDidLoad];
+    
+    
 }
 
 
@@ -68,14 +70,13 @@
 
 -(void) reloadInterface
 {
-    if (self.environment) {
-        VSC::OB::Scene::SPtr scene = self.environment->getOBScene();
-        if (scene) {
-            VSC::OB::Displays 
-        }
+    if (self.environment)
+    {
+        self.sceneView.scene = self.environment->getOBScene();
     }
-    else {
-        
+    else
+    {
+        self.sceneView.scene = VSC::OB::Scene::SPtr();
     }
 }
 

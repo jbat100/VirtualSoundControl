@@ -289,7 +289,7 @@ namespace VSC {
                 typedef boost::shared_ptr<CollisionDetector>    SPtr;
                 typedef boost::weak_ptr<CollisionDetector>      WPtr;
                 
-                CollisionDetector(Scene::WPtr scene) : mScene(scene), mDistanceThreshold(0.1) {}
+                CollisionDetector(Scene::SPtr scene) : mScene(Scene::WPtr(scene)), mDistanceThreshold(0.1) {}
                 
                 const Collisions&   getCollisions(void) {return mCollisions;}
                 const Listeners&    getListeners(void) {return mListeners;}
@@ -299,7 +299,7 @@ namespace VSC {
                 
                 Collisions getCollisionsForElementPair(Scene::Element::SPtr first, Scene::Element::SPtr second);
                 
-                Scene::WPtr getScene(void) {return mScene;}
+                Scene::SPtr getScene(void) {return mScene.lock();}
                 
                 virtual void updateCollisions();
                 
@@ -349,9 +349,13 @@ namespace VSC {
             /**--------------------------------------------------------------
              *  Dynamic actions and checks
              */
+            
             bool checkIfEnoughPlaceToAddObject(float maxDist);
-            Element::SPtr getElementAtDisplayCoordinate(Display::SPtr display, Ogre::Vector2& p, Ogre::Vector3 &ip, Ogre::Ray &r);
-            OgreBulletCollisions::DebugLines* getDebugRayLines();
+            
+            Element::SPtr getElementAtDisplayCoordinate(Display::SPtr display, const Ogre::Vector2& p,
+                                                        Ogre::Vector3 &ip, Ogre::Ray &r);
+            
+            OgreBulletCollisions::DebugLines* getDebugLines() {return mDebugLines;}
             
             /**--------------------------------------------------------------
              *  Ogre Getters
@@ -361,14 +365,6 @@ namespace VSC {
             Ogre::SceneManager* getSceneManager(void) {return mSceneManager;}
             LightMap& getLightMap(void) {return mLightMap;}
             
-            /**--------------------------------------------------------------
-             *  Displays
-             */
-            
-            Display::SPtr createDisplayWithView(void* view); // view is platform dependent
-            void destroyDisplay(Display::SPtr display);
-            
-            const Displays& getDisplays(void) {return mDisplays;}
             
             /**--------------------------------------------------------------
              * Elements
@@ -454,21 +450,20 @@ namespace VSC {
             void init();
             void shutdown();
             
-            virtual Display::SPtr createDisplay();
-            
             virtual void internalInit(void); // for subclasses to provide additional init steps (called by init())
             virtual void internalShutdown(void); // for subclasses to provide additional shutdown steps (called by shutdown())
             
-            virtual void initWorld (const Ogre::Vector3& gravityVector = Ogre::Vector3(0,-9.81,0),
-                                    const Ogre::AxisAlignedBox& bounds = Ogre::AxisAlignedBox (Ogre::Vector3(-10000, -10000, -10000),
-                                                                                               Ogre::Vector3(10000,  10000,  10000)));
+            virtual void initWorld (const Ogre::Vector3& gravityVector =
+                                    Ogre::Vector3(0,-9.81,0),
+                                    const Ogre::AxisAlignedBox& bounds =
+                                    Ogre::AxisAlignedBox (Ogre::Vector3(-10000, -10000, -10000),
+                                                          Ogre::Vector3(10000,  10000,  10000)));
             
             virtual void setupFactory();
             virtual void setupLights();
             
             void setInfoText();
             void setDebugText(const Ogre::String &debugText) {mDebugText = debugText;}
-            void getDebugLines();
             void setName(Ogre::String name) {mName = name;}
             
             /*
@@ -478,14 +473,13 @@ namespace VSC {
             void setDynamicsWorld(OgreBulletDynamics::DynamicsWorld* world) {mDynamicsWorld = world;}
             
             virtual void createSceneManager(void);
+            virtual void createDebugLines(void);
             
         private:
             
             Application_WPtr                        mApplication;
             
             Bridge::SPtr                            mBridge;
-            
-            Displays                                mDisplays;
             
             ElementFactory::SPtr                    mElementFactory;
             Elements                                mElements;
@@ -496,7 +490,7 @@ namespace VSC {
             LightMap                                mLightMap;
             Ogre::ShadowTechnique                   mCurrentShadowTechnique;
             
-            OgreBulletCollisions::DebugLines*       mDebugRayLine;
+            OgreBulletCollisions::DebugLines*       mDebugLines;
             Ogre::String                            mDebugText;
             Ogre::String                            mName;
             

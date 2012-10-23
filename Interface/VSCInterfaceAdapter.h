@@ -38,18 +38,18 @@ namespace VSC {
             Responder::SPtr getNextResponder(void) {return mNextResponder.lock();}
             void setNextResponder(Responder::SPtr responder); // {mNextResponder = Responder::WPtr(responder);}
             
-            virtual bool contextChanged(const Context* context);
+            virtual bool contextChanged(Context* context);
             
-            virtual bool modifierChanged(const Context* context, OIS::Keyboard::Modifier modifier);
+            virtual bool modifierChanged(Context* context, OIS::Keyboard::Modifier modifier);
             
-            virtual bool keyPressed(const Context* context, OIS::KeyCode key);
-            virtual bool keyReleased(const Context* context, OIS::KeyCode key);
+            virtual bool keyPressed(Context* context, OIS::KeyCode key);
+            virtual bool keyReleased(Context* context, OIS::KeyCode key);
             
-            virtual bool mouseMoved(const Context* context, const Vector2& position, const Vector2& movement);
-            virtual bool mouseEntered(const Context* context, const Vector2& position);
-            virtual bool mouseExited(const Context* context, const Vector2& position);
-            virtual bool mouseButtonPressed(const Context* context, const Vector2& position, OIS::MouseButtonID buttonID);
-            virtual bool mouseButtonReleased(const Context* context, const Vector2& position, OIS::MouseButtonID buttonID);
+            virtual bool mouseMoved(Context* context, const Vector2& position, const Vector2& movement);
+            virtual bool mouseEntered(Context* context, const Vector2& position);
+            virtual bool mouseExited(Context* context, const Vector2& position);
+            virtual bool mouseButtonPressed(Context* context, const Vector2& position, OIS::MouseButtonID buttonID);
+            virtual bool mouseButtonReleased(Context* context, const Vector2& position, OIS::MouseButtonID buttonID);
             
         private:
             
@@ -138,23 +138,23 @@ namespace VSC {
         
     protected:
         
-        void contextChanged(const Context* context);
+        void contextChanged(Context* context);
         
         /*
          *  Keyboard input
          */
-        void keyPressed(const Context* context, OIS::KeyCode key);
-        void keyReleased(const Context* context, OIS::KeyCode key);
-        void modifierChanged(const Context* context, OIS::Keyboard::Modifier modifier);
+        void keyPressed(Context* context, OIS::KeyCode key);
+        void keyReleased(Context* context, OIS::KeyCode key);
+        void modifierChanged(Context* context, OIS::Keyboard::Modifier modifier);
         
         /*
          *  Mouse input
          */
-        void mouseMoved(const Context* context, const Vector2& position, const Vector2& movement);
-        void mouseEntered(const Context* context, const Vector2& position);
-        void mouseExited(const Context* context, const Vector2& position);
-        void mouseButtonPressed(const Context* context, const Vector2& position, OIS::MouseButtonID buttonID);
-        void mouseButtonReleased(const Context* context, const Vector2& position, OIS::MouseButtonID buttonID);
+        void mouseMoved(Context* context, const Vector2& position, const Vector2& movement);
+        void mouseEntered(Context* context, const Vector2& position);
+        void mouseExited(Context* context, const Vector2& position);
+        void mouseButtonPressed(Context* context, const Vector2& position, OIS::MouseButtonID buttonID);
+        void mouseButtonReleased(Context* context, const Vector2& position, OIS::MouseButtonID buttonID);
         
     private:
 

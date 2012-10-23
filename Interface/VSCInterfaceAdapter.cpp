@@ -59,7 +59,7 @@ bool VSC::InterfaceAdapter<Context, Vector2>::isMouseButtonPressed(OIS::MouseBut
 }
 
 template<typename Context, typename Vector2>
-void VSC::InterfaceAdapter<Context, Vector2>::contextChanged(const Context* context)
+void VSC::InterfaceAdapter<Context, Vector2>::contextChanged(Context* context)
 {
     BOOST_FOREACH (typename Responder::WPtr responder, this->getResponders())
     {
@@ -71,7 +71,7 @@ void VSC::InterfaceAdapter<Context, Vector2>::contextChanged(const Context* cont
 }
 
 template<typename Context, typename Vector2>
-void VSC::InterfaceAdapter<Context, Vector2>::mouseMoved(const Context* context,
+void VSC::InterfaceAdapter<Context, Vector2>::mouseMoved(Context* context,
                                                          const Vector2& position,
                                                          const Vector2& movement)
 {
@@ -89,21 +89,21 @@ void VSC::InterfaceAdapter<Context, Vector2>::mouseMoved(const Context* context,
 }
 
 template<typename Context, typename Vector2>
-void VSC::InterfaceAdapter<Context, Vector2>::mouseEntered(const Context* context,
+void VSC::InterfaceAdapter<Context, Vector2>::mouseEntered(Context* context,
                                                            const Vector2& position)
 {
     
 }
 
 template<typename Context, typename Vector2>
-void VSC::InterfaceAdapter<Context, Vector2>::mouseExited(const Context* context,
+void VSC::InterfaceAdapter<Context, Vector2>::mouseExited(Context* context,
                                                           const Vector2& position)
 {
     
 }
 
 template<typename Context, typename Vector2>
-void VSC::InterfaceAdapter<Context, Vector2>::mouseButtonPressed(const Context* context,
+void VSC::InterfaceAdapter<Context, Vector2>::mouseButtonPressed(Context* context,
                                                                  const Vector2& position,
                                                                  OIS::MouseButtonID buttonID)
 {
@@ -121,7 +121,7 @@ void VSC::InterfaceAdapter<Context, Vector2>::mouseButtonPressed(const Context* 
 }
 
 template<typename Context, typename Vector2>
-void VSC::InterfaceAdapter<Context, Vector2>::mouseButtonReleased(const Context* context,
+void VSC::InterfaceAdapter<Context, Vector2>::mouseButtonReleased(Context* context,
                                                                   const Vector2& position,
                                                                   OIS::MouseButtonID buttonID)
 {
@@ -139,7 +139,7 @@ void VSC::InterfaceAdapter<Context, Vector2>::mouseButtonReleased(const Context*
 }
 
 template<typename Context, typename Vector2>
-void VSC::InterfaceAdapter<Context, Vector2>::keyPressed(const Context* context, OIS::KeyCode key)
+void VSC::InterfaceAdapter<Context, Vector2>::keyPressed(Context* context, OIS::KeyCode key)
 {
     bool relayToListeners = true;
     if (mAllowRapidFireKeyPresses == false)
@@ -166,7 +166,7 @@ void VSC::InterfaceAdapter<Context, Vector2>::keyPressed(const Context* context,
 }
 
 template<typename Context, typename Vector2>
-void VSC::InterfaceAdapter<Context, Vector2>::keyReleased(const Context* context, OIS::KeyCode key)
+void VSC::InterfaceAdapter<Context, Vector2>::keyReleased(Context* context, OIS::KeyCode key)
 {
     bool relayToListeners = true;
     if (mAllowRapidFireKeyPresses == false)
@@ -192,7 +192,7 @@ void VSC::InterfaceAdapter<Context, Vector2>::keyReleased(const Context* context
 }
 
 template<typename Context, typename Vector2>
-void VSC::InterfaceAdapter<Context, Vector2>::modifierChanged(const Context* context, OIS::Keyboard::Modifier modifier)
+void VSC::InterfaceAdapter<Context, Vector2>::modifierChanged(Context* context, OIS::Keyboard::Modifier modifier)
 {
     mCurrentModifier = modifier;
     
@@ -233,7 +233,7 @@ void VSC::InterfaceAdapter<Context, Vector2>::Responder::setNextResponder(Respon
 }
 
 template<typename Context, typename Vector2>
-bool VSC::InterfaceAdapter<Context, Vector2>::Responder::contextChanged(const Context* context)
+bool VSC::InterfaceAdapter<Context, Vector2>::Responder::contextChanged(Context* context)
 {
     if (this->getNextResponder())
     {
@@ -244,7 +244,7 @@ bool VSC::InterfaceAdapter<Context, Vector2>::Responder::contextChanged(const Co
 }
 
 template<typename Context, typename Vector2>
-bool VSC::InterfaceAdapter<Context, Vector2>::Responder::mouseMoved(const Context* context,
+bool VSC::InterfaceAdapter<Context, Vector2>::Responder::mouseMoved(Context* context,
                                                                     const Vector2& position,
                                                                     const Vector2& movement)
 {
@@ -258,7 +258,7 @@ bool VSC::InterfaceAdapter<Context, Vector2>::Responder::mouseMoved(const Contex
 }
 
 template<typename Context, typename Vector2>
-bool VSC::InterfaceAdapter<Context, Vector2>::Responder::mouseEntered(const Context* context,
+bool VSC::InterfaceAdapter<Context, Vector2>::Responder::mouseEntered(Context* context,
                                                                       const Vector2& position)
 {
     if (this->getNextResponder())
@@ -270,7 +270,7 @@ bool VSC::InterfaceAdapter<Context, Vector2>::Responder::mouseEntered(const Cont
 }
 
 template<typename Context, typename Vector2>
-bool VSC::InterfaceAdapter<Context, Vector2>::Responder::mouseExited(const Context* context,
+bool VSC::InterfaceAdapter<Context, Vector2>::Responder::mouseExited(Context* context,
                                                                      const Vector2& position)
 {
     if (this->getNextResponder())
@@ -282,7 +282,7 @@ bool VSC::InterfaceAdapter<Context, Vector2>::Responder::mouseExited(const Conte
 }
 
 template<typename Context, typename Vector2>
-bool VSC::InterfaceAdapter<Context, Vector2>::Responder::mouseButtonPressed(const Context* context,
+bool VSC::InterfaceAdapter<Context, Vector2>::Responder::mouseButtonPressed(Context* context,
                                                                             const Vector2& position,
                                                                             OIS::MouseButtonID buttonID)
 {
@@ -296,7 +296,7 @@ bool VSC::InterfaceAdapter<Context, Vector2>::Responder::mouseButtonPressed(cons
 }
 
 template<typename Context, typename Vector2>
-bool VSC::InterfaceAdapter<Context, Vector2>::Responder::mouseButtonReleased(const Context* context,
+bool VSC::InterfaceAdapter<Context, Vector2>::Responder::mouseButtonReleased(Context* context,
                                                                              const Vector2& position,
                                                                              OIS::MouseButtonID buttonID)
 {
@@ -310,7 +310,7 @@ bool VSC::InterfaceAdapter<Context, Vector2>::Responder::mouseButtonReleased(con
 }
 
 template<typename Context, typename Vector2>
-bool VSC::InterfaceAdapter<Context, Vector2>::Responder::keyPressed(const Context* context, OIS::KeyCode key)
+bool VSC::InterfaceAdapter<Context, Vector2>::Responder::keyPressed(Context* context, OIS::KeyCode key)
 {
     if (mTraceUI) std::cout << "VSC::OB::InputListener::keyPressed " << key << std::endl;
     if (this->getNextResponder())
@@ -322,7 +322,7 @@ bool VSC::InterfaceAdapter<Context, Vector2>::Responder::keyPressed(const Contex
 }
 
 template<typename Context, typename Vector2>
-bool VSC::InterfaceAdapter<Context, Vector2>::Responder::keyReleased(const Context* context, OIS::KeyCode key)
+bool VSC::InterfaceAdapter<Context, Vector2>::Responder::keyReleased(Context* context, OIS::KeyCode key)
 {
     if (this->getNextResponder())
     {
@@ -333,7 +333,7 @@ bool VSC::InterfaceAdapter<Context, Vector2>::Responder::keyReleased(const Conte
 }
 
 template<typename Context, typename Vector2>
-bool VSC::InterfaceAdapter<Context, Vector2>::Responder::modifierChanged(const Context* context,
+bool VSC::InterfaceAdapter<Context, Vector2>::Responder::modifierChanged(Context* context,
                                                                          OIS::Keyboard::Modifier modifier)
 {
     if (this->getNextResponder())

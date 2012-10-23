@@ -56,14 +56,10 @@
 		105CDA1B162D9D6F00532AD0 /* VSCOBKeyboardManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA04162D9D6F00532AD0 /* VSCOBKeyboardManager.cpp */; };
 		105CDA1D162D9D6F00532AD0 /* VSCOBScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA08162D9D6F00532AD0 /* VSCOBScene.cpp */; };
 		105CDA1E162D9D6F00532AD0 /* VSCOBSceneController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA0A162D9D6F00532AD0 /* VSCOBSceneController.cpp */; };
-		105CDA1F162D9D6F00532AD0 /* VSCOBSceneElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA0C162D9D6F00532AD0 /* VSCOBSceneElement.cpp */; };
 		105CDA20162D9D6F00532AD0 /* VSCOBStaticObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA0E162D9D6F00532AD0 /* VSCOBStaticObject.cpp */; };
 		105CDA25162D9DBF00532AD0 /* Plugins_d.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 105CDA22162D9DBF00532AD0 /* Plugins_d.cfg */; };
 		105CDA26162D9DBF00532AD0 /* Plugins.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 105CDA23162D9DBF00532AD0 /* Plugins.cfg */; };
 		105CDA27162D9DBF00532AD0 /* resources.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 105CDA24162D9DBF00532AD0 /* resources.cfg */; };
-		105CDA34162D9DCC00532AD0 /* VSCOBConstraintsDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA28162D9DCC00532AD0 /* VSCOBConstraintsDemo.cpp */; };
-		105CDA35162D9DCC00532AD0 /* VSCOBPrimitivesDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA2A162D9DCC00532AD0 /* VSCOBPrimitivesDemo.cpp */; };
-		105CDA38162D9DCC00532AD0 /* VSCOBTriMeshDemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA30162D9DCC00532AD0 /* VSCOBTriMeshDemo.cpp */; };
 		105CDA3C162DA03500532AD0 /* VSCGlobalApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA3A162DA03500532AD0 /* VSCGlobalApplication.cpp */; };
 		105CDA51162DA9A600532AD0 /* VSCOBOSXApplicationBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA49162DA9A500532AD0 /* VSCOBOSXApplicationBridge.mm */; };
 		105CDA52162DA9A600532AD0 /* VSCOBOSXInterfaceAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA4B162DA9A500532AD0 /* VSCOBOSXInterfaceAdapter.mm */; };
@@ -271,19 +267,11 @@
 		105CDA09162D9D6F00532AD0 /* VSCOBScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBScene.h; path = ../../../../../OB/OgreBulletBasic/VSCOBScene.h; sourceTree = "<group>"; };
 		105CDA0A162D9D6F00532AD0 /* VSCOBSceneController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBSceneController.cpp; path = ../../../../../OB/OgreBulletBasic/VSCOBSceneController.cpp; sourceTree = "<group>"; };
 		105CDA0B162D9D6F00532AD0 /* VSCOBSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBSceneController.h; path = ../../../../../OB/OgreBulletBasic/VSCOBSceneController.h; sourceTree = "<group>"; };
-		105CDA0C162D9D6F00532AD0 /* VSCOBSceneElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBSceneElement.cpp; path = ../../../../../OB/OgreBulletBasic/VSCOBSceneElement.cpp; sourceTree = "<group>"; };
-		105CDA0D162D9D6F00532AD0 /* VSCOBSceneElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBSceneElement.h; path = ../../../../../OB/OgreBulletBasic/VSCOBSceneElement.h; sourceTree = "<group>"; };
 		105CDA0E162D9D6F00532AD0 /* VSCOBStaticObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBStaticObject.cpp; path = ../../../../../OB/OgreBulletBasic/VSCOBStaticObject.cpp; sourceTree = "<group>"; };
 		105CDA0F162D9D6F00532AD0 /* VSCOBStaticObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBStaticObject.h; path = ../../../../../OB/OgreBulletBasic/VSCOBStaticObject.h; sourceTree = "<group>"; };
 		105CDA22162D9DBF00532AD0 /* Plugins_d.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Plugins_d.cfg; path = ../../../../../OB/OgreBulletBasic/Plugins_d.cfg; sourceTree = "<group>"; };
 		105CDA23162D9DBF00532AD0 /* Plugins.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Plugins.cfg; path = ../../../../../OB/OgreBulletBasic/Plugins.cfg; sourceTree = "<group>"; };
 		105CDA24162D9DBF00532AD0 /* resources.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = resources.cfg; path = ../../../../../OB/OgreBulletBasic/resources.cfg; sourceTree = "<group>"; };
-		105CDA28162D9DCC00532AD0 /* VSCOBConstraintsDemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBConstraintsDemo.cpp; path = ../../../../../OB/OgreBulletDemos/VSCOBConstraintsDemo.cpp; sourceTree = "<group>"; };
-		105CDA29162D9DCC00532AD0 /* VSCOBConstraintsDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBConstraintsDemo.h; path = ../../../../../OB/OgreBulletDemos/VSCOBConstraintsDemo.h; sourceTree = "<group>"; };
-		105CDA2A162D9DCC00532AD0 /* VSCOBPrimitivesDemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBPrimitivesDemo.cpp; path = ../../../../../OB/OgreBulletDemos/VSCOBPrimitivesDemo.cpp; sourceTree = "<group>"; };
-		105CDA2B162D9DCC00532AD0 /* VSCOBPrimitivesDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBPrimitivesDemo.h; path = ../../../../../OB/OgreBulletDemos/VSCOBPrimitivesDemo.h; sourceTree = "<group>"; };
-		105CDA30162D9DCC00532AD0 /* VSCOBTriMeshDemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBTriMeshDemo.cpp; path = ../../../../../OB/OgreBulletDemos/VSCOBTriMeshDemo.cpp; sourceTree = "<group>"; };
-		105CDA31162D9DCC00532AD0 /* VSCOBTriMeshDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBTriMeshDemo.h; path = ../../../../../OB/OgreBulletDemos/VSCOBTriMeshDemo.h; sourceTree = "<group>"; };
 		105CDA3A162DA03500532AD0 /* VSCGlobalApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCGlobalApplication.cpp; path = ../../../../Application/VSCGlobalApplication.cpp; sourceTree = "<group>"; };
 		105CDA3B162DA03500532AD0 /* VSCGlobalApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCGlobalApplication.h; path = ../../../../Application/VSCGlobalApplication.h; sourceTree = "<group>"; };
 		105CDA48162DA9A500532AD0 /* VSCOBOSXApplicationBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXApplicationBridge.h; path = ../../../OB/VSCOBOSXApplicationBridge.h; sourceTree = "<group>"; };
@@ -555,8 +543,6 @@
 				105CDA09162D9D6F00532AD0 /* VSCOBScene.h */,
 				105CDA0A162D9D6F00532AD0 /* VSCOBSceneController.cpp */,
 				105CDA0B162D9D6F00532AD0 /* VSCOBSceneController.h */,
-				105CDA0C162D9D6F00532AD0 /* VSCOBSceneElement.cpp */,
-				105CDA0D162D9D6F00532AD0 /* VSCOBSceneElement.h */,
 				105CDA0E162D9D6F00532AD0 /* VSCOBStaticObject.cpp */,
 				105CDA0F162D9D6F00532AD0 /* VSCOBStaticObject.h */,
 			);
@@ -792,7 +778,6 @@
 			children = (
 				1001CA7815985607002566F4 /* Cocoa */,
 				1001CA7A1598561D002566F4 /* Core */,
-				10F4EE0F1557F482000E4591 /* Demos */,
 				10B60D2B15505D6D006A6D6E /* Supporting Files */,
 			);
 			name = OB;
@@ -1174,19 +1159,6 @@
 			name = Tasks;
 			sourceTree = "<group>";
 		};
-		10F4EE0F1557F482000E4591 /* Demos */ = {
-			isa = PBXGroup;
-			children = (
-				105CDA28162D9DCC00532AD0 /* VSCOBConstraintsDemo.cpp */,
-				105CDA29162D9DCC00532AD0 /* VSCOBConstraintsDemo.h */,
-				105CDA2A162D9DCC00532AD0 /* VSCOBPrimitivesDemo.cpp */,
-				105CDA2B162D9DCC00532AD0 /* VSCOBPrimitivesDemo.h */,
-				105CDA30162D9DCC00532AD0 /* VSCOBTriMeshDemo.cpp */,
-				105CDA31162D9DCC00532AD0 /* VSCOBTriMeshDemo.h */,
-			);
-			name = Demos;
-			sourceTree = "<group>";
-		};
 		10F907CE162ECFE7006C9C0B /* Interface */ = {
 			isa = PBXGroup;
 			children = (
@@ -1355,11 +1327,7 @@
 				105CDA1B162D9D6F00532AD0 /* VSCOBKeyboardManager.cpp in Sources */,
 				105CDA1D162D9D6F00532AD0 /* VSCOBScene.cpp in Sources */,
 				105CDA1E162D9D6F00532AD0 /* VSCOBSceneController.cpp in Sources */,
-				105CDA1F162D9D6F00532AD0 /* VSCOBSceneElement.cpp in Sources */,
 				105CDA20162D9D6F00532AD0 /* VSCOBStaticObject.cpp in Sources */,
-				105CDA34162D9DCC00532AD0 /* VSCOBConstraintsDemo.cpp in Sources */,
-				105CDA35162D9DCC00532AD0 /* VSCOBPrimitivesDemo.cpp in Sources */,
-				105CDA38162D9DCC00532AD0 /* VSCOBTriMeshDemo.cpp in Sources */,
 				105CDA3C162DA03500532AD0 /* VSCGlobalApplication.cpp in Sources */,
 				105CDA51162DA9A600532AD0 /* VSCOBOSXApplicationBridge.mm in Sources */,
 				105CDA52162DA9A600532AD0 /* VSCOBOSXInterfaceAdapter.mm in Sources */,

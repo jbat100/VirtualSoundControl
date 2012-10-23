@@ -79,9 +79,12 @@
     [self showMIDIWindow:nil];
     
     VSC::Environment::SPtr environment = globalApplication->createEnvironment<VSC::Environment>();
-    
     VSC::OB::Scene::SPtr scene = obApplication->createScene<VSC::OB::Scene>();
+    environment->setOBScene(scene);
     
+    self.environmentWindowController.environment = environment;
+    
+    [self showEnvironmentWindow:self];
     
     [self.applicationManager startOgreRendering];
 }

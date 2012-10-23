@@ -171,6 +171,16 @@ void VSC::OB::Application::destroyDisplay(Display::SPtr display)
     }
 }
 
+VSC::OB::Display::SPtr VSC::OB::Application::getDisplayWithRenderWindow(Ogre::RenderWindow* renderWindow)
+{
+    BOOST_FOREACH(Display::SPtr display, mDisplays)
+    {
+        if (display->getRenderWindow() == renderWindow) return display;
+    }
+    
+    return Display::SPtr();
+}
+
 bool VSC::OB::Application::frameStarted(const Ogre::FrameEvent& evt)
 {
     if (mTraceFrame) std::cout << "VSC::OB::Application frameStarted " << &evt << std::endl;

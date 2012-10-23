@@ -16,7 +16,7 @@ mCameraRotY (0.0)
 }
 
 // -------------------------------------------------------------------------
-bool VSC::OB::DisplayController::mouseMoved(const Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement)
+bool VSC::OB::DisplayController::mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
     if (mTraceUI) std::cout << "VSC::OB::DisplayController::mouseMoved position " << position << ", movement " << movement << std::endl;
     
@@ -41,7 +41,7 @@ bool VSC::OB::DisplayController::mouseMoved(const Ogre::RenderWindow* renderWind
 
 
 // -------------------------------------------------------------------------
-bool VSC::OB::DisplayController::keyPressed(const Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
+bool VSC::OB::DisplayController::keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     
     if (mTraceUI) std::cout << "VSC::OB::DisplayController got key pressed code: " << key << " (W is " << OIS::KC_W << ")" << std::endl; 
@@ -106,7 +106,7 @@ bool VSC::OB::DisplayController::keyPressed(const Ogre::RenderWindow* renderWind
 }
 
 // -------------------------------------------------------------------------
-bool VSC::OB::DisplayController::keyReleased(const Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
+bool VSC::OB::DisplayController::keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
     if (mTraceUI) std::cout << "VSC::OB::DisplayController keyReleased : " << key << std::endl;
     

@@ -88,6 +88,8 @@ namespace VSC {
             void destroyDisplay(Display::SPtr scene);
             const Displays& getDisplays(void) {return mDisplays;}
             
+            Display::SPtr getDisplayWithRenderWindow(Ogre::RenderWindow* renderWindow);
+            
             
             /*------------------------------------------------------
              *  Ogre Setters/Getters

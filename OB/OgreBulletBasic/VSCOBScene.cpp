@@ -3,12 +3,9 @@
  */
 
 #include "VSCOB.h"
+#include "VSCException.h"
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
-#include "VSCOBBetaGUIListener.h"
-#include "VSCOBCameraController.h"
-#include "VSCOBInputAdapter.h"
-#include "VSCOBKeyboardAction.h"
 #include "VSCOBBasicSceneElementFactory.h"
 
 /*
@@ -36,10 +33,9 @@
 #include "OgreBulletDynamicsConstraint.h"
 #include "Constraints/OgreBulletDynamicsPoint2pointConstraint.h" 
 
-/*
- *  Bullet Stuff
- */
 #include "btBulletCollisionCommon.h"
+
+#include <boost/foreach.hpp>
 
 #include <limits>
 
@@ -78,36 +74,9 @@ void VSC::OB::Scene::Element::destroy()
 
 }
 
-//MARK: Element Factory
+//MARK: - Scene Element Factory
 
-/*
-void VSC::OB::Scene::ElementFactory::registerElement(Scene::Element::SPtr element)
-{
-    
-    mSElements.push_back(element);
-}
- */
-
-
-
-//MARK: - Collision
-
-/*
- 
-void VSC::OB::Collision::addPersistentManifold(btPersistentManifold* manifold)
-{
-    PersistentManifolds::iterator it = std::find(mPersistentManifolds.begin(), mPersistentManifolds.end(), manifold);
-    
-    if (it != mPersistentManifolds.end()) {
-        mPersistentManifolds.push_back(manifold);
-    }
-}
-
-void VSC::OB::Collision::clearPersistentManifolds()
-{
-    mPersistentManifolds.clear();
-}
- */
+//MARK: - Scene Collision 
 
 void VSC::OB::Scene::Collision::invalidate()
 {
@@ -186,22 +155,7 @@ void VSC::OB::Scene::CollisionDetector::updateCollisions()
 {
     // http://bulletphysics.org/mediawiki-1.5.8/index.php/Collision_Callbacks_and_Triggers
     
-    Scene::SPtr scene = this->getScene().lock();
-    
-    /*
-     *  Clear current persistent manifolds to repopulate them with the current world ones.
-     *  There can be several manifolds for each object pair which is kind of annoying...
-     */
-    
-    /*
-    BOOST_FOREACH (Collision::SPtr collision, mCollisions)
-    {
-        if (collision)
-        {
-            collision->clearPersistentManifolds();
-        }
-    }
-     */
+    Scene::SPtr scene = this->getScene();
     
     /*
      *  Create a local collisions group so that the difference with the previous one can be
@@ -449,27 +403,45 @@ void VSC::OB::Scene::CollisionDetector::removeCollision(Collision::SPtr collisio
 
 //MARK: - Basic Constructor which does abolutely nothing interesting at all
 
-VSC::OB::Scene::Scene() :
+VSC::OB::Scene::Scene(Application::SPtr application) :
 mSceneManager(0),
 mDynamicsWorld(0),
 mPaused(false),
-mDebugRayLine(0)
+mDebugLines(0)
 {
-
+    if (!application) throw VSCInvalidArgumentException("Scene constructor needs application");
+    mApplication = Application::WPtr(application);
 }
 
 void VSC::OB::Scene::createSceneManager(void)
 {
+    BOOST_ASSERT(this->getApplication()->getOgreRoot());
+    if(!this->getApplication()->getOgreRoot()) return;
+    
     // Create the SceneManager, in this case a generic one
-    mSceneManager = mRoot->createSceneManager(ST_GENERIC, "ExampleSMInstance");
+    mSceneManager = this->getApplication()->getOgreRoot()->createSceneManager(ST_GENERIC, "ExampleSMInstance");
 }
 
-void VSC::OB::Scene::init(Application_SPtr application)
+void VSC::OB::Scene::createDebugLines(void)
 {
-    BOOST_ASSERT(application);
-    if(!application) return;
+    BOOST_ASSERT(!mDebugLines);
+    if (mDebugLines) return;
     
-    mApplication = Application_WPtr(application);
+    BOOST_ASSERT(!this->getSceneManager());
+    if (!this->getSceneManager()) return;
+    
+    mDebugLines = new OgreBulletCollisions::DebugLines();
+    this->getSceneManager()->getRootSceneNode()->createChildSceneNode()->attachObject(mDebugLines);
+}
+
+void VSC::OB::Scene::init()
+{
+    this->createSceneManager();
+    BOOST_ASSERT(this->getSceneManager());
+    if(!this->getSceneManager()) return;
+    
+    this->createDebugLines();
+    BOOST_ASSERT(this->getDebugLines());
     
     /*
      *  A bit of OGRE reading ...
@@ -477,12 +449,12 @@ void VSC::OB::Scene::init(Application_SPtr application)
      *  - Ogre::RenderWindow http://www.ogre3d.org/docs/api/html/classOgre_1_1RenderWindow.html
      */
     
-    Ogre::Root* root = application->getRoot();
+    Ogre::Root* root = this->getApplication()->getOgreRoot();
     Ogre::SceneManager* sceneManager = this->getSceneManager();
     
     BOOST_ASSERT(root);
     BOOST_ASSERT(sceneManager);
-    if (!(root && sceneManage)) return;
+    if (!(root && sceneManager)) return;
 
 #ifndef _DEBUG // Create shadows if not debug mode
     
@@ -546,8 +518,7 @@ void VSC::OB::Scene::init(Application_SPtr application)
 	}
 #endif // _DEBUG
     
-    Scene::WPtr weakThis = Scene::WPtr(shared_from_this());
-    this->setCollisionDetector(CollisionDetector::SPtr(new CollisionDetector(weakThis)));
+    this->setCollisionDetector(CollisionDetector::SPtr(new CollisionDetector(shared_from_this())));
     
     /**
      *  Nothing is enabled by default...
@@ -566,6 +537,12 @@ void VSC::OB::Scene::init(Application_SPtr application)
     mNoHelpText = false;
     mProfileTimings = false;
     mEnableSatComparison = false;
+ 
+    this->setupLights();
+    
+    this->initWorld();
+    
+    this->setupFactory();
     
     this->internalInit();
 
@@ -573,12 +550,6 @@ void VSC::OB::Scene::init(Application_SPtr application)
 
 void VSC::OB::Scene::internalInit()
 {
-    this->setupLights();
-    
-    this->initWorld();
-    
-    this->setupFactory();
-    
     this->getElementFactory()->addGround();
 }
 
@@ -589,6 +560,11 @@ void VSC::OB::Scene::setupFactory()
 
 void VSC::OB::Scene::setupLights()
 {
+    
+    Ogre::SceneManager* sceneManager = this->getSceneManager();
+    BOOST_ASSERT(sceneManager);
+    if (!sceneManager) return;
+    
     // Set ambient light
     sceneManager->setAmbientLight(ColourValue(0.4, 0.4, 0.4));
     
@@ -629,52 +605,8 @@ void VSC::OB::Scene::setupLights()
     mLightMap.insert(LightMap::value_type("Spot2", l));
 
 }
+ 
 
-Display::SPtr VSC::OB::Scene::createDisplay()
-{
-    return Display::SPtr(new Display(shared_from_this()));
-}
-
-VSC::OB::Display::SPtr VSC::OB::Scene::createDisplayWithView(void* view)
-{
-    Display::SPtr display = this->createDisplay();
-    BOOST_ASSERT(display);
-    
-    if (display)
-    {
-        this->getBridge()->setupDisplayWithView(display, view);
-        display->init();
-        mDisplays.push_back(display);
-    }
-    
-    return display;
-}
-
-void VSC::OB::Scene::destroyDisplay(Display::SPtr display)
-{
-    BOOST_ASSERT(display);
-    if (display)
-    {
-        Displays::iterator it = std::find(mDisplays.begin(), mDisplays.end(), display);
-        BOOST_ASSERT(it != mDisplays.end());
-        if (it != mDisplays.end())
-        {
-            display->shutdown();
-            mDisplays.erase(it);
-        }
-    }
-}
-
-OgreBulletCollisions::DebugLines* VSC::OB::Scene::getDebugRayLines()
-{
-    if (mDebugRayLine == 0)
-    {
-        mDebugRayLine = new OgreBulletCollisions::DebugLines();
-        sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(mDebugRayLine);
-    }
-    
-    return mDebugRayLine;
-}
 
 void VSC::OB::Scene::setCollisionDetector(CollisionDetector::SPtr detector)
 {
@@ -745,24 +677,18 @@ void VSC::OB::Scene::shutdown ()
         mDynamicsWorld = 0;
     }
     
-    if (sceneManager) {
-        if (mCamera) {
-            sceneManager->destroyCamera(mCamera->getName());
-        }
-        mCamera = 0;
-        if (mRoot) {
-            mRoot->destroySceneManager(sceneManager);
-        }
-        sceneManager = 0;
+    if (mSceneManager) {
+        /*
+         *  Displays should be destroyed BEFORE their scenes so that the cameras 
+         *  created through the scene manager can be destroyed through the scene 
+         *  manager
+         */
+        mSceneManager = 0;
     }
     
-    if (mWindow) {
-        mWindow->removeViewport(0);
-    }
-    
-    if (mDebugRayLine) {
-        delete mDebugRayLine;
-        mDebugRayLine = 0;
+    if (mDebugLines) {
+        delete mDebugLines;
+        mDebugLines = 0;
     }
 
 }
@@ -899,7 +825,7 @@ bool VSC::OB::Scene::frameEnded(Real elapsedTime)
     return true;
 }
 
-// ------------------------------------------------------------------------- 
+/*
 bool VSC::OB::Scene::checkIfEnoughPlaceToAddObject(float minDist)
 {
     Ogre::Vector3 pickPos;
@@ -921,11 +847,17 @@ bool VSC::OB::Scene::checkIfEnoughPlaceToAddObject(float minDist)
     
     return true;        
 }
+ */
 
 
 // -------------------------------------------------------------------------
 void VSC::OB::Scene::initWorld(const Ogre::Vector3 &gravityVector, const Ogre::AxisAlignedBox &bounds)
 {
+    Ogre::SceneManager* sceneManager = this->getSceneManager();
+    
+    BOOST_ASSERT(sceneManager);
+    if (!sceneManager) return;
+    
     // Start Bullet
     mDynamicsWorld = new OgreBulletDynamics::DynamicsWorld(sceneManager, bounds, gravityVector, true, true, 10000);
 
@@ -938,15 +870,4 @@ void VSC::OB::Scene::initWorld(const Ogre::Vector3 &gravityVector, const Ogre::A
     node->attachObject (static_cast<SimpleRenderable*>(debugDrawer));
 }
 
-// -------------------------------------------------------------------------
-const VSC::OB::Scene::StatsMap& VSC::OB::Scene::getUpdatedStatsMap(void)
-{
-    const Ogre::RenderTarget::FrameStats& stats = mWindow->getStatistics();
-    
-    mStatsMap["Average FPS"]    = Ogre::StringConverter::toString(stats.avgFPS);
-    mStatsMap["Current FPS"]    = Ogre::StringConverter::toString(stats.lastFPS);
-    mStatsMap["Triangle Count"] = Ogre::StringConverter::toString(stats.triangleCount);
-    
-    return mStatsMap;
-}
 

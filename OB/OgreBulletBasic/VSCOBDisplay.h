@@ -105,6 +105,12 @@ namespace VSC {
             virtual void destroyCamera(void);
             virtual void destroyRenderWindow(void);
             
+            /*
+             *  Utility
+             */
+            
+            Ogre::Vector2 normalizedViewportCoordinates(const Ogre::Vector2& absCoord);
+            
         private:
             
             Scene_WPtr                              mScene;

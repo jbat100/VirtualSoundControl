@@ -10,6 +10,15 @@
 
 #include "VSCGlobalApplication.h"
 
+/*
+ *  UI request notifications
+ */
+
+extern NSString* const VSCOSXUIRequestShowMIDIWindowNotification;
+
+/*
+ *  Main application protocol
+ */
 
 @protocol VSCOSXApplicationManagerProtocol <NSObject>
 
