@@ -586,16 +586,20 @@ bool VSC::OB::SceneController::throwDynamicObjectPrimitive(Ogre::RenderWindow* r
                                                            VSC::OB::PrimitiveType primitiveType,
                                                            const Ogre::Vector3& velocity)
 {
+    BOOST_ASSERT(renderWindow);
+    if (!renderWindow) return false;
     
     const float throwDist = 2.0f;
     
     Scene::SPtr scene = this->getScene();
     BOOST_ASSERT(scene);
     Display::SPtr display = scene->getApplication()->getDisplayWithRenderWindow(renderWindow);
+    BOOST_ASSERT(scene == display->getScene());
+    if (scene != display->getScene()) return false;
     
     if(!display) return false;
     
-    if (display->checkIfEnoughPlaceToAddObject(throwDist) == false)
+    if (scene->checkIfEnoughPlaceToAddObjectForDisplay(display, throwDist) == false)
     {
         // TODO throw exception ?
         return false; // false;
@@ -619,19 +623,19 @@ bool VSC::OB::SceneController::throwDynamicObjectPrimitive(Ogre::RenderWindow* r
             object = sceneFactory->addPrimitive(VSC::OB::PrimitiveCube, description);
             break;
             
-        case VSC::OB::KeyboardAction::ShootSphere: 
+        case VSC::OB::PrimitiveSphere: 
             description.name = "Sphere";
             description.size = gSphereBodyBounds;
             object = sceneFactory->addPrimitive(VSC::OB::PrimitiveSphere, description);
             break;
             
-        case VSC::OB::KeyboardAction::ShootCylinder: 
+        case VSC::OB::PrimitiveCylinder: 
             description.name = "Cylinder";
             description.size = gCylinderBodyBounds;
             object = sceneFactory->addPrimitive(VSC::OB::PrimitiveCylinder, description);
             break;
             
-        case VSC::OB::KeyboardAction::ShootCone: 
+        case VSC::OB::PrimitiveCone: 
             description.name = "Cone";
             description.size = gConeBodyBounds;
             object = sceneFactory->addPrimitive(VSC::OB::PrimitiveCylinder, description);

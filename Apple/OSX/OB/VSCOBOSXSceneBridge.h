@@ -13,14 +13,7 @@ namespace VSC {
     
     namespace OB {
 
-        class OSXSceneBridge : public Scene::Bridge
-        {
-            
-        public:
-            
 
-
-        };
         
     }
 }

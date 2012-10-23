@@ -1,10 +1,14 @@
 
+#ifndef _VSC_GLOBAL_APPLICATION_CPP_
+#define _VSC_GLOBAL_APPLICATION_CPP_
+
 #include "VSCGlobalApplication.h"
 
 #include <boost/assert.hpp>
 #include <boost/thread.hpp>
 
 boost::once_flag globalApplicationSingletonInitilizedFlag = BOOST_ONCE_INIT;
+VSC::GlobalApplication::SPtr mGlobalApplicationSingleton;
 
 void VSC::GlobalApplication::InitializeSingletonGlobalApplication()
 {
@@ -61,6 +65,9 @@ void VSC::GlobalApplication::destroyEnvironment(Environment::SPtr environment)
         if(it != mEnvironments.end())
         {
             environment->shutdown();
+            mEnvironments.erase(it);
         }
     }
 }
+
+#endif // _VSC_GLOBAL_APPLICATION_CPP_

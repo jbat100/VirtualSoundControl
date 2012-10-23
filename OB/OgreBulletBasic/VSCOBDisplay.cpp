@@ -77,11 +77,8 @@ Ogre::Vector2 VSC::OB::Display::normalizedViewportCoordinates(const Ogre::Vector
 void VSC::OB::Display::destroyCamera(void)
 {
     /*
-     *  Shutdown can be called when there is no 
+     *  Shutdown can be called when there is no camera/scene manager so no asserts
      */
-    
-    //BOOST_ASSERT(this->getScene()->getSceneManager());
-    //BOOST_ASSERT(this->getCamera());
     
     if (this->getScene()->getSceneManager() && this->getCamera())
     {
@@ -93,10 +90,10 @@ void VSC::OB::Display::destroyCamera(void)
 
 void VSC::OB::Display::destroyRenderWindow(void)
 {
-    BOOST_ASSERT(this->getScene()->getSceneManager());
-    BOOST_ASSERT(this->getRenderWindow());
-    
-    this->getScene()->getApplication()->getOgreRoot()->destroyRenderTarget(this->getRenderWindow());
+    if (this->getRenderWindow())
+    {
+        VSC::OB::Application::singletonApplication()->getOgreRoot()->destroyRenderTarget(this->getRenderWindow());
+    }
     
     this->setRenderWindow(0);
 }

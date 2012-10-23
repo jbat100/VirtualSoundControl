@@ -1,4 +1,7 @@
 
+#ifndef _VSC_INTERFACE_ADAPTER_CPP_
+#define _VSC_INTERFACE_ADAPTER_CPP_
+
 #include "VSCInterfaceAdapter.h"
 #include "VSCException.h"
 
@@ -217,7 +220,7 @@ void VSC::InterfaceAdapter<Context, Vector2>::Responder::setInterfaceAdapter(Int
 
     if (this->getNextResponder())
     {
-        this->getNextResponder()->setInputAdapter(mAdapter);
+        this->getNextResponder()->setInterfaceAdapter(mAdapter.lock());
     }
 }
 
@@ -228,7 +231,7 @@ void VSC::InterfaceAdapter<Context, Vector2>::Responder::setNextResponder(Respon
     
     if (this->getNextResponder())
     {
-        this->getNextResponder()->setInputAdapter(mAdapter);
+        this->getNextResponder()->setInterfaceAdapter(mAdapter.lock());
     }
 }
 
@@ -393,7 +396,7 @@ void VSC::InterfaceAdapter<Context, Vector2>::ResponderChain::removeResponder(ty
     BOOST_ASSERT(responder);
     
     if (responder) {
-        typename Responders::const_iterator it = std::find(mResponders.begin(), mResponders.end(), responder);
+        typename Responders::iterator it = std::find(mResponders.begin(), mResponders.end(), responder);
         BOOST_ASSERT(it != mResponders.end());
         if (it != mResponders.end()) mResponders.erase(it);
     }
@@ -413,11 +416,11 @@ void VSC::InterfaceAdapter<Context, Vector2>::ResponderChain::chainSceneControll
     typename Responders::iterator it = mResponders.begin();
     typename Responders::iterator nextIt = it; ++nextIt;
     
-    this->setNextResponder((*it).lock());
+    this->setNextResponder((*it));
     
     while (nextIt != mResponders.end()) {
-        typename Responder::SPtr responder = (*it)->lock();
-        typename Responder::SPtr nextResponder = (*nextIt)->lock();
+        typename Responder::SPtr responder = (*it);
+        typename Responder::SPtr nextResponder = (*nextIt);
         responder->setNextResponder(nextResponder);
     }
 }
@@ -433,7 +436,7 @@ void VSC::InterfaceAdapter<Context, Vector2>::ResponderChain::insertResponder(ty
 
     
     if (responder) {
-        mResponders.insert(it, Responder::WPtr(responder));
+        mResponders.insert(it, responder);
         this->chainSceneControllers();
     }
 }
@@ -451,5 +454,7 @@ bool VSC::InterfaceAdapter<Context, Vector2>::ResponderChain::containsResponder(
     return false;
     
 }
+
+#endif // _VSC_INTERFACE_ADAPTER_CPP_
 
 

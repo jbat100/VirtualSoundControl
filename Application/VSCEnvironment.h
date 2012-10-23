@@ -29,6 +29,15 @@ namespace VSC {
         typedef boost::shared_ptr<Environment>  SPtr;
         typedef boost::weak_ptr<Environment>    WPtr;
         
+        enum State
+        {
+            StateNone = 0,
+            StateValid,
+            StateInvalid
+        };
+        
+        State getState(void) {return mState;}
+        
         OB::Scene::SPtr             getOBScene(void) {return mOBScene;}
         IM::CollisionMapper::SPtr   getIMCollisionMapper(void) {return mIMCollisionMapper;}
         
@@ -39,8 +48,11 @@ namespace VSC {
         
         Environment(GlobalApplication_SPtr globalApplication);
         
-        void init();
-        void shutdown();
+        void init() {mState = StateValid; internalInit();}
+        void shutdown() {internalShutdown(); mState = StateInvalid;}
+        
+        virtual void internalInit() {}
+        virtual void internalShutdown() {}
         
     private:
         
@@ -48,6 +60,8 @@ namespace VSC {
         IM::CollisionMapper::SPtr   mIMCollisionMapper;
         
         GlobalApplication_WPtr      mGlobalApplication;
+        
+        State                       mState;
   
     };
     

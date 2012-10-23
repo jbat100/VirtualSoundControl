@@ -57,20 +57,15 @@ namespace VSC {
             public:
                 
                 friend class Scene;
-                
+            
                 typedef boost::shared_ptr<Bridge>   SPtr;
                 
                 virtual ~Bridge();
-                
-                virtual void setupDisplayWithView(Display::SPtr display, void* view) = 0;
-                
                 Scene::SPtr getScene(void) {return mScene.lock();}
                 
             protected:
                 
                 Bridge(Scene::SPtr scene) { mScene = Scene::WPtr(scene); }
-                
-                void registerDisplay(Display::SPtr display);
                 
             private:
                 
@@ -350,7 +345,7 @@ namespace VSC {
              *  Dynamic actions and checks
              */
             
-            bool checkIfEnoughPlaceToAddObject(float maxDist);
+            bool checkIfEnoughPlaceToAddObjectForDisplay(Display::SPtr display, float maxDist);
             
             Element::SPtr getElementAtDisplayCoordinate(Display::SPtr display, const Ogre::Vector2& p,
                                                         Ogre::Vector3 &ip, Ogre::Ray &r);

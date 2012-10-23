@@ -33,7 +33,7 @@ namespace VSC {
             virtual ~Responder() {}
             
             void setInterfaceAdapter(InterfaceAdapter::SPtr adapter); //{mAdapter = InterfaceAdapter::WPtr(adapter);}
-            InterfaceAdapter::SPtr getInterfaceAdapter(void); //{return mAdapter.lock();}
+            InterfaceAdapter::SPtr getInterfaceAdapter(void) {return mAdapter.lock();}
             
             Responder::SPtr getNextResponder(void) {return mNextResponder.lock();}
             void setNextResponder(Responder::SPtr responder); // {mNextResponder = Responder::WPtr(responder);}
@@ -56,7 +56,7 @@ namespace VSC {
             InterfaceAdapter::WPtr  mAdapter;
             Responder::WPtr         mNextResponder;
             
-            static const bool       mTraceUI;
+            static const bool       mTraceUI = false;
             
         };
         
@@ -72,7 +72,7 @@ namespace VSC {
             ResponderChain() {}
             virtual ~ResponderChain() {}
             
-            const Responders& getResponders(void);
+            const Responders& getResponders(void) {return mResponders;}
             
             void appendResponder(typename Responder::SPtr responder);
             void prependResponder(typename Responder::SPtr responder);
@@ -174,6 +174,8 @@ namespace VSC {
     };
     
 }
+
+#include "VSCInterfaceAdapter.cpp"
 
 #endif //_VSC_INTERFACE_ADAPTER_H_
 

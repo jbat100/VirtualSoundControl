@@ -53,12 +53,6 @@ const Ogre::ColourValue g_minLightColour(0.2, 0.1, 0.0);
 const Ogre::ColourValue g_maxLightColour(0.5, 0.3, 0.1);
 // -------------------------------------------------------------------------
 
-//MARK: - Bridge
-
-void VSC::OB::Scene::Bridge::registerDisplay(Display::SPtr display)
-{
-    
-}
 
 //MARK: - Elements
 
@@ -699,6 +693,8 @@ void VSC::OB::Scene::internalShutdown()
 }
 
 
+
+
 VSC::OB::Scene::Element::SPtr VSC::OB::Scene::getElementAtDisplayCoordinate(Display::SPtr display,
                                                                             const Ogre::Vector2& p,
                                                                             Ogre::Vector3& ip,
@@ -825,14 +821,13 @@ bool VSC::OB::Scene::frameEnded(Real elapsedTime)
     return true;
 }
 
-/*
-bool VSC::OB::Scene::checkIfEnoughPlaceToAddObject(float minDist)
+bool VSC::OB::Scene::checkIfEnoughPlaceToAddObjectForDisplay(Display::SPtr display, float maxDist)
 {
     Ogre::Vector3 pickPos;
     Ogre::Ray rayTo;
     
     Ogre::Vector2 coord(0.5, 0.5);
-    Scene::Element::SPtr element = this->getElementAtViewportCoordinate(mCamera->getViewport(), coord, pickPos, rayTo);
+    Scene::Element::SPtr element = this->getElementAtDisplayCoordinate(display, coord, pickPos, rayTo);
     
     if (element)
     {
@@ -840,15 +835,12 @@ bool VSC::OB::Scene::checkIfEnoughPlaceToAddObject(float minDist)
         
         if (body)
         {
-            if ((pickPos - mCamera->getDerivedPosition ()).length () < minDist)
-                return false;
+            if ((pickPos - display->getCamera()->getDerivedPosition ()).length () < maxDist) return false;
         }
     }
     
-    return true;        
+    return true;
 }
- */
-
 
 // -------------------------------------------------------------------------
 void VSC::OB::Scene::initWorld(const Ogre::Vector3 &gravityVector, const Ogre::AxisAlignedBox &bounds)

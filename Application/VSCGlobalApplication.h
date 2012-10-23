@@ -48,5 +48,7 @@ namespace VSC {
 
 }
 
+#include "VSCGlobalApplication.cpp"
+
 #endif //_VSC_GLOBAL_APPLICATION_H_
 

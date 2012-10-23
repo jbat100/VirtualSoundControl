@@ -14,15 +14,6 @@
 namespace VSC {
     
     namespace OB {
-
-        class OSXDisplayBridge : public Display::Bridge
-        {
-            
-        public:
-            
-            
-
-        };
         
     }
 }
