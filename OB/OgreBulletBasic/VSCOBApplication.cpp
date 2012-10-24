@@ -1,12 +1,15 @@
 
+#ifndef _VSC_OB_APPLICATION_CPP_
+#define _VSC_OB_APPLICATION_CPP_
+
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
 
-#ifdef __APPLE__
+//#ifdef __APPLE__
 #include "VSCOBOSXApplicationBridge.h"
-#else
-#error "Unsuported Platform"
-#endif
+//#else
+//#error "Unsuported Platform"
+//#endif
 
 #include "OIS.h"
 #include "OgreResourceGroupManager.h"
@@ -29,10 +32,11 @@ void VSC::OB::Application::setDisplayRenderWindow(Display::SPtr display, Ogre::R
 }
 
 boost::once_flag applicationSingletonInitilizedFlag = BOOST_ONCE_INIT;
+VSC::OB::Application::SPtr VSC::OB::Application::mSingletonApplication;
 
 void VSC::OB::Application::InitialiseSingletonApplication()
 {
-    BOOST_ASSERT(!singletonApplication);
+    BOOST_ASSERT(!mSingletonApplication);
     mSingletonApplication = VSC::OB::Application::SPtr (new VSC::OB::Application);
 }
 
@@ -46,7 +50,6 @@ VSC::OB::Application::SPtr VSC::OB::Application::singletonApplication(void)
 
 VSC::OB::Application::Application() :
 mRoot(0),
-Ogre::FrameListener(),
 mInitialised(false)
 {
 
@@ -72,51 +75,29 @@ bool VSC::OB::Application::init(ResourceManager::SPtr resourceManager)
     BOOST_ASSERT(mInitialised == false);
     if (mInitialised) return false;
     
-#ifdef __APPLE__
+//#ifdef __APPLE__
     mBridge = Bridge::SPtr(new OSXApplicationBridge(shared_from_this()));
-#endif
+//#endif
     
     BOOST_ASSERT(mBridge);
     if (!mBridge) return false;
+    BOOST_ASSERT(resourceManager);
+    if (!resourceManager) return false;
+    
+    mResourceManager = resourceManager;
     
     mRoot = mBridge->createOgreRoot();
     BOOST_ASSERT(mRoot);
     
-    BOOST_ASSERT(resourceManager);
-    if (!resourceManager) return false;
-    mResourceManager = resourceManager;
-    
     mResourceManager->setupResources();
     mResourceManager->loadResources();
-    
-    mRoot->addFrameListener(this);
     
     mInitialised = true;
     
     return true;
 }
 
-template<typename SceneSubclass>
-VSC::OB::Scene::SPtr VSC::OB::Application::createScene()
-{
-    SceneSubclass* sceneSub = new SceneSubclass(shared_from_this());
-    Scene* scene = dynamic_cast<Scene*>(sceneSub);
-    BOOST_ASSERT(scene);
-    
-    if (scene)
-    {
-        Scene::SPtr sscene = Scene::SPtr(scene);
-        sscene->init();
-        mScenes.push_back(sscene);
-        return sscene;
-    }
-    else
-    {
-        delete sceneSub;
-    }
-    
-    return Scene::SPtr();
-}
+
 
 void VSC::OB::Application::destroyScene(Scene::SPtr scene)
 {
@@ -132,30 +113,6 @@ void VSC::OB::Application::destroyScene(Scene::SPtr scene)
     }
 }
 
-template<typename DisplaySubclass>
-VSC::OB::Display::SPtr VSC::OB::Application::createDisplayWithView(void* view)
-{
-    BOOST_ASSERT(mBridge);
-    if (!mBridge) return Display::SPtr();
-    
-    DisplaySubclass* displaySub = new DisplaySubclass();
-    Display* display = dynamic_cast<Display*>(displaySub);
-    BOOST_ASSERT(display);
-    
-    if (display)
-    {
-        Display::SPtr sDisplay = Display::SPtr(display);
-        mBridge->setupDisplayWithView(sDisplay, view);
-        mDisplays.push_back(sDisplay);
-        return sDisplay;
-    }
-    else
-    {
-        delete display;
-    }
-    
-    return Display::SPtr();
-}
 
 void VSC::OB::Application::destroyDisplay(Display::SPtr display)
 {
@@ -181,31 +138,5 @@ VSC::OB::Display::SPtr VSC::OB::Application::getDisplayWithRenderWindow(Ogre::Re
     return Display::SPtr();
 }
 
-bool VSC::OB::Application::frameStarted(const Ogre::FrameEvent& evt)
-{
-    if (mTraceFrame) std::cout << "VSC::OB::Application frameStarted " << &evt << std::endl;
-
-    BOOST_FOREACH(Scene::SPtr scene, this->getScenes())
-    {
-        scene->frameStarted(evt.timeSinceLastFrame);
-    }
-    
-    return true;
-}
-
-
-bool VSC::OB::Application::frameEnded(const Ogre::FrameEvent& evt)
-{
-    
-    if (mTraceFrame) std::cout << "VSC::OB::Application::frameEnded" << std::endl;
-    
-    BOOST_FOREACH(Scene::SPtr scene, this->getScenes())
-    {
-        scene->frameEnded(evt.timeSinceLastFrame);
-    }
-
-    return true; 
-}
-
-
+#endif // _VSC_OB_APPLICATION_CPP_
 

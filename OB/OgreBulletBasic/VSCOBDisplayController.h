@@ -15,7 +15,7 @@ namespace VSC {
     
     namespace OB {
 
-        class DisplayController : public InterfaceResponder, public KeyBound
+        class DisplayController : public InterfaceResponder, public KeyBound, public Ogre::FrameListener
         {
             
         public:
@@ -41,10 +41,11 @@ namespace VSC {
             virtual void shutdown(void);
 
             /**
-             *  Ogre Frame Listener Events Forwarded by scene or viewport
+             *  Ogre Frame Listener
              */
             
-            virtual bool frameStarted(Ogre::Real elapsedTime);
+            virtual bool frameStarted(const Ogre::FrameEvent& evt);
+
 
             /**
              *  Input Listener Overrides, only need to override these
@@ -55,8 +56,6 @@ namespace VSC {
             virtual bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
             virtual bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
             virtual bool contextChanged(Ogre::RenderWindow* renderWindow);
-            
-            virtual bool renderWindowChangedSize(Ogre::RenderWindow* renderWindow);
             
             /**
              *  Ogre Setters/Getters
@@ -76,10 +75,10 @@ namespace VSC {
              *  Other Setters/Getters
              */
             
-            Float   getMouseSensitivity(void) {return mMouseSensitivity;}
-            void    setMouseSensitivity(Float sens) {mMouseSensitivity = sens;}
-            Float   getCameraSpeed(void) {return mCameraSpeed;}
-            void    setCameraSpeed(Float speed) {mCameraSpeed = speed;}
+            Float getMouseSensitivity(void) {return mMouseSensitivity;}
+            void  setMouseSensitivity(Float sens) {mMouseSensitivity = sens;}
+            Float getCameraSpeed(void) {return mCameraSpeed;}
+            void  setCameraSpeed(Float speed) {mCameraSpeed = speed;}
             
         private:
 

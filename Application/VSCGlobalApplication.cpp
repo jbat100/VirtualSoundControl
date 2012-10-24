@@ -1,6 +1,4 @@
 
-#ifndef _VSC_GLOBAL_APPLICATION_CPP_
-#define _VSC_GLOBAL_APPLICATION_CPP_
 
 #include "VSCGlobalApplication.h"
 
@@ -8,7 +6,7 @@
 #include <boost/thread.hpp>
 
 boost::once_flag globalApplicationSingletonInitilizedFlag = BOOST_ONCE_INIT;
-VSC::GlobalApplication::SPtr mGlobalApplicationSingleton;
+VSC::GlobalApplication::SPtr VSC::GlobalApplication::mGlobalApplicationSingleton;
 
 void VSC::GlobalApplication::InitializeSingletonGlobalApplication()
 {
@@ -24,35 +22,22 @@ VSC::GlobalApplication::SPtr VSC::GlobalApplication::singletonGlobalApplication(
     return mGlobalApplicationSingleton;
 }
 
+VSC::GlobalApplication::GlobalApplication()
+{
+    
+}
+
+VSC::GlobalApplication::~GlobalApplication()
+{
+    
+}
+
 void VSC::GlobalApplication::init()
 {
     
     
 }
 
-template<typename EnvironmentSubclass>
-VSC::Environment::SPtr VSC::GlobalApplication::createEnvironment(void)
-{
-    
-    EnvironmentSubclass* envSub = new EnvironmentSubclass(shared_from_this());
-    Environment* env = dynamic_cast<Environment*>(envSub);
-    
-    BOOST_ASSERT(env);
-    
-    if (env)
-    {
-        Environment::SPtr environment = Environment::SPtr(env);
-        environment->init();
-        mEnvironments.push_back(environment);
-        return environment;
-    }
-    else
-    {
-        delete envSub;
-    }
-    
-    return Environment::SPtr();
-}
 
 void VSC::GlobalApplication::destroyEnvironment(Environment::SPtr environment)
 {
@@ -70,4 +55,4 @@ void VSC::GlobalApplication::destroyEnvironment(Environment::SPtr environment)
     }
 }
 
-#endif // _VSC_GLOBAL_APPLICATION_CPP_
+

@@ -39,6 +39,8 @@ namespace VSC {
             
             typedef std::map<std::string, std::string>  StatsMap;
             
+            virtual ~Display();
+            
             /*
              *  Init and shutdown are not virtual but will call virtual functions
              */
@@ -58,12 +60,6 @@ namespace VSC {
              *  Camera
              */
             bool resetCameraAspectRatio(void);
-
-            /**--------------------------------------------------------------
-             *  Ogre Frame Listener Forwarded messages from Application 
-             */
-            virtual bool frameStarted(Ogre::Real elapsedTime);
-            virtual bool frameEnded(Ogre::Real elapsedTime);
             
             /**--------------------------------------------------------------
              *  Ogre Getters
@@ -84,7 +80,6 @@ namespace VSC {
              *  Constructor/Destructor/Initialization
              */
             Display();
-            virtual ~Display();
             
             virtual void internalSetup() {}          // for subclasses, will be called by setupWithScene()
             virtual void internalShutdown() {}       // for subclasses, will be called by shutdown()

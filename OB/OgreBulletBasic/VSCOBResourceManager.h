@@ -30,7 +30,7 @@ namespace VSC {
              */
             
             ResourceManager(std::string resourceFilePath) : mResourceFilePath(resourceFilePath) {}
-            virtual ~ResourceManager();
+            virtual ~ResourceManager() {}
             
         protected:
             

@@ -27,7 +27,7 @@ namespace VSC {
         
         class Application;
 
-        class Scene : public boost::enable_shared_from_this<Scene>
+        class Scene : public Ogre::FrameListener, public boost::enable_shared_from_this<Scene>
         {
             
         private:
@@ -338,8 +338,9 @@ namespace VSC {
             /**--------------------------------------------------------------
              *  Ogre Frame Listener Forwarded messages from Application 
              */
-            virtual bool frameStarted(Ogre::Real elapsedTime);
-            virtual bool frameEnded(Ogre::Real elapsedTime);
+            
+            virtual bool frameStarted(const Ogre::FrameEvent& evt);
+            virtual bool frameEnded(const Ogre::FrameEvent& evt);
 
             /**--------------------------------------------------------------
              *  Dynamic actions and checks

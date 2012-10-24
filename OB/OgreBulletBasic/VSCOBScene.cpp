@@ -538,6 +538,8 @@ void VSC::OB::Scene::init()
     
     this->setupFactory();
     
+    Application::singletonApplication()->getOgreRoot()->addFrameListener(this);
+    
     this->internalInit();
 
 }
@@ -546,6 +548,52 @@ void VSC::OB::Scene::internalInit()
 {
     this->getElementFactory()->addGround();
 }
+
+void VSC::OB::Scene::shutdown ()
+{
+    Application::singletonApplication()->getOgreRoot()->removeFrameListener(this);
+    
+    this->internalShutdown();
+    
+    /*
+     *  It is important to reset the element factory before destroying the scene manager
+     *  as it will use it when performing the reset.
+     */
+    
+    this->destroyAllElements();
+    
+    if (mDynamicsWorld) {
+        if (mDynamicsWorld->getDebugDrawer()) {
+            delete mDynamicsWorld->getDebugDrawer();
+            mDynamicsWorld->setDebugDrawer(0);
+        }
+        mDynamicsWorld->setDebugDrawer(0);
+        delete mDynamicsWorld;
+        mDynamicsWorld = 0;
+    }
+    
+    if (mSceneManager) {
+        /*
+         *  Displays should be destroyed BEFORE their scenes so that the cameras
+         *  created through the scene manager can be destroyed through the scene
+         *  manager
+         */
+        mSceneManager = 0;
+    }
+    
+    if (mDebugLines) {
+        delete mDebugLines;
+        mDebugLines = 0;
+    }
+    
+}
+
+void VSC::OB::Scene::internalShutdown()
+{
+    
+}
+
+
 
 void VSC::OB::Scene::setupFactory()
 {
@@ -649,52 +697,6 @@ VSC::OB::Scene::Element::SPtr VSC::OB::Scene::getElementWithRigidBody(OgreBullet
 }
 
 
-
-void VSC::OB::Scene::shutdown ()
-{
-    this->internalShutdown();
-    
-    /*
-     *  It is important to reset the element factory before destroying the scene manager
-     *  as it will use it when performing the reset.
-     */
-    
-    this->destroyAllElements();
-    
-    if (mDynamicsWorld) {
-        if (mDynamicsWorld->getDebugDrawer()) {
-            delete mDynamicsWorld->getDebugDrawer();
-            mDynamicsWorld->setDebugDrawer(0);
-        }
-        mDynamicsWorld->setDebugDrawer(0);
-        delete mDynamicsWorld;
-        mDynamicsWorld = 0;
-    }
-    
-    if (mSceneManager) {
-        /*
-         *  Displays should be destroyed BEFORE their scenes so that the cameras 
-         *  created through the scene manager can be destroyed through the scene 
-         *  manager
-         */
-        mSceneManager = 0;
-    }
-    
-    if (mDebugLines) {
-        delete mDebugLines;
-        mDebugLines = 0;
-    }
-
-}
-
-void VSC::OB::Scene::internalShutdown()
-{
-    
-}
-
-
-
-
 VSC::OB::Scene::Element::SPtr VSC::OB::Scene::getElementAtDisplayCoordinate(Display::SPtr display,
                                                                             const Ogre::Vector2& p,
                                                                             Ogre::Vector3& ip,
@@ -726,8 +728,9 @@ VSC::OB::Scene::Element::SPtr VSC::OB::Scene::getElementAtDisplayCoordinate(Disp
 }
 
 // -------------------------------------------------------------------------
-bool VSC::OB::Scene::frameStarted(Real elapsedTime)
+bool VSC::OB::Scene::frameStarted(const Ogre::FrameEvent& evt)
 {
+    Real elapsedTime = evt.timeSinceLastFrame;
     
     if (mTraceFrame) std::cout << "VSC::OB::Scene::frameStarted, elapsed time " << elapsedTime << std::endl;
     
@@ -790,10 +793,11 @@ void VSC::OB::Scene::enableCCD(bool enable)
 }
 
 // -------------------------------------------------------------------------
-bool VSC::OB::Scene::frameEnded(Real elapsedTime)
+bool VSC::OB::Scene::frameEnded(const Ogre::FrameEvent& evt)
 {
+    Real elapsedTime = evt.timeSinceLastFrame;
+    
     if (mTraceFrame) std::cout << "VSC::OB::Scene::frameEnded, elapsed time " << elapsedTime << std::endl;
-
 
     /*
     if (mNoDeactivation)

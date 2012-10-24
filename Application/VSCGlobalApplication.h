@@ -24,6 +24,8 @@ namespace VSC {
         
         static GlobalApplication::SPtr singletonGlobalApplication(void);
         
+        ~GlobalApplication();
+        
         const Environments& getEnvironments(void) {return mEnvironments;}
         
         template<typename EnvironmentSubclass>
@@ -48,7 +50,29 @@ namespace VSC {
 
 }
 
-#include "VSCGlobalApplication.cpp"
+template<typename EnvironmentSubclass>
+VSC::Environment::SPtr VSC::GlobalApplication::createEnvironment(void)
+{
+    
+    EnvironmentSubclass* envSub = new EnvironmentSubclass(shared_from_this());
+    Environment* env = dynamic_cast<Environment*>(envSub);
+    
+    BOOST_ASSERT(env);
+    
+    if (env)
+    {
+        Environment::SPtr environment = Environment::SPtr(env);
+        environment->init();
+        mEnvironments.push_back(environment);
+        return environment;
+    }
+    else
+    {
+        delete envSub;
+    }
+    
+    return Environment::SPtr();
+}
 
 #endif //_VSC_GLOBAL_APPLICATION_H_
 

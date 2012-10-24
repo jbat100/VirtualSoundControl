@@ -1,4 +1,5 @@
 
+#include "VSCOBApplication.h"
 #include "VSCOBDisplayController.h"
 #include "VSCOBInterface.h"
 #include "VSCOBKeyboardAction.h"
@@ -13,6 +14,18 @@ mCameraRotX (0.0),
 mCameraRotY (0.0)
 {
 
+}
+
+void VSC::OB::DisplayController::setupWithDisplay(Display::SPtr display)
+{
+    mDisplay = Display::WPtr(display);
+    
+    Application::singletonApplication()->getOgreRoot()->addFrameListener(this);
+}
+
+void VSC::OB::DisplayController::shutdown(void)
+{
+    Application::singletonApplication()->getOgreRoot()->removeFrameListener(this);
 }
 
 // -------------------------------------------------------------------------
@@ -105,6 +118,8 @@ bool VSC::OB::DisplayController::keyPressed(Ogre::RenderWindow* renderWindow, OI
     
 }
 
+
+
 // -------------------------------------------------------------------------
 bool VSC::OB::DisplayController::keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key)
 {
@@ -167,8 +182,21 @@ bool VSC::OB::DisplayController::keyReleased(Ogre::RenderWindow* renderWindow, O
     return InterfaceResponder::keyReleased(renderWindow, key);
 }
 
-bool VSC::OB::DisplayController::frameStarted(Ogre::Real elapsedTime)
+bool VSC::OB::DisplayController::contextChanged(Ogre::RenderWindow* renderWindow)
 {
+    if (this->getDisplay())
+    {
+        this->getDisplay()->resetCameraAspectRatio();
+    }
+    
+    return false;
+}
+
+//MARK: - Ogre::FrameListener
+
+bool VSC::OB::DisplayController::frameStarted(const Ogre::FrameEvent& evt)
+{
+    Ogre::Real elapsedTime = evt.timeSinceLastFrame;
 
     if (mTraceFrame) std::cout << "VSC::OB::DisplayController frameStarted" << std::endl;
     
@@ -203,7 +231,7 @@ bool VSC::OB::DisplayController::frameStarted(Ogre::Real elapsedTime)
         if (mCameraMovement & CameraMovementLeft)       trans += Ogre::Vector3(-mCameraSpeed, 0, 0);
         if (mCameraMovement & CameraMovementRight)      trans += Ogre::Vector3(mCameraSpeed, 0, 0);
         
-        camera->moveRelative(trans);
+        camera->moveRelative(trans*elapsedTime);
     }
     
     return true;

@@ -17,7 +17,6 @@
 @interface VSCOSXEnvironmentWindowController : NSWindowController
 
 @property (nonatomic, strong) IBOutlet VSCOBOSXSceneDisplayView* sceneView;
-@property (nonatomic, strong) IBOutlet NSPopUpButton* scenePopUpButton;
 
 @property (nonatomic, assign) VSC::Environment::SPtr environment;
 

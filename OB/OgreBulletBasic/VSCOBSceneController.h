@@ -41,12 +41,6 @@ namespace VSC {
             virtual void shutdown();
 
             /**--------------------------------------------------------------
-             *  Ogre Frame Listener Forwarded messages from Application 
-             */
-            //virtual bool frameStarted(Ogre::Real elapsedTime);
-            //virtual bool frameEnded(Ogre::Real elapsedTime);
-
-            /**--------------------------------------------------------------
              *  Dynamic actions
              */
             bool throwDynamicObjectPrimitive(Ogre::RenderWindow* renderWindow,

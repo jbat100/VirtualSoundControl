@@ -60,7 +60,6 @@
 		105CDA25162D9DBF00532AD0 /* Plugins_d.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 105CDA22162D9DBF00532AD0 /* Plugins_d.cfg */; };
 		105CDA26162D9DBF00532AD0 /* Plugins.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 105CDA23162D9DBF00532AD0 /* Plugins.cfg */; };
 		105CDA27162D9DBF00532AD0 /* resources.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 105CDA24162D9DBF00532AD0 /* resources.cfg */; };
-		105CDA3C162DA03500532AD0 /* VSCGlobalApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA3A162DA03500532AD0 /* VSCGlobalApplication.cpp */; };
 		105CDA51162DA9A600532AD0 /* VSCOBOSXApplicationBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA49162DA9A500532AD0 /* VSCOBOSXApplicationBridge.mm */; };
 		105CDA52162DA9A600532AD0 /* VSCOBOSXInterfaceAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA4B162DA9A500532AD0 /* VSCOBOSXInterfaceAdapter.mm */; };
 		105CDA53162DA9A600532AD0 /* VSCOBOSXSceneDisplayView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA4D162DA9A600532AD0 /* VSCOBOSXSceneDisplayView.mm */; };
@@ -129,6 +128,7 @@
 		10EB5E5E16298E0B00E0F030 /* VSCOSXApplicationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10EB5E5D16298E0B00E0F030 /* VSCOSXApplicationManager.mm */; };
 		10EB5E621629902500E0F030 /* VSCOSXMIDIWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10EB5E611629902500E0F030 /* VSCOSXMIDIWindow.xib */; };
 		10ED088A1601CD8900053C07 /* VSCBound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10ED08881601CD8900053C07 /* VSCBound.cpp */; };
+		10EE8847163842F100A1902B /* VSCGlobalApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA3A162DA03500532AD0 /* VSCGlobalApplication.cpp */; };
 		10EF8DAC1626CBB700EB8FDE /* VSCTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10EF8DA81626CBB700EB8FDE /* VSCTask.cpp */; };
 		10EF8DAD1626CBB700EB8FDE /* VSCTaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10EF8DAA1626CBB700EB8FDE /* VSCTaskQueue.cpp */; };
 		10EF8DB31627228C00EB8FDE /* VSCMIDITasks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10EF8DB11627228C00EB8FDE /* VSCMIDITasks.cpp */; };
@@ -1318,7 +1318,6 @@
 				105CDA1D162D9D6F00532AD0 /* VSCOBScene.cpp in Sources */,
 				105CDA1E162D9D6F00532AD0 /* VSCOBSceneController.cpp in Sources */,
 				105CDA20162D9D6F00532AD0 /* VSCOBStaticObject.cpp in Sources */,
-				105CDA3C162DA03500532AD0 /* VSCGlobalApplication.cpp in Sources */,
 				105CDA51162DA9A600532AD0 /* VSCOBOSXApplicationBridge.mm in Sources */,
 				105CDA52162DA9A600532AD0 /* VSCOBOSXInterfaceAdapter.mm in Sources */,
 				105CDA53162DA9A600532AD0 /* VSCOBOSXSceneDisplayView.mm in Sources */,
@@ -1327,6 +1326,7 @@
 				10F907D8162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp in Sources */,
 				103203481632BBE7006ED4FF /* VSCEnvironment.cpp in Sources */,
 				1032034B16346495006ED4FF /* VSCOBResourceManager.cpp in Sources */,
+				10EE8847163842F100A1902B /* VSCGlobalApplication.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
