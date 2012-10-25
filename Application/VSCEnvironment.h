@@ -4,6 +4,7 @@
 
 #include "VSCOBScene.h"
 #include "VSCIMCollisionMapper.h"
+#include "VSCIMCollisionActionChain.h"
 
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
@@ -44,9 +45,14 @@ namespace VSC {
         void setIMCollisionMapper(IM::CollisionMapper::SPtr mapper);
         void setOBScene(OB::Scene::SPtr scene);
         
+        void addCollisionActionChain(IM::CollisionActionChain::SPtr actionChain);
+        void removeCollisionActionChain(IM::CollisionActionChain::SPtr actionChain);
+        
+        const IM::CollisionActionChains& getCollisionActionChains(void) {return mIMCollisionActionChains};
+        
     protected:
         
-        Environment(GlobalApplication_SPtr globalApplication);
+        Environment();
         
         void init() {mState = StateValid; internalInit();}
         void shutdown() {internalShutdown(); mState = StateInvalid;}
@@ -58,8 +64,8 @@ namespace VSC {
         
         OB::Scene::SPtr             mOBScene;
         IM::CollisionMapper::SPtr   mIMCollisionMapper;
-        
-        GlobalApplication_WPtr      mGlobalApplication;
+
+        IM::CollisionActionChains   mIMCollisionActionChains;
         
         State                       mState;
   

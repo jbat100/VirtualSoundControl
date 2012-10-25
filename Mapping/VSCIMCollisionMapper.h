@@ -7,9 +7,13 @@
 #define _VSC_IM_COLLISION_MAPPER_H_
 
 #include "VSCOBScene.h"
+#include "VSCIMCollisionAction.h"
+#include "VSCIMCollisionActionChain.h"
 
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
+
+#include <map>
 
 namespace VSC {
     
@@ -22,6 +26,19 @@ namespace VSC {
             typedef boost::shared_ptr<CollisionMapper>    SPtr;
             typedef boost::weak_ptr<CollisionMapper>      WPtr;
             
+            /**
+             *  Action Chains
+             */
+            
+            void addActionChainForSceneElement(CollisionActionChain::SPtr actionChain, OB::Scene::Element::SPtr element);
+            void removeActionChainForSceneElement(CollisionActionChain::SPtr actionChain, OB::Scene::Element::SPtr element);
+            
+            const CollisionActionChains& getActionChainsForSceneElement(OB::Scene::Element::SPtr element);
+            
+            /**
+             *  Scene::CollisionListener
+             */
+            
             virtual void collisionProspectDetected(OB::Scene::Collision::SPtr collision);
             virtual void collisionProspectUpdated(OB::Scene::Collision::SPtr collision);
             virtual void collisionProspectEnded(OB::Scene::Collision::SPtr collision);
@@ -31,6 +48,10 @@ namespace VSC {
             virtual void collisionEnded(OB::Scene::Collision::SPtr collision);
             
         private:
+            
+            typedef std::map<OB::Scene::Element::SPtr, CollisionActionChains> CollisionActionChainMap;
+            
+            CollisionActionChainMap     mCollisionActionChainMap;
             
             static const bool mTraceCollisions = true;
             

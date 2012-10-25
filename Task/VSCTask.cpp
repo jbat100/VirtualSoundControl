@@ -12,6 +12,12 @@
 #include <boost/assert.hpp>
 #include <boost/thread.hpp>
 
+std::ostream& VSC::operator << (std::ostream& stream, const Task& task)
+{
+    stream << "VSC::Task with execution start time: " << task.getExecutionStartTime() << std::endl;
+    return stream;
+}
+
 VSC::Task::Task(const Time& executionStartTime, Payload::SPtr payload) :
 mExecutionStartTime(executionStartTime),
 mPayload(payload),

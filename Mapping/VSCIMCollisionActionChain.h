@@ -39,6 +39,8 @@ namespace VSC {
             CollisionActions    mActions;
             
         };
+        
+        typedef std::vector<CollisionActionChain::SPtr> CollisionActionChains;
 
     }
     

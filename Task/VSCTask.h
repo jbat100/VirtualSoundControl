@@ -79,6 +79,8 @@ namespace VSC {
     
     typedef std::list<Task::SPtr> Tasks;
     
+    std::ostream& operator << (std::ostream& stream, const Task& task);
+    
 }
 
 #endif

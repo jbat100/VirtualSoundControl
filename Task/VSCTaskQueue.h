@@ -75,6 +75,8 @@ namespace VSC {
         boost::thread   mInternalThread;
         boost::mutex    mMutex;
         
+        const static bool   mTraceQueue = true;
+        const static bool   mTraceExecution = true;
     };
     
 }

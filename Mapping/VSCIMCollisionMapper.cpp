@@ -8,6 +8,21 @@
 
 #include "VSCIMCollisionMapper.h"
 
+void VSC::IM::CollisionMapper::addActionChainForSceneElement(CollisionActionChain::SPtr actionChain, OB::Scene::Element::SPtr element)
+{
+    
+}
+
+void VSC::IM::CollisionMapper::removeActionChainForSceneElement(CollisionActionChain::SPtr actionChain, OB::Scene::Element::SPtr element)
+{
+    
+}
+
+const VSC::IM::CollisionActionChains& VSC::IM::CollisionMapper::getActionChainsForSceneElement(OB::Scene::Element::SPtr element)
+{
+    
+}
+
 void VSC::IM::CollisionMapper::collisionProspectDetected(OB::Scene::Collision::SPtr collision)
 {
     //if (mTraceCollisions) std::cout << "Collision prospect detected: " << *collision << std::endl;
