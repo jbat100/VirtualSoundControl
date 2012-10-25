@@ -19,6 +19,8 @@
 #include "VSCOBApplication.h"
 #include "VSCOBResourceManager.h"
 
+#include "VSCIMCollisionMapper.h"
+
 #include "VSCMIDI.h"
 #include "VSCMIDIOutput.h"
 #include "VSCMIDIOutputManager.h"
@@ -89,6 +91,8 @@
     VSC::Environment::SPtr environment = globalApplication->createEnvironment<VSC::Environment>();
     VSC::OB::Scene::SPtr scene = obApplication->createScene<VSC::OB::Scene>();
     environment->setOBScene(scene);
+    VSC::IM::CollisionMapper::SPtr collisionMapper = VSC::IM::CollisionMapper::SPtr(new VSC::IM::CollisionMapper);
+    environment->setIMCollisionMapper(collisionMapper);
     
     self.environmentWindowController.environment = environment;
     
@@ -100,6 +104,8 @@
 - (void)applicationWillTerminate:(NSNotification *)aNotification 
 {
     [self.applicationManager stopOgreRendering];
+    
+    VSC::OB::Application::singletonApplication()->shutdown();
     
 }
 

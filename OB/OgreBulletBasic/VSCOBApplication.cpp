@@ -60,27 +60,7 @@ mTestWindow(0)
 // -------------------------------------------------------------------------
 VSC::OB::Application::~Application()
 {
-    BOOST_FOREACH(Display::SPtr display, mDisplays)
-    {
-        display->shutdown();
-        display->destroyRenderWindow();
-    }
-    mDisplays.clear();
-    
-    BOOST_FOREACH(Scene::SPtr scene, mScenes)
-    {
-        scene->shutdown();
-    }
-    mScenes.clear();
-    
-    if (mRoot && mTestWindow)
-    {
-        mRoot->destroyRenderTarget(mTestWindow);
-        mTestWindow = 0;
-    }
-    
-    if (mRoot)
-        OGRE_DELETE mRoot;
+    shutdown();
 }
 
 VSC::OB::Scene::SPtr VSC::OB::Application::sceneWithName(Ogre::String name)
@@ -126,6 +106,27 @@ bool VSC::OB::Application::init(ResourceManager::SPtr resourceManager)
     return true;
 }
 
+void VSC::OB::Application::shutdown(void)
+{
+    BOOST_FOREACH(Display::SPtr display, mDisplays)
+    {
+        display->shutdown();
+        display->destroyRenderWindow();
+    }
+    mDisplays.clear();
+    
+    BOOST_FOREACH(Scene::SPtr scene, mScenes)
+    {
+        scene->shutdown();
+    }
+    mScenes.clear();
+    
+    if (mRoot)
+    {
+        OGRE_DELETE mRoot;
+        mRoot = 0;
+    }
+}
 
 
 void VSC::OB::Application::destroyScene(Scene::SPtr scene)

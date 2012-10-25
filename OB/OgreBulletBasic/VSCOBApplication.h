@@ -62,6 +62,8 @@ namespace VSC {
             
             bool init(ResourceManager::SPtr resourceManager); // call init before doing anything
             
+            void shutdown();
+            
             /*------------------------------------------------------
              *  Resource Manager
              */

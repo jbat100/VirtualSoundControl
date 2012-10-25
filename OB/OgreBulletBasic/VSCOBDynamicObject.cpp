@@ -30,15 +30,21 @@ void VSC::OB::DynamicObject::destroy(void)
 {
     Scene::Element::destroy(); // call base destroy() !!!
     
-    Scene::SPtr scene = this->getScene().lock();
-    if (scene) {
-        scene->getSceneManager()->destroyEntity(mEntity);
+    Ogre::SceneNode *node = dynamic_cast<Ogre::SceneNode*>(mEntity->getParentNode());
+    if (node)
+    {
+        node->detachObject(mEntity);
+        BOOST_ASSERT_MSG (node->getParent(), "Expected parent node");
+        Ogre::SceneNode *parentNode = dynamic_cast <Ogre::SceneNode*>(node->getParent());
+        if (parentNode) parentNode->removeAndDestroyChild(node->getName());
     }
     
-    Ogre::SceneNode *node = static_cast<Ogre::SceneNode*>(mEntity->getParentNode());
-    node->detachObject(mEntity);
-    BOOST_ASSERT_MSG (node->getParent(), "Expected parent node");
-    static_cast <Ogre::SceneNode*>(node->getParent())->removeAndDestroyChild(node->getName());
+    Scene::SPtr scene = this->getScene().lock();
+    if (scene)
+    {
+        scene->getSceneManager()->destroyEntity(mEntity);
+    }
+
     mEntity = 0;
 }
 

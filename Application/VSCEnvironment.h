@@ -41,8 +41,8 @@ namespace VSC {
         OB::Scene::SPtr             getOBScene(void) {return mOBScene;}
         IM::CollisionMapper::SPtr   getIMCollisionMapper(void) {return mIMCollisionMapper;}
         
-        void setIMCollisionMapper(IM::CollisionMapper::SPtr mapper) {mIMCollisionMapper = mapper;}
-        void setOBScene(OB::Scene::SPtr scene) {mOBScene = scene;}
+        void setIMCollisionMapper(IM::CollisionMapper::SPtr mapper);
+        void setOBScene(OB::Scene::SPtr scene);
         
     protected:
         
