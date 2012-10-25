@@ -24,7 +24,7 @@ namespace VSC {
             typedef boost::weak_ptr<DisplayController>      WPtr;
 
             enum CameraMovement {
-                CameraMovementNone = 0,
+                CameraMovementNone      = 0,
                 CameraMovementForward   = 1<<0,
                 CameraMovementBackward  = 1<<1,
                 CameraMovementLeft      = 1<<2,
@@ -94,8 +94,8 @@ namespace VSC {
             Float                               mMouseSensitivity;
             Float                               mCameraSpeed;
             
-            const static bool                   mTraceUI = false;
-            const static bool                   mTraceFrame = false;
+            const static bool                   mTraceUI = true;
+            const static bool                   mTraceFrame = true;
             
         };
         

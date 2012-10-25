@@ -42,7 +42,7 @@ namespace VSC {
             virtual ~Display();
             
             /*
-             *  Init and shutdown are not virtual but will call virtual functions
+             *  Setup and shutdown are not virtual but will call virtual functions
              */
             
             void setupWithScene(Scene_SPtr scene);

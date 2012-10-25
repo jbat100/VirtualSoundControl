@@ -32,7 +32,7 @@ void VSC::OB::Application::setDisplayRenderWindow(Display::SPtr display, Ogre::R
 }
 
 boost::once_flag applicationSingletonInitilizedFlag = BOOST_ONCE_INIT;
-VSC::OB::Application::SPtr VSC::OB::Application::mSingletonApplication;
+VSC::OB::Application::SPtr mSingletonApplication;
 
 void VSC::OB::Application::InitialiseSingletonApplication()
 {
@@ -50,13 +50,35 @@ VSC::OB::Application::SPtr VSC::OB::Application::singletonApplication(void)
 
 VSC::OB::Application::Application() :
 mRoot(0),
-mInitialised(false)
+mInitialised(false),
+mCreatedDisplay(false),
+mResourcesLoaded(false),
+mTestWindow(0)
 {
 
 }
 // -------------------------------------------------------------------------
 VSC::OB::Application::~Application()
-{ 
+{
+    BOOST_FOREACH(Display::SPtr display, mDisplays)
+    {
+        display->shutdown();
+        display->destroyRenderWindow();
+    }
+    mDisplays.clear();
+    
+    BOOST_FOREACH(Scene::SPtr scene, mScenes)
+    {
+        scene->shutdown();
+    }
+    mScenes.clear();
+    
+    if (mRoot && mTestWindow)
+    {
+        mRoot->destroyRenderTarget(mTestWindow);
+        mTestWindow = 0;
+    }
+    
     if (mRoot)
         OGRE_DELETE mRoot;
 }
@@ -89,8 +111,15 @@ bool VSC::OB::Application::init(ResourceManager::SPtr resourceManager)
     mRoot = mBridge->createOgreRoot();
     BOOST_ASSERT(mRoot);
     
+    /*
+     *  Enfore the creation of a render window to complete ogre setup process
+     */
+    //mTestWindow = mRoot->createRenderWindow("TestWindow", 10, 10, false);
+    
     mResourceManager->setupResources();
-    mResourceManager->loadResources();
+    
+    // Need to wait until after a render window is created
+    //mResourceManager->loadResources();
     
     mInitialised = true;
     

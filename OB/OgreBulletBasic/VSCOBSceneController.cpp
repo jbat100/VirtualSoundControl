@@ -102,12 +102,16 @@ void VSC::OB::SceneController::shutdown()
 {
     Scene::SPtr s = this->getScene();
     
-    BOOST_ASSERT(this->getScene());
+    //BOOST_ASSERT(this->getScene());
     
     if (s)
     {
         s->getSceneManager()->destroyQuery(mRayQuery);
         mRayQuery = 0;
+    }
+    else
+    {
+        BOOST_ASSERT(mRayQuery == 0);
     }
     
 }
@@ -122,132 +126,137 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
     if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed : " << position << " (" << buttonID << ")" << std::endl;
     
     Scene::SPtr scene = this->getScene();
-    BOOST_ASSERT(scene);
-    Display::SPtr display = scene->getApplication()->getDisplayWithRenderWindow(renderWindow);
     
-    switch (buttonID) 
+    if (scene)
     {
-        case OIS::MB_Left:
+        
+        Display::SPtr display = Application::singletonApplication()->getDisplayWithRenderWindow(renderWindow);
+        
+        switch (buttonID)
         {
-            if (!display) break;
-            
-            // pick a body and try to drag it.
-            Ogre::Vector3 pickPos;
-            Ogre::Ray rayTo;
-            
-            /*
-             *  Note this does not take into account the fact that one render window can contain multiple viewports
-             *  and happily converts renderWindow coord to viewport coord directly.
-             */
-            
-            Ogre::Viewport* v = display->getCamera()->getViewport();
-            
-            Ogre::Vector2 pos = position;
-            Ogre::Vector2 normPos = Ogre::Vector2( pos.x / v->getActualWidth(), 1.0 - (pos.y / v->getActualHeight()) );
-            
-            Scene::Element::SPtr element = scene->getElementAtDisplayCoordinate(display, normPos, pickPos, rayTo);
-            
-            if (element)
+            case OIS::MB_Left:
             {
-                if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed Left button, detected element" << std::endl;
+                if (!display) break;
                 
-                OgreBulletDynamics::RigidBody* body = element->getRigidBody();
+                // pick a body and try to drag it.
+                Ogre::Vector3 pickPos;
+                Ogre::Ray rayTo;
                 
-                if (!body->isStaticObject())
+                /*
+                 *  Note this does not take into account the fact that one render window can contain multiple viewports
+                 *  and happily converts renderWindow coord to viewport coord directly.
+                 */
+                
+                Ogre::Viewport* v = display->getCamera()->getViewport();
+                
+                Ogre::Vector2 pos = position;
+                Ogre::Vector2 normPos = Ogre::Vector2( pos.x / v->getActualWidth(), 1.0 - (pos.y / v->getActualHeight()) );
+                
+                Scene::Element::SPtr element = scene->getElementAtDisplayCoordinate(display, normPos, pickPos, rayTo);
+                
+                if (element)
                 {
-                    mPickedBody = body;
-                    mPickedBody->disableDeactivation();
+                    if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed Left button, detected element" << std::endl;
                     
-                    const Ogre::Vector3 localPivot (body->getCenterOfMassPivot(pickPos));
+                    OgreBulletDynamics::RigidBody* body = element->getRigidBody();
                     
-                    OgreBulletDynamics::PointToPointConstraint *p2p  = new OgreBulletDynamics::PointToPointConstraint(body, localPivot);
-                    scene->getDynamicsWorld()->addConstraint(p2p);
-                    
-                    //save mouse position for dragging
-                    mOldPickingPosition = pickPos;
-                    const Ogre::Vector3 eyePos(display->getCamera()->getDerivedPosition());
-                    mOldPickingDistance = (pickPos - eyePos).length();
-                    
-                    if (mTraceUI) {
-                        std::cout << "VSC::OB::SceneController::mouseButtonPressed picked body " << mPickedBody;
-                        std::cout << " at distance " << mOldPickingDistance << std::endl;
+                    if (!body->isStaticObject())
+                    {
+                        mPickedBody = body;
+                        mPickedBody->disableDeactivation();
+                        
+                        const Ogre::Vector3 localPivot (body->getCenterOfMassPivot(pickPos));
+                        
+                        OgreBulletDynamics::PointToPointConstraint *p2p  = new OgreBulletDynamics::PointToPointConstraint(body, localPivot);
+                        scene->getDynamicsWorld()->addConstraint(p2p);
+                        
+                        //save mouse position for dragging
+                        mOldPickingPosition = pickPos;
+                        const Ogre::Vector3 eyePos(display->getCamera()->getDerivedPosition());
+                        mOldPickingDistance = (pickPos - eyePos).length();
+                        
+                        if (mTraceUI) {
+                            std::cout << "VSC::OB::SceneController::mouseButtonPressed picked body " << mPickedBody;
+                            std::cout << " at distance " << mOldPickingDistance << std::endl;
+                        }
+                        
+                        //very weak constraint for picking
+                        p2p->setTau(0.1f);
+                        mPickConstraint = p2p;
+                        
                     }
                     
-                    //very weak constraint for picking
-                    p2p->setTau(0.1f);
-                    mPickConstraint = p2p;
+                    scene->getDebugLines()->addLine(rayTo.getOrigin(), pickPos);
+                    scene->getDebugLines()->draw();
                     
                 }
                 
-                scene->getDebugLines()->addLine(rayTo.getOrigin(), pickPos);
-                scene->getDebugLines()->draw();
-                
-            }
-            
-            else
-            {
-                if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed Left button, detected no element" << std::endl;
-            }
-            
-            return true;
-            
-        }
-            
-        case OIS::MB_Middle:
-        {
-            if (!display) break;
-            
-            // small unique impulse under cursor.
-            Ogre::Vector3 pickPos;
-            Ogre::Ray rayTo;
-            
-            /*
-             *  Note this does not take into account the fact that one render window can contain multiple viewports
-             *  and happily converts renderWindow coord to viewport coord directly.
-             */
-            
-            Ogre::Viewport* v = display->getCamera()->getViewport();
-            Ogre::Vector2 pos = position;
-            
-            Scene::Element::SPtr element = scene->getElementAtDisplayCoordinate(display, pos, pickPos, rayTo);
-            
-            if (element)
-            {
-                if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed Left button, detected element" << std::endl;
-                
-                OgreBulletDynamics::RigidBody* body = element->getRigidBody();
-                
-                if (!(body->isStaticObject() || body->isKinematicObject()))
+                else
                 {
-                    
-                    body->enableActiveState ();
-                    
-                    const Ogre::Vector3 relPos (pickPos - body->getCenterOfMassPosition());
-                    const Ogre::Vector3 impulse (rayTo.getDirection ());
-                    
-                    body->applyImpulse (impulse * mImpulseForce, relPos);		
-                    
+                    if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed Left button, detected no element" << std::endl;
                 }
                 
-                scene->getDebugLines()->addLine(rayTo.getOrigin(), pickPos);
-                scene->getDebugLines()->draw();	
+                return true;
+                
             }
-            
-            return true;
-        }
-            
-
-        case OIS::MB_Right:
-        {
-            break;
-        }
-            
-        default:
-        {
-            if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed unknown mouse button pressed " << buttonID << std::endl;
-            break;
+                
+            case OIS::MB_Middle:
+            {
+                if (!display) break;
+                
+                // small unique impulse under cursor.
+                Ogre::Vector3 pickPos;
+                Ogre::Ray rayTo;
+                
+                /*
+                 *  Note this does not take into account the fact that one render window can contain multiple viewports
+                 *  and happily converts renderWindow coord to viewport coord directly.
+                 */
+                
+                Ogre::Viewport* v = display->getCamera()->getViewport();
+                Ogre::Vector2 pos = position;
+                
+                Scene::Element::SPtr element = scene->getElementAtDisplayCoordinate(display, pos, pickPos, rayTo);
+                
+                if (element)
+                {
+                    if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed Left button, detected element" << std::endl;
+                    
+                    OgreBulletDynamics::RigidBody* body = element->getRigidBody();
+                    
+                    if (!(body->isStaticObject() || body->isKinematicObject()))
+                    {
+                        
+                        body->enableActiveState ();
+                        
+                        const Ogre::Vector3 relPos (pickPos - body->getCenterOfMassPosition());
+                        const Ogre::Vector3 impulse (rayTo.getDirection ());
+                        
+                        body->applyImpulse (impulse * mImpulseForce, relPos);
+                        
+                    }
+                    
+                    scene->getDebugLines()->addLine(rayTo.getOrigin(), pickPos);
+                    scene->getDebugLines()->draw();	
+                }
+                
+                return true;
+            }
+                
+                
+            case OIS::MB_Right:
+            {
+                break;
+            }
+                
+            default:
+            {
+                if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed unknown mouse button pressed " << buttonID << std::endl;
+                break;
+            }
         }
     }
+    
     
     return VSC::OB::InterfaceResponder::mouseButtonPressed(renderWindow, position, buttonID);
 }
@@ -321,7 +330,7 @@ bool VSC::OB::SceneController::mouseMoved(Ogre::RenderWindow* renderWindow,
     
     Scene::SPtr scene = this->getScene();
     BOOST_ASSERT(scene);
-    Display::SPtr display = scene->getApplication()->getDisplayWithRenderWindow(renderWindow);
+    Display::SPtr display = Application::singletonApplication()->getDisplayWithRenderWindow(renderWindow);
     
     InterfaceAdapter::SPtr adapter = this->getInterfaceAdapter();
     
@@ -392,8 +401,13 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
     static int count = 0;
     
     Scene::SPtr scene = this->getScene();
-    BOOST_ASSERT(scene);
-    Display::SPtr display = scene->getApplication()->getDisplayWithRenderWindow(renderWindow);
+    //BOOST_ASSERT(scene);
+    if (!scene) {
+        if (mTraceUI) std::cout << "VSC::OB::SceneController has no scene!" << std::endl;
+        return VSC::OB::InterfaceResponder::keyPressed(renderWindow, key);
+    }
+    
+    Display::SPtr display = Application::singletonApplication()->getDisplayWithRenderWindow(renderWindow);
     
     InterfaceAdapter::SPtr inputAdapter = this->getInterfaceAdapter();
     
@@ -569,16 +583,17 @@ bool VSC::OB::SceneController::keyReleased(Ogre::RenderWindow* renderWindow, OIS
 bool VSC::OB::SceneController::contextChanged(Ogre::RenderWindow* renderWindow)
 {
     Scene::SPtr scene = this->getScene();
-    BOOST_ASSERT(scene);
-    Display::SPtr display = scene->getApplication()->getDisplayWithRenderWindow(renderWindow);
-    
-    if (display)
-    {
-        display->resetCameraAspectRatio();
-        return true;
+
+    if (!scene) {
+        if (mTraceUI) std::cout << "VSC::OB::SceneController::contextChanged has no scene!" << std::endl;
+        Display::SPtr display = Application::singletonApplication()->getDisplayWithRenderWindow(renderWindow);
+        if (display)
+        {
+            display->resetCameraAspectRatio();
+        }
     }
     
-    return false;
+    return VSC::OB::InterfaceResponder::contextChanged(renderWindow);
 }
 
 // -------------------------------------------------------------------------
@@ -593,7 +608,7 @@ bool VSC::OB::SceneController::throwDynamicObjectPrimitive(Ogre::RenderWindow* r
     
     Scene::SPtr scene = this->getScene();
     BOOST_ASSERT(scene);
-    Display::SPtr display = scene->getApplication()->getDisplayWithRenderWindow(renderWindow);
+    Display::SPtr display = Application::singletonApplication()->getDisplayWithRenderWindow(renderWindow);
     BOOST_ASSERT(scene == display->getScene());
     if (scene != display->getScene()) return false;
     

@@ -422,6 +422,8 @@ void VSC::InterfaceAdapter<Context, Vector2>::ResponderChain::chainSceneControll
         typename Responder::SPtr responder = (*it);
         typename Responder::SPtr nextResponder = (*nextIt);
         responder->setNextResponder(nextResponder);
+        ++nextIt;
+        ++it;
     }
 }
 

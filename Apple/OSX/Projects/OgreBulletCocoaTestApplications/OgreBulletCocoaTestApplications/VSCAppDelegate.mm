@@ -11,6 +11,7 @@
 #import "VSCOSXApplicationManager.h"
 #import "VSCOSXEnvironmentWindowController.h"
 #import "VSCOSXMIDIWindowController.h"
+#import "VSCOBOSXSceneDisplayView.h"
 
 #include "VSCGlobalApplication.h"
 
@@ -41,7 +42,7 @@
 {
     VSC::GlobalApplication::SPtr globalApplication = VSC::GlobalApplication::singletonGlobalApplication();
     
-    std::string resourcePath = Ogre::macBundlePath() + "/Contents/Resources/";
+    std::string resourcePath = Ogre::macBundlePath() + "/Contents/Resources/resources.cfg";
     
     VSC::OB::ResourceManager::SPtr resourceManager = VSC::OB::ResourceManager::SPtr(new VSC::OB::ResourceManager(resourcePath));
     VSC::OB::Application::SPtr obApplication = VSC::OB::Application::singletonApplication();
@@ -54,8 +55,15 @@
     self.applicationManager = [[VSCOSXApplicationManager alloc] init];
     BOOST_ASSERT(self.applicationManager);
 
-    self.environmentWindowController = [[VSCOSXEnvironmentWindowController alloc] initWithWindowNibName:@"VSCOBOSXSceneWindow"];
+    self.environmentWindowController = [[VSCOSXEnvironmentWindowController alloc]
+                                        initWithWindowNibName:@"VSCOSXEnvironmentWindow"];
     BOOST_ASSERT(self.environmentWindowController);
+    
+    // create window to force a display + render windoe creation
+    //[self.environmentWindowController loadWindow]; // docs says not to invoke this method
+    NSWindow* w = self.environmentWindowController.window; // does not force creation
+    BOOST_ASSERT(w);
+    BOOST_ASSERT(self.environmentWindowController.sceneView.display.lock());
     
     self.midiWindowController = [[VSCOSXMIDIWindowController alloc] initWithWindowNibName:@"VSCOSXMIDIWindow"];
     BOOST_ASSERT(self.midiWindowController);

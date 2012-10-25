@@ -85,6 +85,25 @@ class VSCNotImplementedException : public VSCBaseException
     }
 };
 
+
+#pragma mark Bad State
+
+/*------------------------------------------------------------------------------------
+ *	Used when call is made in unexpected state
+ */
+class VSCBadStateException : public VSCBaseException
+{
+    
+public:
+    
+    VSCBadStateException(std::string additionalInfo) : VSCBaseException(additionalInfo) {}
+    
+    virtual const char* what() const throw()
+    {
+        return "Bad State";
+    }
+};
+
 #pragma mark Internal Inconsistency Exception
 
 /*------------------------------------------------------------------------------------

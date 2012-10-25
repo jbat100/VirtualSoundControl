@@ -397,23 +397,24 @@ void VSC::OB::Scene::CollisionDetector::removeCollision(Collision::SPtr collisio
 
 //MARK: - Basic Constructor which does abolutely nothing interesting at all
 
-VSC::OB::Scene::Scene(Application::SPtr application) :
+VSC::OB::Scene::Scene() :
 mSceneManager(0),
 mDynamicsWorld(0),
 mPaused(false),
 mDebugLines(0)
 {
-    if (!application) throw VSCInvalidArgumentException("Scene constructor needs application");
-    mApplication = Application::WPtr(application);
+
 }
 
 void VSC::OB::Scene::createSceneManager(void)
 {
-    BOOST_ASSERT(this->getApplication()->getOgreRoot());
-    if(!this->getApplication()->getOgreRoot()) return;
+    
+    BOOST_ASSERT(Application::singletonApplication()->getOgreRoot());
+    if(!Application::singletonApplication()->getOgreRoot()) return;
     
     // Create the SceneManager, in this case a generic one
-    mSceneManager = this->getApplication()->getOgreRoot()->createSceneManager(ST_GENERIC, "ExampleSMInstance");
+    mSceneManager = Application::singletonApplication()->getOgreRoot()->createSceneManager(ST_GENERIC, "ExampleSMInstance");
+    BOOST_ASSERT(mSceneManager);
 }
 
 void VSC::OB::Scene::createDebugLines(void)
@@ -421,7 +422,7 @@ void VSC::OB::Scene::createDebugLines(void)
     BOOST_ASSERT(!mDebugLines);
     if (mDebugLines) return;
     
-    BOOST_ASSERT(!this->getSceneManager());
+    BOOST_ASSERT(this->getSceneManager());
     if (!this->getSceneManager()) return;
     
     mDebugLines = new OgreBulletCollisions::DebugLines();
@@ -431,7 +432,6 @@ void VSC::OB::Scene::createDebugLines(void)
 void VSC::OB::Scene::init()
 {
     this->createSceneManager();
-    BOOST_ASSERT(this->getSceneManager());
     if(!this->getSceneManager()) return;
     
     this->createDebugLines();
@@ -443,7 +443,7 @@ void VSC::OB::Scene::init()
      *  - Ogre::RenderWindow http://www.ogre3d.org/docs/api/html/classOgre_1_1RenderWindow.html
      */
     
-    Ogre::Root* root = this->getApplication()->getOgreRoot();
+    Ogre::Root* root = Application::singletonApplication()->getOgreRoot();
     Ogre::SceneManager* sceneManager = this->getSceneManager();
     
     BOOST_ASSERT(root);

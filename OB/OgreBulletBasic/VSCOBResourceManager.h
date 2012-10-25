@@ -47,6 +47,8 @@ namespace VSC {
             void loadResources();
             
             std::string mResourceFilePath;
+            
+            static const bool mTrace = true;
 
 
         };

@@ -5,7 +5,7 @@ void VSC::OB::ResourceManager::setupResources(void)
 {
     Ogre::ResourceGroupManager *rsm = Ogre::ResourceGroupManager::getSingletonPtr();
     
-    /*-------------------------------------------------------------------------------------*/
+    if (mTrace) std::cout << "VSC::OB::ResourceManager::setupResources with path " << mResourceFilePath << std::endl;
     
     // Load resource paths from config file
     Ogre::ConfigFile cf;
@@ -59,7 +59,6 @@ void VSC::OB::ResourceManager::setupResources(void)
 		}
 	}
     
-    Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
     
     this->internalSetupResources();
 }
@@ -67,6 +66,14 @@ void VSC::OB::ResourceManager::setupResources(void)
 
 void VSC::OB::ResourceManager::loadResources(void)
 {
+    /*
+     *  It looks like we need a window to be created before we can do this
+     */
+    
+    Ogre::TextureManager* textureManager = Ogre::TextureManager::getSingletonPtr();
+    if (mTrace) std::cout << "VSC::OB::ResourceManager::setupResources, texture manager is " << textureManager << std::endl;
+    textureManager->setDefaultNumMipmaps(5);
+    
     Ogre::ResourceGroupManager *rsm = Ogre::ResourceGroupManager::getSingletonPtr();
     
     rsm->initialiseAllResourceGroups(); // is this necessary given what follows ?

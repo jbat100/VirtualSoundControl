@@ -5,6 +5,7 @@
 #include "VSCOBScene.h"
 #include "VSCOBDisplay.h"
 #include "VSCOBResourceManager.h"
+#include "VSCException.h"
 
 #include <Ogre/Ogre.h>
 
@@ -65,7 +66,7 @@ namespace VSC {
              *  Resource Manager
              */
             
-            ResourceManager::SPtr getResourceManager(void);
+            ResourceManager::SPtr getResourceManager(void) {return mResourceManager;}
             
             /*------------------------------------------------------
              *  Scenes
@@ -110,7 +111,7 @@ namespace VSC {
         private:
             
             static void                     InitialiseSingletonApplication();
-            static Application::SPtr        mSingletonApplication;
+            //static Application::SPtr        mSingletonApplication;
             
             void                            setDisplayRenderWindow(Display::SPtr display, Ogre::RenderWindow* renderWindow);
             
@@ -122,7 +123,12 @@ namespace VSC {
             
             Ogre::Root*                     mRoot;
             
+            Ogre::RenderWindow*             mTestWindow;
+            
             bool                            mInitialised;
+            
+            bool                            mCreatedDisplay;
+            bool                            mResourcesLoaded;
             
             static const bool               mTraceUI = true;
             static const bool               mTraceFrame = false;
@@ -137,7 +143,12 @@ namespace VSC {
 template<typename SceneSubclass>
 VSC::OB::Scene::SPtr VSC::OB::Application::createScene()
 {
-    SceneSubclass* sceneSub = new SceneSubclass(shared_from_this());
+    if (!mCreatedDisplay)
+    {
+        throw VSCBadStateException("An Ogre RenderWindow must be created before VSC::Scene, create VSC::Display first!");
+    }
+    
+    SceneSubclass* sceneSub = new SceneSubclass();
     Scene* scene = dynamic_cast<Scene*>(sceneSub);
     BOOST_ASSERT(scene);
     
@@ -171,6 +182,15 @@ VSC::OB::Display::SPtr VSC::OB::Application::createDisplayWithView(void* view)
         Display::SPtr sDisplay = Display::SPtr(display);
         mBridge->setupDisplayWithView(sDisplay, view);
         mDisplays.push_back(sDisplay);
+        
+        if (!mResourcesLoaded)
+        {
+            this->getResourceManager()->loadResources();
+            mResourcesLoaded = true;
+        }
+        
+        mCreatedDisplay = true;
+        
         return sDisplay;
     }
     else

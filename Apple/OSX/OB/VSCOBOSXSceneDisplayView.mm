@@ -48,7 +48,10 @@ static const bool mTraceUI = false;
         self.interfaceResponderChain = VSC::OB::InterfaceResponderChain::SPtr(new VSC::OB::InterfaceResponderChain);
         
         self.sceneController = VSC::OB::SceneController::SPtr(new VSC::OB::SceneController);
+        self.sceneController->setOgreKeyBindings(keyBindings);
+        
         self.displayController = VSC::OB::DisplayController::SPtr(new VSC::OB::DisplayController);
+        self.displayController->setOgreKeyBindings(keyBindings);
         
         self.displayController->setupWithDisplay(self.display.lock());
         

@@ -8,10 +8,11 @@
 #include <boost/foreach.hpp>
 
 VSC::OB::DisplayController::DisplayController() :    
-mCameraSpeed (0.1f),
+mCameraSpeed (10.0f),
 mMouseSensitivity (0.13f),
 mCameraRotX (0.0),
-mCameraRotY (0.0)
+mCameraRotY (0.0),
+mCameraMovement(CameraMovementNone)
 {
 
 }
@@ -230,6 +231,8 @@ bool VSC::OB::DisplayController::frameStarted(const Ogre::FrameEvent& evt)
         if (mCameraMovement & CameraMovementBackward)   trans += Ogre::Vector3(0, 0, mCameraSpeed);
         if (mCameraMovement & CameraMovementLeft)       trans += Ogre::Vector3(-mCameraSpeed, 0, 0);
         if (mCameraMovement & CameraMovementRight)      trans += Ogre::Vector3(mCameraSpeed, 0, 0);
+        
+        if (mTraceUI) std::cout << "VSC::OB::DisplayController::frameStarted trans is " << trans << std::endl;
         
         camera->moveRelative(trans*elapsedTime);
     }

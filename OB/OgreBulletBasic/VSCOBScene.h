@@ -319,11 +319,6 @@ namespace VSC {
             virtual ~Scene() { /* shutdown(); // calling shutdown in destructor causes problems */  };
             
             /**--------------------------------------------------------------
-             *  Application
-             */
-            Application_SPtr getApplication(void) {return mApplication.lock();}
-            
-            /**--------------------------------------------------------------
              *  Factory and Element weak_ptr container
              */
             
@@ -441,7 +436,7 @@ namespace VSC {
             
         protected:
             
-            Scene(Application_SPtr application);
+            Scene();
             
             void init();
             void shutdown();
@@ -472,8 +467,6 @@ namespace VSC {
             virtual void createDebugLines(void);
             
         private:
-            
-            Application_WPtr                        mApplication;
             
             Bridge::SPtr                            mBridge;
             

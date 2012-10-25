@@ -80,9 +80,14 @@ void VSC::OB::Display::destroyCamera(void)
      *  Shutdown can be called when there is no camera/scene manager so no asserts
      */
     
-    if (this->getScene()->getSceneManager() && this->getCamera())
+    if (this->getScene() && this->getScene()->getSceneManager() && this->getCamera())
     {
         this->getScene()->getSceneManager()->destroyCamera(this->getCamera());
+    }
+    else if (this->getCamera() && (!this->getScene() || !this->getScene()->getSceneManager()))
+    {
+        // THIS SHOULD NOT HAPPEN... LEAAAK
+        BOOST_ASSERT(0);
     }
     
     this->setCamera(0);
@@ -92,6 +97,12 @@ void VSC::OB::Display::destroyRenderWindow(void)
 {
     if (this->getRenderWindow())
     {
+        std::cout << "VSC::OB::Display::destroyRenderWindow destroying " << this->getRenderWindow() << std::endl;
+        std::cout << "VSC::OB::Application::singletonApplication().get ";
+        std::cout << VSC::OB::Application::singletonApplication().get() << std::endl;
+        std::cout << "VSC::OB::Application::singletonApplication()->getOgreRoot() ";
+        std::cout << VSC::OB::Application::singletonApplication()->getOgreRoot() << std::endl;
+        
         VSC::OB::Application::singletonApplication()->getOgreRoot()->destroyRenderTarget(this->getRenderWindow());
     }
     
@@ -100,7 +111,7 @@ void VSC::OB::Display::destroyRenderWindow(void)
 
 bool VSC::OB::Display::resetCameraAspectRatio(void)
 {
-    BOOST_ASSERT(this->getCamera());
+    //BOOST_ASSERT(this->getCamera());
     if (!this->getCamera()) return false;
     
     Ogre::Viewport* vp = this->getCamera()->getViewport();
