@@ -638,7 +638,6 @@
 			children = (
 				104198F516171F2600D1742D /* VSCIMCollisionMapper.cpp */,
 				104198F616171F2600D1742D /* VSCIMCollisionMapper.h */,
-				10EF8DB0162721DA00EB8FDE /* Tasks */,
 				102671CB16258770002D34B2 /* Mappings */,
 				102671C6162583D6002D34B2 /* Actions */,
 			);
@@ -1140,13 +1139,6 @@
 				10EF8DAB1626CBB700EB8FDE /* VSCTaskQueue.h */,
 			);
 			name = Task;
-			sourceTree = "<group>";
-		};
-		10EF8DB0162721DA00EB8FDE /* Tasks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Tasks;
 			sourceTree = "<group>";
 		};
 		10F907CE162ECFE7006C9C0B /* Interface */ = {
