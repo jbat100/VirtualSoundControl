@@ -48,7 +48,7 @@ namespace VSC {
              *  which should not apply offset and scale factor
              */
             
-            virtual Float internalMappedValue(VSC::OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision) = 0;
+            virtual Float internalMappedValue(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision) = 0;
             
         private:
             
@@ -65,7 +65,7 @@ namespace VSC {
             
         protected:
             
-            virtual Float internalMappedValue(VSC::OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision) {return 0.0;}
+            virtual Float internalMappedValue(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision) {return 0.0;}
             
         };
         
@@ -78,7 +78,7 @@ namespace VSC {
             
         protected:
             
-            virtual Float internalMappedValue(VSC::OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision);
+            virtual Float internalMappedValue(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision);
             
         };
         
@@ -96,7 +96,7 @@ namespace VSC {
             
         protected:
             
-            virtual Float internalMappedValue(VSC::OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision);
+            virtual Float internalMappedValue(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision);
             
         private:
             

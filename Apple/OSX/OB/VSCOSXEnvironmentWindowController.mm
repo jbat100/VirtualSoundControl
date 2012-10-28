@@ -30,6 +30,8 @@
 
 @implementation VSCOSXEnvironmentWindowController
 
+@synthesize environment = _environment;
+
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
@@ -61,7 +63,7 @@
 
 #pragma mark - Custom Setters
 
-- (void) setEnvironment:(VSC::Environment::SPtr)environment
+- (void) setEnvironment:(VSC::Environment::WPtr)environment
 {
     _environment = environment;
     [self reloadInterface];
@@ -70,9 +72,9 @@
 
 -(void) reloadInterface
 {
-    if (self.environment)
+    if (self.environment.lock())
     {
-        self.sceneView.scene = self.environment->getOBScene();
+        self.sceneView.scene = self.environment.lock()->getOBScene();
     }
     else
     {

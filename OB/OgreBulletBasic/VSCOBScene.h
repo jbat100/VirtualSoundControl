@@ -381,13 +381,7 @@ namespace VSC {
             /*
              *  Provide access the elements which have been created by the factory.
              */
-            Elements& elements() {return mElements;}
-            
-            /*
-             *  Registering an element will add a shared_ptr to the element to the factory's private container
-             *  and will add a weak_ptr to the scenes private container
-             */
-            void registerElement(Scene::Element::SPtr element, std::string name, int identifier);
+            Elements& getElements() {return mElements;}
             
             /**--------------------------------------------------------------
              *  Collisions
@@ -465,6 +459,12 @@ namespace VSC {
             
             virtual void createSceneManager(void);
             virtual void createDebugLines(void);
+            
+            /*
+             *  Registering an element will add a shared_ptr to the element to the factory's private container
+             *  and will add a weak_ptr to the scenes private container
+             */
+            void registerElement(Scene::Element::SPtr element, std::string name, int identifier);
             
         private:
             

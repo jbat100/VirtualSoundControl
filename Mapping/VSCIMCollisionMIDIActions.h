@@ -10,6 +10,7 @@
 
 #include "VSCOBScene.h"
 #include "VSCIMCollisionMapping.h"
+#include "VSCIMCollisionMapped.h"
 #include "VSCIMCollisionAction.h"
 #include "VSCMIDIOutputChannel.h"
 
@@ -21,6 +22,8 @@ namespace VSC {
     
     namespace IM {
         
+        
+        
         /*
          *  A abstract class for all MIDI Actions
          */
@@ -29,81 +32,51 @@ namespace VSC {
             
         public:
             
-            class PitchMapped {
-                
-            public:
-                
-                CollisionMapping::SPtr setPitchMapping() {return mPitchMapping;}
-                void setPitchMapping(CollisionMapping::SPtr mapping) {mPitchMapping = mapping;}
-                
-            private:
-
-                CollisionMapping::SPtr  mPitchMapping;
-                
-            };
-            
-            class VelocityMapped {
-                
-            public:
-                
-                CollisionMapping::SPtr getVelocityMapping() {return mVelocityMapping;}
-                void setVelocityMapping(CollisionMapping::SPtr mapping) {mVelocityMapping = mapping;}
-                
-            private:
-                
-                CollisionMapping::SPtr  mVelocityMapping;
-                
-            };
-            
-            class DurationMapped {
-                
-            public:
-                
-                CollisionMapping::SPtr getDurationMapping() {return mDurationMapping;}
-                void setDurationMapping(CollisionMapping::SPtr mapping) {mDurationMapping = mapping;}
-                
-            private:
-                
-                CollisionMapping::SPtr  mDurationMapping;
-                
-            };
-            
             CollisionMIDIAction();
-            CollisionMIDIAction(MIDI::OutputChannel::SPtr outputChannel);
             
-            MIDI::OutputChannel::SPtr getOuputChannel(void) {return mOutputChannel;}
-            void setOutpitChannel(MIDI::OutputChannel::SPtr outputChannel) {mOutputChannel = outputChannel;}
+            MIDI::Output::SPtr getMIDIOuput(void) {return mMIDIOutput;}
+            void setMIDIOutput(MIDI::Output::SPtr output) {mMIDIOutput = output;}
+            
+            unsigned int getChannel(void) {return mChannel;}
+            void setChannel(unsigned int chan) {mChannel = chan;}
             
         private:
             
-            MIDI::OutputChannel::SPtr  mOutputChannel;
+            MIDI::Output::SPtr  mMIDIOutput;
+            
+            unsigned int mChannel;
             
         };
         
-        class CollisionMIDINoteAction : public CollisionMIDIAction,
-                                        public CollisionMIDIAction::PitchMapped,
-                                        public CollisionMIDIAction::VelocityMapped
+        class CollisionMIDINoteOnAction : public CollisionMIDIAction
         {
+            virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
+                                                      OB::Scene::Collision::SPtr collision);
+        };
+        
+        class CollisionMIDINoteOffAction : public CollisionMIDIAction
+        {
+            virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
+                                                      OB::Scene::Collision::SPtr collision);
+        };
+        
+        class CollisionMIDINoteOnAndOffAction : public CollisionMIDIAction
+        {
+            virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
+                                                      OB::Scene::Collision::SPtr collision);
+        };
+        
+        class CollisionMIDIControlChangeAction : public CollisionMIDIAction
+        {
+            virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
+                                                      OB::Scene::Collision::SPtr collision);
             
-        };
-        
-        class CollisionMIDINoteOnAction : public CollisionMIDINoteAction
-        {
-            virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
-                                                      OB::Scene::Collision::SPtr collision);
-        };
-        
-        class CollisionMIDINoteOffAction : public CollisionMIDINoteAction
-        {
-            virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
-                                                      OB::Scene::Collision::SPtr collision);
-        };
-        
-        class CollisionMIDINoteOnAndOffAction : public CollisionMIDINoteAction,
-                                                public CollisionMIDIAction::DurationMapped
-        {
-            virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
-                                                      OB::Scene::Collision::SPtr collision);
+            MIDI::ControlNumber getControlNumber(void) {return mControlNumber;}
+            void setControlNumber(MIDI::ControlNumber number) {mControlNumber = number;}
+            
+        private:
+            
+            MIDI::ControlNumber mControlNumber;
         };
 
     }

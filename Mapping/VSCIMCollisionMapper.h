@@ -30,10 +30,11 @@ namespace VSC {
              *  Action Chains
              */
             
-            void addActionChainForSceneElement(CollisionActionChain::SPtr actionChain, OB::Scene::Element::SPtr element);
-            void removeActionChainForSceneElement(CollisionActionChain::SPtr actionChain, OB::Scene::Element::SPtr element);
+            void setActionChainForSceneElementCollisionStarted(CollisionActionChain::SPtr actionChain, OB::Scene::Element::SPtr element);
+            void setActionChainForSceneElementCollisionEnded(CollisionActionChain::SPtr actionChain, OB::Scene::Element::SPtr element);
             
-            const CollisionActionChains& getActionChainsForSceneElement(OB::Scene::Element::SPtr element);
+            CollisionActionChain::SPtr getActionChainForSceneElementCollisionStarted(OB::Scene::Element::SPtr element);
+            CollisionActionChain::SPtr getActionChainForSceneElementCollisionEnded(OB::Scene::Element::SPtr element);
             
             /**
              *  Scene::CollisionListener

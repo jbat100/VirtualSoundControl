@@ -8,17 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "VSCOSXApplicationManagerProtocol.h"
+#import "VSCOSXEnvironmentController.h"
 
 #include "VSCEnvironment.h"
 
 @class VSCOBOSXSceneDisplayView;
 
-@interface VSCOSXEnvironmentWindowController : NSWindowController
+@interface VSCOSXEnvironmentWindowController : NSWindowController <VSCOSXEnvironmentController>
 
 @property (nonatomic, strong) IBOutlet VSCOBOSXSceneDisplayView* sceneView;
 
-@property (nonatomic, assign) VSC::Environment::SPtr environment;
+@property (nonatomic, assign) VSC::Environment::WPtr environment;
+
+-(void) showElementInspectorForElement:(VSC::OB::Scene::Element::SPtr)element;
 
 -(void) reloadInterface;
 
