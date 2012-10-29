@@ -14,20 +14,49 @@ namespace VSC {
     
     namespace IM {
         
+        /*
+         *  Abstract collision action, with a task creater taking collision and collidee.
+         */
+        
         class CollisionAction : public Action, public CollisionMapped {
             
         public:
             
             typedef boost::shared_ptr<CollisionAction> SPtr;
             
-            CollisionAction() {}
+            CollisionAction() : mMuted(false) {}
+            
+            bool isMuted(void) {return mMuted;}
+            void setMuted(bool mute) {mMuted = mute;}
             
             virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
                                                       OB::Scene::Collision::SPtr collision) = 0;
             
+        private:
+            
+            bool mMuted;
+            
         };
 
         typedef std::vector<CollisionAction::SPtr> CollisionActions;
+        
+        /*
+         *  Empty collision action used as default when creating a new action in GUI
+         *  so that I don't have to choose another default action (which wouldn't make
+         *  sense anyway)
+         *
+         *  I've come to the conclusion that this is not actually necessary as
+         *  we can just create an empty action view.
+         */
+        
+        class CollisionVoidAction : public Action {
+            
+        public:
+            
+            virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
+                                                      OB::Scene::Collision::SPtr collision);
+            
+        };
 
     }
     

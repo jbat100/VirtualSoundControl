@@ -26,8 +26,6 @@
 @property (nonatomic, strong) IBOutlet NSTextField* nameTextField;
 @property (nonatomic, strong) IBOutlet NSButton* inspectorButton;
 
-@property (nonatomic, assign, setter=showDetail:) BOOL detailed;
-
 -(void) reload;
 
 -(IBAction) showElementInspector;

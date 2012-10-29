@@ -34,6 +34,8 @@ namespace VSC {
             
             void insertActionAtIndex(CollisionAction::SPtr action, unsigned int index);
             
+            void swapActions(CollisionAction::SPtr firstAction, CollisionAction::SPtr secondAction);
+            
         private:
             
             CollisionActions    mActions;

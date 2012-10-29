@@ -9,6 +9,7 @@
 #include "VSC.h"
 #include "VSCTask.h"
 #include "VSCTaskQueue.h"
+#include "VSCIMEvent.h"
 
 #include <boost/shared_ptr.hpp>
 
@@ -19,10 +20,12 @@ namespace VSC {
     namespace IM {
         
         /*
-         *  A very abstract class to provide an interface for performable actions
+         *  A very abstract class to provide an interface for performable actions.
+         *  Subclasses should provide a way to generate tasks which will be queued
+         *  on the action's task queue.
          */
         
-        class Action {
+        class Action : Event {
             
         public:
             
@@ -30,15 +33,11 @@ namespace VSC {
             
             Action() {}
             
-            void setDelay(TimeDuration delay) {mDelay = delay;}
-            TimeDuration getDelay(void) {return mDelay;}
-            
             TaskQueue::SPtr getTaskQueue(void) {return mTaskQueue;}
             void setTaskQueue(TaskQueue::SPtr queue) {mTaskQueue = queue;}
             
         private:
             
-            TimeDuration        mDelay;
             TaskQueue::SPtr     mTaskQueue;
             
         };

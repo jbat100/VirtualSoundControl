@@ -9,7 +9,7 @@
 
 @implementation VSCOSXOBSceneElementCell
 
--(void) showDetail:(BOOL)detailed
+-(void) awakeFromNib
 {
     
 }

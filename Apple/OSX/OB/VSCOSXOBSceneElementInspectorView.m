@@ -12,9 +12,19 @@ NSDictionary* elementInspectorTabDict = nil;
 
 @implementation VSCOSXOBSceneElementInspectorView
 
-+(void) load {
++ (void)load
+{
     
     
+    
+}
+
+- (void)awakeFromNib
+{
+    NSLog(@"%@ awakeFromNib", self);
+    
+    BOOST_ASSERT(self.elementDetailView);
+    BOOST_ASSERT(self.elementCollisionView);
     
 }
 

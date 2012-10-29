@@ -8,6 +8,17 @@
 
 #import "VSCIMOSXCollisionActionView.h"
 
+/*
+ *  Private internals
+ */
+
+@interface VSCIMOSXCollisionActionView ()
+
+-(void) setupInterfaceForCollisionActionType:(VSCIMOSXCollisionActionType)collisionActionType;
+
+@end
+
+
 @implementation VSCIMOSXCollisionActionView
 
 - (id)initWithFrame:(NSRect)frame
@@ -23,6 +34,16 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
+}
+
+-(void) setupInterfaceForCollisionActionType:(VSCIMOSXCollisionActionType)collisionActionType
+{
+    
+}
+
+-(IBAction) actionTypeChanged:(id)sender
+{
+    
 }
 
 @end

@@ -9,3 +9,7 @@
 #include "VSCIMCollisionAction.h"
 
 
+VSC::Task::SPtr VSC::IM::CollisionVoidAction::createTaskForCollision(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision)
+{
+    return Task::SPtr();
+}
