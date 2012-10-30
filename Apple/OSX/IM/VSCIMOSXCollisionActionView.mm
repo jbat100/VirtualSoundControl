@@ -14,6 +14,8 @@
 
 @interface VSCIMOSXCollisionActionView ()
 
+@property (nonatomic, assign) VSCIMOSXCollisionActionType currentActionType;
+
 -(void) setupInterfaceForCollisionActionType:(VSCIMOSXCollisionActionType)collisionActionType;
 
 @end

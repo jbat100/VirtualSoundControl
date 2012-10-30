@@ -8,7 +8,7 @@
 
 #include "VSCOBScene.h"
 #include "VSCIMCollisionAction.h"
-#include "VSCIMCollisionActionChain.h"
+#include "VSCIMCollisionEventChain.h"
 
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
@@ -30,11 +30,11 @@ namespace VSC {
              *  Action Chains
              */
             
-            void setActionChainForSceneElementCollisionStarted(CollisionActionChain::SPtr actionChain, OB::Scene::Element::SPtr element);
-            void setActionChainForSceneElementCollisionEnded(CollisionActionChain::SPtr actionChain, OB::Scene::Element::SPtr element);
+            void setActionChainForSceneElementCollisionStarted(CollisionEventChain::SPtr actionChain, OB::Scene::Element::SPtr element);
+            void setActionChainForSceneElementCollisionEnded(CollisionEventChain::SPtr actionChain, OB::Scene::Element::SPtr element);
             
-            CollisionActionChain::SPtr getActionChainForSceneElementCollisionStarted(OB::Scene::Element::SPtr element);
-            CollisionActionChain::SPtr getActionChainForSceneElementCollisionEnded(OB::Scene::Element::SPtr element);
+            CollisionEventChain::SPtr getActionChainForSceneElementCollisionStarted(OB::Scene::Element::SPtr element);
+            CollisionEventChain::SPtr getActionChainForSceneElementCollisionEnded(OB::Scene::Element::SPtr element);
             
             /**
              *  Scene::CollisionListener
@@ -50,9 +50,9 @@ namespace VSC {
             
         private:
             
-            typedef std::map<OB::Scene::Element::SPtr, CollisionActionChains> CollisionActionChainMap;
+            typedef std::map<OB::Scene::Element::SPtr, CollisionEventChains> CollisionEventChainMap;
             
-            CollisionActionChainMap     mCollisionActionChainMap;
+            CollisionEventChainMap     mCollisionEventChainMap;
             
             static const bool mTraceCollisions = true;
             

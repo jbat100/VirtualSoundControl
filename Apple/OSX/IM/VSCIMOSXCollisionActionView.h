@@ -7,17 +7,20 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "VSCIMOSXCollisionMappingView.h"
 
 #include "VSCIMCollisionAction.h"
 
 typedef enum _VSCIMOSXCollisionActionType {
     VSCIMOSXCollisionActionTypeNone = 0,
-    VSCIMOSXCollisionActionTypeVoid
+    VSCIMOSXCollisionActionTypeVoid,
     VSCIMOSXCollisionActionTypeMIDINoteOn,
     VSCIMOSXCollisionActionTypeMIDINoteOnAndOff,
     VSCIMOSXCollisionActionTypeMIDINoteOff,
     VSCIMOSXCollisionActionTypeMIDIControlChange
 } VSCIMOSXCollisionActionType;
+
+@class VSCIMOSXCollisionActionView;
 
 /*
  *  Protocol used by the view to interact with the model, specifically to ask for a collision
@@ -42,13 +45,13 @@ typedef enum _VSCIMOSXCollisionActionType {
  *  the type of action to be switched.
  */
 
-@interface VSCIMOSXCollisionActionView : NSView
+@interface VSCIMOSXCollisionActionView : NSView <VSCIMOSXCollisionMappingViewDelegate>
+
++(CGFloat) heightOfViewForCollisionAction:(VSC::IM::CollisionAction::SPtr)collisionAction;
 
 @property (weak) id<VSCIMOSXCollisionActionViewDelegate> delegate;
+
 @property (nonatomic, assign) VSC::IM::CollisionAction::SPtr collisionAction;
-
 @property (nonatomic, strong) IBOutlet NSPopUpButton* actionTypePopUpButton;
-
--(IBAction) actionTypeChanged:(id)sender;
 
 @end

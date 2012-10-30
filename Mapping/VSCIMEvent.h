@@ -34,43 +34,6 @@ namespace VSC {
         };
 
         typedef std::vector<Event::SPtr> Events;
-        
-        /*
-         *  Event chain for actions and delays
-         */
-        
-        class EventChain {
-            
-        public:
-            
-            typedef boost::shared_ptr<EventChain> SPtr;
-            
-            virtual ~EventChain();
-            
-            unsigned int numberOfEvents(void);
-            
-            void appendEvent(Event::SPtr event);
-            void prependEvent(Event::SPtr event);
-            
-            void insertEventAtIndex(Event::SPtr event, unsigned int index);
-            
-            void swapEvents(Event::SPtr firstEvent, Event::SPtr secondEvent);
-            
-        protected:
-            
-            /*
-             *  Can be over-ridden by subclass to reject invalid events.
-             */
-            
-            virtual bool checkEvent(Event::SPtr event) {return true;}
-            
-        private:
-            
-            Events mEvents;
-            
-        };
-        
-        typedef std::vector<EventChain::SPtr> EventChains;
 
     }
     

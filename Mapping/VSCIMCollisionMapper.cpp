@@ -11,51 +11,51 @@
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
-void VSC::IM::CollisionMapper::addActionChainForSceneElement(CollisionActionChain::SPtr actionChain, OB::Scene::Element::SPtr element)
+void VSC::IM::CollisionMapper::addActionChainForSceneElement(CollisionEventChain::SPtr actionChain, OB::Scene::Element::SPtr element)
 {
     BOOST_ASSERT(actionChain);
     BOOST_ASSERT(element);
     if ((!actionChain) || (!element)) return;
     
     /* // trying prettier way of doing it
-    CollisionActionChainMap::iterator it = mCollisionActionChainMap.find(element);
-    if (it != mCollisionActionChainMap.end())
+    CollisionEventChainMap::iterator it = mCollisionEventChainMap.find(element);
+    if (it != mCollisionEventChainMap.end())
     {
-        CollisionActionChains& actionChains = (*it).second;
-        CollisionActionChains::iterator actionChainIt = std::find(actionChains.begin(), actionChains.end(), actionChain);
+        CollisionEventChains& actionChains = (*it).second;
+        CollisionEventChains::iterator actionChainIt = std::find(actionChains.begin(), actionChains.end(), actionChain);
         BOOST_ASSERT_MSG(actionChainIt == actionChains.end(), "Action chain already registered for element");
         if (actionChainIt == actionChains.end()) actionChains.push_back(actionChain);
     }
     else
     {
-        CollisionActionChains actionChains;
+        CollisionEventChains actionChains;
         actionChains.push_back(actionChain);
-        mCollisionActionChainMap[element] = actionChains;
+        mCollisionEventChainMap[element] = actionChains;
     }
      */
     
-    CollisionActionChains& actionChains = mCollisionActionChainMap[element];
-    CollisionActionChains::iterator actionChainIt = std::find(actionChains.begin(), actionChains.end(), actionChain);
+    CollisionEventChains& actionChains = mCollisionEventChainMap[element];
+    CollisionEventChains::iterator actionChainIt = std::find(actionChains.begin(), actionChains.end(), actionChain);
     BOOST_ASSERT_MSG(actionChainIt == actionChains.end(), "Action chain already registered for element");
     if (actionChainIt == actionChains.end()) actionChains.push_back(actionChain);
     
 }
 
-void VSC::IM::CollisionMapper::removeActionChainForSceneElement(CollisionActionChain::SPtr actionChain, OB::Scene::Element::SPtr element)
+void VSC::IM::CollisionMapper::removeActionChainForSceneElement(CollisionEventChain::SPtr actionChain, OB::Scene::Element::SPtr element)
 {
     BOOST_ASSERT(actionChain);
     BOOST_ASSERT(element);
     if ((!actionChain) || (!element)) return;
     
-    CollisionActionChains& actionChains = mCollisionActionChainMap[element];
-    CollisionActionChains::iterator it = std::find(actionChains.begin(), actionChains.end(), actionChain);
+    CollisionEventChains& actionChains = mCollisionEventChainMap[element];
+    CollisionEventChains::iterator it = std::find(actionChains.begin(), actionChains.end(), actionChain);
     BOOST_ASSERT_MSG(it != actionChains.end(), "Action chain not registered for element");
     if (it != actionChains.end()) actionChains.erase(it);
 }
 
-const VSC::IM::CollisionActionChains& VSC::IM::CollisionMapper::getActionChainsForSceneElement(OB::Scene::Element::SPtr element)
+const VSC::IM::CollisionEventChains& VSC::IM::CollisionMapper::getActionChainsForSceneElement(OB::Scene::Element::SPtr element)
 {
-    CollisionActionChains& actionChains = mCollisionActionChainMap[element];
+    CollisionEventChains& actionChains = mCollisionEventChainMap[element];
     return actionChains;
 }
 
@@ -91,9 +91,9 @@ void VSC::IM::CollisionMapper::collisionDetected(OB::Scene::Collision::SPtr coll
             BOOST_ASSERT(element);
             if (element)
             {
-                const CollisionActionChains& actionChains = this->getActionChainsForSceneElement(element);
+                const CollisionEventChains& actionChains = this->getActionChainsForSceneElement(element);
                 
-                BOOST_FOREACH(CollisionActionChain::SPtr actionChain, actionChains)
+                BOOST_FOREACH(CollisionEventChain::SPtr actionChain, actionChains)
                 {
                     actionChain->perform(element, collision);
                 }

@@ -13,6 +13,7 @@
 #include <Ogre/Ogre.h>
 
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 
 namespace VSC {
     
@@ -29,7 +30,8 @@ namespace VSC {
             
         public:
             
-            typedef boost::shared_ptr<CollisionMapping> SPtr;
+            typedef boost::shared_ptr<CollisionMapping>     SPtr;
+            typedef boost::weak_ptr<CollisionMapping>       WPtr;
             
             CollisionMapping() : mOffset(0.0), mScaleFactor(0.0) {}
             

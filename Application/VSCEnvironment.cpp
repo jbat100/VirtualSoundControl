@@ -45,30 +45,30 @@ void VSC::Environment::setOBScene(OB::Scene::SPtr scene)
     }
 }
 
-void VSC::Environment::addCollisionActionChain(IM::CollisionActionChain::SPtr actionChain)
+void VSC::Environment::addCollisionEventChain(IM::CollisionEventChain::SPtr actionChain)
 {
     BOOST_ASSERT(actionChain);
     if (!actionChain) return;
     
-    IM::CollisionActionChains::iterator it = std::find(mIMCollisionActionChains.begin(), mIMCollisionActionChains.end(), actionChain);
-    BOOST_ASSERT(it == mIMCollisionActionChains.end());
+    IM::CollisionEventChains::iterator it = std::find(mIMCollisionEventChains.begin(), mIMCollisionEventChains.end(), actionChain);
+    BOOST_ASSERT(it == mIMCollisionEventChains.end());
     
-    if (it == mIMCollisionActionChains.end())
+    if (it == mIMCollisionEventChains.end())
     {
-        mIMCollisionActionChains.push_back(actionChain);
+        mIMCollisionEventChains.push_back(actionChain);
     }
 }
 
-void VSC::Environment::removeCollisionActionChain(IM::CollisionActionChain::SPtr actionChain)
+void VSC::Environment::removeCollisionEventChain(IM::CollisionEventChain::SPtr actionChain)
 {
     BOOST_ASSERT(actionChain);
     if (!actionChain) return;
     
-    IM::CollisionActionChains::iterator it = std::find(mIMCollisionActionChains.begin(), mIMCollisionActionChains.end(), actionChain);
-    BOOST_ASSERT(it != mIMCollisionActionChains.end());
+    IM::CollisionEventChains::iterator it = std::find(mIMCollisionEventChains.begin(), mIMCollisionEventChains.end(), actionChain);
+    BOOST_ASSERT(it != mIMCollisionEventChains.end());
     
-    if (it != mIMCollisionActionChains.end())
+    if (it != mIMCollisionEventChains.end())
     {
-        mIMCollisionActionChains.erase(it);
+        mIMCollisionEventChains.erase(it);
     }
 }

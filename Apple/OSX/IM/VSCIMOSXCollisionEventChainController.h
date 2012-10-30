@@ -1,0 +1,20 @@
+//
+//  VSCIMOSXCollisionEventChainController.h
+//  OgreBulletCocoaTestApplications
+//
+//  Created by Jonathan Thorpe on 10/29/12.
+//  Copyright (c) 2012 JBAT. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+#import "VSCIMOSXCollisionEventChainView.h"
+
+#include "VSCIMCollisionEventChain.h"
+#include "VSCIMCollisionAction.h"
+
+@interface VSCIMOSXCollisionEventChainController : NSObject
+
+//@property (nonatomic, assign) VSC::IM:CollisionEventChain::WPtr collisionEventChain;
+
+@end

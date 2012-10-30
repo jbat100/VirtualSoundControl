@@ -1,5 +1,5 @@
 //
-//  VSCOSXOBSceneElementCollisionActionChainView.m
+//  VSCOSXOBSceneElementCollisionEventChainView.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 10/28/12.
