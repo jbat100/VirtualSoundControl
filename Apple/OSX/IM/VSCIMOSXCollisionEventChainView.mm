@@ -9,6 +9,8 @@
 #import "VSCIMOSXCollisionEventChainView.h"
 #import "PXListViewCell.h"
 
+#include "VSCIMDelay.h"
+
 #include <boost/assert.hpp>
 
 @interface VSCIMOSXCollisionEventChainView ()
@@ -117,7 +119,7 @@
 -(IBAction) prependNewDelay:(id)sender
 {
     VSC::IM::Event::SPtr delay = VSC::IM::Event::SPtr(new VSC::IM::Delay);
-    [self prependEvent:voidAction];
+    [self prependEvent:delay];
 }
 
 -(IBAction) appendNewDelay:(id)sender

@@ -36,6 +36,8 @@ namespace VSC {
             
             void swapEvents(Event::SPtr firstEvent, Event::SPtr secondEvent);
             
+            void removeEvent(Event::SPtr event);
+            
         protected:
             
             /*

@@ -103,7 +103,6 @@
 		10AF5437163DAB3800419EEE /* VSCIMOSXCollisionMappingView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10AF5436163DAB3800419EEE /* VSCIMOSXCollisionMappingView.mm */; };
 		10B24D7D163E9C25008E5BAE /* VSCOSXOBSceneElementInspectorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10B24D7C163E9C25008E5BAE /* VSCOSXOBSceneElementInspectorView.xib */; };
 		10B24D81163EACBD008E5BAE /* VSCIMOSXCollisionEventChainView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10B24D80163EACBD008E5BAE /* VSCIMOSXCollisionEventChainView.mm */; };
-		10B24D84163EB127008E5BAE /* VSCIMOSXCollisionEventChainController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10B24D83163EB127008E5BAE /* VSCIMOSXCollisionEventChainController.mm */; };
 		10B24D87163EDF2D008E5BAE /* VSCIMEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10B24D85163EDF2B008E5BAE /* VSCIMEvent.cpp */; };
 		10B24D8A163EE36C008E5BAE /* VSCIMDelay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10B24D88163EE369008E5BAE /* VSCIMDelay.cpp */; };
 		10B60D2515505D6D006A6D6E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60D2415505D6D006A6D6E /* Cocoa.framework */; };
@@ -394,8 +393,6 @@
 		10B24D7C163E9C25008E5BAE /* VSCOSXOBSceneElementInspectorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXOBSceneElementInspectorView.xib; path = ../../../OB/VSCOSXOBSceneElementInspectorView.xib; sourceTree = "<group>"; };
 		10B24D7F163EACBD008E5BAE /* VSCIMOSXCollisionEventChainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMOSXCollisionEventChainView.h; path = ../../../IM/VSCIMOSXCollisionEventChainView.h; sourceTree = "<group>"; };
 		10B24D80163EACBD008E5BAE /* VSCIMOSXCollisionEventChainView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCIMOSXCollisionEventChainView.mm; path = ../../../IM/VSCIMOSXCollisionEventChainView.mm; sourceTree = "<group>"; };
-		10B24D82163EB127008E5BAE /* VSCIMOSXCollisionEventChainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMOSXCollisionEventChainController.h; path = ../../../IM/VSCIMOSXCollisionEventChainController.h; sourceTree = "<group>"; };
-		10B24D83163EB127008E5BAE /* VSCIMOSXCollisionEventChainController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCIMOSXCollisionEventChainController.mm; path = ../../../IM/VSCIMOSXCollisionEventChainController.mm; sourceTree = "<group>"; };
 		10B24D85163EDF2B008E5BAE /* VSCIMEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCIMEvent.cpp; path = ../../../../../Mapping/VSCIMEvent.cpp; sourceTree = "<group>"; };
 		10B24D86163EDF2D008E5BAE /* VSCIMEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMEvent.h; path = ../../../../../Mapping/VSCIMEvent.h; sourceTree = "<group>"; };
 		10B24D88163EE369008E5BAE /* VSCIMDelay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCIMDelay.cpp; path = ../../../../../Mapping/VSCIMDelay.cpp; sourceTree = "<group>"; };
@@ -832,8 +829,6 @@
 		10AF53D4163D2DEC00419EEE /* Cocoa */ = {
 			isa = PBXGroup;
 			children = (
-				10B24D82163EB127008E5BAE /* VSCIMOSXCollisionEventChainController.h */,
-				10B24D83163EB127008E5BAE /* VSCIMOSXCollisionEventChainController.mm */,
 				10B24D7F163EACBD008E5BAE /* VSCIMOSXCollisionEventChainView.h */,
 				10B24D80163EACBD008E5BAE /* VSCIMOSXCollisionEventChainView.mm */,
 				10F2BF3A163FFE5100CA22FB /* VSCIMOSXCollisionEventChainView.xib */,
@@ -1600,7 +1595,6 @@
 				10AF5434163DAAE700419EEE /* VSCIMOSXCollisionActionView.mm in Sources */,
 				10AF5437163DAB3800419EEE /* VSCIMOSXCollisionMappingView.mm in Sources */,
 				10B24D81163EACBD008E5BAE /* VSCIMOSXCollisionEventChainView.mm in Sources */,
-				10B24D84163EB127008E5BAE /* VSCIMOSXCollisionEventChainController.mm in Sources */,
 				10B24D87163EDF2D008E5BAE /* VSCIMEvent.cpp in Sources */,
 				10B24D8A163EE36C008E5BAE /* VSCIMDelay.cpp in Sources */,
 				10F2BF38163FE73B00CA22FB /* VSCIMEventChain.cpp in Sources */,

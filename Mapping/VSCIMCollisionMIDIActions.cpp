@@ -31,9 +31,7 @@ VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAction::createTaskForCollision(OB::S
         payload->velocity   = (unsigned int) velocityMapping->mappedValue(element, collision);
         payload->midiOutput = this->getMIDIOuput();
         
-        Time executionTime = CurrentTime() + this->getDelay();
-        
-        return Task::SPtr(new MIDI::MIDINoteOnTask(executionTime, payload));
+        return Task::SPtr(new MIDI::MIDINoteOnTask(payload));
     }
     
     return Task::SPtr();
@@ -56,9 +54,7 @@ VSC::Task::SPtr VSC::IM::CollisionMIDINoteOffAction::createTaskForCollision(OB::
         payload->velocity   = (unsigned int) velocityMapping->mappedValue(element, collision);
         payload->midiOutput = this->getMIDIOuput();
         
-        Time executionTime = CurrentTime() + this->getDelay();
-        
-        return Task::SPtr(new MIDI::MIDINoteOffTask(executionTime, payload));
+        return Task::SPtr(new MIDI::MIDINoteOffTask(payload));
     }
     
     return Task::SPtr();
@@ -90,9 +86,7 @@ VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAndOffAction::createTaskForCollision
         
         payload->midiOutput     = this->getMIDIOuput();
         
-        Time executionTime = CurrentTime() + this->getDelay();
-        
-        return Task::SPtr(new MIDI::MIDINoteOffTask(executionTime, payload));
+        return Task::SPtr(new MIDI::MIDINoteOffTask(payload));
     }
     
     return Task::SPtr();
@@ -113,9 +107,7 @@ VSC::Task::SPtr VSC::IM::CollisionMIDIControlChangeAction::createTaskForCollisio
         payload->value   = (unsigned int) valueMapping->mappedValue(element, collision);
         payload->midiOutput = this->getMIDIOuput();
         
-        Time executionTime = CurrentTime() + this->getDelay();
-        
-        return Task::SPtr(new MIDI::MIDIControlChangeTask(executionTime, payload));
+        return Task::SPtr(new MIDI::MIDIControlChangeTask(payload));
     }
     
     return Task::SPtr();

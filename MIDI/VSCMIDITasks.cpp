@@ -33,7 +33,7 @@ VSC::TaskQueue::SPtr VSC::MIDI::SingletonMIDITaskQueue()
 
 // MARK: Note On
 
-VSC::MIDI::MIDINoteOnTask::MIDINoteOnTask(const Time& executionStartTime, Task::Payload::SPtr payload) : MIDITask(executionStartTime, payload)
+VSC::MIDI::MIDINoteOnTask::MIDINoteOnTask(Task::Payload::SPtr payload) : MIDITask(payload)
 {
     MIDINoteOnTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDINoteOnTask::Payload>(payload);
     
@@ -55,7 +55,7 @@ bool VSC::MIDI::MIDINoteOnTask::stepExecution(void)
 
 // MARK: Note Off
 
-VSC::MIDI::MIDINoteOffTask::MIDINoteOffTask(const Time& executionStartTime, Task::Payload::SPtr payload) : MIDITask(executionStartTime, payload)
+VSC::MIDI::MIDINoteOffTask::MIDINoteOffTask(Task::Payload::SPtr payload) : MIDITask(payload)
 {
     MIDINoteOffTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDINoteOffTask::Payload>(payload);
     
@@ -77,8 +77,7 @@ bool VSC::MIDI::MIDINoteOffTask::stepExecution(void)
 
 // MARK: Note On And Off
 
-VSC::MIDI::MIDINoteOnAndOffTask::MIDINoteOnAndOffTask(const Time& executionStartTime, Task::Payload::SPtr payload) :
-MIDITask(executionStartTime, payload),
+VSC::MIDI::MIDINoteOnAndOffTask::MIDINoteOnAndOffTask(Task::Payload::SPtr payload) : MIDITask(payload),
 mSentNoteOn(false)
 {
     MIDINoteOnAndOffTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDINoteOnAndOffTask::Payload>(payload);
@@ -114,7 +113,7 @@ bool VSC::MIDI::MIDINoteOnAndOffTask::stepExecution(void)
 
 // MARK: Control Change
 
-VSC::MIDI::MIDIControlChangeTask::MIDIControlChangeTask(const Time& executionStartTime, Task::Payload::SPtr payload) : MIDITask(executionStartTime, payload)
+VSC::MIDI::MIDIControlChangeTask::MIDIControlChangeTask(Task::Payload::SPtr payload) : MIDITask(payload)
 {
     MIDIControlChangeTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDIControlChangeTask::Payload>(payload);
     

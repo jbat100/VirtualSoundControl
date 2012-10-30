@@ -18,8 +18,8 @@ std::ostream& VSC::operator << (std::ostream& stream, const Task& task)
     return stream;
 }
 
-VSC::Task::Task(const Time& executionStartTime, Payload::SPtr payload) :
-mExecutionStartTime(executionStartTime),
+VSC::Task::Task(Payload::SPtr payload) :
+mExecutionStartTime(CurrentTime()),
 mPayload(payload),
 mState(StateWaiting)
 {

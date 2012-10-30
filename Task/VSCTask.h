@@ -43,7 +43,7 @@ namespace VSC {
             typedef boost::shared_ptr<Payload> SPtr;
         };
         
-        Task(const Time& executionStartTime, Payload::SPtr payload);
+        Task(Payload::SPtr payload);
         virtual ~Task() {}
         
         const Time& getExecutionStartTime(void) const {return mExecutionStartTime;} // constant so no need for mutex

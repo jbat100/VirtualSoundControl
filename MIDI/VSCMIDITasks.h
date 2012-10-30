@@ -37,7 +37,7 @@ namespace VSC {
             
         public:
             
-            MIDITask(const Time& executionStartTime, Task::Payload::SPtr payload) : Task(executionStartTime, payload) {}
+            MIDITask(Task::Payload::SPtr payload) : Task(payload) {}
             
             Output::SPtr getMIDIOutput(void) {return mMIDIOutput;}
         
@@ -65,7 +65,7 @@ namespace VSC {
                 unsigned int velocity;
             };
             
-            MIDINoteOnTask(const Time& executionStartTime, Task::Payload::SPtr payload);
+            MIDINoteOnTask(Task::Payload::SPtr payload);
             
         protected:
             
@@ -91,7 +91,7 @@ namespace VSC {
                 unsigned int velocity;
             };
             
-            MIDINoteOffTask(const Time& executionStartTime, Task::Payload::SPtr payload);
+            MIDINoteOffTask(Task::Payload::SPtr payload);
             
         protected:
             
@@ -119,7 +119,7 @@ namespace VSC {
                 TimeDuration duration;
             };
             
-            MIDINoteOnAndOffTask(const Time& executionStartTime, Task::Payload::SPtr payload);
+            MIDINoteOnAndOffTask(Task::Payload::SPtr payload);
             
         protected:
             
@@ -149,7 +149,7 @@ namespace VSC {
                 unsigned int value;
             };
             
-            MIDIControlChangeTask(const Time& executionStartTime, Task::Payload::SPtr payload);
+            MIDIControlChangeTask(Task::Payload::SPtr payload);
             
         protected:
             

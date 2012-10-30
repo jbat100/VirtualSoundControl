@@ -16,7 +16,7 @@ unsigned int VSC::IM::EventChain::numberOfEvents(void)
 
 void VSC::IM::EventChain::appendEvent(Event::SPtr event)
 {
-    this->checkEvent(event);
+    if (!this->checkEvent(event))
     
     Events::iterator it = std::find(mEvents.begin(), mEvents.end(), event);
     if (it == mEvents.end())
@@ -81,7 +81,6 @@ void VSC::IM::EventChain::insertEventBeforeEvent(Event::SPtr insertedEvent, Even
 
 void VSC::IM::EventChain::swapEvents(Event::SPtr firstEvent, Event::SPtr secondEvent)
 {
-    
     Events::iterator firstIt = std::find(mEvents.begin(), mEvents.end(), firstEvent);
     Events::iterator secondIt = std::find(mEvents.begin(), mEvents.end(), secondEvent);
     
@@ -98,6 +97,9 @@ void VSC::IM::EventChain::swapEvents(Event::SPtr firstEvent, Event::SPtr secondE
     {
         (*secondIt) = firstEvent;
     }
-    
 }
 
+void VSC::IM::EventChain::removeEvent(Event::SPtr event)
+{
+    
+}
