@@ -9,6 +9,7 @@
 
 #include "VSC.h"
 #include "VSCOBScene.h"
+#include "VSCIMTarget.h"
 
 #include <Ogre/Ogre.h>
 
@@ -58,6 +59,8 @@ namespace VSC {
             Float   mScaleFactor;
             
         };
+        
+        typedef std::vector<CollisionMapping::SPtr> CollisionMappings;
         
         /*
          *  Constant mapping (which can be modulated with offset, then modulators and scale factor)

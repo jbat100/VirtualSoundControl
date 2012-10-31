@@ -7,6 +7,7 @@
 #include "VSCOBScene.h"
 
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 
 #include <vector>
 
@@ -22,7 +23,8 @@ namespace VSC {
             
         public:
             
-            typedef boost::shared_ptr<CollisionAction> SPtr;
+            typedef boost::shared_ptr<CollisionAction>  SPtr;
+            typedef boost::weak_ptr<CollisionAction>    WPtr;
             
             CollisionAction() : mMuted(false) {}
             

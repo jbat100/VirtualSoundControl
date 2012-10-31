@@ -7,25 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "VSCIMOSXCollisionMappingGlobal.h"
 
 #include "VSCIMCollisionMapping.h"
-
-typedef enum _VSCIMOSXCollisionMappingType {
-    VSCIMOSXCollisionMappingTypeNone = 0,
-    VSCIMOSXCollisionMappingTypeConstant,
-    VSCIMOSXCollisionMappingTypeVelocity,
-    VSCIMOSXCollisionMappingTypeDistance
-} VSCIMOSXCollisionMappingType;
-
-@class VSCIMOSXCollisionMappingView;
-
-@protocol VSCIMOSXCollisionMappingViewDelegate <NSObject>
-
--(VSC::IM::CollisionMapping::SPtr) collisionMappingView:(VSCIMOSXCollisionMappingView*)view
-                                requestsMappingWithType:(VSCIMOSXCollisionMappingType)mappingType;
-
-@end
-
 
 @interface VSCIMOSXCollisionMappingView : NSView
 

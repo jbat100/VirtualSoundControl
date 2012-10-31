@@ -8,29 +8,24 @@
 #define _VSC_IM_COLLISION_MAPPED_H_
 
 #include "VSCIMCollisionMapping.h"
+#include "VSCIMTarget.h"
 
 #include <map>
 
 namespace VSC {
     
     namespace IM {
-    
-        enum Target {
-            None = 0,
-            Channel,
-            Pitch,
-            VelocityOn,
-            VelocityOff,
-            Duration,
-            ControlValue
-        };
         
         class CollisionMapped {
             
         public:
             
-            CollisionMapping::SPtr getMappingForTarget(Target target);
+            CollisionMapping::SPtr getMappingForTarget(const Target target);
             void setMappingForTarget(Target target, CollisionMapping::SPtr mapping);
+            void removeMappingForTarget(const Target target);
+            const Targets getMappingTargets();
+            
+            Target getTargetForMapping(CollisionMapping::SPtr mapping);
             
         private:
             
