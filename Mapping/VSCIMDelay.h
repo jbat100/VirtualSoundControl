@@ -12,6 +12,7 @@
 #include "VSCIMEvent.h"
 
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 
 #include <vector>
 
@@ -27,7 +28,8 @@ namespace VSC {
             
         public:
             
-            typedef boost::shared_ptr<Delay> SPtr;
+            typedef boost::shared_ptr<Delay>    SPtr;
+            typedef boost::weak_ptr<Delay>      WPtr;
             
             Delay() {}
             

@@ -9,23 +9,17 @@
 #import <Cocoa/Cocoa.h>
 #import "VSCIMOSXCollisionMappingGlobal.h"
 
+#include "VSCIMTarget.h"
 #include "VSCIMCollisionMapping.h"
 
 @interface VSCIMOSXCollisionMappingView : NSView
 
 +(CGFloat) heightOfViewForCollisionMapping:(VSC::IM::CollisionMapping::SPtr)collisionMapping;
 
+@property (nonatomic, assign) VSC::IM::Target target;
+
 @property (nonatomic, assign) VSC::IM::CollisionMapping::WPtr collisionMapping;
 
-/*
- *  Interface elements common to all mappings
- */
-
-@property (nonatomic, strong) NSTextField* offsetLabelTextField;
-@property (nonatomic, strong) NSTextField* scaleFactorLabelTextField;
-
-@property (nonatomic, strong) NSTextField* offsetTextField;
-@property (nonatomic, strong) NSTextField* scaleFactorTextField;
 
 @end
 

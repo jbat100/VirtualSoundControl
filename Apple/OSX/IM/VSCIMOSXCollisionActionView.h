@@ -24,6 +24,4 @@
 
 +(CGFloat) heightOfViewForCollisionAction:(VSC::IM::CollisionAction::SPtr)collisionAction;
 
-@property (nonatomic, strong) IBOutlet NSPopUpButton* actionTypePopUpButton;
-
 @end

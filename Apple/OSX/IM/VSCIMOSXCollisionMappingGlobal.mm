@@ -14,14 +14,11 @@ VSCIMOSXCollisionMappingType VSCIMOSXCollisionMappingTypeForCollisionMapping(VSC
 {
     if (collisionMapping)
     {
-        VSC::IM::CollisionConstantMapping::SPtr constant = boost::dynamic_pointer_cast<VSC::IM::CollisionConstantMapping>(collisionMapping);
-        if (constant) return VSCIMOSXCollisionMappingTypeConstant;
+        if (boost::dynamic_pointer_cast<VSC::IM::CollisionConstantMapping>(collisionMapping)) return VSCIMOSXCollisionMappingTypeConstant;
         
-        VSC::IM::CollisionVelocityMapping::SPtr velocity = boost::dynamic_pointer_cast<VSC::IM::CollisionVelocityMapping>(collisionMapping);
-        if (velocity) return VSCIMOSXCollisionMappingTypeVelocity;
+        if (boost::dynamic_pointer_cast<VSC::IM::CollisionVelocityMapping>(collisionMapping)) return VSCIMOSXCollisionMappingTypeVelocity;
         
-        VSC::IM::CollisionDistanceMapping::SPtr distance = boost::dynamic_pointer_cast<VSC::IM::CollisionDistanceMapping>(collisionMapping);
-        if (distance) return VSCIMOSXCollisionMappingTypeDistance;
+        if (boost::dynamic_pointer_cast<VSC::IM::CollisionDistanceMapping>(collisionMapping)) return VSCIMOSXCollisionMappingTypeDistance;
     }
     
     return VSCIMOSXCollisionMappingTypeNone;

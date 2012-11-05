@@ -6,8 +6,12 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
-@interface VSCIMOSXDelayView : NSObject
+#include "VSCIMDelay.h"
+
+@interface VSCIMOSXDelayView : NSView
+
+@property (nonatomic, assign) VSC::IM::Delay::WPtr delay;
 
 @end

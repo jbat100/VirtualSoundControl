@@ -11,7 +11,22 @@
 
 @interface VSCIMOSXCollisionMappingView ()
 
+/*
+ *  Interface elements common to all mappings
+ */
+
+@property (nonatomic, strong) IBOutlet NSTextField* targetTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* mappingTypeTextField;
+
+@property (nonatomic, strong) IBOutlet NSTextField* offsetLabelTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* scaleFactorLabelTextField;
+
+@property (nonatomic, strong) IBOutlet NSTextField* offsetTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* scaleFactorTextField;
+
 @property (nonatomic, assign) VSCIMOSXCollisionMappingType collisionMappingType;
+
+-(void) updateInterface;
 
 @end
 
@@ -37,6 +52,31 @@
 {
     _collisionMapping = collisionMapping;
     self.collisionMappingType = VSCIMOSXCollisionMappingTypeForCollisionMapping(collisionMapping.lock());
+    
+    [self updateInterface];
+}
+
+-(void) updateInterface
+{
+    switch (self.collisionMappingType) {
+            
+        case VSCIMOSXCollisionMappingTypeConstant:
+            [self.mappingTypeTextField setStringValue:@"Constant"];
+            break;
+            
+        case VSCIMOSXCollisionMappingTypeVelocity:
+            [self.mappingTypeTextField setStringValue:@"Velocity"];
+            break;
+            
+        case VSCIMOSXCollisionMappingTypeDistance:
+            [self.mappingTypeTextField setStringValue:@"Distance"];
+            break;
+            
+        default:
+            [self.mappingTypeTextField setStringValue:@"None"];
+            break;
+    }
+    
 }
 
 
