@@ -50,24 +50,32 @@ namespace VSC {
         
         class CollisionMIDINoteOnAction : public CollisionMIDIAction
         {
+            CollisionMIDINoteOnAction();
+            
             virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
                                                       OB::Scene::Collision::SPtr collision);
         };
         
         class CollisionMIDINoteOffAction : public CollisionMIDIAction
         {
+            CollisionMIDINoteOffAction();
+            
             virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
                                                       OB::Scene::Collision::SPtr collision);
         };
         
         class CollisionMIDINoteOnAndOffAction : public CollisionMIDIAction
         {
+            CollisionMIDINoteOnAndOffAction();
+            
             virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
                                                       OB::Scene::Collision::SPtr collision);
         };
         
         class CollisionMIDIControlChangeAction : public CollisionMIDIAction
         {
+            CollisionMIDIControlChangeAction();
+            
             virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
                                                       OB::Scene::Collision::SPtr collision);
             

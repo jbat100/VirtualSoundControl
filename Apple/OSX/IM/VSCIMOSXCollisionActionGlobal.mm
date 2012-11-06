@@ -54,3 +54,21 @@ VSC::IM::CollisionAction::SPtr VSCIMOSXCreateCollisionActionWithType(VSCIMOSXCol
     
     return VSC::IM::CollisionAction::SPtr();
 }
+
+BOOL VSCIMOSXCollisionActionTypeIsMIDI(VSCIMOSXCollisionActionType actionType)
+{
+    switch (actionType)
+    {
+            
+        case VSCIMOSXCollisionActionTypeMIDINoteOn:
+        case VSCIMOSXCollisionActionTypeMIDINoteOnAndOff:
+        case VSCIMOSXCollisionActionTypeMIDINoteOff:
+        case VSCIMOSXCollisionActionTypeMIDIControlChange:
+            return YES;
+            
+        default:
+            break;
+    }
+    
+    return NO;
+}

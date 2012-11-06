@@ -14,13 +14,20 @@ mChannel(0)
     this->setTaskQueue(MIDI::SingletonMIDITaskQueue());
 }
 
+VSC::IM::CollisionMIDINoteOnAction::CollisionMIDINoteOnAction()
+{
+    this->addExpectedMappingTarget(TargetPitch);
+    this->addExpectedMappingTarget(TargetVelocityOn);
+}
+
 VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAction::createTaskForCollision(OB::Scene::Element::SPtr element,
                                                                            OB::Scene::Collision::SPtr collision)
 {
-    CollisionMapping::SPtr pitchMapping = this->getMappingForTarget(Pitch);
-    BOOST_ASSERT(pitchMapping);
-    CollisionMapping::SPtr velocityMapping = this->getMappingForTarget(VelocityOn);
-    BOOST_ASSERT(velocityMapping);
+    bool gotMappings = this->checkExpectedMappingTargets();
+    BOOST_ASSERT(gotMappings);
+    
+    CollisionMapping::SPtr pitchMapping = this->getMappingForTarget(TargetPitch);
+    CollisionMapping::SPtr velocityMapping = this->getMappingForTarget(TargetVelocityOn);
     
     if (pitchMapping && velocityMapping)
     {
@@ -37,13 +44,20 @@ VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAction::createTaskForCollision(OB::S
     return Task::SPtr();
 }
 
+VSC::IM::CollisionMIDINoteOffAction::CollisionMIDINoteOffAction()
+{
+    this->addExpectedMappingTarget(TargetPitch);
+    this->addExpectedMappingTarget(TargetVelocityOff);
+}
+
 VSC::Task::SPtr VSC::IM::CollisionMIDINoteOffAction::createTaskForCollision(OB::Scene::Element::SPtr element,
                                                                             OB::Scene::Collision::SPtr collision)
 {
-    CollisionMapping::SPtr pitchMapping = this->getMappingForTarget(Pitch);
-    BOOST_ASSERT(pitchMapping);
-    CollisionMapping::SPtr velocityMapping = this->getMappingForTarget(VelocityOn);
-    BOOST_ASSERT(velocityMapping);
+    bool gotMappings = this->checkExpectedMappingTargets();
+    BOOST_ASSERT(gotMappings);
+    
+    CollisionMapping::SPtr pitchMapping = this->getMappingForTarget(TargetPitch);
+    CollisionMapping::SPtr velocityMapping = this->getMappingForTarget(TargetVelocityOn);
     
     if (pitchMapping && velocityMapping)
     {
@@ -60,17 +74,24 @@ VSC::Task::SPtr VSC::IM::CollisionMIDINoteOffAction::createTaskForCollision(OB::
     return Task::SPtr();
 }
 
+VSC::IM::CollisionMIDINoteOnAndOffAction::CollisionMIDINoteOnAndOffAction()
+{
+    this->addExpectedMappingTarget(TargetPitch);
+    this->addExpectedMappingTarget(TargetVelocityOn);
+    this->addExpectedMappingTarget(TargetDuration);
+    this->addExpectedMappingTarget(TargetVelocityOff);
+}
+
 VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAndOffAction::createTaskForCollision(OB::Scene::Element::SPtr element,
                                                                                  OB::Scene::Collision::SPtr collision)
 {
-    CollisionMapping::SPtr pitchMapping = this->getMappingForTarget(Pitch);
-    BOOST_ASSERT(pitchMapping);
-    CollisionMapping::SPtr velocityOnMapping = this->getMappingForTarget(VelocityOn);
-    BOOST_ASSERT(velocityOnMapping);
-    CollisionMapping::SPtr durationMapping = this->getMappingForTarget(Duration);
-    BOOST_ASSERT(durationMapping);
-    CollisionMapping::SPtr velocityOffMapping = this->getMappingForTarget(VelocityOff);
-    BOOST_ASSERT(velocityOffMapping);
+    bool gotMappings = this->checkExpectedMappingTargets();
+    BOOST_ASSERT(gotMappings);
+    
+    CollisionMapping::SPtr pitchMapping = this->getMappingForTarget(TargetPitch);
+    CollisionMapping::SPtr velocityOnMapping = this->getMappingForTarget(TargetVelocityOn);
+    CollisionMapping::SPtr durationMapping = this->getMappingForTarget(TargetDuration);
+    CollisionMapping::SPtr velocityOffMapping = this->getMappingForTarget(TargetVelocityOff);
     
     if (pitchMapping && velocityOnMapping && durationMapping && velocityOffMapping)
     {
@@ -92,11 +113,18 @@ VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAndOffAction::createTaskForCollision
     return Task::SPtr();
 }
 
+VSC::IM::CollisionMIDIControlChangeAction::CollisionMIDIControlChangeAction()
+{
+    this->addExpectedMappingTarget(TargetControlValue);
+}
+
 VSC::Task::SPtr VSC::IM::CollisionMIDIControlChangeAction::createTaskForCollision(OB::Scene::Element::SPtr element,
                                                                                   OB::Scene::Collision::SPtr collision)
 {
-    CollisionMapping::SPtr valueMapping = this->getMappingForTarget(ControlValue);
-    BOOST_ASSERT(valueMapping);
+    bool gotMappings = this->checkExpectedMappingTargets();
+    BOOST_ASSERT(gotMappings);
+    
+    CollisionMapping::SPtr valueMapping = this->getMappingForTarget(TargetControlValue);
     
     if (valueMapping)
     {
@@ -112,3 +140,4 @@ VSC::Task::SPtr VSC::IM::CollisionMIDIControlChangeAction::createTaskForCollisio
     
     return Task::SPtr();
 }
+

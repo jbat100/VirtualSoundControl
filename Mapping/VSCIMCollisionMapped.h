@@ -27,7 +27,19 @@ namespace VSC {
             
             Target getTargetForMapping(CollisionMapping::SPtr mapping);
             
+            const Targets& getExpectedMappingTargets(void) {return mExpectedTargets;}
+            
+            virtual void createDefaultMappings() = 0;
+            
+        protected:
+            
+            void addExpectedMappingTarget(Target target);
+            
+            bool checkExpectedMappingTargets(void);
+            
         private:
+            
+            Targets mExpectedTargets;
             
             typedef std::map<Target, CollisionMapping::SPtr> CollisionMappingMap;
             

@@ -10,6 +10,13 @@
 
 #include "VSCIMCollisionAction.h"
 
+/*
+ *  Action types enum, used to avoid having to downcast constantly to check action type.
+ *  Not sure whether this is the best way of doing things. Should collision actions be polymorphic 
+ *  in the first place. If they weren't all task creations would have to be defined in the same 
+ *  place. No extention possible, which is a serious restriction.
+ */
+
 typedef enum _VSCIMOSXCollisionActionType {
     VSCIMOSXCollisionActionTypeNone = 0,
     VSCIMOSXCollisionActionTypeVoid,
@@ -32,6 +39,16 @@ VSCIMOSXCollisionActionType VSCIMOSXCollisionActionTypeForCollisionAction(VSC::I
  */
 
 VSC::IM::CollisionAction::SPtr VSCIMOSXCreateCollisionActionWithType(VSCIMOSXCollisionActionType actionType);
+
+/*
+ *  Check if action is midi action, useful for interface (editor needs channel text field)
+ */
+
+BOOL VSCIMOSXCollisionActionTypeIsMIDI(VSCIMOSXCollisionActionType actionType);
+
+/*
+ *  Forward declaration needed for VSCIMOSXCollisionActionController protocol
+ */
 
 @protocol VSCIMOSXCollisionActionEditor;
 
