@@ -13,6 +13,11 @@
 
 NSDictionary* actionTypeMenuItemStringDict = nil;
 
+const CGFloat VSCIMOSXCollisionActionViewHorizontalMargin   = 5.0;
+const CGFloat VSCIMOSXCollisionActionViewVerticalMargin     = 5.0;
+
+const CGFloat VSCIMOSXCollisionActionViewPopUpButtonHeight  = 10.0;
+
 const CGFloat VSCIMOSXCollisionActionViewBaseHeight         = 20.0;
 const CGFloat VSCIMOSXCollisionActionViewMappingHeight      = 20.0;
 const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
@@ -120,6 +125,13 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
         
         self.currentActionType = VSCIMOSXCollisionActionTypeNone;
         
+        NSRect f = NSMakeRect(VSCIMOSXCollisionActionViewHorizontalMargin,
+                              frame.size.height - VSCIMOSXCollisionActionViewVerticalMargin,
+                              frame.size.width - (2.0*VSCIMOSXCollisionActionViewHorizontalMargin),
+                              VSCIMOSXCollisionActionViewPopUpButtonHeight);
+        
+        self.actionTypePopUpButton = [[NSPopUpButton alloc] initWithFrame:f];
+        
     }
     
     return self;
@@ -167,17 +179,18 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
     
     VSC::IM::CollisionAction::SPtr action = self.collisionAction.lock();
     
+    /*
+     *  If action then tighten your seat belts, here we go...
+     */
+    
+    CGFloat h = [[self class] heightOfViewForCollisionAction:action];
+    
     [self.actionTypePopUpButton selectItemWithTitle:[[self class] stringForActionTypeMenuItem:self.currentActionType]];
     
     if (!action)
     {
         // empty interface and return 
     }
-    
-    /*
-     *  If action then tighten your seat belts, here we go...
-     */
-    
     
     
     /*
@@ -206,8 +219,11 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
         BOOST_ASSERT(mapping);
         if (mapping)
         {
-            //NSRect f = NSMakeRect(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat w#>, <#CGFloat h#>)
-            VSCIMOSXCollisionMappingView* mappingView = [[VSCIMOSXCollisionMappingView alloc] initWithFrame:];
+            NSRect f = NSMakeRect(5.0, h - 5.0, self.frame.size.width - 10.0, 10.0);
+            VSCIMOSXCollisionMappingView* mappingView = [[VSCIMOSXCollisionMappingView alloc] initWithFrame:f];
+            mappingView.target = target;
+            mappingView.collisionMapping = VSC::IM::CollisionMapping::WPtr(mapping);
+            [mappingView setAutoresizingMask:(NSUInteger)(NSViewWidthSizable | NSViewMinYMargin)];
         }
     }
     
