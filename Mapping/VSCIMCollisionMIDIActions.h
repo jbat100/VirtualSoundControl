@@ -32,6 +32,8 @@ namespace VSC {
             
         public:
             
+            typedef boost::shared_ptr<CollisionMIDIAction> SPtr;
+            
             CollisionMIDIAction();
             
             MIDI::Output::SPtr getMIDIOuput(void) {return mMIDIOutput;}
@@ -48,24 +50,45 @@ namespace VSC {
             
         };
         
+        /*
+         *  Generates a note on task
+         */
+        
         class CollisionMIDINoteOnAction : public CollisionMIDIAction
         {
+            
+        public:
+            
             CollisionMIDINoteOnAction();
             
             virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
                                                       OB::Scene::Collision::SPtr collision);
         };
         
+        /*
+         *  Generates a note off task
+         */
+        
         class CollisionMIDINoteOffAction : public CollisionMIDIAction
         {
+            
+        public:
+            
             CollisionMIDINoteOffAction();
             
             virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
                                                       OB::Scene::Collision::SPtr collision);
         };
         
+        /*
+         *  Generates a note on task followed by a note off task after a mapping derived duration
+         */
+        
         class CollisionMIDINoteOnAndOffAction : public CollisionMIDIAction
         {
+            
+        public:
+            
             CollisionMIDINoteOnAndOffAction();
             
             virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
@@ -74,6 +97,11 @@ namespace VSC {
         
         class CollisionMIDIControlChangeAction : public CollisionMIDIAction
         {
+            
+        public:
+            
+            typedef boost::shared_ptr<CollisionMIDIControlChangeAction> SPtr;
+            
             CollisionMIDIControlChangeAction();
             
             virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,

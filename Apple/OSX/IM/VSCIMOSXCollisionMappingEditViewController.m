@@ -10,6 +10,12 @@
 
 @interface VSCIMOSXCollisionMappingEditViewController ()
 
+@property (nonatomic, strong) NSTextField* offsetLabelTextField;
+@property (nonatomic, strong) NSTextField* scaleFactorLabelTextField;
+
+@property (nonatomic, strong) NSTextField* offsetTextField;
+@property (nonatomic, strong) NSTextField* scaleFactorTextField;
+
 @end
 
 @implementation VSCIMOSXCollisionMappingEditViewController

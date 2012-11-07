@@ -24,4 +24,7 @@
 
 +(CGFloat) heightOfViewForCollisionAction:(VSC::IM::CollisionAction::SPtr)collisionAction;
 
++(NSString*) menuItemStringForActionType:(VSCIMOSXCollisionActionType)actionType;
++(VSCIMOSXCollisionActionType) actionTypeForMenuItemString:(NSString*)menuItemString;
+
 @end

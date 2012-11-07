@@ -8,6 +8,7 @@
 
 #include "VSC.h"
 
+#include <string>
 #include <vector>
 
 namespace VSC {
@@ -25,6 +26,9 @@ namespace VSC {
         };
         
         typedef std::vector<Target> Targets;
+        
+        std::string stringForTarget(const Target target);
+        const Target targetForString(const std::string& s);
 
     }
     

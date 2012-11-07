@@ -7,6 +7,9 @@
 //
 
 #import "VSCIMOSXCollisionActionView.h"
+#import "NSString+VSCAdditions.h"
+
+#include "VSCIMCollisionMIDIActions.h"
 
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
@@ -40,6 +43,7 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
  */
 
 @property (nonatomic, strong) NSMutableArray* collisionMappingViews;
+@property (nonatomic, strong) NSNib* mappingViewNib;
 
 /*
  *  Only for MIDI actions
@@ -47,10 +51,11 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
 
 @property (nonatomic, strong) NSPopUpButton* midiControlNumberPopUpButton;
 
-+(NSString*) stringForActionTypeMenuItem:(VSCIMOSXCollisionActionType)actionType;
-+(VSCIMOSXCollisionActionType) actionTypeForMenuItemString:(NSString*)menuItemString;
+-(VSCIMOSXCollisionMappingView*) newCollisionMappingView;
 
--(void) setupInterface;
+-(void) setupActionChoice;
+-(void) setupInterfaceForNewCollisionAction;
+-(void) updateMIDIControlNumbers;
 
 @end
 
@@ -131,6 +136,9 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
                               VSCIMOSXCollisionActionViewPopUpButtonHeight);
         
         self.actionTypePopUpButton = [[NSPopUpButton alloc] initWithFrame:f];
+        [self.actionTypePopUpButton setAutoresizingMask:(NSUInteger)(NSViewWidthSizable | NSViewMinYMargin)];
+        [self.actionTypePopUpButton setTarget:self];
+        [self.actionTypePopUpButton setAction:@selector(actionTypeChanged:)];
         
     }
     
@@ -157,7 +165,8 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
 
 -(void) midiControlNumberChanged:(id)sender
 {
-    
+
+
 }
 
 #pragma mark - Custom Setter
@@ -168,13 +177,30 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
     
     self.currentActionType = VSCIMOSXCollisionActionTypeForCollisionAction(_collisionAction.lock());
     
-    [self setupInterface];
+    [self setupInterfaceForNewCollisionAction];
     
 }
 
 #pragma mark - UI Helper
 
--(void) setupInterface
+-(void) setupActionChoice
+{
+    BOOST_ASSERT(actionTypeMenuItemStringDict);
+    BOOST_ASSERT(self.actionTypePopUpButton);
+    
+    [self.actionTypePopUpButton removeAllItems];
+    
+    NSArray* keys = [[actionTypeMenuItemStringDict allKeys] sortedArrayUsingSelector:@selector(compare:)];
+    
+    for (NSNumber* key in keys)
+    {
+        NSString* actionDescription = [actionTypeMenuItemStringDict objectForKey:key];
+        BOOST_ASSERT([actionDescription isKindOfClass:[NSString class]]);
+        [self.actionTypePopUpButton addItemWithTitle:actionDescription];
+    }
+}
+
+-(void) setupInterfaceForNewCollisionAction
 {
     
     VSC::IM::CollisionAction::SPtr action = self.collisionAction.lock();
@@ -209,8 +235,6 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
      *  Create new mapping views
      */
     
-    
-    
     const VSC::IM::Targets& targets = action->getExpectedMappingTargets();
     
     BOOST_FOREACH(const VSC::IM::Target& target, targets)
@@ -239,6 +263,7 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
             break;
             
         case VSCIMOSXCollisionActionTypeMIDIControlChange:
+            [self updateMIDIControlNumbers];
             break;
             
         default:
@@ -248,7 +273,30 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
 
 -(void) updateMIDIControlNumbers
 {
+    //BOOST_ASSERT(self.currentActionType == VSCIMOSXCollisionActionTypeMIDIControlChange);
     
+    [self.midiControlNumberPopUpButton removeAllItems];
+    
+    VSC::IM::CollisionMIDIAction::SPtr midiAction = boost::dynamic_pointer_cast<VSC::IM::CollisionMIDIAction>(self.collisionAction.lock());
+    
+    BOOST_ASSERT(midiAction);
+    
+    VSC::MIDI::Output::SPtr midiOutput = midiAction->getMIDIOuput();
+    
+    if (midiOutput)
+    {
+        const VSC::MIDI::ControlNumbers& controlNumbers = midiOutput->getValidControlNumbers();
+        
+        BOOST_FOREACH(const VSC::MIDI::ControlNumber& controlNumber, controlNumbers)
+        {
+            std::string controlNumberString = VSC::MIDI::controlNumberToString(controlNumber);
+            BOOST_ASSERT(!controlNumberString.empty());
+            if (!controlNumberString.empty())
+            {
+                [self.midiControlNumberPopUpButton addItemWithTitle:[NSString stringWithStdString:controlNumberString]];
+            }
+        }
+    }
 }
 
 

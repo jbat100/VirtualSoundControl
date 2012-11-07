@@ -12,14 +12,15 @@
 #include "VSCIMTarget.h"
 #include "VSCIMCollisionMapping.h"
 
-@interface VSCIMOSXCollisionMappingView : NSView
+@interface VSCIMOSXCollisionMappingView : NSView <VSCIMOSXCollisionMappingEditor>
 
++(CGFloat) defaultHeightOfView;
 +(CGFloat) heightOfViewForCollisionMapping:(VSC::IM::CollisionMapping::SPtr)collisionMapping;
 
++(NSString*) menuItemStringForCollisionMappingType:(VSCIMOSXCollisionMappingType)mappingType;
++(VSCIMOSXCollisionMappingType) collisionMappingTypeForMenuItemString:(NSString*)menuItemString;
+
 @property (nonatomic, assign) VSC::IM::Target target;
-
-@property (nonatomic, assign) VSC::IM::CollisionMapping::WPtr collisionMapping;
-
 
 @end
 
