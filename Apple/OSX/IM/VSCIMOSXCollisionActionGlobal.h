@@ -67,6 +67,8 @@ BOOL VSCIMOSXCollisionActionTypeIsMIDI(VSCIMOSXCollisionActionType actionType);
 -(VSC::IM::CollisionAction::SPtr) collisionActionEditor:(id<VSCIMOSXCollisionActionEditor>)editor
                         requestsCollisionActionWithType:(VSCIMOSXCollisionActionType)collisionActionType;
 
+-(void) showMappingsForCollisionAction:(VSC::IM::CollisionAction::SPtr)collisionAction;
+
 @end
 
 /*

@@ -16,6 +16,16 @@
 
 NSDictionary* actionTypeMenuItemStringDict = nil;
 
+/*
+ *  Heights should agree with nib
+ */
+
+const CGFloat VSCIMOSXCollisionActionViewBaseHeight = 54.0;
+const CGFloat VSCIMOSXCollisionActionViewMIDISetupHeight = 48.0;
+const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
+
+/** // Using nib instead...
+
 const CGFloat VSCIMOSXCollisionActionViewHorizontalMargin   = 5.0;
 const CGFloat VSCIMOSXCollisionActionViewVerticalMargin     = 5.0;
 
@@ -24,6 +34,8 @@ const CGFloat VSCIMOSXCollisionActionViewPopUpButtonHeight  = 10.0;
 const CGFloat VSCIMOSXCollisionActionViewBaseHeight         = 20.0;
 const CGFloat VSCIMOSXCollisionActionViewMappingHeight      = 20.0;
 const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
+ 
+ */
 
 /*
  *  Private internals
@@ -36,25 +48,28 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
  */
 
 @property (nonatomic, assign) VSCIMOSXCollisionActionType currentActionType;
-@property (nonatomic, strong) NSPopUpButton* actionTypePopUpButton;
+//@property (nonatomic, strong) IBOutlet NSPopUpButton* actionTypePopUpButton;
 
-/*
- *  Generic mapping views (not for mapping editting, just minimal)
- */
+@property (nonatomic, strong) IBOutlet NSView* mainView;
+@property (nonatomic, strong) IBOutlet NSTextField* actionTypeTextField;
+@property (nonatomic, strong) IBOutlet NSButton* mappingsButton;
 
-@property (nonatomic, strong) NSMutableArray* collisionMappingViews;
-@property (nonatomic, strong) NSNib* mappingViewNib;
+-(void) setupInterfaceForNewCollisionAction;
 
 /*
  *  Only for MIDI actions
  */
 
-@property (nonatomic, strong) NSPopUpButton* midiControlNumberPopUpButton;
+@property (nonatomic, strong) IBOutlet NSView* midiSetupView;
+@property (nonatomic, strong) IBOutlet NSPopUpButton* midiOutputPopUpButton;
 
--(VSCIMOSXCollisionMappingView*) newCollisionMappingView;
+/*
+ *  Only for MIDI control actions
+ */
 
--(void) setupActionChoice;
--(void) setupInterfaceForNewCollisionAction;
+@property (nonatomic, strong) IBOutlet NSView* midiControlSetupView;
+@property (nonatomic, strong) IBOutlet NSPopUpButton* midiControlNumberPopUpButton;
+
 -(void) updateMIDIControlNumbers;
 
 @end
@@ -64,23 +79,20 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
 
 @synthesize collisionAction = _collisionAction;
 
-+(CGFloat) heightOfViewForCollisionAction:(VSC::IM::CollisionAction::SPtr)collisionAction
++(CGFloat) heightOfViewForCollisionAction:(VSC::IM::CollisionAction::SPtr)collisionAction 
 {
-    CGFloat totalHeight = VSCIMOSXCollisionActionViewBaseHeight;
-    
-    const VSC::IM::Targets& expectedTargets = collisionAction->getExpectedMappingTargets();
-    totalHeight += expectedTargets.size();
-    
     VSCIMOSXCollisionActionType actionType = VSCIMOSXCollisionActionTypeForCollisionAction(collisionAction);
+    
+    CGFloat totalHeight = VSCIMOSXCollisionActionViewBaseHeight;
     
     if (VSCIMOSXCollisionActionTypeIsMIDI(actionType))
     {
-        totalHeight += VSCIMOSXCollisionActionViewParameterHeight;
+        totalHeight += VSCIMOSXCollisionActionViewMIDISetupHeight;
     }
     
     if (actionType == VSCIMOSXCollisionActionTypeMIDIControlChange)
     {
-        totalHeight += VSCIMOSXCollisionActionViewParameterHeight;
+        totalHeight += VSCIMOSXCollisionActionViewMIDIControlSetupHeight;
     }
     
     return totalHeight;
@@ -98,14 +110,14 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
     }
 }
 
-+(NSString*) stringForActionTypeMenuItem:(VSCIMOSXCollisionActionType)actionType
++(NSString*) stringForActionType:(VSCIMOSXCollisionActionType)actionType
 {
     BOOST_ASSERT(actionTypeMenuItemStringDict);
     
     return [actionTypeMenuItemStringDict objectForKey:@((int)actionType)];
 }
 
-+(VSCIMOSXCollisionActionType) actionTypeForMenuItemString:(NSString*)menuItemString
++(VSCIMOSXCollisionActionType) actionTypeForString:(NSString*)menuItemString
 {
     BOOST_ASSERT(actionTypeMenuItemStringDict);
     
@@ -130,16 +142,6 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
         
         self.currentActionType = VSCIMOSXCollisionActionTypeNone;
         
-        NSRect f = NSMakeRect(VSCIMOSXCollisionActionViewHorizontalMargin,
-                              frame.size.height - VSCIMOSXCollisionActionViewVerticalMargin,
-                              frame.size.width - (2.0*VSCIMOSXCollisionActionViewHorizontalMargin),
-                              VSCIMOSXCollisionActionViewPopUpButtonHeight);
-        
-        self.actionTypePopUpButton = [[NSPopUpButton alloc] initWithFrame:f];
-        [self.actionTypePopUpButton setAutoresizingMask:(NSUInteger)(NSViewWidthSizable | NSViewMinYMargin)];
-        [self.actionTypePopUpButton setTarget:self];
-        [self.actionTypePopUpButton setAction:@selector(actionTypeChanged:)];
-        
     }
     
     return self;
@@ -150,24 +152,8 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
     // Drawing code here.
 }
 
-#pragma mark - UI Callbacks
-
--(void) actionTypeChanged:(id)sender
-{
-    VSCIMOSXCollisionActionType newActionType = [[self class] actionTypeForMenuItemString:[[self.actionTypePopUpButton selectedItem] title]];
-    
-    if (newActionType != self.currentActionType)
-    {
-        VSC::IM::CollisionAction::SPtr newAction = [self.controller collisionActionEditor:self requestsCollisionActionWithType:newActionType];
-        self.collisionAction = VSC::IM::CollisionAction::WPtr(newAction);
-    }
-}
-
--(void) midiControlNumberChanged:(id)sender
-{
 
 
-}
 
 #pragma mark - Custom Setter
 
@@ -183,22 +169,7 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
 
 #pragma mark - UI Helper
 
--(void) setupActionChoice
-{
-    BOOST_ASSERT(actionTypeMenuItemStringDict);
-    BOOST_ASSERT(self.actionTypePopUpButton);
-    
-    [self.actionTypePopUpButton removeAllItems];
-    
-    NSArray* keys = [[actionTypeMenuItemStringDict allKeys] sortedArrayUsingSelector:@selector(compare:)];
-    
-    for (NSNumber* key in keys)
-    {
-        NSString* actionDescription = [actionTypeMenuItemStringDict objectForKey:key];
-        BOOST_ASSERT([actionDescription isKindOfClass:[NSString class]]);
-        [self.actionTypePopUpButton addItemWithTitle:actionDescription];
-    }
-}
+
 
 -(void) setupInterfaceForNewCollisionAction
 {

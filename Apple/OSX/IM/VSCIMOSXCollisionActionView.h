@@ -20,11 +20,13 @@
  *  the type of action to be switched.
  */
 
-@interface VSCIMOSXCollisionActionView : NSView <VSCIMOSXCollisionActionEditor, VSCIMOSXCollisionMappingController>
+@interface VSCIMOSXCollisionActionView : NSView
 
 +(CGFloat) heightOfViewForCollisionAction:(VSC::IM::CollisionAction::SPtr)collisionAction;
 
-+(NSString*) menuItemStringForActionType:(VSCIMOSXCollisionActionType)actionType;
-+(VSCIMOSXCollisionActionType) actionTypeForMenuItemString:(NSString*)menuItemString;
++(NSString*) stringForActionType:(VSCIMOSXCollisionActionType)actionType;
++(VSCIMOSXCollisionActionType) actionTypeForString:(NSString*)menuItemString;
+
+@property (nonatomic, assign) VSC::IM::CollisionAction::WPtr collisionAction;
 
 @end
