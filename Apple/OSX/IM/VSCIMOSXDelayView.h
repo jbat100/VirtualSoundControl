@@ -7,10 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "PXListViewCell.h"
 
 #include "VSCIMDelay.h"
 
-@interface VSCIMOSXDelayView : NSView
+@interface VSCIMOSXDelayView : PXListViewCell
 
 @property (nonatomic, assign) VSC::IM::Delay::WPtr delay;
 

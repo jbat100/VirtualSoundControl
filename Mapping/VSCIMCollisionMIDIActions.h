@@ -82,6 +82,8 @@ namespace VSC {
             
             CollisionMIDINoteOnAction();
             
+            virtual void createDefaultMappings();
+            
             virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
                                                       OB::Scene::Collision::SPtr collision);
         };
@@ -96,6 +98,8 @@ namespace VSC {
         public:
             
             CollisionMIDINoteOffAction();
+            
+            virtual void createDefaultMappings();
             
             virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
                                                       OB::Scene::Collision::SPtr collision);
@@ -112,6 +116,8 @@ namespace VSC {
             
             CollisionMIDINoteOnAndOffAction();
             
+            virtual void createDefaultMappings();
+            
             virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
                                                       OB::Scene::Collision::SPtr collision);
         };
@@ -121,9 +127,9 @@ namespace VSC {
             
         public:
             
-            //typedef boost::shared_ptr<CollisionMIDIControlChangeAction> SPtr;
-            
             CollisionMIDIControlChangeAction();
+            
+            virtual void createDefaultMappings();
             
             virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
                                                       OB::Scene::Collision::SPtr collision);

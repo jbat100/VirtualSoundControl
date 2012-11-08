@@ -7,10 +7,11 @@
 //
 
 #import "VSCIMOSXCollisionEventChainView.h"
+#import "VSCIMOSXCollisionEventChainController.h"
 #import "PXListView.h"
 #import "PXListViewCell.h"
 
-#include "VSCIMDelay.h"
+#include "VSCIMCollisionEventChain.h"
 
 #include <boost/assert.hpp>
 
@@ -61,7 +62,7 @@
         
         if (self.eventChainController)
         {
-            VSC::IM::CollisionEventChain::SPtr chain = self.eventChainController.collisionEventChain.lock();
+            VSC::IM::CollisionEventChain::SPtr chain = [self.eventChainController collisionEventChain].lock();
             if (chain) return chain->getEvents().at(index);
         }
     }

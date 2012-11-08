@@ -41,12 +41,6 @@ VSCIMOSXCollisionActionType VSCIMOSXCollisionActionTypeForCollisionAction(VSC::I
 VSC::IM::CollisionAction::SPtr VSCIMOSXCreateCollisionActionWithType(VSCIMOSXCollisionActionType actionType);
 
 /*
- *  Check if action is midi action, useful for interface (editor needs channel text field)
- */
-
-BOOL VSCIMOSXCollisionActionTypeIsMIDI(VSCIMOSXCollisionActionType actionType);
-
-/*
  *  Forward declaration needed for VSCIMOSXCollisionActionController protocol
  */
 

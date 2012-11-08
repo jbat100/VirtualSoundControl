@@ -8,6 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class PXListView;
+
+/*
+ *  Container view for mapping views.
+ */
+
 @interface VSCIMOSXCollisionMappingListView : NSView
+
+@property (weak) IBOutlet PXListView* listView;
 
 @end

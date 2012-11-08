@@ -29,15 +29,21 @@
  */
 
 @class VSCIMOSXCollisionEventChainView;
+@class VSCIMOSXCollisionMappingListView;
+
 @class VSCIMOSXCollisionMappingView;
+@class VSCIMOSXCollisionActionView;
+@class VSCIMOSXDelayView;
 
 @interface VSCIMOSXCollisionEventChainController : NSObject <VSCIMOSXCollisionEventChainController>
 
-@property (nonatomic, strong) IBOutlet VSCIMOSXCollisionEventChainView* collisionEventChainView;
-@property (nonatomic, strong) NSNib* mappingViewNib;
+@property (strong) IBOutlet VSCIMOSXCollisionEventChainView* collisionEventChainView;
 
+@property (strong) IBOutlet VSCIMOSXCollisionMappingListView* collisionMappingListView;
 
 -(VSCIMOSXCollisionMappingView*) newCollisionMappingView;
+-(VSCIMOSXCollisionActionView*) newCollisionActionView;
+-(VSCIMOSXDelayView*) newDelayView;
 
 
 @end

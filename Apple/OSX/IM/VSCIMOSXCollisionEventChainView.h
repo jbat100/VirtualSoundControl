@@ -13,11 +13,17 @@
 @class PXListView;
 @protocol VSCIMOSXCollisionEventChainController;
 
+/*
+ *  Container view for the event chain view and the controls to edit 
+ *  add and remove events
+ */
+
 @interface VSCIMOSXCollisionEventChainView : NSView
 
 @property (weak) id<VSCIMOSXCollisionEventChainController> eventChainController;
 
 @property (nonatomic, strong) IBOutlet PXListView* collisionEventListView;
+
 @property (nonatomic, strong) IBOutlet NSPopUpButton* addEventButton;
 @property (nonatomic, strong) IBOutlet NSButton* removeEventButton;
 @property (nonatomic, strong) IBOutlet NSMenu* addEventMenu;

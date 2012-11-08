@@ -27,15 +27,16 @@ const CGFloat VSCIMOSXCollisionMappingViewEditButtonHeight      = 10.0;
  *  Interface elements common to all mappings
  */
 
-@property (nonatomic, strong) NSTextField* targetTextField;
-@property (nonatomic, strong) NSPopUpButton* mappingPopUpButton;
+@property (weak) IBOutlet NSTextField* targetTextField;
+@property (weak) IBOutlet NSPopUpButton* mappingPopUpButton;
+@property (weak) IBOutlet NSButton* editButton;
 
-@property (nonatomic, strong) NSButton* editButton;
+@property (assign) VSCIMOSXCollisionMappingType collisionMappingType;
 
-@property (nonatomic, assign) VSCIMOSXCollisionMappingType collisionMappingType;
+-(IBAction) editMapping:(id)sender;
+-(IBAction) mappingTypeSelected:(id)sender;
 
 -(void) setupCollisionMappingChoice;
-
 -(void) updateInterfaceForNewCollisionMapping;
 -(void) updateInterfaceForNewTarget;
 

@@ -10,8 +10,10 @@
 
 @interface VSCIMOSXDelayView ()
 
-@property (nonatomic, strong) IBOutlet NSTextField* titleTextField;
-@property (nonatomic, strong) IBOutlet NSTextField* delayTextField;
+@property (weak) IBOutlet NSTextField* titleTextField;
+@property (weak) IBOutlet NSTextField* delayTextField;
+
+-(IBAction) delayChanged:(id)sender;
 
 @end
 
@@ -30,6 +32,16 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
+}
+
+-(void) awakeFromNib
+{
+    [(NSNumberFormatter*)[self.delayTextField formatter] setThousandSeparator:@""];
+}
+
+-(IBAction) delayChanged:(id)sender
+{
+    
 }
 
 @end
