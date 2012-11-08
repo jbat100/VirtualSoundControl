@@ -123,6 +123,7 @@
 		10B60F0B1550850C006A6D6E /* BulletSoftBodySolvers_OpenCL_Mini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60F041550850C006A6D6E /* BulletSoftBodySolvers_OpenCL_Mini.framework */; };
 		10B60F0C1550850C006A6D6E /* Cg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60F051550850C006A6D6E /* Cg.framework */; };
 		10B60F0D1550850C006A6D6E /* LinearMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60F061550850C006A6D6E /* LinearMath.framework */; };
+		10CA6EF9164BF37C00C92F4A /* VSCIMOSXCollisionMappingListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10CA6EF8164BF37C00C92F4A /* VSCIMOSXCollisionMappingListView.m */; };
 		10CFE720156CD62000B24399 /* OgreBulletCollisionsDebugContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6D7156CD61F00B24399 /* OgreBulletCollisionsDebugContact.cpp */; };
 		10CFE721156CD62000B24399 /* OgreBulletCollisionsDebugDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6D8156CD61F00B24399 /* OgreBulletCollisionsDebugDrawer.cpp */; };
 		10CFE722156CD62000B24399 /* OgreBulletCollisionsDebugLines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6D9156CD61F00B24399 /* OgreBulletCollisionsDebugLines.cpp */; };
@@ -446,6 +447,8 @@
 		10B60F051550850C006A6D6E /* Cg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cg.framework; path = /Library/Frameworks/Cg.framework; sourceTree = "<absolute>"; };
 		10B60F061550850C006A6D6E /* LinearMath.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinearMath.framework; path = /Library/Frameworks/LinearMath.framework; sourceTree = "<absolute>"; };
 		10B60F10155086F9006A6D6E /* OgreOSXCocoaView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaView.h; path = include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaView.h; sourceTree = OGRE_SDK; };
+		10CA6EF7164BF37B00C92F4A /* VSCIMOSXCollisionMappingListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMOSXCollisionMappingListView.h; path = ../../../IM/VSCIMOSXCollisionMappingListView.h; sourceTree = "<group>"; };
+		10CA6EF8164BF37C00C92F4A /* VSCIMOSXCollisionMappingListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSCIMOSXCollisionMappingListView.m; path = ../../../IM/VSCIMOSXCollisionMappingListView.m; sourceTree = "<group>"; };
 		10CFE6B0156CD61F00B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		10CFE6B1156CD61F00B24399 /* OgreBulletCollisionsDebugContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsDebugContact.h; sourceTree = "<group>"; };
 		10CFE6B2156CD61F00B24399 /* OgreBulletCollisionsDebugDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsDebugDrawer.h; sourceTree = "<group>"; };
@@ -866,6 +869,8 @@
 				103C3CBF16401BAE00A62B3C /* VSCIMOSXDelayView.mm */,
 				10F1DD0016413524005EA872 /* VSCIMOSXCollisionMappingGlobal.h */,
 				10F1DD07164177F4005EA872 /* VSCIMOSXCollisionMappingGlobal.mm */,
+				10CA6EF7164BF37B00C92F4A /* VSCIMOSXCollisionMappingListView.h */,
+				10CA6EF8164BF37C00C92F4A /* VSCIMOSXCollisionMappingListView.m */,
 				10B4A991164ABC6500E0F6E1 /* VSCIMOSXCollisionMappingView.h */,
 				10B4A992164ABC6500E0F6E1 /* VSCIMOSXCollisionMappingView.mm */,
 				10B4A995164ABCA900E0F6E1 /* VSCIMOSXCollisionMappingView.xib */,
@@ -1641,6 +1646,7 @@
 				10F1DD08164177F8005EA872 /* VSCIMOSXCollisionMappingGlobal.mm in Sources */,
 				10B4A993164ABC6500E0F6E1 /* VSCIMOSXCollisionMappingView.mm in Sources */,
 				1034AF3F164B16C100CE4D14 /* VSCIMOSXCollisionEventChainController.mm in Sources */,
+				10CA6EF9164BF37C00C92F4A /* VSCIMOSXCollisionMappingListView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,11 +7,15 @@
 //
 
 #import <Cocoa/Cocoa.h>
+
 #include "VSCIMEvent.h"
 
 @class PXListView;
+@protocol VSCIMOSXCollisionEventChainController;
 
 @interface VSCIMOSXCollisionEventChainView : NSView
+
+@property (weak) id<VSCIMOSXCollisionEventChainController> eventChainController;
 
 @property (nonatomic, strong) IBOutlet PXListView* collisionEventListView;
 @property (nonatomic, strong) IBOutlet NSPopUpButton* addEventButton;

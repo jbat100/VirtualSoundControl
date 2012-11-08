@@ -63,6 +63,7 @@ namespace VSC {
         
         enum ControlNumber {
             ControlInvalid                      = 999,
+            ControlNone                         = 998,
             ControlBankSelect                   = 0,
             ControlModulationWheel              = 1,
             ControlBreath                       = 2,
@@ -105,6 +106,7 @@ namespace VSC {
         
         std::string messageDescription(const Message& m);
         std::string controlNumberToString(ControlNumber num);
+        ControlNumber stringToControlNumber(const std::string& desc);
         
         class MessageGenerator {
             

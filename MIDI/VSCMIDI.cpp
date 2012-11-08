@@ -12,6 +12,8 @@
 #include "VSCTaskQueue.h"
 
 #include <boost/thread.hpp>
+#include <boost/foreach.hpp>
+#include <boost/assert.hpp>
 
 #include <limits>
 #include <assert.h>
@@ -66,78 +68,84 @@ bool VSC::MIDI::InputPort::operator<(const InputPort& p) const {
     return p.name.compare(name) < 0;
 }
 
-#pragma mark - MIDI Messages
+#pragma mark - MIDI Control Numbers
+
+boost::once_flag filledControlNumberStringsMapFlag = BOOST_ONCE_INIT;
+
+namespace VSC {
+    namespace MIDI {
+        void FillControlNumberStringsMap();
+        typedef std::map<ControlNumber, std::string> ControlNumberStringMap;
+        static ControlNumberStringMap controlNumberStringMap;
+    }
+}
+
+VSC::MIDI::ControlNumberStringMap controlNumberStringMap;
+
+void VSC::MIDI::FillControlNumberStringsMap()
+{
+    
+    BOOST_ASSERT(controlNumberStringMap.empty());
+    
+    controlNumberStringMap[ControlBankSelect]                   = "Bank Select";
+    controlNumberStringMap[ControlModulationWheel]              = "Modulation Wheel";
+    controlNumberStringMap[ControlBreath]                       = "Breath";
+    controlNumberStringMap[ControlFootController]               = "Foot Controller";
+    controlNumberStringMap[ControlChannelVolume]                = "Channel Volume";
+    controlNumberStringMap[ControlBalance]                      = "Balance";
+    controlNumberStringMap[ControlUndefined1]                   = "Undefined 1";
+    controlNumberStringMap[ControlPan]                          = "Pan";
+    controlNumberStringMap[ControlExpressionController]         = "Expression Controller";
+    controlNumberStringMap[ControlEffectControl1]               = "Effect Control 1";
+    controlNumberStringMap[ControlEffectControl2]               = "Effect Control 2";
+    controlNumberStringMap[ControlUndefined2]                   = "Undefined 2";
+    controlNumberStringMap[ControlUndefined3]                   = "Undefined 3";
+    controlNumberStringMap[ControlGeneralPurposeController1]    = "General Purpose Controller 1";
+    controlNumberStringMap[ControlGeneralPurposeController2]    = "General Purpose Controller 2";
+    controlNumberStringMap[ControlGeneralPurposeController3]    = "General Purpose Controller 3";
+    controlNumberStringMap[ControlUndefined4]                   = "Undefined 4";
+    controlNumberStringMap[ControlUndefined5]                   = "Undefined 5";
+    controlNumberStringMap[ControlUndefined6]                   = "Undefined 6";
+    controlNumberStringMap[ControlUndefined7]                   = "Undefined 7";
+    controlNumberStringMap[ControlUndefined8]                   = "Undefined 8";
+    controlNumberStringMap[ControlUndefined9]                   = "Undefined 9";
+    controlNumberStringMap[ControlUndefined10]                  = "Undefined 10";
+    controlNumberStringMap[ControlUndefined11]                  = "Undefined 11";
+    controlNumberStringMap[ControlUndefined12]                  = "Undefined 12";
+    controlNumberStringMap[ControlUndefined13]                  = "Undefined 13";
+    controlNumberStringMap[ControlUndefined14]                  = "Undefined 14";
+    controlNumberStringMap[ControlUndefined15]                  = "Undefined 15";
+    
+    controlNumberStringMap[ControlInvalid]                      = "Invalid MIDI Control Number";
+    controlNumberStringMap[ControlNone]                         = "No MIDI Control Number";
+
+}
+
 
 std::string VSC::MIDI::controlNumberToString(ControlNumber num)
 {
-    switch (num) {
-            
-        case ControlBankSelect:
-            return "Bank Select";
-        case ControlModulationWheel:
-            return "Modulation Wheel";
-        case ControlBreath:
-            return "Breath";
-        case ControlFootController:
-            return "Foot Controller";
-        case ControlChannelVolume:
-            return "Channel Volume";
-        case ControlBalance:
-            return "Balance";
-        case ControlUndefined1:
-            return "Undefined 1";
-        case ControlPan:
-            return "Pan";
-        case ControlExpressionController:
-            return "Expression Controller";
-        case ControlEffectControl1:
-            return "Effect Control 1";
-        case ControlEffectControl2:
-            return "Effect Control 2";
-        case ControlUndefined2:
-            return "Undefined 2";
-        case ControlUndefined3:
-            return "Undefined 3";
-        case ControlGeneralPurposeController1:
-            return "General Purpose Controller 1";
-        case ControlGeneralPurposeController2:
-            return "General Purpose Controller 2";
-        case ControlGeneralPurposeController3:
-            return "General Purpose Controller 3";
-        case ControlGeneralPurposeController4:
-            return "General Purpose Controller 4";
-        case ControlUndefined4:
-            return "Undefined 4";
-        case ControlUndefined5:
-            return "Undefined 5";
-        case ControlUndefined6:
-            return "Undefined 6";
-        case ControlUndefined7:
-            return "Undefined 7";
-        case ControlUndefined8:
-            return "Undefined 8";
-        case ControlUndefined9:
-            return "Undefined 9";
-        case ControlUndefined10:
-            return "Undefined 10";
-        case ControlUndefined11:
-            return "Undefined 11";
-        case ControlUndefined12:
-            return "Undefined 12";
-        case ControlUndefined13:
-            return "Undefined 13";
-        case ControlUndefined14:
-            return "Undefined 14";
-        case ControlUndefined15:
-            return "Undefined 15";
-            
-        default:
-            break;
+    boost::call_once(&FillControlNumberStringsMap, filledControlNumberStringsMapFlag);
+    
+    std::string desc = controlNumberStringMap[num];
+    BOOST_ASSERT(!desc.empty());
+    if (desc.empty()) desc = "Unknown MIDI Control Number";
+    
+    return desc;
+}
+
+VSC::MIDI::ControlNumber VSC::MIDI::stringToControlNumber(const std::string& desc)
+{
+    boost::call_once(&FillControlNumberStringsMap, filledControlNumberStringsMapFlag);
+    
+    BOOST_FOREACH(const ControlNumberStringMap::value_type& mapValue, controlNumberStringMap)
+    {
+        if (desc.compare(mapValue.second) == 0) return mapValue.first;
     }
     
-    return "Invalid";
-             
+    return ControlInvalid;
 }
+
+#pragma mark - MIDI Messages
 
 std::string VSC::MIDI::messageDescription(const Message& m) {
     

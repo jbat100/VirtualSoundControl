@@ -36,7 +36,7 @@ namespace VSC {
             
             CollisionMIDIAction();
             
-            MIDI::Output::SPtr getMIDIOuput(void) {return mMIDIOutput;}
+            MIDI::Output::SPtr getMIDIOutput(void) {return mMIDIOutput;}
             void setMIDIOutput(MIDI::Output::SPtr output) {mMIDIOutput = output;}
             
             unsigned int getChannel(void) {return mChannel;}
@@ -47,6 +47,27 @@ namespace VSC {
             MIDI::Output::SPtr  mMIDIOutput;
             
             unsigned int mChannel;
+            
+        };
+        
+        /*
+         *  A abstract class for MIDI Control Actions
+         */
+        
+        class CollisionMIDIControlAction : public CollisionMIDIAction {
+            
+        public:
+            
+            typedef boost::shared_ptr<CollisionMIDIControlAction> SPtr;
+            
+            CollisionMIDIControlAction() : mControlNumber(MIDI::ControlInvalid) {}
+            
+            MIDI::ControlNumber getControlNumber(void) {return mControlNumber;}
+            void setControlNumber(MIDI::ControlNumber number) {mControlNumber = number;}
+            
+        private:
+            
+            MIDI::ControlNumber mControlNumber;
             
         };
         
@@ -95,25 +116,27 @@ namespace VSC {
                                                       OB::Scene::Collision::SPtr collision);
         };
         
-        class CollisionMIDIControlChangeAction : public CollisionMIDIAction
+        class CollisionMIDIControlChangeAction : public CollisionMIDIControlAction
         {
             
         public:
             
-            typedef boost::shared_ptr<CollisionMIDIControlChangeAction> SPtr;
+            //typedef boost::shared_ptr<CollisionMIDIControlChangeAction> SPtr;
             
             CollisionMIDIControlChangeAction();
             
             virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
                                                       OB::Scene::Collision::SPtr collision);
             
-            MIDI::ControlNumber getControlNumber(void) {return mControlNumber;}
-            void setControlNumber(MIDI::ControlNumber number) {mControlNumber = number;}
-            
-        private:
-            
-            MIDI::ControlNumber mControlNumber;
         };
+        
+        /*
+         *  Utilies and shortcuts
+         */
+        
+        bool collisionActionIsMIDI(CollisionAction::SPtr collisionAction);
+    
+        bool collisionActionIsMIDIControl(CollisionAction::SPtr collisionAction);
 
     }
     

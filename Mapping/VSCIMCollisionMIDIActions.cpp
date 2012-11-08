@@ -7,8 +7,22 @@
 #include "VSCIMCollisionMIDIActions.h"
 #include "VSCMIDITasks.h"
 
+bool VSC::IM::collisionActionIsMIDI(CollisionAction::SPtr collisionAction)
+{
+    if (boost::dynamic_pointer_cast<CollisionMIDIAction>(collisionAction)) return true;
+    
+    return false;
+}
 
-VSC::IM::CollisionMIDIAction::CollisionMIDIAction() : 
+bool VSC::IM::collisionActionIsMIDIControl(CollisionAction::SPtr collisionAction)
+{
+    if (boost::dynamic_pointer_cast<CollisionMIDIControlAction>(collisionAction)) return true;
+    
+    return false;
+}
+
+
+VSC::IM::CollisionMIDIAction::CollisionMIDIAction() :
 mChannel(0)
 {
     this->setTaskQueue(MIDI::SingletonMIDITaskQueue());
@@ -36,7 +50,7 @@ VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAction::createTaskForCollision(OB::S
         payload->channel    = this->getChannel();
         payload->pitch      = (unsigned int) pitchMapping->mappedValue(element, collision);
         payload->velocity   = (unsigned int) velocityMapping->mappedValue(element, collision);
-        payload->midiOutput = this->getMIDIOuput();
+        payload->midiOutput = this->getMIDIOutput();
         
         return Task::SPtr(new MIDI::MIDINoteOnTask(payload));
     }
@@ -66,7 +80,7 @@ VSC::Task::SPtr VSC::IM::CollisionMIDINoteOffAction::createTaskForCollision(OB::
         payload->channel    = this->getChannel();
         payload->pitch      = (unsigned int) pitchMapping->mappedValue(element, collision);
         payload->velocity   = (unsigned int) velocityMapping->mappedValue(element, collision);
-        payload->midiOutput = this->getMIDIOuput();
+        payload->midiOutput = this->getMIDIOutput();
         
         return Task::SPtr(new MIDI::MIDINoteOffTask(payload));
     }
@@ -105,7 +119,7 @@ VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAndOffAction::createTaskForCollision
         long milliseconds       = (long) std::floor(duration * 1000.0);
         payload->duration       = boost::posix_time::millisec(milliseconds);
         
-        payload->midiOutput     = this->getMIDIOuput();
+        payload->midiOutput     = this->getMIDIOutput();
         
         return Task::SPtr(new MIDI::MIDINoteOffTask(payload));
     }
@@ -133,7 +147,7 @@ VSC::Task::SPtr VSC::IM::CollisionMIDIControlChangeAction::createTaskForCollisio
         payload->channel = this->getChannel();
         payload->controlNumber = this->getControlNumber();
         payload->value   = (unsigned int) valueMapping->mappedValue(element, collision);
-        payload->midiOutput = this->getMIDIOuput();
+        payload->midiOutput = this->getMIDIOutput();
         
         return Task::SPtr(new MIDI::MIDIControlChangeTask(payload));
     }

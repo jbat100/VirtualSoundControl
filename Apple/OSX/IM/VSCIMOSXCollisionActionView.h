@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "PXListViewCell.h"
 
 #import "VSCIMOSXCollisionActionGlobal.h"
 #import "VSCIMOSXCollisionMappingGlobal.h"
@@ -14,18 +15,21 @@
 
 #include "VSCIMCollisionAction.h"
 
+@protocol VSCIMOSXCollisionEventChainController;
 
 /*
  *  The actual NSView subclass which displays the collision action parameters and allows 
  *  the type of action to be switched.
  */
 
-@interface VSCIMOSXCollisionActionView : NSView
+@interface VSCIMOSXCollisionActionView : PXListViewCell
 
 +(CGFloat) heightOfViewForCollisionAction:(VSC::IM::CollisionAction::SPtr)collisionAction;
 
 +(NSString*) stringForActionType:(VSCIMOSXCollisionActionType)actionType;
 +(VSCIMOSXCollisionActionType) actionTypeForString:(NSString*)menuItemString;
+
+@property (weak) id<VSCIMOSXCollisionEventChainController> eventChainController;
 
 @property (nonatomic, assign) VSC::IM::CollisionAction::WPtr collisionAction;
 

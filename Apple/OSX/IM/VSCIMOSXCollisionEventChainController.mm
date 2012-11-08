@@ -21,38 +21,48 @@
 -(void) insertEventBeforeSelection:(VSC::IM::Event::SPtr)event;
 -(void) insertEventAfterSelection:(VSC::IM::Event::SPtr)event;
 
+@property (nonatomic, strong) IBOutlet NSMenuItem* addDelayMenuItem;
+
+@property (nonatomic, strong) IBOutlet NSMenuItem* addCollisionMIDINoteOnMenuItem;
+@property (nonatomic, strong) IBOutlet NSMenuItem* addCollisionMIDINoteOffMenuItem;
+@property (nonatomic, strong) IBOutlet NSMenuItem* addCollisionMIDINoteOnAndOffMenuItem;
+@property (nonatomic, strong) IBOutlet NSMenuItem* addCollisionMIDIControlChangeMenuItem;
+
+/*
+ *  Add/Remove chain events
+ */
+
+-(IBAction) addEvent:(id)sender; // type will depend on the NSMenuItem which sent the message
+-(IBAction) removeSelectedEvent:(id)sender;
+
 @end
+
 
 @implementation VSCIMOSXCollisionEventChainController
 
-#pragma mark - Collision Action View Callbacks
-
--(IBAction) showCollisionMappings:(id)sender
-{
-    
-}
-
--(IBAction) refreshMIDIOutputs:(id)sender
-{
-    
-}
-
--(IBAction) midiOutputSelected:(id)sender
-{
-    
-}
-
--(IBAction) refreshMIDIControlNumbers:(id)sender
-{
-    
-}
-
--(IBAction) midiControlNumberSelected:(id)sender
-{
-    
-}
 
 #pragma mark - Add and Remove Events To Chain
+
+-(IBAction) addEvent:(id)sender
+{
+    VSC::IM::Event::SPtr event;
+    
+    if (sender == self.addDelayMenuItem)
+        event = VSC::IM::Event::SPtr(new VSC::IM::Delay);
+    else if (sender == self.addCollisionMIDINoteOnMenuItem)
+        event = VSC::IM::Event::SPtr(new VSC::IM::CollisionNoteOnAction);
+    else if (sender == self.addCollisionMIDINoteOffMenuItem)
+        event = VSC::IM::Event::SPtr(new VSC::IM::CollisionNoteOffAction);
+    else if (sender == self.addCollisionMIDINoteOnAndOffMenuItem)
+        event = VSC::IM::Event::SPtr(new VSC::IM::CollisionNoteOnAndOffAction);
+    else if (sender == self.addCollisionMIDIControlChangeMenuItem)
+        event = VSC::IM::Event::SPtr(new VSC::IM::CollisionControlChangeAction);
+    
+    if (event)
+    {
+        [self appendEvent:event];
+    }
+}
 
 -(IBAction) removeSelectedEvent:(id)sender
 {
@@ -67,58 +77,6 @@
             [self.collisionEventChainView.collisionEventListView reloadData];
         }
     }
-}
-
-#pragma mark - Add Collision Actions To Chain
-
--(IBAction) prependNewCollisionAction:(id)sender
-{
-    VSC::IM::Event::SPtr voidAction = VSC::IM::Event::SPtr(new VSC::IM::CollisionVoidAction);
-    [self prependEvent:voidAction];
-}
-
--(IBAction) appendNewCollisionAction:(id)sender
-{
-    VSC::IM::Event::SPtr voidAction = VSC::IM::Event::SPtr(new VSC::IM::CollisionVoidAction);
-    [self appendEvent:voidAction];
-}
-
--(IBAction) insertNewCollisionActionBeforeSelection:(id)sender
-{
-    VSC::IM::Event::SPtr voidAction = VSC::IM::Event::SPtr(new VSC::IM::CollisionVoidAction);
-    [self insertEventBeforeSelection:voidAction];
-}
-
--(IBAction) insertNewCollisionActionAfterSelection:(id)sender
-{
-    VSC::IM::Event::SPtr voidAction = VSC::IM::Event::SPtr(new VSC::IM::CollisionVoidAction);
-    [self insertEventAfterSelection:voidAction];
-}
-
-#pragma mark - Add Delays To Chain
-
--(IBAction) prependNewDelay:(id)sender
-{
-    VSC::IM::Event::SPtr delay = VSC::IM::Event::SPtr(new VSC::IM::Delay);
-    [self prependEvent:delay];
-}
-
--(IBAction) appendNewDelay:(id)sender
-{
-    VSC::IM::Event::SPtr delay = VSC::IM::Event::SPtr(new VSC::IM::Delay);
-    [self appendEvent:delay];
-}
-
--(IBAction) insertNewDelayBeforeSelection:(id)sender
-{
-    VSC::IM::Event::SPtr delay = VSC::IM::Event::SPtr(new VSC::IM::Delay);
-    [self insertEventBeforeSelection:delay];
-}
-
--(IBAction) insertNewDelayAfterSelection:(id)sender
-{
-    VSC::IM::Event::SPtr delay = VSC::IM::Event::SPtr(new VSC::IM::Delay);
-    [self insertEventAfterSelection:delay];
 }
 
 #pragma mark - Add Events To Chain
@@ -146,7 +104,7 @@
 -(void) insertEventBeforeSelection:(VSC::IM::Event::SPtr)event
 {
     VSC::IM::CollisionEventChain::SPtr chain = self.collisionEventChain.lock();
-    VSC::IM::Event::SPtr selectedEvent = [self selectedChainEvent];
+    VSC::IM::Event::SPtr selectedEvent = [self.collisionEventChainView selectedChainEvent];
     if (chain && selectedEvent && event)
     {
         chain->insertEventBeforeEvent(event, selectedEvent);
@@ -157,12 +115,16 @@
 -(void) insertEventAfterSelection:(VSC::IM::Event::SPtr)event
 {
     VSC::IM::CollisionEventChain::SPtr chain = self.collisionEventChain.lock();
-    VSC::IM::Event::SPtr selectedEvent = [self selectedChainEvent];
+    VSC::IM::Event::SPtr selectedEvent = [self.collisionEventChainView selectedChainEvent];
     if (chain && selectedEvent && event)
     {
         chain->insertEventAfterEvent(event, selectedEvent);
         [self.collisionEventChainView.collisionEventListView reloadData];
     }
 }
+
+#pragma mark - PXListViewDelegate
+
+
 
 @end

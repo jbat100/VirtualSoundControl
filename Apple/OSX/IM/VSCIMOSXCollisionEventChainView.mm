@@ -7,6 +7,7 @@
 //
 
 #import "VSCIMOSXCollisionEventChainView.h"
+#import "PXListView.h"
 #import "PXListViewCell.h"
 
 #include "VSCIMDelay.h"
@@ -57,8 +58,12 @@
     if ([indexSet count] == 1)
     {
         NSUInteger index = [indexSet firstIndex];
-        VSC::IM::CollisionEventChain::SPtr chain = self.collisionEventChain.lock();
-        if (chain) return chain->getEvents().at(index);
+        
+        if (self.eventChainController)
+        {
+            VSC::IM::CollisionEventChain::SPtr chain = self.eventChainController.collisionEventChain.lock();
+            if (chain) return chain->getEvents().at(index);
+        }
     }
     
     return VSC::IM::Event::SPtr();
