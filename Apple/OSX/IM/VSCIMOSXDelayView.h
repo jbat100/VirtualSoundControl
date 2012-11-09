@@ -13,6 +13,8 @@
 
 @interface VSCIMOSXDelayView : PXListViewCell
 
++(CGFloat) defaultViewHeight;
+
 @property (nonatomic, assign) VSC::IM::Delay::WPtr delay;
 
 @end

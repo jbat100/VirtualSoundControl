@@ -9,14 +9,29 @@
 
 #include <boost/foreach.hpp>
 
-unsigned int VSC::IM::EventChain::numberOfEvents(void)
+unsigned int VSC::IM::EventChain::getNumberOfEvents(void)
 {
     return (unsigned int) mEvents.size();
 }
 
+VSC::IM::Event::SPtr VSC::IM::EventChain::getEventAtIndex(unsigned int index)
+{
+    BOOST_ASSERT(this->getNumberOfEvents() > index);
+    
+    if (this->getNumberOfEvents() > index)
+    {
+        return mEvents.at(index);
+    }
+    
+    return Event::SPtr();
+}
+
 void VSC::IM::EventChain::appendEvent(Event::SPtr event)
 {
-    if (!this->checkEvent(event))
+    if (!this->checkEvent(event))        
+    {
+        throw VSCInvalidArgumentException("Attempting to event of invalid type");
+    }
     
     Events::iterator it = std::find(mEvents.begin(), mEvents.end(), event);
     if (it == mEvents.end())
@@ -38,7 +53,7 @@ void VSC::IM::EventChain::prependEvent(Event::SPtr event)
 
 void VSC::IM::EventChain::insertEventAtIndex(Event::SPtr event, unsigned int index)
 {
-    if (index > numberOfEvents())
+    if (index > getNumberOfEvents())
     {
         throw VSCInvalidArgumentException("Attempting to add event at invalid index");
     }

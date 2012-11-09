@@ -23,13 +23,12 @@ namespace VSC {
             
             virtual ~EventChain();
             
-            unsigned int numberOfEvents(void);
-            
+            unsigned int getNumberOfEvents(void);
             const Events& getEvents(void);
-            
+            Event::SPtr getEventAtIndex(unsigned int index);
+
             void appendEvent(Event::SPtr event);
             void prependEvent(Event::SPtr event);
-            
             void insertEventAtIndex(Event::SPtr event, unsigned int index);
             void insertEventAfterEvent(Event::SPtr insertedEvent, Event::SPtr event);
             void insertEventBeforeEvent(Event::SPtr insertedEvent, Event::SPtr event);

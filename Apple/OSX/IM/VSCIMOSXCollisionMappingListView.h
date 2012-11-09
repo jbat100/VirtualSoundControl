@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#include "VSCIMCollisionAction.h"
+
 @class PXListView;
 
 /*
@@ -16,6 +18,8 @@
 
 @interface VSCIMOSXCollisionMappingListView : NSView
 
-@property (weak) IBOutlet PXListView* listView;
+@property (nonatomic, assign) VSC::IM::CollisionAction::WPtr collisionAction;
+
+@property (weak) IBOutlet PXListView* mappingListView;
 
 @end

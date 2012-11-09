@@ -22,7 +22,7 @@
 
 @property (weak) id<VSCIMOSXCollisionEventChainController> eventChainController;
 
-@property (nonatomic, strong) IBOutlet PXListView* collisionEventListView;
+@property (nonatomic, strong) IBOutlet PXListView* eventListView;
 
 @property (nonatomic, strong) IBOutlet NSPopUpButton* addEventButton;
 @property (nonatomic, strong) IBOutlet NSButton* removeEventButton;

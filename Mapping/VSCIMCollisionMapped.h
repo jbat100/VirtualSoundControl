@@ -23,7 +23,6 @@ namespace VSC {
             CollisionMapping::SPtr getMappingForTarget(const Target target);
             void setMappingForTarget(Target target, CollisionMapping::SPtr mapping);
             void removeMappingForTarget(const Target target);
-            const Targets getMappingTargets();
             
             Target getTargetForMapping(CollisionMapping::SPtr mapping);
             

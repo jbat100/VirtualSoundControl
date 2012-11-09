@@ -19,6 +19,11 @@
 
 @implementation VSCIMOSXDelayView
 
++(CGFloat) defaultViewHeight
+{
+    return 40.0;
+}
+
 - (id)initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];

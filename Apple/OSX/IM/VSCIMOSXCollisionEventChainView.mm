@@ -52,7 +52,7 @@
 
 -(VSC::IM::Event::SPtr) selectedChainEvent
 {
-    NSIndexSet* indexSet = [self.collisionEventListView selectedRows];
+    NSIndexSet* indexSet = [self.eventListView selectedRows];
     
     BOOST_ASSERT([indexSet count] <= 1);
     
