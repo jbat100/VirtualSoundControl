@@ -7,6 +7,15 @@
 
 #import "NSString+VSCAdditions.h"
 
+@interface VSCOSXOBSceneElementCell ()
+
+@property (nonatomic, strong) IBOutlet NSTextField* nameTextField;
+@property (nonatomic, strong) IBOutlet NSButton* inspectorButton;
+
+-(IBAction) showElementInspector;
+
+@end
+
 @implementation VSCOSXOBSceneElementCell
 
 -(void) awakeFromNib

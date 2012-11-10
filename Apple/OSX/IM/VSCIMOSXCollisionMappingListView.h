@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "VSCIMOSXCollisionEventChainController.h"
 
 #include "VSCIMCollisionAction.h"
 
@@ -19,6 +20,8 @@
 @interface VSCIMOSXCollisionMappingListView : NSView
 
 @property (nonatomic, assign) VSC::IM::CollisionAction::WPtr collisionAction;
+
+@property (weak) id<VSCIMOSXCollisionEventChainController> eventChainController;
 
 @property (weak) IBOutlet PXListView* mappingListView;
 

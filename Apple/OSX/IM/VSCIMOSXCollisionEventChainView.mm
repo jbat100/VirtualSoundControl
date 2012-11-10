@@ -39,7 +39,7 @@
 
 - (void) awakeFromNib
 {
-    BOOST_ASSERT(self.collisionEventListView);
+    BOOST_ASSERT(self.eventListView);
     BOOST_ASSERT(self.addEventButton);
     BOOST_ASSERT(self.removeEventButton);
     BOOST_ASSERT(self.addEventMenu);

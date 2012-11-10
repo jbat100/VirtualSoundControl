@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11E53</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2843</string>
-		<string key="IBDocument.AppKitVersion">1138.47</string>
-		<string key="IBDocument.HIToolboxVersion">569.00</string>
+		<int key="IBDocument.SystemTarget">1080</int>
+		<string key="IBDocument.SystemVersion">12C60</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
+		<string key="IBDocument.AppKitVersion">1187.34</string>
+		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2843</string>
+			<string key="NS.object.0">2844</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBNSLayoutConstraint</string>
@@ -52,7 +52,7 @@
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="39266544">
-							<int key="NSCellFlags">-2080244160</int>
+							<int key="NSCellFlags">-2080374720</int>
 							<int key="NSCellFlags2">134219776</int>
 							<object class="NSFont" key="NSSupport" id="522850837">
 								<string key="NSName">LucidaGrande</string>
@@ -119,6 +119,8 @@
 													<int key="NSMnemonicLoc">2147483647</int>
 													<reference key="NSOnImage" ref="3427850"/>
 													<reference key="NSMixedImage" ref="922039701"/>
+													<string key="NSAction">_popUpItemAction:</string>
+													<reference key="NSTarget" ref="39266544"/>
 												</object>
 												<object class="NSMenuItem" id="719848596">
 													<reference key="NSMenu" ref="815143741"/>
@@ -127,6 +129,8 @@
 													<int key="NSMnemonicLoc">2147483647</int>
 													<reference key="NSOnImage" ref="3427850"/>
 													<reference key="NSMixedImage" ref="922039701"/>
+													<string key="NSAction">_popUpItemAction:</string>
+													<reference key="NSTarget" ref="39266544"/>
 												</object>
 												<object class="NSMenuItem" id="910135829">
 													<reference key="NSMenu" ref="815143741"/>
@@ -135,6 +139,8 @@
 													<int key="NSMnemonicLoc">2147483647</int>
 													<reference key="NSOnImage" ref="3427850"/>
 													<reference key="NSMixedImage" ref="922039701"/>
+													<string key="NSAction">_popUpItemAction:</string>
+													<reference key="NSTarget" ref="39266544"/>
 												</object>
 												<object class="NSMenuItem" id="709798335">
 													<reference key="NSMenu" ref="815143741"/>
@@ -174,11 +180,11 @@
 								</array>
 								<reference key="NSMenuFont" ref="522850837"/>
 							</object>
-							<int key="NSSelectedIndex">2</int>
 							<bool key="NSPullDown">YES</bool>
 							<bool key="NSUsesItemFromMenu">YES</bool>
 							<bool key="NSAltersState">YES</bool>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSCustomView" id="56607749">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -212,6 +218,7 @@
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 				</array>
 				<string key="NSFrameSize">{218, 389}</string>
@@ -225,11 +232,19 @@
 			<array class="NSMutableArray" key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">addCollisionMIDIControlChangeMenuItem</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="709798335"/>
+					</object>
+					<int key="connectionID">89</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">addCollisionMIDINoteOffMenuItem</string>
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="719848596"/>
 					</object>
-					<int key="connectionID">84</int>
+					<int key="connectionID">90</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -237,7 +252,7 @@
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="910135829"/>
 					</object>
-					<int key="connectionID">85</int>
+					<int key="connectionID">91</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -245,23 +260,31 @@
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="630875826"/>
 					</object>
-					<int key="connectionID">86</int>
+					<int key="connectionID">92</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">addCollisionMIDIControlChangeMenuItem</string>
+						<string key="label">addDelayMenuItem</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="709798335"/>
+						<reference key="destination" ref="32613036"/>
 					</object>
-					<int key="connectionID">87</int>
+					<int key="connectionID">93</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">collisionEventListView</string>
-						<reference key="source" ref="1005"/>
-						<reference key="destination" ref="56607749"/>
+						<string key="label">collisionEventChainView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1005"/>
 					</object>
-					<int key="connectionID">32</int>
+					<int key="connectionID">94</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">removeSelectedEvent:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1062753581"/>
+					</object>
+					<int key="connectionID">95</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -272,28 +295,20 @@
 					<int key="connectionID">53</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">removeSelectedEvent:</string>
-						<reference key="source" ref="1005"/>
-						<reference key="destination" ref="1062753581"/>
-					</object>
-					<int key="connectionID">54</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">prependNewDelay:</string>
-						<reference key="source" ref="1005"/>
-						<reference key="destination" ref="32613036"/>
-					</object>
-					<int key="connectionID">41</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">addEventButton</string>
 						<reference key="source" ref="1005"/>
 						<reference key="destination" ref="828878072"/>
 					</object>
 					<int key="connectionID">76</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">eventListView</string>
+						<reference key="source" ref="1005"/>
+						<reference key="destination" ref="56607749"/>
+					</object>
+					<int key="connectionID">88</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -735,7 +750,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">87</int>
+			<int key="maxID">95</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -769,31 +784,45 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">VSCIMOSXCollisionEventChainController</string>
 					<string key="superclassName">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="addEvent:">id</string>
-						<string key="removeSelectedEvent:">id</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="addCollisionMIDIControlChangeMenuItem">NSMenuItem</string>
+						<string key="addCollisionMIDINoteOffMenuItem">NSMenuItem</string>
+						<string key="addCollisionMIDINoteOnAndOffMenuItem">NSMenuItem</string>
+						<string key="addCollisionMIDINoteOnMenuItem">NSMenuItem</string>
+						<string key="addDelayMenuItem">NSMenuItem</string>
+						<string key="collisionEventChainView">VSCIMOSXCollisionEventChainView</string>
+						<string key="collisionMappingListView">VSCIMOSXCollisionMappingListView</string>
 					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="addEvent:">
-							<string key="name">addEvent:</string>
-							<string key="candidateClassName">id</string>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="addCollisionMIDIControlChangeMenuItem">
+							<string key="name">addCollisionMIDIControlChangeMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
 						</object>
-						<object class="IBActionInfo" key="removeSelectedEvent:">
-							<string key="name">removeSelectedEvent:</string>
-							<string key="candidateClassName">id</string>
+						<object class="IBToOneOutletInfo" key="addCollisionMIDINoteOffMenuItem">
+							<string key="name">addCollisionMIDINoteOffMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
 						</object>
-					</dictionary>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">collisionEventChainView</string>
-						<string key="NS.object.0">VSCIMOSXCollisionEventChainView</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">collisionEventChainView</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
+						<object class="IBToOneOutletInfo" key="addCollisionMIDINoteOnAndOffMenuItem">
+							<string key="name">addCollisionMIDINoteOnAndOffMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="addCollisionMIDINoteOnMenuItem">
+							<string key="name">addCollisionMIDINoteOnMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="addDelayMenuItem">
+							<string key="name">addDelayMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="collisionEventChainView">
 							<string key="name">collisionEventChainView</string>
 							<string key="candidateClassName">VSCIMOSXCollisionEventChainView</string>
 						</object>
-					</object>
+						<object class="IBToOneOutletInfo" key="collisionMappingListView">
+							<string key="name">collisionMappingListView</string>
+							<string key="candidateClassName">VSCIMOSXCollisionMappingListView</string>
+						</object>
+					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/VSCIMOSXCollisionEventChainController.h</string>
@@ -805,7 +834,7 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="addEventButton">NSPopUpButton</string>
 						<string key="addEventMenu">NSMenu</string>
-						<string key="collisionEventListView">PXListView</string>
+						<string key="eventListView">PXListView</string>
 						<string key="removeEventButton">NSButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -817,8 +846,8 @@
 							<string key="name">addEventMenu</string>
 							<string key="candidateClassName">NSMenu</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="collisionEventListView">
-							<string key="name">collisionEventListView</string>
+						<object class="IBToOneOutletInfo" key="eventListView">
+							<string key="name">eventListView</string>
 							<string key="candidateClassName">PXListView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="removeEventButton">
@@ -829,6 +858,25 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/VSCIMOSXCollisionEventChainView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">VSCIMOSXCollisionMappingListView</string>
+					<string key="superclassName">NSView</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">mappingListView</string>
+						<string key="NS.object.0">PXListView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">mappingListView</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">mappingListView</string>
+							<string key="candidateClassName">PXListView</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/VSCIMOSXCollisionMappingListView.h</string>
 					</object>
 				</object>
 			</array>

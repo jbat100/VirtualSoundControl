@@ -12,12 +12,18 @@
 
 #include "VSCOBScene.h"
 
-@interface VSCOSXOBSceneElementListController : NSObject <PXListViewDelegate>
+@class VSCOBOSXSceneElementListView;
+
+@protocol VSCOSXOBSceneElementListController <NSObject, PXListViewDelegate>
 
 @property (weak) id<VSCOSXEnvironmentController> environmentController;
 
+@end
+
+@interface VSCOSXOBSceneElementListController : NSObject <VSCOSXOBSceneElementListController>
+
 @property (nonatomic, assign) VSC::OB::Scene::WPtr scene;
 
-@property (nonatomic, strong) IBOutlet PXListView* sceneElementListView;
+@property (weak) VSCOBOSXSceneElementListView* elementListView;
 
 @end

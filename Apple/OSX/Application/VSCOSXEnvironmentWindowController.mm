@@ -10,7 +10,6 @@
 #import "VSCOSXApplicationManager.h"
 #import "VSCOBOSXSceneDisplayView.h"
 
-
 #import "NSString+VSCAdditions.h"
 #import "NSArray+VSCAdditions.h"
 

@@ -14,10 +14,13 @@
 
 @interface VSCOSXOBSceneElementInspectorView : NSView
 
-@property (nonatomic, strong) IBOutlet DMTabBar* tabBar;
-@property (nonatomic, strong) IBOutlet NSTabView* tabView;
+@property (weak) IBOutlet DMTabBar* tabBar;
+@property (weak) IBOutlet NSView* mainView;
 
-@property (nonatomic, strong) IBOutlet VSCOSXOBSceneElementDetailView* elementDetailView;
-@property (nonatomic, strong) IBOutlet VSCOSXOBSceneElementCollisionView* elementCollisionView;
+@property (strong) VSCOSXOBSceneElementDetailView* elementDetailView;
+@property (strong) VSCOSXOBSceneElementCollisionView* elementCollisionView;
+
+-(void) showElementDetailView;
+-(void) showElementCollisionView;
 
 @end

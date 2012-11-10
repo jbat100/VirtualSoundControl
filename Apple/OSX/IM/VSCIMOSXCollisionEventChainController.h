@@ -20,6 +20,8 @@
 
 @property (nonatomic, assign) VSC::IM::CollisionEventChain::WPtr collisionEventChain;
 
+-(void) showCollisionEventChain;
+
 -(void) showCollisionMappingsForCollisionAction:(VSC::IM::CollisionAction::SPtr)collisionAction;
 
 @end
@@ -37,8 +39,9 @@
 
 @interface VSCIMOSXCollisionEventChainController : NSObject <VSCIMOSXCollisionEventChainController>
 
-@property (strong) IBOutlet VSCIMOSXCollisionEventChainView* collisionEventChainView;
+@property (strong) NSView* mainView;
 
+@property (strong) IBOutlet VSCIMOSXCollisionEventChainView* collisionEventChainView;
 @property (strong) IBOutlet VSCIMOSXCollisionMappingListView* collisionMappingListView;
 
 -(VSCIMOSXCollisionMappingView*) newCollisionMappingView;

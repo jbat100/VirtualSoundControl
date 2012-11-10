@@ -12,22 +12,10 @@
 @interface VSCOSXOBSceneElementCell : PXListViewCell
 
 @property (nonatomic, assign) VSC::OB::Scene::Element::WPtr element;
-
-/*
- *  Environment controller
- */
-
 @property (weak) id<VSCOSXEnvironmentController> environmentController;
 
-/*
- *  Basic info and interface
- */
-
-@property (nonatomic, strong) IBOutlet NSTextField* nameTextField;
-@property (nonatomic, strong) IBOutlet NSButton* inspectorButton;
++(CGFloat) defaultViewHeight;
 
 -(void) reload;
-
--(IBAction) showElementInspector;
 
 @end

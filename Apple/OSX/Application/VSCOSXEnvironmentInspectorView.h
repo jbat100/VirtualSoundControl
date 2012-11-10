@@ -28,8 +28,10 @@
  *  Tabbed interface
  */
 
-@property (nonatomic, strong) IBOutlet DMTabBar* tabBar;
-@property (nonatomic, strong) IBOutlet NSTabView* tabView;
+@property (weak) IBOutlet DMTabBar* tabBar;
+//@property (nonatomic, strong) IBOutlet NSTabView* tabView;
+
+@property (weak) IBOutlet NSView* mainView;
 
 /*
  *  Element list

@@ -8,11 +8,14 @@
 
 #import "VSCOSXOBSceneElementListController.h"
 
+#import "VSCOBOSXSceneElementListView.h"
 #import "VSCOSXOBSceneElementCell.h"
 
-NSString* const CellIdentifier = @"VSCOSXOBSceneElementCell";
+NSString* const VSCOSXOBSceneElementCellReuseIdentifier = @"VSCOSXOBSceneElementCellReuseIdentifier";
 
 @implementation VSCOSXOBSceneElementListController
+
+@synthesize environmentController = _environmentController;
 
 #pragma mark - List View Delegate Methods
 
@@ -26,14 +29,22 @@ NSString* const CellIdentifier = @"VSCOSXOBSceneElementCell";
 
 - (PXListViewCell*)listView:(PXListView*)aListView cellForRow:(NSUInteger)row
 {
-	VSCOSXOBSceneElementCell *cell = (VSCOSXOBSceneElementCell*)[self.listView dequeueCellWithReusableIdentifier:CellIdentifier];
+    BOOST_ASSERT(aListView == self.elementListView.listView);
+    if (aListView != self.elementListView.listView) return nil;
+    
+    PXListViewCell* cell = [aListView dequeueCellWithReusableIdentifier:VSCOSXOBSceneElementCellReuseIdentifier];
+    
+    BOOST_ASSERT([cell isKindOfClass:[VSCOSXOBSceneElementCell class]]);
+    
+	VSCOSXOBSceneElementCell *elementCell = (VSCOSXOBSceneElementCell*)cell;
 	
-	if(!cell)
+	if(!elementCell)
     {
-		cell = [VSCOSXOBSceneElementCell cellLoadedFromNibNamed:@"VSCOSXOBSceneElementCell" reusableIdentifier:CellIdentifier];
+		elementCell = [VSCOSXOBSceneElementCell cellLoadedFromNibNamed:@"VSCOSXOBSceneElementCell"
+                                                    reusableIdentifier:VSCOSXOBSceneElementCellReuseIdentifier];
 	}
     
-    cell.environmentController = self.environmentController;
+    elementCell.environmentController = self.environmentController;
     
     VSC::OB::Scene::SPtr s = self.scene.lock();
     VSC::OB::Scene::Elements& elems = s->getElements();
@@ -42,19 +53,19 @@ NSString* const CellIdentifier = @"VSCOSXOBSceneElementCell";
     VSC::OB::Scene::Element::WPtr weakElem = VSC::OB::Scene::Element::WPtr(elem);
 	
 	// Set up the new cell:
-	cell.element = weakElem;
+	elementCell.element = weakElem;
 	
-	return cell;
+	return elementCell;
 }
 
 - (CGFloat)listView:(PXListView*)aListView heightOfRow:(NSUInteger)row
 {
-	return 60;
+	return [VSCOSXOBSceneElementCell defaultViewHeight];
 }
 
 - (void)listViewSelectionDidChange:(NSNotification*)aNotification
 {
-    NSLog(@"Selection changed");
+    NSLog(@"%@ selection changed %@", self, aNotification);
 }
 
 @end

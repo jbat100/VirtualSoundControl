@@ -8,6 +8,8 @@
 
 #import "VSCOSXOBSceneElementInspectorView.h"
 
+#include <boost/assert.hpp>
+
 NSDictionary* elementInspectorTabDict = nil;
 
 @implementation VSCOSXOBSceneElementInspectorView
@@ -15,16 +17,14 @@ NSDictionary* elementInspectorTabDict = nil;
 + (void)load
 {
     
-    
-    
 }
 
 - (void)awakeFromNib
 {
     NSLog(@"%@ awakeFromNib", self);
     
-    BOOST_ASSERT(self.elementDetailView);
-    BOOST_ASSERT(self.elementCollisionView);
+    //BOOST_ASSERT(self.elementDetailView);
+    //BOOST_ASSERT(self.elementCollisionView);
     
 }
 
@@ -41,6 +41,16 @@ NSDictionary* elementInspectorTabDict = nil;
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
+}
+
+-(void) showElementDetailView
+{
+    
+}
+
+-(void) showElementCollisionView
+{
+    
 }
 
 @end

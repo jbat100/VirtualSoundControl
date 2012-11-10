@@ -22,11 +22,11 @@
 
 @property (weak) id<VSCIMOSXCollisionEventChainController> eventChainController;
 
-@property (nonatomic, strong) IBOutlet PXListView* eventListView;
+@property (weak) IBOutlet PXListView* eventListView;
 
-@property (nonatomic, strong) IBOutlet NSPopUpButton* addEventButton;
-@property (nonatomic, strong) IBOutlet NSButton* removeEventButton;
-@property (nonatomic, strong) IBOutlet NSMenu* addEventMenu;
+@property (weak) IBOutlet NSPopUpButton* addEventButton;
+@property (weak) IBOutlet NSButton* removeEventButton;
+@property (weak) IBOutlet NSMenu* addEventMenu;
 
 -(VSC::IM::Event::SPtr) selectedChainEvent;
 

@@ -8,6 +8,14 @@
 
 #import "VSCIMOSXCollisionMappingListView.h"
 
+@interface VSCIMOSXCollisionMappingListView ()
+
+@property (weak) IBOutlet NSButton* backToEventChainViewButton;
+
+-(IBAction) backToEventChainView:(id)sender;
+
+@end
+
 @implementation VSCIMOSXCollisionMappingListView
 
 - (id)initWithFrame:(NSRect)frame
@@ -23,6 +31,11 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
+}
+
+-(IBAction) backToEventChainView:(id)sender
+{
+    [self.eventChainController showCollisionEventChain];
 }
 
 @end
