@@ -1,9 +1,9 @@
 [submodule "Apple/Submodules/JAListView"]
 	path = Apple/Submodules/JAListView
-	url = https://github.com/joshaber/JAListView
+url=https://github.com/jbat100/JAListView
 [submodule "Apple/Submodules/PXListView"]
 	path = Apple/Submodules/PXListView
-	url = https://github.com/Perspx/PXListView.git
+url=https://github.com/jbat100/PXListView.git
 [submodule "Apple/Submodules/DMTabBar"]
 	path = Apple/Submodules/DMTabBar
-	url = https://github.com/malcommac/DMTabBar.git
+url=https://github.com/jbat100/DMTabBar.git
