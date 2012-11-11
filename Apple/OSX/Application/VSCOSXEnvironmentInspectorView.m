@@ -10,8 +10,12 @@
 
 NSArray* EnvironmentInspectorTabParamArray = nil;
 
+NSString* const VSCOSXTabTitleScene = @"Scene";
+NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
+
 @interface VSCOSXEnvironmentInspectorView ()
 
+-(void) setup;
 
 @end
 
@@ -20,8 +24,8 @@ NSArray* EnvironmentInspectorTabParamArray = nil;
 +(void) load {
     
     EnvironmentInspectorTabParamArray = @[
-    @{@"image": [NSImage imageNamed:@"12-eye"], @"title": @"Scene"},
-    @{@"image": [NSImage imageNamed:@"122-stats"], @"title": @"Enveloppes"},
+    @{@"image": [NSImage imageNamed:@"12-eye"], @"title": VSCOSXTabTitleScene},
+    @{@"image": [NSImage imageNamed:@"122-stats"], @"title": VSCOSXTabTitleEnveloppes},
     ];
     
 }
@@ -42,8 +46,15 @@ NSArray* EnvironmentInspectorTabParamArray = nil;
     // Drawing code here.
 }
 
+-(void) awakeFromNib
+{
+    [self setup];
+}
+
 -(void) setup
 {
+    
+    BOOST_ASSERT(EnvironmentInspectorTabParamArray);
     
     NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:[EnvironmentInspectorTabParamArray count]];
     
@@ -68,15 +79,26 @@ NSArray* EnvironmentInspectorTabParamArray = nil;
         
         if (selectionType == DMTabBarItemSelectionType_WillSelect)
         {
-            NSLog(@"Will select %lu/%@", tabBarItemIndex, tabBarItem);
-            [self.tabView selectTabViewItem:[tabView.tabViewItems objectAtIndex:tabBarItemIndex]];
+            NSLog(@"%@ will select %lu/%@", self.tabBar, tabBarItemIndex, tabBarItem);
+            //[self.tabView selectTabViewItem:[tabView.tabViewItems objectAtIndex:tabBarItemIndex]];
+            
+            if ([item.toolTip isEqualToString:VSCOSXTabTitleScene])
+            {
+                [self showElementSceneList];
+            }
+            
         }
         else if (selectionType == DMTabBarItemSelectionType_DidSelect)
         {
-            NSLog(@"Did select %lu/%@", tabBarItemIndex, tabBarItem);
+            NSLog(@"%@ did select %lu/%@", self.tabBar, tabBarItemIndex, tabBarItem);
         }
         
     }];
+    
+}
+
+-(void) showSceneElementList
+{
     
 }
 

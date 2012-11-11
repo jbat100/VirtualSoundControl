@@ -13,6 +13,8 @@
 
 #include "VSCEnvironment.h"
 
+@class VSCOSXOBSceneElementInspectorWindowController;
+
 /*
  *  Set up programatically, not through IB.
  */
@@ -20,9 +22,7 @@
 @interface VSCOSXEnvironmentInspectorView : NSView
 
 @property (nonatomic, assign) VSC::Environment::WPtr environment;
-@property (weak) id<VSCOSXEnvironmentController> environmentController;
-
--(void) setup;
+@property (weak) IBOutlet id<VSCOSXEnvironmentController> environmentController;
 
 /*
  *  Tabbed interface
@@ -37,8 +37,8 @@
  *  Element list
  */
 
-@property (nonatomic, strong) IBOutlet PXListView* sceneElementListView;
-@property (nonatomic, strong) IBOutlet VSCOSXOBSceneElementListController* sceneElementListController;
+@property (strong) IBOutlet VSCOSXOBSceneElementListView* sceneElementListView;
 
+-(void) showSceneElementList;
 
 @end

@@ -17,8 +17,8 @@
 @property (weak) IBOutlet DMTabBar* tabBar;
 @property (weak) IBOutlet NSView* mainView;
 
-@property (strong) VSCOSXOBSceneElementDetailView* elementDetailView;
-@property (strong) VSCOSXOBSceneElementCollisionView* elementCollisionView;
+@property (strong) IBOutlet VSCOSXOBSceneElementDetailView* elementDetailView;
+@property (strong) IBOutlet VSCOSXOBSceneElementCollisionView* elementCollisionView;
 
 -(void) showElementDetailView;
 -(void) showElementCollisionView;

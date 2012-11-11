@@ -1,5 +1,5 @@
 //
-//  VSCOBOSXSceneElementListView.h
+//  VSCOSXOBSceneElementListView.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 11/10/12.
@@ -8,12 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "VSCOBScene.h"
+//#include "VSCOBScene.h"
 
 @class PXListView;
 
 
-@interface VSCOBOSXSceneElementListView : NSView
+@interface VSCOSXOBSceneElementListView : NSView
 
 @property (nonatomic, strong) IBOutlet PXListView* listView;
 

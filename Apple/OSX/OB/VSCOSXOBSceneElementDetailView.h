@@ -10,18 +10,18 @@
 
 @interface VSCOSXOBSceneElementDetailView : NSView
 
-@property (nonatomic, strong) IBOutlet NSTextField* nameTextField;
+@property (weak) IBOutlet NSTextField* nameTextField;
 
 /*
  *  Position/Rotation
  */
 
-@property (nonatomic, strong) IBOutlet NSTextField* xPosTextField;
-@property (nonatomic, strong) IBOutlet NSTextField* yPosTextField;
-@property (nonatomic, strong) IBOutlet NSTextField* zPosTextField;
+@property (weak) IBOutlet NSTextField* xPosTextField;
+@property (weak) IBOutlet NSTextField* yPosTextField;
+@property (weak) IBOutlet NSTextField* zPosTextField;
 
-@property (nonatomic, strong) IBOutlet NSTextField* rollTextField;
-@property (nonatomic, strong) IBOutlet NSTextField* pitchTextField;
-@property (nonatomic, strong) IBOutlet NSTextField* yawTextField;
+@property (weak) IBOutlet NSTextField* rollTextField;
+@property (weak) IBOutlet NSTextField* pitchTextField;
+@property (weak) IBOutlet NSTextField* yawTextField;
 
 @end

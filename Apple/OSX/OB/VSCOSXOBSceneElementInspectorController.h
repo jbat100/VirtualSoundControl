@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol VSCIMOSXCollisionEventChainController;
+@class VSCOSXOBSceneElementInspectorView;
+
+
 @protocol VSCOSXOBSceneElementInspectorController <NSObject>
+
+@property (weak) id<VSCIMOSXCollisionEventChainController> collisionEventChainController;
+
+@property (weak) IBOutlet VSCOSXOBSceneElementInspectorView* elementInspectorView;
 
 @end

@@ -12,7 +12,7 @@
 
 #include "VSCOBScene.h"
 
-@class VSCOBOSXSceneElementListView;
+@class VSCOSXOBSceneElementListView;
 
 @protocol VSCOSXOBSceneElementListController <NSObject, PXListViewDelegate>
 
@@ -24,6 +24,6 @@
 
 @property (nonatomic, assign) VSC::OB::Scene::WPtr scene;
 
-@property (weak) VSCOBOSXSceneElementListView* elementListView;
+@property (weak) VSCOSXOBSceneElementListView* elementListView;
 
 @end

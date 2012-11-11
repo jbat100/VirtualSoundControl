@@ -14,6 +14,9 @@
 
 @implementation VSCOSXOBSceneElementInspectorWindowController
 
+@synthesize elementInspectorView = _elementInspectorView;
+@synthesize collisionEventChainController = _collisionEventChainController;
+
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];

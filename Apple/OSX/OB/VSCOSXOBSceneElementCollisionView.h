@@ -8,6 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class VSCIMOSXCollisionEventChainView;
+
 @interface VSCOSXOBSceneElementCollisionView : NSView
+
+@property (strong) VSCIMOSXCollisionEventChainView* eventChainView;
 
 @end

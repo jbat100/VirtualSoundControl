@@ -8,7 +8,7 @@
 
 #import "VSCOSXOBSceneElementListController.h"
 
-#import "VSCOBOSXSceneElementListView.h"
+#import "VSCOSXOBSceneElementListView.h"
 #import "VSCOSXOBSceneElementCell.h"
 
 NSString* const VSCOSXOBSceneElementCellReuseIdentifier = @"VSCOSXOBSceneElementCellReuseIdentifier";

@@ -7,11 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "VSCOSXOBSceneElementInspectorController.h"
 
-@class VSCOSXOBSceneElementInspectorView;
+@interface VSCOSXOBSceneElementInspectorWindowController : NSWindowController <VSCOSXOBSceneElementInspectorController>
 
-@interface VSCOSXOBSceneElementInspectorWindowController : NSWindowController
 
-@property (weak) IBOutlet VSCOSXOBSceneElementInspectorView* elementInspectorView;
 
 @end

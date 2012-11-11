@@ -13,10 +13,17 @@
 #include "VSCEnvironment.h"
 
 @class VSCOBOSXSceneDisplayView;
+@class VSCOSXOBSceneElementInspectorWindowController;
+
+/*
+ *  This is the main window controller 
+ */
 
 @interface VSCOSXEnvironmentWindowController : NSWindowController <VSCOSXEnvironmentController>
 
-@property (nonatomic, strong) IBOutlet VSCOBOSXSceneDisplayView* sceneView;
+@property (weak) IBOutlet VSCOBOSXSceneDisplayView* sceneView;
+
+@property (strong) VSCOSXOBSceneElementInspectorWindowController* elementInspectorWindowController;
 
 @property (nonatomic, assign) VSC::Environment::WPtr environment;
 

@@ -45,7 +45,16 @@ NSDictionary* elementInspectorTabDict = nil;
 
 -(void) showElementDetailView
 {
-    
+    if (!self.elementDetailView)
+    {
+        NSArray* topLevelObjects = nil;
+        
+        [[NSBundle mainBundle] loadNibNamed:@"VSCOSXOBSceneElementDetailView"
+                                      owner:self
+                            topLevelObjects:&topLevelObjects];
+        
+        BOOST_ASSERT(self.elementDetailView);
+    }
 }
 
 -(void) showElementCollisionView
