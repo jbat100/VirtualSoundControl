@@ -17,14 +17,27 @@ NSString* const VSCOSXOBSceneElementCellReuseIdentifier = @"VSCOSXOBSceneElement
 
 @synthesize environmentController = _environmentController;
 
+-(void) dealoc
+{
+    NSLog(@"%@ DEALLOC", self);
+}
+
 #pragma mark - List View Delegate Methods
 
 - (NSUInteger)numberOfRowsInListView: (PXListView*)aListView
 {
     VSC::OB::Scene::SPtr s = self.scene.lock();
-    VSC::OB::Scene::Elements& elems = s->getElements();
     
-	return (NSUInteger)(elems.size());
+    if (s)
+    {
+        VSC::OB::Scene::Elements& elems = s->getElements();
+        NSLog(@"%@ numberOfRowsInListView %ld", self, (NSUInteger)(elems.size()));
+        return (NSUInteger)(elems.size());
+    }
+ 
+    NSLog(@"%@ numberOfRowsInListView NO SCENE", self);
+    
+	return 0;
 }
 
 - (PXListViewCell*)listView:(PXListView*)aListView cellForRow:(NSUInteger)row
@@ -54,6 +67,8 @@ NSString* const VSCOSXOBSceneElementCellReuseIdentifier = @"VSCOSXOBSceneElement
 	
 	// Set up the new cell:
 	elementCell.element = weakElem;
+    
+    NSLog(@"%@ aListView %@ cellForRow %ld: %@", self, aListView, row, elementCell);
 	
 	return elementCell;
 }

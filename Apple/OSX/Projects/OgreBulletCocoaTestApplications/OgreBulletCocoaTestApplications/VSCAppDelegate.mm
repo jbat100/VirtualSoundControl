@@ -89,8 +89,12 @@
     [self showMIDIWindow:nil];
     
     VSC::Environment::SPtr environment = globalApplication->createEnvironment<VSC::Environment>();
+    BOOST_ASSERT(environment);
+    
     VSC::OB::Scene::SPtr scene = obApplication->createScene<VSC::OB::Scene>();
+    BOOST_ASSERT(scene);
     environment->setOBScene(scene);
+    
     VSC::IM::CollisionMapper::SPtr collisionMapper = VSC::IM::CollisionMapper::SPtr(new VSC::IM::CollisionMapper);
     environment->setIMCollisionMapper(collisionMapper);
     

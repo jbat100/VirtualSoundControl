@@ -16,8 +16,7 @@
 
 @protocol VSCOSXEnvironmentController <NSObject>
 
-@property (nonatomic, assign) VSC::Environment::WPtr environment;
-
+@property (assign) VSC::Environment::WPtr environment;
 @property (strong) IBOutlet id<VSCOSXOBSceneElementListController> sceneElementListController;
 
 -(void) showEnvironmentInspector;

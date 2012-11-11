@@ -15,6 +15,11 @@
 
 @synthesize listView = _listView;
 
+-(void) dealoc
+{
+    NSLog(@"%@ DEALLOC", self);
+}
+
 - (id)initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];
@@ -28,12 +33,14 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
-}
+} 
 
 -(void) awakeFromNib
 {
     BOOST_ASSERT(self.listView);
     BOOST_ASSERT(self.listView.delegate);
+    
+    NSLog(@"%@ awakeFromNib, self.listView: %@, self.listView.delegate: %@", self, self.listView, self.listView.delegate);
 }
 
 @end

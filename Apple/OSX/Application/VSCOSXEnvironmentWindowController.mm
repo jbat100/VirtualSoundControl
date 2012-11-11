@@ -30,26 +30,49 @@
 @implementation VSCOSXEnvironmentWindowController
 
 @synthesize environment = _environment;
+@synthesize sceneElementListController = _sceneElementListController;
 
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
-    if (self) {
+    if (self)
+    {
         // Initialization code here.
-        
+    }
+    
+    return self;
+}
 
+-(id) initWithWindowNibName:(NSString *)windowNibName
+{
+    self = [super initWithWindowNibName:windowNibName];
+    if (self)
+    {
         
     }
     
     return self;
 }
 
-- (void)windowDidLoad
+-(void) dealoc
+{
+    NSLog(@"%@ DEALLOC", self);
+}
+
+-(void) windowDidLoad
 {
     [super windowDidLoad];
     
-    //BOOST_ASSERT(self.sceneView);
-    //BOOST_ASSERT(self.sceneElementListController);
+    NSLog(@"%@ windowDidLoad owner: %@, windowNibName: %@", self, [self owner], [self windowNibName]);
+    
+    BOOST_ASSERT(self.sceneView);
+    BOOST_ASSERT(self.sceneElementListController);
+    BOOST_ASSERT(self.environmentInspectorView);
+}
+
+-(void) windowWillLoad
+{
+    
 }
 
 
@@ -72,12 +95,16 @@
 
 -(void) reloadInterface
 {
-    if (self.environment.lock())
+    VSC::Environment::SPtr env = self.environment.lock();
+    
+    if (env && env->getOBScene())
     {
-        self.sceneView.scene = self.environment.lock()->getOBScene();
+        NSLog(@"%@ reloadInterface", self);
+        self.sceneView.scene = env->getOBScene();
     }
     else
     {
+        NSLog(@"%@ reloadInterface NO SCENE", self);
         self.sceneView.scene = VSC::OB::Scene::SPtr();
     }
 }

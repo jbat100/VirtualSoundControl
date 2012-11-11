@@ -47,6 +47,11 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     return self;
 }
 
+-(void) dealoc
+{
+    NSLog(@"%@ DEALLOC", self);
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
@@ -56,7 +61,13 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 {
     [self setup];
     
-    //BOOST_ASSERT(self.sceneElementListView);
+    BOOST_ASSERT(self.environmentController);
+    BOOST_ASSERT(self.sceneElementListView);
+    BOOST_ASSERT(self.tabBar);
+    BOOST_ASSERT(self.mainView);
+    
+    NSLog(@"%@ awakeFromNib, self.sceneElementListView: %@, subviews: %@",
+          self, self.sceneElementListView, [self.sceneElementListView subviews]);
 }
 
 -(void) setup
@@ -112,7 +123,18 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 
 -(void) showSceneElementList
 {
+    BOOST_ASSERT(self.sceneElementListView);
+    BOOST_ASSERT(self.sceneElementListView.listView);
+    BOOST_ASSERT(self.sceneElementListView.listView.delegate);
     
+    if ([self.sceneElementListView superview] != self)
+    {
+        [self addSubview:self.sceneElementListView];
+    }
+    
+    self.sceneElementListView.frame = self.bounds;
+    
+    [self.sceneElementListView.listView reloadData];
 }
 
 @end

@@ -14,6 +14,7 @@
 
 @class VSCOBOSXSceneDisplayView;
 @class VSCOSXOBSceneElementInspectorWindowController;
+@class VSCOSXEnvironmentInspectorView;
 
 /*
  *  This is the main window controller 
@@ -21,11 +22,10 @@
 
 @interface VSCOSXEnvironmentWindowController : NSWindowController <VSCOSXEnvironmentController>
 
-@property (weak) IBOutlet VSCOBOSXSceneDisplayView* sceneView;
+@property (strong) IBOutlet VSCOBOSXSceneDisplayView* sceneView;
+@property (weak) IBOutlet VSCOSXEnvironmentInspectorView* environmentInspectorView;
 
 @property (strong) VSCOSXOBSceneElementInspectorWindowController* elementInspectorWindowController;
-
-@property (nonatomic, assign) VSC::Environment::WPtr environment;
 
 -(void) showElementInspectorForElement:(VSC::OB::Scene::Element::SPtr)element;
 

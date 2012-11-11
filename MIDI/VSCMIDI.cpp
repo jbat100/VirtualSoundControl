@@ -126,8 +126,9 @@ std::string VSC::MIDI::controlNumberToString(ControlNumber num)
 {
     boost::call_once(&FillControlNumberStringsMap, filledControlNumberStringsMapFlag);
     
+    BOOST_ASSERT(!controlNumberStringMap.empty());
     std::string desc = controlNumberStringMap[num];
-    BOOST_ASSERT(!desc.empty());
+    //BOOST_ASSERT(!desc.empty());
     if (desc.empty()) desc = "Unknown MIDI Control Number";
     
     return desc;
@@ -136,6 +137,8 @@ std::string VSC::MIDI::controlNumberToString(ControlNumber num)
 VSC::MIDI::ControlNumber VSC::MIDI::stringToControlNumber(const std::string& desc)
 {
     boost::call_once(&FillControlNumberStringsMap, filledControlNumberStringsMapFlag);
+    
+    BOOST_ASSERT(!controlNumberStringMap.empty());
     
     BOOST_FOREACH(const ControlNumberStringMap::value_type& mapValue, controlNumberStringMap)
     {
