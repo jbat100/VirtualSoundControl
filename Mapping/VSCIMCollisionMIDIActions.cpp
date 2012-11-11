@@ -7,6 +7,8 @@
 #include "VSCIMCollisionMIDIActions.h"
 #include "VSCMIDITasks.h"
 
+#include <boost/foreach.hpp>
+
 bool VSC::IM::collisionActionIsMIDI(CollisionAction::SPtr collisionAction)
 {
     if (boost::dynamic_pointer_cast<CollisionMIDIAction>(collisionAction)) return true;
@@ -32,6 +34,18 @@ VSC::IM::CollisionMIDINoteOnAction::CollisionMIDINoteOnAction()
 {
     this->addExpectedMappingTarget(TargetPitch);
     this->addExpectedMappingTarget(TargetVelocityOn);
+}
+
+void VSC::IM::CollisionMIDINoteOnAction::createDefaultMappings()
+{
+    const Targets& targets = this->getExpectedMappingTargets();
+    
+    BOOST_FOREACH(const Target& target, targets)
+    {
+        CollisionMapping::SPtr mapping(new CollisionConstantMapping);
+        
+        this->setMappingForTarget(target, mapping);
+    }
 }
 
 VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAction::createTaskForCollision(OB::Scene::Element::SPtr element,
@@ -64,6 +78,18 @@ VSC::IM::CollisionMIDINoteOffAction::CollisionMIDINoteOffAction()
     this->addExpectedMappingTarget(TargetVelocityOff);
 }
 
+void VSC::IM::CollisionMIDINoteOffAction::createDefaultMappings()
+{
+    const Targets& targets = this->getExpectedMappingTargets();
+    
+    BOOST_FOREACH(const Target& target, targets)
+    {
+        CollisionMapping::SPtr mapping(new CollisionConstantMapping);
+        
+        this->setMappingForTarget(target, mapping);
+    }
+}
+
 VSC::Task::SPtr VSC::IM::CollisionMIDINoteOffAction::createTaskForCollision(OB::Scene::Element::SPtr element,
                                                                             OB::Scene::Collision::SPtr collision)
 {
@@ -94,6 +120,18 @@ VSC::IM::CollisionMIDINoteOnAndOffAction::CollisionMIDINoteOnAndOffAction()
     this->addExpectedMappingTarget(TargetVelocityOn);
     this->addExpectedMappingTarget(TargetDuration);
     this->addExpectedMappingTarget(TargetVelocityOff);
+}
+
+void VSC::IM::CollisionMIDINoteOnAndOffAction::createDefaultMappings()
+{
+    const Targets& targets = this->getExpectedMappingTargets();
+    
+    BOOST_FOREACH(const Target& target, targets)
+    {
+        CollisionMapping::SPtr mapping(new CollisionConstantMapping);
+        
+        this->setMappingForTarget(target, mapping);
+    }
 }
 
 VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAndOffAction::createTaskForCollision(OB::Scene::Element::SPtr element,
@@ -130,6 +168,18 @@ VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAndOffAction::createTaskForCollision
 VSC::IM::CollisionMIDIControlChangeAction::CollisionMIDIControlChangeAction()
 {
     this->addExpectedMappingTarget(TargetControlValue);
+}
+
+void VSC::IM::CollisionMIDIControlChangeAction::createDefaultMappings()
+{
+    const Targets& targets = this->getExpectedMappingTargets();
+    
+    BOOST_FOREACH(const Target& target, targets)
+    {
+        CollisionMapping::SPtr mapping(new CollisionConstantMapping);
+        
+        this->setMappingForTarget(target, mapping);
+    }
 }
 
 VSC::Task::SPtr VSC::IM::CollisionMIDIControlChangeAction::createTaskForCollision(OB::Scene::Element::SPtr element,

@@ -44,8 +44,8 @@
     BOOST_ASSERT(self.removeEventButton);
     BOOST_ASSERT(self.addEventMenu);
     
-    self.collisionEventListView.allowsEmptySelection = YES;
-    self.collisionEventListView.allowsMultipleSelection = NO;
+    self.eventListView.allowsEmptySelection = YES;
+    self.eventListView.allowsMultipleSelection = NO;
 }
 
 #pragma mark - Event Select/Add/Remove

@@ -58,7 +58,7 @@
     BOOST_ASSERT(self.applicationManager);
 
     self.environmentWindowController = [[VSCOSXEnvironmentWindowController alloc]
-                                        initWithWindowNibName:@"VSCOSXEnvironmentWindow"];
+                                        initWithWindowNibName:@"VSCOSXEnvironmentWindowController"];
     BOOST_ASSERT(self.environmentWindowController);
     
     // create window to force a display + render windoe creation

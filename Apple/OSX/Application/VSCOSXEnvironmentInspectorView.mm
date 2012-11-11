@@ -8,6 +8,12 @@
 
 #import "VSCOSXEnvironmentInspectorView.h"
 
+#import "VSCOSXEnvironmentController.h"
+#import "DMTabBar.h"
+#import "VSCOSXOBSceneElementListView.h"
+#import "VSCOSXOBSceneElementListController.h"
+
+
 NSArray* EnvironmentInspectorTabParamArray = nil;
 
 NSString* const VSCOSXTabTitleScene = @"Scene";
@@ -49,6 +55,8 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 -(void) awakeFromNib
 {
     [self setup];
+    
+    //BOOST_ASSERT(self.sceneElementListView);
 }
 
 -(void) setup
@@ -60,12 +68,17 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     
     [EnvironmentInspectorTabParamArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         
+        BOOST_ASSERT([obj isKindOfClass:[NSDictionary class]]);
+        if (![obj isKindOfClass:[NSDictionary class]]) return;
+        
+        NSDictionary* objDict = (NSDictionary*)obj;
+        
         NSImage *iconImage = [objDict objectForKey:@"image"];
         [iconImage setTemplate:YES];
         
         DMTabBarItem *item = [DMTabBarItem tabBarItemWithIcon:iconImage tag:idx];
         item.toolTip = [objDict objectForKey:@"title"];
-        item.keyEquivalent = [NSString stringWithFormat:@"%d",idx];
+        item.keyEquivalent = [NSString stringWithFormat:@"%ld",idx];
         item.keyEquivalentModifierMask = NSCommandKeyMask;
         [items addObject:item];
         
@@ -82,9 +95,9 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
             NSLog(@"%@ will select %lu/%@", self.tabBar, tabBarItemIndex, tabBarItem);
             //[self.tabView selectTabViewItem:[tabView.tabViewItems objectAtIndex:tabBarItemIndex]];
             
-            if ([item.toolTip isEqualToString:VSCOSXTabTitleScene])
+            if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleScene])
             {
-                [self showElementSceneList];
+                [self showSceneElementList];
             }
             
         }

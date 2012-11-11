@@ -48,7 +48,8 @@
 {
     [super windowDidLoad];
     
-    
+    //BOOST_ASSERT(self.sceneView);
+    //BOOST_ASSERT(self.sceneElementListController);
 }
 
 

@@ -30,6 +30,7 @@ namespace VSC {
             typedef boost::shared_ptr<Event> SPtr;
             
             Event() {}
+            virtual ~Event() {}
             
         };
 

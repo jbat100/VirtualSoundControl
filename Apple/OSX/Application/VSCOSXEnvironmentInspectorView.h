@@ -7,13 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "VSCOSXEnvironmentController.h"
-#import "DMTabBar.h"
-#import "VSCOSXOBSceneElementListController.h"
 
 #include "VSCEnvironment.h"
 
 @class VSCOSXOBSceneElementInspectorWindowController;
+@class DMTabBar;
+@class VSCOSXOBSceneElementListView;
+@protocol VSCOSXEnvironmentController;
 
 /*
  *  Set up programatically, not through IB.

@@ -54,7 +54,7 @@ template<typename EnvironmentSubclass>
 VSC::Environment::SPtr VSC::GlobalApplication::createEnvironment(void)
 {
     
-    EnvironmentSubclass* envSub = new EnvironmentSubclass(shared_from_this());
+    EnvironmentSubclass* envSub = new EnvironmentSubclass();
     Environment* env = dynamic_cast<Environment*>(envSub);
     
     BOOST_ASSERT(env);

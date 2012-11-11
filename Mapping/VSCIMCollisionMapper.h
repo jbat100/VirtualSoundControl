@@ -30,11 +30,11 @@ namespace VSC {
              *  Action Chains
              */
             
-            void setActionChainForSceneElementCollisionStarted(CollisionEventChain::SPtr actionChain, OB::Scene::Element::SPtr element);
-            void setActionChainForSceneElementCollisionEnded(CollisionEventChain::SPtr actionChain, OB::Scene::Element::SPtr element);
+            void setActionChainForCollisionStarted(CollisionEventChain::SPtr actionChain, OB::Scene::Element::SPtr element);
+            void setActionChainForCollisionEnded(CollisionEventChain::SPtr actionChain, OB::Scene::Element::SPtr element);
             
-            CollisionEventChain::SPtr getActionChainForSceneElementCollisionStarted(OB::Scene::Element::SPtr element);
-            CollisionEventChain::SPtr getActionChainForSceneElementCollisionEnded(OB::Scene::Element::SPtr element);
+            CollisionEventChain::SPtr getActionChainForCollisionStarted(OB::Scene::Element::SPtr element);
+            CollisionEventChain::SPtr getActionChainForCollisionEnded(OB::Scene::Element::SPtr element);
             
             /**
              *  Scene::CollisionListener
@@ -50,9 +50,10 @@ namespace VSC {
             
         private:
             
-            typedef std::map<OB::Scene::Element::SPtr, CollisionEventChains> CollisionEventChainMap;
+            typedef std::map<OB::Scene::Element::SPtr, CollisionEventChain::SPtr> CollisionEventChainMap;
             
-            CollisionEventChainMap     mCollisionEventChainMap;
+            CollisionEventChainMap mCollisionStartedEventChainMap;
+            CollisionEventChainMap mCollisionEndedEventChainMap;
             
             static const bool mTraceCollisions = true;
             

@@ -15,6 +15,6 @@
 
 @interface VSCOSXOBSceneElementListView : NSView
 
-@property (nonatomic, strong) IBOutlet PXListView* listView;
+@property (weak) IBOutlet PXListView* listView;
 
 @end

@@ -21,10 +21,10 @@ namespace VSC {
             
             typedef boost::shared_ptr<EventChain> SPtr;
             
-            virtual ~EventChain();
+            virtual ~EventChain() {}
             
             unsigned int getNumberOfEvents(void);
-            const Events& getEvents(void);
+            const Events& getEvents(void) {return mEvents;}
             Event::SPtr getEventAtIndex(unsigned int index);
 
             void appendEvent(Event::SPtr event);

@@ -55,6 +55,8 @@ namespace VSC {
             
         public:
             
+            virtual void createDefaultMappings() {}
+            
             virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
                                                       OB::Scene::Collision::SPtr collision);
             

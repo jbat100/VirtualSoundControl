@@ -15,4 +15,12 @@ VSC::Float VSC::IM::CollisionMapping::mappedValue(VSC::OB::Scene::Element::SPtr 
     return (internalValue * mScaleFactor) + mOffset;
 }
 
+VSC::Float VSC::IM::CollisionVelocityMapping::internalMappedValue(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision)
+{
+    return 0;
+}
 
+VSC::Float VSC::IM::CollisionDistanceMapping::internalMappedValue(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision)
+{
+    return 0;
+}

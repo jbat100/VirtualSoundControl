@@ -35,6 +35,7 @@ namespace VSC {
             typedef boost::weak_ptr<CollisionMapping>       WPtr;
             
             CollisionMapping() : mOffset(0.0), mScaleFactor(0.0) {}
+            virtual ~CollisionMapping() {}
             
             Float mappedValue(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision);
             

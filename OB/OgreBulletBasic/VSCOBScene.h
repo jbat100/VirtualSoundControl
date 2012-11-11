@@ -460,6 +460,7 @@ namespace VSC {
             virtual void createSceneManager(void);
             virtual void createDebugLines(void);
             
+        public:
             /*
              *  Registering an element will add a shared_ptr to the element to the factory's private container
              *  and will add a weak_ptr to the scenes private container

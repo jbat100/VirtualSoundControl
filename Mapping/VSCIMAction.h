@@ -25,7 +25,7 @@ namespace VSC {
          *  on the action's task queue.
          */
         
-        class Action : Event {
+        class Action : public Event {
             
         public:
             

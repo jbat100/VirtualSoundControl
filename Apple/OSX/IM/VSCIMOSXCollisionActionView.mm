@@ -97,16 +97,15 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
 
 +(CGFloat) heightOfViewForCollisionAction:(VSC::IM::CollisionAction::SPtr)collisionAction 
 {
-    VSCIMOSXCollisionActionType actionType = VSCIMOSXCollisionActionTypeForCollisionAction(collisionAction);
     
     CGFloat totalHeight = VSCIMOSXCollisionActionViewBaseHeight;
     
-    if (VSCIMOSXCollisionActionTypeIsMIDI(actionType))
+    if (VSC::IM::collisionActionIsMIDI(collisionAction))
     {
         totalHeight += VSCIMOSXCollisionActionViewMIDISetupHeight;
     }
     
-    if (actionType == VSCIMOSXCollisionActionTypeMIDIControlChange)
+    if (VSC::IM::collisionActionIsMIDIControl(collisionAction))
     {
         totalHeight += VSCIMOSXCollisionActionViewMIDIControlSetupHeight;
     }

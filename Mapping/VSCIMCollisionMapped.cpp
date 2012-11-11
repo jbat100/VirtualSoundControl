@@ -34,18 +34,6 @@ void VSC::IM::CollisionMapped::removeMappingForTarget(const Target target)
     mCollisionMappingMap.erase(target);
 }
 
-const VSC::IM::Targets VSC::IM::CollisionMapped::getMappingTargets()
-{
-    Targets targets;
-    
-    BOOST_FOREACH(const CollisionMappingMap::value_type& mapValue, mCollisionMappingMap)
-    {
-        targets.push_back(mapValue.first);
-    }
-    
-    return targets;
-}
-
 VSC::IM::Target VSC::IM::CollisionMapped::getTargetForMapping(CollisionMapping::SPtr mapping)
 {
     BOOST_FOREACH(const CollisionMappingMap::value_type& mapValue, mCollisionMappingMap)

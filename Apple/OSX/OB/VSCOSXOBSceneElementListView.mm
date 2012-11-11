@@ -7,8 +7,13 @@
 //
 
 #import "VSCOSXOBSceneElementListView.h"
+#import "PXListView.h"
+
+#include <boost/assert.hpp>
 
 @implementation VSCOSXOBSceneElementListView
+
+@synthesize listView = _listView;
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -23,6 +28,12 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
+}
+
+-(void) awakeFromNib
+{
+    BOOST_ASSERT(self.listView);
+    BOOST_ASSERT(self.listView.delegate);
 }
 
 @end
