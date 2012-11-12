@@ -256,30 +256,30 @@ namespace VSC {
             
             typedef std::vector<Collision::SPtr>            Collisions;
     
-            class CollisionListener
-            {
-                
-            public:
-                
-                typedef boost::shared_ptr<CollisionListener>    SPtr;
-                typedef boost::weak_ptr<CollisionListener>      WPtr;
-                
-                virtual void collisionProspectDetected(Scene::Collision::SPtr collision) {}
-                virtual void collisionProspectUpdated(Scene::Collision::SPtr collision) {}
-                virtual void collisionProspectEnded(Scene::Collision::SPtr collision) {}
-                
-                virtual void collisionDetected(Scene::Collision::SPtr collision) {}
-                virtual void collisionUpdated(Scene::Collision::SPtr collision) {}
-                virtual void collisionEnded(Scene::Collision::SPtr collision) {}
-                
-            };
-            
-            typedef std::vector<CollisionListener::SPtr>    Listeners;
             
             class CollisionDetector
             {
                 
             public:
+                
+                class Listener {
+                    
+                public:
+                    
+                    typedef boost::shared_ptr<Listener>    SPtr;
+                    typedef boost::weak_ptr<Listener>      WPtr;
+                    
+                    virtual void collisionProspectDetected(Scene::Collision::SPtr collision) {}
+                    virtual void collisionProspectUpdated(Scene::Collision::SPtr collision) {}
+                    virtual void collisionProspectEnded(Scene::Collision::SPtr collision) {}
+                    
+                    virtual void collisionDetected(Scene::Collision::SPtr collision) {}
+                    virtual void collisionUpdated(Scene::Collision::SPtr collision) {}
+                    virtual void collisionEnded(Scene::Collision::SPtr collision) {}
+                    
+                };
+                
+                typedef std::vector<Listener::WPtr> Listeners;
                 
                 typedef boost::shared_ptr<CollisionDetector>    SPtr;
                 typedef boost::weak_ptr<CollisionDetector>      WPtr;
@@ -287,10 +287,10 @@ namespace VSC {
                 CollisionDetector(Scene::SPtr scene) : mScene(Scene::WPtr(scene)), mDistanceThreshold(0.1) {}
                 
                 const Collisions&   getCollisions(void) {return mCollisions;}
-                const Listeners&    getListeners(void) {return mListeners;}
                 
-                void addListener(CollisionListener::SPtr listener);
-                void removeListener(CollisionListener::SPtr listener);
+                const Listeners& getListeners(void) {return mListeners;}
+                void addListener(Listener::SPtr listener);
+                void removeListener(Listener::SPtr listener);
                 
                 Collisions getCollisionsForElementPair(Scene::Element::SPtr first, Scene::Element::SPtr second);
                 
@@ -315,6 +315,24 @@ namespace VSC {
                 Ogre::Real      mDistanceThreshold;
                 
             };
+            
+            /*
+             *  The scene listener is used by elements which want to be informed
+             *  of scene events. This is primarily for UI updates put can potentially
+             *  be used for other stuff.
+             */
+            
+            class Listener
+            {
+                
+            public:
+                
+                typedef boost::shared_ptr<Listener>    SPtr;
+                typedef boost::weak_ptr<Listener>      WPtr;
+                
+                void sceneRegisteredElement(Scene::SPtr scene, Scene::Element::SPtr element) {}
+                
+            };
 
             virtual ~Scene() { /* shutdown(); // calling shutdown in destructor causes problems */  };
             
@@ -324,6 +342,15 @@ namespace VSC {
             
             ElementFactory::SPtr getElementFactory(void) {return mElementFactory;}
             void setElementFactory(ElementFactory::SPtr factory) {mElementFactory = factory;}
+            
+            /**--------------------------------------------------------------
+             *  Listeners (scene has weak references to them)
+             */
+            
+            void addListener(Scene::Listener::SPtr listener);
+            void removeListener(Scene::Listener::SPtr listener);
+            void removeAllListeners(void);
+            
 
             /**--------------------------------------------------------------
              *  MISC Info
@@ -429,6 +456,8 @@ namespace VSC {
             void toggleCCD(void) {mEnableCCD = !mEnableCCD;}
             
         protected:
+            
+            typedef std::vector<Listener::WPtr> Listeners;
             
             Scene();
             

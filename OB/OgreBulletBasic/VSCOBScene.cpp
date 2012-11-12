@@ -394,6 +394,23 @@ void VSC::OB::Scene::CollisionDetector::removeCollision(Collision::SPtr collisio
     }
 }
 
+//MARK: - Scene Listeners
+
+void VSC::OB::Scene::addListener(Scene::Listener::SPtr listener)
+{
+    
+}
+
+void VSC::OB::Scene::removeListener(Scene::Listener::SPtr listener)
+{
+    
+}
+
+void VSC::OB::Scene::removeAllListeners(void)
+{
+    
+}
+
 
 //MARK: - Basic Constructor which does abolutely nothing interesting at all
 

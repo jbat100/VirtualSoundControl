@@ -6,8 +6,8 @@
 //  Copyright 2011 NXP. All rights reserved.
 //
 
-#ifndef _VSC_MATH_H_
-#define _VSC_MATH_H_
+#ifndef _VSC_H_
+#define _VSC_H_
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 
