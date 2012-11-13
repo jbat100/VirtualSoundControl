@@ -1,6 +1,3 @@
-[submodule "Apple/Submodules/JAListView"]
-	path = Apple/Submodules/JAListView
-url=https://github.com/jbat100/JAListView
 [submodule "Apple/Submodules/PXListView"]
 	path = Apple/Submodules/PXListView
 url=https://github.com/jbat100/PXListView.git
