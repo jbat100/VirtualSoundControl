@@ -98,21 +98,16 @@ std::ostream& VSC::OB::operator << (std::ostream& stream, const Scene::Element& 
 
 //MARK: - Collisions Detector
 
-
-void VSC::OB::Scene::CollisionDetector::addListener(CollisionListener::SPtr listener)
+bool VSC::OB::Scene::CollisionDetector::checkListener(VSC::Listener::SPtr listener)
 {
-    Listeners::iterator it = std::find(mListeners.begin(), mListeners.end(), listener);
-    if (it == mListeners.end()) {
-        mListeners.push_back(listener);
+    CollisionDetector::Listener::SPtr collisionDetectorListener = boost::dynamic_pointer_cast<CollisionDetector::Listener>(listener);
+    
+    if (collisionDetectorListener)
+    {
+        return true;
     }
-}
-
-void VSC::OB::Scene::CollisionDetector::removeListener(CollisionListener::SPtr listener)
-{
-    Listeners::iterator it = std::find(mListeners.begin(), mListeners.end(), listener);
-    if (it != mListeners.end()) {
-        mListeners.erase(it);
-    }
+    
+    return false;
 }
 
 VSC::OB::Scene::Collisions VSC::OB::Scene::CollisionDetector::getCollisionsForElementPair(Scene::Element::SPtr first,
@@ -271,13 +266,21 @@ void VSC::OB::Scene::CollisionDetector::updateCollisions()
             if (collision->getState() == Collision::StateClose)
             {
                 collision->setState(Collision::StateEnded);
-                BOOST_FOREACH (CollisionListener::SPtr listener, mListeners) if (listener) listener->collisionProspectEnded(collision);
+                BOOST_FOREACH (VSC::Listener::WPtr l, this->getListeners())
+                {
+                    CollisionDetector::Listener::SPtr listener = boost::dynamic_pointer_cast<CollisionDetector::Listener>(l.lock());
+                    if (listener) listener->collisionProspectEnded(collision);
+                }
             }
             
             else if (collision->getState() == Collision::StateOngoing)
             {
                 collision->setState(Collision::StateEnded);
-                BOOST_FOREACH (CollisionListener::SPtr listener, mListeners) if (listener) listener->collisionEnded(collision);
+                BOOST_FOREACH (VSC::Listener::WPtr l, this->getListeners())
+                {
+                    CollisionDetector::Listener::SPtr listener = boost::dynamic_pointer_cast<CollisionDetector::Listener>(l.lock());
+                    if (listener) listener->collisionEnded(collision);
+                }
             }
 
             /*
@@ -343,11 +346,19 @@ void VSC::OB::Scene::CollisionDetector::updateCollisions()
                 collision->getState() == Collision::StateEnded) 
             {
                 collision->setState(Collision::StateOngoing);
-                BOOST_FOREACH (CollisionListener::SPtr listener, mListeners) if (listener) listener->collisionDetected(collision);
+                BOOST_FOREACH (VSC::Listener::WPtr l, this->getListeners())
+                {
+                    CollisionDetector::Listener::SPtr listener = boost::dynamic_pointer_cast<CollisionDetector::Listener>(l.lock());
+                    if (listener) listener->collisionDetected(collision);
+                }
             }
             else if (collision->getState() == Collision::StateOngoing)
             {
-                BOOST_FOREACH (CollisionListener::SPtr listener, mListeners) if (listener) listener->collisionUpdated(collision);
+                BOOST_FOREACH (VSC::Listener::WPtr l, this->getListeners())
+                {
+                    CollisionDetector::Listener::SPtr listener = boost::dynamic_pointer_cast<CollisionDetector::Listener>(l.lock());
+                    if (listener) listener->collisionUpdated(collision);
+                }
             }
         }
         
@@ -358,18 +369,34 @@ void VSC::OB::Scene::CollisionDetector::updateCollisions()
                 collision->getState() == Collision::StateEnded)
             {
                 collision->setState(Collision::StateClose);
-                BOOST_FOREACH (CollisionListener::SPtr listener, mListeners) if (listener) listener->collisionProspectDetected(collision);
+                BOOST_FOREACH (VSC::Listener::WPtr l, this->getListeners())
+                {
+                    CollisionDetector::Listener::SPtr listener = boost::dynamic_pointer_cast<CollisionDetector::Listener>(l.lock());
+                    if (listener) listener->collisionProspectDetected(collision);
+                }
             }
             else if (collision->getState() == Collision::StateOngoing)
             {
                 collision->setState(Collision::StateEnded);
-                BOOST_FOREACH (CollisionListener::SPtr listener, mListeners) if (listener) listener->collisionEnded(collision);
+                BOOST_FOREACH (VSC::Listener::WPtr l, this->getListeners())
+                {
+                    CollisionDetector::Listener::SPtr listener = boost::dynamic_pointer_cast<CollisionDetector::Listener>(l.lock());
+                    if (listener) listener->collisionEnded(collision);
+                }
                 collision->setState(Collision::StateClose);
-                BOOST_FOREACH (CollisionListener::SPtr listener, mListeners) if (listener) listener->collisionProspectDetected(collision);
+                BOOST_FOREACH (VSC::Listener::WPtr l, this->getListeners())
+                {
+                    CollisionDetector::Listener::SPtr listener = boost::dynamic_pointer_cast<CollisionDetector::Listener>(l.lock());
+                    if (listener) listener->collisionProspectDetected(collision);
+                }
             }
             else if (collision->getState() == Collision::StateClose)
             {
-                BOOST_FOREACH (CollisionListener::SPtr listener, mListeners) if (listener) listener->collisionProspectUpdated(collision);
+                BOOST_FOREACH (VSC::Listener::WPtr l, this->getListeners())
+                {
+                    CollisionDetector::Listener::SPtr listener = boost::dynamic_pointer_cast<CollisionDetector::Listener>(l.lock());
+                    if (listener) listener->collisionProspectUpdated(collision);
+                }
             }
         }
     }
@@ -396,19 +423,16 @@ void VSC::OB::Scene::CollisionDetector::removeCollision(Collision::SPtr collisio
 
 //MARK: - Scene Listeners
 
-void VSC::OB::Scene::addListener(Scene::Listener::SPtr listener)
+bool VSC::OB::Scene::checkListener(VSC::Listener::SPtr listener)
 {
+    Scene::Listener::SPtr sceneListener = boost::dynamic_pointer_cast<Scene::Listener>(listener);
     
-}
-
-void VSC::OB::Scene::removeListener(Scene::Listener::SPtr listener)
-{
+    if (sceneListener)
+    {
+        return true;
+    }
     
-}
-
-void VSC::OB::Scene::removeAllListeners(void)
-{
-    
+    return false;
 }
 
 

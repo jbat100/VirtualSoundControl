@@ -3,6 +3,8 @@
 #define _VSC_OGRE_BULLET_SCENE_H_
 
 #include "VSCOBDisplay.h"
+#include "VSCBroadcaster.h"
+#include "VSCListener.h"
 
 #include "OgreBulletDynamics.h"
 #include "OIS.h"
@@ -27,7 +29,7 @@ namespace VSC {
         
         class Application;
 
-        class Scene : public Ogre::FrameListener, public boost::enable_shared_from_this<Scene>
+        class Scene : public Ogre::FrameListener, public VSC::Broadcaster, public boost::enable_shared_from_this<Scene>
         {
             
         private:
@@ -254,15 +256,15 @@ namespace VSC {
                 
             };
             
-            typedef std::vector<Collision::SPtr>            Collisions;
+            typedef std::vector<Collision::SPtr> Collisions;
     
             
-            class CollisionDetector
+            class CollisionDetector : public VSC::Broadcaster
             {
                 
             public:
                 
-                class Listener {
+                class Listener : public VSC::Listener {
                     
                 public:
                     
@@ -279,19 +281,12 @@ namespace VSC {
                     
                 };
                 
-                typedef std::vector<Listener::WPtr> Listeners;
-                
                 typedef boost::shared_ptr<CollisionDetector>    SPtr;
                 typedef boost::weak_ptr<CollisionDetector>      WPtr;
                 
                 CollisionDetector(Scene::SPtr scene) : mScene(Scene::WPtr(scene)), mDistanceThreshold(0.1) {}
                 
                 const Collisions&   getCollisions(void) {return mCollisions;}
-                
-                const Listeners& getListeners(void) {return mListeners;}
-                void addListener(Listener::SPtr listener);
-                void removeListener(Listener::SPtr listener);
-                
                 Collisions getCollisionsForElementPair(Scene::Element::SPtr first, Scene::Element::SPtr second);
                 
                 Scene::SPtr getScene(void) {return mScene.lock();}
@@ -305,10 +300,11 @@ namespace VSC {
                 
                 Collision::SPtr getCollisionsForPersistentManifold(btPersistentManifold* manifold);
                 
+                virtual bool checkListener(VSC::Listener::SPtr listener);
+                
             private:
                 
                 Collisions      mCollisions;
-                Listeners       mListeners;
                 
                 Scene::WPtr     mScene;
                 
@@ -322,7 +318,7 @@ namespace VSC {
              *  be used for other stuff.
              */
             
-            class Listener
+            class Listener : public VSC::Listener
             {
                 
             public:
@@ -342,15 +338,6 @@ namespace VSC {
             
             ElementFactory::SPtr getElementFactory(void) {return mElementFactory;}
             void setElementFactory(ElementFactory::SPtr factory) {mElementFactory = factory;}
-            
-            /**--------------------------------------------------------------
-             *  Listeners (scene has weak references to them)
-             */
-            
-            void addListener(Scene::Listener::SPtr listener);
-            void removeListener(Scene::Listener::SPtr listener);
-            void removeAllListeners(void);
-            
 
             /**--------------------------------------------------------------
              *  MISC Info
@@ -488,6 +475,12 @@ namespace VSC {
             
             virtual void createSceneManager(void);
             virtual void createDebugLines(void);
+            
+            /*
+             *  Broadcaster listener check
+             */
+            
+            virtual bool checkListener(VSC::Listener::SPtr listener);
             
         public:
             /*

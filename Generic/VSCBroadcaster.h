@@ -15,6 +15,9 @@ namespace VSC {
     
     class Broadcaster
     {
+        
+    public:
+        
         virtual ~Broadcaster();
         
         const Listeners& getListeners(void) {return mListeners;}

@@ -21,7 +21,7 @@ namespace VSC {
         typedef boost::shared_ptr<Listener> SPtr;
         typedef boost::weak_ptr<Listener>   WPtr;
         
-        virtual ~Listener();
+        virtual ~Listener() {}
     };
     
     typedef std::vector<Listener::WPtr> Listeners;
