@@ -4,3 +4,6 @@ url=https://github.com/jbat100/PXListView.git
 [submodule "Apple/Submodules/DMTabBar"]
 	path = Apple/Submodules/DMTabBar
 url=https://github.com/jbat100/DMTabBar.git
+[submodule "Apple/Submodules/JAListView"]
+	path = Apple/Submodules/JAListView
+	url = https://github.com/jbat100/JAListView
