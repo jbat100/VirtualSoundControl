@@ -16,7 +16,7 @@
 
 @protocol VSCOSXOBSceneElementListController <NSObject, PXListViewDelegate>
 
-@property (weak) id<VSCOSXEnvironmentController> environmentController;
+@property (assign) id<VSCOSXEnvironmentController> environmentController;
 
 @end
 

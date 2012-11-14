@@ -18,7 +18,7 @@ namespace VSC {
         
     public:
         
-        virtual ~Broadcaster();
+        virtual ~Broadcaster() {}
         
         const Listeners& getListeners(void) {return mListeners;}
         void addListener(Listener::SPtr listener);

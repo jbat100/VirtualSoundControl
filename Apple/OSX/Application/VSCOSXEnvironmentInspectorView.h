@@ -22,7 +22,7 @@
 @interface VSCOSXEnvironmentInspectorView : NSView
 
 @property (nonatomic, assign) VSC::Environment::WPtr environment;
-@property (weak) IBOutlet id<VSCOSXEnvironmentController> environmentController;
+@property (assign) IBOutlet id<VSCOSXEnvironmentController> environmentController;
 
 /*
  *  Tabbed interface

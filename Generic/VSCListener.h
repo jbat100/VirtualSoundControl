@@ -24,6 +24,10 @@ namespace VSC {
         virtual ~Listener() {}
     };
     
+    bool operator< (const Listener::WPtr& lhs, const Listener::WPtr& rhs);
+    
+    bool operator== (const Listener::WPtr& lhs, const Listener::WPtr& rhs);
+    
     typedef std::vector<Listener::WPtr> Listeners;
 	
 }

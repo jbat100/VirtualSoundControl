@@ -19,7 +19,7 @@ namespace VSC {
     
     namespace IM {
         
-        class CollisionMapper : public VSC::OB::Scene::CollisionListener {
+        class CollisionMapper : public VSC::OB::Scene::CollisionDetector::Listener {
             
         public:
             
@@ -37,7 +37,7 @@ namespace VSC {
             CollisionEventChain::SPtr getActionChainForCollisionEnded(OB::Scene::Element::SPtr element);
             
             /**
-             *  Scene::CollisionListener
+             *  Scene::CollisionDetector::Listener
              */
             
             virtual void collisionProspectDetected(OB::Scene::Collision::SPtr collision);

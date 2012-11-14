@@ -27,7 +27,7 @@
 
 @property (retain) IBOutlet NSButton *mainActionButton;
 
-@property (assign) VSC::MIDI::Output::WPtr midiOutput;
+@property (nonatomic, assign) VSC::MIDI::Output::WPtr midiOutput;
 
 -(IBAction) mainAction:(id)sender;
 
