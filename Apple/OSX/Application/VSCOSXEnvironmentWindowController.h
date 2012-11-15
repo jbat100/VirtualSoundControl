@@ -22,14 +22,8 @@
 
 @interface VSCOSXEnvironmentWindowController : NSWindowController <VSCOSXEnvironmentController>
 
-@property (strong) IBOutlet VSCOBOSXSceneDisplayView* sceneView;
 @property (weak) IBOutlet VSCOSXEnvironmentInspectorView* environmentInspectorView;
 @property (strong) VSCOSXOBSceneElementInspectorWindowController* elementInspectorWindowController;
-
-/*
- *  Listeners
- */
-@property (nonatomic, assign) VSC::OB::OSXSceneListener::SPtr sceneListener;
 
 -(void) reloadInterface;
 - (IBAction)test1:(id)sender;

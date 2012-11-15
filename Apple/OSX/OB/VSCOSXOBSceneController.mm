@@ -8,6 +8,7 @@
 
 #import "VSCOSXOBSceneController.h"
 
+#import "VSCOBOSXSceneDisplayView.h"
 #import "VSCOSXOBSceneElementListView.h"
 #import "VSCOSXOBSceneElementCell.h"
 
@@ -15,11 +16,37 @@ NSString* const VSCOSXOBSceneElementCellReuseIdentifier = @"VSCOSXOBSceneElement
 
 @implementation VSCOSXOBSceneController
 
+@synthesize scene = _scene;
 @synthesize environmentController = _environmentController;
 
 -(void) dealoc
 {
     NSLog(@"%@ DEALLOC", self);
+}
+
+#pragma mark - Custom Setter
+
+-(void) setScene:(VSC::OB::Scene::WPtr)s
+{
+    BOOST_ASSERT(self.sceneListener);
+    
+    VSC::OB::Scene::SPtr oldScene = _scene.lock();
+    if (oldScene && self.sceneListener)
+    {
+        oldScene->removeListener(self.sceneListener);
+    }
+    
+    _scene = s;
+    
+    [self.sceneView setupControlChain];
+    
+    VSC::OB::Scene::SPtr newScene = _scene.lock();
+    if (newScene && self.sceneListener)
+    {
+        oldScene->addListener(self.sceneListener);
+    }
+    
+    [self.elementListView.listView reloadData];
 }
 
 #pragma mark - List View Delegate Methods

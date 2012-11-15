@@ -8,16 +8,20 @@
 
 #import "OgreOSXCocoaView.h"
 
+#import "VSCOSXOBSceneController.h"
+
 #include "VSCOBKeyBindings.h"
-#include "VSCOBScene.h"
 #include "VSCOBDisplay.h"
 #include "VSCOBInterface.h"
 
-@interface VSCOBOSXSceneDisplayView : OgreView 
+@interface VSCOBOSXSceneDisplayView : OgreView
 
-@property (nonatomic, assign) VSC::OB::Scene::WPtr scene;
 @property (nonatomic, assign) VSC::OB::InterfaceResponderChain::SPtr interfaceResponderChain;
-
 @property (readonly, nonatomic, assign) VSC::OB::Display::WPtr display;
+
+@property (weak) IBOutlet id<VSCOSXOBSceneController> sceneController;
+
+// called by controller when the scene changes
+-(void) setupControllerChain;
 
 @end

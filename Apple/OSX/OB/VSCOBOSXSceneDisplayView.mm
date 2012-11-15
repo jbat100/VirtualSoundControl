@@ -52,7 +52,6 @@ static const bool mTraceUI = false;
         
         self.displayController = VSC::OB::DisplayController::SPtr(new VSC::OB::DisplayController);
         self.displayController->setOgreKeyBindings(keyBindings);
-        
         self.displayController->setupWithDisplay(self.display.lock());
         
         self.interfaceResponderChain->appendResponder(boost::static_pointer_cast<VSC::OB::InterfaceResponder>(self.sceneController));
@@ -99,29 +98,27 @@ static const bool mTraceUI = false;
 
 #pragma mark - Custom Setters
 
--(void) setScene:(VSC::OB::Scene::WPtr)scene
+-(void) setupControllerChain
 {
-    VSC::OB::Scene::SPtr currentScene = _scene.lock();
-    VSC::OB::Scene::SPtr newScene = scene.lock();
+    id<VSCOSXOBSceneController> controller = self.controller;
     
-    if (currentScene != newScene) {
-        
-        _scene = scene;
-        
-        if (newScene)
+    if (controller)
+    {
+        VSC::OB::Scene::SPtr currentScene = controller.scene.lock();
+            
+        if (currentScene)
         {
             self.display.lock()->setupWithScene(newScene);
             self.sceneController->setupWithScene(newScene);
-            
-        }
-        else
-        {
-            self.display.lock()->shutdown();
-            self.sceneController->shutdown();
         }
         
+        return;
     }
-    
+
+    self.display.lock()->shutdown();
+    self.sceneController->shutdown();
+
+    return;
 }
 
 #pragma mark - NSResponder Stuff
