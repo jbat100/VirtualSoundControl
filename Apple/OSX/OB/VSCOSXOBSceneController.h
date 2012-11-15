@@ -7,22 +7,22 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "PXListView.h"
 #import "VSCOSXEnvironmentController.h"
+#import "VSCOBOSXSceneListener.h"
 
 #include "VSCOBScene.h"
 
 @class VSCOSXOBSceneElementListView;
 
-@protocol VSCOSXOBSceneElementListController <NSObject, PXListViewDelegate>
+@protocol VSCOSXOBSceneController <NSObject, PXListViewDelegate, VSCOBOSXSceneListenerTarget>
+
+@property (nonatomic, assign) VSC::OB::Scene::WPtr scene;
 
 @property (assign) id<VSCOSXEnvironmentController> environmentController;
 
 @end
 
-@interface VSCOSXOBSceneElementListController : NSObject <VSCOSXOBSceneElementListController>
-
-@property (nonatomic, assign) VSC::OB::Scene::WPtr scene;
+@interface VSCOSXOBSceneController : NSObject <VSCOSXOBSceneController>
 
 @property (weak) VSCOSXOBSceneElementListView* elementListView;
 

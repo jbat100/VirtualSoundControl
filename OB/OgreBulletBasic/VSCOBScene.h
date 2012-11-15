@@ -326,7 +326,9 @@ namespace VSC {
                 typedef boost::shared_ptr<Listener>    SPtr;
                 typedef boost::weak_ptr<Listener>      WPtr;
                 
-                void sceneRegisteredElement(Scene::SPtr scene, Scene::Element::SPtr element) {}
+                virtual ~Listener() {}
+                
+                virtual void sceneRegisteredElement(Scene::SPtr scene, Scene::Element::SPtr element) {}
                 
             };
 

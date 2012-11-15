@@ -8,6 +8,7 @@
 
 #import "VSCOSXEnvironmentWindowController.h"
 #import "VSCOSXApplicationManager.h"
+#import "VSCOSXOBSceneController.h"
 #import "VSCOBOSXSceneDisplayView.h"
 
 #import "NSString+VSCAdditions.h"
@@ -25,12 +26,14 @@
 
 @interface VSCOSXEnvironmentWindowController ()
 
+-(void) reloadSceneInterface;
+
 @end
 
 @implementation VSCOSXEnvironmentWindowController
 
 @synthesize environment = _environment;
-@synthesize sceneElementListController = _sceneElementListController;
+@synthesize sceneController = _sceneController;
 
 - (id)initWithWindow:(NSWindow *)window
 {
@@ -66,7 +69,7 @@
     NSLog(@"%@ windowDidLoad owner: %@, windowNibName: %@", self, [self owner], [self windowNibName]);
     
     BOOST_ASSERT(self.sceneView);
-    BOOST_ASSERT(self.sceneElementListController);
+    BOOST_ASSERT(self.sceneController);
     BOOST_ASSERT(self.environmentInspectorView);
 }
 
@@ -90,6 +93,7 @@
 {
     _environment = environment;
     [self reloadInterface];
+    
 }
 
 
@@ -107,6 +111,30 @@
         NSLog(@"%@ reloadInterface NO SCENE", self);
         self.sceneView.scene = VSC::OB::Scene::SPtr();
     }
+}
+
+-(void) reloadSceneInterface
+{
+    VSC::Environment::SPtr env = self.environment.lock();
+    
+    if (env)
+    {
+        self.sceneController.scene = VSC::OB::Scene::WPtr(env->getOBScene());
+    }
+    else
+    {
+        
+    }
+}
+
+-(void) showSceneSettings
+{
+    
+}
+
+-(void) showSceneElementList
+{
+    
 }
 
 

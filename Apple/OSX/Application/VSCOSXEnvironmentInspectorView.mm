@@ -11,7 +11,7 @@
 #import "VSCOSXEnvironmentController.h"
 #import "DMTabBar.h"
 #import "VSCOSXOBSceneElementListView.h"
-#import "VSCOSXOBSceneElementListController.h"
+#import "VSCOSXOBSceneController.h"
 
 
 NSArray* EnvironmentInspectorTabParamArray = nil;

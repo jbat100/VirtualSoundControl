@@ -8,6 +8,7 @@
 
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
+#include <boost/enable_shared_from_this.hpp>
 
 #include <vector>
 
@@ -15,7 +16,7 @@ namespace VSC {
     
     class GlobalApplication;
     
-    class Environment
+    class Environment : public VSC::Broadcaster, public boost::enable_shared_from_this<Environment>
     {
         
     private:
@@ -29,6 +30,20 @@ namespace VSC {
         
         typedef boost::shared_ptr<Environment>  SPtr;
         typedef boost::weak_ptr<Environment>    WPtr;
+        
+        class Listener : public VSC::Listener
+        {
+            
+        public:
+            
+            typedef boost::shared_ptr<Environment::Listener>  SPtr;
+            typedef boost::weak_ptr<Environment::Listener>    WPtr;
+            
+            virtual ~Listener() {}
+            
+            virtual void environmentChangedScene(VSC::Environment::SPtr environment);
+        
+        };
         
         enum State
         {

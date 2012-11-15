@@ -7,8 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
 #import "VSCOSXEnvironmentController.h"
+#import "VSCOBOSXSceneListener.h"
 
 #include "VSCEnvironment.h"
 
@@ -24,13 +24,14 @@
 
 @property (strong) IBOutlet VSCOBOSXSceneDisplayView* sceneView;
 @property (weak) IBOutlet VSCOSXEnvironmentInspectorView* environmentInspectorView;
-
 @property (strong) VSCOSXOBSceneElementInspectorWindowController* elementInspectorWindowController;
 
--(void) showElementInspectorForElement:(VSC::OB::Scene::Element::SPtr)element;
+/*
+ *  Listeners
+ */
+@property (nonatomic, assign) VSC::OB::OSXSceneListener::SPtr sceneListener;
 
 -(void) reloadInterface;
-
 - (IBAction)test1:(id)sender;
 - (IBAction)test2:(id)sender;
 - (IBAction)test3:(id)sender;

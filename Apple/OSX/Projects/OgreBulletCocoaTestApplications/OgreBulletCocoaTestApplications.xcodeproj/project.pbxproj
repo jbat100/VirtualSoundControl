@@ -68,6 +68,7 @@
 		105CDA52162DA9A600532AD0 /* VSCOBOSXInterfaceAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA4B162DA9A500532AD0 /* VSCOBOSXInterfaceAdapter.mm */; };
 		105CDA53162DA9A600532AD0 /* VSCOBOSXSceneDisplayView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA4D162DA9A600532AD0 /* VSCOBOSXSceneDisplayView.mm */; };
 		105CDA58162DAD2E00532AD0 /* VSCOBDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA56162DAD2E00532AD0 /* VSCOBDisplay.cpp */; };
+		108DDE0216543B3300B733CE /* VSCOBOSXSceneListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 108DDE0116543B3300B733CE /* VSCOBOSXSceneListener.mm */; };
 		108EE2A5163C007200DD45BF /* VSCIMCollisionMapped.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108EE2A3163C007200DD45BF /* VSCIMCollisionMapped.cpp */; };
 		108EE2A9163C08CA00DD45BF /* VSCIMAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108EE2A7163C08CA00DD45BF /* VSCIMAction.cpp */; };
 		1091F28415B07C0D00466854 /* VSCLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1091F28215B07C0D00466854 /* VSCLog.cpp */; };
@@ -76,7 +77,7 @@
 		10AF53E7163D316100419EEE /* PXListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53DD163D316100419EEE /* PXListView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		10AF53E8163D316100419EEE /* PXListView+UserInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53E0163D316100419EEE /* PXListView+UserInteraction.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		10AF53E9163D316100419EEE /* PXListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53E2163D316100419EEE /* PXListViewCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		10AF53F1163D340000419EEE /* VSCOSXOBSceneElementListController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53F0163D340000419EEE /* VSCOSXOBSceneElementListController.mm */; };
+		10AF53F1163D340000419EEE /* VSCOSXOBSceneController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53F0163D340000419EEE /* VSCOSXOBSceneController.mm */; };
 		10AF53F4163D355B00419EEE /* VSCOSXOBSceneElementCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53F3163D355B00419EEE /* VSCOSXOBSceneElementCell.mm */; };
 		10AF53F6163D73F800419EEE /* VSCOSXOBSceneElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10AF53F5163D73F800419EEE /* VSCOSXOBSceneElementCell.xib */; };
 		10AF53FE163D8D7600419EEE /* DMTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53FB163D8D7600419EEE /* DMTabBar.m */; };
@@ -344,6 +345,8 @@
 		105CDA4D162DA9A600532AD0 /* VSCOBOSXSceneDisplayView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXSceneDisplayView.mm; path = ../../../OB/VSCOBOSXSceneDisplayView.mm; sourceTree = "<group>"; };
 		105CDA56162DAD2E00532AD0 /* VSCOBDisplay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBDisplay.cpp; path = ../../../../../OB/OgreBulletBasic/VSCOBDisplay.cpp; sourceTree = "<group>"; };
 		105CDA57162DAD2E00532AD0 /* VSCOBDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBDisplay.h; path = ../../../../../OB/OgreBulletBasic/VSCOBDisplay.h; sourceTree = "<group>"; };
+		108DDE0016543B3300B733CE /* VSCOBOSXSceneListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXSceneListener.h; path = ../../../OB/VSCOBOSXSceneListener.h; sourceTree = "<group>"; };
+		108DDE0116543B3300B733CE /* VSCOBOSXSceneListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXSceneListener.mm; path = ../../../OB/VSCOBOSXSceneListener.mm; sourceTree = "<group>"; };
 		108EE2A3163C007200DD45BF /* VSCIMCollisionMapped.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCIMCollisionMapped.cpp; path = ../../../../../Mapping/VSCIMCollisionMapped.cpp; sourceTree = "<group>"; };
 		108EE2A4163C007200DD45BF /* VSCIMCollisionMapped.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMCollisionMapped.h; path = ../../../../../Mapping/VSCIMCollisionMapped.h; sourceTree = "<group>"; };
 		108EE2A7163C08CA00DD45BF /* VSCIMAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCIMAction.cpp; path = ../../../../../Mapping/VSCIMAction.cpp; sourceTree = "<group>"; };
@@ -353,7 +356,7 @@
 		1091F28315B07C0D00466854 /* VSCLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCLog.h; path = ../../../../Generic/VSCLog.h; sourceTree = "<group>"; };
 		109D51B3155998EE0030C161 /* VSCException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCException.cpp; path = ../../../../Generic/VSCException.cpp; sourceTree = "<group>"; };
 		109D51B4155998EE0030C161 /* VSCException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCException.h; path = ../../../../Generic/VSCException.h; sourceTree = "<group>"; };
-		10AF53D6163D2F1B00419EEE /* VSCOSXOBSceneElementListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementListController.h; path = ../../../OB/VSCOSXOBSceneElementListController.h; sourceTree = "<group>"; };
+		10AF53D6163D2F1B00419EEE /* VSCOSXOBSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneController.h; path = ../../../OB/VSCOSXOBSceneController.h; sourceTree = "<group>"; };
 		10AF53DA163D316100419EEE /* PXListDocumentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PXListDocumentView.h; path = ../../../Submodules/PXListView/Classes/PXListDocumentView.h; sourceTree = "<group>"; };
 		10AF53DB163D316100419EEE /* PXListDocumentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PXListDocumentView.m; path = ../../../Submodules/PXListView/Classes/PXListDocumentView.m; sourceTree = "<group>"; };
 		10AF53DC163D316100419EEE /* PXListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PXListView.h; path = ../../../Submodules/PXListView/Classes/PXListView.h; sourceTree = "<group>"; };
@@ -371,7 +374,7 @@
 		10AF53ED163D319E00419EEE /* MyListViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MyListViewCell.h; path = ../../../Submodules/PXListView/Classes/MyListViewCell.h; sourceTree = "<group>"; };
 		10AF53EE163D319E00419EEE /* MyListViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MyListViewCell.m; path = ../../../Submodules/PXListView/Classes/MyListViewCell.m; sourceTree = "<group>"; };
 		10AF53EF163D31A600419EEE /* MyListViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MyListViewCell.xib; path = ../../../Submodules/PXListView/Resources/MyListViewCell.xib; sourceTree = "<group>"; };
-		10AF53F0163D340000419EEE /* VSCOSXOBSceneElementListController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneElementListController.mm; path = ../../../OB/VSCOSXOBSceneElementListController.mm; sourceTree = "<group>"; };
+		10AF53F0163D340000419EEE /* VSCOSXOBSceneController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneController.mm; path = ../../../OB/VSCOSXOBSceneController.mm; sourceTree = "<group>"; };
 		10AF53F2163D355B00419EEE /* VSCOSXOBSceneElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementCell.h; path = ../../../OB/VSCOSXOBSceneElementCell.h; sourceTree = "<group>"; };
 		10AF53F3163D355B00419EEE /* VSCOSXOBSceneElementCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneElementCell.mm; path = ../../../OB/VSCOSXOBSceneElementCell.mm; sourceTree = "<group>"; };
 		10AF53F5163D73F800419EEE /* VSCOSXOBSceneElementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXOBSceneElementCell.xib; path = ../../../OB/VSCOSXOBSceneElementCell.xib; sourceTree = "<group>"; };
@@ -651,6 +654,8 @@
 			children = (
 				105CDA4C162DA9A600532AD0 /* VSCOBOSXSceneDisplayView.h */,
 				105CDA4D162DA9A600532AD0 /* VSCOBOSXSceneDisplayView.mm */,
+				108DDE0016543B3300B733CE /* VSCOBOSXSceneListener.h */,
+				108DDE0116543B3300B733CE /* VSCOBOSXSceneListener.mm */,
 				10CB65BD164EACE9000D311F /* Element List */,
 				10CB65BC164EACD2000D311F /* Bridges And Adapters */,
 				10CB65BE164EAD0B000D311F /* Element Inspector */,
@@ -1118,8 +1123,8 @@
 		10CB65BD164EACE9000D311F /* Element List */ = {
 			isa = PBXGroup;
 			children = (
-				10AF53D6163D2F1B00419EEE /* VSCOSXOBSceneElementListController.h */,
-				10AF53F0163D340000419EEE /* VSCOSXOBSceneElementListController.mm */,
+				10AF53D6163D2F1B00419EEE /* VSCOSXOBSceneController.h */,
+				10AF53F0163D340000419EEE /* VSCOSXOBSceneController.mm */,
 				10CB65B3164E934A000D311F /* VSCOSXOBSceneElementListView.h */,
 				10CB65B4164E934A000D311F /* VSCOSXOBSceneElementListView.mm */,
 				10AF53F2163D355B00419EEE /* VSCOSXOBSceneElementCell.h */,
@@ -1705,7 +1710,7 @@
 				10AF53E7163D316100419EEE /* PXListView.m in Sources */,
 				10AF53E8163D316100419EEE /* PXListView+UserInteraction.m in Sources */,
 				10AF53E9163D316100419EEE /* PXListViewCell.m in Sources */,
-				10AF53F1163D340000419EEE /* VSCOSXOBSceneElementListController.mm in Sources */,
+				10AF53F1163D340000419EEE /* VSCOSXOBSceneController.mm in Sources */,
 				10AF53F4163D355B00419EEE /* VSCOSXOBSceneElementCell.mm in Sources */,
 				10AF53FE163D8D7600419EEE /* DMTabBar.m in Sources */,
 				10AF53FF163D8D7600419EEE /* DMTabBarItem.m in Sources */,
@@ -1731,6 +1736,7 @@
 				10CB65CC164FB88F000D311F /* VSCIMOSXCollisionMappingListView.mm in Sources */,
 				100812B21651A89800E975B8 /* VSCBroadcaster.cpp in Sources */,
 				100812B61651ABE700E975B8 /* VSCListener.cpp in Sources */,
+				108DDE0216543B3300B733CE /* VSCOBOSXSceneListener.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

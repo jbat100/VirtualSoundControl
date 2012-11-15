@@ -8,7 +8,9 @@
 #include "VSCEnvironment.h"
 #include "VSCOBScene.h"
 
-@protocol VSCOSXOBSceneElementListController;
+
+@protocol VSCOSXOBSceneController;
+
 
 /*
  *  Main environment controller protocol
@@ -16,11 +18,20 @@
 
 @protocol VSCOSXEnvironmentController <NSObject>
 
+/*
+ *  The actual environment the controller is associated with
+ */
 @property (nonatomic, assign) VSC::Environment::WPtr environment;
-@property (strong) IBOutlet id<VSCOSXOBSceneElementListController> sceneElementListController;
+/*
+ *  Sub-controllers
+ */
+@property (strong) IBOutlet id<VSCOSXOBSceneController> sceneController;
 
 -(void) showEnvironmentInspector;
+
+-(void) showSceneSettings;
 -(void) showSceneElementList;
+
 -(void) showElementInspectorForElement:(VSC::OB::Scene::Element::SPtr)element;
 
 @end

@@ -6,14 +6,14 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCOSXOBSceneElementListController.h"
+#import "VSCOSXOBSceneController.h"
 
 #import "VSCOSXOBSceneElementListView.h"
 #import "VSCOSXOBSceneElementCell.h"
 
 NSString* const VSCOSXOBSceneElementCellReuseIdentifier = @"VSCOSXOBSceneElementCellReuseIdentifier";
 
-@implementation VSCOSXOBSceneElementListController
+@implementation VSCOSXOBSceneController
 
 @synthesize environmentController = _environmentController;
 
