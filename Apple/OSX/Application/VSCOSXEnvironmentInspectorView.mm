@@ -8,6 +8,7 @@
 
 #import "VSCOSXEnvironmentInspectorView.h"
 
+#import "PXListView.h"
 #import "VSCOSXEnvironmentController.h"
 #import "DMTabBar.h"
 #import "VSCOSXOBSceneElementListView.h"

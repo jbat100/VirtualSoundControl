@@ -1,4 +1,7 @@
 
+#ifndef _VSC_OB_OSX_SCENE_LISTENER_H_
+#define _VSC_OB_OSX_SCENE_LISTENER_H_
+
 #include "VSCOBScene.h"
 
 #include <boost/shared_ptr.hpp>
@@ -26,14 +29,14 @@ namespace VSC
             typedef boost::shared_ptr<OSXSceneListener>    SPtr;
             typedef boost::weak_ptr<OSXSceneListener>      WPtr;
             
-            id<VSCOBOSXSceneListenerTarget> getTarget(void);
-            void getTarget(id<VSCOBOSXSceneListenerTarget>);
+            id<VSCOBOSXSceneListenerTarget> getTarget(void) {return mTarget;}
+            void setTarget(id<VSCOBOSXSceneListenerTarget> target) {mTarget = target;}
             
             /*
              *  Scene::Listener overrides
              */
             
-            virtual void sceneRegisteredElement(Scene::SPtr scene, Scene::Element::SPtr element);
+            virtual void sceneRegisteredElement(Scene::SPtr scene, Scene::Element::SPtr element); 
             
         private:
             
@@ -43,3 +46,5 @@ namespace VSC
         
     }
 }
+
+#endif // _VSC_OB_OSX_SCENE_LISTENER_H_

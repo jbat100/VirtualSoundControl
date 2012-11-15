@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "VSCOSXEnvironmentController.h"
 #import "VSCOBOSXSceneListener.h"
+#import "PXListViewDelegate.h"
 
 #include "VSCOBScene.h"
 
@@ -29,5 +30,7 @@
 
 @property (weak) IBOutlet VSCOSXOBSceneElementListView* elementListView;
 @property (weak) IBOutlet VSCOBOSXSceneDisplayView* sceneView;
+
+@property (assign) IBOutlet id<VSCOSXEnvironmentController> environmentController;
 
 @end

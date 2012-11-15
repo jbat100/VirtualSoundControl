@@ -68,7 +68,6 @@
     
     NSLog(@"%@ windowDidLoad owner: %@, windowNibName: %@", self, [self owner], [self windowNibName]);
     
-    BOOST_ASSERT(self.sceneView);
     BOOST_ASSERT(self.sceneController);
     BOOST_ASSERT(self.environmentInspectorView);
 }
@@ -101,16 +100,7 @@
 {
     VSC::Environment::SPtr env = self.environment.lock();
     
-    if (env && env->getOBScene())
-    {
-        NSLog(@"%@ reloadInterface", self);
-        self.sceneView.scene = env->getOBScene();
-    }
-    else
-    {
-        NSLog(@"%@ reloadInterface NO SCENE", self);
-        self.sceneView.scene = VSC::OB::Scene::SPtr();
-    }
+    [self reloadSceneInterface];
 }
 
 -(void) reloadSceneInterface
@@ -123,7 +113,7 @@
     }
     else
     {
-        
+        self.sceneController.scene = VSC::OB::Scene::WPtr();
     }
 }
 

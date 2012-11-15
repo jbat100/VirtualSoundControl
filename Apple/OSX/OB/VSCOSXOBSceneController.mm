@@ -11,6 +11,7 @@
 #import "VSCOBOSXSceneDisplayView.h"
 #import "VSCOSXOBSceneElementListView.h"
 #import "VSCOSXOBSceneElementCell.h"
+#import "PXListView.h"
 
 NSString* const VSCOSXOBSceneElementCellReuseIdentifier = @"VSCOSXOBSceneElementCellReuseIdentifier";
 
@@ -18,6 +19,19 @@ NSString* const VSCOSXOBSceneElementCellReuseIdentifier = @"VSCOSXOBSceneElement
 
 @synthesize scene = _scene;
 @synthesize environmentController = _environmentController;
+
+-(id) init {
+    
+    self = [super init];
+    if (self)
+    {
+        self.sceneListener = VSC::OB::OSXSceneListener::SPtr(new VSC::OB::OSXSceneListener);
+        self.sceneListener->setTarget(self);
+    }
+    
+    return self;
+    
+}
 
 -(void) dealoc
 {
@@ -29,6 +43,7 @@ NSString* const VSCOSXOBSceneElementCellReuseIdentifier = @"VSCOSXOBSceneElement
 -(void) setScene:(VSC::OB::Scene::WPtr)s
 {
     BOOST_ASSERT(self.sceneListener);
+    BOOST_ASSERT(self.sceneListener->getTarget() == self);
     
     VSC::OB::Scene::SPtr oldScene = _scene.lock();
     if (oldScene && self.sceneListener)
@@ -38,18 +53,25 @@ NSString* const VSCOSXOBSceneElementCellReuseIdentifier = @"VSCOSXOBSceneElement
     
     _scene = s;
     
-    [self.sceneView setupControlChain];
+    [self.sceneView setupControllerChain];
     
     VSC::OB::Scene::SPtr newScene = _scene.lock();
     if (newScene && self.sceneListener)
     {
-        oldScene->addListener(self.sceneListener);
+        newScene->addListener(self.sceneListener);
     }
     
     [self.elementListView.listView reloadData];
 }
 
-#pragma mark - List View Delegate Methods
+#pragma mark - VSCOBOSXSceneListenerTarget Methods
+
+-(void) scene:(VSC::OB::Scene::SPtr)scene registeredElement:(VSC::OB::Scene::Element::SPtr)element
+{
+    [self.elementListView.listView reloadData];
+}
+
+#pragma mark - PXListViewDelegate Methods
 
 - (NSUInteger)numberOfRowsInListView: (PXListView*)aListView
 {
@@ -74,7 +96,7 @@ NSString* const VSCOSXOBSceneElementCellReuseIdentifier = @"VSCOSXOBSceneElement
     
     PXListViewCell* cell = [aListView dequeueCellWithReusableIdentifier:VSCOSXOBSceneElementCellReuseIdentifier];
     
-    BOOST_ASSERT([cell isKindOfClass:[VSCOSXOBSceneElementCell class]]);
+    if (cell) BOOST_ASSERT([cell isKindOfClass:[VSCOSXOBSceneElementCell class]]);
     
 	VSCOSXOBSceneElementCell *elementCell = (VSCOSXOBSceneElementCell*)cell;
 	

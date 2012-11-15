@@ -18,6 +18,11 @@
 
 @implementation VSCOSXOBSceneElementCell
 
++(CGFloat) defaultViewHeight
+{
+    return 60.0;
+}
+
 -(void) awakeFromNib
 {
     

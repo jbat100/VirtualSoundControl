@@ -65,7 +65,6 @@
     //[self.environmentWindowController loadWindow]; // docs says not to invoke this method
     NSWindow* w = self.environmentWindowController.window; // does not force creation
     BOOST_ASSERT(w);
-    BOOST_ASSERT(self.environmentWindowController.sceneView.display.lock());
     
     self.midiWindowController = [[VSCOSXMIDIWindowController alloc] initWithWindowNibName:@"VSCOSXMIDIWindow"];
     BOOST_ASSERT(self.midiWindowController);

@@ -24,7 +24,7 @@
 
 @property (nonatomic, assign) VSC::OB::OSXInterfaceAdapter::SPtr inputAdapter;
 
-@property (nonatomic, assign) VSC::OB::SceneController::SPtr sceneController;
+@property (nonatomic, assign) VSC::OB::SceneController::SPtr internalSceneController;
 @property (nonatomic, assign) VSC::OB::DisplayController::SPtr displayController;
 
 @end
@@ -47,14 +47,14 @@ static const bool mTraceUI = false;
         
         self.interfaceResponderChain = VSC::OB::InterfaceResponderChain::SPtr(new VSC::OB::InterfaceResponderChain);
         
-        self.sceneController = VSC::OB::SceneController::SPtr(new VSC::OB::SceneController);
-        self.sceneController->setOgreKeyBindings(keyBindings);
+        self.internalSceneController = VSC::OB::SceneController::SPtr(new VSC::OB::SceneController);
+        self.internalSceneController->setOgreKeyBindings(keyBindings);
         
         self.displayController = VSC::OB::DisplayController::SPtr(new VSC::OB::DisplayController);
         self.displayController->setOgreKeyBindings(keyBindings);
         self.displayController->setupWithDisplay(self.display.lock());
         
-        self.interfaceResponderChain->appendResponder(boost::static_pointer_cast<VSC::OB::InterfaceResponder>(self.sceneController));
+        self.interfaceResponderChain->appendResponder(boost::static_pointer_cast<VSC::OB::InterfaceResponder>(self.internalSceneController));
         self.interfaceResponderChain->appendResponder(boost::static_pointer_cast<VSC::OB::InterfaceResponder>(self.displayController));
         
         self.inputAdapter = VSC::OB::OSXInterfaceAdapter::SPtr(new VSC::OB::OSXInterfaceAdapter());
@@ -100,7 +100,9 @@ static const bool mTraceUI = false;
 
 -(void) setupControllerChain
 {
-    id<VSCOSXOBSceneController> controller = self.controller;
+    BOOST_ASSERT(self.sceneController);
+    
+    id<VSCOSXOBSceneController> controller = self.sceneController;
     
     if (controller)
     {
@@ -108,15 +110,15 @@ static const bool mTraceUI = false;
             
         if (currentScene)
         {
-            self.display.lock()->setupWithScene(newScene);
-            self.sceneController->setupWithScene(newScene);
+            self.display.lock()->setupWithScene(currentScene);
+            self.internalSceneController->setupWithScene(currentScene);
         }
         
         return;
     }
 
     self.display.lock()->shutdown();
-    self.sceneController->shutdown();
+    self.internalSceneController->shutdown();
 
     return;
 }
