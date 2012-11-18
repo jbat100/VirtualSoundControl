@@ -132,7 +132,10 @@
     [self.environmentInspectorView showSceneElementList];
 }
 
-
+-(void) showElementInspectorForElement:(VSC::OB::Scene::Element::SPtr)element
+{
+    NSLog(@"%@ showElementInspectorForElement", self);
+}
 
 #pragma mark - Stupid tests
 

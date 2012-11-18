@@ -12,6 +12,13 @@
 
 NSDictionary* elementInspectorTabDict = nil;
 
+@interface VSCOSXOBSceneElementInspectorView ()
+
+@property (weak) IBOutlet DMTabBar* tabBar;
+@property (weak) IBOutlet NSView* mainView;
+
+@end
+
 @implementation VSCOSXOBSceneElementInspectorView
 
 + (void)load
@@ -55,11 +62,36 @@ NSDictionary* elementInspectorTabDict = nil;
         
         BOOST_ASSERT(self.elementDetailView);
     }
+    
+    [self.elementCollisionView setHidden:YES];
+    if ([self.elementDetailView superview] != self.mainView)
+    {
+        [self.mainView addSubview:self.elementDetailView];
+    }
+    self.elementDetailView.frame = self.mainView.bounds;
+    [self.elementDetailView setHidden:NO];
 }
 
 -(void) showElementCollisionView
 {
+    if (!self.elementCollisionView)
+    {
+        NSArray* topLevelObjects = nil;
+        
+        [[NSBundle mainBundle] loadNibNamed:@"VSCOSXOBSceneElementCollisionView"
+                                      owner:self
+                            topLevelObjects:&topLevelObjects];
+        
+        BOOST_ASSERT(self.elementDetailView);
+    }
     
+    [self.elementDetailView setHidden:YES];
+    if ([self.elementCollisionView superview] != self.mainView)
+    {
+        [self.mainView addSubview:self.elementCollisionView];
+    }
+    self.elementCollisionView.frame = self.mainView.bounds;
+    [self.elementCollisionView setHidden:NO];
 }
 
 @end

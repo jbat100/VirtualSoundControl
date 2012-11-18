@@ -349,6 +349,7 @@ namespace VSC {
                 
                 virtual void sceneRegisteredElement(Scene::SPtr scene, Scene::Element::SPtr element) {}
                 virtual void sceneChangedSetting(Scene::SPtr scene, Setting setting, bool value) {}
+                virtual void sceneWasRendered(Scene::SPtr scene) {}
                 
             };
             

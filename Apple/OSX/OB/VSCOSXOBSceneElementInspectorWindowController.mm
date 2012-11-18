@@ -7,6 +7,9 @@
 //
 
 #import "VSCOSXOBSceneElementInspectorWindowController.h"
+#import "VSCOSXOBSceneElementController.h"
+#import "VSCOSXOBSceneElementInspectorView.h"
+#import "VSCOSXOBSceneElementDetailView.h"
 
 @interface VSCOSXOBSceneElementInspectorWindowController ()
 
@@ -14,7 +17,8 @@
 
 @implementation VSCOSXOBSceneElementInspectorWindowController
 
-@synthesize elementInspectorView = _elementInspectorView;
+@synthesize element = _element;
+@synthesize environmentController = _environmentController;
 @synthesize collisionEventChainController = _collisionEventChainController;
 
 - (id)initWithWindow:(NSWindow *)window
@@ -32,6 +36,21 @@
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+}
+
+-(void) showElementDetailView
+{
+    [self.elementInspectorView showElementDetailView];
+}
+
+-(void) showElementCollisionView
+{
+    [self.elementInspectorView showElementCollisionView];
+}
+
+-(void) sceneWasRendered
+{
+    [self.elementInspectorView.elementDetailView reloadInterface];
 }
 
 @end

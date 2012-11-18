@@ -776,6 +776,15 @@ bool VSC::OB::Scene::frameStarted(const Ogre::FrameEvent& evt)
     }
 
     mDoOneStep = false;
+    
+    BOOST_FOREACH(VSC::Listener::WPtr listener, this->getListeners())
+    {
+        Scene::Listener::SPtr sceneListener = boost::dynamic_pointer_cast<Scene::Listener>(listener.lock());
+        if (sceneListener)
+        {
+            sceneListener->sceneWasRendered(shared_from_this());
+        }
+    }
 
     return true;
 }

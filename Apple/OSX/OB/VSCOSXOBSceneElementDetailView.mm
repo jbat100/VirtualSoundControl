@@ -25,4 +25,22 @@
     // Drawing code here.
 }
 
+-(void) awakeFromNib
+{
+    
+}
+
+#pragma mark - NSTextFieldDelegate
+
+- (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
+{
+    return YES;
+}
+
+- (BOOL)control:(NSControl *)control didFailToFormatString:(NSString *)string errorDescription:(NSString *)error
+{
+    return NO;
+}
+
+
 @end

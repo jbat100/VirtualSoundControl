@@ -14,9 +14,6 @@
 
 @interface VSCOSXOBSceneElementInspectorView : NSView
 
-@property (weak) IBOutlet DMTabBar* tabBar;
-@property (weak) IBOutlet NSView* mainView;
-
 @property (strong) IBOutlet VSCOSXOBSceneElementDetailView* elementDetailView;
 @property (strong) IBOutlet VSCOSXOBSceneElementCollisionView* elementCollisionView;
 

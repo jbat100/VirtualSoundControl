@@ -8,9 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
+@protocol VSCOSXOBSceneElementController;
+
 @interface VSCOSXOBSceneElementDetailView : NSView
 
+@property (weak) id<VSCOSXOBSceneElementController> elementController;
+
 @property (weak) IBOutlet NSTextField* nameTextField;
+@property (weak) IBOutlet NSTextField* idTextField;
 
 /*
  *  Position/Rotation
@@ -20,8 +25,11 @@
 @property (weak) IBOutlet NSTextField* yPosTextField;
 @property (weak) IBOutlet NSTextField* zPosTextField;
 
-@property (weak) IBOutlet NSTextField* rollTextField;
-@property (weak) IBOutlet NSTextField* pitchTextField;
-@property (weak) IBOutlet NSTextField* yawTextField;
+@property (weak) IBOutlet NSTextField* wRotTextField;
+@property (weak) IBOutlet NSTextField* xRotTextField;
+@property (weak) IBOutlet NSTextField* yRotTextField;
+@property (weak) IBOutlet NSTextField* zRotTextField;
+
+-(void) reloadInterface;
 
 @end

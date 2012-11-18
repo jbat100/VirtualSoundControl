@@ -9,9 +9,18 @@
 #import <Cocoa/Cocoa.h>
 
 @class VSCIMOSXCollisionEventChainView;
+@protocol VSCOSXOBSceneElementController;
+
+/*
+ *  A view for displaying collision related element stuff
+ */
 
 @interface VSCOSXOBSceneElementCollisionView : NSView
 
+@property (weak) id<VSCOSXOBSceneElementController> elementController;
+
 @property (strong) VSCIMOSXCollisionEventChainView* eventChainView;
+
+-(void) reloadInterface;
 
 @end
