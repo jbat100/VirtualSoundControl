@@ -313,6 +313,25 @@ namespace VSC {
             };
             
             /*
+             *  Enum for on/off scene settings
+             */
+            
+            enum Setting {
+                SettingNone = 0,
+                SettingPaused,
+                SettingDrawWireFrame,
+                SettingDrawAABB,
+                SettingDrawText,
+                SettingDrawFeaturesText,
+                SettingDrawContactPoints,
+                SettingBulletLCPIEnabled,
+                SettingCCDEnabled,
+                SettingNoDeactivation,
+                SettingProfileTimings,
+                SettingSatComparisonEnabled
+            };
+            
+            /*
              *  The scene listener is used by elements which want to be informed
              *  of scene events. This is primarily for UI updates put can potentially
              *  be used for other stuff.
@@ -329,8 +348,10 @@ namespace VSC {
                 virtual ~Listener() {}
                 
                 virtual void sceneRegisteredElement(Scene::SPtr scene, Scene::Element::SPtr element) {}
+                virtual void sceneChangedSetting(Scene::SPtr scene, Setting setting, bool value) {}
                 
             };
+            
 
             virtual ~Scene() { /* shutdown(); // calling shutdown in destructor causes problems */  };
             
@@ -407,42 +428,18 @@ namespace VSC {
             void setCollisionDetector(CollisionDetector::SPtr detector);
             
             /**--------------------------------------------------------------
-             *  Other Setters/Getters
+             *  Settings
+             */
+            
+            void toggleSetting(Setting setting);
+            void setSetting(Setting setting, bool on);
+            bool getSetting(Setting setting);
+            
+            /*
+             *  Step
              */
             
             void doOneStep() {mDoOneStep = true;} // steps through simulation/dynamics useful when paused
-            
-            bool isPaused(void) {return mPaused;}
-            void pause(bool p) {mPaused = p;}
-            void togglePause(void) {mPaused = !mPaused;}
-            
-            bool drawingWireFrame(void) {return mDrawWireFrame;}
-            void drawWireFrame(bool draw);
-            void toggleDrawWireFrame(void) {drawWireFrame(!mDrawWireFrame);}
-            
-            bool drawingAabb(void) {return mDrawAabb;}
-            void drawAabb(bool draw);
-            void toggleDrawAabb(void) {mDrawAabb = !mDrawAabb;}
-            
-            bool drawingText(void) {return mDrawText;}
-            void drawText(bool draw);
-            void toggleDrawText(void) {mDrawText = !mDrawText;}
-            
-            bool drawingFeaturesText(void) {return mDrawFeaturesText;}
-            void drawFeaturesText(bool draw);
-            void toggleDrawFeaturesText(void) {mDrawFeaturesText = !mDrawFeaturesText;}
-            
-            bool drawingContactPoints(void) {return mDrawContactPoints;}
-            void drawContactPoints(bool draw);
-            void toggleDrawContactPoints(void) {mDrawContactPoints = !mDrawContactPoints;}
-            
-            bool bulletLCPIsEnabled(void) {return !mDisableBulletLCP;}
-            void enableBulletLCP(bool enable);
-            void toggleBulletLCP(void) {mDisableBulletLCP = !mDisableBulletLCP;}
-            
-            bool ccdIsEnabled(void) {return mEnableCCD;}
-            void enableCCD(bool enable);
-            void toggleCCD(void) {mEnableCCD = !mEnableCCD;}
             
         protected:
             
@@ -514,25 +511,10 @@ namespace VSC {
             static const bool                       mTraceUI = false;
             
             bool mDoOneStep;
-            bool mPaused;
             
-            bool mDrawWireFrame;
-            bool mDrawAabb;
-            bool mDrawFeaturesText;
-            bool mDrawContactPoints;
-            bool mDrawText;
+            typedef std::map<Setting, bool> SettingValueMap;
             
-            bool mDisableBulletLCP;
-            bool mEnableCCD;
-            
-            /*
-             *  Useful?
-             */
-            
-            bool mNoDeactivation;
-            bool mNoHelpText;
-            bool mProfileTimings;
-            bool mEnableSatComparison;
+            SettingValueMap mSettingValueMap;
             
         };
         

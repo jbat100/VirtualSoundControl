@@ -9,16 +9,25 @@
 #import "VSCOSXOBSceneController.h"
 
 #import "VSCOBOSXSceneDisplayView.h"
+#import "VSCOSXOBSceneDetailView.h"
 #import "VSCOSXOBSceneElementListView.h"
 #import "VSCOSXOBSceneElementCell.h"
 #import "PXListView.h"
 
 NSString* const VSCOSXOBSceneElementCellReuseIdentifier = @"VSCOSXOBSceneElementCellReuseIdentifier";
 
+@interface VSCOSXOBSceneController ()
+
+@end
+
 @implementation VSCOSXOBSceneController
 
 @synthesize scene = _scene;
 @synthesize environmentController = _environmentController;
+
+@synthesize elementListView = _elementListView;
+@synthesize sceneView = _sceneView;
+@synthesize sceneDetailView = _sceneDetailView;
 
 -(id) init {
     
@@ -64,11 +73,34 @@ NSString* const VSCOSXOBSceneElementCellReuseIdentifier = @"VSCOSXOBSceneElement
     [self.elementListView.listView reloadData];
 }
 
+#pragma mark - UI Callbacks
+
+
+-(IBAction)checkBoxAction:(id)sender
+{
+    VSC::OB::Scene::SPtr s = self.scene.lock();
+    BOOST_ASSERT(s); if (!s) return;
+    
+    BOOST_ASSERT(self.sceneDetailView);
+    
+    VSC::OB::Scene::Setting setting = [self.sceneDetailView settingForCheckBox:sender];
+    BOOST_ASSERT(setting != VSC::OB::Scene::SettingNone); if (setting == VSC::OB::Scene::SettingNone) return;
+    
+    bool value = ([(NSButton*)sender state] == NSOnState) ? true : false;
+    s->setSetting(setting, value);
+    
+}
+
 #pragma mark - VSCOBOSXSceneListenerTarget Methods
 
 -(void) scene:(VSC::OB::Scene::SPtr)scene registeredElement:(VSC::OB::Scene::Element::SPtr)element
 {
     [self.elementListView.listView reloadData];
+}
+
+-(void) scene:(VSC::OB::Scene::SPtr)scene changedSetting:(VSC::OB::Scene::Setting)setting toValue:(BOOL)value
+{
+    [self.sceneDetailView reloadSetting:setting];
 }
 
 #pragma mark - PXListViewDelegate Methods

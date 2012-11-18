@@ -12,17 +12,30 @@
 #import "VSCOSXEnvironmentController.h"
 #import "DMTabBar.h"
 #import "VSCOSXOBSceneElementListView.h"
+#import "VSCOSXOBSceneDetailView.h"
 #import "VSCOSXOBSceneController.h"
 
 
 NSArray* EnvironmentInspectorTabParamArray = nil;
 
-NSString* const VSCOSXTabTitleScene = @"Scene";
+NSString* const VSCOSXTabTitleSceneSettings = @"Scene Settings";
+NSString* const VSCOSXTabTitleSceneElements = @"Scene Elements";
 NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 
 @interface VSCOSXEnvironmentInspectorView ()
 
+/*
+ *  Tabbed interface
+ */
+
+@property (weak) IBOutlet DMTabBar* tabBar;
+//@property (nonatomic, strong) IBOutlet NSTabView* tabView;
+
+@property (weak) IBOutlet NSView* mainView;
+
 -(void) setup;
+
+-(void) clearMainView;
 
 @end
 
@@ -31,8 +44,9 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 +(void) load {
     
     EnvironmentInspectorTabParamArray = @[
-    @{@"image": [NSImage imageNamed:@"12-eye"], @"title": VSCOSXTabTitleScene},
-    @{@"image": [NSImage imageNamed:@"122-stats"], @"title": VSCOSXTabTitleEnveloppes},
+    @{@"image": [NSImage imageNamed:@"158-wrench-2.png"], @"title": VSCOSXTabTitleSceneSettings},
+    @{@"image": [NSImage imageNamed:@"12-eye"], @"title": VSCOSXTabTitleSceneElements},
+    @{@"image": [NSImage imageNamed:@"122-stats"], @"title": VSCOSXTabTitleEnveloppes}
     ];
     
 }
@@ -107,9 +121,19 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
             NSLog(@"%@ will select %lu/%@", self.tabBar, tabBarItemIndex, tabBarItem);
             //[self.tabView selectTabViewItem:[tabView.tabViewItems objectAtIndex:tabBarItemIndex]];
             
-            if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleScene])
+            if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleSceneElements])
             {
+                NSLog(@"Selected scene element list tab");
                 [self showSceneElementList];
+            }
+            else if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleSceneSettings])
+            {
+                NSLog(@"Selected scene detail tab");
+                [self showSceneDetail];
+            }
+            else if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleEnveloppes])
+            {
+                NSLog(@"Selected enveloppes tab");
             }
             
         }
@@ -122,20 +146,88 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     
 }
 
+-(void) clearMainView
+{
+    NSArray* subviews = [self.mainView subviews];
+    
+    for (NSView* subview in subviews)
+    {
+        [subview removeFromSuperview];
+    }
+}
+
 -(void) showSceneElementList
 {
     BOOST_ASSERT(self.sceneElementListView);
     BOOST_ASSERT(self.sceneElementListView.listView);
     BOOST_ASSERT(self.sceneElementListView.listView.delegate);
     
-    if ([self.sceneElementListView superview] != self)
+    NSLog(@"%@ showSceneElementList", self);
+    
+    //[self clearMainView];
+    
+    [self.sceneDetailView setHidden:YES];
+    
+    if ([self.sceneElementListView superview] != self.mainView)
     {
-        [self addSubview:self.sceneElementListView];
+        [self.mainView addSubview:self.sceneElementListView];
     }
     
-    self.sceneElementListView.frame = self.bounds;
+    [self.sceneElementListView setHidden:NO];
+    
+    self.sceneElementListView.frame = self.mainView.bounds;
     
     [self.sceneElementListView.listView reloadData];
+    
+    NSLog(@"self.sceneElementListView.frame: %@", NSStringFromRect(self.sceneElementListView.frame));
+    NSLog(@"self.sceneElementListView.listView.frame: %@", NSStringFromRect(self.sceneElementListView.listView.frame));
+}
+
+-(void) showSceneDetail
+{
+    NSLog(@"%@ showSceneDetail", self);
+    
+    if (!self.sceneDetailView)
+    {
+        BOOST_ASSERT(self.environmentController.sceneController);
+        
+        if (self.environmentController.sceneController)
+        {
+            NSArray* topLevelObjects = nil;
+            
+            [[NSBundle mainBundle] loadNibNamed:@"VSCOSXOBSceneDetailView"
+                                          owner:self.environmentController.sceneController
+                                topLevelObjects:&topLevelObjects];
+            
+            for (NSObject* topLevelObject in topLevelObjects)
+            {
+                if ([topLevelObject isKindOfClass:[VSCOSXOBSceneDetailView class]])
+                {
+                    self.sceneDetailView = (VSCOSXOBSceneDetailView*)topLevelObject;
+                }
+            }
+            
+            BOOST_ASSERT(self.sceneDetailView);
+            BOOST_ASSERT(self.sceneDetailView.sceneController == self.environmentController.sceneController);
+        }
+        
+    }
+    
+    //[self clearMainView];
+    
+    [self.sceneElementListView setHidden:YES];
+    
+    if ([self.sceneDetailView superview] != self.mainView)
+    {
+        [self.mainView addSubview:self.sceneDetailView];
+    }
+    
+    [self.sceneDetailView setHidden:NO];
+    
+    self.sceneDetailView.frame = self.mainView.bounds;
+    
+    [self.sceneDetailView reloadInterface];
+    
 }
 
 @end

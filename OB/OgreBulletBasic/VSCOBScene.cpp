@@ -441,7 +441,6 @@ bool VSC::OB::Scene::checkListener(VSC::Listener::SPtr listener)
 VSC::OB::Scene::Scene() :
 mSceneManager(0),
 mDynamicsWorld(0),
-mPaused(false),
 mDebugLines(0)
 {
 
@@ -554,24 +553,6 @@ void VSC::OB::Scene::init()
 #endif // _DEBUG
     
     this->setCollisionDetector(CollisionDetector::SPtr(new CollisionDetector(shared_from_this())));
-    
-    /**
-     *  Nothing is enabled by default...
-     */
-    
-    mPaused = false;
-    mDrawWireFrame = false;
-    mDrawAabb = false;
-    mDrawFeaturesText = false;
-    mDrawContactPoints = false;
-    mDisableBulletLCP = false;
-    mEnableCCD = false;
-    mDrawText = false;
-    
-    mNoDeactivation = false;
-    mNoHelpText = false;
-    mProfileTimings = false;
-    mEnableSatComparison = false;
  
     this->setupLights();
     
@@ -701,6 +682,15 @@ void VSC::OB::Scene::registerElement(Element::SPtr element, std::string name, in
     element->setName(name);
     element->setIdentifier(identifier);
     mElements.push_back(element);
+    
+    BOOST_FOREACH(VSC::Listener::WPtr listener, this->getListeners())
+    {
+        Scene::Listener::SPtr sceneListener = boost::dynamic_pointer_cast<Scene::Listener>(listener.lock());
+        if (sceneListener)
+        {
+            sceneListener->sceneRegisteredElement(shared_from_this(), element);
+        }
+    }
 }
 
 void VSC::OB::Scene::destroyAllElements(void)
@@ -775,12 +765,13 @@ bool VSC::OB::Scene::frameStarted(const Ogre::FrameEvent& evt)
     
     if (mTraceFrame) std::cout << "VSC::OB::Scene::frameStarted, elapsed time " << elapsedTime << std::endl;
     
-    if (!mPaused || mDoOneStep)
+    if ((!this->getSetting(SettingPaused)) || mDoOneStep)
     {
         mDynamicsWorld->stepSimulation(elapsedTime);
     }
     
-    if (this->getCollisionDetector()) {
+    if (this->getCollisionDetector())
+    {
         this->getCollisionDetector()->updateCollisions();
     }
 
@@ -789,49 +780,78 @@ bool VSC::OB::Scene::frameStarted(const Ogre::FrameEvent& evt)
     return true;
 }
 
-void VSC::OB::Scene::drawWireFrame(bool draw)
+void VSC::OB::Scene::toggleSetting(Setting setting)
 {
-    mDrawWireFrame = draw;
-    mDynamicsWorld->getDebugDrawer()->setDrawWireframe(draw);
-    mDynamicsWorld->setShowDebugShapes(draw);
+    this->setSetting(setting, !this->getSetting(setting));
 }
 
-void VSC::OB::Scene::drawAabb(bool draw)
+void VSC::OB::Scene::setSetting(Setting setting, bool on)
 {
-    mDrawAabb = draw;
-    mDynamicsWorld->getDebugDrawer()->setDrawAabb(draw);
+    mSettingValueMap[setting] = on;
+    
+    switch (setting)
+    {
+        case SettingDrawWireFrame:
+            mDynamicsWorld->getDebugDrawer()->setDrawWireframe(on);
+            mDynamicsWorld->setShowDebugShapes(on);
+            break;
+            
+        case SettingDrawAABB:
+            mDynamicsWorld->getDebugDrawer()->setDrawAabb(on);
+            break;
+            
+        case SettingDrawText:
+            mDynamicsWorld->getDebugDrawer()->setDrawText(on);
+            break;
+            
+        case SettingDrawFeaturesText:
+            mDynamicsWorld->getDebugDrawer()->setDrawFeaturesText(on);
+            break;
+            
+        case SettingDrawContactPoints:
+            mDynamicsWorld->getDebugDrawer()->setDrawContactPoints(on);
+            mDynamicsWorld->setShowDebugContactPoints(on);
+            break;
+            
+        case SettingBulletLCPIEnabled:
+            mDynamicsWorld->getDebugDrawer()->setDisableBulletLCP(on);
+            break;
+            
+        case SettingCCDEnabled:
+            mDynamicsWorld->getDebugDrawer()->setEnableCCD(on);
+            break;
+            
+        case SettingSatComparisonEnabled:
+            mDynamicsWorld->getDebugDrawer()->setEnableSatComparison(on);
+            break;
+            
+        case SettingNoDeactivation:
+            mDynamicsWorld->getDebugDrawer()->setNoDeactivation(on);
+            break;
+            
+        case SettingProfileTimings:
+            mDynamicsWorld->getDebugDrawer()->setProfileTimings(on);
+            break;
+            
+        default:
+            break;
+    }
+    
+    BOOST_FOREACH(VSC::Listener::WPtr listener, this->getListeners())
+    {
+        Scene::Listener::SPtr sceneListener = boost::dynamic_pointer_cast<Scene::Listener>(listener.lock());
+        if (sceneListener)
+        {
+            sceneListener->sceneChangedSetting(shared_from_this(), setting, on);
+        }
+    }
 }
 
-void VSC::OB::Scene::drawText(bool draw)
+bool VSC::OB::Scene::getSetting(Setting setting)
 {
-    mDrawText = draw;
-    mDynamicsWorld->getDebugDrawer()->setDrawText(draw);
+    return mSettingValueMap[setting];
 }
 
-void VSC::OB::Scene::drawFeaturesText(bool draw)
-{
-    mDrawFeaturesText = draw;
-    mDynamicsWorld->getDebugDrawer()->setDrawFeaturesText(draw);
-}
-
-void VSC::OB::Scene::drawContactPoints(bool draw)
-{
-    mDrawContactPoints = draw;
-    mDynamicsWorld->getDebugDrawer()->setDrawContactPoints(draw);
-    mDynamicsWorld->setShowDebugContactPoints(draw);
-}
-
-void VSC::OB::Scene::enableBulletLCP(bool enable)
-{
-    mDisableBulletLCP = !enable;
-    mDynamicsWorld->getDebugDrawer()->setDisableBulletLCP(mDisableBulletLCP);
-}
-
-void VSC::OB::Scene::enableCCD(bool enable)
-{
-    mEnableCCD = enable;
-    mDynamicsWorld->getDebugDrawer()->setEnableCCD(mEnableCCD);
-}
 
 // -------------------------------------------------------------------------
 bool VSC::OB::Scene::frameEnded(const Ogre::FrameEvent& evt)
@@ -839,29 +859,6 @@ bool VSC::OB::Scene::frameEnded(const Ogre::FrameEvent& evt)
     Real elapsedTime = evt.timeSinceLastFrame;
     
     if (mTraceFrame) std::cout << "VSC::OB::Scene::frameEnded, elapsed time " << elapsedTime << std::endl;
-
-    /*
-    if (mNoDeactivation)
-    {
-        debugDrawer->setNoDeactivation(!debugDrawer->doesNoDeactivation());
-        mNoDeactivation = false;
-    }
-    if (mNoHelpText)
-    {
-        debugDrawer->setNoHelpText(!debugDrawer->doesNoHelpText());
-        mNoHelpText = false;
-    }
-    if (mProfileTimings)
-    {
-        debugDrawer->setProfileTimings(!debugDrawer->doesProfileTimings());
-        mProfileTimings = false;
-    }
-    if (mEnableSatComparison)
-    {
-        debugDrawer->setEnableSatComparison(!debugDrawer->doesEnableSatComparison());
-        mEnableSatComparison = false;
-    }
-     */
     
     return true;
 }

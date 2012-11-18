@@ -13,6 +13,7 @@
 @class VSCOSXOBSceneElementInspectorWindowController;
 @class DMTabBar;
 @class VSCOSXOBSceneElementListView;
+@class VSCOSXOBSceneDetailView;
 @protocol VSCOSXEnvironmentController;
 
 /*
@@ -24,21 +25,11 @@
 @property (nonatomic, assign) VSC::Environment::WPtr environment;
 @property (assign) IBOutlet id<VSCOSXEnvironmentController> environmentController;
 
-/*
- *  Tabbed interface
- */
-
-@property (weak) IBOutlet DMTabBar* tabBar;
-//@property (nonatomic, strong) IBOutlet NSTabView* tabView;
-
-@property (weak) IBOutlet NSView* mainView;
-
-/*
- *  Element list
- */
 
 @property (strong) IBOutlet VSCOSXOBSceneElementListView* sceneElementListView;
+@property (strong) IBOutlet VSCOSXOBSceneDetailView* sceneDetailView;
 
 -(void) showSceneElementList;
+-(void) showSceneDetail;
 
 @end

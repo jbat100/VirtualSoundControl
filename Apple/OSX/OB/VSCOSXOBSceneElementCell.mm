@@ -39,9 +39,18 @@
 {
     VSC::OB::Scene::Element::SPtr elem = self.element.lock();
     
-    std::string name = elem->getName();
-    if (!name.empty()) [self.nameTextField setStringValue:[NSString stringWithStdString:name]];
-    else [self.nameTextField setStringValue:@"Un-named"];
+    BOOST_ASSERT(elem);
+    
+    if (elem)
+    {
+        std::stringstream displayName;
+        displayName << elem->getName() << "(id: " << elem->getIdentifier() << ")";
+        [self.nameTextField setStringValue:[NSString stringWithStdString:displayName.str()]];
+    }
+    else
+    {
+        [self.nameTextField setStringValue:@"EMPTY"];
+    }
     
     
 }

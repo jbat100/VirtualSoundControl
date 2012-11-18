@@ -122,6 +122,7 @@ VSC::OB::DynamicObject::SPtr VSC::OB::BasicSceneElementFactory::addPrimitive(Pri
     Scene::Element::SPtr element = boost::static_pointer_cast<Scene::Element>(object);
     
     scene->registerElement(element, description.name, mNumberOfObjectsCreated);
+    //scene->registerElement(element, entityName, mNumberOfObjectsCreated);
     
     mNumberOfObjectsCreated++;
 

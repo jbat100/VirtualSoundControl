@@ -9,3 +9,10 @@ void VSC::OB::OSXSceneListener::sceneRegisteredElement(Scene::SPtr scene, Scene:
     }
 }
 
+void VSC::OB::OSXSceneListener::sceneChangedSetting(Scene::SPtr scene, Scene::Setting setting, bool value)
+{
+    if (mTarget && [mTarget respondsToSelector:@selector(scene:changedSetting:toValue::)])
+    {
+        [mTarget scene:scene changedSetting:setting toValue:value];
+    }
+}

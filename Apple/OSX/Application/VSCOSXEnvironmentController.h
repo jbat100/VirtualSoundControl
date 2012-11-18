@@ -29,7 +29,7 @@
 
 -(void) showEnvironmentInspector;
 
--(void) showSceneSettings;
+-(void) showSceneDetails;
 -(void) showSceneElementList;
 
 -(void) showElementInspectorForElement:(VSC::OB::Scene::Element::SPtr)element;

@@ -445,72 +445,51 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
             // Scene Debug Options
                 
             case VSC::OB::KeyboardAction::ToggleDisplayWireFrame:
-                scene->toggleDrawWireFrame();
-                if (mTraceUI) std::cout << "Wireframe is " << (scene->drawingWireFrame() ? "on" : "off") << std::endl;
+                scene->toggleSetting(Scene::SettingDrawWireFrame);
+                //if (mTraceUI) std::cout << "Wireframe is " << (scene->drawingWireFrame() ? "on" : "off") << std::endl;
                 break;
                 
             case VSC::OB::KeyboardAction::ToggleDisplayAABB:
-                scene->toggleDrawAabb();
-                if (mTraceUI) std::cout << "Draw AABB is " << (scene->drawingAabb() ? "on" : "off") << std::endl;
+                scene->toggleSetting(Scene::SettingDrawAABB);
+                //if (mTraceUI) std::cout << "Draw AABB is " << (scene->drawingAabb() ? "on" : "off") << std::endl;
                 break;
                 
             case VSC::OB::KeyboardAction::ToggleFeaturesText:
-                scene->toggleDrawFeaturesText();
-                if (mTraceUI) std::cout << "Draw Features Text is " << (scene->drawingFeaturesText() ? "on" : "off") << std::endl;
+                scene->toggleSetting(Scene::SettingDrawFeaturesText);
+                //DrawFeaturesText();
+                //if (mTraceUI) std::cout << "Draw Features Text is " << (scene->drawingFeaturesText() ? "on" : "off") << std::endl;
                 break;
                 
             case VSC::OB::KeyboardAction::ToggleDisplayContactPoints:
-                scene->toggleDrawContactPoints();
-                if (mTraceUI) std::cout << "Draw contact points is " << (scene->drawingContactPoints() ? "on" : "off") << std::endl;
+                scene->toggleSetting(Scene::SettingDrawContactPoints);
+                //if (mTraceUI) std::cout << "Draw contact points is " << (scene->drawingContactPoints() ? "on" : "off") << std::endl;
                 break;
                 
-                /*
-                
-            case VSC::OB::KeyboardAction::ToggleDeactivation:
-                mNoDeactivation = !mNoDeactivation;
-                if (mTraceUI) std::cout << "No deactivation is " << (mNoDeactivation ? "on" : "off") << std::endl;
-                break;
-                
-            case VSC::OB::KeyboardAction::ToggleHelpText:
-                mNoHelpText = !mNoHelpText;
-                if (mTraceUI) std::cout << "No help text is " << (mNoHelpText ? "on" : "off") << std::endl;
-                break;
-                 
-                 */
                 
             case VSC::OB::KeyboardAction::ToggleDrawText:
-                scene->toggleDrawText();
-                if (mTraceUI) std::cout << "Draw text is " << (scene->drawingText() ? "on" : "off") << std::endl;
+                scene->toggleSetting(Scene::SettingDrawText);
+                //scene->toggleDrawText();
+                //if (mTraceUI) std::cout << "Draw text is " << (scene->drawingText() ? "on" : "off") << std::endl;
                 break;
                 
-                /*
-                
-            case VSC::OB::KeyboardAction::ToggleProfileTimings:
-                mProfileTimings = !mProfileTimings;
-                if (mTraceUI) std::cout << "Profile timings is " << (mProfileTimings ? "on" : "off") << std::endl;
-                break;
-                
-            case VSC::OB::KeyboardAction::ToggleSatComparison:
-                mEnableSatComparison = !mEnableSatComparison;
-                if (mTraceUI) std::cout << "Enable sat comparison is " << (mEnableSatComparison ? "on" : "off") << std::endl;
-                break;
-                 
-                 */
                 
             case VSC::OB::KeyboardAction::ToggleBulletLCP:
-                scene->toggleBulletLCP();
-                if (mTraceUI) std::cout << "Disable bullet LCP is " << (scene->bulletLCPIsEnabled() ? "on" : "off") << std::endl;
+                scene->toggleSetting(Scene::SettingBulletLCPIEnabled);
+                //scene->toggleBulletLCP();
+                //if (mTraceUI) std::cout << "Disable bullet LCP is " << (scene->bulletLCPIsEnabled() ? "on" : "off") << std::endl;
                 break;
                 
             case VSC::OB::KeyboardAction::ToggleCCD:
-                scene->toggleCCD();
-                if (mTraceUI) std::cout << "Enable CCD is " << (scene->ccdIsEnabled() ? "on" : "off") << std::endl;
+                scene->toggleSetting(Scene::SettingCCDEnabled);
+                //scene->toggleCCD();
+                //if (mTraceUI) std::cout << "Enable CCD is " << (scene->ccdIsEnabled() ? "on" : "off") << std::endl;
                 break;
                 
                 // pause
             case VSC::OB::KeyboardAction::ToggleSimulationPause:
-                scene->togglePause();
-                if (mTraceUI) std::cout << "Paused is " << (scene->isPaused() ? "on" : "off") << std::endl;
+                scene->toggleSetting(Scene::SettingPaused);
+                //scene->togglePause();
+                //if (mTraceUI) std::cout << "Paused is " << (scene->isPaused() ? "on" : "off") << std::endl;
                 break;
                 
                 // single step

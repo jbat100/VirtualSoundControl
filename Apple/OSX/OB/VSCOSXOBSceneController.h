@@ -15,6 +15,7 @@
 
 @class VSCOBOSXSceneDisplayView;
 @class VSCOSXOBSceneElementListView;
+@class VSCOSXOBSceneDetailView;
 
 @protocol VSCOSXOBSceneController <PXListViewDelegate, VSCOBOSXSceneListenerTarget>
 
@@ -22,15 +23,18 @@
 
 @property (assign) id<VSCOSXEnvironmentController> environmentController;
 
+@property (weak) IBOutlet VSCOSXOBSceneElementListView* elementListView;
+@property (weak) IBOutlet VSCOBOSXSceneDisplayView* sceneView;
+@property (weak) IBOutlet VSCOSXOBSceneDetailView* sceneDetailView;
+
 @end
 
 @interface VSCOSXOBSceneController : NSObject <VSCOSXOBSceneController>
 
 @property (nonatomic, assign) VSC::OB::OSXSceneListener::SPtr sceneListener;
 
-@property (weak) IBOutlet VSCOSXOBSceneElementListView* elementListView;
-@property (weak) IBOutlet VSCOBOSXSceneDisplayView* sceneView;
-
 @property (assign) IBOutlet id<VSCOSXEnvironmentController> environmentController;
+
+-(IBAction)checkBoxAction:(id)sender;
 
 @end

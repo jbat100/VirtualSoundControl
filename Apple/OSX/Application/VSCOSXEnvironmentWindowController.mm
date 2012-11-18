@@ -10,6 +10,7 @@
 #import "VSCOSXApplicationManager.h"
 #import "VSCOSXOBSceneController.h"
 #import "VSCOBOSXSceneDisplayView.h"
+#import "VSCOSXEnvironmentInspectorView.h"
 
 #import "NSString+VSCAdditions.h"
 #import "NSArray+VSCAdditions.h"
@@ -117,14 +118,18 @@
     }
 }
 
--(void) showSceneSettings
+-(void) showSceneDetails
 {
+    BOOST_ASSERT(self.environmentInspectorView);
     
+    [self.environmentInspectorView showSceneDetail];
 }
 
 -(void) showSceneElementList
 {
+    BOOST_ASSERT(self.environmentInspectorView);
     
+    [self.environmentInspectorView showSceneElementList];
 }
 
 

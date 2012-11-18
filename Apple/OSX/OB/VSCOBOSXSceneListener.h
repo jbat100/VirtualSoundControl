@@ -12,6 +12,7 @@
 @optional
 
 -(void) scene:(VSC::OB::Scene::SPtr)scene registeredElement:(VSC::OB::Scene::Element::SPtr)element;
+-(void) scene:(VSC::OB::Scene::SPtr)scene changedSetting:(VSC::OB::Scene::Setting)setting toValue:(BOOL)value;
 
 @end
 
@@ -36,7 +37,8 @@ namespace VSC
              *  Scene::Listener overrides
              */
             
-            virtual void sceneRegisteredElement(Scene::SPtr scene, Scene::Element::SPtr element); 
+            virtual void sceneRegisteredElement(Scene::SPtr scene, Scene::Element::SPtr element);
+            virtual void sceneChangedSetting(Scene::SPtr scene, Scene::Setting setting, bool value);
             
         private:
             
