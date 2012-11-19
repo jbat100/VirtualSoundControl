@@ -18,6 +18,7 @@
 #include "VSCEnvironment.h"
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
+#include "VSCIMCollisionMapper.h"
 
 #include <Ogre/Ogre.h>
 
@@ -135,6 +136,32 @@
 -(void) showElementInspectorForElement:(VSC::OB::Scene::Element::SPtr)element
 {
     NSLog(@"%@ showElementInspectorForElement", self);
+}
+
+-(VSC::IM::CollisionEventChain::SPtr) collisionStartedEventChainForElement:(VSC::OB::Scene::Element::SPtr)element
+{
+    VSC::Environment::SPtr env = self.environment.lock();
+    BOOST_ASSERT(env);
+    
+    if (env)
+    {
+        return env->getIMCollisionMapper()->getActionChainForCollisionStarted(element);
+    }
+    
+    return VSC::IM::CollisionEventChain::SPtr();
+}
+
+-(VSC::IM::CollisionEventChain::SPtr) collisionEndedEventChainForElement:(VSC::OB::Scene::Element::SPtr)element
+{
+    VSC::Environment::SPtr env = self.environment.lock();
+    BOOST_ASSERT(env);
+    
+    if (env)
+    {
+        return env->getIMCollisionMapper()->getActionChainForCollisionEnded(element);
+    }
+    
+    return VSC::IM::CollisionEventChain::SPtr();
 }
 
 #pragma mark - Stupid tests

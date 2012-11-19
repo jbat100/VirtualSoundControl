@@ -7,6 +7,7 @@
 
 #include "VSCEnvironment.h"
 #include "VSCOBScene.h"
+#include "VSCIMCollisionEventChain.h"
 
 
 @protocol VSCOSXOBSceneController;
@@ -28,10 +29,11 @@
 @property (strong) IBOutlet id<VSCOSXOBSceneController> sceneController;
 
 -(void) showEnvironmentInspector;
-
 -(void) showSceneDetails;
 -(void) showSceneElementList;
-
 -(void) showElementInspectorForElement:(VSC::OB::Scene::Element::SPtr)element;
+
+-(VSC::IM::CollisionEventChain::SPtr) collisionStartedEventChainForElement:(VSC::OB::Scene::Element::SPtr)element;
+-(VSC::IM::CollisionEventChain::SPtr) collisionEndedEventChainForElement:(VSC::OB::Scene::Element::SPtr)element;
 
 @end

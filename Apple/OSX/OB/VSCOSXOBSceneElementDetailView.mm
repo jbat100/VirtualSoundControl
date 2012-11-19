@@ -7,6 +7,12 @@
 //
 
 #import "VSCOSXOBSceneElementDetailView.h"
+#import "VSCOSXOBSceneElementController.h"
+
+#include "VSCOBScene.h"
+#include "OgreBulletDynamicsRigidBody.h"
+#include <Ogre/Ogre.h>
+#include <boost/assert.hpp>
 
 @implementation VSCOSXOBSceneElementDetailView
 
@@ -28,6 +34,57 @@
 -(void) awakeFromNib
 {
     
+}
+
+#pragma mark - UI Helpers
+
+-(void) reloadInterface
+{
+    BOOST_ASSERT(self.elementController);
+    
+    VSC::OB::Scene::Element::SPtr element = self.elementController.element.lock();
+    
+    if (element)
+    {
+        OgreBulletDynamics::RigidBody* rigidBody = element->getRigidBody();
+        BOOST_ASSERT(rigidBody);
+        if (rigidBody)
+        {
+            const Ogre::Vector3& linearVelocity = rigidBody->getLinearVelocity();
+            
+            //[self.xVelTextField setStringValue:[@(linearVelocity.x) stringValue]];
+            //[self.yVelTextField setStringValue:[@(linearVelocity.y) stringValue]];
+            //[self.zVelTextField setStringValue:[@(linearVelocity.z) stringValue]];
+            
+            [self.xVelTextField setDoubleValue:linearVelocity.x];
+            [self.yVelTextField setDoubleValue:linearVelocity.y];
+            [self.zVelTextField setDoubleValue:linearVelocity.z];
+            
+            Ogre::Node* node = rigidBody->getSceneNode();
+            BOOST_ASSERT(node);
+            if (node)
+            {
+                const Ogre::Vector3& position = node->getPosition();
+                
+                [self.xPosTextField setDoubleValue:position.x];
+                [self.yPosTextField setDoubleValue:position.y];
+                [self.zPosTextField setDoubleValue:position.z];
+                
+                const Ogre::Quaternion& rotation = node->getOrientation();
+                
+                [self.xRotTextField setDoubleValue:rotation.x];
+                [self.yRotTextField setDoubleValue:rotation.y];
+                [self.zRotTextField setDoubleValue:rotation.z];
+                [self.wRotTextField setDoubleValue:rotation.w];
+                
+            }
+        }
+        
+    }
+    
+    /*
+     *  Reach here if there is no info to display...
+     */
 }
 
 #pragma mark - NSTextFieldDelegate

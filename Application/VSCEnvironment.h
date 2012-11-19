@@ -80,7 +80,7 @@ namespace VSC {
         OB::Scene::SPtr             mOBScene;
         IM::CollisionMapper::SPtr   mIMCollisionMapper;
 
-        IM::CollisionEventChains   mIMCollisionEventChains;
+        IM::CollisionEventChains    mIMCollisionEventChains;
         
         State                       mState;
   
