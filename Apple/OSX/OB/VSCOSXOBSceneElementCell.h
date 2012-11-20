@@ -12,7 +12,7 @@
 @interface VSCOSXOBSceneElementCell : PXListViewCell
 
 @property (nonatomic, assign) VSC::OB::Scene::Element::WPtr element;
-@property (weak) id<VSCOSXEnvironmentController> environmentController;
+@property (assign) id<VSCOSXEnvironmentController> environmentController;
 
 +(CGFloat) defaultViewHeight;
 

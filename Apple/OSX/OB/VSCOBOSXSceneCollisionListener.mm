@@ -1,18 +1,32 @@
 
-#import "VSCOBOSXSceneDisplayView.h"
+#include "VSCOBOSXSceneCollisionListener.h"
 
-void VSC::OB::OSXSceneListener::sceneRegisteredElement(Scene::SPtr scene, Scene::Element::SPtr element)
+void VSC::OB::OSXSceneCollisionListener::collisionProspectDetected(Scene::Collision::SPtr collision)
 {
-    if (mTarget && [mTarget respondsToSelector:@selector(scene:registeredElement:)])
-    {
-        [mTarget scene:scene registeredElement:element];
-    }
+    [mTarget collisionProspectDetected:collision];
 }
 
-void VSC::OB::OSXSceneListener::sceneChangedSetting(Scene::SPtr scene, Scene::Setting setting, bool value)
+void VSC::OB::OSXSceneCollisionListener::collisionProspectUpdated(Scene::Collision::SPtr collision)
 {
-    if (mTarget && [mTarget respondsToSelector:@selector(scene:changedSetting:toValue::)])
-    {
-        [mTarget scene:scene changedSetting:setting toValue:value];
-    }
+    [mTarget collisionProspectUpdated:collision];
+}
+
+void VSC::OB::OSXSceneCollisionListener::collisionProspectEnded(Scene::Collision::SPtr collision)
+{
+    [mTarget collisionProspectEnded:collision];
+}
+
+void VSC::OB::OSXSceneCollisionListener::collisionDetected(Scene::Collision::SPtr collision)
+{
+    [mTarget collisionDetected:collision];
+}
+
+void VSC::OB::OSXSceneCollisionListener::collisionUpdated(Scene::Collision::SPtr collision)
+{
+    [mTarget collisionUpdated:collision];
+}
+
+void VSC::OB::OSXSceneCollisionListener::collisionEnded(Scene::Collision::SPtr collision)
+{
+    [mTarget collisionEnded:collision];
 }

@@ -10,12 +10,17 @@
 
 #include <boost/assert.hpp>
 
-NSDictionary* elementInspectorTabDict = nil;
+NSString* const VSCOSXTabTitleElementDetails = @"Details";
+NSString* const VSCOSXTabTitleElementCollision = @"Collision";
+
+NSArray* ElementInspectorTabParamArray = nil;
 
 @interface VSCOSXOBSceneElementInspectorView ()
 
 @property (weak) IBOutlet DMTabBar* tabBar;
 @property (weak) IBOutlet NSView* mainView;
+
+-(void) setupTabBar;
 
 @end
 
@@ -23,8 +28,13 @@ NSDictionary* elementInspectorTabDict = nil;
 
 + (void)load
 {
-    
+    ElementInspectorTabParamArray = @[
+    @{@"image": [NSImage imageNamed:@"19-gear.png"], @"title": VSCOSXTabTitleElementDetails},
+    @{@"image": [NSImage imageNamed:@"55-network.png"], @"title": VSCOSXTabTitleElementCollision},
+    ];
 }
+
+#pragma mark - NSView
 
 - (void)awakeFromNib
 {
@@ -32,6 +42,12 @@ NSDictionary* elementInspectorTabDict = nil;
     
     //BOOST_ASSERT(self.elementDetailView);
     //BOOST_ASSERT(self.elementCollisionView);
+    
+    [self setupTabBar];
+    
+    [self showElementDetailView];
+    
+    self.tabBar.selectedIndex = 0;
     
 }
 
@@ -49,6 +65,65 @@ NSDictionary* elementInspectorTabDict = nil;
 {
     // Drawing code here.
 }
+
+
+#pragma mark - UI Helpers
+
+-(void) setupTabBar
+{
+    BOOST_ASSERT(ElementInspectorTabParamArray);
+    
+    NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:[ElementInspectorTabParamArray count]];
+    
+    [ElementInspectorTabParamArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        BOOST_ASSERT([obj isKindOfClass:[NSDictionary class]]);
+        if (![obj isKindOfClass:[NSDictionary class]]) return;
+        
+        NSDictionary* objDict = (NSDictionary*)obj;
+        
+        NSImage *iconImage = [objDict objectForKey:@"image"];
+        [iconImage setTemplate:YES];
+        
+        DMTabBarItem *item = [DMTabBarItem tabBarItemWithIcon:iconImage tag:idx];
+        item.toolTip = [objDict objectForKey:@"title"];
+        item.keyEquivalent = [NSString stringWithFormat:@"%ld",idx];
+        item.keyEquivalentModifierMask = NSCommandKeyMask;
+        [items addObject:item];
+        
+    }];
+    
+    // Load them
+    self.tabBar.tabBarItems = items;
+    
+    // Handle selection events
+    [self.tabBar handleTabBarItemSelection:^(DMTabBarItemSelectionType selectionType, DMTabBarItem *tabBarItem, NSUInteger tabBarItemIndex) {
+        
+        if (selectionType == DMTabBarItemSelectionType_WillSelect)
+        {
+            NSLog(@"%@ will select %lu/%@", self.tabBar, tabBarItemIndex, tabBarItem);
+            //[self.tabView selectTabViewItem:[tabView.tabViewItems objectAtIndex:tabBarItemIndex]];
+            
+            if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleElementDetails])
+            {
+                NSLog(@"Selected scene element list tab");
+                [self showElementDetailView];
+            }
+            else if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleElementCollision])
+            {
+                NSLog(@"Selected scene detail tab");
+                [self showElementCollisionView];
+            }
+            
+        }
+        else if (selectionType == DMTabBarItemSelectionType_DidSelect)
+        {
+            NSLog(@"%@ did select %lu/%@", self.tabBar, tabBarItemIndex, tabBarItem);
+        }
+        
+    }];
+}
+
 
 -(void) showElementDetailView
 {

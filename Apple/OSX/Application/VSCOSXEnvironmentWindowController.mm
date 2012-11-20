@@ -11,6 +11,7 @@
 #import "VSCOSXOBSceneController.h"
 #import "VSCOBOSXSceneDisplayView.h"
 #import "VSCOSXEnvironmentInspectorView.h"
+#import "VSCOSXOBSceneElementInspectorWindowController.h"
 
 #import "NSString+VSCAdditions.h"
 #import "NSArray+VSCAdditions.h"
@@ -136,6 +137,17 @@
 -(void) showElementInspectorForElement:(VSC::OB::Scene::Element::SPtr)element
 {
     NSLog(@"%@ showElementInspectorForElement", self);
+    
+    if (!self.elementInspectorWindowController)
+    {
+        NSString* nibName = @"VSCOSXOBSceneElementInspectorWindowController";
+        self.elementInspectorWindowController = [[VSCOSXOBSceneElementInspectorWindowController alloc] initWithWindowNibName:nibName];
+        BOOST_ASSERT(self.elementInspectorWindowController);
+    }
+    
+    self.elementInspectorWindowController.element = VSC::OB::Scene::Element::WPtr(element);
+    
+    [self.elementInspectorWindowController showWindow:self];
 }
 
 -(VSC::IM::CollisionEventChain::SPtr) collisionStartedEventChainForElement:(VSC::OB::Scene::Element::SPtr)element

@@ -33,7 +33,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 
 @property (weak) IBOutlet NSView* mainView;
 
--(void) setup;
+-(void) setupTabBar;
 
 -(void) clearMainView;
 
@@ -56,7 +56,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
-        [self setup];
+        //[self setup];
     }
     
     return self;
@@ -74,7 +74,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 
 -(void) awakeFromNib
 {
-    [self setup];
+    [self setupTabBar];
     
     BOOST_ASSERT(self.environmentController);
     BOOST_ASSERT(self.sceneElementListView);
@@ -85,7 +85,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
           self, self.sceneElementListView, [self.sceneElementListView subviews]);
 }
 
--(void) setup
+-(void) setupTabBar
 {
     
     BOOST_ASSERT(EnvironmentInspectorTabParamArray);

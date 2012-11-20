@@ -12,7 +12,7 @@
 @property (nonatomic, strong) IBOutlet NSTextField* nameTextField;
 @property (nonatomic, strong) IBOutlet NSButton* inspectorButton;
 
--(IBAction) showElementInspector;
+-(IBAction) showElementInspector:(id)sender;
 
 @end
 
@@ -55,7 +55,7 @@
     
 }
 
--(IBAction) showElementInspector
+-(IBAction) showElementInspector:(id)sender
 {
     [self.environmentController showElementInspectorForElement:self.element.lock()];
 }

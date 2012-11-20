@@ -2,6 +2,8 @@
 #ifndef _VSC_OB_OSX_SCENE_LISTENER_H_
 #define _VSC_OB_OSX_SCENE_LISTENER_H_
 
+#import <Foundation/Foundation.h>
+
 #include "VSCOBScene.h"
 
 #include <boost/shared_ptr.hpp>
