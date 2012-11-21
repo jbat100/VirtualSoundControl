@@ -54,7 +54,7 @@
 								<object class="NSCustomView" id="542851528">
 									<reference key="NSNextResponder" ref="321926826"/>
 									<int key="NSvFlags">268</int>
-									<string key="NSFrameSize">{300, 300}</string>
+									<string key="NSFrameSize">{300, 311}</string>
 									<reference key="NSSuperview" ref="321926826"/>
 									<reference key="NSWindow"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -63,10 +63,9 @@
 								<object class="NSCustomView" id="161122933">
 									<reference key="NSNextResponder" ref="321926826"/>
 									<int key="NSvFlags">268</int>
-									<string key="NSFrame">{{0, 308}, {300, 33}}</string>
+									<string key="NSFrame">{{0, 314}, {300, 27}}</string>
 									<reference key="NSSuperview" ref="321926826"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<string key="NSClassName">DMTabBar</string>
 								</object>
@@ -131,6 +130,14 @@
 						<reference key="destination" ref="161122933"/>
 					</object>
 					<int key="connectionID">37</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">elementController</string>
+						<reference key="source" ref="321926826"/>
+						<reference key="destination" ref="1001"/>
+					</object>
+					<int key="connectionID">41</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -244,7 +251,7 @@
 						<reference key="object" ref="321926826"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="161122933"/>
-							<object class="IBNSLayoutConstraint" id="103761033">
+							<object class="IBNSLayoutConstraint" id="978891737">
 								<reference key="firstItem" ref="542851528"/>
 								<int key="firstAttribute">3</int>
 								<int key="relation">0</int>
@@ -252,28 +259,12 @@
 								<int key="secondAttribute">3</int>
 								<float key="multiplier">1</float>
 								<object class="IBLayoutConstant" key="constant">
-									<double key="value">41</double>
+									<double key="value">30</double>
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="321926826"/>
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
-								<int key="contentType">3</int>
-							</object>
-							<object class="IBNSLayoutConstraint" id="238115383">
-								<reference key="firstItem" ref="542851528"/>
-								<int key="firstAttribute">3</int>
-								<int key="relation">0</int>
-								<reference key="secondItem" ref="161122933"/>
-								<int key="secondAttribute">4</int>
-								<float key="multiplier">1</float>
-								<object class="IBNSLayoutSymbolicConstant" key="constant">
-									<double key="value">8</double>
-								</object>
-								<float key="priority">1000</float>
-								<reference key="containingView" ref="321926826"/>
-								<int key="scoringType">6</int>
-								<float key="scoringTypeFloat">24</float>
 								<int key="contentType">3</int>
 							</object>
 							<object class="IBNSLayoutConstraint" id="623921197">
@@ -322,6 +313,22 @@
 								<reference key="containingView" ref="321926826"/>
 								<int key="scoringType">8</int>
 								<float key="scoringTypeFloat">29</float>
+								<int key="contentType">3</int>
+							</object>
+							<object class="IBNSLayoutConstraint" id="384484212">
+								<reference key="firstItem" ref="321926826"/>
+								<int key="firstAttribute">4</int>
+								<int key="relation">0</int>
+								<reference key="secondItem" ref="161122933"/>
+								<int key="secondAttribute">4</int>
+								<float key="multiplier">1</float>
+								<object class="IBLayoutConstant" key="constant">
+									<double key="value">314</double>
+								</object>
+								<float key="priority">1000</float>
+								<reference key="containingView" ref="321926826"/>
+								<int key="scoringType">3</int>
+								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
 							</object>
 							<object class="IBNSLayoutConstraint" id="190600498">
@@ -437,13 +444,13 @@
 						<reference key="parent" ref="321926826"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">34</int>
-						<reference key="object" ref="238115383"/>
+						<int key="objectID">39</int>
+						<reference key="object" ref="384484212"/>
 						<reference key="parent" ref="321926826"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">35</int>
-						<reference key="object" ref="103761033"/>
+						<int key="objectID">40</int>
+						<reference key="object" ref="978891737"/>
 						<reference key="parent" ref="321926826"/>
 					</object>
 				</array>
@@ -456,11 +463,11 @@
 					<reference ref="401955510"/>
 					<reference ref="74023896"/>
 					<reference ref="190600498"/>
+					<reference ref="384484212"/>
 					<reference ref="20790611"/>
 					<reference ref="465136047"/>
 					<reference ref="623921197"/>
-					<reference ref="238115383"/>
-					<reference ref="103761033"/>
+					<reference ref="978891737"/>
 				</array>
 				<boolean value="NO" key="13.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="13.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -478,8 +485,8 @@
 				<string key="31.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="32.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="33.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="34.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="35.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="39.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="40.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="5.NSWindowTemplate.visibleAtLaunch"/>
 				<array class="NSMutableArray" key="6.IBNSViewMetadataConstraints">
@@ -494,7 +501,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">38</int>
+			<int key="maxID">41</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -515,20 +522,110 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">VSCOSXOBSceneElementCollisionView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/VSCOSXOBSceneElementCollisionView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">VSCOSXOBSceneElementDetailView</string>
+					<string key="superclassName">NSView</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="elementController">id</string>
+						<string key="idTextField">NSTextField</string>
+						<string key="nameTextField">NSTextField</string>
+						<string key="wRotTextField">NSTextField</string>
+						<string key="xPosTextField">NSTextField</string>
+						<string key="xRotTextField">NSTextField</string>
+						<string key="xVelTextField">NSTextField</string>
+						<string key="yPosTextField">NSTextField</string>
+						<string key="yRotTextField">NSTextField</string>
+						<string key="yVelTextField">NSTextField</string>
+						<string key="zPosTextField">NSTextField</string>
+						<string key="zRotTextField">NSTextField</string>
+						<string key="zVelTextField">NSTextField</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="elementController">
+							<string key="name">elementController</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="idTextField">
+							<string key="name">idTextField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="nameTextField">
+							<string key="name">nameTextField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="wRotTextField">
+							<string key="name">wRotTextField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="xPosTextField">
+							<string key="name">xPosTextField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="xRotTextField">
+							<string key="name">xRotTextField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="xVelTextField">
+							<string key="name">xVelTextField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="yPosTextField">
+							<string key="name">yPosTextField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="yRotTextField">
+							<string key="name">yRotTextField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="yVelTextField">
+							<string key="name">yVelTextField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="zPosTextField">
+							<string key="name">zPosTextField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="zRotTextField">
+							<string key="name">zRotTextField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="zVelTextField">
+							<string key="name">zVelTextField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/VSCOSXOBSceneElementDetailView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">VSCOSXOBSceneElementInspectorView</string>
 					<string key="superclassName">NSView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="mainView">NSView</string>
-						<string key="tabBar">DMTabBar</string>
+						<string key="elementCollisionView">VSCOSXOBSceneElementCollisionView</string>
+						<string key="elementController">id</string>
+						<string key="elementDetailView">VSCOSXOBSceneElementDetailView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="mainView">
-							<string key="name">mainView</string>
-							<string key="candidateClassName">NSView</string>
+						<object class="IBToOneOutletInfo" key="elementCollisionView">
+							<string key="name">elementCollisionView</string>
+							<string key="candidateClassName">VSCOSXOBSceneElementCollisionView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="tabBar">
-							<string key="name">tabBar</string>
-							<string key="candidateClassName">DMTabBar</string>
+						<object class="IBToOneOutletInfo" key="elementController">
+							<string key="name">elementController</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="elementDetailView">
+							<string key="name">elementDetailView</string>
+							<string key="candidateClassName">VSCOSXOBSceneElementDetailView</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

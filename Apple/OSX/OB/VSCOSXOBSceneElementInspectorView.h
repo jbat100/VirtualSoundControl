@@ -12,7 +12,11 @@
 #import "VSCOSXOBSceneElementDetailView.h"
 #import "VSCOSXOBSceneElementCollisionView.h"
 
+@protocol VSCOSXOBSceneElementController;
+
 @interface VSCOSXOBSceneElementInspectorView : NSView
+
+@property (assign) IBOutlet id<VSCOSXOBSceneElementController> elementController;
 
 @property (strong) IBOutlet VSCOSXOBSceneElementDetailView* elementDetailView;
 @property (strong) IBOutlet VSCOSXOBSceneElementCollisionView* elementCollisionView;

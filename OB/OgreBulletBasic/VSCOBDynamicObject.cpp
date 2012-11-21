@@ -39,7 +39,7 @@ void VSC::OB::DynamicObject::destroy(void)
         if (parentNode) parentNode->removeAndDestroyChild(node->getName());
     }
     
-    Scene::SPtr scene = this->getScene().lock();
+    Scene::SPtr scene = this->getScene();
     if (scene)
     {
         scene->getSceneManager()->destroyEntity(mEntity);

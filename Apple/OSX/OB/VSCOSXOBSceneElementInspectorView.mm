@@ -45,10 +45,10 @@ NSArray* ElementInspectorTabParamArray = nil;
     
     [self setupTabBar];
     
+    /*
     [self showElementDetailView];
-    
     self.tabBar.selectedIndex = 0;
-    
+    */
 }
 
 - (id)initWithFrame:(NSRect)frame
@@ -66,6 +66,12 @@ NSArray* ElementInspectorTabParamArray = nil;
     // Drawing code here.
 }
 
+-(void) setElementController:(id<VSCOSXOBSceneElementController>)elementController
+{
+    _elementController = elementController;
+    
+    self.elementDetailView.elementController = elementController;
+}
 
 #pragma mark - UI Helpers
 
@@ -138,6 +144,10 @@ NSArray* ElementInspectorTabParamArray = nil;
         BOOST_ASSERT(self.elementDetailView);
     }
     
+    self.elementDetailView.elementController = self.elementController;
+    
+    self.tabBar.selectedIndex = 0;
+    
     [self.elementCollisionView setHidden:YES];
     if ([self.elementDetailView superview] != self.mainView)
     {
@@ -145,6 +155,8 @@ NSArray* ElementInspectorTabParamArray = nil;
     }
     self.elementDetailView.frame = self.mainView.bounds;
     [self.elementDetailView setHidden:NO];
+    
+    [self.elementDetailView reloadInterface];
 }
 
 -(void) showElementCollisionView
@@ -159,6 +171,8 @@ NSArray* ElementInspectorTabParamArray = nil;
         
         BOOST_ASSERT(self.elementDetailView);
     }
+    
+    self.tabBar.selectedIndex = 1;
     
     [self.elementDetailView setHidden:YES];
     if ([self.elementCollisionView superview] != self.mainView)

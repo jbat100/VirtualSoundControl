@@ -23,7 +23,7 @@ void VSC::OB::StaticObject::destroy(void)
 {
     Scene::Element::destroy();  // call base class destroy() !!!
     
-    Scene::SPtr scene = this->getScene().lock();
+    Scene::SPtr scene = this->getScene();
     
     if (scene)
     {

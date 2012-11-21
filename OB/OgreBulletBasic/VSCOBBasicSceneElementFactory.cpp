@@ -54,7 +54,7 @@ VSC::OB::DynamicObject::SPtr VSC::OB::BasicSceneElementFactory::addPrimitive(Pri
      *  Create a corresponding OgreBulletCollisions::BoxCollisionShape which just represents the shape
      */
     
-    VSC::OB::Scene::SPtr scene = this->getScene().lock();
+    VSC::OB::Scene::SPtr scene = this->getScene();
     
     Ogre::Entity *entity = 0;
     OgreBulletCollisions::CollisionShape* collisionShape = 0;
@@ -64,27 +64,27 @@ VSC::OB::DynamicObject::SPtr VSC::OB::BasicSceneElementFactory::addPrimitive(Pri
     switch (primitiveType) {
             
         case PrimitiveCube:
-            entity =  this->getScene().lock()->getSceneManager()->createEntity(entityName, "Bulletbox.mesh");
+            entity =  this->getScene()->getSceneManager()->createEntity(entityName, "Bulletbox.mesh");
             // "Crate.mesh", "Crate1.mesh", "Crate2.mesh"
             collisionShape = new OgreBulletCollisions::BoxCollisionShape(description.size);
             rigidBodyName = "RigidCube_" + Ogre::StringConverter::toString(mNumberOfObjectsCreated);
             break;
             
         case PrimitiveSphere:
-            entity = this->getScene().lock()->getSceneManager()->createEntity(entityName, "ellipsoid.mesh");
+            entity = this->getScene()->getSceneManager()->createEntity(entityName, "ellipsoid.mesh");
             collisionShape = new OgreBulletCollisions::SphereCollisionShape(description.size.x);
             rigidBodyName = "RigidSphere_" + Ogre::StringConverter::toString(mNumberOfObjectsCreated);
             break;
             
         case PrimitiveCylinder:
-            entity = this->getScene().lock()->getSceneManager()->createEntity(entityName, "cylinder.mesh");
+            entity = this->getScene()->getSceneManager()->createEntity(entityName, "cylinder.mesh");
             // "capsule.mesh" "Barrel.mesh" "Barrel1.mesh" "Barrel2.mesh"
             collisionShape = new OgreBulletCollisions::CylinderCollisionShape(description.size, Ogre::Vector3::UNIT_X);
             rigidBodyName = "RigidCylinder_" + Ogre::StringConverter::toString(mNumberOfObjectsCreated);
             break;
             
         case PrimitiveCone:
-            entity = this->getScene().lock()->getSceneManager()->createEntity(entityName, "Mesh.mesh");
+            entity = this->getScene()->getSceneManager()->createEntity(entityName, "Mesh.mesh");
             //"Cone.mesh");
             collisionShape = new OgreBulletCollisions::ConeCollisionShape(description.size.x, description.size.y, Ogre::Vector3::UNIT_Y);
             rigidBodyName = "RigidCylinder_" + Ogre::StringConverter::toString(mNumberOfObjectsCreated);
@@ -133,7 +133,7 @@ VSC::OB::DynamicObject::SPtr VSC::OB::BasicSceneElementFactory::addPrimitive(Pri
 VSC::OB::DynamicObject::SPtr VSC::OB::BasicSceneElementFactory::addTrimesh(const Ogre::String& meshName,
                                                                            const DynamicObject::FactoryDescription& description)
 {
-    VSC::OB::Scene::SPtr scene = this->getScene().lock();
+    VSC::OB::Scene::SPtr scene = this->getScene();
     
     /*
      *  Create an Ogre::Entity with the specified mesh, and an associated scene node.
@@ -175,7 +175,7 @@ VSC::OB::StaticObject::SPtr VSC::OB::BasicSceneElementFactory::addStaticPlane(co
     // Use a load of meshes to represent the floor
     int i = 0;
     
-    VSC::OB::Scene::SPtr scene = this->getScene().lock();
+    VSC::OB::Scene::SPtr scene = this->getScene();
     
     BOOST_ASSERT_MSG(scene->getSceneManager(), "Expected scene manager");
     

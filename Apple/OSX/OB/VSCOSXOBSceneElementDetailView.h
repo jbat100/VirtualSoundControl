@@ -5,7 +5,7 @@
 
 @interface VSCOSXOBSceneElementDetailView : NSView
 
-@property (weak) id<VSCOSXOBSceneElementController> elementController;
+@property (assign) IBOutlet id<VSCOSXOBSceneElementController> elementController;
 
 @property (weak) IBOutlet NSTextField* nameTextField;
 @property (weak) IBOutlet NSTextField* idTextField;

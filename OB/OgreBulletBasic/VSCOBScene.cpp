@@ -58,7 +58,7 @@ const Ogre::ColourValue g_maxLightColour(0.5, 0.3, 0.1);
 
 void VSC::OB::Scene::Element::destroy()
 {
-    Scene::SPtr scene = this->getScene().lock();
+    Scene::SPtr scene = this->getScene();
     
     if (scene) {
         scene->getDynamicsWorld()->removeObject(mRigidBody);

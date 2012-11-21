@@ -106,7 +106,7 @@ namespace VSC {
                  *  deliberate design decision.
                  */
                 
-                Scene::WPtr                             getScene(void) const {return mScene;};
+                Scene::SPtr                             getScene(void) const {return mScene.lock();};
                 OgreBulletDynamics::RigidBody*          getRigidBody(void) const {return mRigidBody;}
                 
                 bool                                    silentCollisions() const {return mSilentCollisions;}
@@ -156,7 +156,7 @@ namespace VSC {
                 ElementFactory(Scene::WPtr scene) : mScene(scene) {}
                 virtual ~ElementFactory() { }
                 
-                Scene::WPtr getScene(void) {return mScene;}; // no public setter, cannot change the element scene.
+                Scene::SPtr getScene(void) {return mScene.lock();}; // no public setter, cannot change the element scene.
                 
                 /*
                  *  Abstract API for adding the stuff to the world. Used directly by VSC::OB::Scene 

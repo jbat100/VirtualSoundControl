@@ -148,6 +148,8 @@
     self.elementInspectorWindowController.element = VSC::OB::Scene::Element::WPtr(element);
     
     [self.elementInspectorWindowController showWindow:self];
+    
+    [self.elementInspectorWindowController showElementDetailView];
 }
 
 -(VSC::IM::CollisionEventChain::SPtr) collisionStartedEventChainForElement:(VSC::OB::Scene::Element::SPtr)element

@@ -16,3 +16,11 @@ void VSC::OB::OSXSceneListener::sceneChangedSetting(Scene::SPtr scene, Scene::Se
         [mTarget scene:scene changedSetting:setting toValue:value];
     }
 }
+
+void VSC::OB::OSXSceneListener::sceneWasRendered(Scene::SPtr scene)
+{
+    if (mTarget && [mTarget respondsToSelector:@selector(sceneWasRendered:)])
+    {
+        [mTarget sceneWasRendered:scene];
+    }
+}

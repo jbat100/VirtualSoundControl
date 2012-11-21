@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11E53</string>
+		<int key="IBDocument.SystemTarget">1080</int>
+		<string key="IBDocument.SystemVersion">12C60</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
-		<string key="IBDocument.AppKitVersion">1138.47</string>
-		<string key="IBDocument.HIToolboxVersion">569.00</string>
+		<string key="IBDocument.AppKitVersion">1187.34</string>
+		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">2844</string>
@@ -69,16 +69,12 @@
 									<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 								</object>
 							</object>
-							<object class="NSColor" key="NSTextColor" id="417819916">
-								<int key="NSColorSpace">6</int>
-								<string key="NSCatalogName">System</string>
-								<string key="NSColorName">controlTextColor</string>
-								<object class="NSColor" key="NSColor" id="890778346">
-									<int key="NSColorSpace">3</int>
-									<bytes key="NSWhite">MAA</bytes>
-								</object>
+							<object class="NSColor" key="NSTextColor" id="554125177">
+								<int key="NSColorSpace">1</int>
+								<bytes key="NSRGB">MC45OTY2NDU3MjAxIDAuOTk2NjQ1NzIwMSAwLjk5NjY0NTcyMDEAA</bytes>
 							</object>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="406295893">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -154,9 +150,13 @@
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
 								<string key="NSColorName">textColor</string>
-								<reference key="NSColor" ref="890778346"/>
+								<object class="NSColor" key="NSColor" id="890778346">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MAA</bytes>
+								</object>
 							</object>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="453015032">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -175,8 +175,9 @@
 							<string key="NSCellIdentifier">_NS:1535</string>
 							<reference key="NSControlView" ref="453015032"/>
 							<reference key="NSBackgroundColor" ref="642761060"/>
-							<reference key="NSTextColor" ref="417819916"/>
+							<reference key="NSTextColor" ref="554125177"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="813086031">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -233,6 +234,7 @@
 							<reference key="NSBackgroundColor" ref="536393306"/>
 							<reference key="NSTextColor" ref="429371278"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="475177219">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -251,8 +253,9 @@
 							<string key="NSCellIdentifier">_NS:1535</string>
 							<reference key="NSControlView" ref="475177219"/>
 							<reference key="NSBackgroundColor" ref="642761060"/>
-							<reference key="NSTextColor" ref="417819916"/>
+							<reference key="NSTextColor" ref="554125177"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="857935084">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -309,6 +312,7 @@
 							<reference key="NSBackgroundColor" ref="536393306"/>
 							<reference key="NSTextColor" ref="429371278"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="1031829798">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -327,8 +331,9 @@
 							<string key="NSCellIdentifier">_NS:1535</string>
 							<reference key="NSControlView" ref="1031829798"/>
 							<reference key="NSBackgroundColor" ref="642761060"/>
-							<reference key="NSTextColor" ref="417819916"/>
+							<reference key="NSTextColor" ref="554125177"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSBox" id="704049754">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -372,8 +377,9 @@
 							<string key="NSCellIdentifier">_NS:1535</string>
 							<reference key="NSControlView" ref="558446420"/>
 							<reference key="NSBackgroundColor" ref="642761060"/>
-							<reference key="NSTextColor" ref="417819916"/>
+							<reference key="NSTextColor" ref="554125177"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="862157299">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -392,8 +398,9 @@
 							<string key="NSCellIdentifier">_NS:1535</string>
 							<reference key="NSControlView" ref="862157299"/>
 							<reference key="NSBackgroundColor" ref="642761060"/>
-							<reference key="NSTextColor" ref="417819916"/>
+							<reference key="NSTextColor" ref="554125177"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="821754037">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -401,7 +408,6 @@
 						<string key="NSFrame">{{45, 34}, {50, 22}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="876489701">
@@ -450,6 +456,7 @@
 							<reference key="NSBackgroundColor" ref="536393306"/>
 							<reference key="NSTextColor" ref="429371278"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="895475118">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -468,8 +475,9 @@
 							<string key="NSCellIdentifier">_NS:1535</string>
 							<reference key="NSControlView" ref="895475118"/>
 							<reference key="NSBackgroundColor" ref="642761060"/>
-							<reference key="NSTextColor" ref="417819916"/>
+							<reference key="NSTextColor" ref="554125177"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="863420914">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -526,6 +534,7 @@
 							<reference key="NSBackgroundColor" ref="536393306"/>
 							<reference key="NSTextColor" ref="429371278"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="712031043">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -544,8 +553,9 @@
 							<string key="NSCellIdentifier">_NS:1535</string>
 							<reference key="NSControlView" ref="712031043"/>
 							<reference key="NSBackgroundColor" ref="642761060"/>
-							<reference key="NSTextColor" ref="417819916"/>
+							<reference key="NSTextColor" ref="554125177"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="815431094">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -602,6 +612,7 @@
 							<reference key="NSBackgroundColor" ref="536393306"/>
 							<reference key="NSTextColor" ref="429371278"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="511327845">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -620,8 +631,9 @@
 							<string key="NSCellIdentifier">_NS:1535</string>
 							<reference key="NSControlView" ref="511327845"/>
 							<reference key="NSBackgroundColor" ref="642761060"/>
-							<reference key="NSTextColor" ref="417819916"/>
+							<reference key="NSTextColor" ref="554125177"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="623683800">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -678,6 +690,7 @@
 							<reference key="NSBackgroundColor" ref="536393306"/>
 							<reference key="NSTextColor" ref="429371278"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="368598942">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -696,8 +709,9 @@
 							<string key="NSCellIdentifier">_NS:1535</string>
 							<reference key="NSControlView" ref="368598942"/>
 							<reference key="NSBackgroundColor" ref="642761060"/>
-							<reference key="NSTextColor" ref="417819916"/>
+							<reference key="NSTextColor" ref="554125177"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="933990066">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -754,6 +768,7 @@
 							<reference key="NSBackgroundColor" ref="536393306"/>
 							<reference key="NSTextColor" ref="429371278"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="668990917">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -772,8 +787,9 @@
 							<string key="NSCellIdentifier">_NS:1535</string>
 							<reference key="NSControlView" ref="668990917"/>
 							<reference key="NSBackgroundColor" ref="642761060"/>
-							<reference key="NSTextColor" ref="417819916"/>
+							<reference key="NSTextColor" ref="554125177"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="129873405">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -830,6 +846,7 @@
 							<reference key="NSBackgroundColor" ref="536393306"/>
 							<reference key="NSTextColor" ref="429371278"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="158377330">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -848,8 +865,9 @@
 							<string key="NSCellIdentifier">_NS:1535</string>
 							<reference key="NSControlView" ref="158377330"/>
 							<reference key="NSBackgroundColor" ref="642761060"/>
-							<reference key="NSTextColor" ref="417819916"/>
+							<reference key="NSTextColor" ref="554125177"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="592144156">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -906,6 +924,7 @@
 							<reference key="NSBackgroundColor" ref="536393306"/>
 							<reference key="NSTextColor" ref="429371278"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="654595040">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -924,8 +943,9 @@
 							<string key="NSCellIdentifier">_NS:1535</string>
 							<reference key="NSControlView" ref="654595040"/>
 							<reference key="NSBackgroundColor" ref="642761060"/>
-							<reference key="NSTextColor" ref="417819916"/>
+							<reference key="NSTextColor" ref="554125177"/>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="502779330">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -948,8 +968,14 @@
 							<string key="NSCellIdentifier">_NS:1535</string>
 							<reference key="NSControlView" ref="502779330"/>
 							<reference key="NSBackgroundColor" ref="642761060"/>
-							<reference key="NSTextColor" ref="417819916"/>
+							<object class="NSColor" key="NSTextColor">
+								<int key="NSColorSpace">6</int>
+								<string key="NSCatalogName">System</string>
+								<string key="NSColorName">controlTextColor</string>
+								<reference key="NSColor" ref="890778346"/>
+							</object>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 				</array>
 				<string key="NSFrameSize">{213, 336}</string>
@@ -961,6 +987,14 @@
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">elementDetailView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1005"/>
+					</object>
+					<int key="connectionID">456</int>
+				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">xPosTextField</string>
@@ -3457,7 +3491,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">455</int>
+			<int key="maxID">457</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3481,6 +3515,7 @@
 					<string key="className">VSCOSXOBSceneElementDetailView</string>
 					<string key="superclassName">NSView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="elementController">id</string>
 						<string key="idTextField">NSTextField</string>
 						<string key="nameTextField">NSTextField</string>
 						<string key="wRotTextField">NSTextField</string>
@@ -3495,6 +3530,10 @@
 						<string key="zVelTextField">NSTextField</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="elementController">
+							<string key="name">elementController</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="idTextField">
 							<string key="name">idTextField</string>
 							<string key="candidateClassName">NSTextField</string>
@@ -3554,12 +3593,17 @@
 					<string key="superclassName">NSView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="elementCollisionView">VSCOSXOBSceneElementCollisionView</string>
+						<string key="elementController">id</string>
 						<string key="elementDetailView">VSCOSXOBSceneElementDetailView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="elementCollisionView">
 							<string key="name">elementCollisionView</string>
 							<string key="candidateClassName">VSCOSXOBSceneElementCollisionView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="elementController">
+							<string key="name">elementController</string>
+							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="elementDetailView">
 							<string key="name">elementDetailView</string>
