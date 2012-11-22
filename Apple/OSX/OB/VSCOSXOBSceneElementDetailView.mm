@@ -14,6 +14,12 @@
 #include <Ogre/Ogre.h>
 #include <boost/assert.hpp>
 
+@interface VSCOSXOBSceneElementDetailView ()
+
+-(NSArray*) allNumberTextFields;
+
+@end
+
 @implementation VSCOSXOBSceneElementDetailView
 
 - (id)initWithFrame:(NSRect)frame
@@ -33,7 +39,39 @@
 
 -(void) awakeFromNib
 {
+    NSArray* numberTextFields = [self allNumberTextFields];
     
+    for (NSTextField* textField in numberTextFields)
+    {
+        BOOST_ASSERT([textField isKindOfClass:[NSTextField class]]);
+        if ([textField isKindOfClass:[NSTextField class]])
+        {
+            NSNumberFormatter* formatter = textField.formatter;
+            BOOST_ASSERT(formatter);
+            BOOST_ASSERT([formatter isKindOfClass:[NSNumberFormatter class]]);
+            if ([formatter isKindOfClass:[NSNumberFormatter class]])
+            {
+                formatter.maximumFractionDigits = 3;
+                formatter.thousandSeparator = @"";
+            }
+        }
+    }
+}
+
+-(NSArray*) allNumberTextFields
+{
+    return @[
+    self.xPosTextField,
+    self.yPosTextField,
+    self.zPosTextField,
+    self.xVelTextField,
+    self.yVelTextField,
+    self.zVelTextField,
+    self.wRotTextField,
+    self.xRotTextField,
+    self.yRotTextField,
+    self.zRotTextField
+    ];
 }
 
 #pragma mark - UI Helpers
