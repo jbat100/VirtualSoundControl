@@ -98,7 +98,7 @@
 
 -(void) sceneWasRendered:(VSC::OB::Scene::SPtr)scene
 {
-    [self.elementInspectorView.elementDetailView reloadInterface];
+    [self.elementInspectorView.elementDetailView reloadInterface:NO];
 }
 
 @end

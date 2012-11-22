@@ -20,6 +20,8 @@ NSArray* ElementInspectorTabParamArray = nil;
 @property (weak) IBOutlet DMTabBar* tabBar;
 @property (weak) IBOutlet NSView* mainView;
 
+-(void) commonInit;
+
 -(void) setupTabBar;
 
 @end
@@ -45,21 +47,38 @@ NSArray* ElementInspectorTabParamArray = nil;
     
     [self setupTabBar];
     
+    
     /*
     [self showElementDetailView];
     self.tabBar.selectedIndex = 0;
     */
 }
 
-- (id)initWithFrame:(NSRect)frame
+-(id)initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
+        [self commonInit];
     }
-    
     return self;
 }
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        // Initialization code here.
+        [self commonInit];
+    }
+    return self;
+}
+
+-(void) commonInit
+{
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+}
+
 
 - (void)drawRect:(NSRect)dirtyRect
 {
@@ -145,10 +164,11 @@ NSArray* ElementInspectorTabParamArray = nil;
     }
     
     self.elementDetailView.elementController = self.elementController;
-    
     self.tabBar.selectedIndex = 0;
-    
     [self.elementCollisionView setHidden:YES];
+    
+    if (!self.elementDetailView) return;
+    
     if ([self.elementDetailView superview] != self.mainView)
     {
         [self.mainView addSubview:self.elementDetailView];
@@ -157,6 +177,16 @@ NSArray* ElementInspectorTabParamArray = nil;
     [self.elementDetailView setHidden:NO];
     
     [self.elementDetailView reloadInterface];
+    
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_elementDetailView);
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_elementDetailView(>=200)]|"
+                                                                 options:0
+                                                                 metrics:nil
+                                                                   views:viewsDictionary]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_elementDetailView(>=350)]|"
+                                                                 options:0
+                                                                 metrics:nil
+                                                                   views:viewsDictionary]];
 }
 
 -(void) showElementCollisionView
@@ -169,18 +199,30 @@ NSArray* ElementInspectorTabParamArray = nil;
                                       owner:self
                             topLevelObjects:&topLevelObjects];
         
-        BOOST_ASSERT(self.elementDetailView);
+        //BOOST_ASSERT(self.elementCollisionView);
     }
     
     self.tabBar.selectedIndex = 1;
-    
     [self.elementDetailView setHidden:YES];
+    
+    if(!self.elementCollisionView) return;
+    
     if ([self.elementCollisionView superview] != self.mainView)
     {
         [self.mainView addSubview:self.elementCollisionView];
     }
     self.elementCollisionView.frame = self.mainView.bounds;
     [self.elementCollisionView setHidden:NO];
+    
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_elementCollisionView);
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_elementCollisionView(>=200)]|"
+                                                                 options:0
+                                                                 metrics:nil
+                                                                   views:viewsDictionary]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_elementCollisionView(>=350)]|"
+                                                                 options:0
+                                                                 metrics:nil
+                                                                   views:viewsDictionary]];
 }
 
 @end

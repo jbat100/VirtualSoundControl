@@ -28,5 +28,6 @@
 @property (weak) IBOutlet NSTextField* zRotTextField;
 
 -(void) reloadInterface;
+-(void) reloadInterface:(BOOL)critical;
 
 @end

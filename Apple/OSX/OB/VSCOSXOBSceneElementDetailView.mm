@@ -16,6 +16,11 @@
 
 @interface VSCOSXOBSceneElementDetailView ()
 
+@property (nonatomic, assign) NSTimeInterval minimumInterfaceUpdateInterval;
+@property (nonatomic, strong) NSDate* lastUpdateDate;
+
+-(void) commonInit;
+
 -(NSArray*) allNumberTextFields;
 
 @end
@@ -27,9 +32,25 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
+        [self commonInit];
     }
-    
     return self;
+}
+
+-(id) initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        // Initialization code here.
+        [self commonInit];
+    }
+    return self;
+}
+
+-(void) commonInit
+{
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    self.minimumInterfaceUpdateInterval = 0.1;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -51,7 +72,7 @@
             BOOST_ASSERT([formatter isKindOfClass:[NSNumberFormatter class]]);
             if ([formatter isKindOfClass:[NSNumberFormatter class]])
             {
-                formatter.maximumFractionDigits = 3;
+                formatter.maximumFractionDigits = 2;
                 formatter.thousandSeparator = @"";
             }
         }
@@ -78,6 +99,18 @@
 
 -(void) reloadInterface
 {
+    [self reloadInterface:YES];
+}
+
+-(void) reloadInterface:(BOOL)critical
+{
+    if (!critical &&
+        self.lastUpdateDate &&
+        [[NSDate date] timeIntervalSinceDate:self.lastUpdateDate] > self.minimumInterfaceUpdateInterval)
+    {
+        return;
+    }
+    
     BOOST_ASSERT(self.elementController);
     
     VSC::OB::Scene::Element::SPtr element = self.elementController.element.lock();
@@ -120,9 +153,7 @@
         
     }
     
-    /*
-     *  Reach here if there is no info to display...
-     */
+    self.lastUpdateDate = [NSDate date];
 }
 
 #pragma mark - NSTextFieldDelegate
