@@ -27,7 +27,9 @@
 @property (weak) IBOutlet NSTextField* yRotTextField;
 @property (weak) IBOutlet NSTextField* zRotTextField;
 
--(void) reloadInterface;
--(void) reloadInterface:(BOOL)critical;
+-(void) reloadWholeInterface;
+
+-(void) reloadPositionInterface;
+-(void) reloadPositionInterface:(BOOL)critical;
 
 @end

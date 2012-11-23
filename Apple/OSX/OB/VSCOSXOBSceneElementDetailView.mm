@@ -9,6 +9,8 @@
 #import "VSCOSXOBSceneElementDetailView.h"
 #import "VSCOSXOBSceneElementController.h"
 
+#import "NSString+VSCAdditions.h"
+
 #include "VSCOBScene.h"
 #include "OgreBulletDynamicsRigidBody.h"
 #include <Ogre/Ogre.h>
@@ -97,12 +99,43 @@
 
 #pragma mark - UI Helpers
 
--(void) reloadInterface
+-(void) reloadWholeInterface
 {
-    [self reloadInterface:YES];
+    [self reloadNameInterface];
+    
+    [self reloadPositionInterface:YES];
 }
 
--(void) reloadInterface:(BOOL)critical
+-(void) reloadNameInterface
+{
+    BOOST_ASSERT(self.elementController);
+    
+    if (self.elementController)
+    {
+        VSC::OB::Scene::Element::SPtr element = self.elementController.element.lock();
+        
+        if (element)
+        {
+            NSString *nameString = [NSString stringWithStdString:element->getName()];
+            NSString *idString = [NSString stringWithFormat:@"id: %d", element->getIdentifier()];
+            
+            [self.nameTextField setStringValue:nameString];
+            [self.idTextField setStringValue:idString];
+            
+            return;
+        }
+    }
+    
+    [self.nameTextField setStringValue:@"No Element"];
+    [self.idTextField setStringValue:@"id: None"];
+}
+
+-(void) reloadPositionInterface
+{
+    [self reloadPositionInterface:YES];
+}
+
+-(void) reloadPositionInterface:(BOOL)critical
 {
     if (!critical &&
         self.lastUpdateDate &&
@@ -113,45 +146,46 @@
     
     BOOST_ASSERT(self.elementController);
     
-    VSC::OB::Scene::Element::SPtr element = self.elementController.element.lock();
-    
-    if (element)
+    if (self.elementController)
     {
-        OgreBulletDynamics::RigidBody* rigidBody = element->getRigidBody();
-        BOOST_ASSERT(rigidBody);
-        if (rigidBody)
-        {
-            const Ogre::Vector3& linearVelocity = rigidBody->getLinearVelocity();
-            
-            //[self.xVelTextField setStringValue:[@(linearVelocity.x) stringValue]];
-            //[self.yVelTextField setStringValue:[@(linearVelocity.y) stringValue]];
-            //[self.zVelTextField setStringValue:[@(linearVelocity.z) stringValue]];
-            
-            [self.xVelTextField setDoubleValue:linearVelocity.x];
-            [self.yVelTextField setDoubleValue:linearVelocity.y];
-            [self.zVelTextField setDoubleValue:linearVelocity.z];
-            
-            Ogre::Node* node = rigidBody->getSceneNode();
-            BOOST_ASSERT(node);
-            if (node)
-            {
-                const Ogre::Vector3& position = node->getPosition();
-                
-                [self.xPosTextField setDoubleValue:position.x];
-                [self.yPosTextField setDoubleValue:position.y];
-                [self.zPosTextField setDoubleValue:position.z];
-                
-                const Ogre::Quaternion& rotation = node->getOrientation();
-                
-                [self.xRotTextField setDoubleValue:rotation.x];
-                [self.yRotTextField setDoubleValue:rotation.y];
-                [self.zRotTextField setDoubleValue:rotation.z];
-                [self.wRotTextField setDoubleValue:rotation.w];
-                
-            }
-        }
+        VSC::OB::Scene::Element::SPtr element = self.elementController.element.lock();
         
+        if (element)
+        {
+            OgreBulletDynamics::RigidBody* rigidBody = element->getRigidBody();
+            BOOST_ASSERT(rigidBody);
+            if (rigidBody)
+            {
+                const Ogre::Vector3& linearVelocity = rigidBody->getLinearVelocity();
+                
+                [self.xVelTextField setDoubleValue:linearVelocity.x];
+                [self.yVelTextField setDoubleValue:linearVelocity.y];
+                [self.zVelTextField setDoubleValue:linearVelocity.z];
+                
+                Ogre::Node* node = rigidBody->getSceneNode();
+                BOOST_ASSERT(node);
+                if (node)
+                {
+                    const Ogre::Vector3& position = node->getPosition();
+                    
+                    [self.xPosTextField setDoubleValue:position.x];
+                    [self.yPosTextField setDoubleValue:position.y];
+                    [self.zPosTextField setDoubleValue:position.z];
+                    
+                    const Ogre::Quaternion& rotation = node->getOrientation();
+                    
+                    [self.xRotTextField setDoubleValue:rotation.x];
+                    [self.yRotTextField setDoubleValue:rotation.y];
+                    [self.zRotTextField setDoubleValue:rotation.z];
+                    [self.wRotTextField setDoubleValue:rotation.w];
+                    
+                }
+            }
+            
+        }
     }
+    
+
     
     self.lastUpdateDate = [NSDate date];
 }
