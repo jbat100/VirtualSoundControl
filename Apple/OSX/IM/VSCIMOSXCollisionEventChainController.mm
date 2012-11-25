@@ -178,20 +178,6 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDela
     }
 }
 
--(IBAction) removeSelectedEvent:(id)sender
-{
-    VSC::IM::Event::SPtr selectedEvent = [self.collisionEventChainView selectedChainEvent];
-    
-    if (selectedEvent)
-    {
-        VSC::IM::CollisionEventChain::SPtr chain = self.collisionEventChain.lock();
-        if (chain)
-        {
-            chain->removeEvent(selectedEvent);
-            [self.collisionEventChainView.eventListView reloadData];
-        }
-    }
-}
 
 #pragma mark - Add Events To Chain
 

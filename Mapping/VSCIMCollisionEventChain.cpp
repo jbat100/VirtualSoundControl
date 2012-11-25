@@ -15,6 +15,10 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/foreach.hpp>
 
+unsigned int VSC::IM::CollisionEventChain::getNumberOfActions(void)
+{
+    return 0; // NOT IMPLEMEMTED !!
+}
 
 bool VSC::IM::CollisionEventChain::checkEvent(Event::SPtr event)
 {

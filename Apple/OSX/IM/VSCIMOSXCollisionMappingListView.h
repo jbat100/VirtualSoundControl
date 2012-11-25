@@ -12,6 +12,7 @@
 #include "VSCIMCollisionAction.h"
 
 @class PXListView;
+@protocol VSCOSXOBSceneElementController;
 
 /*
  *  Container view for mapping views.
@@ -19,10 +20,10 @@
 
 @interface VSCIMOSXCollisionMappingListView : NSView
 
-@property (nonatomic, assign) VSC::IM::CollisionAction::WPtr collisionAction;
+@property (nonatomic, assign) VSC::IM::CollisionAction::WPtr action;
 
-@property (weak) id<VSCIMOSXCollisionEventChainController> eventChainController;
+@property (weak) id<VSCOSXOBSceneElementController> elementController;
 
-@property (weak) IBOutlet PXListView* mappingListView;
+@property (weak) IBOutlet PXListView* listView;
 
 @end

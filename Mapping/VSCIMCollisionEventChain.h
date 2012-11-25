@@ -31,6 +31,8 @@ namespace VSC {
             
             void perform(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision);
             
+            unsigned int getNumberOfActions(void);
+            
         protected:
             
             /*

@@ -8,26 +8,30 @@
 
 #import <Foundation/Foundation.h>
 
-#include "VSCOBScene.h"
+#import "VSCOSXEnvironmentController.h"
+#import "VSCOSXOBSceneElementEditor.h"
+#import "PXListViewDelegate.h"
 
-@protocol VSCOSXEnvironmentController;
-@protocol VSCIMOSXCollisionEventChainController;
-//@class VSCOSXOBSceneElementInspectorView;
+#include "VSCOBScene.h"
+#include "VSCIMEvent.h"
 
 /*
  *  Main controller for a Scene::Element
  */
 
-@protocol VSCOSXOBSceneElementController <NSObject>
+@protocol VSCOSXOBSceneElementController <NSObject, PXListViewDelegate>
 
 @property (nonatomic, assign) VSC::OB::Scene::Element::WPtr element;
 
 @property (weak) id <VSCOSXEnvironmentController> environmentController;
-@property (strong) id<VSCIMOSXCollisionEventChainController> collisionEventChainController;
+
+-(void) collisionEventChainEditor:(id<VSCIMOSXCollisionEventChainEditor>)editor requestsAppendingEvent:(VSC::IM::Event::SPtr)event;
+-(void) collisionEventChainEditor:(id<VSCIMOSXCollisionEventChainEditor>)editor requestsRemovingEvent:(VSC::IM::Event::SPtr)event;
+
 
 -(void) showElementDetailView;
 -(void) showElementCollisionView;
 
--(void) sceneWasRendered;
-
 @end
+
+

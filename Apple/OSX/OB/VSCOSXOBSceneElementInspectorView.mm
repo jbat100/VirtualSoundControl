@@ -176,7 +176,7 @@ NSArray* ElementInspectorTabParamArray = nil;
     self.elementDetailView.frame = self.mainView.bounds;
     [self.elementDetailView setHidden:NO];
     
-    [self.elementDetailView reloadInterface];
+    [self.elementDetailView reloadWholeInterface];
     
     NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_elementDetailView);
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_elementDetailView(>=200)]|"

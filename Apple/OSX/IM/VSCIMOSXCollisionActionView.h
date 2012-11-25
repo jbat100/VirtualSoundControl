@@ -15,7 +15,11 @@
 
 #include "VSCIMCollisionAction.h"
 
-@protocol VSCIMOSXCollisionEventChainController;
+@protocol VSCIMOSXCollisionActionEditorDelegate
+
+-(void) collisionActionEditor:() requestsMappingEditor:(VSCIMOSXCollisionActionView*);
+
+@end
 
 /*
  *  The actual NSView subclass which displays the collision action parameters and allows 
