@@ -9,12 +9,13 @@
 #import <Cocoa/Cocoa.h>
 
 #import "DMTabBar.h"
+#import "VSCOSXOBSceneElementEditor.h"
 #import "VSCOSXOBSceneElementDetailView.h"
 #import "VSCOSXOBSceneElementCollisionView.h"
 
 @protocol VSCOSXOBSceneElementController;
 
-@interface VSCOSXOBSceneElementInspectorView : NSView
+@interface VSCOSXOBSceneElementInspectorView : NSView <VSCOSXOBSceneElementEditor>
 
 @property (assign) IBOutlet id<VSCOSXOBSceneElementController> elementController;
 

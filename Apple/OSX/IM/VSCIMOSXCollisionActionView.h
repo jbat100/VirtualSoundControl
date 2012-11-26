@@ -15,11 +15,7 @@
 
 #include "VSCIMCollisionAction.h"
 
-@protocol VSCIMOSXCollisionActionEditorDelegate
-
--(void) collisionActionEditor:() requestsMappingEditor:(VSCIMOSXCollisionActionView*);
-
-@end
+@protocol VSCIMOSXCollisionEventChainEditor;
 
 /*
  *  The actual NSView subclass which displays the collision action parameters and allows 
@@ -29,11 +25,10 @@
 @interface VSCIMOSXCollisionActionView : PXListViewCell
 
 +(CGFloat) heightOfViewForCollisionAction:(VSC::IM::CollisionAction::SPtr)collisionAction;
-
 +(NSString*) stringForActionType:(VSCIMOSXCollisionActionType)actionType;
 +(VSCIMOSXCollisionActionType) actionTypeForString:(NSString*)menuItemString;
 
-@property (weak) id<VSCIMOSXCollisionEventChainController> eventChainController;
+@property (weak) id<VSCIMOSXCollisionEventChainEditor> eventChainEditor;
 
 @property (nonatomic, assign) VSC::IM::CollisionAction::WPtr collisionAction;
 

@@ -28,8 +28,8 @@
 @property (weak) IBOutlet NSView* collisionStartedContainerView;
 @property (weak) IBOutlet NSView* collisionEndedContainerView;
 
-@property (strong) VSCOSXOBSceneElementCollisionEditView* collisionStartedEditView;
-@property (strong) VSCOSXOBSceneElementCollisionEditView* collisionEndedEditView;
+@property (strong) VSCIMOSXCollisionEventChainView* collisionStartedEventChainView;
+@property (strong) VSCIMOSXCollisionEventChainView* collisionEndedEventChainView;
 
 -(void) reloadInterface;
 

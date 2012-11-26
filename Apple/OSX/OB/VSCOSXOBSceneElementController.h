@@ -15,6 +15,8 @@
 #include "VSCOBScene.h"
 #include "VSCIMEvent.h"
 
+@protocol VSCIMOSXCollisionEventChainEditor;
+
 /*
  *  Main controller for a Scene::Element
  */

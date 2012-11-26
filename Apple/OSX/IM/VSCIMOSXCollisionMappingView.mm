@@ -44,7 +44,7 @@ const CGFloat VSCIMOSXCollisionMappingViewEditButtonHeight      = 10.0;
 
 @implementation VSCIMOSXCollisionMappingView
 
-@synthesize collisionMapping = _collisionMapping;
+@synthesize mapping = _mapping;
 
 +(void) initialize
 {
@@ -114,10 +114,10 @@ const CGFloat VSCIMOSXCollisionMappingViewEditButtonHeight      = 10.0;
     // Drawing code here.
 }
 
--(void) setCollisionMapping:(VSC::IM::CollisionMapping::WPtr)collisionMapping
+-(void) setMapping:(VSC::IM::CollisionMapping::WPtr)mapping
 {
-    _collisionMapping = collisionMapping;
-    self.collisionMappingType = VSCIMOSXCollisionMappingTypeForCollisionMapping(collisionMapping.lock());
+    _mapping = mapping;
+    self.collisionMappingType = VSCIMOSXCollisionMappingTypeForCollisionMapping(_mapping.lock());
     
     [self updateInterfaceForNewCollisionMapping];
 }
@@ -125,9 +125,7 @@ const CGFloat VSCIMOSXCollisionMappingViewEditButtonHeight      = 10.0;
 -(void) setTarget:(VSC::IM::Target)t
 {
     _target = t;
-    
     [self updateInterfaceForNewTarget];
-    
 }
 
 -(void) updateInterfaceForNewTarget

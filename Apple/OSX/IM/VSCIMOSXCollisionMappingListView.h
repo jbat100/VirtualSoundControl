@@ -22,8 +22,6 @@
 
 @property (nonatomic, assign) VSC::IM::CollisionAction::WPtr action;
 
-@property (weak) id<VSCOSXOBSceneElementController> elementController;
-
 @property (weak) IBOutlet PXListView* listView;
 
 @end

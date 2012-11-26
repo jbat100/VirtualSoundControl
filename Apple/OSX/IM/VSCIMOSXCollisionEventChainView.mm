@@ -10,6 +10,7 @@
 #import "VSCIMOSXCollisionEventChainController.h"
 #import "VSCOSXOBSceneElementEditor.h"
 #import "VSCOSXOBSceneElementController.h"
+#import "VSCIMOSXCollisionMappingListView.h"
 
 #import "PXListView.h"
 #import "PXListViewCell.h"
@@ -24,6 +25,7 @@
 
 @interface VSCIMOSXCollisionEventChainView ()
 
+-(void) customInit;
 
 @end
 
@@ -33,10 +35,23 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
+        [self customInit];
     }
-    
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self customInit];
+    }
+    return self;
+}
+
+-(void) customInit
+{
+    self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -71,12 +86,8 @@
     if ([indexSet count] == 1)
     {
         NSUInteger index = [indexSet firstIndex];
-        
-        if (self.eventChainController)
-        {
-            VSC::IM::CollisionEventChain::SPtr chain = [self.eventChainController collisionEventChain].lock();
-            if (chain) return chain->getEvents().at(index);
-        }
+        VSC::IM::CollisionEventChain::SPtr chain = self.eventChain.lock();
+        if (chain) return chain->getEvents().at(index);
     }
     
     return VSC::IM::Event::SPtr();
@@ -84,7 +95,7 @@
 
 -(IBAction) removeSelectedEvent:(id)sender
 {
-    VSC::IM::Event::SPtr selectedEvent = [self.collisionEventChainView selectedChainEvent];
+    VSC::IM::Event::SPtr selectedEvent = [self selectedChainEvent];
     
     if (selectedEvent)
     {
@@ -93,7 +104,7 @@
         
         if ([self.elementController respondsToSelector:@selector(collisionEventChainEditor:requestsRemovingEvent:)])
         {
-            [self.elementController collisionEventChainEditor:self requestsRemovingEvent:event];
+            [self.elementController collisionEventChainEditor:self requestsRemovingEvent:selectedEvent];
         }
     }
 }
@@ -124,6 +135,50 @@
         }
     }
 }
+
+#pragma mark - UI Helpers
+
+-(void) sender:(id)sender requestsMappingEditorForAction:(VSC::IM::CollisionAction::SPtr)action
+{
+    if (!self.mappingListView)
+    {
+        NSArray* topLevelObjects = nil;
+        
+        [[NSBundle mainBundle] loadNibNamed:@"VSCIMOSXCollisionMappingListView"
+                                      owner:self
+                            topLevelObjects:&topLevelObjects];
+        
+        BOOST_ASSERT(self.mappingListView);
+        
+        NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_mappingListView);
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_mappingListView]|"
+                                                                     options:0
+                                                                     metrics:nil
+                                                                       views:viewsDictionary]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_mappingListView]|"
+                                                                     options:0
+                                                                     metrics:nil
+                                                                       views:viewsDictionary]];
+    }
+    
+    if ([self.mappingListView superview] != self)
+    {
+        [self addSubview:self.mappingListView];
+    }
+    
+}
+
+-(void) senderRequestsEventChainView:(id)sender
+{
+    if ([self.mappingListView superview] == self)
+    {
+        [self.mappingListView removeFromSuperview];
+    }
+}
+
+
+
+
 
 
 @end

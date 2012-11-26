@@ -1,20 +1,24 @@
-//
-//  VSCOSXOBSceneElementEditor.h
-//  OgreBulletCocoaTestApplications
-//
-//  Created by Jonathan Thorpe on 11/25/12.
-//  Copyright (c) 2012 JBAT. All rights reserved.
-//
+
 
 #import <Foundation/Foundation.h>
 
+#include "VSCIMCollisionAction.h"
+
+/*
+ *  VSCOSXOBSceneElementEditor, meant for the main inspector view
+ */
+
 @protocol VSCOSXOBSceneElementEditor <NSObject>
 
+-(void) senderRequestsDetailView:(id)sender;
+-(void) senderRequestsCollisionView:(id)sender;
+
 @end
 
-@protocol VSCIMOSXCollisionEventChainEditor <NSObject>
 
-@end
+/*
+ *  VSCIMOSXCollisionActionEditor
+ */
 
 @protocol VSCIMOSXCollisionActionEditor <NSObject>
 

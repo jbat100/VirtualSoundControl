@@ -9,10 +9,12 @@
 #import <Cocoa/Cocoa.h>
 #import "VSCOSXOBSceneElementEditor.h"
 #import "VSCOSXOBSceneElementController.h"
+#import "VSCIMOSXCollisionEventChainEditor.h"
 
 #include "VSCIMEvent.h"
 
 @class PXListView;
+@class VSCIMOSXCollisionMappingListView;
 
 /*
  *  Container view for the event chain view and the controls to edit 
@@ -25,12 +27,14 @@
 
 @property VSC::IM::CollisionEventChain::WPtr eventChain;
 
-@property (weak) IBOutlet PXListView* eventListView;
+/*
+ *  Event chain interface
+ */
 
+@property (weak) IBOutlet PXListView* eventListView;
 @property (weak) IBOutlet NSPopUpButton* addEventButton;
 @property (weak) IBOutlet NSButton* removeEventButton;
 @property (weak) IBOutlet NSMenu* addEventMenu;
-
 @property (weak) IBOutlet NSMenuItem* addDelayMenuItem;
 @property (weak) IBOutlet NSMenuItem* addCollisionMIDINoteOnMenuItem;
 @property (weak) IBOutlet NSMenuItem* addCollisionMIDINoteOffMenuItem;
@@ -41,6 +45,16 @@
 -(IBAction) menuItemAction:(id)sender;
 
 -(VSC::IM::Event::SPtr) selectedChainEvent;
+
+/*
+ *  Mapping list view
+ */
+
+@property (strong)  VSCIMOSXCollisionMappingListView* mappingListView;
+
+/*
+ *  
+ */
 
 -(void) reloadInterface;
 

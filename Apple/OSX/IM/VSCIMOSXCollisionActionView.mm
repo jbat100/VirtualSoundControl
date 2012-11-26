@@ -8,6 +8,7 @@
 
 #import "VSCIMOSXCollisionActionView.h"
 #import "VSCIMOSXCollisionEventChainController.h"
+#import "VSCOSXOBSceneElementEditor.h"
 #import "NSString+VSCAdditions.h"
 
 #include "VSCMIDI.h"
@@ -29,19 +30,6 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
 const CGFloat VSCIMOSXCollisionActionViewBaseHeight = 54.0;
 const CGFloat VSCIMOSXCollisionActionViewMIDISetupHeight = 48.0;
 const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
-
-/** // Using nib instead...
-
-const CGFloat VSCIMOSXCollisionActionViewHorizontalMargin   = 5.0;
-const CGFloat VSCIMOSXCollisionActionViewVerticalMargin     = 5.0;
-
-const CGFloat VSCIMOSXCollisionActionViewPopUpButtonHeight  = 10.0;
-
-const CGFloat VSCIMOSXCollisionActionViewBaseHeight         = 20.0;
-const CGFloat VSCIMOSXCollisionActionViewMappingHeight      = 20.0;
-const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
- 
- */
 
 /*
  *  Private internals
@@ -268,7 +256,7 @@ const CGFloat VSCIMOSXCollisionActionViewParameterHeight    = 20.0;
 
 -(IBAction) showCollisionMappings:(id)sender
 {
-    [self.eventChainController showCollisionMappingsForCollisionAction:self.collisionAction.lock()];
+    [self.eventChainEditor sender:self requestsMappingEditorForAction:self.collisionAction.lock()];
 }
 
 -(IBAction) refreshMIDIOutputs:(id)sender

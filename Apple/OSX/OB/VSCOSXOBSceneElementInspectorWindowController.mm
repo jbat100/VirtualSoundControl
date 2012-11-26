@@ -202,6 +202,7 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDela
                 actionView = [self newCollisionActionView];
             }
             [actionView setCollisionAction:(VSC::IM::CollisionAction::WPtr(action))];
+            actionView.eventChainEditor = eventChainView;
             return actionView;
         }
         
