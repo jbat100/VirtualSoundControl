@@ -8,9 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class VSCIMOSXCollisionEventChainView;
-@class VSCIMOSXCollisionEventChainController;
-@class VSCIMOSXCollisionMappingListView;
 @protocol VSCOSXOBSceneElementController;
 
 #include "VSCOBScene.h"
@@ -22,13 +19,10 @@
 
 @interface VSCOSXOBSceneElementCollisionView : NSView
 
-@property (nonatomic, weak) id<VSCOSXOBSceneElementController> elementController;
+@property (assign) id<VSCOSXOBSceneElementController> elementController;
 
-@property (weak) IBOutlet NSView* collisionStartedContainerView;
-@property (weak) IBOutlet NSView* collisionEndedContainerView;
-
-@property (strong) VSCIMOSXCollisionEventChainView* collisionStartedEventChainView;
-@property (strong) VSCIMOSXCollisionEventChainView* collisionEndedEventChainView;
+@property (weak) IBOutlet NSBox* collisionStartedEventChainBox;
+@property (weak) IBOutlet NSBox* collisionEndedEventChainBox;
 
 -(void) reloadInterface;
 

@@ -11,19 +11,13 @@
 #import "VSCOSXOBSceneElementController.h"
 #import "VSCOBOSXSceneListener.h"
 
-@class VSCOSXOBSceneElementInspectorView;
+@class VSCOSXOBSceneElementInspectorViewController;
 
-/*
- *  Main element inspector window;
- *  Listens to the element scene to be able to update element pos/vel/rot on
- *  scene renders.
- */
 
 @interface VSCOSXOBSceneElementInspectorWindowController : NSWindowController
-<VSCOSXOBSceneElementController, VSCOBOSXSceneListenerTarget>
 
-@property (weak) IBOutlet VSCOSXOBSceneElementInspectorView* elementInspectorView;
+@property (strong) VSCOSXOBSceneElementInspectorViewController* elementInspectorViewController;
 
-@property (assign) VSC::OB::OSXSceneListener::SPtr sceneListener;
+@property (weak) IBOutlet NSBox* mainBox;
 
 @end

@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "VSCIMOSXCollisionMappingTypes.h"
+#import "PXListViewDelegate.h"
 
 #include "VSCIMCollisionAction.h"
 

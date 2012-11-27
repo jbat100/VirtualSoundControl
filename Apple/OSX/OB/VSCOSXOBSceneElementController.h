@@ -27,10 +27,6 @@
 
 @property (weak) id <VSCOSXEnvironmentController> environmentController;
 
--(void) collisionEventChainEditor:(id<VSCIMOSXCollisionEventChainController>)editor requestsAppendingEvent:(VSC::IM::Event::SPtr)event;
--(void) collisionEventChainEditor:(id<VSCIMOSXCollisionEventChainController>)editor requestsRemovingEvent:(VSC::IM::Event::SPtr)event;
-
-
 -(void) showElementDetailView;
 -(void) showElementCollisionView;
 

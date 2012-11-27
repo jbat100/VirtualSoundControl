@@ -4,13 +4,13 @@
  *  VSCIMOSXCollisionEventChainController, meant for the VSCIMOSXCollisionEventChainView
  */
 
-#import "PXListViewDelegate.h"
-
 @protocol VSCOSXOBSceneElementController;
 
-@protocol VSCIMOSXCollisionEventChainController <NSObject, PXListViewDelegate>
+@protocol VSCIMOSXCollisionEventChainController <NSObject>
 
 @property (weak) id<VSCOSXOBSceneElementController> elementController;
+
+@property (nonatomic, assign) VSC::IM::CollisionEventChain::WPtr eventChain;
 
 -(void) sender:(id)sender requestsShowMappingsForCollisionAction:(VSC::IM::CollisionAction::SPtr)action;
 -(void) senderRequestsEventCollisionChainView:(id)sender;

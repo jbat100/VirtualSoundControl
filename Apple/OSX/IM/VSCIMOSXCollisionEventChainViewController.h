@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "PXListViewDelegate.h"
 #import "VSCOSXOBSceneElementEditor.h"
 #import "VSCOSXOBSceneElementController.h"
 #import "VSCIMOSXCollisionEventChainController.h"
@@ -14,11 +15,9 @@
 #include "VSCIMEvent.h"
 
 @class PXListView;
-@class VSCIMOSXCollisionMappingListView;
+@class VSCIMOSXCollisionActionMappingsViewController;
 
-@interface VSCIMOSXCollisionEventChainViewController : NSViewController <VSCIMOSXCollisionEventChainController>
-
-@property (nonatomic, assign) VSC::IM::CollisionEventChain::WPtr eventChain;
+@interface VSCIMOSXCollisionEventChainViewController : NSViewController <VSCIMOSXCollisionEventChainController, PXListViewDelegate>
 
 /*
  *  Event chain interface
@@ -43,11 +42,7 @@
  *  Mapping list view
  */
 
-@property (strong)  VSCIMOSXCollisionMappingListView* mappingListView;
-
-/*
- *
- */
+@property (strong)  VSCIMOSXCollisionActionMappingsViewController* actionMappingsViewController;
 
 -(void) reloadInterface;
 
