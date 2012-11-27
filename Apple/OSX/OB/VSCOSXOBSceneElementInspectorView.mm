@@ -90,6 +90,7 @@ NSArray* ElementInspectorTabParamArray = nil;
     _elementController = elementController;
     
     self.elementDetailView.elementController = elementController;
+    self.elementCollisionView.elementController = elementController;
 }
 
 #pragma mark - UI Helpers
@@ -160,7 +161,15 @@ NSArray* ElementInspectorTabParamArray = nil;
                                       owner:self
                             topLevelObjects:&topLevelObjects];
         
+        for (NSObject* topLevelObject in topLevelObjects)
+        {
+            if ([topLevelObject isKindOfClass:[VSCOSXOBSceneElementDetailView class]])
+                self.elementDetailView = (VSCOSXOBSceneElementDetailView*)topLevelObject;
+        }
+        
         BOOST_ASSERT(self.elementDetailView);
+        
+        self.elementDetailView.elementController = self.elementController;
     }
     
     self.elementDetailView.elementController = self.elementController;
@@ -173,7 +182,6 @@ NSArray* ElementInspectorTabParamArray = nil;
     {
         [self.mainView addSubview:self.elementDetailView];
     }
-    self.elementDetailView.frame = self.mainView.bounds;
     [self.elementDetailView setHidden:NO];
     
     [self.elementDetailView reloadWholeInterface];
@@ -187,6 +195,8 @@ NSArray* ElementInspectorTabParamArray = nil;
                                                                  options:0
                                                                  metrics:nil
                                                                    views:viewsDictionary]];
+    
+    [self setNeedsLayout:YES];
 }
 
 -(void) showElementCollisionView
@@ -199,7 +209,15 @@ NSArray* ElementInspectorTabParamArray = nil;
                                       owner:self
                             topLevelObjects:&topLevelObjects];
         
-        //BOOST_ASSERT(self.elementCollisionView);
+        for (NSObject* topLevelObject in topLevelObjects)
+        {
+            if ([topLevelObject isKindOfClass:[VSCOSXOBSceneElementCollisionView class]])
+                self.elementCollisionView = (VSCOSXOBSceneElementCollisionView*)topLevelObject;
+        }
+        
+        BOOST_ASSERT(self.elementCollisionView);
+        
+        self.elementCollisionView.elementController = self.elementController;
     }
     
     self.tabBar.selectedIndex = 1;
@@ -211,7 +229,6 @@ NSArray* ElementInspectorTabParamArray = nil;
     {
         [self.mainView addSubview:self.elementCollisionView];
     }
-    self.elementCollisionView.frame = self.mainView.bounds;
     [self.elementCollisionView setHidden:NO];
     
     NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_elementCollisionView);

@@ -40,39 +40,4 @@ VSCIMOSXCollisionActionType VSCIMOSXCollisionActionTypeForCollisionAction(VSC::I
 
 VSC::IM::CollisionAction::SPtr VSCIMOSXCreateCollisionActionWithType(VSCIMOSXCollisionActionType actionType);
 
-/*
- *  Forward declaration needed for VSCIMOSXCollisionActionController protocol
- */
 
-@protocol VSCIMOSXCollisionActionEditor;
-
-/*
- *  Protocol used by the view to interact with the model, specifically to ask for a collision
- *  action type change.
- */
-
-@protocol VSCIMOSXCollisionActionController <NSObject>
-
-/*
- *  Use when a new type (subclass) of collision action has been created by the view
- *  to inform the delegate of the change in pointer.
- */
-
--(VSC::IM::CollisionAction::SPtr) collisionActionEditor:(id<VSCIMOSXCollisionActionEditor>)editor
-                        requestsCollisionActionWithType:(VSCIMOSXCollisionActionType)collisionActionType;
-
--(void) showMappingsForCollisionAction:(VSC::IM::CollisionAction::SPtr)collisionAction;
-
-@end
-
-/*
- *  Protocol used for editor viewss for example
- */
-
-@protocol VSCIMOSXCollisionActionEditor <NSObject>
-
-@property (weak) id<VSCIMOSXCollisionActionController> controller;
-
-@property (nonatomic, assign) VSC::IM::CollisionAction::WPtr collisionAction;
-
-@end

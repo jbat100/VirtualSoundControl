@@ -25,7 +25,7 @@
 
 @property (weak) id<VSCOSXOBSceneElementController> elementController;
 
-@property VSC::IM::CollisionEventChain::WPtr eventChain;
+@property (nonatomic, assign) VSC::IM::CollisionEventChain::WPtr eventChain;
 
 /*
  *  Event chain interface

@@ -11,7 +11,6 @@
 #import "VSCOSXOBSceneElementInspectorView.h"
 #import "VSCOSXOBSceneElementDetailView.h"
 #import "VSCOSXOBSceneElementCollisionView.h"
-#import "VSCOSXOBSceneElementCollisionEditView.h"
 
 #import "VSCIMOSXCollisionActionView.h"
 #import "VSCIMOSXDelayView.h"
@@ -115,12 +114,19 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDela
      
 }
 
+#pragma mark - VSCOBOSXSceneListenerTarget
+
+-(void) sceneWasRendered:(VSC::OB::Scene::SPtr)scene
+{
+    [self.elementInspectorView.elementDetailView reloadPositionInterface:NO];
+}
+
 #pragma mark - VSCOSXOBSceneElementController
 
 -(VSC::IM::CollisionEventChain::SPtr) collisionEventChainForEditor:(id<VSCIMOSXCollisionEventChainEditor>)editor
 {
-    BOOST_ASSERT([editor isKindOfClass:[VSCOSXOBSceneElementCollisionEditView class]]);
-    if ([editor isKindOfClass:[VSCOSXOBSceneElementCollisionEditView class]] == NO) return VSC::IM::CollisionEventChain::SPtr();
+    BOOST_ASSERT([editor isKindOfClass:[VSCIMOSXCollisionEventChainView class]]);
+    if ([editor isKindOfClass:[VSCIMOSXCollisionEventChainView class]] == NO) return VSC::IM::CollisionEventChain::SPtr();
     return [(VSCIMOSXCollisionEventChainView*)editor eventChain].lock();
 }
 
@@ -134,7 +140,7 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDela
     if (chain && event)
     {
         chain->appendEvent(event);
-        [[(VSCOSXOBSceneElementCollisionEditView*)editor eventChainView] reloadInterface];
+        [(VSCOSXOBSceneElementCollisionView*)editor reloadInterface];
     }
 }
 
@@ -148,7 +154,7 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDela
     if (chain && event)
     {
         chain->removeEvent(event);
-        [[(VSCOSXOBSceneElementCollisionEditView*)editor eventChainView] reloadInterface];
+        [(VSCOSXOBSceneElementCollisionView*)editor reloadInterface];
     }
     
 }
@@ -256,7 +262,7 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDela
                     mappingView = [self newCollisionMappingView];
                 }
                 
-                [mappingView setCollisionMapping:(VSC::IM::CollisionMapping::WPtr(collisionMapping))];
+                [mappingView setMapping:(VSC::IM::CollisionMapping::WPtr(collisionMapping))];
                 
                 return mappingView;
             }

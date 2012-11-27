@@ -14,15 +14,20 @@ VSCIMOSXCollisionActionType VSCIMOSXCollisionActionTypeForCollisionAction(VSC::I
 {
     if (action)
     {
-        if (boost::dynamic_pointer_cast<VSC::IM::CollisionVoidAction>(action)) return VSCIMOSXCollisionActionTypeVoid;
+        if (boost::dynamic_pointer_cast<VSC::IM::CollisionVoidAction>(action))
+            return VSCIMOSXCollisionActionTypeVoid;
         
-        if (boost::dynamic_pointer_cast<VSC::IM::CollisionMIDINoteOnAction>(action)) return VSCIMOSXCollisionActionTypeMIDINoteOn;
+        if (boost::dynamic_pointer_cast<VSC::IM::CollisionMIDINoteOnAction>(action))
+            return VSCIMOSXCollisionActionTypeMIDINoteOn;
         
-        if (boost::dynamic_pointer_cast<VSC::IM::CollisionMIDINoteOnAndOffAction>(action)) return VSCIMOSXCollisionActionTypeMIDINoteOnAndOff;
+        if (boost::dynamic_pointer_cast<VSC::IM::CollisionMIDINoteOnAndOffAction>(action))
+            return VSCIMOSXCollisionActionTypeMIDINoteOnAndOff;
         
-        if (boost::dynamic_pointer_cast<VSC::IM::CollisionMIDINoteOffAction>(action)) return VSCIMOSXCollisionActionTypeMIDINoteOff;
+        if (boost::dynamic_pointer_cast<VSC::IM::CollisionMIDINoteOffAction>(action))
+            return VSCIMOSXCollisionActionTypeMIDINoteOff;
         
-        if (boost::dynamic_pointer_cast<VSC::IM::CollisionMIDIControlChangeAction>(action)) return VSCIMOSXCollisionActionTypeMIDIControlChange;
+        if (boost::dynamic_pointer_cast<VSC::IM::CollisionMIDIControlChangeAction>(action))
+            return VSCIMOSXCollisionActionTypeMIDIControlChange;
     }
     
     return VSCIMOSXCollisionActionTypeNone;

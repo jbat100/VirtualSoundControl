@@ -199,6 +199,7 @@
 		10F69492156E483000E70049 /* Plugin_OctreeSceneManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */; };
 		10F69493156E483000E70049 /* Plugin_ParticleFX.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */; };
 		10F907D8162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F907D0162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp */; };
+		10FD0F541664143C007A75EA /* VSCIMOSXCollisionActionGlobal.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10FD0F531664143C007A75EA /* VSCIMOSXCollisionActionGlobal.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -611,6 +612,8 @@
 		10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_ParticleFX.dylib; path = lib/Plugin_ParticleFX.dylib; sourceTree = OGRE_SDK; };
 		10F907D0162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCInterfaceAdapter.cpp; path = ../../../../Interface/VSCInterfaceAdapter.cpp; sourceTree = "<group>"; };
 		10F907D1162ECFF8006C9C0B /* VSCInterfaceAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCInterfaceAdapter.h; path = ../../../../Interface/VSCInterfaceAdapter.h; sourceTree = "<group>"; };
+		10FD0F521664143B007A75EA /* VSCIMOSXCollisionActionGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMOSXCollisionActionGlobal.h; path = ../../../IM/VSCIMOSXCollisionActionGlobal.h; sourceTree = "<group>"; };
+		10FD0F531664143C007A75EA /* VSCIMOSXCollisionActionGlobal.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCIMOSXCollisionActionGlobal.mm; path = ../../../IM/VSCIMOSXCollisionActionGlobal.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1186,6 +1189,8 @@
 				10B24D7F163EACBD008E5BAE /* VSCIMOSXCollisionEventChainView.h */,
 				10B24D80163EACBD008E5BAE /* VSCIMOSXCollisionEventChainView.mm */,
 				10F2BF3A163FFE5100CA22FB /* VSCIMOSXCollisionEventChainView.xib */,
+				10FD0F521664143B007A75EA /* VSCIMOSXCollisionActionGlobal.h */,
+				10FD0F531664143C007A75EA /* VSCIMOSXCollisionActionGlobal.mm */,
 				10AF5432163DAAE600419EEE /* VSCIMOSXCollisionActionView.h */,
 				10AF5433163DAAE700419EEE /* VSCIMOSXCollisionActionView.mm */,
 				10B4A997164AC7DD00E0F6E1 /* VSCIMOSXCollisionActionView.xib */,
@@ -1761,6 +1766,7 @@
 				108DDE0216543B3300B733CE /* VSCOBOSXSceneListener.mm in Sources */,
 				107D686E16581C8F00C12B2B /* VSCOSXOBSceneDetailView.mm in Sources */,
 				107D68731659527600C12B2B /* VSCOBOSXSceneCollisionListener.mm in Sources */,
+				10FD0F541664143C007A75EA /* VSCIMOSXCollisionActionGlobal.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

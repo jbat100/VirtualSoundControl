@@ -52,7 +52,7 @@
 -(void) commonInit
 {
     self.translatesAutoresizingMaskIntoConstraints = NO;
-    self.minimumInterfaceUpdateInterval = 0.1;
+    self.minimumInterfaceUpdateInterval = 0.02;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -139,7 +139,7 @@
 {
     if (!critical &&
         self.lastUpdateDate &&
-        [[NSDate date] timeIntervalSinceDate:self.lastUpdateDate] > self.minimumInterfaceUpdateInterval)
+        [[NSDate date] timeIntervalSinceDate:self.lastUpdateDate] < self.minimumInterfaceUpdateInterval)
     {
         return;
     }
@@ -184,8 +184,6 @@
             
         }
     }
-    
-
     
     self.lastUpdateDate = [NSDate date];
 }

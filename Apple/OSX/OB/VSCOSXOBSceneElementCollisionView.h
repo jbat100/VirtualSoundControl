@@ -11,7 +11,6 @@
 @class VSCIMOSXCollisionEventChainView;
 @class VSCIMOSXCollisionEventChainController;
 @class VSCIMOSXCollisionMappingListView;
-@class VSCOSXOBSceneElementCollisionEditView;
 @protocol VSCOSXOBSceneElementController;
 
 #include "VSCOBScene.h"
@@ -23,7 +22,7 @@
 
 @interface VSCOSXOBSceneElementCollisionView : NSView
 
-@property (weak) id<VSCOSXOBSceneElementController> elementController;
+@property (nonatomic, weak) id<VSCOSXOBSceneElementController> elementController;
 
 @property (weak) IBOutlet NSView* collisionStartedContainerView;
 @property (weak) IBOutlet NSView* collisionEndedContainerView;

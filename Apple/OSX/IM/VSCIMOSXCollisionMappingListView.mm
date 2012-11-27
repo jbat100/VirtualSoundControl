@@ -8,6 +8,8 @@
 
 #import "VSCIMOSXCollisionMappingListView.h"
 
+#import "VSCIMOSXCollisionEventChainEditor.h"
+
 @interface VSCIMOSXCollisionMappingListView ()
 
 @property (weak) IBOutlet NSButton* backToEventChainViewButton;
@@ -35,7 +37,7 @@
 
 -(IBAction) backToEventChainView:(id)sender
 {
-    [self.eventChainController showCollisionEventChain];
+    [self.eventChainEditor senderRequestsEventChainView:self];
 }
 
 @end

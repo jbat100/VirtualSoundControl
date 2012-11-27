@@ -9,6 +9,7 @@
 #import "VSCIMOSXCollisionActionView.h"
 #import "VSCIMOSXCollisionEventChainController.h"
 #import "VSCOSXOBSceneElementEditor.h"
+#import "VSCIMOSXCollisionEventChainEditor.h"
 #import "NSString+VSCAdditions.h"
 
 #include "VSCMIDI.h"

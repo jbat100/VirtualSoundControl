@@ -17,7 +17,7 @@
 
 @interface VSCOSXOBSceneElementInspectorView : NSView <VSCOSXOBSceneElementEditor>
 
-@property (assign) IBOutlet id<VSCOSXOBSceneElementController> elementController;
+@property (nonatomic, assign) IBOutlet id<VSCOSXOBSceneElementController> elementController;
 
 @property (strong) IBOutlet VSCOSXOBSceneElementDetailView* elementDetailView;
 @property (strong) IBOutlet VSCOSXOBSceneElementCollisionView* elementCollisionView;
