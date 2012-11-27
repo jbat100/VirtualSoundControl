@@ -1,16 +1,18 @@
-//
-//  VSCIMOSXCollisionEventChainController.h
-//  OgreBulletCocoaTestApplications
-//
-//  Created by Jonathan Thorpe on 10/29/12.
-//  Copyright (c) 2012 JBAT. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
+
+/*
+ *  VSCIMOSXCollisionEventChainController, meant for the VSCIMOSXCollisionEventChainView
+ */
+
 #import "PXListViewDelegate.h"
 
-#include "VSCIMCollisionEventChain.h"
-#include "VSCIMEvent.h"
+@protocol VSCOSXOBSceneElementController;
 
+@protocol VSCIMOSXCollisionEventChainController <NSObject, PXListViewDelegate>
 
+@property (weak) id<VSCOSXOBSceneElementController> elementController;
 
+-(void) sender:(id)sender requestsShowMappingsForCollisionAction:(VSC::IM::CollisionAction::SPtr)action;
+-(void) senderRequestsEventCollisionChainView:(id)sender;
+
+@end

@@ -7,18 +7,9 @@
 //
 
 #import "VSCIMOSXCollisionMappingView.h"
-#import "VSCIMOSXCollisionMappingGlobal.h"
+#import "VSCIMOSXCollisionMappingTypes.h"
 
 NSDictionary* mappingTypeMenuItemStringDict = nil;
-
-const CGFloat VSCIMOSXCollisionMappingViewHorizontalMargin      = 5.0;
-const CGFloat VSCIMOSXCollisionMappingViewVerticalMargin        = 5.0;
-
-const CGFloat VSCIMOSXCollisionMappingViewTargetLabelHeight     = 10.0;
-const CGFloat VSCIMOSXCollisionMappingViewPopUpButtonHeight     = 10.0;
-
-const CGFloat VSCIMOSXCollisionMappingViewEditButtonWidth       = 10.0;
-const CGFloat VSCIMOSXCollisionMappingViewEditButtonHeight      = 10.0;
 
 
 @interface VSCIMOSXCollisionMappingView ()
@@ -45,6 +36,7 @@ const CGFloat VSCIMOSXCollisionMappingViewEditButtonHeight      = 10.0;
 @implementation VSCIMOSXCollisionMappingView
 
 @synthesize mapping = _mapping;
+@synthesize target = _target;
 
 +(void) initialize
 {
@@ -71,7 +63,6 @@ const CGFloat VSCIMOSXCollisionMappingViewEditButtonHeight      = 10.0;
 +(NSString*) menuItemStringForCollisionMappingType:(VSCIMOSXCollisionMappingType)mappingType
 {
     BOOST_ASSERT(mappingTypeMenuItemStringDict);
-    
     return [mappingTypeMenuItemStringDict objectForKey:@((int)mappingType)];
 }
 
@@ -122,9 +113,9 @@ const CGFloat VSCIMOSXCollisionMappingViewEditButtonHeight      = 10.0;
     [self updateInterfaceForNewCollisionMapping];
 }
 
--(void) setTarget:(VSC::IM::Target)t
+-(void) setTarget:(VSC::IM::Target)target
 {
-    _target = t;
+    _target = target;
     [self updateInterfaceForNewTarget];
 }
 
@@ -159,6 +150,26 @@ const CGFloat VSCIMOSXCollisionMappingViewEditButtonHeight      = 10.0;
 -(void) setupCollisionMappingChoice
 {
     
+}
+
+#pragma mark - UI Callbacks
+
+-(IBAction) editMapping:(id)sender
+{
+    
+}
+
+-(IBAction) mappingTypeSelected:(id)sender
+{
+    BOOST_ASSERT(self.mappingController);
+    BOOST_ASSERT([self.mappingController respondsToSelector:@selector(collisionMappingView:requestsMappingWithType:)]);
+    
+    NSString* menuItemTitle = [[self.mappingPopUpButton selectedItem] title];
+    VSCIMOSXCollisionMappingType requestedType = [[self class] collisionMappingTypeForMenuItemString:menuItemTitle];
+    
+    BOOST_ASSERT(requestedType != VSCIMOSXCollisionMappingTypeNone);
+    
+    self.mapping = [self.mappingController collisionMappingView:self requestsMappingWithType:requestedType];
 }
 
 

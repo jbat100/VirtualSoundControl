@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "VSCIMOSXCollisionMappingGlobal.h"
+#import "VSCIMOSXCollisionMappingTypes.h"
 
 @interface VSCIMOSXCollisionMappingEditViewController : NSViewController <VSCIMOSXCollisionMappingEditor>
 

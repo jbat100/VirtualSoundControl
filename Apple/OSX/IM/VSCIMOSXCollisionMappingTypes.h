@@ -21,28 +21,6 @@ VSCIMOSXCollisionMappingType VSCIMOSXCollisionMappingTypeForCollisionMapping(VSC
 
 VSC::IM::CollisionMapping::SPtr VSCIMOSXCreateCollisionMappingWithType(VSCIMOSXCollisionMappingType mappingType);
 
-@protocol VSCIMOSXCollisionMappingEditor;
 
-/*
- *  Handles the swapping of mapping in the model
- */
 
-@protocol VSCIMOSXCollisionMappingController <NSObject>
-
--(VSC::IM::CollisionMapping::SPtr) collisionMappingEditor:(id<VSCIMOSXCollisionMappingEditor>)editor
-                                  requestsMappingWithType:(VSCIMOSXCollisionMappingType)mappingType;
-
-@end
-
-/*
- *  Used by editor views for example
- */
-
-@protocol VSCIMOSXCollisionMappingEditor <NSObject>
-
-@property (weak) id<VSCIMOSXCollisionMappingController> controller;
-
-@property (nonatomic, assign) VSC::IM::CollisionMapping::WPtr collisionMapping;
-
-@end
 

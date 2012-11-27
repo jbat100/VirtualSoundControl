@@ -10,12 +10,12 @@
 #import "PXListViewCell.h"
 
 #import "VSCIMOSXCollisionActionGlobal.h"
-#import "VSCIMOSXCollisionMappingGlobal.h"
+#import "VSCIMOSXCollisionMappingTypes.h"
 #import "VSCIMOSXCollisionMappingView.h"
 
 #include "VSCIMCollisionAction.h"
 
-@protocol VSCIMOSXCollisionEventChainEditor;
+@protocol VSCIMOSXCollisionEventChainController;
 
 /*
  *  The actual NSView subclass which displays the collision action parameters and allows 
@@ -28,7 +28,7 @@
 +(NSString*) stringForActionType:(VSCIMOSXCollisionActionType)actionType;
 +(VSCIMOSXCollisionActionType) actionTypeForString:(NSString*)menuItemString;
 
-@property (weak) id<VSCIMOSXCollisionEventChainEditor> eventChainEditor;
+@property (weak) id<VSCIMOSXCollisionEventChainController> eventChainController;
 
 @property (nonatomic, assign) VSC::IM::CollisionAction::WPtr collisionAction;
 

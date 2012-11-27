@@ -15,7 +15,7 @@
 #include "VSCOBScene.h"
 #include "VSCIMEvent.h"
 
-@protocol VSCIMOSXCollisionEventChainEditor;
+@protocol VSCIMOSXCollisionEventChainController;
 
 /*
  *  Main controller for a Scene::Element
@@ -27,8 +27,8 @@
 
 @property (weak) id <VSCOSXEnvironmentController> environmentController;
 
--(void) collisionEventChainEditor:(id<VSCIMOSXCollisionEventChainEditor>)editor requestsAppendingEvent:(VSC::IM::Event::SPtr)event;
--(void) collisionEventChainEditor:(id<VSCIMOSXCollisionEventChainEditor>)editor requestsRemovingEvent:(VSC::IM::Event::SPtr)event;
+-(void) collisionEventChainEditor:(id<VSCIMOSXCollisionEventChainController>)editor requestsAppendingEvent:(VSC::IM::Event::SPtr)event;
+-(void) collisionEventChainEditor:(id<VSCIMOSXCollisionEventChainController>)editor requestsRemovingEvent:(VSC::IM::Event::SPtr)event;
 
 
 -(void) showElementDetailView;

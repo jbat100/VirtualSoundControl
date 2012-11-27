@@ -1,43 +1,38 @@
 //
-//  VSCIMOSXCollisionMappingListView.m
+//  VSCIMOSXCollisionActionMappingsViewController.m
 //  OgreBulletCocoaTestApplications
 //
-//  Created by Jonathan Thorpe on 11/8/12.
+//  Created by Jonathan Thorpe on 11/27/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCIMOSXCollisionMappingListView.h"
+#import "VSCIMOSXCollisionActionMappingsViewController.h"
 
 #import "VSCIMOSXCollisionEventChainController.h"
 
-@interface VSCIMOSXCollisionMappingListView ()
+
+@interface VSCIMOSXCollisionActionMappingsViewController ()
 
 @property (weak) IBOutlet NSButton* backToEventChainViewButton;
-
 @property (strong) VSCIMOSXCollisionMappingEditViewController* mappingEditViewController;
 @property (strong) NSPopover
 
 -(IBAction) backToEventChainView:(id)sender;
-
 -(BOOL) checkMappingEditor:(id<VSCIMOSXCollisionMappingEditor>)editor;
 
 @end
 
-@implementation VSCIMOSXCollisionMappingListView
 
-- (id)initWithFrame:(NSRect)frame
+@implementation VSCIMOSXCollisionActionMappingsViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Initialization code here.
     }
     
     return self;
-}
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-    // Drawing code here.
 }
 
 #pragma mark - UI Callbacks
@@ -65,7 +60,7 @@
 #pragma mark - VSCIMOSXCollisionMappingController Methods
 
 -(VSC::IM::CollisionMapping::SPtr) collisionMappingEditor:(id<VSCIMOSXCollisionMappingEditor>)editor
-                                  requestsMappingWithType:(VSCIMOSXCollisionMappingType)mappingType
+requestsMappingWithType:(VSCIMOSXCollisionMappingType)mappingType
 {
     
     if ([self checkMappingEditor:editor])
@@ -93,6 +88,5 @@
 {
     
 }
-
 
 @end

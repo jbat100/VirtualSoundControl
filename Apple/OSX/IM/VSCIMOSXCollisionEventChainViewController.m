@@ -1,13 +1,13 @@
 //
-//  VSCIMOSXCollisionEventChainView.m
+//  VSCIMOSXCollisionEventChainViewController.m
 //  OgreBulletCocoaTestApplications
 //
-//  Created by Jonathan Thorpe on 10/29/12.
+//  Created by Jonathan Thorpe on 11/27/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCIMOSXCollisionEventChainView.h"
-#import "VSCIMOSXCollisionEventChainController.h"
+#import "VSCIMOSXCollisionEventChainViewController.h"
+
 #import "VSCOSXOBSceneElementEditor.h"
 #import "VSCOSXOBSceneElementController.h"
 #import "VSCIMOSXCollisionMappingListView.h"
@@ -23,40 +23,28 @@
 
 #include <boost/assert.hpp>
 
-@interface VSCIMOSXCollisionEventChainView ()
+@interface VSCIMOSXCollisionEventChainViewController ()
 
 -(void) customInit;
 
 @end
 
-@implementation VSCIMOSXCollisionEventChainView
+@implementation VSCIMOSXCollisionEventChainViewController
 
-- (id)initWithFrame:(NSRect)frame
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [self customInit];
+        // Initialization code here.
     }
+    
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [self customInit];
-    }
-    return self;
-}
 
 -(void) customInit
 {
     self.translatesAutoresizingMaskIntoConstraints = NO;
-}
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-    // Drawing code here.
 }
 
 - (void) awakeFromNib
@@ -161,16 +149,16 @@
                                                                        views:viewsDictionary]];
     }
     
-    if ([self.mappingListView superview] != self)
+    if ([self.mappingListView superview] != self.view)
     {
-        [self addSubview:self.mappingListView];
+        [self.view addSubview:self.mappingListView];
     }
     
 }
 
 -(void) senderRequestsEventChainView:(id)sender
 {
-    if ([self.mappingListView superview] == self)
+    if ([self.mappingListView superview] == self.view)
     {
         [self.mappingListView removeFromSuperview];
     }

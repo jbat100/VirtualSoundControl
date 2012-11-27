@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "VSCIMOSXCollisionMappingGlobal.h"
+#import "VSCIMOSXCollisionMappingTypes.h"
 
 VSCIMOSXCollisionMappingType VSCIMOSXCollisionMappingTypeForCollisionMapping(VSC::IM::CollisionMapping::SPtr collisionMapping)
 {

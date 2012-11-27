@@ -9,7 +9,7 @@
 #import "VSCOSXOBSceneElementCollisionView.h"
 #import "VSCOSXEnvironmentController.h"
 #import "VSCOSXOBSceneElementController.h"
-#import "VSCIMOSXCollisionEventChainEditor.h"
+#import "VSCIMOSXCollisionEventChainController.h"
 #import "VSCIMOSXCollisionEventChainView.h"
 
 #include <boost/assert.hpp>

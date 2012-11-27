@@ -34,7 +34,7 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDela
 
 @interface VSCOSXOBSceneElementInspectorWindowController ()
 
--(VSC::IM::CollisionEventChain::SPtr) collisionEventChainForEditor:(id<VSCIMOSXCollisionEventChainEditor>)editor;
+-(VSC::IM::CollisionEventChain::SPtr) collisionEventChainForEditor:(id<VSCIMOSXCollisionEventChainController>)editor;
 
 -(VSCIMOSXCollisionMappingView*) newCollisionMappingView;
 -(VSCIMOSXCollisionActionView*) newCollisionActionView;
@@ -123,14 +123,14 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDela
 
 #pragma mark - VSCOSXOBSceneElementController
 
--(VSC::IM::CollisionEventChain::SPtr) collisionEventChainForEditor:(id<VSCIMOSXCollisionEventChainEditor>)editor
+-(VSC::IM::CollisionEventChain::SPtr) collisionEventChainForEditor:(id<VSCIMOSXCollisionEventChainController>)editor
 {
     BOOST_ASSERT([editor isKindOfClass:[VSCIMOSXCollisionEventChainView class]]);
     if ([editor isKindOfClass:[VSCIMOSXCollisionEventChainView class]] == NO) return VSC::IM::CollisionEventChain::SPtr();
     return [(VSCIMOSXCollisionEventChainView*)editor eventChain].lock();
 }
 
--(void) collisionEventChainEditor:(id<VSCIMOSXCollisionEventChainEditor>)editor requestsAppendingEvent:(VSC::IM::Event::SPtr)event
+-(void) collisionEventChainEditor:(id<VSCIMOSXCollisionEventChainController>)editor requestsAppendingEvent:(VSC::IM::Event::SPtr)event
 {
     VSC::IM::CollisionEventChain::SPtr chain = [self collisionEventChainForEditor:editor];
     
@@ -144,7 +144,7 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDela
     }
 }
 
--(void) collisionEventChainEditor:(id<VSCIMOSXCollisionEventChainEditor>)editor requestsRemovingEvent:(VSC::IM::Event::SPtr)event
+-(void) collisionEventChainEditor:(id<VSCIMOSXCollisionEventChainController>)editor requestsRemovingEvent:(VSC::IM::Event::SPtr)event
 {
     VSC::IM::CollisionEventChain::SPtr chain = [self collisionEventChainForEditor:editor];
     
@@ -208,7 +208,7 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDela
                 actionView = [self newCollisionActionView];
             }
             [actionView setCollisionAction:(VSC::IM::CollisionAction::WPtr(action))];
-            actionView.eventChainEditor = eventChainView;
+            actionView.eventChainController = eventChainView;
             return actionView;
         }
         
