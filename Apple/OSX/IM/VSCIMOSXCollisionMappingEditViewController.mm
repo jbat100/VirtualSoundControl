@@ -14,9 +14,6 @@
 
 @implementation VSCIMOSXCollisionMappingEditViewController
 
-@synthesize controller = _controller;
-@synthesize collisionMapping = _collisionMapping;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

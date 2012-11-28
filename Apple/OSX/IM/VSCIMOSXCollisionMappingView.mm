@@ -8,6 +8,10 @@
 
 #import "VSCIMOSXCollisionMappingView.h"
 #import "VSCIMOSXCollisionMappingTypes.h"
+#import "VSCIMOSXCollisionActionMappingsController.h"
+
+#include "VSCIMTarget.h"
+#include "VSCIMCollisionMapping.h"
 
 NSDictionary* mappingTypeMenuItemStringDict = nil;
 
@@ -35,6 +39,7 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
 
 @implementation VSCIMOSXCollisionMappingView
 
+@synthesize controller = _controller;
 @synthesize mapping = _mapping;
 @synthesize target = _target;
 
@@ -161,15 +166,24 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
 
 -(IBAction) mappingTypeSelected:(id)sender
 {
-    BOOST_ASSERT(self.mappingController);
-    BOOST_ASSERT([self.mappingController respondsToSelector:@selector(collisionMappingView:requestsMappingWithType:)]);
+    BOOST_ASSERT(self.target != VSC::IM::TargetNone);
+    BOOST_ASSERT(self.controller);
+    BOOST_ASSERT([self.controller respondsToSelector:@selector(sender:requestsMappingWithType:forTarget:)]);
     
-    NSString* menuItemTitle = [[self.mappingPopUpButton selectedItem] title];
-    VSCIMOSXCollisionMappingType requestedType = [[self class] collisionMappingTypeForMenuItemString:menuItemTitle];
+    VSC::IM::CollisionMapping::SPtr newMapping = VSC::IM::CollisionMapping::SPtr();
     
-    BOOST_ASSERT(requestedType != VSCIMOSXCollisionMappingTypeNone);
+    if (self.target != VSC::IM::TargetNone)
+    {
+        NSString* menuItemTitle = [[self.mappingPopUpButton selectedItem] title];
+        VSCIMOSXCollisionMappingType requestedType = [[self class] collisionMappingTypeForMenuItemString:menuItemTitle];
+        BOOST_ASSERT(requestedType != VSCIMOSXCollisionMappingTypeNone);
+        if (requestedType != VSCIMOSXCollisionMappingTypeNone)
+        {
+            newMapping = [self.controller sender:self requestsMappingWithType:requestedType forTarget:self.target];
+        }
+    }
     
-    self.mapping = [self.mappingController collisionMappingView:self requestsMappingWithType:requestedType];
+    self.mapping = VSC::IM::CollisionMapping::WPtr(newMapping);
 }
 
 

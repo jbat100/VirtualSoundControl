@@ -16,7 +16,7 @@
 
 -(VSC::IM::CollisionMapping::SPtr) sender:(id)sender
                   requestsMappingWithType:(VSCIMOSXCollisionMappingType)mappingType
-                                forTarget:(VSC::IM::Target);
+                                forTarget:(VSC::IM::Target)target;
 
 -(void) sender:(id)sender requestsEditorForMapping:(VSC::IM::CollisionMapping::SPtr)mapping;
 

@@ -13,10 +13,11 @@
 #include "VSCIMTarget.h"
 #include "VSCIMCollisionMapping.h"
 
+@protocol VSCIMOSXCollisionActionMappingsController;
+
 @protocol VSCIMOSXCollisionMappingView <NSObject>
 
-@property (weak) id<VSCIMOSXCollisionMappingController> controller;
-
+@property (weak) id<VSCIMOSXCollisionActionMappingsController> controller;
 @property (nonatomic, assign) VSC::IM::CollisionMapping::WPtr mapping;
 @property (nonatomic, assign) VSC::IM::Target target;
 
@@ -30,8 +31,6 @@
 +(CGFloat) heightOfViewForCollisionMapping:(VSC::IM::CollisionMapping::SPtr)collisionMapping;
 +(NSString*) menuItemStringForCollisionMappingType:(VSCIMOSXCollisionMappingType)mappingType;
 +(VSCIMOSXCollisionMappingType) collisionMappingTypeForMenuItemString:(NSString*)menuItemString;
-
-@property (nonatomic, assign) id<VSCIMOSXCollisionMappingController> mappingController;
 
 @end
 

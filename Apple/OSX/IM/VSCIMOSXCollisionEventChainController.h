@@ -9,7 +9,6 @@
 @protocol VSCIMOSXCollisionEventChainController <NSObject>
 
 @property (weak) id<VSCOSXOBSceneElementController> elementController;
-
 @property (nonatomic, assign) VSC::IM::CollisionEventChain::WPtr eventChain;
 
 -(void) sender:(id)sender requestsShowMappingsForCollisionAction:(VSC::IM::CollisionAction::SPtr)action;

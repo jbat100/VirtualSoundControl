@@ -44,6 +44,9 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDela
 
 @implementation VSCIMOSXCollisionEventChainViewController
 
+@synthesize elementController = _elementController;
+@synthesize eventChain = _eventChain;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -166,7 +169,7 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDela
         
         BOOST_ASSERT(self.actionMappingsViewController);
         
-        NSView* actionMappingsView = self.actionMappingsViewController;
+        NSView* actionMappingsView = self.actionMappingsViewController.view;
                                              
         NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(actionMappingsView);
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[actionMappingsView]|"
@@ -178,6 +181,8 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDela
                                                                           metrics:nil
                                                                             views:viewsDictionary]];
     }
+    
+    self.actionMappingsViewController.action = VSC::IM::CollisionAction::WPtr(action);
     
     if ([self.actionMappingsViewController.view superview] != self.view)
     {
@@ -266,7 +271,7 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDela
                 actionView = [[self class] newCollisionActionView];
             }
             [actionView setCollisionAction:(VSC::IM::CollisionAction::WPtr(action))];
-            actionView.eventChainController = eventChainView;
+            actionView.eventChainController = self;
             return actionView;
         }
         

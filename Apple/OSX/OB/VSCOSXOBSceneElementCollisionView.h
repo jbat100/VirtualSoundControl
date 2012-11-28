@@ -8,22 +8,18 @@
 
 #import <Cocoa/Cocoa.h>
 
-@protocol VSCOSXOBSceneElementController;
-
-#include "VSCOBScene.h"
-
 /*
  *  A view for displaying collision related element stuff, it can show multiple
  *  collision edit views for different stages of the collision.
  */
 
+@protocol VSCOSXOBSceneElementController;
+
 @interface VSCOSXOBSceneElementCollisionView : NSView
 
-@property (assign) id<VSCOSXOBSceneElementController> elementController;
+@property (assign) IBOutlet id<VSCOSXOBSceneElementController> elementController;
 
 @property (weak) IBOutlet NSBox* collisionStartedEventChainBox;
 @property (weak) IBOutlet NSBox* collisionEndedEventChainBox;
-
--(void) reloadInterface;
 
 @end

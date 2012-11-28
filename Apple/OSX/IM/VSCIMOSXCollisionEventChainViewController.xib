@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11G63b</string>
+		<int key="IBDocument.SystemTarget">1080</int>
+		<string key="IBDocument.SystemVersion">12C60</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
-		<string key="IBDocument.AppKitVersion">1138.51</string>
-		<string key="IBDocument.HIToolboxVersion">569.00</string>
+		<string key="IBDocument.AppKitVersion">1187.34</string>
+		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">2844</string>
@@ -33,7 +33,7 @@
 		</object>
 		<array class="NSMutableArray" key="IBDocument.RootObjects" id="1000">
 			<object class="NSCustomObject" id="1001">
-				<string key="NSClassName">NSObject</string>
+				<string key="NSClassName">VSCIMOSXCollisionEventChainViewController</string>
 			</object>
 			<object class="NSCustomObject" id="1003">
 				<string key="NSClassName">FirstResponder</string>
@@ -88,6 +88,7 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="840443364"/>
 								<string key="NSReuseIdentifierKey">_NS:15</string>
+								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<reference key="NSTarget" ref="365041233"/>
 								<string key="NSAction">_doScroller:</string>
 								<double key="NSCurValue">1</double>
@@ -101,6 +102,7 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1062753581"/>
 								<string key="NSReuseIdentifierKey">_NS:26</string>
+								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<int key="NSsFlags">1</int>
 								<reference key="NSTarget" ref="365041233"/>
 								<string key="NSAction">_doScroller:</string>
@@ -116,6 +118,9 @@
 						<reference key="NSVScroller" ref="855229390"/>
 						<reference key="NSHScroller" ref="840443364"/>
 						<reference key="NSContentView" ref="860656822"/>
+						<double key="NSMinMagnification">0.25</double>
+						<double key="NSMaxMagnification">4</double>
+						<double key="NSMagnification">1</double>
 					</object>
 					<object class="NSPopUpButton" id="828878072">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -127,7 +132,7 @@
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="39266544">
-							<int key="NSCellFlags">-2080244160</int>
+							<int key="NSCellFlags">-2080374720</int>
 							<int key="NSCellFlags2">134219776</int>
 							<object class="NSFont" key="NSSupport" id="522850837">
 								<string key="NSName">LucidaGrande</string>
@@ -260,6 +265,7 @@
 							<bool key="NSUsesItemFromMenu">YES</bool>
 							<bool key="NSAltersState">YES</bool>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSButton" id="1062753581">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -267,6 +273,7 @@
 						<string key="NSFrame">{{109, 367}, {109, 23}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:22</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="200915156">
@@ -283,17 +290,98 @@
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 				</array>
 				<string key="NSFrameSize">{218, 389}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="828878072"/>
-				<string key="NSClassName">VSCIMOSXCollisionEventChainView</string>
+				<string key="NSClassName">NSView</string>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">addCollisionMIDIControlChangeMenuItem</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="709798335"/>
+					</object>
+					<int key="connectionID">123</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">addCollisionMIDINoteOffMenuItem</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="719848596"/>
+					</object>
+					<int key="connectionID">124</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">addCollisionMIDINoteOnAndOffMenuItem</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="910135829"/>
+					</object>
+					<int key="connectionID">125</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">addCollisionMIDINoteOnMenuItem</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="630875826"/>
+					</object>
+					<int key="connectionID">126</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">addDelayMenuItem</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="32613036"/>
+					</object>
+					<int key="connectionID">127</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">addEventButton</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="828878072"/>
+					</object>
+					<int key="connectionID">128</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">addEventMenu</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="192120463"/>
+					</object>
+					<int key="connectionID">129</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">eventListView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="365041233"/>
+					</object>
+					<int key="connectionID">130</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">removeEventButton</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1062753581"/>
+					</object>
+					<int key="connectionID">131</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">view</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1005"/>
+					</object>
+					<int key="connectionID">132</int>
+				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">removeEventButton</string>
@@ -405,6 +493,14 @@
 						<reference key="destination" ref="365041233"/>
 					</object>
 					<int key="connectionID">121</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="365041233"/>
+						<reference key="destination" ref="1001"/>
+					</object>
+					<int key="connectionID">122</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -886,7 +982,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">121</int>
+			<int key="maxID">132</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -926,8 +1022,8 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">VSCIMOSXCollisionEventChainView</string>
-					<string key="superclassName">NSView</string>
+					<string key="className">VSCIMOSXCollisionEventChainViewController</string>
+					<string key="superclassName">NSViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="menuItemAction:">id</string>
 						<string key="removeSelectedEvent:">id</string>
@@ -993,7 +1089,7 @@
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/VSCIMOSXCollisionEventChainView.h</string>
+						<string key="minorKey">./Classes/VSCIMOSXCollisionEventChainViewController.h</string>
 					</object>
 				</object>
 			</array>

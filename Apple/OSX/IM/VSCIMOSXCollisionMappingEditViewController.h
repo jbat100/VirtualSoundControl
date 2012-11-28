@@ -10,7 +10,7 @@
 
 #import "VSCIMOSXCollisionMappingTypes.h"
 
-@interface VSCIMOSXCollisionMappingEditViewController : NSViewController <VSCIMOSXCollisionMappingEditor>
+@interface VSCIMOSXCollisionMappingEditViewController : NSViewController
 
 @property (nonatomic, strong) IBOutlet NSTextField* targetTextField;
 @property (nonatomic, strong) IBOutlet NSTextField* mappingTypeTextField;

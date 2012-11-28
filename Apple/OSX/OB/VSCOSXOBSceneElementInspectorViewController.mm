@@ -8,11 +8,15 @@
 
 #import "VSCOSXOBSceneElementInspectorViewController.h"
 
+#import "VSCOSXEnvironmentController.h"
+#import "VSCIMOSXCollisionEventChainController.h"
 #import "VSCIMOSXCollisionEventChainViewController.h"
-#import "DMTabBar.h"
 #import "VSCOSXOBSceneElementEditor.h"
 #import "VSCOSXOBSceneElementDetailView.h"
 #import "VSCOSXOBSceneElementCollisionView.h"
+#import "DMTabBar.h"
+
+#include "VSCIMCollisionEventChain.h"
 
 #include <boost/assert.hpp>
 
@@ -29,6 +33,7 @@ NSArray* ElementInspectorTabParamArray = nil;
 @property (nonatomic, assign) VSC::OB::OSXSceneListener::SPtr sceneListener;
 
 -(void) setupTabBar;
+-(void) updateCollisionEventChains;
 
 @end
 
@@ -58,11 +63,13 @@ NSArray* ElementInspectorTabParamArray = nil;
                                                          initWithNibName:@"VSCIMOSXCollisionEventChainViewController"
                                                          bundle:nil];
         BOOST_ASSERT(self.collisionStartedEventChainViewController);
+        self.collisionStartedEventChainViewController.elementController = self;
         
         self.collisionEndedEventChainViewController = [[VSCIMOSXCollisionEventChainViewController alloc]
                                                        initWithNibName:@"VSCIMOSXCollisionEventChainViewController"
                                                        bundle:nil];
         BOOST_ASSERT(self.collisionEndedEventChainViewController);
+        self.collisionEndedEventChainViewController.elementController = self;
     }
     
     return self;
@@ -72,12 +79,21 @@ NSArray* ElementInspectorTabParamArray = nil;
 {
     BOOST_ASSERT(self.elementDetailView);
     BOOST_ASSERT(self.elementDetailView.elementController == self);
+    [self.elementDetailView reloadWholeInterface];
     
     BOOST_ASSERT(self.elementCollisionView);
     BOOST_ASSERT(self.elementCollisionView.elementController == self);
-    
     BOOST_ASSERT(self.elementCollisionView.collisionStartedEventChainBox);
-    [self.elementCollisionView.collisionStartedEventChainBox setContentView:self.collisionStartedEventChainViewController.view];
+    if (self.elementCollisionView.collisionStartedEventChainBox)
+    {
+        [self.elementCollisionView.collisionStartedEventChainBox setContentView:self.collisionStartedEventChainViewController.view];
+        [self.collisionStartedEventChainViewController reloadInterface];
+    }
+    if (self.elementCollisionView.collisionEndedEventChainBox)
+    {
+        [self.elementCollisionView.collisionEndedEventChainBox setContentView:self.collisionEndedEventChainViewController.view];
+        [self.collisionEndedEventChainViewController reloadInterface];
+    }
     
     [self showElementDetailView];
 }
@@ -113,9 +129,27 @@ NSArray* ElementInspectorTabParamArray = nil;
         }
     }
     
-    /*
-     *  Setup event chains.
-     */
+    [self.elementDetailView reloadWholeInterface];
+    
+    [self updateCollisionEventChains];
+    
+}
+
+-(void) updateCollisionEventChains
+{
+    VSC::OB::Scene::Element::SPtr elem = self.element.lock();
+    
+    VSC::IM::CollisionEventChain::SPtr collisionStartedEventChain = VSC::IM::CollisionEventChain::SPtr();
+    VSC::IM::CollisionEventChain::SPtr collisionEndedEventChain = VSC::IM::CollisionEventChain::SPtr();
+    
+    if (elem)
+    {
+        collisionStartedEventChain = [self.environmentController collisionStartedEventChainForElement:elem];
+        collisionEndedEventChain = [self.environmentController collisionEndedEventChainForElement:elem];
+    }
+    
+    self.collisionStartedEventChainViewController.eventChain = collisionStartedEventChain;
+    self.collisionEndedEventChainViewController.eventChain = collisionEndedEventChain;
     
 }
 
@@ -133,7 +167,6 @@ NSArray* ElementInspectorTabParamArray = nil;
         if (![obj isKindOfClass:[NSDictionary class]]) return;
         
         NSDictionary* objDict = (NSDictionary*)obj;
-        
         NSImage *iconImage = [objDict objectForKey:@"image"];
         [iconImage setTemplate:YES];
         
@@ -154,8 +187,6 @@ NSArray* ElementInspectorTabParamArray = nil;
         if (selectionType == DMTabBarItemSelectionType_WillSelect)
         {
             NSLog(@"%@ will select %lu/%@", self.tabBar, tabBarItemIndex, tabBarItem);
-            //[self.tabView selectTabViewItem:[tabView.tabViewItems objectAtIndex:tabBarItemIndex]];
-            
             if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleElementDetails])
             {
                 NSLog(@"Selected scene element list tab");
@@ -166,7 +197,6 @@ NSArray* ElementInspectorTabParamArray = nil;
                 NSLog(@"Selected scene detail tab");
                 [self showElementCollisionView];
             }
-            
         }
         else if (selectionType == DMTabBarItemSelectionType_DidSelect)
         {
@@ -181,14 +211,14 @@ NSArray* ElementInspectorTabParamArray = nil;
 {
     self.tabBar.selectedIndex = 0;
     [self.mainBox setContentView:self.elementDetailView];
-    [self.elementDetailView reloadWholeInterface];
 }
 
 -(void) showElementCollisionView
 {
+    BOOST_ASSERT(self.elementCollisionView);
     self.tabBar.selectedIndex = 1;
     [self.mainBox setContentView:self.elementCollisionView];
-    [self.elementCollisionView reloadInterface];
+    
 }
 
 #pragma mark - VSCOBOSXSceneListenerTarget
