@@ -7,8 +7,9 @@
 //
 
 #import "VSCIMOSXCollisionActionMappingsViewController.h"
-
 #import "VSCIMOSXCollisionEventChainController.h"
+#import "VSCIMOSXCollisionMappingView.h"
+#import "PXListView.h"
 
 NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisionMappingViewReuseIdentifier";
 
@@ -16,10 +17,10 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
 
 @property (weak) IBOutlet NSButton* backToEventChainViewButton;
 @property (strong) VSCIMOSXCollisionMappingEditViewController* mappingEditViewController;
-@property (strong) NSPopover
+@property (strong) NSPopover* mappingEditPopover;
 
 -(IBAction) backToEventChainView:(id)sender;
--(BOOL) checkMappingEditor:(id<VSCIMOSXCollisionMappingEditor>)editor;
+-(BOOL) checkMappingView:(id<VSCIMOSXCollisionMappingView>)v;
 
 @end
 
@@ -53,49 +54,45 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
 
 -(IBAction) backToEventChainView:(id)sender
 {
-    [self.eventChainController senderRequestsEventChainView:self];
+    [self.eventChainController senderRequestsEventCollisionChainView:self];
 }
 
 #pragma mark - Helpers
 
--(BOOL) checkMappingEditor:(id<VSCIMOSXCollisionMappingEditor>)editor
+-(BOOL) checkMappingView:(id<VSCIMOSXCollisionMappingView>)v
 {
-    BOOST_ASSERT([editor respondsToSelector:@selector(target)]);
-    BOOST_ASSERT([editor respondsToSelector:@selector(mapping)]);
-    BOOST_ASSERT([editor respondsToSelector:@selector(setMapping:)]);
+    BOOST_ASSERT([v respondsToSelector:@selector(target)]);
+    BOOST_ASSERT([v respondsToSelector:@selector(mapping)]);
+    BOOST_ASSERT([v respondsToSelector:@selector(setMapping:)]);
     
-    if (![editor respondsToSelector:@selector(target)]) return NO;
-    if (![editor respondsToSelector:@selector(mapping)]) return NO;
-    if (![editor respondsToSelector:@selector(setMapping:)]) return NO;
+    if (![v respondsToSelector:@selector(target)]) return NO;
+    if (![v respondsToSelector:@selector(mapping)]) return NO;
+    if (![v respondsToSelector:@selector(setMapping:)]) return NO;
     
     return YES;
 }
 
 #pragma mark - VSCIMOSXCollisionMappingController Methods
 
--(VSC::IM::CollisionMapping::SPtr) collisionMappingEditor:(id<VSCIMOSXCollisionMappingEditor>)editor
-requestsMappingWithType:(VSCIMOSXCollisionMappingType)mappingType
+-(VSC::IM::CollisionMapping::SPtr) sender:(id)sender
+                  requestsMappingWithType:(VSCIMOSXCollisionMappingType)mappingType
+                      forTarget:(VSC::IM::Target)target;
 {
     
-    if ([self checkMappingEditor:editor])
-    {
-        VSC::IM::CollisionAction::SPtr collisionAction = self.action.lock();
-        
-        BOOST_ASSERT(editor.target != VSC::IM::TargetNone);
-        if (editor.target == VSC::IM::TargetNone) return VSC::IM::CollisionMapping::SPtr();
-        
-        VSC::IM::CollisionMapping::SPtr currentMapping = collisionAction->getMappingForTarget(editor.target);
-        VSCIMOSXCollisionMappingType currentMappingType = VSCIMOSXCollisionMappingTypeForCollisionMapping(currentMapping);
-        if (currentMappingType == mappingType) return currentMapping;
-        
-        VSC::IM::CollisionMapping::SPtr newMapping = VSCIMOSXCreateCollisionMappingWithType(mappingType);
-        collisionAction->setMappingForTarget(editor.target, newMapping);
-        
-        return newMapping;
-    }
+    VSC::IM::CollisionAction::SPtr collisionAction = self.action.lock();
     
-    return VSC::IM::CollisionMapping::SPtr();
+    BOOST_ASSERT(target != VSC::IM::TargetNone);
+    if (target == VSC::IM::TargetNone) return VSC::IM::CollisionMapping::SPtr();
     
+    VSC::IM::CollisionMapping::SPtr currentMapping = collisionAction->getMappingForTarget(target);
+    VSCIMOSXCollisionMappingType currentMappingType = VSCIMOSXCollisionMappingTypeForCollisionMapping(currentMapping);
+    if (currentMappingType == mappingType) return currentMapping;
+    
+    VSC::IM::CollisionMapping::SPtr newMapping = VSCIMOSXCreateCollisionMappingWithType(mappingType);
+    BOOST_ASSERT(newMapping);
+    collisionAction->setMappingForTarget(target, newMapping);
+    
+    return newMapping;
 }
 
 -(void) collisionMappingViewRequestsEditor:(id<VSCIMOSXCollisionMappingView>)view
@@ -108,20 +105,13 @@ requestsMappingWithType:(VSCIMOSXCollisionMappingType)mappingType
 
 - (NSUInteger)numberOfRowsInListView:(PXListView*)aListView
 {
-    if ([[aListView superview] isKindOfClass:[VSCIMOSXCollisionEventChainView class]])
-    {
-        VSCIMOSXCollisionEventChainView* eventChainView = (VSCIMOSXCollisionEventChainView*)[aListView superview];
-        VSC::IM::CollisionEventChain::SPtr eventChain = [eventChainView eventChain].lock();
-        BOOST_ASSERT(eventChain);
-        if (eventChain) eventChain->getNumberOfEvents();
-    }
+    BOOST_ASSERT(aListView == self.listView);
     
-    else if ([aListView isKindOfClass:[VSCIMOSXCollisionMappingListView class]])
+    if (aListView == self.listView)
     {
-        VSCIMOSXCollisionMappingListView* actionMappingsViewController = (VSCIMOSXCollisionMappingListView*)[aListView superview];
-        VSC::IM::CollisionAction::SPtr collisionAction = [mappingListView action].lock();
+        VSC::IM::CollisionAction::SPtr collisionAction = self.action.lock();
         BOOST_ASSERT(collisionAction);
-        if (collisionAction) collisionAction->getExpectedMappingTargets().size();
+        if (collisionAction) return collisionAction->getExpectedMappingTargets().size();
     }
     
 	return 0;
@@ -129,57 +119,12 @@ requestsMappingWithType:(VSCIMOSXCollisionMappingType)mappingType
 
 - (PXListViewCell*)listView:(PXListView*)aListView cellForRow:(NSUInteger)row
 {
-    if ([[aListView superview] isKindOfClass:[VSCIMOSXCollisionEventChainView class]])
-    {
-        VSCIMOSXCollisionEventChainView* eventChainView = (VSCIMOSXCollisionEventChainView*)[aListView superview];
-        VSC::IM::CollisionEventChain::SPtr eventChain = [eventChainView eventChain].lock();
-        BOOST_ASSERT(eventChain);
-        VSC::IM::Event::SPtr event = VSC::IM::Event::SPtr();
-        if (eventChain) event = eventChain->getEventAtIndex((unsigned int)row);
-        
-        VSC::IM::CollisionAction::SPtr action = boost::dynamic_pointer_cast<VSC::IM::CollisionAction>(event);
-        if (action)
-        {
-            PXListViewCell* cell = [aListView dequeueCellWithReusableIdentifier:VSCIMOSXCollisionActionViewReuseIdentifier];
-            VSCIMOSXCollisionActionView* actionView = nil;
-            if (cell)
-            {
-                BOOST_ASSERT([cell isKindOfClass:[VSCIMOSXCollisionActionView class]]);
-                actionView = (VSCIMOSXCollisionActionView*)cell;
-            }
-            if(!actionView)
-            {
-                actionView = [self newCollisionActionView];
-            }
-            [actionView setCollisionAction:(VSC::IM::CollisionAction::WPtr(action))];
-            actionView.eventChainController = eventChainView;
-            return actionView;
-        }
-        
-        VSC::IM::Delay::SPtr delay = boost::dynamic_pointer_cast<VSC::IM::Delay>(event);
-        if (delay)
-        {
-            PXListViewCell* cell = [aListView dequeueCellWithReusableIdentifier:VSCIMOSXDelayViewReuseIdentifier];
-            VSCIMOSXDelayView* delayView = nil;
-            if (cell)
-            {
-                BOOST_ASSERT([cell isKindOfClass:[VSCIMOSXDelayView class]]);
-                delayView = (VSCIMOSXDelayView*)cell;
-            }
-            if(!delayView)
-            {
-                delayView = [self newDelayView];
-            }
-            [delayView setDelay:(VSC::IM::Delay::WPtr(delay))];
-            return delayView;
-        }
-        
-    }
+
+    BOOST_ASSERT(aListView == self.listView);
     
-    else if ([aListView isKindOfClass:[VSCIMOSXCollisionMappingListView class]])
+    if (aListView == self.listView)
     {
-        VSCIMOSXCollisionMappingListView* mappingListView = (VSCIMOSXCollisionMappingListView*)[aListView superview];
-        VSC::IM::CollisionAction::SPtr collisionAction = [mappingListView action].lock();
+        VSC::IM::CollisionAction::SPtr collisionAction = self.action.lock();
         BOOST_ASSERT(collisionAction);
         
         if (collisionAction)
@@ -203,9 +148,8 @@ requestsMappingWithType:(VSCIMOSXCollisionMappingType)mappingType
                 
                 if(!mappingView)
                 {
-                    mappingView = [self newCollisionMappingView];
+                    mappingView = [[self class] newCollisionMappingView];
                 }
-                
                 [mappingView setMapping:(VSC::IM::CollisionMapping::WPtr(collisionMapping))];
                 
                 return mappingView;
@@ -218,27 +162,12 @@ requestsMappingWithType:(VSCIMOSXCollisionMappingType)mappingType
 
 - (CGFloat)listView:(PXListView*)aListView heightOfRow:(NSUInteger)row
 {
-    if ([[aListView superview] isKindOfClass:[VSCIMOSXCollisionEventChainView class]])
-    {
-        VSCIMOSXCollisionEventChainView* eventChainView = (VSCIMOSXCollisionEventChainView*)[aListView superview];
-        VSC::IM::CollisionEventChain::SPtr eventChain = [eventChainView eventChain].lock();
-        BOOST_ASSERT(eventChain);
-        VSC::IM::Event::SPtr event = VSC::IM::Event::SPtr();
-        if (eventChain) event = eventChain->getEventAtIndex((unsigned int)row);
-        
-        VSC::IM::CollisionAction::SPtr action = boost::dynamic_pointer_cast<VSC::IM::CollisionAction>(event);
-        if (action) return [VSCIMOSXCollisionActionView heightOfViewForCollisionAction:action];
-        
-        VSC::IM::Delay::SPtr delay = boost::dynamic_pointer_cast<VSC::IM::Delay>(event);
-        if (delay) return [VSCIMOSXDelayView defaultViewHeight];
-        
-        BOOST_ASSERT_MSG(false, "Expected CollisionAction or Delay");
-    }
     
-    else if ([aListView isKindOfClass:[VSCIMOSXCollisionMappingListView class]])
+    BOOST_ASSERT(aListView == self.listView);
+    
+    if (aListView == self.listView)
     {
-        VSCIMOSXCollisionMappingListView* mappingListView = (VSCIMOSXCollisionMappingListView*)[aListView superview];
-        VSC::IM::CollisionAction::SPtr collisionAction = [mappingListView action].lock();
+        VSC::IM::CollisionAction::SPtr collisionAction = self.action.lock();
         BOOST_ASSERT(collisionAction);
         
         if (collisionAction)
@@ -248,7 +177,6 @@ requestsMappingWithType:(VSCIMOSXCollisionMappingType)mappingType
             if (targets.size() <= row) return 0;
             VSC::IM::Target target = targets.at(row);
             VSC::IM::CollisionMapping::SPtr collisionMapping = collisionAction->getMappingForTarget(target);
-            
             return [VSCIMOSXCollisionMappingView heightOfViewForCollisionMapping:collisionMapping];
         }
     }
@@ -260,7 +188,7 @@ requestsMappingWithType:(VSCIMOSXCollisionMappingType)mappingType
 
 - (void)listViewSelectionDidChange:(NSNotification*)aNotification
 {
-    NSLog(@"Selection changed");
+    NSLog(@"%@ selection changed: %@", self, aNotification);
 }
 
 

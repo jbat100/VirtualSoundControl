@@ -12,6 +12,7 @@
 #import "VSCOBOSXSceneDisplayView.h"
 #import "VSCOSXEnvironmentInspectorView.h"
 #import "VSCOSXOBSceneElementInspectorWindowController.h"
+#import "VSCOSXOBSceneElementInspectorViewController.h"
 
 #import "NSString+VSCAdditions.h"
 #import "NSArray+VSCAdditions.h"
@@ -145,11 +146,10 @@
         BOOST_ASSERT(self.elementInspectorWindowController);
     }
     
-    self.elementInspectorWindowController.element = VSC::OB::Scene::Element::WPtr(element);
-    
+    BOOST_ASSERT(self.elementInspectorWindowController.elementInspectorViewController);
+    self.elementInspectorWindowController.elementInspectorViewController.element = VSC::OB::Scene::Element::WPtr(element);
     [self.elementInspectorWindowController showWindow:self];
-    
-    [self.elementInspectorWindowController showElementDetailView];
+    [self.elementInspectorWindowController.elementInspectorViewController showElementDetailView];
 }
 
 -(VSC::IM::CollisionEventChain::SPtr) collisionStartedEventChainForElement:(VSC::OB::Scene::Element::SPtr)element

@@ -1,4 +1,8 @@
+
 #import <Foundation/Foundation.h>
+
+#include "VSCIMCollisionAction.h"
+#include "VSCIMCollisionEventChain.h"
 
 /*
  *  VSCIMOSXCollisionEventChainController, meant for the VSCIMOSXCollisionEventChainView
@@ -8,7 +12,7 @@
 
 @protocol VSCIMOSXCollisionEventChainController <NSObject>
 
-@property (weak) id<VSCOSXOBSceneElementController> elementController;
+@property (assign) id<VSCOSXOBSceneElementController> elementController;
 @property (nonatomic, assign) VSC::IM::CollisionEventChain::WPtr eventChain;
 
 -(void) sender:(id)sender requestsShowMappingsForCollisionAction:(VSC::IM::CollisionAction::SPtr)action;

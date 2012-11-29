@@ -9,7 +9,6 @@
 #import "VSCIMOSXCollisionActionView.h"
 #import "VSCIMOSXCollisionEventChainController.h"
 #import "VSCOSXOBSceneElementEditor.h"
-#import "VSCIMOSXCollisionEventChainController.h"
 #import "NSString+VSCAdditions.h"
 
 #include "VSCMIDI.h"
@@ -257,7 +256,7 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
 
 -(IBAction) showCollisionMappings:(id)sender
 {
-    [self.eventChainController sender:self requestsMappingEditorForAction:self.collisionAction.lock()];
+    [self.eventChainController sender:self requestsShowMappingsForCollisionAction:self.collisionAction.lock()];
 }
 
 -(IBAction) refreshMIDIOutputs:(id)sender
