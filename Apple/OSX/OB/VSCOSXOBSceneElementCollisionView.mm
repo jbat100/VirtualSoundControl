@@ -36,7 +36,7 @@
 
 -(void) customInit
 {
-    
+    self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -46,7 +46,7 @@
 
 -(void) awakeFromNib
 {
-    self.translatesAutoresizingMaskIntoConstraints = NO;
+    
 }
 
 

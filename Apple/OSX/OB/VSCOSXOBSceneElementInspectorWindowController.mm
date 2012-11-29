@@ -11,11 +11,15 @@
 
 @interface VSCOSXOBSceneElementInspectorWindowController ()
 
+@property (nonatomic, assign) BOOL traceInterface;
+
 -(void) customInit;
 
 @end
 
 @implementation VSCOSXOBSceneElementInspectorWindowController
+
+const static BOOL traceInterface = YES;
 
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
@@ -40,6 +44,9 @@
 
 -(void) customInit
 {
+    
+    if (traceInterface) NSLog(@"%@ customInit", self);
+    
     self.elementInspectorViewController = [[VSCOSXOBSceneElementInspectorViewController alloc]
                                            initWithNibName:@"VSCOSXOBSceneElementInspectorViewController"
                                            bundle:nil];
@@ -51,9 +58,15 @@
 {
     [super windowDidLoad];
     
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+    if (traceInterface) NSLog(@"%@ windowDidLoad", self);
     
     BOOST_ASSERT(self.elementInspectorViewController);
+    BOOST_ASSERT(self.mainBox);
+    
+    if (self.elementInspectorViewController && self.mainBox)
+    {
+        [self.mainBox setContentView:[self.elementInspectorViewController view]];
+    }
 }
 
 

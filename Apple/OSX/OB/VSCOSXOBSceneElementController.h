@@ -10,7 +10,6 @@
 
 #import "VSCOSXEnvironmentController.h"
 #import "VSCOSXOBSceneElementEditor.h"
-#import "PXListViewDelegate.h"
 
 #include "VSCOBScene.h"
 #include "VSCIMEvent.h"
@@ -21,7 +20,7 @@
  *  Main controller for a Scene::Element
  */
 
-@protocol VSCOSXOBSceneElementController <NSObject, PXListViewDelegate>
+@protocol VSCOSXOBSceneElementController <NSObject>
 
 @property (nonatomic, assign) VSC::OB::Scene::Element::WPtr element;
 

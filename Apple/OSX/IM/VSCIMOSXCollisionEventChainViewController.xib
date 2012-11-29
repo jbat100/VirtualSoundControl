@@ -260,7 +260,6 @@
 								</array>
 								<reference key="NSMenuFont" ref="522850837"/>
 							</object>
-							<int key="NSSelectedIndex">-1</int>
 							<bool key="NSPullDown">YES</bool>
 							<bool key="NSUsesItemFromMenu">YES</bool>
 							<bool key="NSAltersState">YES</bool>
@@ -273,7 +272,6 @@
 						<string key="NSFrame">{{109, 367}, {109, 23}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:22</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="200915156">
@@ -381,118 +379,6 @@
 						<reference key="destination" ref="1005"/>
 					</object>
 					<int key="connectionID">132</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">removeEventButton</string>
-						<reference key="source" ref="1005"/>
-						<reference key="destination" ref="1062753581"/>
-					</object>
-					<int key="connectionID">53</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">addEventButton</string>
-						<reference key="source" ref="1005"/>
-						<reference key="destination" ref="828878072"/>
-					</object>
-					<int key="connectionID">76</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">addCollisionMIDIControlChangeMenuItem</string>
-						<reference key="source" ref="1005"/>
-						<reference key="destination" ref="709798335"/>
-					</object>
-					<int key="connectionID">108</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">addCollisionMIDINoteOffMenuItem</string>
-						<reference key="source" ref="1005"/>
-						<reference key="destination" ref="719848596"/>
-					</object>
-					<int key="connectionID">109</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">addCollisionMIDINoteOnAndOffMenuItem</string>
-						<reference key="source" ref="1005"/>
-						<reference key="destination" ref="910135829"/>
-					</object>
-					<int key="connectionID">110</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">addCollisionMIDINoteOnMenuItem</string>
-						<reference key="source" ref="1005"/>
-						<reference key="destination" ref="630875826"/>
-					</object>
-					<int key="connectionID">111</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">addDelayMenuItem</string>
-						<reference key="source" ref="1005"/>
-						<reference key="destination" ref="32613036"/>
-					</object>
-					<int key="connectionID">112</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">addEventMenu</string>
-						<reference key="source" ref="1005"/>
-						<reference key="destination" ref="192120463"/>
-					</object>
-					<int key="connectionID">113</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">menuItemAction:</string>
-						<reference key="source" ref="1005"/>
-						<reference key="destination" ref="32613036"/>
-					</object>
-					<int key="connectionID">116</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">menuItemAction:</string>
-						<reference key="source" ref="1005"/>
-						<reference key="destination" ref="630875826"/>
-					</object>
-					<int key="connectionID">117</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">menuItemAction:</string>
-						<reference key="source" ref="1005"/>
-						<reference key="destination" ref="719848596"/>
-					</object>
-					<int key="connectionID">118</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">menuItemAction:</string>
-						<reference key="source" ref="1005"/>
-						<reference key="destination" ref="910135829"/>
-					</object>
-					<int key="connectionID">119</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">menuItemAction:</string>
-						<reference key="source" ref="1005"/>
-						<reference key="destination" ref="709798335"/>
-					</object>
-					<int key="connectionID">120</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">eventListView</string>
-						<reference key="source" ref="1005"/>
-						<reference key="destination" ref="365041233"/>
-					</object>
-					<int key="connectionID">121</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">

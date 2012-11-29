@@ -44,13 +44,16 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDela
 
 @implementation VSCIMOSXCollisionEventChainViewController
 
+const static BOOL traceInterface = YES;
+
 @synthesize elementController = _elementController;
 @synthesize eventChain = _eventChain;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Initialization code here.
         [self customInit];
     }
@@ -238,8 +241,9 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDela
     if (aListView == self.eventListView)
     {
         VSC::IM::CollisionEventChain::SPtr chain = self.eventChain.lock();
-        BOOST_ASSERT(chain);
+        //BOOST_ASSERT(chain);
         if (chain) return chain->getNumberOfEvents();
+        else if (traceInterface) NSLog(@"%@ numberOfRowsInListView for %@ NO CHAIN", self, aListView);
     }
     
 	return 0;

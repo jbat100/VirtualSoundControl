@@ -39,6 +39,8 @@ NSArray* ElementInspectorTabParamArray = nil;
 
 @implementation VSCOSXOBSceneElementInspectorViewController
 
+const static BOOL traceInterface = YES;
+
 @synthesize element = _element;
 @synthesize environmentController = _environmentController;
 
@@ -77,6 +79,11 @@ NSArray* ElementInspectorTabParamArray = nil;
 
 - (void) awakeFromNib
 {
+    [self view].translatesAutoresizingMaskIntoConstraints = NO;
+    
+    BOOST_ASSERT(self.tabBar);
+    [self setupTabBar];
+    
     BOOST_ASSERT(self.elementDetailView);
     BOOST_ASSERT(self.elementDetailView.elementController == self);
     [self.elementDetailView reloadWholeInterface];
@@ -128,6 +135,8 @@ NSArray* ElementInspectorTabParamArray = nil;
             scene->addListener(boost::dynamic_pointer_cast<VSC::Listener>(self.sceneListener));
         }
     }
+    
+    if (traceInterface) NSLog(@"%@ setElement %p", self, newElement.get());
     
     [self.elementDetailView reloadWholeInterface];
     
@@ -186,21 +195,21 @@ NSArray* ElementInspectorTabParamArray = nil;
         
         if (selectionType == DMTabBarItemSelectionType_WillSelect)
         {
-            NSLog(@"%@ will select %lu/%@", self.tabBar, tabBarItemIndex, tabBarItem);
+            if (traceInterface) NSLog(@"%@ will select %lu/%@", self.tabBar, tabBarItemIndex, tabBarItem);
             if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleElementDetails])
             {
-                NSLog(@"Selected scene element list tab");
+                if (traceInterface) NSLog(@"Selected scene element list tab");
                 [self showElementDetailView];
             }
             else if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleElementCollision])
             {
-                NSLog(@"Selected scene detail tab");
+                if (traceInterface) NSLog(@"Selected scene detail tab");
                 [self showElementCollisionView];
             }
         }
         else if (selectionType == DMTabBarItemSelectionType_DidSelect)
         {
-            NSLog(@"%@ did select %lu/%@", self.tabBar, tabBarItemIndex, tabBarItem);
+            if (traceInterface) NSLog(@"%@ did select %lu/%@", self.tabBar, tabBarItemIndex, tabBarItem);
         }
         
     }];
@@ -209,13 +218,30 @@ NSArray* ElementInspectorTabParamArray = nil;
 
 -(void) showElementDetailView
 {
+    if (traceInterface)
+    {
+        NSLog(@"%@ showElementDetailView, self.mainBox: %@, self.elementDetailView: %@", self, self.mainBox, self.elementDetailView);
+        NSLog(@"self.view: %@, self.view.frame: %@", self.view, NSStringFromRect(self.view.frame));
+        NSLog(@"self.mainBox.frame: %@, [self.mainBox superview]: %@", NSStringFromRect(self.mainBox.frame), [self.mainBox superview]);
+    }
+    
+    BOOST_ASSERT(self.elementDetailView);
+    BOOST_ASSERT(self.mainBox);
+    
     self.tabBar.selectedIndex = 0;
     [self.mainBox setContentView:self.elementDetailView];
 }
 
 -(void) showElementCollisionView
 {
+    if (traceInterface)
+    {
+        NSLog(@"%@ showElementDetailView, self.mainBox: %@, self.elementCollisionView: %@", self, self.mainBox, self.elementDetailView);
+    }
+    
     BOOST_ASSERT(self.elementCollisionView);
+    BOOST_ASSERT(self.mainBox);
+    
     self.tabBar.selectedIndex = 1;
     [self.mainBox setContentView:self.elementCollisionView];
     
