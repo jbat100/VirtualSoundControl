@@ -13,6 +13,8 @@
 @property (weak) IBOutlet NSTextField* titleTextField;
 @property (weak) IBOutlet NSTextField* delayTextField;
 
+-(void) commonInit;
+
 -(IBAction) delayChanged:(id)sender;
 
 @end
@@ -28,10 +30,23 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
+        [self commonInit];
     }
-    
     return self;
+}
+
+-(id) initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self commonInit];
+    }
+    return self;
+}
+
+-(void) commonInit
+{
+    self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 - (void)drawRect:(NSRect)dirtyRect

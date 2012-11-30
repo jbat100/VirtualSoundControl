@@ -14,7 +14,7 @@
 @class VSCOSXOBSceneElementInspectorViewController;
 
 
-@interface VSCOSXOBSceneElementInspectorWindowController : NSWindowController
+@interface VSCOSXOBSceneElementInspectorWindowController : NSWindowController <NSWindowDelegate>
 
 @property (strong) VSCOSXOBSceneElementInspectorViewController* elementInspectorViewController;
 

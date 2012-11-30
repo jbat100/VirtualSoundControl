@@ -14,26 +14,32 @@
 #import "VSCOBOSXSceneDisplayView.h"
 
 #include "VSCGlobalApplication.h"
-
 #include "VSCOBScene.h"
 #include "VSCOBApplication.h"
 #include "VSCOBResourceManager.h"
-
 #include "VSCIMCollisionMapper.h"
-
 #include "VSCMIDI.h"
 #include "VSCMIDIOutput.h"
 #include "VSCMIDIOutputManager.h"
 #include "VSCException.h"
 
-#include <Ogre/OSX/macUtils.h>
-
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
-//#import "OgreOSXCocoaView.h"
+/*
+ *  Temporary test for VSCOSXOBSceneElementInspectorWindowController
+ */
+#define VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW
+
+#ifdef VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW
+#import "VSCOSXOBSceneElementInspectorWindowController.h"
+#endif
 
 @interface VSCAppDelegate ()
+
+#ifdef VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW
+@property (nonatomic, strong) VSCOSXOBSceneElementInspectorWindowController* testElementInspectorWindowController;
+#endif
 
 
 @end
@@ -42,6 +48,18 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    
+#ifdef VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW
+    
+    self.testElementInspectorWindowController = [[VSCOSXOBSceneElementInspectorWindowController alloc]
+                                                 initWithWindowNibName:@"VSCOSXOBSceneElementInspectorWindowController"];
+    
+    BOOST_ASSERT(self.testElementInspectorWindowController);
+    
+    [self.testElementInspectorWindowController showWindow:self];
+    
+#else
+    
     VSC::GlobalApplication::SPtr globalApplication = VSC::GlobalApplication::singletonGlobalApplication();
     
     std::string resourcePath = Ogre::macBundlePath() + "/Contents/Resources/resources.cfg";
@@ -102,9 +120,11 @@
     [self showEnvironmentWindow:self];
     
     [self.applicationManager startOgreRendering];
+    
+#endif
 }
 
-- (void)applicationWillTerminate:(NSNotification *)aNotification 
+- (void)applicationWillTerminate:(NSNotification *)aNotification
 {
     [self.applicationManager stopOgreRendering];
     

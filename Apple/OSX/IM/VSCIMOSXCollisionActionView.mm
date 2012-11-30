@@ -64,6 +64,8 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
 @property (nonatomic, strong) IBOutlet NSView* midiControlSetupView;
 @property (nonatomic, strong) IBOutlet NSPopUpButton* midiControlNumberPopUpButton;
 
+-(void) commonInit;
+
 -(void) updateMIDIControlNumbers;
 
 /*
@@ -141,13 +143,25 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
-        
-        self.currentActionType = VSCIMOSXCollisionActionTypeNone;
-        
+        [self commonInit];
     }
     
     return self;
+}
+
+-(id) initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self commonInit];
+    }
+    return self;
+}
+
+-(void) commonInit
+{
+    self.currentActionType = VSCIMOSXCollisionActionTypeNone;
+    self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 - (void)drawRect:(NSRect)dirtyRect

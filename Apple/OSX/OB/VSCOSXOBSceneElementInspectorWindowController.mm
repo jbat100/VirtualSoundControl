@@ -11,9 +11,11 @@
 
 @interface VSCOSXOBSceneElementInspectorWindowController ()
 
-@property (nonatomic, assign) BOOL traceInterface;
+@property (nonatomic, assign) BOOL calledCustomInit;
 
 -(void) customInit;
+
+- (void)printUIDescription;
 
 @end
 
@@ -37,13 +39,17 @@ const static BOOL traceInterface = YES;
     self = [super initWithWindow:window];
     if (self)
     {
-        [self customInit];
+        //[self customInit];
     }
     return self;
 }
 
 -(void) customInit
 {
+    
+    static BOOL calledOnce = NO;
+    
+    BOOST_ASSERT(calledOnce == NO);
     
     if (traceInterface) NSLog(@"%@ customInit", self);
     
@@ -52,6 +58,18 @@ const static BOOL traceInterface = YES;
                                            bundle:nil];
     
     BOOST_ASSERT(self.elementInspectorViewController);
+    
+    calledOnce = YES;
+}
+
+- (void)printUIDescription
+{
+    NSLog(@"------------------%@ printUIDescription----------------------", self);
+    NSLog(@"self.mainBox : %@, %@", self.mainBox, NSStringFromRect(self.mainBox.frame));
+    NSLog(@"self.mainBox.contentView : %@, %@", self.mainBox.contentView, NSStringFromRect([(NSView*)[self.mainBox contentView] frame]));
+    NSLog(@"self.elementInspectorViewController.view %@, %@",
+          self.elementInspectorViewController.view, NSStringFromRect(self.elementInspectorViewController.view.frame));
+    NSLog(@"-------------------------------------------------------------");
 }
 
 - (void)windowDidLoad
@@ -65,12 +83,39 @@ const static BOOL traceInterface = YES;
     
     if (self.elementInspectorViewController && self.mainBox)
     {
-        [self.mainBox setContentView:[self.elementInspectorViewController view]];
+        BOOST_ASSERT([self.mainBox contentView]);
+        //[self.elementInspectorViewController view].frame = self.mainBox.bounds;
+        [[self.mainBox contentView] addSubview:[self.elementInspectorViewController view]];
     }
+    
+    //if (traceInterface) [self printUIDescription];
+    
+    NSView* boxContentView = [self.mainBox contentView];
+    NSView* elementInspectorView = [self.elementInspectorViewController view];
+    
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(boxContentView, elementInspectorView);
+    [boxContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[elementInspectorView]|"
+                                                                           options:0
+                                                                           metrics:nil
+                                                                             views:viewsDictionary]];
+    [boxContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[elementInspectorView]|"
+                                                                           options:0
+                                                                           metrics:nil
+                                                                             views:viewsDictionary]];
+
+    self.window.delegate = self;
 }
 
+#pragma mark - NSWindowDelegate
 
-
+- (void)windowDidResize:(NSNotification *)notification
+{
+    if (traceInterface)
+    {
+        //NSLog(@"%@ windowDidResize: %@", self, notification);
+        //[self printUIDescription];
+    }
+}
 
 
 @end

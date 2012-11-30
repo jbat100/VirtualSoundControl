@@ -69,6 +69,9 @@ const static BOOL traceInterface = YES;
 
 - (void) awakeFromNib
 {
+    BOOST_ASSERT(self.view);
+    self.view.translatesAutoresizingMaskIntoConstraints = NO;
+    
     BOOST_ASSERT(self.eventListView);
     BOOST_ASSERT(self.addEventButton);
     BOOST_ASSERT(self.removeEventButton);
