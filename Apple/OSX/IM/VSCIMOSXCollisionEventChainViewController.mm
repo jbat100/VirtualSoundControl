@@ -73,6 +73,8 @@ const static BOOL traceInterface = YES;
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
     
     BOOST_ASSERT(self.eventListView);
+    self.eventListView.translatesAutoresizingMaskIntoConstraints = NO;
+    
     BOOST_ASSERT(self.addEventButton);
     BOOST_ASSERT(self.removeEventButton);
     BOOST_ASSERT(self.addEventMenu);

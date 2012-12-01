@@ -46,7 +46,7 @@
 
 -(void) awakeFromNib
 {
-    
+    self.collisionStartedEventChainBox.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 
