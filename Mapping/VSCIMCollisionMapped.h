@@ -31,9 +31,8 @@ namespace VSC {
             virtual void createDefaultMappings() = 0;
             
         protected:
-            
+
             void addExpectedMappingTarget(Target target);
-            
             bool checkExpectedMappingTargets(void);
             
         private:

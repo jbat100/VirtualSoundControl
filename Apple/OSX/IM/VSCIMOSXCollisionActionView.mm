@@ -105,7 +105,7 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
 
 +(void) initialize
 {
-    if (actionTypeMenuItemStringDict) {
+    if (!actionTypeMenuItemStringDict) {
         actionTypeMenuItemStringDict = @{
         @((int)VSCIMOSXCollisionActionTypeMIDINoteOn)           : @"MIDI Note On",
         @((int)VSCIMOSXCollisionActionTypeMIDINoteOnAndOff)     : @"MIDI Note On and Off",
@@ -166,7 +166,9 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // Drawing code here.
+    CGContextRef myContext = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+    CGContextSetGrayStrokeColor (myContext, 1.0, 1.0);
+    CGContextStrokeRectWithWidth(myContext, NSRectToCGRect(self.bounds), 2.0);
 }
 
 -(void) awakeFromNib

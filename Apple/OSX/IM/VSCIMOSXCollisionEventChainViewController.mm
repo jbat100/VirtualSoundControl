@@ -79,6 +79,14 @@ const static BOOL traceInterface = YES;
     BOOST_ASSERT(self.removeEventButton);
     BOOST_ASSERT(self.addEventMenu);
     
+    BOOST_ASSERT(self.addDelayMenuItem);
+    BOOST_ASSERT(self.addCollisionMIDINoteOnMenuItem);
+    BOOST_ASSERT(self.addCollisionMIDINoteOffMenuItem);
+    BOOST_ASSERT(self.addCollisionMIDINoteOnAndOffMenuItem);
+    BOOST_ASSERT(self.addCollisionMIDIControlChangeMenuItem);
+    
+    BOOST_ASSERT(self.addCollisionMIDINoteOnMenuItem.target == self);
+    
     self.eventListView.allowsEmptySelection = YES;
     self.eventListView.allowsMultipleSelection = NO;
 }
@@ -333,7 +341,8 @@ const static BOOL traceInterface = YES;
 
 - (void)listViewSelectionDidChange:(NSNotification*)aNotification
 {
-    NSLog(@"Selection changed");
+    VSC::IM::CollisionEventChain::SPtr chain = self.eventChain.lock();
+    NSLog(@"%@ Selection changed, event chain is: %p", self, chain.get());
 }
 
 

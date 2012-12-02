@@ -120,6 +120,7 @@ namespace VSC {
             
             virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
                                                       OB::Scene::Collision::SPtr collision);
+            
         };
         
         class CollisionMIDIControlChangeAction : public CollisionMIDIControlAction

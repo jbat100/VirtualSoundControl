@@ -25,7 +25,6 @@
 @property (nonatomic, assign) VSC::Environment::WPtr environment;
 @property (assign) IBOutlet id<VSCOSXEnvironmentController> environmentController;
 
-
 @property (strong) IBOutlet VSCOSXOBSceneElementListView* sceneElementListView;
 @property (strong) IBOutlet VSCOSXOBSceneDetailView* sceneDetailView;
 

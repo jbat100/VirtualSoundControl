@@ -33,8 +33,8 @@ namespace VSC {
             void setActionChainForCollisionStarted(CollisionEventChain::SPtr actionChain, OB::Scene::Element::SPtr element);
             void setActionChainForCollisionEnded(CollisionEventChain::SPtr actionChain, OB::Scene::Element::SPtr element);
             
-            CollisionEventChain::SPtr getActionChainForCollisionStarted(OB::Scene::Element::SPtr element);
-            CollisionEventChain::SPtr getActionChainForCollisionEnded(OB::Scene::Element::SPtr element);
+            CollisionEventChain::SPtr getEventChainForCollisionStarted(OB::Scene::Element::SPtr element);
+            CollisionEventChain::SPtr getEventChainForCollisionEnded(OB::Scene::Element::SPtr element);
             
             /**
              *  Scene::CollisionDetector::Listener

@@ -33,7 +33,9 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // Drawing code here.
+    CGContextRef myContext = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+    CGContextSetGrayFillColor (myContext, 0.8, 1.0);
+    CGContextFillRect(myContext, NSRectToCGRect(self.bounds));
 }
 
 -(void) awakeFromNib
@@ -80,31 +82,31 @@
             return self.pausePhysicsCheckBox;
             
         case VSC::OB::Scene::SettingDrawWireFrame:
-            return self.pausePhysicsCheckBox;
+            return self.drawWireFrameCheckBox;
             
         case VSC::OB::Scene::SettingDrawAABB:
-            return self.pausePhysicsCheckBox;
+            return self.drawAABBCheckBox;
             
         case VSC::OB::Scene::SettingDrawContactPoints:
-            return self.pausePhysicsCheckBox;
+            return self.drawContactPointsCheckBox;
             
         case VSC::OB::Scene::SettingDrawText:
-            return self.pausePhysicsCheckBox;
+            return self.textCheckBox;
             
         case VSC::OB::Scene::SettingDrawFeaturesText:
-            return self.pausePhysicsCheckBox;
+            return self.featureTextCheckBox;
             
         case VSC::OB::Scene::SettingBulletLCPIEnabled:
-            return self.pausePhysicsCheckBox;
+            return self.enableBulletLCPICheckBox;
             
         case VSC::OB::Scene::SettingCCDEnabled:
-            return self.pausePhysicsCheckBox;
+            return self.enableCCDCheckBox;
             
         case VSC::OB::Scene::SettingSatComparisonEnabled:
-            return self.pausePhysicsCheckBox;
+            return self.enableSatComparisonCheckBox;
             
         case VSC::OB::Scene::SettingProfileTimings:
-            return self.pausePhysicsCheckBox;
+            return self.profileTimingsCheckBox;
             
         default:
             break;
@@ -138,12 +140,17 @@
     {
         VSC::OB::Scene::Setting setting = [self settingForCheckBox:checkBox];
         if (setting != VSC::OB::Scene::SettingNone) [checkBox setState:[self stateForSceneSetting:setting]];
+        if (checkBox == self.pausePhysicsCheckBox && [self stateForSceneSetting:setting] == NSOnState)
+            NSLog(@"wooaaa");
     }
 }
 
 -(void) reloadSetting:(VSC::OB::Scene::Setting)setting
 {
     NSButton* checkBox = (NSButton*)[self checkBoxForSetting:setting];
+    
+    if (checkBox == self.pausePhysicsCheckBox && [self stateForSceneSetting:setting] == NSOnState)
+        NSLog(@"wooaaa");
     
     if (checkBox)
     {

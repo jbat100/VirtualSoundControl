@@ -31,7 +31,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 @property (weak) IBOutlet DMTabBar* tabBar;
 //@property (nonatomic, strong) IBOutlet NSTabView* tabView;
 
-@property (weak) IBOutlet NSView* mainView;
+@property (weak) IBOutlet NSBox* mainBox;
 
 -(void) setupTabBar;
 

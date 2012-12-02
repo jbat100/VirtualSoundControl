@@ -51,7 +51,9 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // Drawing code here.
+    CGContextRef myContext = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+    CGContextSetGrayStrokeColor (myContext, 1.0, 1.0);
+    CGContextStrokeRectWithWidth(myContext, NSRectToCGRect(self.bounds), 2.0);
 }
 
 -(void) awakeFromNib

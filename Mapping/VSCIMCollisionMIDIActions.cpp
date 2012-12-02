@@ -43,7 +43,6 @@ void VSC::IM::CollisionMIDINoteOnAction::createDefaultMappings()
     BOOST_FOREACH(const Target& target, targets)
     {
         CollisionMapping::SPtr mapping(new CollisionConstantMapping);
-        
         this->setMappingForTarget(target, mapping);
     }
 }

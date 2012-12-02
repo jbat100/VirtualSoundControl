@@ -49,21 +49,21 @@ using namespace OIS;
 size_t VSC::OB::Scene::mNumEntitiesInstanced = 0;
 
 // -------------------------------------------------------------------------
-const Ogre::ColourValue g_minLightColour(0.2, 0.1, 0.0);
-const Ogre::ColourValue g_maxLightColour(0.5, 0.3, 0.1);
+static const Ogre::ColourValue g_minLightColour(0.2, 0.1, 0.0);
+static const Ogre::ColourValue g_maxLightColour(0.5, 0.3, 0.1);
 // -------------------------------------------------------------------------
 
-const float             gStaticBodyRestitution  = 0.1f;
-const float             gStaticBodyFriction     = 0.8f;
+static const float             gStaticBodyRestitution  = 0.1f;
+static const float             gStaticBodyFriction     = 0.8f;
 
-const float             gDynamicBodyRestitution = 0.6f;
-const float             gDynamicBodyFriction    = 0.6f;
-const float             gDynamicBodyMass        = 1.0f;
+static const float             gDynamicBodyRestitution = 0.6f;
+static const float             gDynamicBodyFriction    = 0.6f;
+static const float             gDynamicBodyMass        = 1.0f;
 
-const Ogre::Vector3     gCubeBodyBounds      = Ogre::Vector3 (1, 1, 1);
-const Ogre::Vector3     gCylinderBodyBounds  = Ogre::Vector3 (0.5, 1, 0.5); 
-const Ogre::Vector3     gConeBodyBounds      = Ogre::Vector3 (1, 1, 1);
-const Real              gSphereBodyBounds    = 1.0f;
+static const Ogre::Vector3     gCubeBodyBounds      = Ogre::Vector3 (1, 1, 1);
+static const Ogre::Vector3     gCylinderBodyBounds  = Ogre::Vector3 (0.5, 1, 0.5); 
+static const Ogre::Vector3     gConeBodyBounds      = Ogre::Vector3 (1, 1, 1);
+static const Real              gSphereBodyBounds    = 1.0f;
 
 
 //MARK: Basic Constructor which does abolutely nothing interesting at all 

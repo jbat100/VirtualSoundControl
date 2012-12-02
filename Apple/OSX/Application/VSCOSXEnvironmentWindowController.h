@@ -14,7 +14,8 @@
 
 @class VSCOBOSXSceneDisplayView;
 @class VSCOSXOBSceneElementInspectorWindowController;
-@class VSCOSXEnvironmentInspectorView;
+@class VSCOSXOBSceneElementListView;
+@class VSCOSXOBSceneDetailView;
 
 /*
  *  This is the main window controller 
@@ -22,10 +23,14 @@
 
 @interface VSCOSXEnvironmentWindowController : NSWindowController <VSCOSXEnvironmentController>
 
-@property (weak) IBOutlet VSCOSXEnvironmentInspectorView* environmentInspectorView;
 @property (strong) VSCOSXOBSceneElementInspectorWindowController* elementInspectorWindowController;
 
--(void) reloadInterface;
+@property (strong) IBOutlet VSCOSXOBSceneElementListView* sceneElementListView;
+@property (strong) IBOutlet VSCOSXOBSceneDetailView* sceneDetailView;
+
+-(void) showSceneElementList;
+-(void) showSceneDetail;
+
 - (IBAction)test1:(id)sender;
 - (IBAction)test2:(id)sender;
 - (IBAction)test3:(id)sender;

@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-
 #import "VSCAppDelegate.h"
 #import "VSCOSXApplicationManager.h"
 #import "VSCOSXEnvironmentWindowController.h"
@@ -14,6 +13,7 @@
 #import "VSCOBOSXSceneDisplayView.h"
 
 #include "VSCGlobalApplication.h"
+#include "VSCEnvironment.h"
 #include "VSCOBScene.h"
 #include "VSCOBApplication.h"
 #include "VSCOBResourceManager.h"
@@ -23,13 +23,16 @@
 #include "VSCMIDIOutputManager.h"
 #include "VSCException.h"
 
+#include "VSCEnvironmentTest.h"
+
+#include <Ogre/OSX/macUtils.h>
+
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
-/*
- *  Temporary test for VSCOSXOBSceneElementInspectorWindowController
- */
-#define VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW
+//#define VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW // TEST
+
+
 
 #ifdef VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW
 #import "VSCOSXOBSceneElementInspectorWindowController.h"
@@ -120,6 +123,29 @@
     [self showEnvironmentWindow:self];
     
     [self.applicationManager startOgreRendering];
+    
+    /*
+     *  Setup test
+     */
+    
+    VSC::EnvironmentTest::SPtr test = VSC::EnvironmentTest::SPtr(new VSC::EnvironmentTest);
+    test->setupTestForEnvironment(environment);
+    
+    const VSC::OB::Scene::Elements& elements = environment->getOBScene()->getElements();
+    VSC::OB::Scene::Element::SPtr element = VSC::OB::Scene::Element::SPtr();
+    BOOST_FOREACH(VSC::OB::Scene::Element::SPtr e, elements)
+    {
+        VSC::IM::CollisionEventChain::SPtr chain = environment->getIMCollisionMapper()->getEventChainForCollisionStarted(e);
+        if (chain->getNumberOfEvents() > 0)
+        {
+            element = e;
+            break;
+        }
+    }
+    
+    BOOST_ASSERT(element);
+    if (element) [self.environmentWindowController showElementInspectorForElement:element];
+    
     
 #endif
 }

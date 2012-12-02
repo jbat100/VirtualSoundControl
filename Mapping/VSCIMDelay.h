@@ -32,6 +32,8 @@ namespace VSC {
             typedef boost::weak_ptr<Delay>      WPtr;
             
             Delay() {}
+            Delay(const TimeDuration& duration) : mDelay(duration) {}
+            Delay(const Float& seconds);
             
             void setDelay(TimeDuration delay) {mDelay = delay;}
             TimeDuration getDelay(void) {return mDelay;}
