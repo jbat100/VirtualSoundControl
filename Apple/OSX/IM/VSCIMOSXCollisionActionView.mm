@@ -161,7 +161,7 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
 -(void) commonInit
 {
     self.currentActionType = VSCIMOSXCollisionActionTypeNone;
-    self.translatesAutoresizingMaskIntoConstraints = NO;
+    //self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -189,7 +189,7 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
 
 -(void) awakeFromNib
 {
-    self.translatesAutoresizingMaskIntoConstraints = NO;
+    //self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 
@@ -201,10 +201,15 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
     {
         _collisionAction = action;
         self.currentActionType = VSCIMOSXCollisionActionTypeForCollisionAction(_collisionAction.lock());
-        [self setupInterfaceForNewCollisionAction];
+        
+        //[self setupInterfaceForNewCollisionAction];
+        
+        CGRect f = self.frame;
+        f.size.height = [[self class] heightOfViewForCollisionAction:action.lock()];
+        self.frame = f;
     }
     
-    [self setNeedsDisplay:YES];
+    //[self setNeedsDisplay:YES];
     
 }
 
@@ -220,29 +225,40 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
     
     // start from zero
     [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [self removeConstraints:[self constraints]];
+    //[self removeConstraints:[self constraints]];
     
     BOOST_ASSERT(self.mainView);
     [self addSubview:self.mainView];
     NSView* mainView = self.mainView;
+    
+    CGRect f = self.frame;
+    f.size.height = [[self class] heightOfViewForCollisionAction:action];
+    self.frame = f;
+    
+    /*
     viewsDictionary = NSDictionaryOfVariableBindings(mainView);
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[mainView]|" options:0
                                                                       metrics:nil views:viewsDictionary]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[mainView]-0@999-|" options:0
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[mainView]|" options:0
                                                                       metrics:nil views:viewsDictionary]];
-    
+     */
+     
+    /*
     NSView* midiView = self.midiSetupView;
     
     if (VSC::IM::collisionActionIsMIDI(action))
     {
         BOOST_ASSERT(midiView);
         [self addSubview:midiView];
+        
         viewsDictionary = NSDictionaryOfVariableBindings(mainView, midiView);
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[midiView]|" options:0
                                                                      metrics:nil views:viewsDictionary]];
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[mainView][midiView]-0@998-|" options:0
                                                                      metrics:nil views:viewsDictionary]];
+
     }
+    */
     
     [self.actionTypeTextField setStringValue:[[self class] stringForActionType:self.currentActionType]];
 }

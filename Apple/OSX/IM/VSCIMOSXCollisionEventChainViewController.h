@@ -35,6 +35,7 @@
 
 -(IBAction) removeSelectedEvent:(id)sender;
 -(IBAction) menuItemAction:(id)sender;
+-(IBAction) listViewTest:(id)sender;
 
 -(VSC::IM::Event::SPtr) selectedChainEvent;
 

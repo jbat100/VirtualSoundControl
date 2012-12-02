@@ -16,6 +16,7 @@
 
 #import "PXListView.h"
 #import "PXListViewCell.h"
+#import "PXListDocumentView.h"
 
 #include "VSCIMCollisionMapper.h"
 #include "VSCIMEvent.h"
@@ -94,6 +95,24 @@ const static BOOL traceInterface = YES;
 -(void) reloadInterface
 {
     [self.eventListView reloadData];
+}
+
+#pragma mark - UI Callbacks
+
+-(IBAction) listViewTest:(id)sender
+{
+    NSLog(@"%@ listViewTest", self);
+    
+    BOOST_ASSERT(self.eventListView);
+    
+    PXListDocumentView* documentView = (PXListDocumentView*)[self.eventListView documentView];
+    BOOST_ASSERT([documentView isKindOfClass:[PXListDocumentView class]]);
+    
+    for (NSView* subview in [documentView subviews])
+    {
+        NSLog(@"SUBVIEW: %@ frame: %@", subview, NSStringFromRect(subview.frame));
+    }
+    
 }
 
 #pragma mark - Event Select/Add/Remove
@@ -268,6 +287,8 @@ const static BOOL traceInterface = YES;
     
     if (aListView == self.eventListView)
     {
+        if (traceInterface) NSLog(@"%@ listView:cellForRow: %ld", self, row);
+        
         VSC::IM::CollisionEventChain::SPtr chain = self.eventChain.lock();
         BOOST_ASSERT(chain);
         VSC::IM::Event::SPtr event = VSC::IM::Event::SPtr();
@@ -289,6 +310,7 @@ const static BOOL traceInterface = YES;
             }
             [actionView setCollisionAction:(VSC::IM::CollisionAction::WPtr(action))];
             actionView.eventChainController = self;
+            if (traceInterface) NSLog(@"Returning: %@ with frame: %@", actionView, NSStringFromRect(actionView.frame));
             return actionView;
         }
         
@@ -307,6 +329,7 @@ const static BOOL traceInterface = YES;
                 delayView = [[self class] newDelayView];
             }
             [delayView setDelay:(VSC::IM::Delay::WPtr(delay))];
+            if (traceInterface) NSLog(@"Returning: %@ with frame: %@", delayView, NSStringFromRect(delayView.frame));
             return delayView;
         }
         
@@ -322,6 +345,8 @@ const static BOOL traceInterface = YES;
     
     if (aListView == self.eventListView)
     {
+        if (traceInterface) NSLog(@"%@ heightOfRow: %ld", self, row);
+        
         VSC::IM::CollisionEventChain::SPtr chain = self.eventChain.lock();
         BOOST_ASSERT(chain);
         
@@ -335,10 +360,20 @@ const static BOOL traceInterface = YES;
         if (chain) event = chain->getEventAtIndex((unsigned int)row);
         
         VSC::IM::CollisionAction::SPtr action = boost::dynamic_pointer_cast<VSC::IM::CollisionAction>(event);
-        if (action) return [VSCIMOSXCollisionActionView heightOfViewForCollisionAction:action];
+        if (action)
+        {
+            CGFloat h = [VSCIMOSXCollisionActionView heightOfViewForCollisionAction:action];
+            if (traceInterface) NSLog(@"Returning: %f", h);
+            return h;
+        }
         
         VSC::IM::Delay::SPtr delay = boost::dynamic_pointer_cast<VSC::IM::Delay>(event);
-        if (delay) return [VSCIMOSXDelayView defaultViewHeight];
+        if (delay)
+        {
+            CGFloat h = [VSCIMOSXDelayView defaultViewHeight];
+            if (traceInterface) NSLog(@"Returning: %f", h);
+            return h;
+        }
         
         BOOST_ASSERT_MSG(false, "Expected CollisionAction or Delay");
     }

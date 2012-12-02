@@ -46,7 +46,7 @@
 
 -(void) commonInit
 {
-    self.translatesAutoresizingMaskIntoConstraints = NO;
+    //self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
