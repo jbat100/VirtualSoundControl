@@ -27,8 +27,8 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
  *  Heights should agree with nib
  */
 
-const CGFloat VSCIMOSXCollisionActionViewBaseHeight = 54.0;
-const CGFloat VSCIMOSXCollisionActionViewMIDISetupHeight = 48.0;
+const CGFloat VSCIMOSXCollisionActionViewBaseHeight = 50.0;
+const CGFloat VSCIMOSXCollisionActionViewMIDISetupHeight = 50.0;
 const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
 
 /*
@@ -64,13 +64,13 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
 @property (nonatomic, strong) IBOutlet NSView* midiControlSetupView;
 @property (nonatomic, strong) IBOutlet NSPopUpButton* midiControlNumberPopUpButton;
 
--(void) commonInit;
-
--(void) updateMIDIControlNumbers;
-
 /*
- *  Action view callbacks
+ *  Constraints!
  */
+@property (strong) IBOutlet NSLayoutConstraint* mainViewBottomConstraint;
+
+-(void) commonInit;
+-(void) updateMIDIControlNumbers;
 
 -(IBAction) showCollisionMappings:(id)sender;
 -(IBAction) refreshMIDIOutputs:(id)sender;
@@ -167,15 +167,29 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
 - (void)drawRect:(NSRect)dirtyRect
 {
     CGContextRef myContext = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+    
+    switch (self.currentActionType)
+    {
+        case VSCIMOSXCollisionActionTypeMIDINoteOn:
+            CGContextSetRGBFillColor (myContext, 1.0, 0.0, 0.0, 1.0);
+            break;
+            
+        case VSCIMOSXCollisionActionTypeMIDINoteOff:
+            CGContextSetRGBFillColor (myContext, 0.0, 1.0, 0.0, 1.0);
+            break;
+            
+        default:
+            CGContextSetRGBFillColor (myContext, 0.4, 0.4, 0.4, 1.0);
+    }
+    CGContextFillRect(myContext, self.bounds);
+    
     CGContextSetGrayStrokeColor (myContext, 1.0, 1.0);
     CGContextStrokeRectWithWidth(myContext, NSRectToCGRect(self.bounds), 2.0);
 }
 
 -(void) awakeFromNib
 {
-    [self setAutoresizesSubviews:YES];
-    
-    [self.midiSetupView setAutoresizingMask:(NSUInteger)(NSViewWidthSizable | NSViewMinYMargin)];
+    self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 
@@ -183,11 +197,14 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
 
 -(void) setCollisionAction:(VSC::IM::CollisionAction::WPtr)action {
     
-    _collisionAction = action;
+    if (action.lock() != _collisionAction.lock())
+    {
+        _collisionAction = action;
+        self.currentActionType = VSCIMOSXCollisionActionTypeForCollisionAction(_collisionAction.lock());
+        [self setupInterfaceForNewCollisionAction];
+    }
     
-    self.currentActionType = VSCIMOSXCollisionActionTypeForCollisionAction(_collisionAction.lock());
-    
-    [self setupInterfaceForNewCollisionAction];
+    [self setNeedsDisplay:YES];
     
 }
 
@@ -199,45 +216,35 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
 {
     
     VSC::IM::CollisionAction::SPtr action = self.collisionAction.lock();
+    NSDictionary *viewsDictionary = nil;
     
-    /*
-     *  If action then tighten your seat belts, here we go...
-     */
+    // start from zero
+    [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self removeConstraints:[self constraints]];
     
-    CGFloat h = [[self class] heightOfViewForCollisionAction:action];
+    BOOST_ASSERT(self.mainView);
+    [self addSubview:self.mainView];
+    NSView* mainView = self.mainView;
+    viewsDictionary = NSDictionaryOfVariableBindings(mainView);
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[mainView]|" options:0
+                                                                      metrics:nil views:viewsDictionary]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[mainView]-0@999-|" options:0
+                                                                      metrics:nil views:viewsDictionary]];
     
-    NSRect f = self.frame;
-    f.size.height = h;
-    self.frame = f;
+    NSView* midiView = self.midiSetupView;
+    
+    if (VSC::IM::collisionActionIsMIDI(action))
+    {
+        BOOST_ASSERT(midiView);
+        [self addSubview:midiView];
+        viewsDictionary = NSDictionaryOfVariableBindings(mainView, midiView);
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[midiView]|" options:0
+                                                                     metrics:nil views:viewsDictionary]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[mainView][midiView]-0@998-|" options:0
+                                                                     metrics:nil views:viewsDictionary]];
+    }
     
     [self.actionTypeTextField setStringValue:[[self class] stringForActionType:self.currentActionType]];
-    
-    h -= VSCIMOSXCollisionActionViewBaseHeight;
-    
-    if (!action)
-    {
-        // empty interface and return
-        
-        [self.mappingsButton setEnabled:NO];
-    }
-    
-    else
-    {
-    
-        [self.mappingsButton setEnabled:YES];
-        
-        if (VSC::IM::collisionActionIsMIDI(action))
-        {
-            f = NSMakeRect(0.0, h, self.frame.size.width, VSCIMOSXCollisionActionViewMIDISetupHeight);
-            self.midiSetupView.frame = f;
-            
-            if ([self.midiSetupView superview] != self)
-            {
-                
-            }
-        }
-        
-    }
 }
 
 -(void) updateMIDIControlNumbers

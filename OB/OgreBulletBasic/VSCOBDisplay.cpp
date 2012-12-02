@@ -7,7 +7,8 @@
 
 #include <Ogre/Ogre.h>
 
-const Ogre::Vector3 CameraStart = Ogre::Vector3(13,4.5,0);
+static const Ogre::Vector3 CameraStartPos = Ogre::Vector3(30.0, 10.0, 0.0);
+static const Ogre::Vector3 CameraStartLookAt = Ogre::Vector3(0.0, 0.0, 0.0);
 
 VSC::OB::Display::Display() :
 mRenderWindow(0),
@@ -50,14 +51,10 @@ void VSC::OB::Display::createCamera(void)
     // Create the camera
     this->setCamera( this->getScene()->getSceneManager()->createCamera("Camera") );
     
-    // Position it at 500 in Z direction
-    //mCamera->setPosition(Ogre::Vector3(0,0,500));
+    mCamera->setPosition(CameraStartPos);
+    mCamera->lookAt(CameraStartLookAt);
     
-    mCamera->setPosition(CameraStart);
-    
-    // Look back along -Z
-    mCamera->lookAt(Ogre::Vector3(0,0,-300));
-    mCamera->setNearClipDistance(5);
+    mCamera->setNearClipDistance(1.0);
     
 }
 

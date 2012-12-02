@@ -32,7 +32,6 @@
 @interface VSCOSXOBSceneController : NSObject <VSCOSXOBSceneController>
 
 @property (nonatomic, assign) VSC::OB::OSXSceneListener::SPtr sceneListener;
-
 @property (assign) IBOutlet id<VSCOSXEnvironmentController> environmentController;
 
 -(IBAction)checkBoxAction:(id)sender;

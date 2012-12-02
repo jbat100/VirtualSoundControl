@@ -49,11 +49,15 @@ void VSC::IM::CollisionEventChain::perform(OB::Scene::Element::SPtr element, OB:
         if (action)
         {
             Task::SPtr task = action->createTaskForCollision(element, collision);
-            task->setExecutionStartTime(executionTime);
-            BOOST_ASSERT(action->getTaskQueue());
-            if (action->getTaskQueue())
+            BOOST_ASSERT(task);
+            if (task)
             {
-                action->getTaskQueue()->enqueueTask(task);
+                task->setExecutionStartTime(executionTime);
+                BOOST_ASSERT(action->getTaskQueue());
+                if (action->getTaskQueue())
+                {
+                    action->getTaskQueue()->enqueueTask(task);
+                }
             }
             continue;
         }

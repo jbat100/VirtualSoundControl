@@ -44,17 +44,20 @@ void VSC::EnvironmentTest::internalSetupForEnvironment(Environment::SPtr environ
         OB::DynamicObject::FactoryDescription description1;
         description1.name = "Test Cube 1";
         description1.size = Ogre::Vector3(1.0, 1.0, 1.0);
-        description1.position = Ogre::Vector3(-5.0, 10.0, -5.0);
+        description1.position = Ogre::Vector3(0.0, 1.0, 0.0);
         element1 = elementFactory->addPrimitive(OB::PrimitiveCube, description1);
         BOOST_ASSERT(element1);
         
+        /*
         OB::DynamicObject::FactoryDescription description2;
         description2.name = "Test Cube 2";
-        description2.position = Ogre::Vector3(-5.0, 10.0, 5.0);
+        description2.position = Ogre::Vector3(0.0, 20.0, 0.0);
         description2.size = Ogre::Vector3(1.0, 1.0, 1.0);
         element2 = elementFactory->addPrimitive(OB::PrimitiveCube, description2);
         BOOST_ASSERT(element2);
+         */
         
+        /*
         OB::DynamicObject::FactoryDescription description3;
         description3.name = "Test Cube 3";
         description3.position = Ogre::Vector3(5.0, 10.0, -5.0);
@@ -68,6 +71,7 @@ void VSC::EnvironmentTest::internalSetupForEnvironment(Environment::SPtr environ
         description4.size = Ogre::Vector3(1.0, 1.0, 1.0);
         element4 = elementFactory->addPrimitive(OB::PrimitiveCube, description4);
         BOOST_ASSERT(element4);
+         */
     }
     
     /*

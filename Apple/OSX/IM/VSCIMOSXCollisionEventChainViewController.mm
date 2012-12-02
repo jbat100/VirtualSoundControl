@@ -324,6 +324,13 @@ const static BOOL traceInterface = YES;
     {
         VSC::IM::CollisionEventChain::SPtr chain = self.eventChain.lock();
         BOOST_ASSERT(chain);
+        
+        if (row >= chain->getNumberOfEvents())
+        {
+            NSLog(@"ASKING FOR ROW HEIGHT FOR OUT OF BOUNDS INDEX");
+            return 0;
+        }
+        
         VSC::IM::Event::SPtr event = VSC::IM::Event::SPtr();
         if (chain) event = chain->getEventAtIndex((unsigned int)row);
         
