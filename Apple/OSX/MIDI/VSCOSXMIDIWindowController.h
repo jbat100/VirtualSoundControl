@@ -8,16 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 #import "VSCOSXApplicationManagerProtocol.h"
-#import "JAListView.h"
 
 #include "VSCMIDI.h"
 #include "VSCMIDIOutput.h"
 #include "VSCMIDIOutputManager.h"
 
-//@class VSCOSXMIDITestController;
-//@class VSCOSXMIDITest;
-
-@interface VSCOSXMIDIWindowController : NSWindowController <JAListViewDataSource, JAListViewDelegate, NSComboBoxDelegate, NSComboBoxDataSource>
+@interface VSCOSXMIDIWindowController : NSWindowController
+<NSComboBoxDelegate, NSComboBoxDataSource, NSTableViewDataSource, NSTableViewDelegate>
 
 @property (nonatomic, assign) VSC::MIDI::OutputManager::SPtr midiOutputManager;
 
@@ -25,7 +22,7 @@
  *  MIDI Inputs/Outputs
  */
 
-@property (nonatomic, strong) IBOutlet JAListView* midiOutputsListView;
+@property (nonatomic, strong) IBOutlet NSTableView* midiOutputsTableView;
 @property (nonatomic, strong) IBOutlet NSButton* refreshInputsButton;
 @property (nonatomic, strong) IBOutlet NSButton* refreshOutputsButton;
 

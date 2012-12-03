@@ -12,8 +12,6 @@
 		101C8E191624CA460026F0D7 /* VSCIMCollisionAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101C8E181624CA460026F0D7 /* VSCIMCollisionAction.cpp */; };
 		101C8E1C1624CB2E0026F0D7 /* VSCIMCollisionEventChain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101C8E1A1624CB2E0026F0D7 /* VSCIMCollisionEventChain.cpp */; };
 		101EBB441629AE79006601A2 /* NSArray+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB431629AE79006601A2 /* NSArray+VSCAdditions.mm */; };
-		101EBB881629DE75006601A2 /* VSCOSXMIDIOutputJAView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB861629DE75006601A2 /* VSCOSXMIDIOutputJAView.mm */; };
-		101EBB8C162AB52A006601A2 /* VSCOSXMIDIOutputJAView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 101EBB8B162AB52A006601A2 /* VSCOSXMIDIOutputJAView.xib */; };
 		101EBB8E162B2E2C006601A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 101EBB8D162B2E2C006601A2 /* QuartzCore.framework */; };
 		101EBB90162B2E3C006601A2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 101EBB8F162B2E3B006601A2 /* CoreGraphics.framework */; };
 		101EBB92162B3022006601A2 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 101EBB91162B3022006601A2 /* ApplicationServices.framework */; };
@@ -32,6 +30,9 @@
 		103C3CC016401BAE00A62B3C /* VSCIMOSXDelayView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 103C3CBF16401BAE00A62B3C /* VSCIMOSXDelayView.mm */; };
 		103E77EF166A686C0013ABB6 /* VSCEnvironmentTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103E77ED166A686C0013ABB6 /* VSCEnvironmentTest.cpp */; };
 		104198F916171F2600D1742D /* VSCIMCollisionMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104198F516171F2600D1742D /* VSCIMCollisionMapper.cpp */; };
+		104BFB79166D3BC400746CA9 /* VSCOSXMIDIOutputView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 104BFB78166D3BC400746CA9 /* VSCOSXMIDIOutputView.mm */; };
+		104BFB7C166D3D4E00746CA9 /* VSCOSXMIDIWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 104BFB7B166D3D4E00746CA9 /* VSCOSXMIDIWindowController.xib */; };
+		104BFB7F166D440600746CA9 /* VSCOSXOBSceneElementView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 104BFB7E166D440600746CA9 /* VSCOSXOBSceneElementView.mm */; };
 		105BAD2216231C860031EE91 /* VSCMIDI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105BAD1A16231C860031EE91 /* VSCMIDI.cpp */; };
 		105BAD2516231C860031EE91 /* VSCMIDIOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105BAD2016231C860031EE91 /* VSCMIDIOutput.cpp */; };
 		105BAD2716231CA50031EE91 /* libstk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 105BAD2616231CA50031EE91 /* libstk.a */; };
@@ -72,8 +73,6 @@
 		1091F28415B07C0D00466854 /* VSCLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1091F28215B07C0D00466854 /* VSCLog.cpp */; };
 		109D51B5155998EE0030C161 /* VSCException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109D51B3155998EE0030C161 /* VSCException.cpp */; };
 		10AF53F1163D340000419EEE /* VSCOSXOBSceneController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53F0163D340000419EEE /* VSCOSXOBSceneController.mm */; };
-		10AF53F4163D355B00419EEE /* VSCOSXOBSceneElementCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53F3163D355B00419EEE /* VSCOSXOBSceneElementCell.mm */; };
-		10AF53F6163D73F800419EEE /* VSCOSXOBSceneElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10AF53F5163D73F800419EEE /* VSCOSXOBSceneElementCell.xib */; };
 		10AF53FE163D8D7600419EEE /* DMTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53FB163D8D7600419EEE /* DMTabBar.m */; };
 		10AF53FF163D8D7600419EEE /* DMTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53FD163D8D7600419EEE /* DMTabBarItem.m */; };
 		10AF5418163D9A6C00419EEE /* 01-refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AF5409163D9A6C00419EEE /* 01-refresh.png */; };
@@ -163,7 +162,6 @@
 		10E8557415E65048008FF635 /* VSCUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E8557215E65048008FF635 /* VSCUI.cpp */; };
 		10EB5A3B16050D7500F0939E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10EB5A3A16050D7500F0939E /* OpenGL.framework */; };
 		10EB5E5E16298E0B00E0F030 /* VSCOSXApplicationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10EB5E5D16298E0B00E0F030 /* VSCOSXApplicationManager.mm */; };
-		10EB5E621629902500E0F030 /* VSCOSXMIDIWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10EB5E611629902500E0F030 /* VSCOSXMIDIWindow.xib */; };
 		10ED088A1601CD8900053C07 /* VSCBound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10ED08881601CD8900053C07 /* VSCBound.cpp */; };
 		10EE8847163842F100A1902B /* VSCGlobalApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA3A162DA03500532AD0 /* VSCGlobalApplication.cpp */; };
 		10EF8DAC1626CBB700EB8FDE /* VSCTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10EF8DA81626CBB700EB8FDE /* VSCTask.cpp */; };
@@ -229,9 +227,6 @@
 		101C8E1B1624CB2E0026F0D7 /* VSCIMCollisionEventChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMCollisionEventChain.h; path = ../../../../../Mapping/VSCIMCollisionEventChain.h; sourceTree = "<group>"; };
 		101EBB421629AE79006601A2 /* NSArray+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+VSCAdditions.h"; path = "../../../Categories/NSArray+VSCAdditions.h"; sourceTree = "<group>"; };
 		101EBB431629AE79006601A2 /* NSArray+VSCAdditions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSArray+VSCAdditions.mm"; path = "../../../Categories/NSArray+VSCAdditions.mm"; sourceTree = "<group>"; };
-		101EBB861629DE75006601A2 /* VSCOSXMIDIOutputJAView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXMIDIOutputJAView.mm; path = ../../MIDI/VSCOSXMIDIOutputJAView.mm; sourceTree = "<group>"; };
-		101EBB8A162A1E1E006601A2 /* VSCOSXMIDIOutputJAView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXMIDIOutputJAView.h; path = ../../MIDI/VSCOSXMIDIOutputJAView.h; sourceTree = "<group>"; };
-		101EBB8B162AB52A006601A2 /* VSCOSXMIDIOutputJAView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXMIDIOutputJAView.xib; path = ../../MIDI/VSCOSXMIDIOutputJAView.xib; sourceTree = "<group>"; };
 		101EBB8D162B2E2C006601A2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		101EBB8F162B2E3B006601A2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		101EBB91162B3022006601A2 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
@@ -261,6 +256,11 @@
 		103E77EE166A686C0013ABB6 /* VSCEnvironmentTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCEnvironmentTest.h; path = ../../../../Application/VSCEnvironmentTest.h; sourceTree = "<group>"; };
 		104198F516171F2600D1742D /* VSCIMCollisionMapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCIMCollisionMapper.cpp; path = ../../../../../Mapping/VSCIMCollisionMapper.cpp; sourceTree = "<group>"; };
 		104198F616171F2600D1742D /* VSCIMCollisionMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMCollisionMapper.h; path = ../../../../../Mapping/VSCIMCollisionMapper.h; sourceTree = "<group>"; };
+		104BFB77166D3BC400746CA9 /* VSCOSXMIDIOutputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXMIDIOutputView.h; path = ../../MIDI/VSCOSXMIDIOutputView.h; sourceTree = "<group>"; };
+		104BFB78166D3BC400746CA9 /* VSCOSXMIDIOutputView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXMIDIOutputView.mm; path = ../../MIDI/VSCOSXMIDIOutputView.mm; sourceTree = "<group>"; };
+		104BFB7B166D3D4E00746CA9 /* VSCOSXMIDIWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXMIDIWindowController.xib; path = ../../MIDI/VSCOSXMIDIWindowController.xib; sourceTree = "<group>"; };
+		104BFB7D166D440600746CA9 /* VSCOSXOBSceneElementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementView.h; path = ../../../OB/VSCOSXOBSceneElementView.h; sourceTree = "<group>"; };
+		104BFB7E166D440600746CA9 /* VSCOSXOBSceneElementView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneElementView.mm; path = ../../../OB/VSCOSXOBSceneElementView.mm; sourceTree = "<group>"; };
 		105BAD1A16231C860031EE91 /* VSCMIDI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDI.cpp; path = ../../../../MIDI/VSCMIDI.cpp; sourceTree = "<group>"; };
 		105BAD1B16231C860031EE91 /* VSCMIDI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDI.h; path = ../../../../MIDI/VSCMIDI.h; sourceTree = "<group>"; };
 		105BAD2016231C860031EE91 /* VSCMIDIOutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDIOutput.cpp; path = ../../../../MIDI/VSCMIDIOutput.cpp; sourceTree = "<group>"; };
@@ -333,9 +333,6 @@
 		109D51B4155998EE0030C161 /* VSCException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCException.h; path = ../../../../Generic/VSCException.h; sourceTree = "<group>"; };
 		10AF53D6163D2F1B00419EEE /* VSCOSXOBSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneController.h; path = ../../../OB/VSCOSXOBSceneController.h; sourceTree = "<group>"; };
 		10AF53F0163D340000419EEE /* VSCOSXOBSceneController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneController.mm; path = ../../../OB/VSCOSXOBSceneController.mm; sourceTree = "<group>"; };
-		10AF53F2163D355B00419EEE /* VSCOSXOBSceneElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementCell.h; path = ../../../OB/VSCOSXOBSceneElementCell.h; sourceTree = "<group>"; };
-		10AF53F3163D355B00419EEE /* VSCOSXOBSceneElementCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneElementCell.mm; path = ../../../OB/VSCOSXOBSceneElementCell.mm; sourceTree = "<group>"; };
-		10AF53F5163D73F800419EEE /* VSCOSXOBSceneElementCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXOBSceneElementCell.xib; path = ../../../OB/VSCOSXOBSceneElementCell.xib; sourceTree = "<group>"; };
 		10AF53F7163D76B300419EEE /* VSCOSXEnvironmentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOSXEnvironmentController.h; path = ../../Application/VSCOSXEnvironmentController.h; sourceTree = "<group>"; };
 		10AF53FA163D8D7600419EEE /* DMTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DMTabBar.h; path = ../../../Submodules/DMTabBar/DMTabBar/DMTabBar/DMTabBar.h; sourceTree = "<group>"; };
 		10AF53FB163D8D7600419EEE /* DMTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DMTabBar.m; path = ../../../Submodules/DMTabBar/DMTabBar/DMTabBar/DMTabBar.m; sourceTree = "<group>"; };
@@ -523,7 +520,6 @@
 		10EB5E5C16298E0B00E0F030 /* VSCOSXApplicationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXApplicationManager.h; path = ../../Application/VSCOSXApplicationManager.h; sourceTree = "<group>"; };
 		10EB5E5D16298E0B00E0F030 /* VSCOSXApplicationManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXApplicationManager.mm; path = ../../Application/VSCOSXApplicationManager.mm; sourceTree = "<group>"; };
 		10EB5E6016298FC000E0F030 /* VSCOSXApplicationManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXApplicationManagerProtocol.h; path = ../../Application/VSCOSXApplicationManagerProtocol.h; sourceTree = "<group>"; };
-		10EB5E611629902500E0F030 /* VSCOSXMIDIWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXMIDIWindow.xib; path = ../../MIDI/VSCOSXMIDIWindow.xib; sourceTree = "<group>"; };
 		10ED08841601CC2700053C07 /* VSCBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCBindings.cpp; path = ../../../../Interface/VSCBindings.cpp; sourceTree = "<group>"; };
 		10ED08851601CC2700053C07 /* VSCBindings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; name = VSCBindings.hpp; path = ../../../../Interface/VSCBindings.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		10ED08881601CD8900053C07 /* VSCBound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCBound.cpp; path = ../../../../Interface/VSCBound.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -1027,9 +1023,8 @@
 			children = (
 				10CB65B3164E934A000D311F /* VSCOSXOBSceneElementListView.h */,
 				10CB65B4164E934A000D311F /* VSCOSXOBSceneElementListView.mm */,
-				10AF53F2163D355B00419EEE /* VSCOSXOBSceneElementCell.h */,
-				10AF53F3163D355B00419EEE /* VSCOSXOBSceneElementCell.mm */,
-				10AF53F5163D73F800419EEE /* VSCOSXOBSceneElementCell.xib */,
+				104BFB7D166D440600746CA9 /* VSCOSXOBSceneElementView.h */,
+				104BFB7E166D440600746CA9 /* VSCOSXOBSceneElementView.mm */,
 			);
 			name = "Element List";
 			sourceTree = "<group>";
@@ -1368,12 +1363,11 @@
 		10D7AE8D1628766100DE0F72 /* Cocoa */ = {
 			isa = PBXGroup;
 			children = (
-				101EBB8B162AB52A006601A2 /* VSCOSXMIDIOutputJAView.xib */,
-				101EBB8A162A1E1E006601A2 /* VSCOSXMIDIOutputJAView.h */,
-				101EBB861629DE75006601A2 /* VSCOSXMIDIOutputJAView.mm */,
+				104BFB77166D3BC400746CA9 /* VSCOSXMIDIOutputView.h */,
+				104BFB78166D3BC400746CA9 /* VSCOSXMIDIOutputView.mm */,
 				10D7AE941628767F00DE0F72 /* VSCOSXMIDIWindowController.h */,
 				10D7AE951628767F00DE0F72 /* VSCOSXMIDIWindowController.mm */,
-				10EB5E611629902500E0F030 /* VSCOSXMIDIWindow.xib */,
+				104BFB7B166D3D4E00746CA9 /* VSCOSXMIDIWindowController.xib */,
 			);
 			name = Cocoa;
 			sourceTree = "<group>";
@@ -1477,12 +1471,9 @@
 				10B60D2F15505D6D006A6D6E /* InfoPlist.strings in Resources */,
 				10B60D3515505D6D006A6D6E /* Credits.rtf in Resources */,
 				10B60D3B15505D6D006A6D6E /* MainMenu.xib in Resources */,
-				10EB5E621629902500E0F030 /* VSCOSXMIDIWindow.xib in Resources */,
-				101EBB8C162AB52A006601A2 /* VSCOSXMIDIOutputJAView.xib in Resources */,
 				105CDA25162D9DBF00532AD0 /* Plugins_d.cfg in Resources */,
 				105CDA26162D9DBF00532AD0 /* Plugins.cfg in Resources */,
 				105CDA27162D9DBF00532AD0 /* resources.cfg in Resources */,
-				10AF53F6163D73F800419EEE /* VSCOSXOBSceneElementCell.xib in Resources */,
 				10AF5418163D9A6C00419EEE /* 01-refresh.png in Resources */,
 				10AF5419163D9A6C00419EEE /* 02-redo.png in Resources */,
 				10AF541A163D9A6C00419EEE /* 06-magnify.png in Resources */,
@@ -1507,6 +1498,7 @@
 				10F45D9B166503F7007C9688 /* VSCIMOSXCollisionEventChainViewController.xib in Resources */,
 				10F45DA0166505DA007C9688 /* VSCIMOSXCollisionActionMappingsViewController.xib in Resources */,
 				1077BE7916655B050080769A /* VSCOSXOBSceneElementInspectorViewController.xib in Resources */,
+				104BFB7C166D3D4E00746CA9 /* VSCOSXMIDIWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1578,7 +1570,6 @@
 				10D7AE9C1628767F00DE0F72 /* VSCOSXMIDIWindowController.mm in Sources */,
 				10EB5E5E16298E0B00E0F030 /* VSCOSXApplicationManager.mm in Sources */,
 				101EBB441629AE79006601A2 /* NSArray+VSCAdditions.mm in Sources */,
-				101EBB881629DE75006601A2 /* VSCOSXMIDIOutputJAView.mm in Sources */,
 				105CDA10162D9D6F00532AD0 /* VSCOB.cpp in Sources */,
 				105CDA11162D9D6F00532AD0 /* VSCOBApplication.cpp in Sources */,
 				105CDA13162D9D6F00532AD0 /* VSCOBBasicSceneElementFactory.cpp in Sources */,
@@ -1602,7 +1593,6 @@
 				108EE2A5163C007200DD45BF /* VSCIMCollisionMapped.cpp in Sources */,
 				108EE2A9163C08CA00DD45BF /* VSCIMAction.cpp in Sources */,
 				10AF53F1163D340000419EEE /* VSCOSXOBSceneController.mm in Sources */,
-				10AF53F4163D355B00419EEE /* VSCOSXOBSceneElementCell.mm in Sources */,
 				10AF53FE163D8D7600419EEE /* DMTabBar.m in Sources */,
 				10AF53FF163D8D7600419EEE /* DMTabBarItem.m in Sources */,
 				10AF5429163D9B1B00419EEE /* VSCOSXOBSceneElementDetailView.mm in Sources */,
@@ -1629,6 +1619,8 @@
 				10F45D9F166505DA007C9688 /* VSCIMOSXCollisionActionMappingsViewController.mm in Sources */,
 				1077BE7C16655C350080769A /* VSCOSXOBSceneElementInspectorViewController.mm in Sources */,
 				103E77EF166A686C0013ABB6 /* VSCEnvironmentTest.cpp in Sources */,
+				104BFB79166D3BC400746CA9 /* VSCOSXMIDIOutputView.mm in Sources */,
+				104BFB7F166D440600746CA9 /* VSCOSXOBSceneElementView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

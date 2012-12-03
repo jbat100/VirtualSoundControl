@@ -8,11 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 #import "VSCIMOSXCollisionMappingTypes.h"
-#import "PXListViewDelegate.h"
 
 #include "VSCIMCollisionAction.h"
 
-@class PXListView;
 @class VSCIMOSXCollisionMappingEditViewController;
 @protocol VSCIMOSXCollisionEventChainController;
 
@@ -23,6 +21,6 @@
 
 @property (nonatomic, assign) VSC::IM::CollisionAction::WPtr action;
 
-@property (weak) IBOutlet PXListView* listView;
+@property (weak) IBOutlet NSTableView* listView;
 
 @end

@@ -8,13 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-//#include "VSCOBScene.h"
-
-@class PXListView;
-
-
 @interface VSCOSXOBSceneElementListView : NSView
 
-@property (weak) IBOutlet PXListView* listView;
+@property (weak) IBOutlet NSTableView* elementTableView;
 
 @end

@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import "VSCOSXEnvironmentController.h"
 #import "VSCOBOSXSceneListener.h"
-#import "PXListViewDelegate.h"
 
 #include "VSCOBScene.h"
 
@@ -17,7 +16,7 @@
 @class VSCOSXOBSceneElementListView;
 @class VSCOSXOBSceneDetailView;
 
-@protocol VSCOSXOBSceneController <PXListViewDelegate, VSCOBOSXSceneListenerTarget>
+@protocol VSCOSXOBSceneController <NSTableViewDataSource, NSTableViewDelegate, VSCOBOSXSceneListenerTarget>
 
 @property (nonatomic, assign) VSC::OB::Scene::WPtr scene;
 

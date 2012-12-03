@@ -7,13 +7,10 @@
 //
 
 #import "VSCOSXOBSceneElementListView.h"
-#import "PXListView.h"
 
 #include <boost/assert.hpp>
 
 @implementation VSCOSXOBSceneElementListView
-
-@synthesize listView = _listView;
 
 -(void) dealoc
 {
@@ -37,10 +34,12 @@
 
 -(void) awakeFromNib
 {
-    BOOST_ASSERT(self.listView);
-    BOOST_ASSERT(self.listView.delegate);
+    BOOST_ASSERT(self.elementTableView);
+    BOOST_ASSERT(self.elementTableView.delegate);
+    BOOST_ASSERT(self.elementTableView.dataSource);
     
-    NSLog(@"%@ awakeFromNib, self.listView: %@, self.listView.delegate: %@", self, self.listView, self.listView.delegate);
+    NSLog(@"%@ awakeFromNib, elementTableView: %@, self.elementTableView.delegate: %@",
+          self, self.elementTableView, self.elementTableView.delegate);
 }
 
 @end

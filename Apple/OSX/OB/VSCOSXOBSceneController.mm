@@ -7,20 +7,18 @@
 //
 
 #import "VSCOSXOBSceneController.h"
-
 #import "VSCOBOSXSceneDisplayView.h"
 #import "VSCOSXOBSceneDetailView.h"
 #import "VSCOSXOBSceneElementListView.h"
-#import "VSCOSXOBSceneElementCell.h"
-#import "PXListView.h"
-
-NSString* const VSCOSXOBSceneElementCellReuseIdentifier = @"VSCOSXOBSceneElementCellReuseIdentifier";
+#import "VSCOSXOBSceneElementView.h"
 
 @interface VSCOSXOBSceneController ()
 
 @end
 
 @implementation VSCOSXOBSceneController
+
+static const BOOL traceInterface = YES;
 
 @synthesize scene = _scene;
 @synthesize environmentController = _environmentController;
@@ -70,7 +68,7 @@ NSString* const VSCOSXOBSceneElementCellReuseIdentifier = @"VSCOSXOBSceneElement
         newScene->addListener(self.sceneListener);
     }
     
-    [self.elementListView.listView reloadData];
+    [self.elementListView.elementTableView reloadData];
 }
 
 #pragma mark - UI Callbacks
@@ -95,7 +93,7 @@ NSString* const VSCOSXOBSceneElementCellReuseIdentifier = @"VSCOSXOBSceneElement
 
 -(void) scene:(VSC::OB::Scene::SPtr)scene registeredElement:(VSC::OB::Scene::Element::SPtr)element
 {
-    [self.elementListView.listView reloadData];
+    [self.elementListView.elementTableView reloadData];
 }
 
 -(void) scene:(VSC::OB::Scene::SPtr)scene changedSetting:(VSC::OB::Scene::Setting)setting toValue:(BOOL)value
@@ -105,7 +103,7 @@ NSString* const VSCOSXOBSceneElementCellReuseIdentifier = @"VSCOSXOBSceneElement
 
 #pragma mark - PXListViewDelegate Methods
 
-- (NSUInteger)numberOfRowsInListView: (PXListView*)aListView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
     VSC::OB::Scene::SPtr s = self.scene.lock();
     
@@ -115,53 +113,51 @@ NSString* const VSCOSXOBSceneElementCellReuseIdentifier = @"VSCOSXOBSceneElement
         NSLog(@"%@ numberOfRowsInListView %ld", self, (NSUInteger)(elems.size()));
         return (NSUInteger)(elems.size());
     }
- 
+    
     NSLog(@"%@ numberOfRowsInListView NO SCENE", self);
     
 	return 0;
 }
 
-- (PXListViewCell*)listView:(PXListView*)aListView cellForRow:(NSUInteger)row
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn*)tableColumn row:(NSInteger)row
 {
-    BOOST_ASSERT(aListView == self.elementListView.listView);
-    if (aListView != self.elementListView.listView) return nil;
+    BOOST_ASSERT(tableView == self.elementListView.elementTableView);
     
-    PXListViewCell* cell = [aListView dequeueCellWithReusableIdentifier:VSCOSXOBSceneElementCellReuseIdentifier];
-    
-    if (cell) BOOST_ASSERT([cell isKindOfClass:[VSCOSXOBSceneElementCell class]]);
-    
-	VSCOSXOBSceneElementCell *elementCell = (VSCOSXOBSceneElementCell*)cell;
-	
-	if(!elementCell)
+    if (tableView == self.elementListView.elementTableView)
     {
-		elementCell = [VSCOSXOBSceneElementCell cellLoadedFromNibNamed:@"VSCOSXOBSceneElementCell"
-                                                    reusableIdentifier:VSCOSXOBSceneElementCellReuseIdentifier];
-	}
+        if (traceInterface) NSLog(@"%@ listView:cellForRow: %ld", self, row);
+        
+        VSC::OB::Scene::SPtr s = self.scene.lock();
+        VSC::OB::Scene::Elements& elems = s->getElements();
+        BOOST_ASSERT((NSInteger)elems.size() > row);
+        if ((NSInteger)elems.size() > row)
+        {
+            VSC::OB::Scene::Element::SPtr elem = elems.at(row);
+            VSC::OB::Scene::Element::WPtr weakElem = VSC::OB::Scene::Element::WPtr(elem);
+            VSCOSXOBSceneElementView* elementView = [tableView makeViewWithIdentifier:[[VSCOSXOBSceneElementView class] description] owner:self];
+            BOOST_ASSERT(elementView);
+            BOOST_ASSERT([elementView isKindOfClass:[VSCOSXOBSceneElementView class]]);
+            elementView.environmentController = self.environmentController;
+            elementView.element = weakElem;
+            
+            return elementView;
+        }
+    }
     
-    elementCell.environmentController = self.environmentController;
-    
-    VSC::OB::Scene::SPtr s = self.scene.lock();
-    VSC::OB::Scene::Elements& elems = s->getElements();
-    
-    VSC::OB::Scene::Element::SPtr elem = elems.at(row);
-    VSC::OB::Scene::Element::WPtr weakElem = VSC::OB::Scene::Element::WPtr(elem);
-	
-	// Set up the new cell:
-	elementCell.element = weakElem;
-    
-    NSLog(@"%@ aListView %@ cellForRow %ld: %@", self, aListView, row, elementCell);
-	
-	return elementCell;
+	return nil;
 }
 
-- (CGFloat)listView:(PXListView*)aListView heightOfRow:(NSUInteger)row
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
-	return [VSCOSXOBSceneElementCell defaultViewHeight];
+    BOOST_ASSERT(tableView == self.elementListView.elementTableView);
+    
+    if (tableView == self.elementListView.elementTableView)
+    {
+        return [VSCOSXOBSceneElementView defaultViewHeight];
+    }
+    
+    return 0;
 }
 
-- (void)listViewSelectionDidChange:(NSNotification*)aNotification
-{
-    NSLog(@"%@ selection changed %@", self, aNotification);
-}
 
 @end

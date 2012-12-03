@@ -8,7 +8,7 @@
 
 #import "VSCOSXMIDIWindowController.h"
 #import "VSCOSXMIDITestController.h"
-#import "VSCOSXMIDIOutputJAView.h"
+#import "VSCOSXMIDIOutputView.h"
 #import "VSCOSXMIDITest.h"
 
 #import "NSString+VSCAdditions.h"
@@ -58,8 +58,7 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
 {
     [super windowDidLoad];
     
-    self.midiOutputsListView.canCallDataSourceInParallel = YES;
-    [self.midiOutputsListView reloadData];
+    [self.midiOutputsTableView reloadData];
     
     BOOST_ASSERT(self.channelTextField.formatter);
     BOOST_ASSERT(self.pitchTextField.formatter);
@@ -138,7 +137,7 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
      *  Main output tab
      */
     
-    [self.midiOutputsListView reloadData];
+    [self.midiOutputsTableView reloadData];
     
     /*
      *  Test output
@@ -293,11 +292,13 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
     
 }
 
-#pragma mark - JAListViewDataSource
+#pragma mark - NSTableViewDelegate and NSTableViewDataSource
 
-- (NSUInteger)numberOfItemsInListView:(JAListView *)listView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    if (self.midiOutputManager)
+    BOOST_ASSERT(aTableView == self.midiOutputsTableView);
+    BOOST_ASSERT(self.midiOutputManager);
+    if (aTableView == self.midiOutputsTableView && self.midiOutputManager)
     {
         return (NSUInteger)self.midiOutputManager->getOutputs().size();
     }
@@ -305,28 +306,36 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
     return 0;
 }
 
-- (JAListViewItem *)listView:(JAListView *)listView viewAtIndex:(NSUInteger)index
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn*)tableColumn row:(NSInteger)row
 {
-    if (listView == self.midiOutputsListView) {
-        
-        if (self.midiOutputManager)
+    BOOST_ASSERT(tableView == self.midiOutputsTableView);
+    BOOST_ASSERT(self.midiOutputManager);
+    if (tableView == self.midiOutputsTableView && self.midiOutputManager)
+    {
+        const VSC::MIDI::Outputs& outputs = self.midiOutputManager->getOutputs();
+        BOOST_ASSERT((NSUInteger)outputs.size() > row);
+        if ((NSUInteger)outputs.size() > row)
         {
-            const VSC::MIDI::Outputs& outputs = self.midiOutputManager->getOutputs();
-            
-            if ((NSUInteger)outputs.size() > index)
-            {
-                VSCOSXMIDIOutputJAView* outputView = [VSCOSXMIDIOutputJAView midiOutputView];
-                outputView.midiOutput = outputs.at(index);
-                return outputView;
-            }
+            VSCOSXMIDIOutputView* outputView = [tableView makeViewWithIdentifier:[[VSCOSXMIDIOutputView class] description] owner:self];
+            BOOST_ASSERT(outputView);
+            outputView.midiOutput = outputs.at(row);
+            return outputView;
         }
-        
     }
     
-    return nil;
+	return nil;
 }
 
-#pragma mark - JAListViewDelegate
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
+{
+    BOOST_ASSERT(tableView == self.midiOutputsTableView);
+    if (tableView == self.midiOutputsTableView)
+    {
+        return 50.0;
+    }
+    
+    return 0;
+}
  
 
 @end

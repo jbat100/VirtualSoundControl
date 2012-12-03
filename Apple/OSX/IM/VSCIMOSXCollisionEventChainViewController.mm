@@ -221,6 +221,11 @@ const static BOOL traceInterface = YES;
     
 }
 
+-(void) sender:(id)sender requestsSetDelay:(VSC::IM::Delay::SPtr)delay toInterval:(NSTimeInterval)delayInterval
+{
+    BOOST_ASSERT_MSG(NO, "NOT IMPLEMENTED");
+}
+
 -(void) senderRequestsEventChainView:(id)sender
 {
     if ([self.actionMappingsViewController.view superview] == self.view)

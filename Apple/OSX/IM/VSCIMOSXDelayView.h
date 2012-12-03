@@ -9,6 +9,9 @@
 #import <Cocoa/Cocoa.h>
 #include "VSCIMDelay.h"
 
+@protocol VSCIMOSXCollisionEventChainController;
+
+
 @interface VSCIMOSXDelayView : NSView
 
 +(CGFloat) defaultViewHeight;
