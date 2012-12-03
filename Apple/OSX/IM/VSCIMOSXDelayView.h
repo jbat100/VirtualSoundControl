@@ -7,14 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "PXListViewCell.h"
-
 #include "VSCIMDelay.h"
 
-@interface VSCIMOSXDelayView : PXListViewCell
+@interface VSCIMOSXDelayView : NSView
 
 +(CGFloat) defaultViewHeight;
 
 @property (nonatomic, assign) VSC::IM::Delay::WPtr delay;
+
+@property (weak) id<VSCIMOSXCollisionEventChainController> eventChainController;
 
 @end

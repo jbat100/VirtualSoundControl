@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "PXListViewDelegate.h"
 #import "VSCOSXOBSceneElementEditor.h"
 #import "VSCOSXOBSceneElementController.h"
 #import "VSCIMOSXCollisionEventChainController.h"
@@ -17,13 +16,14 @@
 @class PXListView;
 @class VSCIMOSXCollisionActionMappingsViewController;
 
-@interface VSCIMOSXCollisionEventChainViewController : NSViewController <VSCIMOSXCollisionEventChainController, PXListViewDelegate>
+@interface VSCIMOSXCollisionEventChainViewController : NSViewController
+<VSCIMOSXCollisionEventChainController, NSTableViewDataSource, NSTableViewDelegate>
 
 /*
  *  Event chain interface
  */
 
-@property (weak) IBOutlet PXListView* eventListView;
+@property (weak) IBOutlet NSTableView* eventTableView;
 @property (weak) IBOutlet NSPopUpButton* addEventButton;
 @property (weak) IBOutlet NSButton* removeEventButton;
 @property (weak) IBOutlet NSMenu* addEventMenu;

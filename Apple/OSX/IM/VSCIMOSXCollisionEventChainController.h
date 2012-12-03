@@ -16,6 +16,7 @@
 @property (nonatomic, assign) VSC::IM::CollisionEventChain::WPtr eventChain;
 
 -(void) sender:(id)sender requestsShowMappingsForCollisionAction:(VSC::IM::CollisionAction::SPtr)action;
+-(void) sender:(id)sender requestsSetDelay:(VSC::IM::Delay::SPtr)delay to:(NSTimeInterval)delayInterval;
 -(void) senderRequestsEventCollisionChainView:(id)sender;
 
 @end

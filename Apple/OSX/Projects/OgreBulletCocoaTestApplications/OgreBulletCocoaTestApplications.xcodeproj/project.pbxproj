@@ -12,12 +12,6 @@
 		101C8E191624CA460026F0D7 /* VSCIMCollisionAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101C8E181624CA460026F0D7 /* VSCIMCollisionAction.cpp */; };
 		101C8E1C1624CB2E0026F0D7 /* VSCIMCollisionEventChain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101C8E1A1624CB2E0026F0D7 /* VSCIMCollisionEventChain.cpp */; };
 		101EBB441629AE79006601A2 /* NSArray+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB431629AE79006601A2 /* NSArray+VSCAdditions.mm */; };
-		101EBB781629DBCE006601A2 /* JAListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB5A1629DBCE006601A2 /* JAListView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		101EBB7A1629DBCE006601A2 /* JAListViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB611629DBCE006601A2 /* JAListViewItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		101EBB7B1629DBCE006601A2 /* JAObjectListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB631629DBCE006601A2 /* JAObjectListView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		101EBB7C1629DBCE006601A2 /* JAObjectListViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB651629DBCE006601A2 /* JAObjectListViewItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		101EBB7D1629DBCE006601A2 /* JASectionedListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB671629DBCE006601A2 /* JASectionedListView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		101EBB7F1629DBCE006601A2 /* NSIndexPath+JAListViewExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB6A1629DBCE006601A2 /* NSIndexPath+JAListViewExtensions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		101EBB881629DE75006601A2 /* VSCOSXMIDIOutputJAView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB861629DE75006601A2 /* VSCOSXMIDIOutputJAView.mm */; };
 		101EBB8C162AB52A006601A2 /* VSCOSXMIDIOutputJAView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 101EBB8B162AB52A006601A2 /* VSCOSXMIDIOutputJAView.xib */; };
 		101EBB8E162B2E2C006601A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 101EBB8D162B2E2C006601A2 /* QuartzCore.framework */; };
@@ -77,10 +71,6 @@
 		108EE2A9163C08CA00DD45BF /* VSCIMAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108EE2A7163C08CA00DD45BF /* VSCIMAction.cpp */; };
 		1091F28415B07C0D00466854 /* VSCLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1091F28215B07C0D00466854 /* VSCLog.cpp */; };
 		109D51B5155998EE0030C161 /* VSCException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109D51B3155998EE0030C161 /* VSCException.cpp */; };
-		10AF53E6163D316100419EEE /* PXListDocumentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53DB163D316100419EEE /* PXListDocumentView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		10AF53E7163D316100419EEE /* PXListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53DD163D316100419EEE /* PXListView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		10AF53E8163D316100419EEE /* PXListView+UserInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53E0163D316100419EEE /* PXListView+UserInteraction.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		10AF53E9163D316100419EEE /* PXListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53E2163D316100419EEE /* PXListViewCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		10AF53F1163D340000419EEE /* VSCOSXOBSceneController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53F0163D340000419EEE /* VSCOSXOBSceneController.mm */; };
 		10AF53F4163D355B00419EEE /* VSCOSXOBSceneElementCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53F3163D355B00419EEE /* VSCOSXOBSceneElementCell.mm */; };
 		10AF53F6163D73F800419EEE /* VSCOSXOBSceneElementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10AF53F5163D73F800419EEE /* VSCOSXOBSceneElementCell.xib */; };
@@ -239,28 +229,6 @@
 		101C8E1B1624CB2E0026F0D7 /* VSCIMCollisionEventChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMCollisionEventChain.h; path = ../../../../../Mapping/VSCIMCollisionEventChain.h; sourceTree = "<group>"; };
 		101EBB421629AE79006601A2 /* NSArray+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+VSCAdditions.h"; path = "../../../Categories/NSArray+VSCAdditions.h"; sourceTree = "<group>"; };
 		101EBB431629AE79006601A2 /* NSArray+VSCAdditions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSArray+VSCAdditions.mm"; path = "../../../Categories/NSArray+VSCAdditions.mm"; sourceTree = "<group>"; };
-		101EBB4A1629DBCE006601A2 /* Demo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Demo-Info.plist"; path = "../../../Submodules/JAListView/Demo-Info.plist"; sourceTree = "<group>"; };
-		101EBB4B1629DBCE006601A2 /* DemoSectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoSectionView.h; path = ../../../Submodules/JAListView/DemoSectionView.h; sourceTree = "<group>"; };
-		101EBB4C1629DBCE006601A2 /* DemoSectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemoSectionView.m; path = ../../../Submodules/JAListView/DemoSectionView.m; sourceTree = "<group>"; };
-		101EBB4D1629DBCE006601A2 /* DemoSectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DemoSectionView.xib; path = ../../../Submodules/JAListView/DemoSectionView.xib; sourceTree = "<group>"; };
-		101EBB4E1629DBCE006601A2 /* DemoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoView.h; path = ../../../Submodules/JAListView/DemoView.h; sourceTree = "<group>"; };
-		101EBB4F1629DBCE006601A2 /* DemoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemoView.m; path = ../../../Submodules/JAListView/DemoView.m; sourceTree = "<group>"; };
-		101EBB501629DBCE006601A2 /* DemoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DemoView.xib; path = ../../../Submodules/JAListView/DemoView.xib; sourceTree = "<group>"; };
-		101EBB561629DBCE006601A2 /* JAEdgeInsets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAEdgeInsets.h; path = ../../../Submodules/JAListView/JAEdgeInsets.h; sourceTree = "<group>"; };
-		101EBB591629DBCE006601A2 /* JAListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAListView.h; path = ../../../Submodules/JAListView/JAListView.h; sourceTree = "<group>"; };
-		101EBB5A1629DBCE006601A2 /* JAListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAListView.m; path = ../../../Submodules/JAListView/JAListView.m; sourceTree = "<group>"; };
-		101EBB5E1629DBCE006601A2 /* JAListViewAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAListViewAppDelegate.h; path = ../../../Submodules/JAListView/JAListViewAppDelegate.h; sourceTree = "<group>"; };
-		101EBB5F1629DBCE006601A2 /* JAListViewAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAListViewAppDelegate.m; path = ../../../Submodules/JAListView/JAListViewAppDelegate.m; sourceTree = "<group>"; };
-		101EBB601629DBCE006601A2 /* JAListViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAListViewItem.h; path = ../../../Submodules/JAListView/JAListViewItem.h; sourceTree = "<group>"; };
-		101EBB611629DBCE006601A2 /* JAListViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAListViewItem.m; path = ../../../Submodules/JAListView/JAListViewItem.m; sourceTree = "<group>"; };
-		101EBB621629DBCE006601A2 /* JAObjectListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAObjectListView.h; path = ../../../Submodules/JAListView/JAObjectListView.h; sourceTree = "<group>"; };
-		101EBB631629DBCE006601A2 /* JAObjectListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAObjectListView.m; path = ../../../Submodules/JAListView/JAObjectListView.m; sourceTree = "<group>"; };
-		101EBB641629DBCE006601A2 /* JAObjectListViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAObjectListViewItem.h; path = ../../../Submodules/JAListView/JAObjectListViewItem.h; sourceTree = "<group>"; };
-		101EBB651629DBCE006601A2 /* JAObjectListViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAObjectListViewItem.m; path = ../../../Submodules/JAListView/JAObjectListViewItem.m; sourceTree = "<group>"; };
-		101EBB661629DBCE006601A2 /* JASectionedListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JASectionedListView.h; path = ../../../Submodules/JAListView/JASectionedListView.h; sourceTree = "<group>"; };
-		101EBB671629DBCE006601A2 /* JASectionedListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASectionedListView.m; path = ../../../Submodules/JAListView/JASectionedListView.m; sourceTree = "<group>"; };
-		101EBB691629DBCE006601A2 /* NSIndexPath+JAListViewExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSIndexPath+JAListViewExtensions.h"; path = "../../../Submodules/JAListView/NSIndexPath+JAListViewExtensions.h"; sourceTree = "<group>"; };
-		101EBB6A1629DBCE006601A2 /* NSIndexPath+JAListViewExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSIndexPath+JAListViewExtensions.m"; path = "../../../Submodules/JAListView/NSIndexPath+JAListViewExtensions.m"; sourceTree = "<group>"; };
 		101EBB861629DE75006601A2 /* VSCOSXMIDIOutputJAView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXMIDIOutputJAView.mm; path = ../../MIDI/VSCOSXMIDIOutputJAView.mm; sourceTree = "<group>"; };
 		101EBB8A162A1E1E006601A2 /* VSCOSXMIDIOutputJAView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXMIDIOutputJAView.h; path = ../../MIDI/VSCOSXMIDIOutputJAView.h; sourceTree = "<group>"; };
 		101EBB8B162AB52A006601A2 /* VSCOSXMIDIOutputJAView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXMIDIOutputJAView.xib; path = ../../MIDI/VSCOSXMIDIOutputJAView.xib; sourceTree = "<group>"; };
@@ -364,23 +332,6 @@
 		109D51B3155998EE0030C161 /* VSCException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCException.cpp; path = ../../../../Generic/VSCException.cpp; sourceTree = "<group>"; };
 		109D51B4155998EE0030C161 /* VSCException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCException.h; path = ../../../../Generic/VSCException.h; sourceTree = "<group>"; };
 		10AF53D6163D2F1B00419EEE /* VSCOSXOBSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneController.h; path = ../../../OB/VSCOSXOBSceneController.h; sourceTree = "<group>"; };
-		10AF53DA163D316100419EEE /* PXListDocumentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PXListDocumentView.h; path = ../../../Submodules/PXListView/Classes/PXListDocumentView.h; sourceTree = "<group>"; };
-		10AF53DB163D316100419EEE /* PXListDocumentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PXListDocumentView.m; path = ../../../Submodules/PXListView/Classes/PXListDocumentView.m; sourceTree = "<group>"; };
-		10AF53DC163D316100419EEE /* PXListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PXListView.h; path = ../../../Submodules/PXListView/Classes/PXListView.h; sourceTree = "<group>"; };
-		10AF53DD163D316100419EEE /* PXListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PXListView.m; path = ../../../Submodules/PXListView/Classes/PXListView.m; sourceTree = "<group>"; };
-		10AF53DE163D316100419EEE /* PXListView+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PXListView+Private.h"; path = "../../../Submodules/PXListView/Classes/PXListView+Private.h"; sourceTree = "<group>"; };
-		10AF53DF163D316100419EEE /* PXListView+UserInteraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PXListView+UserInteraction.h"; path = "../../../Submodules/PXListView/Classes/PXListView+UserInteraction.h"; sourceTree = "<group>"; };
-		10AF53E0163D316100419EEE /* PXListView+UserInteraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PXListView+UserInteraction.m"; path = "../../../Submodules/PXListView/Classes/PXListView+UserInteraction.m"; sourceTree = "<group>"; };
-		10AF53E1163D316100419EEE /* PXListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PXListViewCell.h; path = ../../../Submodules/PXListView/Classes/PXListViewCell.h; sourceTree = "<group>"; };
-		10AF53E2163D316100419EEE /* PXListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PXListViewCell.m; path = ../../../Submodules/PXListView/Classes/PXListViewCell.m; sourceTree = "<group>"; };
-		10AF53E3163D316100419EEE /* PXListViewCell+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PXListViewCell+Private.h"; path = "../../../Submodules/PXListView/Classes/PXListViewCell+Private.h"; sourceTree = "<group>"; };
-		10AF53E4163D316100419EEE /* PXListViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PXListViewDelegate.h; path = ../../../Submodules/PXListView/Classes/PXListViewDelegate.h; sourceTree = "<group>"; };
-		10AF53E5163D316100419EEE /* PXListViewDropHighlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PXListViewDropHighlight.h; path = ../../../Submodules/PXListView/Classes/PXListViewDropHighlight.h; sourceTree = "<group>"; };
-		10AF53EB163D319E00419EEE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../../../Submodules/PXListView/Classes/AppDelegate.h; sourceTree = "<group>"; };
-		10AF53EC163D319E00419EEE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ../../../Submodules/PXListView/Classes/AppDelegate.m; sourceTree = "<group>"; };
-		10AF53ED163D319E00419EEE /* MyListViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MyListViewCell.h; path = ../../../Submodules/PXListView/Classes/MyListViewCell.h; sourceTree = "<group>"; };
-		10AF53EE163D319E00419EEE /* MyListViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MyListViewCell.m; path = ../../../Submodules/PXListView/Classes/MyListViewCell.m; sourceTree = "<group>"; };
-		10AF53EF163D31A600419EEE /* MyListViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MyListViewCell.xib; path = ../../../Submodules/PXListView/Resources/MyListViewCell.xib; sourceTree = "<group>"; };
 		10AF53F0163D340000419EEE /* VSCOSXOBSceneController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneController.mm; path = ../../../OB/VSCOSXOBSceneController.mm; sourceTree = "<group>"; };
 		10AF53F2163D355B00419EEE /* VSCOSXOBSceneElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementCell.h; path = ../../../OB/VSCOSXOBSceneElementCell.h; sourceTree = "<group>"; };
 		10AF53F3163D355B00419EEE /* VSCOSXOBSceneElementCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneElementCell.mm; path = ../../../OB/VSCOSXOBSceneElementCell.mm; sourceTree = "<group>"; };
@@ -460,7 +411,6 @@
 		10B60F061550850C006A6D6E /* LinearMath.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinearMath.framework; path = /Library/Frameworks/LinearMath.framework; sourceTree = "<absolute>"; };
 		10B60F10155086F9006A6D6E /* OgreOSXCocoaView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaView.h; path = include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaView.h; sourceTree = OGRE_SDK; };
 		10BECC65164C59340006604C /* VSCIMOSXDelayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCIMOSXDelayView.xib; path = ../../../IM/VSCIMOSXDelayView.xib; sourceTree = "<group>"; };
-		10BECC6B164C65B30006604C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = ../../../Submodules/PXListView/Resources/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		10CB65AC164E926E000D311F /* VSCOSXEnvironmentWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXEnvironmentWindowController.xib; path = ../../Application/VSCOSXEnvironmentWindowController.xib; sourceTree = "<group>"; };
 		10CB65AD164E926E000D311F /* VSCOSXEnvironmentWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXEnvironmentWindowController.h; path = ../../Application/VSCOSXEnvironmentWindowController.h; sourceTree = "<group>"; };
 		10CB65AE164E926E000D311F /* VSCOSXEnvironmentWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXEnvironmentWindowController.mm; path = ../../Application/VSCOSXEnvironmentWindowController.mm; sourceTree = "<group>"; };
@@ -733,43 +683,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		101EBB491629DB9C006601A2 /* JAListView */ = {
-			isa = PBXGroup;
-			children = (
-				101EBB891629DEAE006601A2 /* Demo */,
-				101EBB561629DBCE006601A2 /* JAEdgeInsets.h */,
-				101EBB591629DBCE006601A2 /* JAListView.h */,
-				101EBB5A1629DBCE006601A2 /* JAListView.m */,
-				101EBB601629DBCE006601A2 /* JAListViewItem.h */,
-				101EBB611629DBCE006601A2 /* JAListViewItem.m */,
-				101EBB621629DBCE006601A2 /* JAObjectListView.h */,
-				101EBB631629DBCE006601A2 /* JAObjectListView.m */,
-				101EBB641629DBCE006601A2 /* JAObjectListViewItem.h */,
-				101EBB651629DBCE006601A2 /* JAObjectListViewItem.m */,
-				101EBB661629DBCE006601A2 /* JASectionedListView.h */,
-				101EBB671629DBCE006601A2 /* JASectionedListView.m */,
-				101EBB691629DBCE006601A2 /* NSIndexPath+JAListViewExtensions.h */,
-				101EBB6A1629DBCE006601A2 /* NSIndexPath+JAListViewExtensions.m */,
-			);
-			name = JAListView;
-			sourceTree = "<group>";
-		};
-		101EBB891629DEAE006601A2 /* Demo */ = {
-			isa = PBXGroup;
-			children = (
-				101EBB4A1629DBCE006601A2 /* Demo-Info.plist */,
-				101EBB4B1629DBCE006601A2 /* DemoSectionView.h */,
-				101EBB4C1629DBCE006601A2 /* DemoSectionView.m */,
-				101EBB4D1629DBCE006601A2 /* DemoSectionView.xib */,
-				101EBB4E1629DBCE006601A2 /* DemoView.h */,
-				101EBB4F1629DBCE006601A2 /* DemoView.m */,
-				101EBB501629DBCE006601A2 /* DemoView.xib */,
-				101EBB5E1629DBCE006601A2 /* JAListViewAppDelegate.h */,
-				101EBB5F1629DBCE006601A2 /* JAListViewAppDelegate.m */,
-			);
-			name = Demo;
-			sourceTree = "<group>";
-		};
 		102671C6162583D6002D34B2 /* Collision Actions */ = {
 			isa = PBXGroup;
 			children = (
@@ -905,39 +818,6 @@
 			name = Cocoa;
 			sourceTree = "<group>";
 		};
-		10AF53D9163D314700419EEE /* PXListView */ = {
-			isa = PBXGroup;
-			children = (
-				10AF53EA163D318100419EEE /* Demo */,
-				10AF53DA163D316100419EEE /* PXListDocumentView.h */,
-				10AF53DB163D316100419EEE /* PXListDocumentView.m */,
-				10AF53DC163D316100419EEE /* PXListView.h */,
-				10AF53DD163D316100419EEE /* PXListView.m */,
-				10AF53DE163D316100419EEE /* PXListView+Private.h */,
-				10AF53DF163D316100419EEE /* PXListView+UserInteraction.h */,
-				10AF53E0163D316100419EEE /* PXListView+UserInteraction.m */,
-				10AF53E1163D316100419EEE /* PXListViewCell.h */,
-				10AF53E2163D316100419EEE /* PXListViewCell.m */,
-				10AF53E3163D316100419EEE /* PXListViewCell+Private.h */,
-				10AF53E4163D316100419EEE /* PXListViewDelegate.h */,
-				10AF53E5163D316100419EEE /* PXListViewDropHighlight.h */,
-			);
-			name = PXListView;
-			sourceTree = "<group>";
-		};
-		10AF53EA163D318100419EEE /* Demo */ = {
-			isa = PBXGroup;
-			children = (
-				10BECC6A164C65B30006604C /* MainMenu.xib */,
-				10AF53EF163D31A600419EEE /* MyListViewCell.xib */,
-				10AF53EB163D319E00419EEE /* AppDelegate.h */,
-				10AF53EC163D319E00419EEE /* AppDelegate.m */,
-				10AF53ED163D319E00419EEE /* MyListViewCell.h */,
-				10AF53EE163D319E00419EEE /* MyListViewCell.m */,
-			);
-			name = Demo;
-			sourceTree = "<group>";
-		};
 		10AF53F8163D76DA00419EEE /* Cocoa */ = {
 			isa = PBXGroup;
 			children = (
@@ -1001,8 +881,6 @@
 			children = (
 				10AF5408163D9A5A00419EEE /* Resources */,
 				10AF53F9163D8CB400419EEE /* DMTabBar */,
-				10AF53D9163D314700419EEE /* PXListView */,
-				101EBB491629DB9C006601A2 /* JAListView */,
 				109D51B2155998CA0030C161 /* VSC */,
 				10CFE6AC156CD5F700B24399 /* OgreBullet */,
 				10B60F0E155086D0006A6D6E /* Ogre */,
@@ -1700,12 +1578,6 @@
 				10D7AE9C1628767F00DE0F72 /* VSCOSXMIDIWindowController.mm in Sources */,
 				10EB5E5E16298E0B00E0F030 /* VSCOSXApplicationManager.mm in Sources */,
 				101EBB441629AE79006601A2 /* NSArray+VSCAdditions.mm in Sources */,
-				101EBB781629DBCE006601A2 /* JAListView.m in Sources */,
-				101EBB7A1629DBCE006601A2 /* JAListViewItem.m in Sources */,
-				101EBB7B1629DBCE006601A2 /* JAObjectListView.m in Sources */,
-				101EBB7C1629DBCE006601A2 /* JAObjectListViewItem.m in Sources */,
-				101EBB7D1629DBCE006601A2 /* JASectionedListView.m in Sources */,
-				101EBB7F1629DBCE006601A2 /* NSIndexPath+JAListViewExtensions.m in Sources */,
 				101EBB881629DE75006601A2 /* VSCOSXMIDIOutputJAView.mm in Sources */,
 				105CDA10162D9D6F00532AD0 /* VSCOB.cpp in Sources */,
 				105CDA11162D9D6F00532AD0 /* VSCOBApplication.cpp in Sources */,
@@ -1729,10 +1601,6 @@
 				10EE8847163842F100A1902B /* VSCGlobalApplication.cpp in Sources */,
 				108EE2A5163C007200DD45BF /* VSCIMCollisionMapped.cpp in Sources */,
 				108EE2A9163C08CA00DD45BF /* VSCIMAction.cpp in Sources */,
-				10AF53E6163D316100419EEE /* PXListDocumentView.m in Sources */,
-				10AF53E7163D316100419EEE /* PXListView.m in Sources */,
-				10AF53E8163D316100419EEE /* PXListView+UserInteraction.m in Sources */,
-				10AF53E9163D316100419EEE /* PXListViewCell.m in Sources */,
 				10AF53F1163D340000419EEE /* VSCOSXOBSceneController.mm in Sources */,
 				10AF53F4163D355B00419EEE /* VSCOSXOBSceneElementCell.mm in Sources */,
 				10AF53FE163D8D7600419EEE /* DMTabBar.m in Sources */,
@@ -1800,14 +1668,6 @@
 			);
 			name = MainMenu.xib;
 			path = OgreBulletCocoaTestApplications;
-			sourceTree = "<group>";
-		};
-		10BECC6A164C65B30006604C /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				10BECC6B164C65B30006604C /* English */,
-			);
-			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

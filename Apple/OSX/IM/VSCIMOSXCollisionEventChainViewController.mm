@@ -14,10 +14,6 @@
 #import "VSCIMOSXCollisionActionView.h"
 #import "VSCIMOSXDelayView.h"
 
-#import "PXListView.h"
-#import "PXListViewCell.h"
-#import "PXListDocumentView.h"
-
 #include "VSCIMCollisionMapper.h"
 #include "VSCIMEvent.h"
 #include "VSCIMDelay.h"
@@ -32,9 +28,8 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDela
 
 @interface VSCIMOSXCollisionEventChainViewController ()
 
-+(VSCIMOSXCollisionMappingView*) newCollisionMappingView;
-+(VSCIMOSXCollisionActionView*) newCollisionActionView;
-+(VSCIMOSXDelayView*) newDelayView;
++(VSCIMOSXCollisionActionView*) newCollisionActionViewWithOwner:(id)owner;
++(VSCIMOSXDelayView*) newDelayViewWithOwner:(id)owner;
 
 -(void) customInit;
 
@@ -73,8 +68,8 @@ const static BOOL traceInterface = YES;
     BOOST_ASSERT(self.view);
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
     
-    BOOST_ASSERT(self.eventListView);
-    self.eventListView.translatesAutoresizingMaskIntoConstraints = NO;
+    BOOST_ASSERT(self.eventTableView);
+    self.eventTableView.translatesAutoresizingMaskIntoConstraints = NO;
     
     BOOST_ASSERT(self.addEventButton);
     BOOST_ASSERT(self.removeEventButton);
@@ -88,13 +83,13 @@ const static BOOL traceInterface = YES;
     
     BOOST_ASSERT(self.addCollisionMIDINoteOnMenuItem.target == self);
     
-    self.eventListView.allowsEmptySelection = YES;
-    self.eventListView.allowsMultipleSelection = NO;
+    self.eventTableView.allowsEmptySelection = YES;
+    self.eventTableView.allowsMultipleSelection = NO;
 }
 
 -(void) reloadInterface
 {
-    [self.eventListView reloadData];
+    [self.eventTableView reloadData];
 }
 
 #pragma mark - UI Callbacks
@@ -103,9 +98,9 @@ const static BOOL traceInterface = YES;
 {
     NSLog(@"%@ listViewTest", self);
     
-    BOOST_ASSERT(self.eventListView);
+    BOOST_ASSERT(self.eventTableView);
     
-    PXListDocumentView* documentView = (PXListDocumentView*)[self.eventListView documentView];
+    PXListDocumentView* documentView = (PXListDocumentView*)[self.eventTableView documentView];
     BOOST_ASSERT([documentView isKindOfClass:[PXListDocumentView class]]);
     
     for (NSView* subview in [documentView subviews])
@@ -119,7 +114,7 @@ const static BOOL traceInterface = YES;
 
 -(VSC::IM::Event::SPtr) selectedChainEvent
 {
-    NSIndexSet* indexSet = [self.eventListView selectedRows];
+    NSIndexSet* indexSet = [self.eventTableView selectedRows];
     
     BOOST_ASSERT([indexSet count] <= 1);
     
@@ -239,53 +234,86 @@ const static BOOL traceInterface = YES;
 
 
 
-+(VSCIMOSXCollisionActionView*) newCollisionActionView
++(VSCIMOSXCollisionActionView*) newCollisionActionViewWithOwner:(id)owner
 {
-    VSCIMOSXCollisionActionView* cell = [VSCIMOSXCollisionActionView cellLoadedFromNibNamed:@"VSCIMOSXCollisionActionView"
-                                                                                     bundle:nil
-                                                                         reusableIdentifier:VSCIMOSXCollisionActionViewReuseIdentifier];
     
-    BOOST_ASSERT(cell);
+    static NSNib* nib = nil;
+    static NSString* identifier = [[VSCIMOSXCollisionActionView class] description];
     
-    return cell;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        BOOST_ASSERT(!nib);
+        nib = [[NSNib alloc] initWithNibNamed:[[VSCIMOSXCollisionActionView class] description] bundle:nil];
+    });
+    BOOST_ASSERT(nib);
+    
+    NSArray *objects = nil;
+    id v = nil;
+    [nib instantiateNibWithOwner:owner topLevelObjects:&objects];
+    for(id object in objects)
+    {
+        if([object isKindOfClass:[VSCIMOSXCollisionActionView class]]) {
+            v = object;
+            [v setReusableIdentifier:identifier];
+            break;
+        }
+    }
+    BOOST_ASSERT(v);
+    return v;
 }
 
-+(VSCIMOSXDelayView*) newDelayView
++(VSCIMOSXDelayView*) newDelayViewWithOwner:(id)owner
 {
-    VSCIMOSXDelayView* cell = [VSCIMOSXDelayView cellLoadedFromNibNamed:@"VSCIMOSXDelayView"
-                                                                 bundle:nil
-                                                     reusableIdentifier:VSCIMOSXDelayViewReuseIdentifier];
+    static NSNib* nib = nil;
+    static NSString* identifier = [[VSCIMOSXDelayView class] description];
     
-    BOOST_ASSERT(cell);
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        BOOST_ASSERT(!nib);
+        nib = [[NSNib alloc] initWithNibNamed:[[VSCIMOSXDelayView class] description] bundle:nil];
+    });
+    BOOST_ASSERT(nib);
     
-    return cell;
+    NSArray *objects = nil;
+    id v = nil;
+    [nib instantiateNibWithOwner:owner topLevelObjects:&objects];
+    for(id object in objects)
+    {
+        if([object isKindOfClass:[VSCIMOSXDelayView class]]) {
+            v = object;
+            [v setReusableIdentifier:identifier];
+            break;
+        }
+    }
+    BOOST_ASSERT(v);
+    return v;
 }
 
 
 
 
-#pragma mark - PXListViewDelegate
+#pragma mark - NSTableViewDelegate and NSTableViewDataSource
 
-- (NSUInteger)numberOfRowsInListView:(PXListView*)aListView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    BOOST_ASSERT(aListView == self.eventListView);
+    BOOST_ASSERT(aTableView == self.eventTableView);
     
-    if (aListView == self.eventListView)
+    if (aTableView == self.eventTableView)
     {
         VSC::IM::CollisionEventChain::SPtr chain = self.eventChain.lock();
         //BOOST_ASSERT(chain);
         if (chain) return chain->getNumberOfEvents();
-        else if (traceInterface) NSLog(@"%@ numberOfRowsInListView for %@ NO CHAIN", self, aListView);
+        else if (traceInterface) NSLog(@"%@ numberOfRowsInTableView for %@ NO CHAIN", self, aListView);
     }
     
 	return 0;
 }
 
-- (PXListViewCell*)listView:(PXListView*)aListView cellForRow:(NSUInteger)row
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn*)tableColumn row:(NSInteger)row
 {
-    BOOST_ASSERT(aListView == self.eventListView);
+    BOOST_ASSERT(tableView == self.eventTableView);
     
-    if (aListView == self.eventListView)
+    if (tableView == self.eventTableView)
     {
         if (traceInterface) NSLog(@"%@ listView:cellForRow: %ld", self, row);
         
@@ -297,17 +325,9 @@ const static BOOL traceInterface = YES;
         VSC::IM::CollisionAction::SPtr action = boost::dynamic_pointer_cast<VSC::IM::CollisionAction>(event);
         if (action)
         {
-            PXListViewCell* cell = [aListView dequeueCellWithReusableIdentifier:VSCIMOSXCollisionActionViewReuseIdentifier];
-            VSCIMOSXCollisionActionView* actionView = nil;
-            if (cell)
-            {
-                BOOST_ASSERT([cell isKindOfClass:[VSCIMOSXCollisionActionView class]]);
-                actionView = (VSCIMOSXCollisionActionView*)cell;
-            }
-            if(!actionView)
-            {
-                actionView = [[self class] newCollisionActionView];
-            }
+            VSCIMOSXCollisionActionView* actionView = [tableView makeViewWithIdentifier:[[VSCIMOSXCollisionActionView class] description] owner:self];
+            if (actionView) BOOST_ASSERT([actionView isKindOfClass:[VSCIMOSXCollisionActionView class]]);
+            else actionView = [[self class] newCollisionActionViewWithOwner:self];
             [actionView setCollisionAction:(VSC::IM::CollisionAction::WPtr(action))];
             actionView.eventChainController = self;
             if (traceInterface) NSLog(@"Returning: %@ with frame: %@", actionView, NSStringFromRect(actionView.frame));
@@ -317,19 +337,12 @@ const static BOOL traceInterface = YES;
         VSC::IM::Delay::SPtr delay = boost::dynamic_pointer_cast<VSC::IM::Delay>(event);
         if (delay)
         {
-            PXListViewCell* cell = [aListView dequeueCellWithReusableIdentifier:VSCIMOSXDelayViewReuseIdentifier];
-            VSCIMOSXDelayView* delayView = nil;
-            if (cell)
-            {
-                BOOST_ASSERT([cell isKindOfClass:[VSCIMOSXDelayView class]]);
-                delayView = (VSCIMOSXDelayView*)cell;
-            }
-            if(!delayView)
-            {
-                delayView = [[self class] newDelayView];
-            }
-            [delayView setDelay:(VSC::IM::Delay::WPtr(delay))];
-            if (traceInterface) NSLog(@"Returning: %@ with frame: %@", delayView, NSStringFromRect(delayView.frame));
+            VSCIMOSXDelayView* delayView = [tableView makeViewWithIdentifier:[[VSCIMOSXDelayView class] description] owner:self];
+            if (delayView) BOOST_ASSERT([delayView isKindOfClass:[VSCIMOSXDelayView class]]);
+            else delayView = [[self class] newDelayViewWithOwner:self];
+            [delayView setDelay:VSC::IM::Delay::WPtr(delay)];
+            delayView.eventChainController = self;
+            if (traceInterface) NSLog(@"Returning: %@ with frame: %@", delayView, NSStringFromRect(actionView.frame));
             return delayView;
         }
         
@@ -338,12 +351,12 @@ const static BOOL traceInterface = YES;
 	return nil;
 }
 
-- (CGFloat)listView:(PXListView*)aListView heightOfRow:(NSUInteger)row
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
     
-    BOOST_ASSERT(aListView == self.eventListView);
+    BOOST_ASSERT(tableView == self.eventTableView);
     
-    if (aListView == self.eventListView)
+    if (tableView == self.eventTableView)
     {
         if (traceInterface) NSLog(@"%@ heightOfRow: %ld", self, row);
         
@@ -380,13 +393,6 @@ const static BOOL traceInterface = YES;
     
     return 0;
 }
-
-- (void)listViewSelectionDidChange:(NSNotification*)aNotification
-{
-    VSC::IM::CollisionEventChain::SPtr chain = self.eventChain.lock();
-    NSLog(@"%@ Selection changed, event chain is: %p", self, chain.get());
-}
-
 
 
 

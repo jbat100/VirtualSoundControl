@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "PXListViewCell.h"
 
 #import "VSCIMOSXCollisionActionGlobal.h"
 #import "VSCIMOSXCollisionMappingTypes.h"
@@ -22,7 +21,7 @@
  *  the type of action to be switched.
  */
 
-@interface VSCIMOSXCollisionActionView : PXListViewCell
+@interface VSCIMOSXCollisionActionView : NSView
 
 +(CGFloat) heightOfViewForCollisionAction:(VSC::IM::CollisionAction::SPtr)collisionAction;
 +(NSString*) stringForActionType:(VSCIMOSXCollisionActionType)actionType;
