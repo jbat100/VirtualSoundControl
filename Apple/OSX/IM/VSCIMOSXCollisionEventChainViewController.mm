@@ -68,6 +68,8 @@ const static BOOL traceInterface = YES;
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
     
     BOOST_ASSERT(self.eventTableView);
+    BOOST_ASSERT(self.eventTableView.delegate == self);
+    BOOST_ASSERT(self.eventTableView.dataSource == self);
     self.eventTableView.translatesAutoresizingMaskIntoConstraints = NO;
     
     BOOST_ASSERT(self.addEventButton);
@@ -245,7 +247,7 @@ const static BOOL traceInterface = YES;
         }
     }
     BOOST_ASSERT(v);
-    BOOST_ASSERT(v.eventChainController == self);
+    BOOST_ASSERT(v.eventChainController == owner);
     return v;
 }
 
@@ -273,7 +275,7 @@ const static BOOL traceInterface = YES;
         }
     }
     BOOST_ASSERT(v);
-    BOOST_ASSERT(v.eventChainController == self);
+    BOOST_ASSERT(v.eventChainController == owner);
     return v;
 }
 

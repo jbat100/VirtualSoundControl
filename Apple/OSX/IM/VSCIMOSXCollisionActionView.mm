@@ -42,27 +42,6 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
  */
 
 @property (nonatomic, assign) VSCIMOSXCollisionActionType currentActionType;
-//@property (nonatomic, strong) IBOutlet NSPopUpButton* actionTypePopUpButton;
-
-@property (nonatomic, strong) IBOutlet NSView* mainView;
-@property (nonatomic, strong) IBOutlet NSTextField* actionTypeTextField;
-@property (nonatomic, strong) IBOutlet NSButton* mappingsButton;
-
--(void) setupInterfaceForNewCollisionAction;
-
-/*
- *  Only for MIDI actions
- */
-
-@property (nonatomic, strong) IBOutlet NSView* midiSetupView;
-@property (nonatomic, strong) IBOutlet NSPopUpButton* midiOutputPopUpButton;
-
-/*
- *  Only for MIDI control actions
- */
-
-@property (nonatomic, strong) IBOutlet NSView* midiControlSetupView;
-@property (nonatomic, strong) IBOutlet NSPopUpButton* midiControlNumberPopUpButton;
 
 /*
  *  Constraints!
@@ -72,16 +51,12 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
 -(void) commonInit;
 -(void) updateMIDIControlNumbers;
 
--(IBAction) showCollisionMappings:(id)sender;
--(IBAction) refreshMIDIOutputs:(id)sender;
--(IBAction) midiOutputSelected:(id)sender;
--(IBAction) refreshMIDIControlNumbers:(id)sender;
--(IBAction) midiControlNumberSelected:(id)sender;
-
 @end
 
 
 @implementation VSCIMOSXCollisionActionView
+
+static const BOOL debugDraw = YES;
 
 @synthesize collisionAction = _collisionAction;
 
@@ -166,25 +141,26 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    CGContextRef myContext = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
-    
-    switch (self.currentActionType)
+    if (debugDraw)
     {
-        case VSCIMOSXCollisionActionTypeMIDINoteOn:
-            CGContextSetRGBFillColor (myContext, 1.0, 0.0, 0.0, 1.0);
-            break;
-            
-        case VSCIMOSXCollisionActionTypeMIDINoteOff:
-            CGContextSetRGBFillColor (myContext, 0.0, 1.0, 0.0, 1.0);
-            break;
-            
-        default:
-            CGContextSetRGBFillColor (myContext, 0.4, 0.4, 0.4, 1.0);
+        CGContextRef myContext = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+        switch (self.currentActionType)
+        {
+            case VSCIMOSXCollisionActionTypeMIDINoteOn:
+                CGContextSetRGBFillColor (myContext, 1.0, 0.0, 0.0, 1.0);
+                break;
+                
+            case VSCIMOSXCollisionActionTypeMIDINoteOff:
+                CGContextSetRGBFillColor (myContext, 0.0, 1.0, 0.0, 1.0);
+                break;
+                
+            default:
+                CGContextSetRGBFillColor (myContext, 0.4, 0.4, 0.4, 1.0);
+        }
+        CGContextFillRect(myContext, self.bounds);
+        CGContextSetGrayStrokeColor (myContext, 1.0, 1.0);
+        CGContextStrokeRectWithWidth(myContext, NSRectToCGRect(self.bounds), 2.0);
     }
-    CGContextFillRect(myContext, self.bounds);
-    
-    CGContextSetGrayStrokeColor (myContext, 1.0, 1.0);
-    CGContextStrokeRectWithWidth(myContext, NSRectToCGRect(self.bounds), 2.0);
 }
 
 -(void) awakeFromNib
@@ -202,11 +178,8 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
         _collisionAction = action;
         self.currentActionType = VSCIMOSXCollisionActionTypeForCollisionAction(_collisionAction.lock());
         
-        //[self setupInterfaceForNewCollisionAction];
+        [self setupInterfaceForNewCollisionAction];
         
-        CGRect f = self.frame;
-        f.size.height = [[self class] heightOfViewForCollisionAction:action.lock()];
-        self.frame = f;
     }
     
     //[self setNeedsDisplay:YES];
@@ -225,7 +198,7 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
     
     // start from zero
     [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    //[self removeConstraints:[self constraints]];
+    [self removeConstraints:[self constraints]];
     
     BOOST_ASSERT(self.mainView);
     [self addSubview:self.mainView];
@@ -235,30 +208,30 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
     f.size.height = [[self class] heightOfViewForCollisionAction:action];
     self.frame = f;
     
-    /*
+    
     viewsDictionary = NSDictionaryOfVariableBindings(mainView);
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[mainView]|" options:0
                                                                       metrics:nil views:viewsDictionary]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[mainView]|" options:0
-                                                                      metrics:nil views:viewsDictionary]];
-     */
-     
-    /*
-    NSView* midiView = self.midiSetupView;
+    
+    NSArray* vConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[mainView]|" options:0 metrics:nil views:viewsDictionary];
+    
     
     if (VSC::IM::collisionActionIsMIDI(action))
     {
+        NSView* midiView = self.midiSetupView;
+        
         BOOST_ASSERT(midiView);
         [self addSubview:midiView];
         
         viewsDictionary = NSDictionaryOfVariableBindings(mainView, midiView);
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[midiView]|" options:0
                                                                      metrics:nil views:viewsDictionary]];
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[mainView][midiView]-0@998-|" options:0
-                                                                     metrics:nil views:viewsDictionary]];
+        
+        vConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[mainView][midiView]|" options:0 metrics:nil views:viewsDictionary];
 
     }
-    */
+    
+    [self addConstraints:vConstraints];
     
     [self.actionTypeTextField setStringValue:[[self class] stringForActionType:self.currentActionType]];
 }

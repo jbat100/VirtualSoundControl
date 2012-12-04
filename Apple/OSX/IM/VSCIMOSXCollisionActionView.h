@@ -31,4 +31,21 @@
 
 @property (nonatomic, assign) VSC::IM::CollisionAction::WPtr collisionAction;
 
+
+@property (nonatomic, strong) IBOutlet NSView* mainView;
+@property (nonatomic, strong) IBOutlet NSTextField* actionTypeTextField;
+@property (nonatomic, strong) IBOutlet NSButton* mappingsButton;
+
+@property (nonatomic, strong) IBOutlet NSView* midiSetupView;
+@property (nonatomic, strong) IBOutlet NSPopUpButton* midiOutputPopUpButton;
+
+@property (nonatomic, strong) IBOutlet NSView* midiControlSetupView;
+@property (nonatomic, strong) IBOutlet NSPopUpButton* midiControlNumberPopUpButton;
+
+-(IBAction) showCollisionMappings:(id)sender;
+-(IBAction) refreshMIDIOutputs:(id)sender;
+-(IBAction) midiOutputSelected:(id)sender;
+-(IBAction) refreshMIDIControlNumbers:(id)sender;
+-(IBAction) midiControlNumberSelected:(id)sender;
+
 @end

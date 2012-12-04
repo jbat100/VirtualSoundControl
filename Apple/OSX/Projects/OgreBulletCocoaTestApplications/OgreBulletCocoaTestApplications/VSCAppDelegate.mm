@@ -168,8 +168,4 @@
     [self.environmentWindowController showWindow:sender];
 }
 
-
-
-
-
 @end
