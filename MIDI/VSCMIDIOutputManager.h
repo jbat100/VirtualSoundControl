@@ -32,6 +32,7 @@ namespace VSC {
             void refreshOutputs(void);
             
             Output::SPtr getFirstOutput(void);
+            Output::SPtr getFirstOpenedOutput(void);
             Output::SPtr getOutputWithDescription(const std::string& description);
             const Outputs& getOutputs(void);
             

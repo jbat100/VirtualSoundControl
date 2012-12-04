@@ -5,6 +5,7 @@
 //
 
 #include "VSCIMCollisionMIDIActions.h"
+#include "VSCMIDIOutputManager.h"
 #include "VSCMIDITasks.h"
 
 #include <boost/foreach.hpp>
@@ -25,9 +26,22 @@ bool VSC::IM::collisionActionIsMIDIControl(CollisionAction::SPtr collisionAction
 
 
 VSC::IM::CollisionMIDIAction::CollisionMIDIAction() :
-mChannel(0)
+mChannel(1)
 {
     this->setTaskQueue(MIDI::SingletonMIDITaskQueue());
+    
+    MIDI::OutputManager::SPtr outputManager = MIDI::OutputManager::singletonManager();
+    BOOST_ASSERT(outputManager);
+    if (outputManager)
+    {
+        // Get the first openend MIDI output...
+        mMIDIOutput = outputManager->getFirstOpenedOutput();
+    }
+}
+
+VSC::IM::CollisionMIDIControlAction::CollisionMIDIControlAction() : mControlNumber(MIDI::ControlBreath)
+{
+    
 }
 
 VSC::IM::CollisionMIDINoteOnAction::CollisionMIDINoteOnAction()

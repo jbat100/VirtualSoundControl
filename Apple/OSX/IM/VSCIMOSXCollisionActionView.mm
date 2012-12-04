@@ -238,15 +238,17 @@ static const BOOL debugDraw = YES;
 
 -(void) updateMIDIControlNumbers
 {
-    //BOOST_ASSERT(self.currentActionType == VSCIMOSXCollisionActionTypeMIDIControlChange);
+    VSC::IM::CollisionAction::SPtr action = self.collisionAction.lock();
+    BOOST_ASSERT(VSC::IM::collisionActionIsMIDIControl(action));
     
     [self.midiControlNumberPopUpButton removeAllItems];
     
-    VSC::IM::CollisionMIDIAction::SPtr midiAction = boost::dynamic_pointer_cast<VSC::IM::CollisionMIDIAction>(self.collisionAction.lock());
+    VSC::IM::CollisionMIDIControlAction::SPtr controlAction;
+    controlAction = boost::dynamic_pointer_cast<VSC::IM::CollisionMIDIControlAction>(self.collisionAction.lock());
     
-    BOOST_ASSERT(midiAction);
+    BOOST_ASSERT(controlAction);
     
-    VSC::MIDI::Output::SPtr midiOutput = midiAction->getMIDIOutput();
+    VSC::MIDI::Output::SPtr midiOutput = controlAction->getMIDIOutput();
     
     if (midiOutput)
     {

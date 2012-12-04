@@ -86,12 +86,20 @@ const VSC::MIDI::Outputs& VSC::MIDI::OutputManager::getOutputs(void)
 VSC::MIDI::Output::SPtr VSC::MIDI::OutputManager::getFirstOutput(void)
 {
     boost::lock_guard<Mutex> lock(mMutex);
-    
     Output::SPtr output = Output::SPtr();
-    
     if (mOutputs.size() > 0) output = *(mOutputs.begin());
-    
     return output;
+}
+
+VSC::MIDI::Output::SPtr VSC::MIDI::OutputManager::getFirstOpenedOutput(void)
+{
+    boost::lock_guard<Mutex> lock(mMutex);
+    BOOST_FOREACH(Output::SPtr output, mOutputs)
+    {
+        BOOST_ASSERT(output);
+        if (output && output->getState() == Output::StateOpened) return output;
+    }
+    return Output::SPtr();
 }
 
 VSC::MIDI::Output::SPtr VSC::MIDI::OutputManager::getOutputWithDescription(const std::string& description)

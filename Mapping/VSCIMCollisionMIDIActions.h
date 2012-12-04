@@ -60,7 +60,7 @@ namespace VSC {
             
             typedef boost::shared_ptr<CollisionMIDIControlAction> SPtr;
             
-            CollisionMIDIControlAction() : mControlNumber(MIDI::ControlInvalid) {}
+            CollisionMIDIControlAction();
             
             MIDI::ControlNumber getControlNumber(void) {return mControlNumber;}
             void setControlNumber(MIDI::ControlNumber number) {mControlNumber = number;}
