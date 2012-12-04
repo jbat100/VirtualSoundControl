@@ -19,7 +19,6 @@
 #import "NSString+VSCAdditions.h"
 #import "NSArray+VSCAdditions.h"
 
-#import "PXListView.h"
 #import "DMTabBar.h"
 
 #include "VSCEnvironment.h"
@@ -226,8 +225,8 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 {
     BOOST_ASSERT(self.tabBox);
     BOOST_ASSERT(self.sceneElementListView);
-    BOOST_ASSERT(self.sceneElementListView.listView);
-    BOOST_ASSERT(self.sceneElementListView.listView.delegate == self.sceneController);
+    BOOST_ASSERT(self.sceneElementListView.elementTableView);
+    BOOST_ASSERT(self.sceneElementListView.elementTableView.delegate == self.sceneController);
     
     NSView* boxContentView = [self.tabBox contentView];
     
@@ -247,7 +246,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
                                                                                options:0 metrics:nil views:viewsDictionary]];
     }
     
-    [self.sceneElementListView.listView reloadData];
+    [self.sceneElementListView.elementTableView reloadData];
     
 }
 

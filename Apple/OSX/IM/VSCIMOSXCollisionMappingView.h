@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "PXListViewCell.h"
 #import "VSCIMOSXCollisionMappingTypes.h"
 
 #include "VSCIMTarget.h"
@@ -25,7 +24,7 @@
 
 
 
-@interface VSCIMOSXCollisionMappingView : PXListViewCell <VSCIMOSXCollisionMappingView>
+@interface VSCIMOSXCollisionMappingView : NSView <VSCIMOSXCollisionMappingView>
 
 +(CGFloat) defaultHeightOfView;
 +(CGFloat) heightOfViewForCollisionMapping:(VSC::IM::CollisionMapping::SPtr)collisionMapping;

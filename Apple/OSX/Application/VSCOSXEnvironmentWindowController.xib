@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1080</int>
-		<string key="IBDocument.SystemVersion">12C60</string>
+		<int key="IBDocument.SystemTarget">1070</int>
+		<string key="IBDocument.SystemVersion">11G63b</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
-		<string key="IBDocument.AppKitVersion">1187.34</string>
-		<string key="IBDocument.HIToolboxVersion">625.00</string>
+		<string key="IBDocument.AppKitVersion">1138.51</string>
+		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">2844</string>
@@ -86,7 +86,6 @@
 													<string key="NSFrameSize">{244, 383}</string>
 													<reference key="NSSuperview" ref="267754872"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView"/>
 													<string key="NSReuseIdentifierKey">_NS:11</string>
 												</object>
 											</array>
@@ -162,7 +161,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="962656048"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
@@ -207,7 +206,6 @@
 							<int key="NSPeriodicDelay">200</int>
 							<int key="NSPeriodicInterval">25</int>
 						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSButton" id="1017366076">
 						<reference key="NSNextResponder" ref="313695382"/>
@@ -215,7 +213,6 @@
 						<string key="NSFrame">{{18, 62}, {167, 18}}</string>
 						<reference key="NSSuperview" ref="313695382"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="834419450">
@@ -234,7 +231,6 @@
 							<int key="NSPeriodicDelay">200</int>
 							<int key="NSPeriodicInterval">25</int>
 						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSButton" id="1033357042">
 						<reference key="NSNextResponder" ref="313695382"/>
@@ -261,7 +257,6 @@
 							<int key="NSPeriodicDelay">200</int>
 							<int key="NSPeriodicInterval">25</int>
 						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSButton" id="553601920">
 						<reference key="NSNextResponder" ref="313695382"/>
@@ -288,7 +283,6 @@
 							<int key="NSPeriodicDelay">200</int>
 							<int key="NSPeriodicInterval">25</int>
 						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSButton" id="623792600">
 						<reference key="NSNextResponder" ref="313695382"/>
@@ -315,7 +309,6 @@
 							<int key="NSPeriodicDelay">200</int>
 							<int key="NSPeriodicInterval">25</int>
 						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSButton" id="999376810">
 						<reference key="NSNextResponder" ref="313695382"/>
@@ -342,7 +335,6 @@
 							<int key="NSPeriodicDelay">200</int>
 							<int key="NSPeriodicInterval">25</int>
 						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSButton" id="353673845">
 						<reference key="NSNextResponder" ref="313695382"/>
@@ -369,7 +361,6 @@
 							<int key="NSPeriodicDelay">200</int>
 							<int key="NSPeriodicInterval">25</int>
 						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSButton" id="908275212">
 						<reference key="NSNextResponder" ref="313695382"/>
@@ -396,7 +387,6 @@
 							<int key="NSPeriodicDelay">200</int>
 							<int key="NSPeriodicInterval">25</int>
 						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSButton" id="57668574">
 						<reference key="NSNextResponder" ref="313695382"/>
@@ -423,7 +413,6 @@
 							<int key="NSPeriodicDelay">200</int>
 							<int key="NSPeriodicInterval">25</int>
 						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSButton" id="991069662">
 						<reference key="NSNextResponder" ref="313695382"/>
@@ -450,7 +439,6 @@
 							<int key="NSPeriodicDelay">200</int>
 							<int key="NSPeriodicInterval">25</int>
 						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 				</array>
 				<string key="NSFrameSize">{203, 333}</string>
@@ -474,15 +462,12 @@
 									<object class="NSTableView" id="683360583">
 										<reference key="NSNextResponder" ref="681522810"/>
 										<int key="NSvFlags">256</int>
-										<array class="NSMutableArray" key="NSSubviews"/>
 										<string key="NSFrameSize">{234, 315}</string>
 										<reference key="NSSuperview" ref="681522810"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="416516009"/>
+										<reference key="NSNextKeyView" ref="501958230"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
 										<bool key="NSEnabled">YES</bool>
-										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-										<bool key="NSControlAllowsExpansionToolTips">YES</bool>
 										<object class="NSTableHeaderView" key="NSHeaderView" id="444783006">
 											<reference key="NSNextResponder" ref="501958230"/>
 											<int key="NSvFlags">256</int>
@@ -595,7 +580,6 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="852236553"/>
 								<string key="NSReuseIdentifierKey">_NS:58</string>
-								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<reference key="NSTarget" ref="135371777"/>
 								<string key="NSAction">_doScroller:</string>
 								<double key="NSPercent">0.95238095238095233</double>
@@ -606,9 +590,7 @@
 								<string key="NSFrame">{{1, 119}, {223, 15}}</string>
 								<reference key="NSSuperview" ref="135371777"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:60</string>
-								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<int key="NSsFlags">1</int>
 								<reference key="NSTarget" ref="135371777"/>
 								<string key="NSAction">_doScroller:</string>
@@ -634,7 +616,7 @@
 						<string key="NSFrameSize">{236, 333}</string>
 						<reference key="NSSuperview" ref="236663740"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="501958230"/>
+						<reference key="NSNextKeyView" ref="681522810"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="NSsFlags">133682</int>
 						<reference key="NSVScroller" ref="1071292988"/>
@@ -643,9 +625,6 @@
 						<reference key="NSHeaderClipView" ref="501958230"/>
 						<reference key="NSCornerView" ref="1003424456"/>
 						<bytes key="NSScrollAmts">QSAAAEEgAABCYAAAQmAAAA</bytes>
-						<double key="NSMinMagnification">0.25</double>
-						<double key="NSMaxMagnification">4</double>
-						<double key="NSMagnification">1</double>
 					</object>
 				</array>
 				<string key="NSFrameSize">{236, 333}</string>
@@ -860,6 +839,30 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">elementTableView</string>
+						<reference key="source" ref="236663740"/>
+						<reference key="destination" ref="683360583"/>
+					</object>
+					<int key="connectionID">518</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">dataSource</string>
+						<reference key="source" ref="683360583"/>
+						<reference key="destination" ref="905468160"/>
+					</object>
+					<int key="connectionID">521</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="683360583"/>
+						<reference key="destination" ref="905468160"/>
+					</object>
+					<int key="connectionID">522</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">inspectorButton</string>
 						<object class="NSCustomView" key="source" id="416516009">
 							<nil key="NSNextResponder"/>
@@ -891,7 +894,6 @@
 										<int key="NSPeriodicDelay">400</int>
 										<int key="NSPeriodicInterval">75</int>
 									</object>
-									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								</object>
 								<object class="NSTextField" id="43178866">
 									<reference key="NSNextResponder" ref="416516009"/>
@@ -916,7 +918,6 @@
 										</object>
 										<reference key="NSTextColor" ref="851792027"/>
 									</object>
-									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								</object>
 							</array>
 							<string key="NSFrame">{{1, 1}, {231, 54}}</string>
@@ -2876,7 +2877,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">517</int>
+			<int key="maxID">522</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2948,6 +2949,8 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="sceneDetailView">VSCOSXOBSceneDetailView</string>
 						<string key="sceneElementListView">VSCOSXOBSceneElementListView</string>
+						<string key="tabBar">DMTabBar</string>
+						<string key="tabBox">NSBox</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="sceneDetailView">
@@ -2957,6 +2960,14 @@
 						<object class="IBToOneOutletInfo" key="sceneElementListView">
 							<string key="name">sceneElementListView</string>
 							<string key="candidateClassName">VSCOSXOBSceneElementListView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tabBar">
+							<string key="name">tabBar</string>
+							<string key="candidateClassName">DMTabBar</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tabBox">
+							<string key="name">tabBox</string>
+							<string key="candidateClassName">NSBox</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -3083,17 +3094,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">VSCOSXOBSceneElementView</string>
 					<string key="superclassName">NSView</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">nameTextField</string>
-						<string key="NS.object.0">NSTextField</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">nameTextField</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">nameTextField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/VSCOSXOBSceneElementView.h</string>

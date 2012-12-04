@@ -21,6 +21,6 @@
 
 @property (nonatomic, assign) VSC::IM::CollisionAction::WPtr action;
 
-@property (weak) IBOutlet NSTableView* listView;
+@property (weak) IBOutlet NSTableView* mappingTableView;
 
 @end

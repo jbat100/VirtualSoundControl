@@ -163,7 +163,7 @@
                 [self.zVelTextField setDoubleValue:linearVelocity.z];
                 
                 Ogre::Node* node = rigidBody->getSceneNode();
-                BOOST_ASSERT(node);
+                //BOOST_ASSERT(node);
                 if (node)
                 {
                     const Ogre::Vector3& position = node->getPosition();
@@ -179,6 +179,18 @@
                     [self.zRotTextField setDoubleValue:rotation.z];
                     [self.wRotTextField setDoubleValue:rotation.w];
                     
+                }
+                
+                else
+                {
+                    [self.xPosTextField setStringValue:@"N/A"];
+                    [self.yPosTextField setStringValue:@"N/A"];
+                    [self.zPosTextField setStringValue:@"N/A"];
+                    
+                    [self.xRotTextField setStringValue:@"N/A"];
+                    [self.yRotTextField setStringValue:@"N/A"];
+                    [self.zRotTextField setStringValue:@"N/A"];
+                    [self.wRotTextField setStringValue:@"N/A"];
                 }
             }
             

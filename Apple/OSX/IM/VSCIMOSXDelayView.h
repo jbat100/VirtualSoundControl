@@ -18,6 +18,6 @@
 
 @property (nonatomic, assign) VSC::IM::Delay::WPtr delay;
 
-@property (weak) id<VSCIMOSXCollisionEventChainController> eventChainController;
+@property (assign) IBOutlet id<VSCIMOSXCollisionEventChainController> eventChainController;
 
 @end

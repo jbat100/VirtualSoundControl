@@ -27,7 +27,7 @@
 +(NSString*) stringForActionType:(VSCIMOSXCollisionActionType)actionType;
 +(VSCIMOSXCollisionActionType) actionTypeForString:(NSString*)menuItemString;
 
-@property (weak) id<VSCIMOSXCollisionEventChainController> eventChainController;
+@property (assign) IBOutlet id<VSCIMOSXCollisionEventChainController> eventChainController;
 
 @property (nonatomic, assign) VSC::IM::CollisionAction::WPtr collisionAction;
 

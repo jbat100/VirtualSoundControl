@@ -9,7 +9,6 @@
 #import "VSCIMOSXCollisionActionMappingsViewController.h"
 #import "VSCIMOSXCollisionEventChainController.h"
 #import "VSCIMOSXCollisionMappingView.h"
-#import "PXListView.h"
 
 NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisionMappingViewReuseIdentifier";
 
@@ -21,6 +20,8 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
 
 -(IBAction) backToEventChainView:(id)sender;
 -(BOOL) checkMappingView:(id<VSCIMOSXCollisionMappingView>)v;
+
++(VSCIMOSXCollisionMappingView*) newCollisionMappingViewWithOwner:(id)owner;
 
 @end
 
@@ -39,15 +40,31 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
 
 #pragma mark - View Factory Methods
 
-+(VSCIMOSXCollisionMappingView*) newCollisionMappingView
++(VSCIMOSXCollisionMappingView*) newCollisionMappingViewWithOwner:(id)owner
 {
-    VSCIMOSXCollisionMappingView* cell = [VSCIMOSXCollisionMappingView cellLoadedFromNibNamed:@"VSCIMOSXCollisionMappingView"
-                                                                                       bundle:nil
-                                                                           reusableIdentifier:VSCIMOSXCollisionMappingViewReuseIdentifier];
+    static NSNib* nib = nil;
+    static NSString* identifier = [[VSCIMOSXCollisionMappingView class] description];
     
-    BOOST_ASSERT(cell);
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        BOOST_ASSERT(!nib);
+        nib = [[NSNib alloc] initWithNibNamed:[[VSCIMOSXCollisionMappingView class] description] bundle:nil];
+    });
+    BOOST_ASSERT(nib);
     
-    return cell;
+    NSArray *objects = nil;
+    VSCIMOSXCollisionMappingView* v = nil;
+    [nib instantiateNibWithOwner:owner topLevelObjects:&objects];
+    for(id object in objects)
+    {
+        if([object isKindOfClass:[VSCIMOSXCollisionMappingView class]]) {
+            v = object;
+            v.identifier = identifier;
+            break;
+        }
+    }
+    BOOST_ASSERT(v);
+    return v;
 }
 
 #pragma mark - UI Callbacks
@@ -103,11 +120,11 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
 
 #pragma mark - PXListViewDelegate
 
-- (NSUInteger)numberOfRowsInListView:(PXListView*)aListView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    BOOST_ASSERT(aListView == self.listView);
+    BOOST_ASSERT(aTableView == self.mappingTableView);
     
-    if (aListView == self.listView)
+    if (aTableView == self.mappingTableView)
     {
         VSC::IM::CollisionAction::SPtr collisionAction = self.action.lock();
         BOOST_ASSERT(collisionAction);
@@ -117,12 +134,11 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
 	return 0;
 }
 
-- (PXListViewCell*)listView:(PXListView*)aListView cellForRow:(NSUInteger)row
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn*)tableColumn row:(NSInteger)row
 {
-
-    BOOST_ASSERT(aListView == self.listView);
+    BOOST_ASSERT(tableView == self.mappingTableView);
     
-    if (aListView == self.listView)
+    if (tableView == self.mappingTableView)
     {
         VSC::IM::CollisionAction::SPtr collisionAction = self.action.lock();
         BOOST_ASSERT(collisionAction);
@@ -137,35 +153,24 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
             
             if (collisionMapping)
             {
-                PXListViewCell* cell = [aListView dequeueCellWithReusableIdentifier:VSCIMOSXCollisionMappingViewReuseIdentifier];
-                VSCIMOSXCollisionMappingView* mappingView = nil;
-                
-                if (cell)
-                {
-                    BOOST_ASSERT([cell isKindOfClass:[VSCIMOSXCollisionMappingView class]]);
-                    mappingView = (VSCIMOSXCollisionMappingView*)cell;
-                }
-                
-                if(!mappingView)
-                {
-                    mappingView = [[self class] newCollisionMappingView];
-                }
+                VSCIMOSXCollisionMappingView* mappingView = [tableView makeViewWithIdentifier:[[VSCIMOSXCollisionMappingView class] description] owner:self];
+                if (mappingView) BOOST_ASSERT([mappingView isKindOfClass:[VSCIMOSXCollisionMappingView class]]);
+                else mappingView = [[self class] newCollisionMappingViewWithOwner:self];
                 [mappingView setMapping:(VSC::IM::CollisionMapping::WPtr(collisionMapping))];
-                
                 return mappingView;
             }
         }
+        
     }
-	
+    
 	return nil;
 }
 
-- (CGFloat)listView:(PXListView*)aListView heightOfRow:(NSUInteger)row
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
+    BOOST_ASSERT(tableView == self.mappingTableView);
     
-    BOOST_ASSERT(aListView == self.listView);
-    
-    if (aListView == self.listView)
+    if (tableView == self.mappingTableView)
     {
         VSC::IM::CollisionAction::SPtr collisionAction = self.action.lock();
         BOOST_ASSERT(collisionAction);
@@ -185,12 +190,5 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
     
     return 0;
 }
-
-- (void)listViewSelectionDidChange:(NSNotification*)aNotification
-{
-    NSLog(@"%@ selection changed: %@", self, aNotification);
-}
-
-
 
 @end

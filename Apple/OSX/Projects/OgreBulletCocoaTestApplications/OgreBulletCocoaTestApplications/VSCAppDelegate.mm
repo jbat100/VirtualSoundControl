@@ -87,7 +87,7 @@
     NSWindow* w = self.environmentWindowController.window; // does not force creation
     BOOST_ASSERT(w);
     
-    self.midiWindowController = [[VSCOSXMIDIWindowController alloc] initWithWindowNibName:@"VSCOSXMIDIWindow"];
+    self.midiWindowController = [[VSCOSXMIDIWindowController alloc] initWithWindowNibName:@"VSCOSXMIDIWindowController"];
     BOOST_ASSERT(self.midiWindowController);
     
     /*

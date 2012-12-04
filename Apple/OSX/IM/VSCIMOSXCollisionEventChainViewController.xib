@@ -199,7 +199,6 @@
 								<reference key="NSSuperview" ref="781711398"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:60</string>
-								<bool key="NSEnabled">YES</bool>
 								<int key="NSsFlags">1</int>
 								<reference key="NSTarget" ref="781711398"/>
 								<string key="NSAction">_doScroller:</string>
@@ -227,7 +226,7 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="283428419"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<int key="NSsFlags">133810</int>
+						<int key="NSsFlags">133682</int>
 						<reference key="NSVScroller" ref="845646845"/>
 						<reference key="NSHScroller" ref="211652067"/>
 						<reference key="NSContentView" ref="283428419"/>
@@ -380,7 +379,6 @@
 						<string key="NSFrame">{{140, 399}, {140, 23}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:22</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="200915156">
@@ -519,6 +517,14 @@
 						<reference key="destination" ref="709798335"/>
 					</object>
 					<int key="connectionID">154</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">eventTableView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="490156033"/>
+					</object>
+					<int key="connectionID">181</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1046,7 +1052,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">180</int>
+			<int key="maxID">181</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1088,7 +1094,7 @@
 						<string key="addDelayMenuItem">NSMenuItem</string>
 						<string key="addEventButton">NSPopUpButton</string>
 						<string key="addEventMenu">NSMenu</string>
-						<string key="eventListView">NSTableView</string>
+						<string key="eventTableView">NSTableView</string>
 						<string key="removeEventButton">NSButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -1120,8 +1126,8 @@
 							<string key="name">addEventMenu</string>
 							<string key="candidateClassName">NSMenu</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="eventListView">
-							<string key="name">eventListView</string>
+						<object class="IBToOneOutletInfo" key="eventTableView">
+							<string key="name">eventTableView</string>
 							<string key="candidateClassName">NSTableView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="removeEventButton">
