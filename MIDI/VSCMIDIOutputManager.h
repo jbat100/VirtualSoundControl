@@ -7,10 +7,13 @@
 #define _VSC_MIDI_OUTPUT_MANAGER_H_
 
 #include "VSC.h"
+#include "VSCBroadcaster.h"
 #include "VSCMIDI.h"
 #include "VSCMIDIOutput.h"
 
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
+#include <boost/enable_shared_from_this.hpp>
 #include <boost/thread.hpp>
 #include <map>
 
@@ -18,14 +21,25 @@ namespace VSC {
     
     namespace MIDI {
                 
-        class OutputManager {
+        class OutputManager : public VSC::Broadcaster, public boost::enable_shared_from_this<OutputManager> {
             
         public:
             
-            OutputManager();
-            ~OutputManager();
-            
             typedef boost::shared_ptr<OutputManager> SPtr;
+            
+            class Listener : public VSC::Listener
+            {
+                public:
+                
+                typedef boost::shared_ptr<OutputManager::Listener>  SPtr;
+                typedef boost::weak_ptr<OutputManager::Listener>    WPtr;
+                
+                void midiOutputManagerRefreshedOutputs(OutputManager::SPtr manager);
+                
+            };
+            
+            OutputManager();
+            virtual ~OutputManager();
             
             static OutputManager::SPtr singletonManager(void);
             
@@ -40,6 +54,8 @@ namespace VSC {
             
             PortManager::SPtr getPortManager(void) {return mPortManager;}
             Output::SPtr getOutputForPort(const OutputPort& port);
+            
+            virtual bool checkListener(VSC::Listener::SPtr listener);
             
         private:
             

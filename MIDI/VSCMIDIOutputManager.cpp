@@ -48,6 +48,14 @@ VSC::MIDI::OutputManager::~OutputManager()
     
 }
 
+bool VSC::MIDI::OutputManager::checkListener(VSC::Listener::SPtr listener)
+{
+    OutputManager::Listener::SPtr outputManagerListener = boost::dynamic_pointer_cast<OutputManager::Listener>(listener);
+    if (outputManagerListener) return true;
+    
+    return false;
+}
+
 void VSC::MIDI::OutputManager::refreshOutputs(void)
 {
     boost::lock_guard<Mutex> lock(mMutex);

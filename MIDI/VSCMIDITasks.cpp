@@ -45,6 +45,8 @@ VSC::MIDI::MIDINoteOnTask::MIDINoteOnTask(Task::Payload::SPtr payload) : MIDITas
 
 bool VSC::MIDI::MIDINoteOnTask::stepExecution(void)
 {
+    VSC::Task::stepExecution();
+    
     MIDINoteOnTask::Payload::SPtr midiPayload = boost::static_pointer_cast<MIDINoteOnTask::Payload>(this->getPayload());
     
     midiPayload->midiOutput->sendNoteOn(midiPayload->channel, midiPayload->pitch, midiPayload->velocity);
@@ -67,6 +69,8 @@ VSC::MIDI::MIDINoteOffTask::MIDINoteOffTask(Task::Payload::SPtr payload) : MIDIT
 
 bool VSC::MIDI::MIDINoteOffTask::stepExecution(void)
 {
+    VSC::Task::stepExecution();
+    
     MIDINoteOffTask::Payload::SPtr midiPayload = boost::static_pointer_cast<MIDINoteOffTask::Payload>(this->getPayload());
     
     midiPayload->midiOutput->sendNoteOff(midiPayload->channel, midiPayload->pitch, midiPayload->velocity);

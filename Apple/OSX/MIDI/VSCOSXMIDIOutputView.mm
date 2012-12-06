@@ -17,6 +17,11 @@
 
 @implementation VSCOSXMIDIOutputView
 
++(CGFloat) defaultViewHeight
+{
+    return 50.0;
+}
+
 - (id)initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];

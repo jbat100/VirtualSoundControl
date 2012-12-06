@@ -52,10 +52,8 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     CGContextRef myContext = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
-    
-    CGContextSetRGBFillColor (myContext, 0.0, 0.0, 1.0, 1.0);
+    CGContextSetRGBFillColor (myContext, 0.4, 0.4, 0.4, 1.0);
     CGContextFillRect(myContext, self.bounds);
-    
     CGContextSetGrayStrokeColor (myContext, 1.0, 1.0);
     CGContextStrokeRectWithWidth(myContext, NSRectToCGRect(self.bounds), 2.0);
 }

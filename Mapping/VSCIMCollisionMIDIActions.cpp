@@ -70,6 +70,9 @@ VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAction::createTaskForCollision(OB::S
     CollisionMapping::SPtr pitchMapping = this->getMappingForTarget(TargetPitch);
     CollisionMapping::SPtr velocityMapping = this->getMappingForTarget(TargetVelocityOn);
     
+    BOOST_ASSERT(pitchMapping);
+    BOOST_ASSERT(velocityMapping);
+    
     if (pitchMapping && velocityMapping)
     {
         MIDI::MIDINoteOnTask::Payload::SPtr payload = MIDI::MIDINoteOnTask::Payload::SPtr(new MIDI::MIDINoteOnTask::Payload);
@@ -81,6 +84,8 @@ VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAction::createTaskForCollision(OB::S
         
         return Task::SPtr(new MIDI::MIDINoteOnTask(payload));
     }
+    
+    BOOST_ASSERT_MSG(false, "Could not create CollisionMIDINoteOnAction task");
     
     return Task::SPtr();
 }
@@ -110,7 +115,10 @@ VSC::Task::SPtr VSC::IM::CollisionMIDINoteOffAction::createTaskForCollision(OB::
     BOOST_ASSERT(gotMappings);
     
     CollisionMapping::SPtr pitchMapping = this->getMappingForTarget(TargetPitch);
-    CollisionMapping::SPtr velocityMapping = this->getMappingForTarget(TargetVelocityOn);
+    CollisionMapping::SPtr velocityMapping = this->getMappingForTarget(TargetVelocityOff);
+    
+    BOOST_ASSERT(pitchMapping);
+    BOOST_ASSERT(velocityMapping);
     
     if (pitchMapping && velocityMapping)
     {
@@ -123,6 +131,8 @@ VSC::Task::SPtr VSC::IM::CollisionMIDINoteOffAction::createTaskForCollision(OB::
         
         return Task::SPtr(new MIDI::MIDINoteOffTask(payload));
     }
+    
+    BOOST_ASSERT_MSG(false, "Could not create CollisionMIDINoteOnAction task");
     
     return Task::SPtr();
 }

@@ -44,3 +44,9 @@ void VSC::Task::setState(State state)
     boost::lock_guard<boost::mutex> lock(mMutex);
     mState = state;
 }
+
+bool VSC::Task::stepExecution(void)
+{
+    if (mTrace) std::cout << "VSC::Task::stepExecution " << *this << " time now: " << CurrentTime() << std::endl;
+}
+

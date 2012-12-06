@@ -65,17 +65,16 @@ namespace VSC {
          *  either StateRunning or StateEnded. Returns true if ended
          */
         
-        virtual bool stepExecution(void) = 0;
+        virtual bool stepExecution(void);
         
     private:
         
         State           mState; // should be mutex protected
-        
         boost::mutex    mMutex;
-        
         Time            mExecutionStartTime;
-        
         Payload::SPtr   mPayload;
+        
+        static const bool mTrace = true;
         
     };
     

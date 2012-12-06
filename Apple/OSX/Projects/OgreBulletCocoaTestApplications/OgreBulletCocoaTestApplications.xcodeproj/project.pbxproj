@@ -63,6 +63,7 @@
 		105CDA52162DA9A600532AD0 /* VSCOBOSXInterfaceAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA4B162DA9A500532AD0 /* VSCOBOSXInterfaceAdapter.mm */; };
 		105CDA53162DA9A600532AD0 /* VSCOBOSXSceneDisplayView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA4D162DA9A600532AD0 /* VSCOBOSXSceneDisplayView.mm */; };
 		105CDA58162DAD2E00532AD0 /* VSCOBDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA56162DAD2E00532AD0 /* VSCOBDisplay.cpp */; };
+		10681E871670CFF700C7A1BE /* VSCTaskTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10681E851670CFF700C7A1BE /* VSCTaskTest.cpp */; };
 		1077BE7916655B050080769A /* VSCOSXOBSceneElementInspectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1077BE7816655B050080769A /* VSCOSXOBSceneElementInspectorViewController.xib */; };
 		1077BE7C16655C350080769A /* VSCOSXOBSceneElementInspectorViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1077BE7B16655C350080769A /* VSCOSXOBSceneElementInspectorViewController.mm */; };
 		107D686E16581C8F00C12B2B /* VSCOSXOBSceneDetailView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 107D686D16581C8F00C12B2B /* VSCOSXOBSceneDetailView.mm */; };
@@ -313,6 +314,8 @@
 		105CDA4D162DA9A600532AD0 /* VSCOBOSXSceneDisplayView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXSceneDisplayView.mm; path = ../../../OB/VSCOBOSXSceneDisplayView.mm; sourceTree = "<group>"; };
 		105CDA56162DAD2E00532AD0 /* VSCOBDisplay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBDisplay.cpp; path = ../../../../../OB/OgreBulletBasic/VSCOBDisplay.cpp; sourceTree = "<group>"; };
 		105CDA57162DAD2E00532AD0 /* VSCOBDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBDisplay.h; path = ../../../../../OB/OgreBulletBasic/VSCOBDisplay.h; sourceTree = "<group>"; };
+		10681E851670CFF700C7A1BE /* VSCTaskTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCTaskTest.cpp; path = ../../../../Task/VSCTaskTest.cpp; sourceTree = "<group>"; };
+		10681E861670CFF700C7A1BE /* VSCTaskTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCTaskTest.h; path = ../../../../Task/VSCTaskTest.h; sourceTree = "<group>"; };
 		1077BE7816655B050080769A /* VSCOSXOBSceneElementInspectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXOBSceneElementInspectorViewController.xib; path = ../../../OB/VSCOSXOBSceneElementInspectorViewController.xib; sourceTree = "<group>"; };
 		1077BE7A16655C340080769A /* VSCOSXOBSceneElementInspectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementInspectorViewController.h; path = ../../../OB/VSCOSXOBSceneElementInspectorViewController.h; sourceTree = "<group>"; };
 		1077BE7B16655C350080769A /* VSCOSXOBSceneElementInspectorViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneElementInspectorViewController.mm; path = ../../../OB/VSCOSXOBSceneElementInspectorViewController.mm; sourceTree = "<group>"; };
@@ -1394,6 +1397,8 @@
 				10EF8DA91626CBB700EB8FDE /* VSCTask.h */,
 				10EF8DAA1626CBB700EB8FDE /* VSCTaskQueue.cpp */,
 				10EF8DAB1626CBB700EB8FDE /* VSCTaskQueue.h */,
+				10681E851670CFF700C7A1BE /* VSCTaskTest.cpp */,
+				10681E861670CFF700C7A1BE /* VSCTaskTest.h */,
 			);
 			name = Task;
 			sourceTree = "<group>";
@@ -1621,6 +1626,7 @@
 				103E77EF166A686C0013ABB6 /* VSCEnvironmentTest.cpp in Sources */,
 				104BFB79166D3BC400746CA9 /* VSCOSXMIDIOutputView.mm in Sources */,
 				104BFB7F166D440600746CA9 /* VSCOSXOBSceneElementView.mm in Sources */,
+				10681E871670CFF700C7A1BE /* VSCTaskTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

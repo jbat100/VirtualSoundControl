@@ -20,6 +20,8 @@
 @property (retain) IBOutlet NSTextField* statusTextField;
 @property (retain) IBOutlet NSButton* mainActionButton;
 
++(CGFloat) defaultViewHeight;
+
 -(IBAction) mainAction:(id)sender;
 
 -(void) refresh;

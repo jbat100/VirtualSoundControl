@@ -76,7 +76,8 @@ namespace VSC {
         boost::mutex    mMutex;
         
         const static bool   mTraceQueue = true;
-        const static bool   mTraceExecution = true;
+        const static bool   mTraceExecution = false;
+        const static bool   mTraceTasks = true;
     };
     
 }

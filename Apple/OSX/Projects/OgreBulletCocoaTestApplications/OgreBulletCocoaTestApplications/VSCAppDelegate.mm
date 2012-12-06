@@ -22,6 +22,9 @@
 #include "VSCMIDIOutput.h"
 #include "VSCMIDIOutputManager.h"
 #include "VSCException.h"
+#include "VSCTaskQueue.h"
+#include "VSCTaskTest.h"
+#include "VSCMIDITasks.h"
 
 #include "VSCEnvironmentTest.h"
 
@@ -30,9 +33,12 @@
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
+
 //#define VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW // TEST
+#define VSCOSX_TEST_TASK_QUEUE
 
-
+//#define VSCOSX_FULL_APPLICATION // RUN FULL BLOWN APP
+#define VSCOSX_SETUP_ENVIRONMENT_TEST
 
 #ifdef VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW
 #import "VSCOSXOBSceneElementInspectorWindowController.h"
@@ -51,6 +57,25 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    /*
+     *  Refresh MIDI outputs and open them all
+     */
+    
+    VSC::MIDI::OutputManager::SPtr outputManager = VSC::MIDI::OutputManager::singletonManager();
+    BOOST_ASSERT(outputManager);
+    outputManager->refreshOutputs();
+    const VSC::MIDI::Outputs& outputs = outputManager->getOutputs();
+    BOOST_FOREACH(VSC::MIDI::Output::SPtr output, outputs)
+    {
+        try
+        {
+            output->open();
+        }
+        catch (VSCMIDIException& e) {
+            std::cerr << e.what() << " - Additional info: ";
+            std::cerr << e.getValueForKey(VSCBaseExceptionAdditionalInfoKey) << std::endl;
+        }
+    }
     
 #ifdef VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW
     
@@ -60,8 +85,20 @@
     BOOST_ASSERT(self.testElementInspectorWindowController);
     
     [self.testElementInspectorWindowController showWindow:self];
+
+#endif
     
-#else
+#ifdef VSCOSX_TEST_TASK_QUEUE
+    
+    VSC::TaskQueue::SPtr taskQueue = VSC::MIDI::SingletonMIDITaskQueue();
+    
+    VSC::TaskTest::SPtr taskTest = VSC::TaskTest::SPtr(new VSC::TaskTest);
+    
+    taskTest->performTestWithTaskQueue(taskQueue);
+    
+#endif
+    
+#ifdef VSCOSX_FULL_APPLICATION
     
     VSC::GlobalApplication::SPtr globalApplication = VSC::GlobalApplication::singletonGlobalApplication();
     
@@ -90,22 +127,6 @@
     self.midiWindowController = [[VSCOSXMIDIWindowController alloc] initWithWindowNibName:@"VSCOSXMIDIWindowController"];
     BOOST_ASSERT(self.midiWindowController);
     
-    /*
-     *  Refresh outputs and open them all
-     */
-    
-    self.midiWindowController.midiOutputManager = VSC::MIDI::OutputManager::singletonManager();
-    
-    const VSC::MIDI::Outputs& outputs = VSC::MIDI::OutputManager::singletonManager()->getOutputs();
-    BOOST_FOREACH(VSC::MIDI::Output::SPtr output, outputs)
-    {
-        try {
-            output->open();
-        } catch (VSCMIDIException& e) {
-            std::cerr << e.what() << " - Additional info: " << e.getValueForKey(VSCBaseExceptionAdditionalInfoKey) << std::endl;
-        }
-    }
-    
     [self showMIDIWindow:nil];
     
     VSC::Environment::SPtr environment = globalApplication->createEnvironment<VSC::Environment>();
@@ -124,12 +145,10 @@
     
     [self.applicationManager startOgreRendering];
     
-    /*
-     *  Setup test
-     */
-    
+#ifdef VSCOSX_SETUP_ENVIRONMENT_TEST
     VSC::EnvironmentTest::SPtr test = VSC::EnvironmentTest::SPtr(new VSC::EnvironmentTest);
     test->setupTestForEnvironment(environment);
+#endif
     
     const VSC::OB::Scene::Elements& elements = environment->getOBScene()->getElements();
     VSC::OB::Scene::Element::SPtr element = VSC::OB::Scene::Element::SPtr();
@@ -146,8 +165,8 @@
     BOOST_ASSERT(element);
     if (element) [self.environmentWindowController showElementInspectorForElement:element];
     
-    
 #endif
+    
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification

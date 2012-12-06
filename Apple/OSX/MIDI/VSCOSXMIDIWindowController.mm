@@ -133,6 +133,10 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
 
 -(void) updateMIDIOutputInterface
 {
+    VSC::MIDI::OutputManager::SPtr outputManager = VSC::MIDI::OutputManager::singletonManager();
+    BOOST_ASSERT(outputManager);
+    if (!outputManager) return;
+    
     /*
      *  Main output tab
      */
@@ -147,25 +151,22 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
     
     [self.midiOutputPopUpButton addItemWithTitle:VSCOSXMIDINoSelectedChannelMenuItemString];
     
-    if (self.midiOutputManager)
+    
+    const VSC::MIDI::Outputs& outputs = outputManager->getOutputs();
+    
+    BOOST_FOREACH(const VSC::MIDI::Output::SPtr& output, outputs)
     {
-        
-        const VSC::MIDI::Outputs& outputs = self.midiOutputManager->getOutputs();
-        
-        BOOST_FOREACH(const VSC::MIDI::Output::SPtr& output, outputs)
+        NSString* title = [NSString stringWithStdString:output->getDescription()];
+        [self.midiOutputPopUpButton addItemWithTitle:title];
+    }
+    
+    if (self.testMIDIOutput)
+    {
+        VSC::MIDI::Outputs::const_iterator it = std::find(outputs.begin(), outputs.end(), self.testMIDIOutput);
+        if (it != outputs.end())
         {
-            NSString* title = [NSString stringWithStdString:output->getDescription()];
-            [self.midiOutputPopUpButton addItemWithTitle:title];
-        }
-        
-        if (self.testMIDIOutput)
-        {
-            VSC::MIDI::Outputs::const_iterator it = std::find(outputs.begin(), outputs.end(), self.testMIDIOutput);
-            if (it != outputs.end())
-            {
-                NSString* title = [NSString stringWithStdString:(*it)->getDescription()];
-                [self.midiOutputPopUpButton selectItemWithTitle:title];
-            }
+            NSString* title = [NSString stringWithStdString:(*it)->getDescription()];
+            [self.midiOutputPopUpButton selectItemWithTitle:title];
         }
     }
     
@@ -198,16 +199,14 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
 
 -(IBAction) midiOutputSelected:(id)sender
 {
-    
-    if (self.midiOutputManager) {
-        
-        std::string description = [[[self.midiOutputPopUpButton selectedItem] title] stdString];
-        
-        VSC::MIDI::Output::SPtr selectedOutput = self.midiOutputManager->getOutputWithDescription(description);
-        
-        self.testMIDIOutput = selectedOutput;
-    }
-    
+    VSC::MIDI::OutputManager::SPtr outputManager = VSC::MIDI::OutputManager::singletonManager();
+    BOOST_ASSERT(outputManager);
+    if (!outputManager) return;    
+
+    std::string description = [[[self.midiOutputPopUpButton selectedItem] title] stdString];
+    VSC::MIDI::Output::SPtr selectedOutput = outputManager->getOutputWithDescription(description);
+    self.testMIDIOutput = selectedOutput;
+
 }
 
 -(IBAction) refreshInputs:(id)sender
@@ -218,18 +217,13 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
 
 -(IBAction) refreshOutputs:(id)sender {
     
-    NSLog(@"Refreshing outputs");
+    VSC::MIDI::OutputManager::SPtr outputManager = VSC::MIDI::OutputManager::singletonManager();
+    BOOST_ASSERT(outputManager);
+    if (!outputManager) return;
     
-    if (self.midiOutputManager)
-    {
-        self.midiOutputManager->refreshOutputs();
-        NSLog(@"Refreshed outputs");
-    }
-    else
-    {
-        NSLog(@"No MIDI output manager");
-    }
-    
+    outputManager->refreshOutputs();
+    NSLog(@"Refreshed outputs");
+
     [self updateMIDIOutputInterface];
 }
 
@@ -268,7 +262,6 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
 }
 
 -(IBAction) controlSliderChangedValue:(id)sender {
-    
     if (sender == self.controlValueSlider) {
         if (self.testMIDIOutput)
         {
@@ -279,7 +272,6 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
             }
         }
     }
-    
 }
 
 -(IBAction) showEnveloppeEditor:(id)sender
@@ -297,10 +289,11 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
     BOOST_ASSERT(aTableView == self.midiOutputsTableView);
-    BOOST_ASSERT(self.midiOutputManager);
-    if (aTableView == self.midiOutputsTableView && self.midiOutputManager)
+    VSC::MIDI::OutputManager::SPtr outputManager = VSC::MIDI::OutputManager::singletonManager();
+    BOOST_ASSERT(outputManager);
+    if (aTableView == self.midiOutputsTableView && outputManager)
     {
-        return (NSUInteger)self.midiOutputManager->getOutputs().size();
+        return (NSUInteger)(outputManager->getOutputs().size());
     }
     
     return 0;
@@ -309,10 +302,11 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn*)tableColumn row:(NSInteger)row
 {
     BOOST_ASSERT(tableView == self.midiOutputsTableView);
-    BOOST_ASSERT(self.midiOutputManager);
-    if (tableView == self.midiOutputsTableView && self.midiOutputManager)
+    VSC::MIDI::OutputManager::SPtr outputManager = VSC::MIDI::OutputManager::singletonManager();
+    BOOST_ASSERT(outputManager);
+    if (tableView == self.midiOutputsTableView && outputManager)
     {
-        const VSC::MIDI::Outputs& outputs = self.midiOutputManager->getOutputs();
+        const VSC::MIDI::Outputs& outputs = outputManager->getOutputs();
         BOOST_ASSERT((NSUInteger)outputs.size() > row);
         if ((NSUInteger)outputs.size() > row)
         {
@@ -331,7 +325,7 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
     BOOST_ASSERT(tableView == self.midiOutputsTableView);
     if (tableView == self.midiOutputsTableView)
     {
-        return 50.0;
+        return [VSCOSXMIDIOutputView defaultViewHeight];
     }
     
     return 0;

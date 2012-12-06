@@ -213,7 +213,11 @@ void VSC::TaskQueue::stepExecution()
                 task->setState(Task::StateRunning);
                 Tasks::iterator checkIt = std::find(mRunningTasks.begin(), mRunningTasks.end(), task);
                 BOOST_ASSERT(checkIt == mRunningTasks.end());
-                if (checkIt == mRunningTasks.end()) mRunningTasks.push_back(task);
+                if (checkIt == mRunningTasks.end())
+                {
+                    mRunningTasks.push_back(task);
+                    if (mTraceTasks) std::cout << "VSC::TaskQueue::stepExecution dequeued task " << task << std::endl;
+                }
                 it = mQueuedTasks.erase(it);
             }
             else
@@ -230,14 +234,21 @@ void VSC::TaskQueue::stepExecution()
         while (it != mRunningTasks.end())
         {
             Task::SPtr task = *it;            
-            if (task->getState() != Task::StateRunning) it = mRunningTasks.erase(it);
+            if (task->getState() != Task::StateRunning)
+            {
+                it = mRunningTasks.erase(it);
+                if (mTraceTasks) std::cout << "VSC::TaskQueue::stepExecution finished running task " << task << std::endl;
+            }
             else ++it;
         }
         
         localRunningTasks = mRunningTasks;
     }
     
-    if (mTraceExecution) std::cout << "VSC::TaskQueue::stepExecution got " << localRunningTasks.size() << "tasks to run" << std::endl;
+    if (mTraceExecution)
+    {
+        std::cout << "VSC::TaskQueue::stepExecution got " << localRunningTasks.size() << "tasks to run" << std::endl;
+    }
     
     /*
      *  After having unlocked the mutex we iterate over the copy of the 

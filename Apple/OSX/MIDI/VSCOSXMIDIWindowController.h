@@ -16,8 +16,6 @@
 @interface VSCOSXMIDIWindowController : NSWindowController
 <NSComboBoxDelegate, NSComboBoxDataSource, NSTableViewDataSource, NSTableViewDelegate>
 
-@property (nonatomic, assign) VSC::MIDI::OutputManager::SPtr midiOutputManager;
-
 /*
  *  MIDI Inputs/Outputs
  */
