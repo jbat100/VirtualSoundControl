@@ -54,30 +54,37 @@ namespace VSC {
         
     protected:
         
-        void    threadedExecutionFunction();
-        void    stepExecution();
-        void    setState(State state);
+        void threadedExecutionFunction();
+        void stepExecution();
+        void setState(State state);
         
-        void    requestStop(bool stop);
-        bool    stopRequested();
+        void requestStop(bool stop);
+        bool stopRequested();
+        
+        bool tasksAreRunning();
+        bool tasksAreQueued();
+        TimeDuration durationUntilNextQueuedTaskExecutionTime();
+        
         
     private:
         
-        Tasks   mQueuedTasks;
-        Tasks   mRunningTasks;
+        Tasks                       mQueuedTasks;
+        Tasks                       mRunningTasks;
         
-        State   mState;
-        bool    mStopRequested;
+        State                       mState;
+        bool                        mStopRequested;
         
-        TimeDuration    mMinimumStepDuration;
-        Time            mLastStepTime;
+        TimeDuration                mMinimumStepDuration;
+        Time                        mLastStepTime;
         
-        boost::thread   mInternalThread;
-        boost::mutex    mMutex;
+        boost::thread               mInternalThread;
+        boost::mutex                mMutex;
+        boost::mutex                mTaskConditionMutex;
+        boost::condition_variable   mTaskCondition;
         
-        const static bool   mTraceQueue = true;
-        const static bool   mTraceExecution = false;
-        const static bool   mTraceTasks = true;
+        const static bool           mTraceQueue = true;
+        const static bool           mTraceExecution = false;
+        const static bool           mTraceTasks = true;
     };
     
 }

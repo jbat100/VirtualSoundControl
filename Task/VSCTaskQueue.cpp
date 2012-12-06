@@ -6,8 +6,10 @@
 
 #include "VSCTaskQueue.h"
 
+#include <boost/chrono/chrono.hpp>
 #include <boost/foreach.hpp>
 #include <boost/assert.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 VSC::TaskQueue::TaskQueue() :
 mState(StateStopped),
@@ -35,6 +37,8 @@ void VSC::TaskQueue::enqueueTask(Task::SPtr task)
             if (task->getExecutionStartTime() < t->getExecutionStartTime()) break;
         }
         mQueuedTasks.insert(it, task);
+        
+        mTaskCondition.notify_one();
     }
 }
 
@@ -97,6 +101,8 @@ void VSC::TaskQueue::start()
         this->requestStop(false);
         mInternalThread = boost::thread(&TaskQueue::threadedExecutionFunction, this);
         this->setState(StateRunning);
+        
+        mTaskCondition.notify_one();
     }
 }
 
@@ -144,30 +150,62 @@ void VSC::TaskQueue::setMinimumExecutionStepDuration(TimeDuration duration)
     mMinimumStepDuration = duration;
 }
 
+bool VSC::TaskQueue::tasksAreRunning()
+{
+    boost::lock_guard<boost::mutex> lock(mMutex);
+    return mRunningTasks.size() > 0;
+}
+
+bool VSC::TaskQueue::tasksAreQueued()
+{
+    boost::lock_guard<boost::mutex> lock(mMutex);
+    return mQueuedTasks.size() > 0;
+}
+
+VSC::TimeDuration VSC::TaskQueue::durationUntilNextQueuedTaskExecutionTime()
+{
+    boost::lock_guard<boost::mutex> lock(mMutex);
+    if (mQueuedTasks.size() == 0)
+    {
+        return VSC::TimeDuration(boost::posix_time::pos_infin);
+    }
+    else
+    {
+        Tasks::iterator it = mQueuedTasks.begin();
+        BOOST_ASSERT(it != mQueuedTasks.end());
+        if (it == mQueuedTasks.end()) return VSC::TimeDuration(boost::posix_time::pos_infin);
+        Task::SPtr task = *it;
+        return task->getExecutionStartTime() - CurrentTime();
+    }
+}
+
 void VSC::TaskQueue::threadedExecutionFunction()
 {
     if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction START" << std::endl;
-    
     while (this->stopRequested() == false)
     {
-        TimeDuration durationSinceLastStep = CurrentTime() - mLastStepTime;
-        TimeDuration minimumStepDuration = this->getMinimumExecutionStepDuration();
+        this->stepExecution();
         
-        if (durationSinceLastStep < minimumStepDuration)
+        if (this->tasksAreQueued())
         {
-            TimeDuration sleepTime = minimumStepDuration - durationSinceLastStep;
-            boost::this_thread::sleep(sleepTime);
+            TimeDuration durationUntilNextQueuedTask = this->durationUntilNextQueuedTaskExecutionTime();
+            
+            if (durationUntilNextQueuedTask < mMinimumStepDuration)
+            {
+                boost::chrono::milliseconds ms(100);
+                mTaskCondition.wait_for();
+            }
         }
         
-        this->stepExecution();
+        //mTaskCondition.
+        
     }
-    
     if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction END" << std::endl;
 }
 
 void VSC::TaskQueue::stepExecution()
 {
-    if (mTraceExecution) std::cout << "VSC::TaskQueue::stepExecution START" << std::endl;
+    if (mTraceTasks) std::cout << "VSC::TaskQueue::stepExecution START" << std::endl;
     
     mLastStepTime = CurrentTime();
     
@@ -176,7 +214,6 @@ void VSC::TaskQueue::stepExecution()
     /*
      *  Get the tasks that need to be dequeued
      */
-    
     Tasks localRunningTasks;
     
     if (mTraceExecution) std::cout << "VSC::TaskQueue::stepExecution getting tasks to execute..." << std::endl;
@@ -185,14 +222,12 @@ void VSC::TaskQueue::stepExecution()
         /*
          *  Locked scope to protect mQueuedTasks which is accessible from external threads
          */
-        
         boost::lock_guard<boost::mutex> lock(mMutex);
         
         /*
          *  Purge cancelled tasks from mQueuedTasks and promote to running the tasks which
          *  have reached their execution start time
          */
-        
         Tasks::iterator it = mQueuedTasks.begin();
         while (it != mQueuedTasks.end())
         {
@@ -268,6 +303,7 @@ void VSC::TaskQueue::stepExecution()
 void VSC::TaskQueue::requestStop(bool stop)
 {
     boost::lock_guard<boost::mutex> lock(mMutex);
+    mTaskCondition.notify_one();
     mStopRequested = stop;
 }
 
