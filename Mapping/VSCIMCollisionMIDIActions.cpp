@@ -182,7 +182,7 @@ VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAndOffAction::createTaskForCollision
         
         payload->midiOutput     = this->getMIDIOutput();
         
-        return Task::SPtr(new MIDI::MIDINoteOffTask(payload));
+        return Task::SPtr(new MIDI::MIDINoteOnAndOffTask(payload));
     }
     
     return Task::SPtr();

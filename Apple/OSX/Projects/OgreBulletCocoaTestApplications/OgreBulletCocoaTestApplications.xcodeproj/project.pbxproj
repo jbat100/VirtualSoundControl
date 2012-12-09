@@ -63,6 +63,9 @@
 		105CDA52162DA9A600532AD0 /* VSCOBOSXInterfaceAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA4B162DA9A500532AD0 /* VSCOBOSXInterfaceAdapter.mm */; };
 		105CDA53162DA9A600532AD0 /* VSCOBOSXSceneDisplayView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA4D162DA9A600532AD0 /* VSCOBOSXSceneDisplayView.mm */; };
 		105CDA58162DAD2E00532AD0 /* VSCOBDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA56162DAD2E00532AD0 /* VSCOBDisplay.cpp */; };
+		106337D61674C1AC003E528B /* libboost_chrono.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106337D51674C1AC003E528B /* libboost_chrono.a */; };
+		106337D91674FDEF003E528B /* RenderSystem_GL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 106337D81674FDEF003E528B /* RenderSystem_GL.dylib */; };
+		106337DA1674FF80003E528B /* RenderSystem_GL.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 106337D81674FDEF003E528B /* RenderSystem_GL.dylib */; };
 		10681E871670CFF700C7A1BE /* VSCTaskTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10681E851670CFF700C7A1BE /* VSCTaskTest.cpp */; };
 		1077BE7916655B050080769A /* VSCOSXOBSceneElementInspectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1077BE7816655B050080769A /* VSCOSXOBSceneElementInspectorViewController.xib */; };
 		1077BE7C16655C350080769A /* VSCOSXOBSceneElementInspectorViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1077BE7B16655C350080769A /* VSCOSXOBSceneElementInspectorViewController.mm */; };
@@ -159,7 +162,6 @@
 		10D5533A15FA409F002AED81 /* NSString+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10D5533915FA409F002AED81 /* NSString+VSCAdditions.mm */; };
 		10D7AE8B1628554E00DE0F72 /* VSCMIDIOutputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10D7AE891628554D00DE0F72 /* VSCMIDIOutputManager.cpp */; };
 		10D7AE9C1628767F00DE0F72 /* VSCOSXMIDIWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10D7AE951628767F00DE0F72 /* VSCOSXMIDIWindowController.mm */; };
-		10E1B289156D2A630013B9F7 /* RenderSystem_GL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */; };
 		10E8557415E65048008FF635 /* VSCUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E8557215E65048008FF635 /* VSCUI.cpp */; };
 		10EB5A3B16050D7500F0939E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10EB5A3A16050D7500F0939E /* OpenGL.framework */; };
 		10EB5E5E16298E0B00E0F030 /* VSCOSXApplicationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10EB5E5D16298E0B00E0F030 /* VSCOSXApplicationManager.mm */; };
@@ -180,7 +182,6 @@
 		10F69480156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6947F156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib */; };
 		10F69483156E3D2700E70049 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F69482156E3D2700E70049 /* IOKit.framework */; };
 		10F69485156E41CB00E70049 /* Ogre.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10B60EEE155080D9006A6D6E /* Ogre.framework */; };
-		10F69487156E41E000E70049 /* RenderSystem_GL.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */; };
 		10F69490156E483000E70049 /* Plugin_BSPSceneManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948C156E483000E70049 /* Plugin_BSPSceneManager.dylib */; };
 		10F69491156E483000E70049 /* Plugin_CgProgramManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */; };
 		10F69492156E483000E70049 /* Plugin_OctreeSceneManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */; };
@@ -206,7 +207,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				10F69487156E41E000E70049 /* RenderSystem_GL.dylib in CopyFiles */,
+				106337DA1674FF80003E528B /* RenderSystem_GL.dylib in CopyFiles */,
 				1033868C156E48AC00CEB288 /* Plugin_BSPSceneManager.dylib in CopyFiles */,
 				1033868D156E48AC00CEB288 /* Plugin_CgProgramManager.dylib in CopyFiles */,
 				1033868E156E48AC00CEB288 /* Plugin_OctreeSceneManager.dylib in CopyFiles */,
@@ -314,6 +315,8 @@
 		105CDA4D162DA9A600532AD0 /* VSCOBOSXSceneDisplayView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXSceneDisplayView.mm; path = ../../../OB/VSCOBOSXSceneDisplayView.mm; sourceTree = "<group>"; };
 		105CDA56162DAD2E00532AD0 /* VSCOBDisplay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBDisplay.cpp; path = ../../../../../OB/OgreBulletBasic/VSCOBDisplay.cpp; sourceTree = "<group>"; };
 		105CDA57162DAD2E00532AD0 /* VSCOBDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBDisplay.h; path = ../../../../../OB/OgreBulletBasic/VSCOBDisplay.h; sourceTree = "<group>"; };
+		106337D51674C1AC003E528B /* libboost_chrono.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_chrono.a; path = ../../../../../../../../../usr/local/lib/libboost_chrono.a; sourceTree = "<group>"; };
+		106337D81674FDEF003E528B /* RenderSystem_GL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = RenderSystem_GL.dylib; path = ../../../../../../Libraries/OgreSDK/lib/RenderSystem_GL.dylib; sourceTree = "<group>"; };
 		10681E851670CFF700C7A1BE /* VSCTaskTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCTaskTest.cpp; path = ../../../../Task/VSCTaskTest.cpp; sourceTree = "<group>"; };
 		10681E861670CFF700C7A1BE /* VSCTaskTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCTaskTest.h; path = ../../../../Task/VSCTaskTest.h; sourceTree = "<group>"; };
 		1077BE7816655B050080769A /* VSCOSXOBSceneElementInspectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXOBSceneElementInspectorViewController.xib; path = ../../../OB/VSCOSXOBSceneElementInspectorViewController.xib; sourceTree = "<group>"; };
@@ -516,7 +519,6 @@
 		10D7AE8A1628554D00DE0F72 /* VSCMIDIOutputManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDIOutputManager.h; path = ../../../../MIDI/VSCMIDIOutputManager.h; sourceTree = "<group>"; };
 		10D7AE941628767F00DE0F72 /* VSCOSXMIDIWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOSXMIDIWindowController.h; path = ../../MIDI/VSCOSXMIDIWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10D7AE951628767F00DE0F72 /* VSCOSXMIDIWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOSXMIDIWindowController.mm; path = ../../MIDI/VSCOSXMIDIWindowController.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = RenderSystem_GL.dylib; path = lib/RenderSystem_GL.dylib; sourceTree = OGRE_SDK; };
 		10E8557215E65048008FF635 /* VSCUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCUI.cpp; path = ../../../../Interface/VSCUI.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		10E8557315E65048008FF635 /* VSCUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCUI.h; path = ../../../../Interface/VSCUI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10EB5A3A16050D7500F0939E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -567,6 +569,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				106337D91674FDEF003E528B /* RenderSystem_GL.dylib in Frameworks */,
 				101EBB92162B3022006601A2 /* ApplicationServices.framework in Frameworks */,
 				101EBB90162B2E3C006601A2 /* CoreGraphics.framework in Frameworks */,
 				101EBB8E162B2E2C006601A2 /* QuartzCore.framework in Frameworks */,
@@ -576,7 +579,6 @@
 				1033869E156E77E100CEB288 /* Carbon.framework in Frameworks */,
 				10B60D2515505D6D006A6D6E /* Cocoa.framework in Frameworks */,
 				10B60EEF155080D9006A6D6E /* libOIS.a in Frameworks */,
-				10E1B289156D2A630013B9F7 /* RenderSystem_GL.dylib in Frameworks */,
 				10F69480156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib in Frameworks */,
 				10F69490156E483000E70049 /* Plugin_BSPSceneManager.dylib in Frameworks */,
 				10F69491156E483000E70049 /* Plugin_CgProgramManager.dylib in Frameworks */,
@@ -596,6 +598,7 @@
 				105BAD3E16232D470031EE91 /* libboost_serialization.a in Frameworks */,
 				105BAD3F16232D470031EE91 /* libboost_system.a in Frameworks */,
 				105BAD4016232D470031EE91 /* libboost_thread.a in Frameworks */,
+				106337D61674C1AC003E528B /* libboost_chrono.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -900,13 +903,14 @@
 		10B60D2315505D6D006A6D6E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				106337D51674C1AC003E528B /* libboost_chrono.a */,
 				105BAD3916232D470031EE91 /* libboost_filesystem.a */,
 				105BAD3A16232D470031EE91 /* libboost_serialization.a */,
 				105BAD3B16232D470031EE91 /* libboost_system.a */,
 				105BAD3C16232D470031EE91 /* libboost_thread.a */,
 				105BAD2616231CA50031EE91 /* libstk.a */,
 				10B60EED155080D9006A6D6E /* libOIS.a */,
-				10E1B288156D2A630013B9F7 /* RenderSystem_GL.dylib */,
+				106337D81674FDEF003E528B /* RenderSystem_GL.dylib */,
 				10F6948C156E483000E70049 /* Plugin_BSPSceneManager.dylib */,
 				10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */,
 				10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */,
@@ -1700,7 +1704,6 @@
 					"$(OGRE_SDK)/include/OGRE/RenderSystems/GL",
 					"$(OGRE_SDK)/include/OGRE",
 					"$(OGRE_SDK)/include/OGRE/RenderSystems",
-					"$(OGRE_SDK)/boost_1_46_1",
 					"$(BULLET_ROOT)/src",
 					"$(BULLET_ROOT)/Extras/ConvexDecomposition",
 					"$(OGREBULLET_ROOT)/Collisions/include",
@@ -1737,7 +1740,6 @@
 					"$(OGRE_SDK)/include/OGRE/RenderSystems/GL",
 					"$(OGRE_SDK)/include/OGRE",
 					"$(OGRE_SDK)/include/OGRE/RenderSystems",
-					"$(OGRE_SDK)/boost_1_46_1",
 					"$(BULLET_ROOT)/src",
 					"$(BULLET_ROOT)/Extras/ConvexDecomposition",
 					"$(OGREBULLET_ROOT)/Collisions/include",

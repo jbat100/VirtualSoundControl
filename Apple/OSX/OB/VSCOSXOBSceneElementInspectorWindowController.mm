@@ -91,6 +91,7 @@ const static BOOL traceInterface = YES;
     //if (traceInterface) [self printUIDescription];
     
     NSView* boxContentView = [self.mainBox contentView];
+    //boxContentView.translatesAutoresizingMaskIntoConstraints = NO;
     NSView* elementInspectorView = [self.elementInspectorViewController view];
     
     NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(boxContentView, elementInspectorView);

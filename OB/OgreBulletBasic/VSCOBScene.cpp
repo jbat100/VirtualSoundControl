@@ -537,7 +537,7 @@ void VSC::OB::Scene::init()
 	mLiSPSMSetup->setUseAggressiveFocusRegion(true);
 	//mLiSPSMSetup->setUseSimpleOptimalAdjust(true);
 	mLiSPSMSetup->setOptimalAdjustFactor(1.1f);
-	sceneManager->setShadowCameraSetup(Ogre::ShadowCameraSetupPtr(mLiSPSMSetup));
+	//sceneManager->setShadowCameraSetup(Ogre::ShadowCameraSetupPtr(mLiSPSMSetup));
 
 	sceneManager->setShadowTechnique(mCurrentShadowTechnique);
 	if (root->getRenderSystem()->getCapabilities()->hasCapability(RSC_HWRENDER_TO_TEXTURE))

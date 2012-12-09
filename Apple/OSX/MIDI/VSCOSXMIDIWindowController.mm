@@ -10,14 +10,18 @@
 #import "VSCOSXMIDITestController.h"
 #import "VSCOSXMIDIOutputView.h"
 #import "VSCOSXMIDITest.h"
-
 #import "NSString+VSCAdditions.h"
 
+#include "VSCTask.h"
+#include "VSCTaskQueue.h"
 #include "VSCMIDI.h"
+#include "VSCMIDITasks.h"
 #include "VSCMIDIOutputManager.h"
 #include "VSCException.h"
 
 #include <boost/foreach.hpp>
+
+#define VSCOSX_USE_MIDI_TASK_QUEUE
 
 NSString* const VSCOSXMIDINoSelectedChannelMenuItemString = @"No selected MIDI output";
 NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control number (set output)";
@@ -231,45 +235,103 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
 -(IBAction) sendMidiControlMessage:(id)sender {
     if(self.testMIDIOutput)
     {
+#ifdef VSCOSX_USE_MIDI_TASK_QUEUE
+        VSC::MIDI::MIDIControlChangeTask::Payload::SPtr payload;
+        payload = VSC::MIDI::MIDIControlChangeTask::Payload::SPtr(new VSC::MIDI::MIDIControlChangeTask::Payload);
+        payload->channel = self.channel;
+        payload->controlNumber = self.controlNumber;
+        payload->value   = self.controlValue;
+        payload->midiOutput = self.testMIDIOutput;
+        VSC::Task::SPtr task = VSC::Task::SPtr(new VSC::MIDI::MIDIControlChangeTask(payload));
+        BOOST_ASSERT(task);
+        VSC::TaskQueue::SPtr taskQueue = VSC::MIDI::SingletonMIDITaskQueue();
+        BOOST_ASSERT(taskQueue);
+        if (task && taskQueue) taskQueue->enqueueTask(task);
+#else
         try {
             self.testMIDIOutput->sendControlChange(self.channel, self.controlNumber, self.controlValue);
         } catch (VSCInvalidArgumentException& e) {
             std::cerr << e.what() << "Additional Info: " << e.getValueForKey(VSCBaseExceptionAdditionalInfoKey);
         }
+#endif
     }
 }
 
 -(IBAction) sendMidiNoteOnMessage:(id)sender {
     if(self.testMIDIOutput)
     {
+#ifdef VSCOSX_USE_MIDI_TASK_QUEUE
+        VSC::MIDI::MIDINoteOnTask::Payload::SPtr payload = VSC::MIDI::MIDINoteOnTask::Payload::SPtr(new VSC::MIDI::MIDINoteOnTask::Payload);
+        BOOST_ASSERT(payload);
+        payload->channel = self.channel;
+        payload->pitch = self.pitch;
+        payload->velocity = self.velocity;
+        payload->midiOutput = self.testMIDIOutput;
+        VSC::Task::SPtr task = VSC::Task::SPtr(new VSC::MIDI::MIDINoteOnTask(payload));
+        BOOST_ASSERT(task);
+        VSC::TaskQueue::SPtr taskQueue = VSC::MIDI::SingletonMIDITaskQueue();
+        BOOST_ASSERT(taskQueue);
+        if (task && taskQueue) taskQueue->enqueueTask(task);
+#else
         try {
             self.testMIDIOutput->sendNoteOn(self.channel, self.pitch, self.velocity);
         } catch (VSCInvalidArgumentException& e) {
             std::cerr << e.what() << "Additional Info: " << e.getValueForKey(VSCBaseExceptionAdditionalInfoKey);
         }
+#endif
     }
 }
 
 -(IBAction) sendMidiNoteOffMessage:(id)sender {
     if(self.testMIDIOutput)
     {
+#ifdef VSCOSX_USE_MIDI_TASK_QUEUE
+        VSC::MIDI::MIDINoteOffTask::Payload::SPtr payload = VSC::MIDI::MIDINoteOffTask::Payload::SPtr(new VSC::MIDI::MIDINoteOffTask::Payload);
+        BOOST_ASSERT(payload);
+        payload->channel = self.channel;
+        payload->pitch = self.pitch;
+        payload->velocity = self.velocity;
+        payload->midiOutput = self.testMIDIOutput;
+        VSC::Task::SPtr task = VSC::Task::SPtr(new VSC::MIDI::MIDINoteOffTask(payload));
+        BOOST_ASSERT(task);
+        VSC::TaskQueue::SPtr taskQueue = VSC::MIDI::SingletonMIDITaskQueue();
+        BOOST_ASSERT(taskQueue);
+        if (task && taskQueue) taskQueue->enqueueTask(task);
+#else
         try {
             self.testMIDIOutput->sendNoteOff(self.channel, self.pitch, self.velocity);
         } catch (VSCInvalidArgumentException& e) {
             std::cerr << e.what() << "Additional Info: " << e.getValueForKey(VSCBaseExceptionAdditionalInfoKey);
         }
+#endif
     }
 }
 
 -(IBAction) controlSliderChangedValue:(id)sender {
-    if (sender == self.controlValueSlider) {
+    if (sender == self.controlValueSlider)
+    {
         if (self.testMIDIOutput)
         {
-            try {
+#ifdef VSCOSX_USE_MIDI_TASK_QUEUE
+            VSC::MIDI::MIDIControlChangeTask::Payload::SPtr payload;
+            payload = VSC::MIDI::MIDIControlChangeTask::Payload::SPtr(new VSC::MIDI::MIDIControlChangeTask::Payload);
+            payload->channel = self.channel;
+            payload->controlNumber = self.controlNumber;
+            payload->value = self.controlValue;
+            payload->midiOutput = self.testMIDIOutput;
+            VSC::Task::SPtr task = VSC::Task::SPtr(new VSC::MIDI::MIDIControlChangeTask(payload));
+            BOOST_ASSERT(task);
+            VSC::TaskQueue::SPtr taskQueue = VSC::MIDI::SingletonMIDITaskQueue();
+            BOOST_ASSERT(taskQueue);
+            if (task && taskQueue) taskQueue->enqueueTask(task);
+#else
+            try
+            {
                 self.testMIDIOutput->sendControlChange(self.channel, self.controlNumber, self.controlValue);
             } catch (VSCInvalidArgumentException& e) {
                 std::cerr << e.what() << "Additional Info: " << e.getValueForKey(VSCBaseExceptionAdditionalInfoKey);
             }
+#endif
         }
     }
 }

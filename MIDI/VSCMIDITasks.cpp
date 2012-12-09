@@ -120,7 +120,7 @@ bool VSC::MIDI::MIDINoteOnAndOffTask::stepExecution(void)
 VSC::MIDI::MIDIControlChangeTask::MIDIControlChangeTask(Task::Payload::SPtr payload) : MIDITask(payload)
 {
     MIDIControlChangeTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDIControlChangeTask::Payload>(payload);
-    
+    BOOST_ASSERT(midiPayload);
     if (!midiPayload)
     {
         throw VSCInvalidArgumentException("Payload for MIDIControlChangeTask should be MIDIControlChangeTask::Payload");
@@ -130,8 +130,8 @@ VSC::MIDI::MIDIControlChangeTask::MIDIControlChangeTask(Task::Payload::SPtr payl
 bool VSC::MIDI::MIDIControlChangeTask::stepExecution(void)
 {
     MIDIControlChangeTask::Payload::SPtr midiPayload = boost::static_pointer_cast<MIDIControlChangeTask::Payload>(this->getPayload());
-    
-    midiPayload->midiOutput->sendNoteOff(midiPayload->channel, midiPayload->controlNumber, midiPayload->value);
+    BOOST_ASSERT(midiPayload);
+    midiPayload->midiOutput->sendControlChange(midiPayload->channel, midiPayload->controlNumber, midiPayload->value);
     this->setState(StateEnded);
     
     return true;

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11G63b</string>
+		<int key="IBDocument.SystemTarget">1080</int>
+		<string key="IBDocument.SystemVersion">12C60</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
-		<string key="IBDocument.AppKitVersion">1138.51</string>
-		<string key="IBDocument.HIToolboxVersion">569.00</string>
+		<string key="IBDocument.AppKitVersion">1187.34</string>
+		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">2844</string>
@@ -45,7 +45,6 @@
 				<string key="NSFrameSize">{245, 50}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView"/>
 				<string key="NSClassName">VSCIMOSXCollisionActionView</string>
 			</object>
 			<object class="NSCustomView" id="890510805">
@@ -79,6 +78,7 @@
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSPopUpButton" id="827594309">
 						<reference key="NSNextResponder" ref="890510805"/>
@@ -90,7 +90,7 @@
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="565003160">
-							<int key="NSCellFlags">-2076049856</int>
+							<int key="NSCellFlags">-2076180416</int>
 							<int key="NSCellFlags2">264192</int>
 							<reference key="NSSupport" ref="22"/>
 							<string key="NSCellIdentifier">_NS:9</string>
@@ -118,6 +118,7 @@
 							<bool key="NSAltersState">YES</bool>
 							<int key="NSArrowPosition">2</int>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="189530395">
 						<reference key="NSNextResponder" ref="890510805"/>
@@ -125,7 +126,6 @@
 						<string key="NSFrame">{{108, 7}, {130, 19}}</string>
 						<reference key="NSSuperview" ref="890510805"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="799408484">
@@ -159,11 +159,12 @@
 								</object>
 							</object>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="237320689">
 						<reference key="NSNextResponder" ref="890510805"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{4, 10}, {99, 14}}</string>
+						<string key="NSFrame">{{4, 9}, {99, 14}}</string>
 						<reference key="NSSuperview" ref="890510805"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="189530395"/>
@@ -193,6 +194,7 @@
 								</object>
 							</object>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 				</array>
 				<string key="NSFrameSize">{245, 50}</string>
@@ -232,6 +234,7 @@
 								<bytes key="NSRGB">MSAxIDEAA</bytes>
 							</object>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSButton" id="526657949">
 						<reference key="NSNextResponder" ref="211775378"/>
@@ -239,7 +242,6 @@
 						<string key="NSFrame">{{20, 8}, {205, 17}}</string>
 						<reference key="NSSuperview" ref="211775378"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="272753533">
@@ -256,6 +258,7 @@
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 				</array>
 				<string key="NSFrameSize">{245, 50}</string>
@@ -272,14 +275,13 @@
 					<object class="NSPopUpButton" id="369642620">
 						<reference key="NSNextResponder" ref="448623326"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{40, 6}, {200, 15}}</string>
+						<string key="NSFrame">{{40, 5}, {200, 15}}</string>
 						<reference key="NSSuperview" ref="448623326"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="1045655696">
-							<int key="NSCellFlags">-2076049856</int>
+							<int key="NSCellFlags">-2076180416</int>
 							<int key="NSCellFlags2">264192</int>
 							<reference key="NSSupport" ref="22"/>
 							<string key="NSCellIdentifier">_NS:9</string>
@@ -303,6 +305,7 @@
 							<bool key="NSAltersState">YES</bool>
 							<int key="NSArrowPosition">2</int>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSButton" id="903529289">
 						<reference key="NSNextResponder" ref="448623326"/>
@@ -327,6 +330,7 @@
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
 						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 				</array>
 				<string key="NSFrameSize">{247, 26}</string>
@@ -402,6 +406,14 @@
 						<reference key="destination" ref="189530395"/>
 					</object>
 					<int key="connectionID">285</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">actionTypeTextField</string>
+						<reference key="source" ref="1005"/>
+						<reference key="destination" ref="161175878"/>
+					</object>
+					<int key="connectionID">287</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1366,7 +1378,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">286</int>
+			<int key="maxID">287</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

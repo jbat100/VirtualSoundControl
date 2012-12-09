@@ -5,6 +5,7 @@
  */
 
 #include "VSCTaskQueue.h"
+#include "VSCException.h"
 
 #include <boost/chrono/chrono.hpp>
 #include <boost/foreach.hpp>
@@ -22,9 +23,16 @@ mMinimumStepDuration(boost::posix_time::milliseconds(10))
 
 void VSC::TaskQueue::enqueueTask(Task::SPtr task)
 {
+    boost::lock_guard<boost::recursive_mutex> lock(mMutex);
+    
     if (mTraceQueue) std::cout << "VSC::TaskQueue::enqueueTask " << *task << std::endl;
     
-    boost::lock_guard<boost::mutex> lock(mMutex);
+    BOOST_ASSERT(this->getState() == StateRunning);
+    if (this->getState() != StateRunning)
+    {
+        std::cerr << "VSC::TaskQueue::enqueueTask queue is not running!!" << std::endl;
+    }
+    
     Tasks::iterator it = std::find(mQueuedTasks.begin(), mQueuedTasks.end(), task);
     if (it == mQueuedTasks.end())
     {
@@ -37,29 +45,30 @@ void VSC::TaskQueue::enqueueTask(Task::SPtr task)
             if (task->getExecutionStartTime() < t->getExecutionStartTime()) break;
         }
         mQueuedTasks.insert(it, task);
-        
         mTaskCondition.notify_one();
     }
 }
 
 bool VSC::TaskQueue::cancelTask(Task::SPtr task)
 {
+    boost::lock_guard<boost::recursive_mutex> lock(mMutex);
+    
+    bool erased = false;
+    
     if (mTraceQueue) std::cout << "VSC::TaskQueue::cancelTask " << *task << std::endl;
-
-    boost::lock_guard<boost::mutex> lock(mMutex);
     Tasks::iterator it = std::find(mQueuedTasks.begin(), mQueuedTasks.end(), task);
     if (it != mQueuedTasks.end())
     {
         task->setState(Task::StateCancelled);
         mQueuedTasks.erase(it);
-        return true;
+        erased = true;
     }
-    it = std::find(mQueuedTasks.begin(), mQueuedTasks.end(), task);
-    if (it != mQueuedTasks.end())
+    it = std::find(mRunningTasks.begin(), mRunningTasks.end(), task);
+    if (it != mRunningTasks.end())
     {
         task->setState(Task::StateCancelled);
-        mQueuedTasks.erase(it);
-        return true;
+        mRunningTasks.erase(it);
+        erased = true;
     }
 
     return false;
@@ -67,10 +76,9 @@ bool VSC::TaskQueue::cancelTask(Task::SPtr task)
 
 bool VSC::TaskQueue::cancelAllTask(void)
 {
+    boost::lock_guard<boost::recursive_mutex> lock(mMutex);
+    
     if (mTraceQueue) std::cout << "VSC::TaskQueue::cancelAllTask" << std::endl;
-    
-    boost::lock_guard<boost::mutex> lock(mMutex);
-    
     bool cancelledAtLeastOneTask = false;
     
     BOOST_FOREACH(Task::SPtr task, mQueuedTasks)
@@ -93,6 +101,8 @@ bool VSC::TaskQueue::cancelAllTask(void)
 
 void VSC::TaskQueue::start()
 {
+    boost::lock_guard<boost::recursive_mutex> lock(mMutex);
+    
     if (this->getState() != StateRunning)
     {
         if (mTraceExecution) std::cout << "VSC::TaskQueue::start" << std::endl;
@@ -108,14 +118,20 @@ void VSC::TaskQueue::start()
 
 void VSC::TaskQueue::stop()
 {
+    boost::lock_guard<boost::recursive_mutex> lock(mMutex);
+    
     if (this->getState() == StateRunning)
     {
         if (mTraceExecution) std::cout << "VSC::TaskQueue::stopping..." << std::endl;
         this->requestStop(true);
-        mInternalThread.join();
+        
+        mInternalThread.join(); // cannot lock mutex for join... 
+        
         this->setState(StateStopped);
         if (mTraceExecution) std::cout << "VSC::TaskQueue::stopped" << std::endl;
     }
+    
+    
     else if (this->getState() != StateStopped)
     {
         this->setState(StateStopped);
@@ -126,45 +142,52 @@ void VSC::TaskQueue::stop()
 
 VSC::TaskQueue::State VSC::TaskQueue::getState(void)
 {
-    boost::lock_guard<boost::mutex> lock(mMutex);
+    boost::lock_guard<boost::recursive_mutex> lock(mMutex);
+    
     State s = mState;
     return s;
 }
 
 void VSC::TaskQueue::setState(State state)
 {
-    boost::lock_guard<boost::mutex> lock(mMutex);
+    boost::lock_guard<boost::recursive_mutex> lock(mMutex);
+    
     mState = state;
 }
 
 VSC::TimeDuration VSC::TaskQueue::getMinimumExecutionStepDuration(void)
 {
-    boost::lock_guard<boost::mutex> lock(mMutex);
+    boost::lock_guard<boost::recursive_mutex> lock(mMutex);
+    
     TimeDuration d = mMinimumStepDuration;
     return d;
 }
 
 void VSC::TaskQueue::setMinimumExecutionStepDuration(TimeDuration duration)
 {
-    boost::lock_guard<boost::mutex> lock(mMutex);
+    boost::lock_guard<boost::recursive_mutex> lock(mMutex);
+    
     mMinimumStepDuration = duration;
 }
 
 bool VSC::TaskQueue::tasksAreRunning()
 {
-    boost::lock_guard<boost::mutex> lock(mMutex);
+    boost::lock_guard<boost::recursive_mutex> lock(mMutex);
+    
     return mRunningTasks.size() > 0;
 }
 
 bool VSC::TaskQueue::tasksAreQueued()
 {
-    boost::lock_guard<boost::mutex> lock(mMutex);
+    boost::lock_guard<boost::recursive_mutex> lock(mMutex);
+    
     return mQueuedTasks.size() > 0;
 }
 
 VSC::TimeDuration VSC::TaskQueue::durationUntilNextQueuedTaskExecutionTime()
 {
-    boost::lock_guard<boost::mutex> lock(mMutex);
+    boost::lock_guard<boost::recursive_mutex> lock(mMutex);
+    
     if (mQueuedTasks.size() == 0)
     {
         return VSC::TimeDuration(boost::posix_time::pos_infin);
@@ -182,22 +205,56 @@ VSC::TimeDuration VSC::TaskQueue::durationUntilNextQueuedTaskExecutionTime()
 void VSC::TaskQueue::threadedExecutionFunction()
 {
     if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction START" << std::endl;
+    
     while (this->stopRequested() == false)
     {
+        if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction BEGIN LOOP" << std::endl;
+        
         this->stepExecution();
         
-        if (this->tasksAreQueued())
+        if (this->tasksAreRunning() || this->tasksAreQueued())
         {
-            TimeDuration durationUntilNextQueuedTask = this->durationUntilNextQueuedTaskExecutionTime();
+            if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction tasks are queued or running" << std::endl;
             
-            if (durationUntilNextQueuedTask < mMinimumStepDuration)
+            TimeDuration waitDuration = mMinimumStepDuration;
+            
+            if (this->tasksAreQueued())
             {
-                boost::chrono::milliseconds ms(100);
-                mTaskCondition.wait_for();
+                TimeDuration durationUntilNextQueuedTask = this->durationUntilNextQueuedTaskExecutionTime();
+                if (this->tasksAreRunning())
+                {
+                    if (durationUntilNextQueuedTask < mMinimumStepDuration)
+                    {
+                        if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction next task is sooner than step duration";
+                        waitDuration = durationUntilNextQueuedTask;
+                    }
+                }
+                else
+                {
+                    waitDuration = durationUntilNextQueuedTask;
+                }
+
             }
+            
+            if (mTraceExecution)
+            {
+                std::cout << "VSC::TaskQueue::threadedExecutionFunction waiting for " << waitDuration.total_milliseconds() << "ms" << std::endl;
+            }
+            
+            boost::chrono::milliseconds chronoMs(waitDuration.total_milliseconds());
+            boost::unique_lock<boost::mutex> lock(mTaskConditionMutex);
+            mTaskCondition.wait_for(lock, chronoMs);
         }
         
-        //mTaskCondition.
+        else
+        {
+            std::cout << "VSC::TaskQueue::threadedExecutionFunction no task queued or running, waiting indefinately..." << std::endl;
+            // if no tasks are queued or running then wait for signal indefinately...
+            boost::unique_lock<boost::mutex> lock(mTaskConditionMutex);
+            mTaskCondition.wait(lock);
+        }
+        
+        if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction END LOOP" << std::endl;
         
     }
     if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction END" << std::endl;
@@ -205,86 +262,85 @@ void VSC::TaskQueue::threadedExecutionFunction()
 
 void VSC::TaskQueue::stepExecution()
 {
-    if (mTraceTasks) std::cout << "VSC::TaskQueue::stepExecution START" << std::endl;
     
-    mLastStepTime = CurrentTime();
-    
-    if (mTraceExecution) std::cout << "VSC::TaskQueue::stepExecution current time: " << mLastStepTime << std::endl;
-    
-    /*
-     *  Get the tasks that need to be dequeued
-     */
     Tasks localRunningTasks;
     
-    if (mTraceExecution) std::cout << "VSC::TaskQueue::stepExecution getting tasks to execute..." << std::endl;
-    
     {
-        /*
-         *  Locked scope to protect mQueuedTasks which is accessible from external threads
-         */
-        boost::lock_guard<boost::mutex> lock(mMutex);
+        boost::lock_guard<boost::recursive_mutex> lock(mMutex);
         
-        /*
-         *  Purge cancelled tasks from mQueuedTasks and promote to running the tasks which
-         *  have reached their execution start time
-         */
-        Tasks::iterator it = mQueuedTasks.begin();
-        while (it != mQueuedTasks.end())
+        try
         {
-            Task::SPtr task = *it;
+            if (mTraceTasks) std::cout << "VSC::TaskQueue::stepExecution START" << std::endl;
+            mLastStepTime = CurrentTime();
+            if (mTraceExecution) std::cout << "VSC::TaskQueue::stepExecution current time: " << mLastStepTime << std::endl;
+            if (mTraceExecution) std::cout << "VSC::TaskQueue::stepExecution getting tasks to execute..." << std::endl;
             
-            Task::State taskState = task->getState();
-            
-            if (taskState == Task::StateCancelled)
             {
-                it = mQueuedTasks.erase(it);
-                continue;
-            }
-            
-            BOOST_ASSERT(taskState == Task::StateWaiting);
-            
-            if (task->getExecutionStartTime() < mLastStepTime)
-            {
-                task->setState(Task::StateRunning);
-                Tasks::iterator checkIt = std::find(mRunningTasks.begin(), mRunningTasks.end(), task);
-                BOOST_ASSERT(checkIt == mRunningTasks.end());
-                if (checkIt == mRunningTasks.end())
+                /*
+                 *  Purge cancelled tasks from mQueuedTasks and promote to running the tasks which
+                 *  have reached their execution start time
+                 */
+                Tasks::iterator it = mQueuedTasks.begin();
+                while (it != mQueuedTasks.end())
                 {
-                    mRunningTasks.push_back(task);
-                    if (mTraceTasks) std::cout << "VSC::TaskQueue::stepExecution dequeued task " << task << std::endl;
+                    Task::SPtr task = *it;
+                    
+                    Task::State taskState = task->getState();
+                    
+                    if (taskState == Task::StateCancelled)
+                    {
+                        it = mQueuedTasks.erase(it);
+                        continue;
+                    }
+                    
+                    BOOST_ASSERT(taskState == Task::StateWaiting);
+                    
+                    if (task->getExecutionStartTime() < mLastStepTime)
+                    {
+                        task->setState(Task::StateRunning);
+                        Tasks::iterator checkIt = std::find(mRunningTasks.begin(), mRunningTasks.end(), task);
+                        BOOST_ASSERT(checkIt == mRunningTasks.end());
+                        if (checkIt == mRunningTasks.end())
+                        {
+                            mRunningTasks.push_back(task);
+                            if (mTraceTasks) std::cout << "VSC::TaskQueue::stepExecution dequeued task " << task << std::endl;
+                        }
+                        it = mQueuedTasks.erase(it);
+                    }
+                    else
+                    {
+                        ++it;
+                    }
                 }
-                it = mQueuedTasks.erase(it);
+                
+                /*
+                 *  Remove cancelled and ended running tasks (likely cancelled or ended)
+                 */
+                
+                it = mRunningTasks.begin();
+                while (it != mRunningTasks.end())
+                {
+                    Task::SPtr task = *it;
+                    if (task->getState() != Task::StateRunning)
+                    {
+                        it = mRunningTasks.erase(it);
+                        if (mTraceTasks) std::cout << "VSC::TaskQueue::stepExecution finished running task " << task << std::endl;
+                    }
+                    else ++it;
+                }
+                
+                localRunningTasks = mRunningTasks;
             }
-            else
-            {
-                ++it;
-            }
+            if (mTraceExecution) std::cout << "VSC::TaskQueue::stepExecution got " << localRunningTasks.size() << " task(s) to run" << std::endl;
         }
-        
-        /*
-         *  Remove cancelled and ended running tasks (likely cancelled or ended)
-         */
-        
-        it = mRunningTasks.begin();
-        while (it != mRunningTasks.end())
+        catch (std::exception& e)
         {
-            Task::SPtr task = *it;            
-            if (task->getState() != Task::StateRunning)
-            {
-                it = mRunningTasks.erase(it);
-                if (mTraceTasks) std::cout << "VSC::TaskQueue::stepExecution finished running task " << task << std::endl;
-            }
-            else ++it;
+            std::cout << "VSC::TaskQueue::stepExecution EXCEPTION!!! : " << e.what() << std::endl;
         }
         
-        localRunningTasks = mRunningTasks;
+
     }
-    
-    if (mTraceExecution)
-    {
-        std::cout << "VSC::TaskQueue::stepExecution got " << localRunningTasks.size() << "tasks to run" << std::endl;
-    }
-    
+
     /*
      *  After having unlocked the mutex we iterate over the copy of the 
      *  running task list and execute them.
@@ -292,24 +348,40 @@ void VSC::TaskQueue::stepExecution()
     
     BOOST_FOREACH(Task::SPtr task, localRunningTasks)
     {
-        bool ended = task->stepExecution();
-        if (ended) {/* */}
+        if (mTraceExecution) std::cout << "VSC::TaskQueue::stepExecution will stepExecution for task : " << task << std::endl;
+        try 
+        {
+            bool ended = task->stepExecution();
+            if (ended) {/* */}
+        }
+        catch (VSCInvalidArgumentException& e)
+        {
+            std::cout << "VSC::TaskQueue::stepExecution INVALID ARGUMENT EXCEPTION!!! : " << e.what();
+            std::cout << "; Additional info: " << e.getValueForKey(VSCBaseExceptionAdditionalInfoKey) << std::endl;
+            this->cancelTask(task);
+        }
+        catch (std::exception& e)
+        {
+            std::cout << "VSC::TaskQueue::stepExecution EXCEPTION!!! : " << e.what() << std::endl;
+            this->cancelTask(task);
+        }
     }
     
-    if (mTraceExecution) std::cout << "VSC::TaskQueue::stepExecution END" << std::endl;
+    if (mTraceExecution) std::cout  << "VSC::TaskQueue::stepExecution END" << std::endl;
     
 }
 
 void VSC::TaskQueue::requestStop(bool stop)
 {
-    boost::lock_guard<boost::mutex> lock(mMutex);
-    mTaskCondition.notify_one();
+    boost::lock_guard<boost::mutex> lock(mRequestStopMutex);
     mStopRequested = stop;
+    mTaskCondition.notify_one();
 }
 
 bool VSC::TaskQueue::stopRequested()
 {
-    boost::lock_guard<boost::mutex> lock(mMutex);
+    boost::lock_guard<boost::mutex> lock(mRequestStopMutex);
+    if (mTraceExecution) std::cout << "VSC::TaskQueue::stopRequested" << std::endl;
     bool s = mStopRequested;
     return s;
 }

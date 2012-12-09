@@ -248,6 +248,7 @@ const static BOOL traceInterface = YES;
     }
     BOOST_ASSERT(v);
     BOOST_ASSERT(v.eventChainController == owner);
+    //v.translatesAutoresizingMaskIntoConstraints = NO;
     return v;
 }
 
@@ -276,6 +277,7 @@ const static BOOL traceInterface = YES;
     }
     BOOST_ASSERT(v);
     BOOST_ASSERT(v.eventChainController == owner);
+    v.translatesAutoresizingMaskIntoConstraints = NO;
     return v;
 }
 
@@ -381,6 +383,23 @@ const static BOOL traceInterface = YES;
     
     return 0;
 }
+
+- (void)tableViewSelectionDidChange:(NSNotification *)aNotification
+{
+    NSLog(@"%@ tableViewSelectionDidChange: %@", self, aNotification);
+    
+    BOOST_ASSERT([aNotification object] == self.eventTableView);
+    if ([aNotification object] != self.eventTableView) return;
+    
+    NSIndexSet* rowIndexes = [self.eventTableView selectedRowIndexes];
+    
+    [rowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        NSView* v = [self.eventTableView viewAtColumn:0 row:idx makeIfNecessary:NO];
+        NSLog(@"Row %ld: %@ with frame %@", idx, v, NSStringFromRect(v.frame));
+    }];
+    
+}
+
 
 
 

@@ -35,9 +35,9 @@
 
 
 //#define VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW // TEST
-#define VSCOSX_TEST_TASK_QUEUE
+//#define VSCOSX_TEST_TASK_QUEUE // TEST
 
-//#define VSCOSX_FULL_APPLICATION // RUN FULL BLOWN APP
+#define VSCOSX_FULL_APPLICATION // RUN FULL BLOWN APP
 #define VSCOSX_SETUP_ENVIRONMENT_TEST
 
 #ifdef VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW
@@ -61,6 +61,10 @@
      *  Refresh MIDI outputs and open them all
      */
     
+    VSC::TaskQueue::SPtr midiTaskQueue = VSC::MIDI::SingletonMIDITaskQueue();
+    BOOST_ASSERT(midiTaskQueue);
+    midiTaskQueue->start();
+    
     VSC::MIDI::OutputManager::SPtr outputManager = VSC::MIDI::OutputManager::singletonManager();
     BOOST_ASSERT(outputManager);
     outputManager->refreshOutputs();
@@ -77,25 +81,21 @@
         }
     }
     
-#ifdef VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW
+    self.midiWindowController = [[VSCOSXMIDIWindowController alloc] initWithWindowNibName:@"VSCOSXMIDIWindowController"];
+    BOOST_ASSERT(self.midiWindowController);
+    [self showMIDIWindow:nil];
     
+#ifdef VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW
     self.testElementInspectorWindowController = [[VSCOSXOBSceneElementInspectorWindowController alloc]
                                                  initWithWindowNibName:@"VSCOSXOBSceneElementInspectorWindowController"];
-    
     BOOST_ASSERT(self.testElementInspectorWindowController);
-    
     [self.testElementInspectorWindowController showWindow:self];
-
 #endif
     
 #ifdef VSCOSX_TEST_TASK_QUEUE
-    
     VSC::TaskQueue::SPtr taskQueue = VSC::MIDI::SingletonMIDITaskQueue();
-    
     VSC::TaskTest::SPtr taskTest = VSC::TaskTest::SPtr(new VSC::TaskTest);
-    
     taskTest->performTestWithTaskQueue(taskQueue);
-    
 #endif
     
 #ifdef VSCOSX_FULL_APPLICATION
@@ -124,10 +124,6 @@
     NSWindow* w = self.environmentWindowController.window; // does not force creation
     BOOST_ASSERT(w);
     
-    self.midiWindowController = [[VSCOSXMIDIWindowController alloc] initWithWindowNibName:@"VSCOSXMIDIWindowController"];
-    BOOST_ASSERT(self.midiWindowController);
-    
-    [self showMIDIWindow:nil];
     
     VSC::Environment::SPtr environment = globalApplication->createEnvironment<VSC::Environment>();
     BOOST_ASSERT(environment);
