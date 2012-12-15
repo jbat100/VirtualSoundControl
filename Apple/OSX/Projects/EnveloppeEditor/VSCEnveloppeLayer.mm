@@ -1,5 +1,5 @@
 //
-//  VSCEnveloppeLayer.m
+//  VSC::EnveloppeLayer.m
 //  EnveloppeEditor
 //
 //  Created by Jonathan Thorpe on 4/3/12.
@@ -12,9 +12,13 @@
 #import "NS+VSCGeomOperations.h"
 #import <boost/shared_ptr.hpp>
 
-@interface VSCEnveloppeLayer ()
+@interface VSC::EnveloppeLayer ()
+{
+    @private
+    VSC::Enveloppe::List _enveloppeList;
+}
 
--(void) drawEnveloppe:(VSCEnveloppePtr)enveloppe withDisplaySetup:(VSCEnveloppeGUIConfigPtr)displaySetup inContext:(CGContextRef)ctx;
+-(void) drawEnveloppe:(VSC::Enveloppe::SPtr)enveloppe withDisplaySetup:(VSC::EnveloppeGUIConfig::SPtr)displaySetup inContext:(CGContextRef)ctx;
 
 @end
 
@@ -26,7 +30,7 @@
 -(id) init {
     
     if ((self = [super init])) {
-        _defaultDisplaySetup = VSCEnveloppeGUIConfigPtr(new VSCEnveloppeGUIConfig());
+        _defaultDisplaySetup = VSC::EnveloppeGUIConfig::SPtr(new VSC::EnveloppeGUIConfig());
     }
     
     return self;
@@ -35,9 +39,9 @@
 
 #pragma mark - C++ Setters/Getters
 
--(void) addEnveloppe:(VSCEnveloppePtr)enveloppe {
+-(void) addEnveloppe:(VSC::Enveloppe::SPtr)enveloppe {
     
-    VSCEnveloppe::List::iterator it = std::find(_enveloppeList.begin(), _enveloppeList.end(), enveloppe);
+    VSC::Enveloppe::List::iterator it = std::find(_enveloppeList.begin(), _enveloppeList.end(), enveloppe);
     
     if (it == _enveloppeList.end()) {
         _enveloppeList.push_back(enveloppe);
@@ -45,31 +49,31 @@
     
 }
 
--(void) addEnveloppe:(VSCEnveloppePtr)enveloppe atIndex:(NSUInteger)index {
+-(void) addEnveloppe:(VSC::Enveloppe::SPtr)enveloppe atIndex:(NSUInteger)index {
     NSAssert(0, @"Not Implemented");
 }
 
--(void) removeEnveloppe:(VSCEnveloppePtr)enveloppe {
+-(void) removeEnveloppe:(VSC::Enveloppe::SPtr)enveloppe {
     _enveloppeList.remove(enveloppe);
 }
 
--(VSCEnveloppeGUIConfigPtr) getDefaultDisplaySetup {
+-(VSC::EnveloppeGUIConfig::SPtr) getDefaultDisplaySetup {
     return _defaultDisplaySetup;
 }
 
--(void) setDefaultDisplaySetup:(VSCEnveloppeGUIConfigPtr)setup {
+-(void) setDefaultDisplaySetup:(VSC::EnveloppeGUIConfig::SPtr)setup {
     _defaultDisplaySetup = setup;
 }
 
 
--(void) setDisplaySetup:(VSCEnveloppeGUIConfigPtr)setup forEnveloppe:(VSCEnveloppePtr)enveloppe {
+-(void) setDisplaySetup:(VSC::EnveloppeGUIConfig::SPtr)setup forEnveloppe:(VSC::Enveloppe::SPtr)enveloppe {
     _enveloppeDisplaySetupMap[enveloppe] = setup;
 }
 
--(VSCEnveloppeGUIConfigPtr) getDisplaySetupForEnveloppe:(VSCEnveloppePtr)enveloppe {
+-(VSC::EnveloppeGUIConfig::SPtr) getDisplaySetupForEnveloppe:(VSC::Enveloppe::SPtr)enveloppe {
     
     // Look for display setup in the map
-    VSCEnveloppeGUIConfigMap::iterator setupIt = _enveloppeDisplaySetupMap.find(enveloppe);
+    VSC::EnveloppeGUIConfigMap::iterator setupIt = _enveloppeDisplaySetupMap.find(enveloppe);
     if (setupIt != _enveloppeDisplaySetupMap.end()) {
         return setupIt->second;
     }
@@ -86,10 +90,10 @@
     /*
      *  First draw non editable enveloppes
      */
-    for (VSCEnveloppe::List::const_iterator it = _enveloppeList.begin(); it != _enveloppeList.end(); ++it) {
-        VSCEnveloppePtr enveloppe = (*it);
+    for (VSC::Enveloppe::List::const_iterator it = _enveloppeList.begin(); it != _enveloppeList.end(); ++it) {
+        VSC::Enveloppe::SPtr enveloppe = (*it);
         if ([self.editor enveloppeIsEditable:enveloppe] == NO) {
-            VSCEnveloppeGUIConfigPtr displaySetup = [self getDisplaySetupForEnveloppe:enveloppe];
+            VSC::EnveloppeGUIConfig::SPtr displaySetup = [self getDisplaySetupForEnveloppe:enveloppe];
             [self drawEnveloppe:enveloppe withDisplaySetup:displaySetup inContext:ctx];
         }
     }
@@ -98,13 +102,13 @@
      *  Then draw editable enveloppes and selection rects
      */
     CGFloat selectionRectWidth = (CGFloat)[self.editor enveloppeEditorGUIConfig]->getSelectionRectLineWidth();
-    const VSCColour selectionRectColour = [self.editor enveloppeEditorGUIConfig]->getSelectionRectColour();
-    CGColorRef cgSelectionRectColour = CGColorCreateFromVSCColour(selectionRectColour);
+    const VSC::Color selectionRectColour = [self.editor enveloppeEditorGUIConfig]->getSelectionRectColour();
+    CGColorRef cgSelectionRectColour = CGColorCreateFromVSC::Color(selectionRectColour);
     
-    for (VSCEnveloppe::List::const_iterator it = _enveloppeList.begin(); it != _enveloppeList.end(); ++it) {
-        VSCEnveloppePtr enveloppe = (*it);
+    for (VSC::Enveloppe::List::const_iterator it = _enveloppeList.begin(); it != _enveloppeList.end(); ++it) {
+        VSC::Enveloppe::SPtr enveloppe = (*it);
         if ([self.editor enveloppeIsEditable:enveloppe] == YES) {
-            VSCEnveloppeGUIConfigPtr displaySetup = [self getDisplaySetupForEnveloppe:enveloppe];
+            VSC::EnveloppeGUIConfig::SPtr displaySetup = [self getDisplaySetupForEnveloppe:enveloppe];
             [self drawEnveloppe:enveloppe withDisplaySetup:displaySetup inContext:ctx];
         }
         drawRectOutline(ctx, [self.editor currentSelectionRectForEnveloppe:enveloppe], selectionRectWidth, cgSelectionRectColour);
@@ -112,19 +116,19 @@
     
 }
 
--(void) drawEnveloppe:(VSCEnveloppePtr)enveloppe withDisplaySetup:(VSCEnveloppeGUIConfigPtr)displaySetup inContext:(CGContextRef)ctx {
+-(void) drawEnveloppe:(VSC::Enveloppe::SPtr)enveloppe withDisplaySetup:(VSC::EnveloppeGUIConfig::SPtr)displaySetup inContext:(CGContextRef)ctx {
     
-    VSCEnveloppeEditorGUIConfigPtr editorConfig = [self.editor enveloppeEditorGUIConfig];
+    VSC::EnveloppeEditorGUIConfig::SPtr editorConfig = [self.editor enveloppeEditorGUIConfig];
     
     CGFloat radius = (CGFloat)(displaySetup->getControlPointRadius());
     CGFloat lineWidth = (CGFloat)(displaySetup->getLineWidth());
-	CGColorRef cgSelectedColourRef = CGColorCreateFromVSCColour(displaySetup->getControlPointSelectedColour());
-	CGColorRef cgUnselectedColourRef = CGColorCreateFromVSCColour(displaySetup->getControlPointUnselectedColour());
-	CGColorRef cgLineSelectedColorRef = CGColorCreateFromVSCColour(displaySetup->getLineSelectedColour());
-    CGColorRef cgLineUnselectedColorRef = CGColorCreateFromVSCColour(displaySetup->getLineUnselectedColour());
+	CGColorRef cgSelectedColourRef = CGColorCreateFromVSC::Color(displaySetup->getControlPointSelectedColour());
+	CGColorRef cgUnselectedColourRef = CGColorCreateFromVSC::Color(displaySetup->getControlPointUnselectedColour());
+	CGColorRef cgLineSelectedColorRef = CGColorCreateFromVSC::Color(displaySetup->getLineSelectedColour());
+    CGColorRef cgLineUnselectedColorRef = CGColorCreateFromVSC::Color(displaySetup->getLineUnselectedColour());
     
-    VSCEnveloppe::ConstPointIterator nextIt;
-	VSCEnveloppe::ConstPointIterator endIt = enveloppe->getPointEndIterator();
+    VSC::Enveloppe::ConstPointIterator nextIt;
+	VSC::Enveloppe::ConstPointIterator endIt = enveloppe->getPointEndIterator();
     
     /*
      *  Draw enveloppe lines
@@ -137,15 +141,15 @@
     
     CGContextSetLineWidth(ctx, lineWidth);
     
-	for (VSCEnveloppe::ConstPointIterator it = enveloppe->getPointBeginIterator(); it !=endIt; ++it) {
+	for (VSC::Enveloppe::ConstPointIterator it = enveloppe->getPointBeginIterator(); it !=endIt; ++it) {
 		
 		nextIt = it;
 		nextIt++;
 		
 		if (nextIt != endIt) {
             
-            VSCEnveloppePointPtr currentPoint = *it;
-			VSCEnveloppePointPtr nextPoint = *nextIt;
+            VSC::EnveloppePoint::SPtr currentPoint = *it;
+			VSC::EnveloppePoint::SPtr nextPoint = *nextIt;
             
             // if the enveloppe is not editable, we don't even need to check whether points are selected or not, we stay in unselected color
             if (isEditable == YES) {
@@ -160,7 +164,7 @@
 			
 			// draw line between this point and next
 			
-			//NSPoint point1 = NSMakePointFromPoint(editorConfig->pointForEnveloppeCoordinate(boost::static_pointer_cast<VSCEnveloppeCoordinate>(currentPoint)));
+			//NSPoint point1 = NSMakePointFromPoint(editorConfig->pointForEnveloppeCoordinate(boost::static_pointer_cast<VSC::EnveloppeCoordinate>(currentPoint)));
 			NSPoint point1 = NSMakePointFromPoint(editorConfig->pointForEnveloppeCoordinate(currentPoint));
             NSPoint point2 = NSMakePointFromPoint(editorConfig->pointForEnveloppeCoordinate(nextPoint));
 			
@@ -189,13 +193,13 @@
     CGContextSetLineWidth(ctx, 1);
     
     
-	for (VSCEnveloppe::ConstPointIterator it = enveloppe->getPointBeginIterator(); it !=endIt; it++) {
+	for (VSC::Enveloppe::ConstPointIterator it = enveloppe->getPointBeginIterator(); it !=endIt; it++) {
 		
-		VSCEnveloppePointPtr currentPoint = *it;
+		VSC::EnveloppePoint::SPtr currentPoint = *it;
 		
 		// draw control circle for point
 		
-        VSC::Point vscp = [self.editor enveloppeEditorGUIConfig]->pointForEnveloppeCoordinate(boost::dynamic_pointer_cast<VSCEnveloppeCoordinate>(currentPoint));
+        VSC::Point vscp = [self.editor enveloppeEditorGUIConfig]->pointForEnveloppeCoordinate(boost::dynamic_pointer_cast<VSC::EnveloppeCoordinate>(currentPoint));
 		NSPoint p =  NSMakePointFromPoint(vscp);
 		
         if (isEditable == YES) {

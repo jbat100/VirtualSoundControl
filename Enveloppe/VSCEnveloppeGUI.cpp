@@ -13,54 +13,57 @@
 
 #include <cmath>
 
-VSCSFloat pointForTime(const VSCSFloat t, const VSCEnveloppe::TimeRange& timeRange, const VSCSFloat width);
-VSCSFloat pointForValue(const VSCSFloat v, const VSCEnveloppe::ValueRange& valueRange, const VSCSFloat height);
-VSCSFloat timeForPoint(const VSCSFloat point, const VSCEnveloppe::TimeRange& timeRange, const VSCSFloat width);
-VSCSFloat valueForPoint(const VSCSFloat point, const VSCEnveloppe::ValueRange& valueRange, const VSCSFloat height);
-VSCSFloat timeDeltaForPointDelta(VSCSFloat delta, const VSCEnveloppe::TimeRange& timeRange, const VSCSFloat width);
-VSCSFloat valueDeltaForPointDelta(VSCSFloat delta, const VSCEnveloppe::ValueRange& valueRange, const VSCSFloat height);
+namespace VSC {
+    Float pointForTime(const Float t, const Enveloppe::TimeRange& timeRange, const Float width);
+    Float pointForValue(const Float v, const Enveloppe::ValueRange& valueRange, const Float height);
+    Float timeForPoint(const Float point, const Enveloppe::TimeRange& timeRange, const Float width);
+    Float valueForPoint(const Float point, const Enveloppe::ValueRange& valueRange, const Float height);
+    Float timeDeltaForPointDelta(Float delta, const Enveloppe::TimeRange& timeRange, const Float width);
+    Float valueDeltaForPointDelta(Float delta, const Enveloppe::ValueRange& valueRange, const Float height);
+}
+
 
 //MARK: Points Calculations
 
-VSCSFloat pointForTime(const VSCSFloat t, const VSCEnveloppe::TimeRange& timeRange, const VSCSFloat width) {
-	VSCSFloat timePerPixel = timeRange.size / width; 
+VSC::Float VSC::pointForTime(const Float t, const Enveloppe::TimeRange& timeRange, const Float width) {
+	Float timePerPixel = timeRange.size / width; 
 	return (t - timeRange.origin) / timePerPixel;
 }
 
-VSCSFloat pointForValue(const VSCSFloat v, const VSCEnveloppe::ValueRange& valueRange, const VSCSFloat height) {
-	VSCSFloat valuePerPixel = valueRange.size / height; 
+VSC::Float VSC::pointForValue(const Float v, const Enveloppe::ValueRange& valueRange, const Float height) {
+	Float valuePerPixel = valueRange.size / height; 
 	return (v - valueRange.origin) / valuePerPixel;
 }
 
-VSCSFloat timeForPoint(const VSCSFloat point, const VSCEnveloppe::TimeRange& timeRange, const VSCSFloat width) {
-	VSCSFloat normalisedX = point / width;
+VSC::Float VSC::timeForPoint(const Float point, const Enveloppe::TimeRange& timeRange, const Float width) {
+	Float normalisedX = point / width;
 	return timeRange.origin  + (normalisedX*timeRange.size);
 }
 
-VSCSFloat valueForPoint(const VSCSFloat point, const VSCEnveloppe::ValueRange& valueRange, const VSCSFloat height) {
-	VSCSFloat normalisedY = (point / height);
+VSC::Float VSC::valueForPoint(const Float point, const Enveloppe::ValueRange& valueRange, const Float height) {
+	Float normalisedY = (point / height);
 	return valueRange.origin  + (normalisedY*valueRange.size);
 }
 
-VSCSFloat timeDeltaForPointDelta(VSCSFloat delta, const VSCEnveloppe::TimeRange& timeRange, const VSCSFloat width) {
-    VSCSFloat normalisedDelta = (delta / width);
+VSC::Float VSC::timeDeltaForPointDelta(Float delta, const Enveloppe::TimeRange& timeRange, const Float width) {
+    Float normalisedDelta = (delta / width);
     return normalisedDelta*timeRange.size;
 }
 
-VSCSFloat valueDeltaForPointDelta(VSCSFloat delta, const VSCEnveloppe::ValueRange& valueRange, const VSCSFloat height) {
-    VSCSFloat normalisedDelta = (delta / height);
+VSC::Float VSC::valueDeltaForPointDelta(Float delta, const Enveloppe::ValueRange& valueRange, const Float height) {
+    Float normalisedDelta = (delta / height);
 	return normalisedDelta*valueRange.size;
 }
 
-VSCEnveloppeEditorGUIConfig::VSCEnveloppeEditorGUIConfig(void) {
+VSC::EnveloppeEditorGUIConfig::EnveloppeEditorGUIConfig(void) {
     this->setToDefault();
 }
 
-void VSCEnveloppeEditorGUIConfig::setToDefault(void) {
-    _timeRange = VSCEnveloppe::TimeRange(0.0,5.0);
-    _valueRange = VSCEnveloppe::ValueRange(0.0,1.0);
-    _allowedTimeRange = VSCEnveloppe::TimeRange(0.0,5.0);
-    _allowedValueRange = VSCEnveloppe::ValueRange(0.0,1.0);
+void VSC::EnveloppeEditorGUIConfig::setToDefault(void) {
+    _timeRange = Enveloppe::TimeRange(0.0,5.0);
+    _valueRange = Enveloppe::ValueRange(0.0,1.0);
+    _allowedTimeRange = Enveloppe::TimeRange(0.0,5.0);
+    _allowedValueRange = Enveloppe::ValueRange(0.0,1.0);
 }
 
 
@@ -70,28 +73,28 @@ void VSCEnveloppeEditorGUIConfig::setToDefault(void) {
  *	View range setters / getters
  */
 
-const VSC::Size& getEditorSize(void) const {
+const VSC::Size& VSC::EnveloppeEditorGUIConfig::getEditorSize(void) const {
     return _editorSize;
 }
 
-void setEditorSize(const VSC::Size& size) {
+void VSC::EnveloppeEditorGUIConfig::setEditorSize(const Size& size) {
     _editorSize = size;
 }
 
 
-const VSCEnveloppe::TimeRange& VSCEnveloppeEditorGUIConfig::getTimeRange(void) const {
+const VSC::Enveloppe::TimeRange& VSC::EnveloppeEditorGUIConfig::getTimeRange(void) const {
     return _timeRange;
 }
 
-void VSCEnveloppeEditorGUIConfig::setTimeRange(const VSCEnveloppe::TimeRange& timeRange) {
+void VSC::EnveloppeEditorGUIConfig::setTimeRange(const Enveloppe::TimeRange& timeRange) {
     _timeRange = timeRange;
 }
 
-const VSCEnveloppe::ValueRange& VSCEnveloppeEditorGUIConfig::getValueRange(void) const {
+const VSC::Enveloppe::ValueRange& VSC::EnveloppeEditorGUIConfig::getValueRange(void) const {
     return _valueRange;
 }
 
-void VSCEnveloppeEditorGUIConfig::setValueRange(const VSCEnveloppe::ValueRange& valueRange) {
+void VSC::EnveloppeEditorGUIConfig::setValueRange(const Enveloppe::ValueRange& valueRange) {
     _valueRange = valueRange;
 }
 
@@ -99,46 +102,46 @@ void VSCEnveloppeEditorGUIConfig::setValueRange(const VSCEnveloppe::ValueRange& 
  *	Allowed range setters / getters
  */
 
-const VSCEnveloppe::TimeRange& VSCEnveloppeEditorGUIConfig::getAllowedTimeRange(void) const {
+const VSC::Enveloppe::TimeRange& VSC::EnveloppeEditorGUIConfig::getAllowedTimeRange(void) const {
     return _allowedTimeRange;
 }
 
-void VSCEnveloppeEditorGUIConfig::setAllowedTimeRange(const VSCEnveloppe::TimeRange& timeRange) {
+void VSC::EnveloppeEditorGUIConfig::setAllowedTimeRange(const Enveloppe::TimeRange& timeRange) {
     _allowedTimeRange = timeRange;
 }
 
-const VSCEnveloppe::ValueRange& VSCEnveloppeEditorGUIConfig::getAllowedValueRange(void) const {
+const VSC::Enveloppe::ValueRange& VSC::EnveloppeEditorGUIConfig::getAllowedValueRange(void) const {
     return _allowedValueRange;
 }
 
-void VSCEnveloppeEditorGUIConfig::setAllowedValueRange(const VSCEnveloppe::ValueRange& valueRange) {
+void VSC::EnveloppeEditorGUIConfig::setAllowedValueRange(const Enveloppe::ValueRange& valueRange) {
     _allowedValueRange = valueRange;
 }
 
-VSCSFloat VSCEnveloppeEditorGUIConfig::getPointSelectionRadius(void) const {
+Float VSC::EnveloppeEditorGUIConfig::getPointSelectionRadius(void) const {
     return _pointSelectionRadius;
 }
 
-void VSCEnveloppeEditorGUIConfig::setPointSelectionRadius(const VSCSFloat radius) {
+void VSC::EnveloppeEditorGUIConfig::setPointSelectionRadius(const Float radius) {
     _pointSelectionRadius = radius;
 }
 
-const VSCColour& VSCEnveloppeEditorGUIConfig::getSelectionRectColour(void) const 
+const VSC::Color& VSC::EnveloppeEditorGUIConfig::getSelectionRectColour(void) const 
 {
     return _selectionRectColour;
 }
 
-void VSCEnveloppeEditorGUIConfig::setSelectionRectColour(const VSCColour& colour)
+void VSC::EnveloppeEditorGUIConfig::setSelectionRectColour(const Color& colour)
 {
     _selectionRectColour = colour;
 }
 
-VSCSFloat VSCEnveloppeEditorGUIConfig::getSelectionRectLineWidth(void) const
+Float VSC::EnveloppeEditorGUIConfig::getSelectionRectLineWidth(void) const
 {
     return _selectionRectLineWidth;
 }
 
-void VSCEnveloppeEditorGUIConfig::setSelectionRectLineWidth(const VSCSFloat width)
+void VSC::EnveloppeEditorGUIConfig::setSelectionRectLineWidth(const Float width)
 {
     _selectionRectLineWidth = width;
 }
@@ -146,44 +149,44 @@ void VSCEnveloppeEditorGUIConfig::setSelectionRectLineWidth(const VSCSFloat widt
 
 #pragma mark Point Calculations
 
-VSCSFloat VSCEnveloppeEditorGUIConfig::pointForTime(const VSCSFloat t) {
+Float VSC::EnveloppeEditorGUIConfig::pointForTime(const Float t) {
     return ::pointForTime(t, _timeRange, _editorSize.width);
 }
 
-VSCSFloat VSCEnveloppeEditorGUIConfig::pointForValue(const VSCSFloat v) {
+Float VSC::EnveloppeEditorGUIConfig::pointForValue(const Float v) {
     return ::pointForValue(v, _valueRange, _editorSize.height);
 }
 
-VSCSFloat VSCEnveloppeEditorGUIConfig::timeForPoint(const VSCSFloat point) {
+Float VSC::EnveloppeEditorGUIConfig::timeForPoint(const Float point) {
     return ::timeForPoint(point, _timeRange, _editorSize.width);
 }
 
-VSCSFloat VSCEnveloppeEditorGUIConfig::valueForPoint(const VSCSFloat point) {
+Float VSC::EnveloppeEditorGUIConfig::valueForPoint(const Float point) {
     return ::valueForPoint(point, _valueRange, _editorSize.height);
 }
 
-VSCSFloat VSCEnveloppeEditorGUIConfig::timeDeltaForPointDelta(const VSCSFloat delta) {
+Float VSC::EnveloppeEditorGUIConfig::timeDeltaForPointDelta(const Float delta) {
     return ::timeDeltaForPointDelta(delta, _timeRange, _editorSize.width);
 }
 
-VSCSFloat VSCEnveloppeEditorGUIConfig::valueDeltaForPointDelta(const VSCSFloat delta) {
+Float VSC::EnveloppeEditorGUIConfig::valueDeltaForPointDelta(const Float delta) {
     return ::valueDeltaForPointDelta(delta, _valueRange, _editorSize.height);
 }
 
-VSC::Point VSCEnveloppeEditorGUIConfig::pointForEnveloppeCoordinate(const VSCEnveloppeCoordinatePtr& p) {
-    VSC::Point point;
+VSC::Point VSC::EnveloppeEditorGUIConfig::pointForEnveloppeCoordinate(const EnveloppeCoordinate::SPtr& p) {
+    Point point;
     point.x = this->pointForTime(p->getTime());
     point.y = this->pointForValue(p->getValue());
     return point;
 }
 
-VSCEnveloppeCoordinatePtr VSCEnveloppeEditorGUIConfig::createEnveloppeCoordinateForPoint(const VSC::Point& p) {
-    VSCEnveloppeCoordinatePtr coord = VSCEnveloppeCoordinatePtr(new VSCEnveloppeCoordinate());
+VSC::EnveloppeCoordinate::SPtr VSC::EnveloppeEditorGUIConfig::createEnveloppeCoordinateForPoint(const Point& p) {
+    EnveloppeCoordinate::SPtr coord = EnveloppeCoordinate::SPtr(new EnveloppeCoordinate());
     this->setEnveloppeCoordinateToPoint(coord, p);
     return coord;
 }
 
-void VSCEnveloppeEditorGUIConfig::setEnveloppeCoordinateToPoint(VSCEnveloppeCoordinatePtr coord, const VSC::Point& p) {
+void VSC::EnveloppeEditorGUIConfig::setEnveloppeCoordinateToPoint(EnveloppeCoordinate::SPtr coord, const Point& p) {
     coord->setTime(this->timeForPoint(p.x));
     coord->setValue(this->valueForPoint(p.y));
 }
@@ -194,16 +197,16 @@ void VSCEnveloppeEditorGUIConfig::setEnveloppeCoordinateToPoint(VSCEnveloppeCoor
 #pragma mark Enveloppe Display Setups
 
 
-VSCEnveloppeGUIConfig::VSCEnveloppeGUIConfig() {
+VSC::EnveloppeGUIConfig::EnveloppeGUIConfig() {
     this->setControlPointRadius(3.0);
     this->setLineWidth(1.0);
-    this->setControlPointSelectedColour((VSCColour){0.0, 0.0, 1.0, 1.0});
-    this->setControlPointUnselectedColour((VSCColour){0.0, 0.0, 0.0, 1.0});
-    this->setLineSelectedColour((VSCColour){0.0, 0.0, 0.0, 1.0});
-    this->setLineUnselectedColour((VSCColour){0.0, 0.0, 1.0, 1.0});
+    this->setControlPointSelectedColour((Color){0.0, 0.0, 1.0, 1.0});
+    this->setControlPointUnselectedColour((Color){0.0, 0.0, 0.0, 1.0});
+    this->setLineSelectedColour((Color){0.0, 0.0, 0.0, 1.0});
+    this->setLineUnselectedColour((Color){0.0, 0.0, 1.0, 1.0});
 }
 
-VSCEnveloppeGUIConfig::VSCEnveloppeGUIConfig(const VSCEnveloppeGUIConfig& setup) {
+VSC::EnveloppeGUIConfig::EnveloppeGUIConfig(const EnveloppeGUIConfig& setup) {
     _controlPointRadius = setup._controlPointRadius;
     _lineWidth = setup._lineWidth;
     _lineSelectedColour = setup._lineSelectedColour;
@@ -218,35 +221,35 @@ VSCEnveloppeGUIConfig::VSCEnveloppeGUIConfig(const VSCEnveloppeGUIConfig& setup)
  *	Control Points setters / getters
  */
 
-float VSCEnveloppeGUIConfig::getControlPointRadius(void) const {
+float VSC::EnveloppeGUIConfig::getControlPointRadius(void) const {
 	return _controlPointRadius;
 }
 
-void VSCEnveloppeGUIConfig::setControlPointRadius(float controlPointRadius) {
+void VSC::EnveloppeGUIConfig::setControlPointRadius(float controlPointRadius) {
 	_controlPointRadius = controlPointRadius;
 }
 
-const VSCColour& VSCEnveloppeGUIConfig::getControlPointSelectedColour(void) const {
+const VSC::Color& VSC::EnveloppeGUIConfig::getControlPointSelectedColour(void) const {
 	return _controlPointSelectedColour;
 }
 
-void VSCEnveloppeGUIConfig::setControlPointSelectedColour(const VSCColour& colour) {
+void VSC::EnveloppeGUIConfig::setControlPointSelectedColour(const Color& colour) {
 	_controlPointSelectedColour = colour;
 }
 
-const VSCColour& VSCEnveloppeGUIConfig::getControlPointUnselectedColour(void) const {
+const VSC::Color& VSC::EnveloppeGUIConfig::getControlPointUnselectedColour(void) const {
 	return _controlPointUnselectedColour;
 }
 
-void VSCEnveloppeGUIConfig::setControlPointUnselectedColour(const VSCColour& colour) {
+void VSC::EnveloppeGUIConfig::setControlPointUnselectedColour(const VSC::Color& colour) {
 	_controlPointUnselectedColour = colour;
 }
 
-float VSCEnveloppeGUIConfig::getLineWidth(void) const {
+float VSC::EnveloppeGUIConfig::getLineWidth(void) const {
 	return _lineWidth;
 }
 
-void VSCEnveloppeGUIConfig::setLineWidth(float lineWidth) {
+void VSC::EnveloppeGUIConfig::setLineWidth(float lineWidth) {
 	_lineWidth = lineWidth;
 }
 
@@ -256,18 +259,18 @@ void VSCEnveloppeGUIConfig::setLineWidth(float lineWidth) {
  *	Enveloppe lines setters / getters
  */
 
-const VSCColour& VSCEnveloppeGUIConfig::getLineSelectedColour(void) const {
+const VSC::Color& VSC::EnveloppeGUIConfig::getLineSelectedColour(void) const {
 	return _lineSelectedColour;
 }
 
-void VSCEnveloppeGUIConfig::setLineSelectedColour(const VSCColour& colour) {
+void VSC::EnveloppeGUIConfig::setLineSelectedColour(const Color& colour) {
 	_lineSelectedColour = colour;
 }
 
-const VSCColour& VSCEnveloppeGUIConfig::getLineUnselectedColour(void) const {
+const VSC::Color& VSC::EnveloppeGUIConfig::getLineUnselectedColour(void) const {
     return _lineUnselectedColour;
 }
 
-void VSCEnveloppeGUIConfig::setLineUnselectedColour(const VSCColour& colour) {
+void VSC::EnveloppeGUIConfig::setLineUnselectedColour(const Color& colour) {
     _lineUnselectedColour = colour;
 }

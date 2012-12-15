@@ -6,8 +6,8 @@
 //  Copyright 2011 JBAT. All rights reserved.
 //
 
-#import "VSCEnveloppeEditorWindowController.h"
-#import "VSCEnveloppeEditorDocument.h"
+#import "VSC::EnveloppeEditorWindowController.h"
+#import "VSC::EnveloppeEditorDocument.h"
 
 #import <string>
 #import <list>
@@ -21,7 +21,7 @@
 #define SAVE_ENVELOPPE_AS_MENU_ITEM_TITLE			@"Save As..."
 */
  
-@interface VSCEnveloppeEditorWindowController ()
+@interface VSC::EnveloppeEditorWindowController ()
 
 /*
 @property (nonatomic) NSMenu* fileMenu;
@@ -36,7 +36,7 @@
 @end
 
 
-@implementation VSCEnveloppeEditorWindowController
+@implementation VSC::EnveloppeEditorWindowController
 
 //@synthesize enveloppeView, enveloppeEditorView;
 @synthesize enveloppeController = _enveloppeController;
@@ -110,8 +110,8 @@
 
 #pragma mark - Convenience 
 
--(VSCEnveloppeEditorDocument*) enveloppeEditorDocument {
-	return (VSCEnveloppeEditorDocument*)[self document];
+-(VSC::EnveloppeEditorDocument*) enveloppeEditorDocument {
+	return (VSC::EnveloppeEditorDocument*)[self document];
 }
 
 /*

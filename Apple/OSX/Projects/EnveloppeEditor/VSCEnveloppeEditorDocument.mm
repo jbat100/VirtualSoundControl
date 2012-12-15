@@ -6,11 +6,11 @@
 //  Copyright 2011 JBAT. All rights reserved.
 //
 
-#import "VSCEnveloppeEditorDocument.h"
+#import "VSC::EnveloppeEditorDocument.h"
 #import "NSApplication+VSCAdditions.h"
 
 
-@implementation VSCEnveloppeEditorDocument
+@implementation VSC::EnveloppeEditorDocument
 
 static NSString* baseFilePath = nil;
 static NSString* enveloppeBaseFilePath = nil;
@@ -30,7 +30,7 @@ static NSString* enveloppeBaseFilePath = nil;
 /*
 - (NSString *)windowNibName {
     // Implement this to return a nib to load OR implement -makeWindowControllers to manually create your controllers.
-    return @"VSCEnveloppeDocument";
+    return @"VSC::EnveloppeDocument";
 }
  */
 
@@ -65,8 +65,8 @@ static NSString* enveloppeBaseFilePath = nil;
 	NSLog(@"%@ makeWindowControllers", self);
 	
 #if 0
-	enveloppeEditorWindowController = [[VSCEnveloppeEditorWindowController alloc] 
-									   initWithWindowNibName:@"VSCEnveloppeEditorWindowController"];
+	enveloppeEditorWindowController = [[VSC::EnveloppeEditorWindowController alloc] 
+									   initWithWindowNibName:@"VSC::EnveloppeEditorWindowController"];
 	[self addWindowController:enveloppeEditorWindowController];
 	NSLog(@"%@ added window controller %@", self, enveloppeEditorWindowController);
 	[enveloppeEditorWindowController release];
@@ -137,12 +137,12 @@ static NSString* enveloppeBaseFilePath = nil;
 
 -(void) createDefaultEnveloppe {
 	
-	VSCEnveloppePtr enveloppe = VSCEnveloppePtr(new VSCEnveloppe());
+	VSC::Enveloppe::SPtr enveloppe = VSC::Enveloppe::SPtr(new VSC::Enveloppe());
 	
-	enveloppe->addPoint(VSCEnveloppePointPtr(new VSCEnveloppePoint(0.0, 0.0)));
-	enveloppe->addPoint(VSCEnveloppePointPtr(new VSCEnveloppePoint(0.0, 1.0)));
-	enveloppe->addPoint(VSCEnveloppePointPtr(new VSCEnveloppePoint(0.0, 2.0)));
-	enveloppe->addPoint(VSCEnveloppePointPtr(new VSCEnveloppePoint(0.0, 3.0)));
+	enveloppe->addPoint(VSC::EnveloppePoint::SPtr(new VSC::EnveloppePoint(0.0, 0.0)));
+	enveloppe->addPoint(VSC::EnveloppePoint::SPtr(new VSC::EnveloppePoint(0.0, 1.0)));
+	enveloppe->addPoint(VSC::EnveloppePoint::SPtr(new VSC::EnveloppePoint(0.0, 2.0)));
+	enveloppe->addPoint(VSC::EnveloppePoint::SPtr(new VSC::EnveloppePoint(0.0, 3.0)));
 	
 	enveloppe->setFilePath(std::string([DEFAULT_ENVELOPPE_RELATIVE_PATH cStringUsingEncoding:NSUTF8StringEncoding]));
 	
@@ -150,11 +150,11 @@ static NSString* enveloppeBaseFilePath = nil;
 	
 }
 
--(void) addEnveloppe:(VSCEnveloppePtr)enveloppe {
+-(void) addEnveloppe:(VSC::Enveloppe::SPtr)enveloppe {
 	_mainEnveloppeList.push_back(enveloppe);
 }
 
--(void) removeEnveloppe:(VSCEnveloppePtr)enveloppe {
+-(void) removeEnveloppe:(VSC::Enveloppe::SPtr)enveloppe {
 	_mainEnveloppeList.remove(enveloppe);
 }
 
@@ -166,16 +166,16 @@ static NSString* enveloppeBaseFilePath = nil;
 	return _mainEnveloppeList.end();
 }
 
--(VSCEnveloppePtr) defaultEnveloppe {
+-(VSC::Enveloppe::SPtr) defaultEnveloppe {
 	std::string defaultRelativePath = std::string([DEFAULT_ENVELOPPE_RELATIVE_PATH cStringUsingEncoding:NSUTF8StringEncoding]);
 	for (EnvIter envIt = [self beginMainEnveloppeListIterator]; envIt != [self endMainEnveloppeListIterator]; envIt++) {
-		VSCEnveloppe* enveloppe = (*envIt).get();
+		VSC::Enveloppe* enveloppe = (*envIt).get();
 		std::string relativePath = enveloppe->getFilePath();
 		if (relativePath.compare(defaultRelativePath) == 0) {
 			return *envIt;
 		}
 	}
-	return VSCEnveloppePtr();
+	return VSC::Enveloppe::SPtr();
 }
 
 @end

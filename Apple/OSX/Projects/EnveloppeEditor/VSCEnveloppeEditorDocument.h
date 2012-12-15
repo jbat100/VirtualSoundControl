@@ -12,24 +12,24 @@
 #include <list>
 #include <boost/shared_ptr.hpp>
 
-#include "VSCEnveloppe.h"
-#include "VSCEnveloppePoint.h"
+#include "VSC::Enveloppe.h"
+#include "VSC::EnveloppePoint.h"
 
-#import "VSCEnveloppeEditorWindowController.h"
+#import "VSC::EnveloppeEditorWindowController.h"
 #import "VSCMIDITestWindowController.h"
 
 #define DEFAULT_ENVELOPPE_RELATIVE_PATH		@"Default"
 
-@class VSCEnveloppeEditorWindowController;
+@class VSC::EnveloppeEditorWindowController;
 
-#define EnvIter				std::list<VSCEnveloppePtr>::iterator 
-#define ConstEnvIter		std::list<VSCEnveloppePtr>::const_iterator 
+#define EnvIter				std::list<VSC::Enveloppe::SPtr>::iterator 
+#define ConstEnvIter		std::list<VSC::Enveloppe::SPtr>::const_iterator 
 
-@interface VSCEnveloppeEditorDocument : NSDocument {
+@interface VSC::EnveloppeEditorDocument : NSDocument {
 	
-	std::list<VSCEnveloppePtr> _mainEnveloppeList;
+	std::list<VSC::Enveloppe::SPtr> _mainEnveloppeList;
 	
-	VSCEnveloppeEditorWindowController* enveloppeEditorWindowController;
+	VSC::EnveloppeEditorWindowController* enveloppeEditorWindowController;
     
     VSCMIDITestWindowController* midiTestWindowController;
 
@@ -45,11 +45,11 @@
  *	Enveloppe Access/Create/Add/Remove
  */
 
--(void) addEnveloppe:(VSCEnveloppePtr)enveloppe;
--(void) removeEnveloppe:(VSCEnveloppePtr)enveloppe;
+-(void) addEnveloppe:(VSC::Enveloppe::SPtr)enveloppe;
+-(void) removeEnveloppe:(VSC::Enveloppe::SPtr)enveloppe;
 -(EnvIter) beginMainEnveloppeListIterator;
 -(EnvIter) endMainEnveloppeListIterator;
 -(void) createDefaultEnveloppe;
--(VSCEnveloppePtr) defaultEnveloppe;
+-(VSC::Enveloppe::SPtr) defaultEnveloppe;
 
 @end

@@ -199,7 +199,7 @@ public:
     
     virtual const char* what() const throw()
     {
-        return "Operation requires non-empty VSCEnveloppe";
+        return "Operation requires non-empty VSC::Enveloppe";
     }
 };
 
@@ -209,11 +209,11 @@ public:
  *	Envelope specific 
  */
 
-class VSCEnveloppeEmptyException : public VSCBaseException
+class VSC::EnveloppeEmptyException : public VSCBaseException
 {
     virtual const char* what() const throw()
     {
-        return "Operation requires non-empty VSCEnveloppe";
+        return "Operation requires non-empty VSC::Enveloppe";
     }
 };
 

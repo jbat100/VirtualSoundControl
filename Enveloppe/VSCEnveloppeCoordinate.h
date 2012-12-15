@@ -1,5 +1,5 @@
 /*
- *  VSCEnveloppeCoordinate.h
+ *  VSC::EnveloppeCoordinate.h
  *  EnveloppeEditor
  *
  *  Created by Jonathan Thorpe on 25/09/2011.
@@ -10,6 +10,7 @@
 #ifndef _VSC_ENVELOPPE_COORDINATE_H_
 #define _VSC_ENVELOPPE_COORDINATE_H_
 
+#include "VSC.h"
 #include "VSCSound.h"
 
 #include <iostream>
@@ -21,64 +22,67 @@
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 
-class VSCEnveloppeCoordinate;
-typedef boost::shared_ptr<VSCEnveloppeCoordinate> VSCEnveloppeCoordinatePtr;
+namespace VSC {
+   
 
-class VSCEnveloppeCoordinate {
-	
-public:
-	
-	/* Constructors / Destructors */
-    VSCEnveloppeCoordinate();
-	VSCEnveloppeCoordinate(const VSCEnveloppeCoordinate& c);
-	VSCEnveloppeCoordinate(VSCSFloat value, VSCSFloat time);
-	~VSCEnveloppeCoordinate(void);
-	
-	void setValue(VSCSFloat value);
-	VSCSFloat getValue(void) const;
-	
-	void setTime(VSCSFloat time);
-	VSCSFloat getTime(void) const;
-	
-private:
-	
-	/*
-	 *	Print out and serialization (private)
-	 */
-	
-	friend std::ostream& operator<<(std::ostream& output, const VSCEnveloppeCoordinate& c);
-	
-	friend class boost::serialization::access;
-	
-    template<class Archive>
-    void save(Archive & ar, const unsigned int version) const
-    {
-		using boost::serialization::make_nvp;
-        // note, version is always the latest when saving
-		ar  & make_nvp("value", _value);
-        ar  & make_nvp("time", _time);
-    }
-    template<class Archive>
-    void load(Archive & ar, const unsigned int version)
-    {
-		using boost::serialization::make_nvp;
-		ar  & make_nvp("value", _value);
-        ar  & make_nvp("time", _time);
-    }
-	
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-	
-protected:
-	
-	VSCSFloat _value;
-	VSCSFloat _time;
-	
-};
+    class EnveloppeCoordinate {
+        
+    public:
+        
+        typedef boost::shared_ptr<EnveloppeCoordinate> SPtr;
+        
+        /* Constructors / Destructors */
+        EnveloppeCoordinate();
+        EnveloppeCoordinate(const VSC::EnveloppeCoordinate& c);
+        EnveloppeCoordinate(Float value, Float time);
+        ~EnveloppeCoordinate(void);
+        
+        void setValue(Float value);
+        Float getValue(void) const;
+        
+        void setTime(Float time);
+        Float getTime(void) const;
+        
+    private:
+        
+        /*
+         *	Print out and serialization (private)
+         */
+        
+        friend std::ostream& operator<<(std::ostream& output, const EnveloppeCoordinate& c);
+        
+        friend class boost::serialization::access;
+        
+        template<class Archive>
+        void save(Archive & ar, const unsigned int version) const
+        {
+            using boost::serialization::make_nvp;
+            // note, version is always the latest when saving
+            ar  & make_nvp("value", _value);
+            ar  & make_nvp("time", _time);
+        }
+        template<class Archive>
+        void load(Archive & ar, const unsigned int version)
+        {
+            using boost::serialization::make_nvp;
+            ar  & make_nvp("value", _value);
+            ar  & make_nvp("time", _time);
+        }
+        
+        BOOST_SERIALIZATION_SPLIT_MEMBER()
+        
+    protected:
+        
+        Float _value;
+        Float _time;
+        
+    };
 
-BOOST_CLASS_VERSION(VSCEnveloppeCoordinate, 1)
-//BOOST_SERIALIZATION_SHARED_PTR(VSCEnveloppeCoordinate)
+    BOOST_CLASS_VERSION(EnveloppeCoordinate, 1)
 
-bool compareEnveloppeCoordinateValues (VSCEnveloppeCoordinate* firstPoint, VSCEnveloppeCoordinate* secondPoint);
-bool compareEnveloppeCoordinateTimes (VSCEnveloppeCoordinate* firstPoint, VSCEnveloppeCoordinate* secondPoint);
+    bool compareEnveloppeCoordinateValues (EnveloppeCoordinate* firstPoint, EnveloppeCoordinate* secondPoint);
+    bool compareEnveloppeCoordinateTimes (EnveloppeCoordinate* firstPoint, EnveloppeCoordinate* secondPoint);
+
+}
 
 #endif

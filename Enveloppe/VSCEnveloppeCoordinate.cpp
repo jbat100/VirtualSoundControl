@@ -1,5 +1,5 @@
 /*
- *  VSCEnveloppeCoordinate.cpp
+ *  VSC::EnveloppeCoordinate.cpp
  *  EnveloppeEditor
  *
  *  Created by Jonathan Thorpe on 25/09/2011.
@@ -7,58 +7,60 @@
  *
  */
 
-#include "VSCEnveloppeCoordinate.h"
+#include "VSC::EnveloppeCoordinate.h"
 #include "VSCSound.h"
+
+#include <boost/assert.hpp>
 
 #pragma mark - Comparison Functions
 
-bool compareEnveloppeCoordinateValues (VSCEnveloppeCoordinate* firstPoint, VSCEnveloppeCoordinate* secondPoint) {
+bool VSC::compareEnveloppeCoordinateValues (VSC::EnveloppeCoordinate* firstPoint, VSC::EnveloppeCoordinate* secondPoint) {
 	return firstPoint->getValue() < secondPoint->getValue();
 }
 
-bool compareEnveloppeCoordinateTimes (VSCEnveloppeCoordinate* firstPoint, VSCEnveloppeCoordinate* secondPoint) {
+bool VSC::compareEnveloppeCoordinateTimes (VSC::EnveloppeCoordinate* firstPoint, VSC::EnveloppeCoordinate* secondPoint) {
 	return firstPoint->getTime() < secondPoint->getTime();
 }
 
-VSCEnveloppeCoordinate::VSCEnveloppeCoordinate() {
+VSC::EnveloppeCoordinate::EnveloppeCoordinate() {
     setTime(0.0);
     setValue(0.0);
 }
 
-VSCEnveloppeCoordinate::VSCEnveloppeCoordinate(VSCSFloat value, VSCSFloat time) {
+VSC::EnveloppeCoordinate::EnveloppeCoordinate(Float value, Float time) {
 	setTime(time);
     setValue(value);
 }
 
-VSCEnveloppeCoordinate::VSCEnveloppeCoordinate(const VSCEnveloppeCoordinate& c) {
+VSC::EnveloppeCoordinate::EnveloppeCoordinate(const EnveloppeCoordinate& c) {
 	_value = c.getValue();
 	_time = c.getTime();
 }
 
-VSCEnveloppeCoordinate::~VSCEnveloppeCoordinate(void) {
+VSC::EnveloppeCoordinate::~EnveloppeCoordinate(void) {
 	std::cout << "Destroying enveloppe coordinate!" << std::endl;
 }
 
-void VSCEnveloppeCoordinate::setValue(VSCSFloat value) {
+void VSC::EnveloppeCoordinate::setValue(Float value) {
 	_value = value;
 }
 
-VSCSFloat VSCEnveloppeCoordinate::getValue(void) const {
+VSC::Float VSC::EnveloppeCoordinate::getValue(void) const {
 	return _value;
 }
 
-void VSCEnveloppeCoordinate::setTime(VSCSFloat time) {
-    assert(time >= 0.0);
+void VSC::EnveloppeCoordinate::setTime(Float time) {
+    BOOST_ASSERT(time >= 0.0);
 	_time = time;
 }
 
-VSCSFloat VSCEnveloppeCoordinate::getTime(void) const {
+VSC::Float VSC::EnveloppeCoordinate::getTime(void) const {
 	return _time;
 }
 
 #pragma mark --- Operator <<
 
-std::ostream& operator<<(std::ostream& output, const VSCEnveloppeCoordinate& c) {
-    output << "VSCEnveloppeCoordinate (time: " <<  c._time << "s, value:" << c._value <<")";
+std::ostream& VSC::operator<<(std::ostream& output, const VSC::EnveloppeCoordinate& c) {
+    output << "VSC::EnveloppeCoordinate (time: " <<  c._time << "s, value:" << c._value << ")";
     return output;  
 }

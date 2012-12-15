@@ -23,8 +23,8 @@
 
 @protocol VSCEnveloppeViewDataSource <NSObject>
 
--(VSCEnveloppePtr) mainEnveloppeForEnveloppeView:(VSCEnveloppeView*)enveloppeView;
--(VSCEnveloppe::List) backgroundEnveloppesForEnveloppeView:(VSCEnveloppeView*)enveloppeView;
+-(VSC::Enveloppe::SPtr) mainEnveloppeForEnveloppeView:(VSCEnveloppeView*)enveloppeView;
+-(VSC::Enveloppe::List) backgroundEnveloppesForEnveloppeView:(VSCEnveloppeView*)enveloppeView;
 
 @end
 
@@ -38,96 +38,59 @@ typedef enum _VSCEnveloppeViewClickArea {
 /* 
  *  Using bitmask type as multiple actions are possible on click down (select, deselect, move, create)
  */
-typedef enum _VSCEnveloppeViewMouseAction {
-	VSCEnveloppeViewMouseActionNone = 0,
-	VSCEnveloppeViewMouseActionSelect = 1 << 0,
+
+typedef enum _VSC::EnveloppeViewMouseAction {
+	VSCEnveloppeViewMouseActionNone             = 0,
+	VSCEnveloppeViewMouseActionSelect           = 1 << 0,
     VSCEnveloppeViewMouseActionPersistentSelect = 1 << 1,
-	VSCEnveloppeViewMouseActionCreate = 1 << 2,
-    VSCEnveloppeViewMouseActionDelete = 1 << 3,
-	VSCEnveloppeViewMouseActionMove = 1 << 4,
-	VSCEnveloppeViewMouseActionCreateControl = 1 << 5,
-	VSCEnveloppeViewMouseActionDeleteControl = 1 << 6,
-    VSCEnveloppeViewMouseActionMoveControl = 1 << 7,
+	VSCEnveloppeViewMouseActionCreate           = 1 << 2,
+    VSCEnveloppeViewMouseActionDelete           = 1 << 3,
+	VSCEnveloppeViewMouseActionMove             = 1 << 4,
+	VSCEnveloppeViewMouseActionCreateControl    = 1 << 5,
+	VSCEnveloppeViewMouseActionDeleteControl    = 1 << 6,
+    VSCEnveloppeViewMouseActionMoveControl      = 1 << 7,
 } VSCEnveloppeViewMouseAction;
 
 
-@interface VSCEnveloppeView : NSView <VSCEnveloppeEditor> {
-    
-    @private
-    
-    VSCEnveloppePtr     _enveloppe;
-    VSCEnveloppe::List  _backgroundEnveloppeList;
-    
-    /*
-     *  An editor setup
-     */
-    VSCEnveloppeEditorGUIConfigPtr _enveloppeEditorGUIConfig;
-	
-	/*
-     *  Keep track of the current grid points and their corresponding pixel
-	 *  so that they do not need to be calculated on every draw, need updating
-	 *	when frame/bounds change or view range/zoom changes
-     */
-	
-    /*
-     *  Keeps track of the currently selected points for group operations (move for example)
-     *  A set is more appropriate than a list as we don't care about ordering and adding
-     *  without needing to check for presence (sets cannot have duplicates) is an advantage
-     */
-    VSCEnveloppe::PointSet _currentlySelectedPoints;
-	VSCEnveloppe::PointSet _pointsInCurrentSelectionRect;
-	
-    /*
-     *  Keeps track of the current mouse action
-     */
-	VSCEnveloppeViewMouseAction currentMouseAction;
-	BOOL movedSinceMouseDown;
-
-}
+@interface VSCEnveloppeView : NSView <VSCEnveloppeEditor>
 
 @property (nonatomic, strong) VSCEnveloppeLayer* mainEnveloppeLayer;
 @property (nonatomic, strong) VSCEnveloppeLayer* backgroundEnveloppesLayer;
 
-/*
- *  Keeps track of the selection rectangles
- *  - currentSelectionRect is the rect which should currently be affected by mouse movements (in case the currentMouseAction
- *  VSCEnveloppeViewMouseActionSelect)
- */
 @property (nonatomic, assign, readonly) NSRect currentSelectionRect;
 @property (nonatomic, assign, readonly) NSPoint currentSelectionOrigin;
 
-@property (nonatomic, weak) id<VSCEnveloppeViewDataSource> dataSource;
+@property (nonatomic, assign) VSC::EnveloppeEditorGUIConfig::SPtr envelopeEditorGUIConfig;
+
+@property (weak) id<VSCEnveloppeViewDataSource> dataSource;
 
 -(void) reloadEnveloppes;
 -(void) redrawMainEnveloppe;
 -(void) redrawAllEnveloppes;
 
-/* 
- *  C++ setters / getters *
- */
--(VSCEnveloppeEditorGUIConfigPtr) getEnveloppeViewSetup;
--(void)setEnveloppeViewSetup:(VSCEnveloppeEditorGUIConfigPtr)enveloppe; 
--(VSCEnveloppe::PointSet&)getCurrentlySelectedPoints; // passing back by reference is less expensive
--(void)getCurrentlySelectedPoints:(VSCEnveloppe::PointSet&)points; // copying into new set is more expensice
--(void)setCurrentlySelectedPoints:(VSCEnveloppe::PointSet&)points;
+-(VSC::Enveloppe::PointSet&)getCurrentlySelectedPoints; // passing back by reference is less expensive
+-(void)getCurrentlySelectedPoints:(VSC::Enveloppe::PointSet&)points; // copying into new set is more expensice
+-(void)setCurrentlySelectedPoints:(VSC::Enveloppe::PointSet&)points;
 
 /* 
  * View/Enveloppe space conversion and manipulation tools 
  */
--(BOOL) point:(NSPoint)p touchesEnveloppePoint:(VSCEnveloppePointPtr)enveloppePoint;
--(NSPoint) pointForTime:(VSCSFloat)time value:(VSCSFloat)value;
--(NSPoint) pointForEnveloppePoint:(VSCEnveloppePointPtr)controlPoint;
--(void) setEnveloppePoint:(VSCEnveloppePointPtr)point withPoint:(NSPoint)p;
--(VSCEnveloppePointPtr) enveloppePointUnderPoint:(NSPoint)point;
--(void) getEnveloppePoints:(VSCEnveloppe::PointList&)points InRect:(NSRect)rect; 
+-(BOOL) point:(NSPoint)p touchesEnveloppePoint:(VSC::EnveloppePoint::SPtr)enveloppePoint;
+-(NSPoint) pointForTime:(Float)time value:(Float)value;
+-(NSPoint) pointForEnveloppePoint:(VSC::EnveloppePoint::SPtr)controlPoint;
+-(void) setEnveloppePoint:(VSC::EnveloppePoint::SPtr)point withPoint:(NSPoint)p;
+-(VSC::EnveloppePoint::SPtr) enveloppePointUnderPoint:(NSPoint)point;
+-(void) getEnveloppePoints:(VSC::Enveloppe::PointList&)points InRect:(NSRect)rect;
+
 /* 
  * Automatic View Setup
  */
 -(void)autoAdjustEnveloppeViewSetup;
+
 /* 
  *  Create points 
  */
--(VSCEnveloppePointPtr) createEnveloppePointForPoint:(const NSPoint)point;
+-(VSC::EnveloppePoint::SPtr) createEnveloppePointForPoint:(const NSPoint)point;
 
 @end
 

@@ -23,7 +23,7 @@
 #include <boost/archive/xml_oarchive.hpp>
 #include <boost/serialization/nvp.hpp>
 
-const std::string VSCEnveloppe::FileExtension = "vscenv";
+const std::string VSC::Enveloppe::FileExtension = "vscenv";
 
 #pragma mark - Save/Load
 
@@ -31,7 +31,7 @@ const std::string VSCEnveloppe::FileExtension = "vscenv";
  *	Saving and loading
  */
 
-void VSCEnveloppe::saveToXMLFile(const char * filepath) {
+void VSC::Enveloppe::saveToXMLFile(const char * filepath) {
     // make an archive
     std::ofstream ofs(filepath);
     assert(ofs.good());
@@ -42,8 +42,8 @@ void VSCEnveloppe::saveToXMLFile(const char * filepath) {
 
 #pragma mark - Static Factory Methods
 
-VSCEnveloppePtr VSCEnveloppe::createFromXMLFile(const char * filepath) {
-    VSCEnveloppePtr envPtr = VSCEnveloppePtr(new VSCEnveloppe());
+VSC::Enveloppe::SPtr VSC::Enveloppe::createFromXMLFile(const char * filepath) {
+    Enveloppe::SPtr envPtr = Enveloppe::SPtr(new Enveloppe());
     // open the archive
     std::ifstream ifs(filepath);
     assert(ifs.good());
@@ -53,15 +53,15 @@ VSCEnveloppePtr VSCEnveloppe::createFromXMLFile(const char * filepath) {
     return envPtr;
 }
 
-VSCEnveloppePtr VSCEnveloppe::createFlatEnveloppe(VSCSFloat duration, unsigned int numberOfPoints, VSCSFloat value) {
+VSC::Enveloppe::SPtr VSC::Enveloppe::createFlatEnveloppe(Float duration, unsigned int numberOfPoints, Float value) {
 
-    VSCEnveloppePtr envPtr = VSCEnveloppePtr(new VSCEnveloppe());
+    Enveloppe::SPtr envPtr = Enveloppe::SPtr(new Enveloppe());
     
-    VSCSFloat step = duration / (VSCSFloat)(numberOfPoints-1);
-    VSCSFloat currentTime = 0.0;
+    Float step = duration / (Float)(numberOfPoints-1);
+    Float currentTime = 0.0;
     
     for (unsigned int i = 0; i < numberOfPoints; ++i) {
-        VSCEnveloppePointPtr pntPtr = VSCEnveloppePointPtr(new VSCEnveloppePoint(value, currentTime));
+        EnveloppePoint::SPtr pntPtr = EnveloppePoint::SPtr(new EnveloppePoint(value, currentTime));
         envPtr->addPoint(pntPtr);
         currentTime += step;
     }
@@ -70,27 +70,27 @@ VSCEnveloppePtr VSCEnveloppe::createFlatEnveloppe(VSCSFloat duration, unsigned i
     
 }
 
-VSCEnveloppePtr VSCEnveloppe::createADSREnveloppe(VSCSFloat attack, VSCSFloat decay, VSCSFloat sustain, VSCSFloat release, VSCSFloat sustainValue) {
+VSC::Enveloppe::SPtr VSC::Enveloppe::createADSREnveloppe(Float attack, Float decay, Float sustain, Float release, Float sustainValue) {
     
-    VSCEnveloppePtr envPtr = VSCEnveloppePtr(new VSCEnveloppe());
+    Enveloppe::SPtr envPtr = Enveloppe::SPtr(new Enveloppe());
         
-    VSCEnveloppePointPtr pntPtr = VSCEnveloppePointPtr(new VSCEnveloppePoint(0.0, 0.0));
+    EnveloppePoint::SPtr pntPtr = EnveloppePoint::SPtr(new EnveloppePoint(0.0, 0.0));
     envPtr->addPoint(pntPtr);
     pntPtr.reset();
     
-    pntPtr = VSCEnveloppePointPtr(new VSCEnveloppePoint(attack, 1.0));
+    pntPtr = EnveloppePoint::SPtr(new EnveloppePoint(attack, 1.0));
     envPtr->addPoint(pntPtr);
     pntPtr.reset();
     
-    pntPtr = VSCEnveloppePointPtr(new VSCEnveloppePoint(attack+decay, sustainValue));
+    pntPtr = EnveloppePoint::SPtr(new EnveloppePoint(attack+decay, sustainValue));
     envPtr->addPoint(pntPtr);
     pntPtr.reset();
     
-    pntPtr = VSCEnveloppePointPtr(new VSCEnveloppePoint(attack+decay+sustain, sustainValue));
+    pntPtr = EnveloppePoint::SPtr(new EnveloppePoint(attack+decay+sustain, sustainValue));
     envPtr->addPoint(pntPtr);
     pntPtr.reset();
     
-    pntPtr = VSCEnveloppePointPtr(new VSCEnveloppePoint(attack+decay+sustain+release, 0.0));
+    pntPtr = EnveloppePoint::SPtr(new EnveloppePoint(attack+decay+sustain+release, 0.0));
     envPtr->addPoint(pntPtr);
     pntPtr.reset();
     
@@ -98,9 +98,9 @@ VSCEnveloppePtr VSCEnveloppe::createADSREnveloppe(VSCSFloat attack, VSCSFloat de
     
 }
 
-VSCEnveloppePtr VSCEnveloppe::createEmptyEnveloppe(void) {
+VSC::Enveloppe::SPtr VSC::Enveloppe::createEmptyEnveloppe(void) {
     
-    VSCEnveloppePtr envPtr = VSCEnveloppePtr(new VSCEnveloppe());
+    Enveloppe::SPtr envPtr = Enveloppe::SPtr(new Enveloppe());
     
     return envPtr;
     
@@ -108,7 +108,7 @@ VSCEnveloppePtr VSCEnveloppe::createEmptyEnveloppe(void) {
 
 #pragma mark - Constructor/Destructor/Defaults
 
-VSCEnveloppe::VSCEnveloppe(void) {
+VSC::Enveloppe::Enveloppe(void) {
 	_minimumTimeStep = 0.01;
     _curveType = CurveTypeLinear;
     _pointDisplacementConflictResolution = PointDisplacementConflictResolutionMix;
@@ -116,7 +116,7 @@ VSCEnveloppe::VSCEnveloppe(void) {
     _allowedValueRange = ValueRange(0.0, 1.0);
 }
 
-VSCEnveloppe::~VSCEnveloppe(void) {
+VSC::Enveloppe::~Enveloppe(void) {
 	std::cout << "Destroying Enveloppe!" << std::endl;
 }
 
@@ -124,16 +124,16 @@ VSCEnveloppe::~VSCEnveloppe(void) {
 #pragma mark - General Setters/Getters
 
 
-void VSCEnveloppe::setCurveType(VSCEnveloppe::CurveType curveType) {
+void VSC::Enveloppe::setCurveType(Enveloppe::CurveType curveType) {
 	_curveType = curveType;
 }
 
-VSCEnveloppe::CurveType VSCEnveloppe::getCurveType(void) const {
+VSC::Enveloppe::CurveType VSC::Enveloppe::getCurveType(void) const {
 	return _curveType;
 }
 
 
-void VSCEnveloppe::setPointDisplacementConflictResolution(VSCEnveloppe::PointDisplacementConflictResolution r) {
+void VSC::Enveloppe::setPointDisplacementConflictResolution(Enveloppe::PointDisplacementConflictResolution r) {
     
     if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionClear ||
         _pointDisplacementConflictResolution == PointDisplacementConflictResolutionBlock) {
@@ -143,54 +143,54 @@ void VSCEnveloppe::setPointDisplacementConflictResolution(VSCEnveloppe::PointDis
 	_pointDisplacementConflictResolution = r;
 }
 
-VSCEnveloppe::PointDisplacementConflictResolution VSCEnveloppe::getPointDisplacementConflictResolution(void) const {
+VSC::Enveloppe::PointDisplacementConflictResolution VSC::Enveloppe::getPointDisplacementConflictResolution(void) const {
 	return _pointDisplacementConflictResolution;
 }
 
-void VSCEnveloppe::setFilePath(std::string filePath) {
+void VSC::Enveloppe::setFilePath(std::string filePath) {
 	_filePath = filePath;
 }
 
-std::string VSCEnveloppe::getFilePath(void) const {
+std::string VSC::Enveloppe::getFilePath(void) const {
 	return _filePath;
 }
 
-std::string VSCEnveloppe::getName(void) const {
+std::string VSC::Enveloppe::getName(void) const {
 	return boost::filesystem::path(_filePath).replace_extension(NULL).filename().string();
 }
 
-void VSCEnveloppe::setMinimumTimeStep(VSCSFloat minimumTimeStep) {
+void VSC::Enveloppe::setMinimumTimeStep(Float minimumTimeStep) {
 	_minimumTimeStep = minimumTimeStep;
 }
 
-VSCSFloat VSCEnveloppe::getMinimumTimeStep(void) const {
+Float VSC::Enveloppe::getMinimumTimeStep(void) const {
 	return _minimumTimeStep;
 }
 
 
-void VSCEnveloppe::setAllowedTimeRange(TimeRange range) {
+void VSC::Enveloppe::setAllowedTimeRange(TimeRange range) {
     _allowedTimeRange = range;
 }
 
-VSCEnveloppe::TimeRange VSCEnveloppe::getAllowedTimeRange(void) {
+VSC::Enveloppe::TimeRange VSC::Enveloppe::getAllowedTimeRange(void) {
     return _allowedTimeRange;
 }
 
-void VSCEnveloppe::setAllowedValueRange(ValueRange range) {
+void VSC::Enveloppe::setAllowedValueRange(ValueRange range) {
     _allowedValueRange = range;
 }
 
-VSCEnveloppe::ValueRange VSCEnveloppe::getAllowedValueRange(void) {
+VSC::Enveloppe::ValueRange VSC::Enveloppe::getAllowedValueRange(void) {
     return _allowedValueRange;
 }
 
-bool VSCEnveloppe::isSortedByTime(void) const {
+bool VSC::Enveloppe::isSortedByTime(void) const {
     
     if (_points.size() < 1) 
         return true;
     
     ConstPointIterator it = _points.begin();
-    VSCSFloat currentTime = (*it)->getTime();
+    Float currentTime = (*it)->getTime();
     for (; it != _points.end(); it++) {
         if ((*it)->getTime() < currentTime) {
             return false;
@@ -204,7 +204,7 @@ bool VSCEnveloppe::isSortedByTime(void) const {
 
 #pragma mark - Add/Remove Enveloppe Points
 
-void VSCEnveloppe::addPoint(VSCEnveloppePointPtr point) {
+void VSC::Enveloppe::addPoint(EnveloppePoint::SPtr point) {
     
     assert(point);
 	
@@ -224,7 +224,7 @@ void VSCEnveloppe::addPoint(VSCEnveloppePointPtr point) {
 	
 	// remove close points
 	for (currentIt = _points.begin(); currentIt != _points.end(); currentIt++) {
-		VSCSFloat difference = std::abs(point->getTime() - (*currentIt)->getTime());
+		Float difference = std::abs(point->getTime() - (*currentIt)->getTime());
 		if (difference < _minimumTimeStep) {
 			std::cout << "Found point " << *(*currentIt) << " closer than minimum time step (" << _minimumTimeStep << ") ";
 			std::cout << "by " << difference << "\n";
@@ -248,8 +248,8 @@ void VSCEnveloppe::addPoint(VSCEnveloppePointPtr point) {
             if (nextIt == _points.end()) {
                 break;
             }
-            VSCEnveloppePointPtr p(*currentIt);
-            VSCEnveloppePointPtr np(*nextIt);
+            EnveloppePoint::SPtr p(*currentIt);
+            EnveloppePoint::SPtr np(*nextIt);
             // insert in the list if the time value is contained between this point's time and next point's time
             if (p->getTime() < point->getTime() && np->getTime() > point->getTime()) {
                 found = true;
@@ -270,21 +270,21 @@ void VSCEnveloppe::addPoint(VSCEnveloppePointPtr point) {
 	
 }
 
-void VSCEnveloppe::removePoint(VSCEnveloppePointPtr point) {
+void VSC::Enveloppe::removePoint(EnveloppePoint::SPtr point) {
 	assert(point);
 	std::cout << "In removePoint: " << *point << std::endl;
 	_points.remove(point);
     assert(isSortedByTime());
 }
 
-void VSCEnveloppe::addPoints(PointList& points) {
+void VSC::Enveloppe::addPoints(PointList& points) {
 	for (PointIterator it = _points.begin(); it != _points.end(); it++) {
 		addPoint(*it);
 	}
     assert(isSortedByTime());
 }
 
-void VSCEnveloppe::removePoints(PointList& pnts) {
+void VSC::Enveloppe::removePoints(PointList& pnts) {
 	//std::cout << "In removePoints";
 	if (pnts.size() == 0) {
 		//std::cout << ", no points to remove\n";
@@ -296,7 +296,7 @@ void VSCEnveloppe::removePoints(PointList& pnts) {
     //assert(isSortedByTime());
 }
 
-void VSCEnveloppe::removePointsInTimeRange(TimeRange range){
+void VSC::Enveloppe::removePointsInTimeRange(TimeRange range){
 	PointList l;
     std::cout << "Removing points in time range " << range.origin << " - " << range.size << std::endl;
 	this->getPointsInTimeRange(l, range);
@@ -304,62 +304,62 @@ void VSCEnveloppe::removePointsInTimeRange(TimeRange range){
     assert(isSortedByTime());
 }
 
-void VSCEnveloppe::removeAllPoints(void) {
+void VSC::Enveloppe::removeAllPoints(void) {
 	_points.clear();
 }
 
 #pragma mark - Change Notification
 
-void VSCEnveloppe::enveloppeChangedBetweenEnveloppePoints(ConstPointIterator begin, ConstPointIterator end) {
-    std::cout << "In VSCEnveloppe enveloppeChangedBetweenEnveloppePoints " << **begin << " " << **end;
+void VSC::Enveloppe::enveloppeChangedBetweenEnveloppePoints(ConstPointIterator begin, ConstPointIterator end) {
+    std::cout << "In Enveloppe enveloppeChangedBetweenEnveloppePoints " << **begin << " " << **end;
 }
 
 /*
  *	Enveloppe changes calls (mostly for subclasses to update cache tables)
  */
-void VSCEnveloppe::enveloppeChangedBetweenEnveloppePoints(VSCEnveloppePointPtr begin, VSCEnveloppePointPtr end) {
-	std::cout << "In VSCEnveloppe enveloppeChangedBetweenEnveloppePoints " << *begin << " " << *end;
+void VSC::Enveloppe::enveloppeChangedBetweenEnveloppePoints(EnveloppePoint::SPtr begin, EnveloppePoint::SPtr end) {
+	std::cout << "In Enveloppe enveloppeChangedBetweenEnveloppePoints " << *begin << " " << *end;
 }
 
-void VSCEnveloppe::enveloppeChangedBetweenEnveloppePointAndNext(VSCEnveloppePointPtr point) {
-	std::cout << "In VSCEnveloppe enveloppeChangedBetweenEnveloppePointAndNext " << *point;
+void VSC::Enveloppe::enveloppeChangedBetweenEnveloppePointAndNext(EnveloppePoint::SPtr point) {
+	std::cout << "In Enveloppe enveloppeChangedBetweenEnveloppePointAndNext " << *point;
 }
 
-void VSCEnveloppe::enveloppeChanged(void) {
-	std::cout << "In VSCEnveloppe enveloppeChanged";
+void VSC::Enveloppe::enveloppeChanged(void) {
+	std::cout << "In Enveloppe enveloppeChanged";
 }
 
 #pragma mark - Point Getters
 
-VSCEnveloppe::PointIterator VSCEnveloppe::getPointBeginIterator(void) {
+VSC::Enveloppe::PointIterator VSC::Enveloppe::getPointBeginIterator(void) {
 	return _points.begin();
 }
 
-VSCEnveloppe::PointIterator VSCEnveloppe::getPointEndIterator(void) {
+VSC::Enveloppe::PointIterator VSC::Enveloppe::getPointEndIterator(void) {
 	return _points.end();
 }
 
-VSCEnveloppe::ConstPointIterator VSCEnveloppe::getPointBeginConstIterator(void) const {
+VSC::Enveloppe::ConstPointIterator VSC::Enveloppe::getPointBeginConstIterator(void) const {
 	return _points.begin();
 }
 
-VSCEnveloppe::ConstPointIterator VSCEnveloppe::getPointEndConstIterator(void) const {
+VSC::Enveloppe::ConstPointIterator VSC::Enveloppe::getPointEndConstIterator(void) const {
 	return _points.end();
 }
 
 /* get points */
 
-VSCEnveloppePointPtr VSCEnveloppe::getPointClosestToTime(VSCSFloat time) const {
+VSC::EnveloppePoint::SPtr VSC::Enveloppe::getPointClosestToTime(Float time) const {
 	
-	VSCEnveloppePointPtr closestPointBefore = this->getFirstPointBeforeTime(time);
-    VSCEnveloppePointPtr closestPointAfter = this->getFirstPointAfterTime(time);
+	EnveloppePoint::SPtr closestPointBefore = this->getFirstPointBeforeTime(time);
+    EnveloppePoint::SPtr closestPointAfter = this->getFirstPointAfterTime(time);
     
-    if (!closestPointAfter && !closestPointBefore) return VSCEnveloppePointPtr(); // return NULL pointer
+    if (!closestPointAfter && !closestPointBefore) return EnveloppePoint::SPtr(); // return NULL pointer
     if (!closestPointBefore) return closestPointAfter;
     if (!closestPointAfter) return closestPointBefore;
     
-    VSCSFloat beforeInterval = std::abs( closestPointBefore->getTime() - time );
-    VSCSFloat afterInterval = std::abs( closestPointAfter->getTime() - time );
+    Float beforeInterval = std::abs( closestPointBefore->getTime() - time );
+    Float afterInterval = std::abs( closestPointAfter->getTime() - time );
     
     if (beforeInterval > afterInterval) return closestPointAfter;
 		
@@ -367,10 +367,10 @@ VSCEnveloppePointPtr VSCEnveloppe::getPointClosestToTime(VSCSFloat time) const {
 	
 }
 
-VSCEnveloppePointPtr VSCEnveloppe::getFirstPointAfterTime(VSCSFloat time) const {
+VSC::EnveloppePoint::SPtr VSC::Enveloppe::getFirstPointAfterTime(Float time) const {
 	
 	if (_points.size() == 0) 
-		return VSCEnveloppePointPtr();
+		return EnveloppePoint::SPtr();
 	
 	for (ConstPointIterator it = _points.begin(); it != _points.end(); it++) {
 		if ((*it)->getTime() > time) {
@@ -378,14 +378,14 @@ VSCEnveloppePointPtr VSCEnveloppe::getFirstPointAfterTime(VSCSFloat time) const 
 		}
 	}
 	
-	return VSCEnveloppePointPtr();
+	return EnveloppePoint::SPtr();
 	
 }
 
-VSCEnveloppePointPtr VSCEnveloppe::getFirstPointBeforeTime(VSCSFloat time) const {
+VSC::EnveloppePoint::SPtr VSC::Enveloppe::getFirstPointBeforeTime(Float time) const {
 
 	if (_points.size() == 0) 
-		return VSCEnveloppePointPtr();
+		return EnveloppePoint::SPtr();
 	
 	for (ConstReversePointIterator it = _points.rbegin(); it != _points.rend(); it++) {
 		if ((*it)->getTime() < time) {
@@ -393,11 +393,11 @@ VSCEnveloppePointPtr VSCEnveloppe::getFirstPointBeforeTime(VSCSFloat time) const
 		}
 	}
 	
-	return VSCEnveloppePointPtr();
+	return EnveloppePoint::SPtr();
 	
 }
 
-void VSCEnveloppe::getPointsInTimeRange(PointList& l, TimeRange range) const {
+void VSC::Enveloppe::getPointsInTimeRange(PointList& l, TimeRange range) const {
 	
 	for (ConstPointIterator it = _points.begin(); it != _points.end(); it++) {
 		if ((*it)->getTime() > range.origin && (*it)->getTime() < range.origin+ range.size) {
@@ -407,18 +407,18 @@ void VSCEnveloppe::getPointsInTimeRange(PointList& l, TimeRange range) const {
 
 }
 
-const VSCEnveloppe::PointList& VSCEnveloppe::getPoints(void) const {
+const VSC::Enveloppe::PointList& VSC::Enveloppe::getPoints(void) const {
     return _points;
 }
 
-int VSCEnveloppe::numberOfPoints(void) const {
+int VSC::Enveloppe::numberOfPoints(void) const {
 	return (int)_points.size();
 }
 
 #pragma mark - Point Displacement 
 
 // this method is necessary in order to validate that all displacements are possible when displacePoints is performed
-bool VSCEnveloppe::canDisplacePoint(VSCEnveloppePointPtr point, VSCSFloat deltaTime, VSCSFloat deltaValue) const {
+bool VSC::Enveloppe::canDisplacePoint(EnveloppePoint::SPtr point, Float deltaTime, Float deltaValue) const {
     
     /*
      *  Check allowed time and value limits 
@@ -479,9 +479,9 @@ bool VSCEnveloppe::canDisplacePoint(VSCEnveloppePointPtr point, VSCSFloat deltaT
 }
 
 // this iterator must be an iterator into _points
-bool VSCEnveloppe::displacePoint(PointIterator pointIt, VSCSFloat deltaTime, VSCSFloat deltaValue) {
+bool VSC::Enveloppe::displacePoint(PointIterator pointIt, Float deltaTime, Float deltaValue) {
 	
-    VSCEnveloppePointPtr point = *pointIt;
+    EnveloppePoint::SPtr point = *pointIt;
     
 #ifdef VSC_DEBUG
     PointIterator selfPointIt = std::find(_points.begin(), _points.end(), point);
@@ -510,12 +510,12 @@ bool VSCEnveloppe::displacePoint(PointIterator pointIt, VSCSFloat deltaTime, VSC
 	
 }
 
-bool VSCEnveloppe::displacePoint(VSCEnveloppePointPtr point, VSCSFloat deltaTime, VSCSFloat deltaValue) {
+bool VSC::Enveloppe::displacePoint(EnveloppePoint::SPtr point, Float deltaTime, Float deltaValue) {
 	PointIterator pointIt = std::find(_points.begin(), _points.end(), point);
     return this->displacePoint(pointIt, deltaTime, deltaValue);
 }
 
-bool VSCEnveloppe::displacePoints(PointList& pts, VSCSFloat deltaTime, VSCSFloat deltaValue) {
+bool VSC::Enveloppe::displacePoints(PointList& pts, Float deltaTime, Float deltaValue) {
 	
     // the list is most likely not the same as _points so we can't just use it with displacePoints which requires
     // the iterator to be so.
@@ -523,7 +523,7 @@ bool VSCEnveloppe::displacePoints(PointList& pts, VSCSFloat deltaTime, VSCSFloat
     // first we need to check that all the points CAN be displaced
     
     for (ConstPointIterator pointIt = pts.begin(); pointIt != pts.end(); pointIt++) {
-        VSCEnveloppePointPtr point = *pointIt;
+        EnveloppePoint::SPtr point = *pointIt;
         if (this->canDisplacePoint(point, deltaTime, deltaValue) == false) {
             return false;
         }
@@ -531,7 +531,7 @@ bool VSCEnveloppe::displacePoints(PointList& pts, VSCSFloat deltaTime, VSCSFloat
     
     // then we actually displace all the points and return true ...
     for (PointIterator pointIt = pts.begin(); pointIt != pts.end(); pointIt++) {
-        VSCEnveloppePointPtr point = *pointIt;
+        EnveloppePoint::SPtr point = *pointIt;
         if (this->displacePoint(point, deltaTime, deltaValue) == false) {
             // we should not be getting back false here as we have previously checked that
             // all the points can be displaced
@@ -548,7 +548,7 @@ bool VSCEnveloppe::displacePoints(PointList& pts, VSCSFloat deltaTime, VSCSFloat
 
 #pragma mark - Enveloppe Duration 
 
-VSCSFloat VSCEnveloppe::duration(void) const {
+VSC::Float VSC::Enveloppe::duration(void) const {
 	
 	assert(isSortedByTime());
 	
@@ -571,11 +571,11 @@ VSCSFloat VSCEnveloppe::duration(void) const {
 
 /* value */
 
-VSCSFloat VSCEnveloppe::getValueAtTime(VSCSFloat time) const {
+VSC::Float VSC::Enveloppe::getValueAtTime(Float time) const {
 	
-	VSCEnveloppePointPtr lp = getFirstPointBeforeTime(time);
-	VSCEnveloppePointPtr up = getFirstPointAfterTime(time);
-	//VSCEnveloppePointPtr up = lp;
+	EnveloppePoint::SPtr lp = getFirstPointBeforeTime(time);
+	EnveloppePoint::SPtr up = getFirstPointAfterTime(time);
+	//EnveloppePoint::SPtr up = lp;
 	//up++;
 	
 	if (lp == NULL || up == NULL) 
@@ -587,7 +587,7 @@ VSCSFloat VSCEnveloppe::getValueAtTime(VSCSFloat time) const {
 		return lp->getValue();
 	 */
 	
-	VSCSFloat normDiff = (up->getTime() - lp->getTime()) / (time - lp->getTime()); 
+	Float normDiff = (up->getTime() - lp->getTime()) / (time - lp->getTime()); 
 	
 	return lp->getValue() + ((up->getValue() - lp->getValue()) * normDiff);
 
@@ -597,54 +597,54 @@ VSCSFloat VSCEnveloppe::getValueAtTime(VSCSFloat time) const {
 
 /* sorting */
 
-void VSCEnveloppe::sortPointsByTime(void) {
+void VSC::Enveloppe::sortPointsByTime(void) {
 	_points.sort(compareEnveloppePointTimes);
 }
 
 #pragma mark - Enveloppe Extremes
 
 /* extremes */
-VSCSFloat VSCEnveloppe::minTime(void) const {
+VSC::Float VSC::Enveloppe::minTime(void) const {
     assert(isSortedByTime());
-    if (_points.size() == 0) throw VSCEnveloppeEmptyException();
+    if (_points.size() == 0) throw EnveloppeEmptyException();
     return (*(_points.begin()))->getTime();
 }
 
-VSCSFloat VSCEnveloppe::maxTime(void) const {
+VSC::Float VSC::Enveloppe::maxTime(void) const {
     assert(isSortedByTime());
-    if (_points.size() == 0) throw VSCEnveloppeEmptyException();
+    if (_points.size() == 0) throw EnveloppeEmptyException();
     ConstPointIterator endIter = _points.end();
     endIter--;
     return (*endIter)->getTime();
 }
 
-VSCSFloat VSCEnveloppe::minValue(void) const {
-    if (_points.size() == 0) throw VSCEnveloppeEmptyException();
-    VSCSFloat minValue = std::numeric_limits<VSCSFloat>::max();
+VSC::Float VSC::Enveloppe::minValue(void) const {
+    if (_points.size() == 0) throw EnveloppeEmptyException();
+    Float minValue = std::numeric_limits<Float>::max();
     for (ConstPointIterator it = _points.begin(); it != _points.end(); it++) {
         if ((*it)->getValue() < minValue) minValue = (*it)->getValue();
     }
     return minValue;
 }
 
-VSCSFloat VSCEnveloppe::maxValue(void) const {
-    if (_points.size() == 0) throw VSCEnveloppeEmptyException();
-    VSCSFloat maxValue = std::numeric_limits<VSCSFloat>::min();
+Float VSC::Enveloppe::maxValue(void) const {
+    if (_points.size() == 0) throw EnveloppeEmptyException();
+    Float maxValue = std::numeric_limits<Float>::min();
     for (ConstPointIterator it = _points.begin(); it != _points.end(); it++) {
         if ((*it)->getValue() > maxValue) maxValue = (*it)->getValue();
     }
     return maxValue;
 }
 
-std::ostream& operator<<(std::ostream& output, VSCEnveloppe& p) {
-	output << "VSCEnveloppe with points:";
-	for (VSCEnveloppe::ConstPointIterator pntIt = p.getPointBeginIterator(); pntIt != p.getPointEndIterator(); pntIt++) {
+std::ostream& VSC::operator<<(std::ostream& output, Enveloppe& p) {
+	output << "Enveloppe with points:";
+	for (Enveloppe::ConstPointIterator pntIt = p.getPointBeginIterator(); pntIt != p.getPointEndIterator(); pntIt++) {
 		output << "\n	" << *((*pntIt).get());
 	}
 	return output;
 }
 
-void sortEnveloppePointListByTime(VSCEnveloppe::PointList& points) {
+void VSC::sortEnveloppePointListByTime(Enveloppe::PointList& points) {
     points.sort(compareEnveloppePointTimes);
 }
 

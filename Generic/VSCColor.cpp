@@ -1,5 +1,5 @@
 /*
- *  VSCColour.cpp
+ *  VSC::Color.cpp
  *  EnveloppeEditor
  *
  *  Created by Jonathan Thorpe on 13/08/2011.
@@ -7,4 +7,4 @@
  *
  */
 
-#include "VSCColour.h"
+#include "VSCColor.h"

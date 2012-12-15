@@ -1,5 +1,5 @@
 /*
- *  VSCColour.h
+ *  VSCColor.h
  *  EnveloppeEditor
  *
  *  Created by Jonathan Thorpe on 13/08/2011.
@@ -10,11 +10,17 @@
 #ifndef _VSC_COLOUR_H_
 #define _VSC_COLOUR_H_
 
-struct VSCColour {
-	float r;
-	float g;
-	float b;
-	float a;
-};
+#include "VSC.h"
+
+namespace VSC {
+    
+    struct Color {
+        Float r;
+        Float g;
+        Float b;
+        Float a;
+    };
+    
+}
 
 #endif

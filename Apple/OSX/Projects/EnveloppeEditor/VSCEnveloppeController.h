@@ -1,5 +1,5 @@
 //
-//  VSCEnveloppeController.h
+//  VSC::EnveloppeController.h
 //  EnveloppeEditor
 //
 //  Created by Jonathan Thorpe on 4/2/12.
@@ -8,29 +8,29 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "VSCEnveloppeView.h"
-#import "VSCEnveloppe.h"
+#import "VSC::EnveloppeView.h"
+#import "VSC::Enveloppe.h"
 
-@protocol VSCEnveloppeViewDataSource;
+@protocol VSC::EnveloppeViewDataSource;
 
 
-@interface VSCEnveloppeController : NSObject <VSCEnveloppeViewDataSource> {
+@interface VSC::EnveloppeController : NSObject <VSC::EnveloppeViewDataSource> {
     
-    VSCEnveloppePtr _currentEnveloppe;
-    VSCEnveloppe::List _backgroundEnveloppes;
+    VSC::Enveloppe::SPtr _currentEnveloppe;
+    VSC::Enveloppe::List _backgroundEnveloppes;
     
 }
 
-@property (nonatomic, strong) IBOutlet VSCEnveloppeView* enveloppeView;
+@property (nonatomic, strong) IBOutlet VSC::EnveloppeView* enveloppeView;
 @property (nonatomic, strong) IBOutlet NSSlider* horizontalScaleSlider;
 
 @property (nonatomic, strong) NSString* defaultEnveloppePath;
 
--(VSCEnveloppePtr) getCurrentEnveloppe;
--(void) setCurrentEnveloppe:(VSCEnveloppePtr)enveloppe;
+-(VSC::Enveloppe::SPtr) getCurrentEnveloppe;
+-(void) setCurrentEnveloppe:(VSC::Enveloppe::SPtr)enveloppe;
 
--(void) addEnveloppe:(VSCEnveloppePtr)enveloppe;
--(void) removeEnveloppe:(VSCEnveloppePtr)enveloppe;
+-(void) addEnveloppe:(VSC::Enveloppe::SPtr)enveloppe;
+-(void) removeEnveloppe:(VSC::Enveloppe::SPtr)enveloppe;
 
 -(IBAction) loadEnveloppe:(id)sender;
 -(IBAction) saveEnveloppe:(id)sender;

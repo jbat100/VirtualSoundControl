@@ -8,12 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "VSCEnveloppeController.h"
+#import "VSC::EnveloppeController.h"
 
 
-@interface VSCEnveloppeEditorWindowController : NSWindowController <NSWindowDelegate>  
+@interface VSC::EnveloppeEditorWindowController : NSWindowController <NSWindowDelegate>  
 
-@property (nonatomic, strong) IBOutlet VSCEnveloppeController* enveloppeController;
+@property (nonatomic, strong) IBOutlet VSC::EnveloppeController* enveloppeController;
 
 /*
 @property (nonatomic, strong) IBOutlet NSTextField* loadedTextField;

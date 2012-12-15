@@ -20,7 +20,7 @@ class VSCTriggeredController : public VSCController {
     
 public:
     
-    VSCSFloat getDurationSinceTriggerTime();
+    Float getDurationSinceTriggerTime();
     
     void trigger();
     
