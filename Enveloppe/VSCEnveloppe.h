@@ -1,18 +1,18 @@
 /*
- *  VSCEnveloppe.h
- *  EnveloppeEditor
+ *  VSCEnvelope.h
+ *  EnvelopeEditor
  *
  *  Created by Jonathan Thorpe on 29/07/2011.
  *  Copyright 2011 JBAT. All rights reserved.
  *
  */
 
-#ifndef _VSC_ENVELOPPE_H_
-#define _VSC_ENVELOPPE_H_
+#ifndef _VSC_ENVElope_H_
+#define _VSC_ENVElope_H_
 
 #include "VSC.h"
 #include "VSCSound.h"
-#include "VSCEnveloppePoint.h"
+#include "VSCEnvelopePoint.h"
 
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
@@ -30,7 +30,7 @@
 
 namespace VSC {
 
-    class Enveloppe {
+    class Envelope {
         
         
     public:
@@ -42,7 +42,7 @@ namespace VSC {
          */
         enum CurveType {
             CurveTypeNone = 0,
-            // in linear mode, enveloppe point control points are ignored (and should't exist anyway)
+            // in linear mode, envelope point control points are ignored (and should't exist anyway)
             CurveTypeLinear = 1, 
             CurveTypeBezierQuadratic,
             CurveTypeBezierCubic
@@ -69,26 +69,26 @@ namespace VSC {
             PointDisplacementConflictResolutionMix
         };
         
-        typedef std::list<Enveloppe::SPtr>                                  List;
+        typedef std::list<Envelope::SPtr>                                  List;
         // set shorthand
-        typedef std::set<EnveloppePoint::SPtr>                              PointSet;
+        typedef std::set<EnvelopePoint::SPtr>                              PointSet;
         // list shorthand and list iterators (as we use them all the time)
-        typedef std::list<EnveloppePoint::SPtr>                             PointList;
+        typedef std::list<EnvelopePoint::SPtr>                             PointList;
         typedef PointList::iterator                                             PointIterator;
         typedef PointList::const_iterator                                       ConstPointIterator;
         typedef PointList::reverse_iterator                                     ReversePointIterator;
         typedef PointList::const_reverse_iterator                               ConstReversePointIterator;
         
-        Enveloppe(void);
-        // Enveloppe copy construct and file construct
-        ~Enveloppe(void);
+        Envelope(void);
+        // Envelope copy construct and file construct
+        ~Envelope(void);
         
         /* Factory */
         
-        static Enveloppe::SPtr createFlatEnveloppe(Float duration, unsigned int numberOfPoints, Float value = 0.0);
-        static Enveloppe::SPtr createADSREnveloppe(Float attack, Float decay, Float sustain, Float release, Float sustainValue = 0.5);
-        static Enveloppe::SPtr createEmptyEnveloppe(void);
-        static Enveloppe::SPtr createFromXMLFile(const char * filepath);
+        static Envelope::SPtr createFlatEnvelope(Float duration, unsigned int numberOfPoints, Float value = 0.0);
+        static Envelope::SPtr createADSREnvelope(Float attack, Float decay, Float sustain, Float release, Float sustainValue = 0.5);
+        static Envelope::SPtr createEmptyEnvelope(void);
+        static Envelope::SPtr createFromXMLFile(const char * filepath);
         
         void saveToXMLFile(const char * filepath);
         
@@ -103,7 +103,7 @@ namespace VSC {
         std::string getFilePath(void) const;
         std::string getName(void) const; /* Get the last component of the file path */
         
-        /* enveloppe limitations */
+        /* envelope limitations */
         
         void setMinimumTimeStep(Float minimumTimeStep);
         Float getMinimumTimeStep(void) const;
@@ -114,10 +114,10 @@ namespace VSC {
         
         /* edit points */
         
-        void addPoint(EnveloppePoint::SPtr point);
+        void addPoint(EnvelopePoint::SPtr point);
         void addPoints(PointList& points); 
         
-        void removePoint(EnveloppePoint::SPtr point);
+        void removePoint(EnvelopePoint::SPtr point);
         void removePoints(PointList& points); 
         void removePointsInTimeRange(TimeRange range);
         void removeAllPoints(void);
@@ -131,9 +131,9 @@ namespace VSC {
         
         /* get points */
         
-        EnveloppePoint::SPtr getPointClosestToTime(Float time) const;
-        EnveloppePoint::SPtr getFirstPointAfterTime(Float time) const;
-        EnveloppePoint::SPtr getFirstPointBeforeTime(Float time) const;
+        EnvelopePoint::SPtr getPointClosestToTime(Float time) const;
+        EnvelopePoint::SPtr getFirstPointAfterTime(Float time) const;
+        EnvelopePoint::SPtr getFirstPointBeforeTime(Float time) const;
         
         void getPointsInTimeRange(PointList& pts, TimeRange range) const;
         void getPointsInValueRange(PointList& pts, ValueRange range) const;
@@ -141,7 +141,7 @@ namespace VSC {
         int numberOfPoints(void) const;
         
         // display groups of points simultanuously, one block stops all displacement (single point displace is private)
-        // this is because the enveloppe is checked for time order and this should be done once all the points in a group 
+        // this is because the envelope is checked for time order and this should be done once all the points in a group 
         // have been moved
         bool displacePoints(PointList& pts, Float deltaTime, Float deltaValue); 
         
@@ -162,12 +162,12 @@ namespace VSC {
     private:
         
         /*
-         *	Contains all the enveloppe points
+         *	Contains all the envelope points
          */
         PointList _points;
         
         /*
-         *	The interpolation type determine how values between two enveloppe points are calculated
+         *	The interpolation type determine how values between two envelope points are calculated
          */
         CurveType _curveType;
         
@@ -178,43 +178,43 @@ namespace VSC {
         PointDisplacementConflictResolution _pointDisplacementConflictResolution;
         
         /*
-         *	The minimum time step between two adjascent enveloppe points, if a point is added to the enveloppe,
-         *	it's neighbourghs which are closer than this time step will be removed from the enveloppe
+         *	The minimum time step between two adjascent envelope points, if a point is added to the envelope,
+         *	it's neighbourghs which are closer than this time step will be removed from the envelope
          */
         Float _minimumTimeStep;
         TimeRange _allowedTimeRange;
         ValueRange _allowedValueRange;
         
         /*
-         *	VSC project data directories will have an enveloppe sub-directory which will serve as bas for the 
-         *	enveloppe's relative path
+         *	VSC project data directories will have an envelope sub-directory which will serve as bas for the 
+         *	envelope's relative path
          */
         std::string _filePath;
         
         
         bool isSortedByTime(void) const;
-        bool canDisplacePoint(EnveloppePoint::SPtr point, Float deltaTime, Float deltaValue) const;
+        bool canDisplacePoint(EnvelopePoint::SPtr point, Float deltaTime, Float deltaValue) const;
         
         /* sorting */
         void sortPointsByTime(void);
         
         /* move points (disallow manggling...) */
-        bool displacePoint(EnveloppePoint::SPtr point, Float deltaTime, Float deltaValue);
+        bool displacePoint(EnvelopePoint::SPtr point, Float deltaTime, Float deltaValue);
         bool displacePoint(PointIterator pointIt, Float deltaTime, Float deltaValue);
         
         /*
-         *	Enveloppe changes calls (mostly for subclasses to update cache tables)
+         *	Envelope changes calls (mostly for subclasses to update cache tables)
          */
-        virtual void enveloppeChangedBetweenEnveloppePoints(ConstPointIterator begin, ConstPointIterator end);
-        virtual void enveloppeChangedBetweenEnveloppePoints(EnveloppePoint::SPtr begin, EnveloppePoint::SPtr end);
-        virtual void enveloppeChangedBetweenEnveloppePointAndNext(EnveloppePoint::SPtr point);
-        virtual void enveloppeChanged(void);
+        virtual void envelopeChangedBetweenEnvelopePoints(ConstPointIterator begin, ConstPointIterator end);
+        virtual void envelopeChangedBetweenEnvelopePoints(EnvelopePoint::SPtr begin, EnvelopePoint::SPtr end);
+        virtual void envelopeChangedBetweenEnvelopePointAndNext(EnvelopePoint::SPtr point);
+        virtual void envelopeChanged(void);
         
         /*
          *	Print out and serialization (private)
          */
         
-        friend std::ostream& operator<<(std::ostream& output, Enveloppe& p);
+        friend std::ostream& operator<<(std::ostream& output, Envelope& p);
         
         friend class boost::serialization::access;
         template<class Archive>
@@ -245,7 +245,7 @@ namespace VSC {
      *  Helpers
      */
 
-    void sortPointListByTime(Enveloppe::PointList& points);
+    void sortPointListByTime(Envelope::PointList& points);
     
 }
 

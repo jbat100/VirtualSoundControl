@@ -1,74 +1,74 @@
 /*
- *  VSC::EnveloppePoint.cpp
- *  EnveloppeEditor
+ *  VSC::EnvelopePoint.cpp
+ *  EnvelopeEditor
  *
  *  Created by Jonathan Thorpe on 29/07/2011.
  *  Copyright 2011 JBAT. All rights reserved.
  *
  */
 
-#include "VSC::EnveloppePoint.h"
+#include "VSC::EnvelopePoint.h"
 #include "VSCSound.h"
 
 #include <cstddef>
 #include <assert.h>
 
 
-VSC::EnveloppePoint::EnveloppePoint(void) {
-    setLeftControlEnveloppeCoordinate(EnveloppeCoordinate::SPtr());
-    setRightControlEnveloppeCoordinate(EnveloppeCoordinate::SPtr());
+VSC::EnvelopePoint::EnvelopePoint(void) {
+    setLeftControlEnvelopeCoordinate(EnvelopeCoordinate::SPtr());
+    setRightControlEnvelopeCoordinate(EnvelopeCoordinate::SPtr());
 }
 
-VSC::EnveloppePoint::EnveloppePoint(Float value, Float time) : EnveloppeCoordinate (value, time) {
-    setLeftControlEnveloppeCoordinate(EnveloppeCoordinate::SPtr());
-    setRightControlEnveloppeCoordinate(EnveloppeCoordinate::SPtr());
+VSC::EnvelopePoint::EnvelopePoint(Float value, Float time) : EnvelopeCoordinate (value, time) {
+    setLeftControlEnvelopeCoordinate(EnvelopeCoordinate::SPtr());
+    setRightControlEnvelopeCoordinate(EnvelopeCoordinate::SPtr());
 }
 
-VSC::EnveloppePoint::EnveloppePoint(const EnveloppePoint& p) : EnveloppeCoordinate(p) {
+VSC::EnvelopePoint::EnvelopePoint(const EnvelopePoint& p) : EnvelopeCoordinate(p) {
     
-    if (p.getLeftControlEnveloppeCoordinate()) {
-        EnveloppeCoordinate* leftRawPtr = p.getLeftControlEnveloppeCoordinate().get();
-        setLeftControlEnveloppeCoordinate(EnveloppeCoordinate::SPtr(new EnveloppeCoordinate(*leftRawPtr)));
+    if (p.getLeftControlEnvelopeCoordinate()) {
+        EnvelopeCoordinate* leftRawPtr = p.getLeftControlEnvelopeCoordinate().get();
+        setLeftControlEnvelopeCoordinate(EnvelopeCoordinate::SPtr(new EnvelopeCoordinate(*leftRawPtr)));
     }
     else {
-        setLeftControlEnveloppeCoordinate(EnveloppeCoordinate::SPtr());
+        setLeftControlEnvelopeCoordinate(EnvelopeCoordinate::SPtr());
     }
     
-    if (p.getRightControlEnveloppeCoordinate()) {
-        EnveloppeCoordinate* rightRawPtr = p.getRightControlEnveloppeCoordinate().get();
-        setRightControlEnveloppeCoordinate(EnveloppeCoordinate::SPtr(new EnveloppeCoordinate(*rightRawPtr)));
+    if (p.getRightControlEnvelopeCoordinate()) {
+        EnvelopeCoordinate* rightRawPtr = p.getRightControlEnvelopeCoordinate().get();
+        setRightControlEnvelopeCoordinate(EnvelopeCoordinate::SPtr(new EnvelopeCoordinate(*rightRawPtr)));
     }
     else {
-        setRightControlEnveloppeCoordinate(EnveloppeCoordinate::SPtr());
+        setRightControlEnvelopeCoordinate(EnvelopeCoordinate::SPtr());
     }
     
 }
 
-VSC::EnveloppePoint::~EnveloppePoint(void) {
-	std::cout << "Destroying enveloppe point!" << std::endl;
+VSC::EnvelopePoint::~EnvelopePoint(void) {
+	std::cout << "Destroying envelope point!" << std::endl;
     /* MUST NOT DELETE SHARED POINTERS */
 }
 
-void VSC::EnveloppePoint::setLeftControlEnveloppeCoordinate(EnveloppeCoordinate::SPtr controlCoordinate) {
+void VSC::EnvelopePoint::setLeftControlEnvelopeCoordinate(EnvelopeCoordinate::SPtr controlCoordinate) {
     _leftControlCoordinate = controlCoordinate;
 }
 
-VSC::EnveloppeCoordinate::SPtr EnveloppePoint::getLeftControlEnveloppeCoordinate(void) const {
+VSC::EnvelopeCoordinate::SPtr EnvelopePoint::getLeftControlEnvelopeCoordinate(void) const {
     return _leftControlCoordinate;
 }
 
-void VSC::EnveloppePoint::setRightControlEnveloppeCoordinate(EnveloppeCoordinate::SPtr controlCoordinate) {
+void VSC::EnvelopePoint::setRightControlEnvelopeCoordinate(EnvelopeCoordinate::SPtr controlCoordinate) {
     _rightControlCoordinate = controlCoordinate;
 }
 
-VSC::EnveloppeCoordinate::SPtr EnveloppePoint::getRightControlEnveloppeCoordinate(void) const {
+VSC::EnvelopeCoordinate::SPtr EnvelopePoint::getRightControlEnvelopeCoordinate(void) const {
     return _rightControlCoordinate;
 }
 
 #pragma mark --- Operator <<
 
-std::ostream& VSC::operator<<(std::ostream& output, const EnveloppePoint& p) {
-    output << "EnveloppePoint (time: " <<  p._time << "s, value: " << p._value; 
+std::ostream& VSC::operator<<(std::ostream& output, const EnvelopePoint& p) {
+    output << "EnvelopePoint (time: " <<  p._time << "s, value: " << p._value; 
 	if (p._leftControlCoordinate)
 		output << ", left control: " << *(p._leftControlCoordinate.get()); 
 	if (p._rightControlCoordinate)
@@ -77,7 +77,7 @@ std::ostream& VSC::operator<<(std::ostream& output, const EnveloppePoint& p) {
     return output;  
 }
 
-bool VSC::compareEnveloppePointTimes(const VSC::EnveloppePoint::SPtr& point1, const VSC::EnveloppePoint::SPtr& point2) {
+bool VSC::compareEnvelopePointTimes(const VSC::EnvelopePoint::SPtr& point1, const VSC::EnvelopePoint::SPtr& point2) {
     if (point1->getTime() < point2->getTime()) {
         return true;
     }

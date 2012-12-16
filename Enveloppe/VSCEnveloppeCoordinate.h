@@ -1,14 +1,14 @@
 /*
- *  VSC::EnveloppeCoordinate.h
- *  EnveloppeEditor
+ *  VSC::EnvelopeCoordinate.h
+ *  EnvelopeEditor
  *
  *  Created by Jonathan Thorpe on 25/09/2011.
  *  Copyright 2011 JBAT. All rights reserved.
  *
  */
 
-#ifndef _VSC_ENVELOPPE_COORDINATE_H_
-#define _VSC_ENVELOPPE_COORDINATE_H_
+#ifndef _VSC_ENVElope_COORDINATE_H_
+#define _VSC_ENVElope_COORDINATE_H_
 
 #include "VSC.h"
 #include "VSCSound.h"
@@ -25,17 +25,17 @@
 namespace VSC {
    
 
-    class EnveloppeCoordinate {
+    class EnvelopeCoordinate {
         
     public:
         
-        typedef boost::shared_ptr<EnveloppeCoordinate> SPtr;
+        typedef boost::shared_ptr<EnvelopeCoordinate> SPtr;
         
         /* Constructors / Destructors */
-        EnveloppeCoordinate();
-        EnveloppeCoordinate(const VSC::EnveloppeCoordinate& c);
-        EnveloppeCoordinate(Float value, Float time);
-        ~EnveloppeCoordinate(void);
+        EnvelopeCoordinate();
+        EnvelopeCoordinate(const VSC::EnvelopeCoordinate& c);
+        EnvelopeCoordinate(Float value, Float time);
+        ~EnvelopeCoordinate(void);
         
         void setValue(Float value);
         Float getValue(void) const;
@@ -49,7 +49,7 @@ namespace VSC {
          *	Print out and serialization (private)
          */
         
-        friend std::ostream& operator<<(std::ostream& output, const EnveloppeCoordinate& c);
+        friend std::ostream& operator<<(std::ostream& output, const EnvelopeCoordinate& c);
         
         friend class boost::serialization::access;
         
@@ -78,10 +78,10 @@ namespace VSC {
         
     };
 
-    BOOST_CLASS_VERSION(EnveloppeCoordinate, 1)
+    BOOST_CLASS_VERSION(EnvelopeCoordinate, 1)
 
-    bool compareEnveloppeCoordinateValues (EnveloppeCoordinate* firstPoint, EnveloppeCoordinate* secondPoint);
-    bool compareEnveloppeCoordinateTimes (EnveloppeCoordinate* firstPoint, EnveloppeCoordinate* secondPoint);
+    bool compareEnvelopeCoordinateValues (EnvelopeCoordinate* firstPoint, EnvelopeCoordinate* secondPoint);
+    bool compareEnvelopeCoordinateTimes (EnvelopeCoordinate* firstPoint, EnvelopeCoordinate* secondPoint);
 
 }
 

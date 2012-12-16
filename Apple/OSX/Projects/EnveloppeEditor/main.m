@@ -1,6 +1,6 @@
 //
 //  main.m
-//  EnveloppeEditor
+//  EnvelopeEditor
 //
 //  Created by Jonathan Thorpe on 10/03/2011.
 //  Copyright 2011 JBAT. All rights reserved.

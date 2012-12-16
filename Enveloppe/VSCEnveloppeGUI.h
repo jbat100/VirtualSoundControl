@@ -1,49 +1,49 @@
 /*
- *  VSCEnveloppeViewSetup.h
- *  EnveloppeEditor
+ *  VSCEnvelopeViewSetup.h
+ *  EnvelopeEditor
  *
  *  Created by Jonathan Thorpe on 02/08/2011.
  *  Copyright 2011 JBAT. All rights reserved.
  *
  */
 
-#ifndef _VSC_ENVELOPPE_GUI_H_
-#define _VSC_ENVELOPPE_GUI_H_
+#ifndef _VSC_ENVElope_GUI_H_
+#define _VSC_ENVElope_GUI_H_
 
 #include "VSCGUI.h"
 #include "VSCMath.h"
 #include "VSCColor.h"
 #include "VSCSound.h"
-#include "VSCEnveloppe.h"
+#include "VSCEnvelope.h"
 
 #include <boost/shared_ptr.hpp>
 
 namespace VSC {
     
 
-    class EnveloppeEditorGUIConfig {
+    class EnvelopeEditorGUIConfig {
         
     public:
         
-        EnveloppeEditorGUIConfig(void);
+        EnvelopeEditorGUIConfig(void);
         
         void setToDefault(void);
         
         /*
          *	View range setters / getters
          */
-        const Enveloppe::TimeRange& getTimeRange(void) const;
-        void setTimeRange(const Enveloppe::TimeRange& timeRange);
-        const Enveloppe::ValueRange& getValueRange(void) const;
-        void setValueRange(const Enveloppe::ValueRange& valueRange);
+        const Envelope::TimeRange& getTimeRange(void) const;
+        void setTimeRange(const Envelope::TimeRange& timeRange);
+        const Envelope::ValueRange& getValueRange(void) const;
+        void setValueRange(const Envelope::ValueRange& valueRange);
         
         /*
          *	Allowed range setters / getters
          */
-        const Enveloppe::TimeRange& getAllowedTimeRange(void) const;
-        void setAllowedTimeRange(const Enveloppe::TimeRange& timeRange);
-        const Enveloppe::ValueRange& getAllowedValueRange(void) const;
-        void setAllowedValueRange(const Enveloppe::ValueRange& valueRange);
+        const Envelope::TimeRange& getAllowedTimeRange(void) const;
+        void setAllowedTimeRange(const Envelope::TimeRange& timeRange);
+        const Envelope::ValueRange& getAllowedValueRange(void) const;
+        void setAllowedValueRange(const Envelope::ValueRange& valueRange);
         
         /*
          *	Selection rect setters / getters
@@ -74,9 +74,9 @@ namespace VSC {
         Float valueForPoint(const Float point);
         Float timeDeltaForPointDelta(const Float delta);
         Float valueDeltaForPointDelta(const Float delta);
-        Point pointForEnveloppeCoordinate(const EnveloppeCoordinate::SPtr& p);
-        EnveloppeCoordinate::SPtr createEnveloppeCoordinateForPoint(const Point& p);
-        void setEnveloppeCoordinateToPoint(EnveloppeCoordinate::SPtr coord, const Point& p);
+        Point pointForEnvelopeCoordinate(const EnvelopeCoordinate::SPtr& p);
+        EnvelopeCoordinate::SPtr createEnvelopeCoordinateForPoint(const Point& p);
+        void setEnvelopeCoordinateToPoint(EnvelopeCoordinate::SPtr coord, const Point& p);
         
         
     private:
@@ -84,14 +84,14 @@ namespace VSC {
         /*
          *	View range
          */
-        Enveloppe::TimeRange _timeRange;
-        Enveloppe::ValueRange _valueRange;
+        Envelope::TimeRange _timeRange;
+        Envelope::ValueRange _valueRange;
         
         /*
          *	Allowed range
          */
-        Enveloppe::TimeRange _allowedTimeRange;
-        Enveloppe::ValueRange _allowedValueRange;
+        Envelope::TimeRange _allowedTimeRange;
+        Envelope::ValueRange _allowedValueRange;
         
         /*
          *	Selection rect
@@ -112,12 +112,12 @@ namespace VSC {
     };
 
 
-    class EnveloppeGUIConfig {
+    class EnvelopeGUIConfig {
         
     public:
         
-        EnveloppeGUIConfig();
-        EnveloppeGUIConfig(const EnveloppeGUIConfig& setup);
+        EnvelopeGUIConfig();
+        EnvelopeGUIConfig(const EnvelopeGUIConfig& setup);
         
         /*
          *	Control Points setters / getters
@@ -130,7 +130,7 @@ namespace VSC {
         void setControlPointUnselectedColour(const Color& colour);
         
         /*
-         *	Enveloppe lines setters / getters
+         *	Envelope lines setters / getters
          */
         Float getLineWidth(void) const;
         void setLineWidth(Float lineWidth);
@@ -149,7 +149,7 @@ namespace VSC {
         Color _controlPointUnselectedColour;
         
         /*
-         *	Enveloppe lines
+         *	Envelope lines
          */
         Float _lineWidth;
         Color _lineSelectedColour;

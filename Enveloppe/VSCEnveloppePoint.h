@@ -1,14 +1,14 @@
 /*
- *  VSC::EnveloppePoint.h
- *  EnveloppeEditor
+ *  VSC::EnvelopePoint.h
+ *  EnvelopeEditor
  *
  *  Created by Jonathan Thorpe on 29/07/2011.
  *  Copyright 2011 JBAT. All rights reserved.
  *
  */
 
-#ifndef _VSC_ENVELOPPE_POINT_H_
-#define _VSC_ENVELOPPE_POINT_H_
+#ifndef _VSC_ENVElope_POINT_H_
+#define _VSC_ENVElope_POINT_H_
 
 #include <iostream>
 #include <ostream>
@@ -19,49 +19,49 @@
 #include <boost/serialization/split_member.hpp>
 #include <boost/serialization/nvp.hpp>
 
-#include "VSC::EnveloppeCoordinate.h"
+#include "VSC::EnvelopeCoordinate.h"
 #include "VSC.h"
 #include "VSCSound.h"
 
 namespace VSC {
     
 
-    class EnveloppePoint : public EnveloppeCoordinate {
+    class EnvelopePoint : public EnvelopeCoordinate {
         
     public:
         
-        typedef boost::shared_ptr<EnveloppePoint> SPtr;
+        typedef boost::shared_ptr<EnvelopePoint> SPtr;
         
         /* Constructors / Destructors */
-        EnveloppePoint(void);
-        EnveloppePoint(const EnveloppePoint& p);
-        EnveloppePoint(const EnveloppeCoordinate& p) : EnveloppeCoordinate(p) {};
-        EnveloppePoint(Float value, Float time);
-        ~EnveloppePoint(void);
+        EnvelopePoint(void);
+        EnvelopePoint(const EnvelopePoint& p);
+        EnvelopePoint(const EnvelopeCoordinate& p) : EnvelopeCoordinate(p) {};
+        EnvelopePoint(Float value, Float time);
+        ~EnvelopePoint(void);
         
-        void setLeftControlEnveloppeCoordinate(EnveloppeCoordinate::SPtr controlPoint);
-        EnveloppeCoordinate::SPtr getLeftControlEnveloppeCoordinate(void) const;
+        void setLeftControlEnvelopeCoordinate(EnvelopeCoordinate::SPtr controlPoint);
+        EnvelopeCoordinate::SPtr getLeftControlEnvelopeCoordinate(void) const;
         
-        void setRightControlEnveloppeCoordinate(EnveloppeCoordinate::SPtr controlPoint);
-        EnveloppeCoordinate::SPtr getRightControlEnveloppeCoordinate(void) const;
+        void setRightControlEnvelopeCoordinate(EnvelopeCoordinate::SPtr controlPoint);
+        EnvelopeCoordinate::SPtr getRightControlEnvelopeCoordinate(void) const;
         
     private:
         
-        EnveloppeCoordinate::SPtr _leftControlCoordinate;
-        EnveloppeCoordinate::SPtr _rightControlCoordinate;
+        EnvelopeCoordinate::SPtr _leftControlCoordinate;
+        EnvelopeCoordinate::SPtr _rightControlCoordinate;
         
         /*
          *	Print out and serialization (private)
          */
         
-        friend std::ostream& operator<<(std::ostream& output, const EnveloppePoint& p);
+        friend std::ostream& operator<<(std::ostream& output, const EnvelopePoint& p);
         
         friend class boost::serialization::access;
         template<class Archive>
         void save(Archive & ar, const unsigned int version) const
         {
             using boost::serialization::make_nvp;
-            ar  & make_nvp("point_coordinate", boost::serialization::base_object<EnveloppeCoordinate>(*this));    
+            ar  & make_nvp("point_coordinate", boost::serialization::base_object<EnvelopeCoordinate>(*this));    
             ar  & make_nvp("left_control_coordinate", _leftControlCoordinate);
             ar  & make_nvp("right_control_coordinate", _rightControlCoordinate);
         }
@@ -69,7 +69,7 @@ namespace VSC {
         void load(Archive & ar, const unsigned int version)
         {
             using boost::serialization::make_nvp;
-            ar  & make_nvp("point_coordinate", boost::serialization::base_object<EnveloppeCoordinate>(*this));    
+            ar  & make_nvp("point_coordinate", boost::serialization::base_object<EnvelopeCoordinate>(*this));    
             ar  & make_nvp("left_control_coordinate", _leftControlCoordinate);
             ar  & make_nvp("right_control_coordinate", _rightControlCoordinate);
         }
@@ -78,9 +78,9 @@ namespace VSC {
         
     };
 
-    BOOST_CLASS_VERSION(EnveloppePoint, 1)
+    BOOST_CLASS_VERSION(EnvelopePoint, 1)
 
-    bool compareEnveloppePointTimes(const EnveloppePoint::SPtr& point1, const EnveloppePoint::SPtr& point2);
+    bool compareEnvelopePointTimes(const EnvelopePoint::SPtr& point1, const EnvelopePoint::SPtr& point2);
     
 }
 

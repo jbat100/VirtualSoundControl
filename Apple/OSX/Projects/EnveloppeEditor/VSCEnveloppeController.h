@@ -1,6 +1,6 @@
 //
-//  VSC::EnveloppeController.h
-//  EnveloppeEditor
+//  VSC::EnvelopeController.h
+//  EnvelopeEditor
 //
 //  Created by Jonathan Thorpe on 4/2/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
@@ -8,35 +8,35 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "VSC::EnveloppeView.h"
-#import "VSC::Enveloppe.h"
+#import "VSC::EnvelopeView.h"
+#import "VSC::Envelope.h"
 
-@protocol VSC::EnveloppeViewDataSource;
+@protocol VSC::EnvelopeViewDataSource;
 
 
-@interface VSC::EnveloppeController : NSObject <VSC::EnveloppeViewDataSource> {
+@interface VSC::EnvelopeController : NSObject <VSC::EnvelopeViewDataSource> {
     
-    VSC::Enveloppe::SPtr _currentEnveloppe;
-    VSC::Enveloppe::List _backgroundEnveloppes;
+    VSC::Envelope::SPtr _currentEnvelope;
+    VSC::Envelope::List _backgroundEnvelopes;
     
 }
 
-@property (nonatomic, strong) IBOutlet VSC::EnveloppeView* enveloppeView;
+@property (nonatomic, strong) IBOutlet VSC::EnvelopeView* envelopeView;
 @property (nonatomic, strong) IBOutlet NSSlider* horizontalScaleSlider;
 
-@property (nonatomic, strong) NSString* defaultEnveloppePath;
+@property (nonatomic, strong) NSString* defaultEnvelopePath;
 
--(VSC::Enveloppe::SPtr) getCurrentEnveloppe;
--(void) setCurrentEnveloppe:(VSC::Enveloppe::SPtr)enveloppe;
+-(VSC::Envelope::SPtr) getCurrentEnvelope;
+-(void) setCurrentEnvelope:(VSC::Envelope::SPtr)envelope;
 
--(void) addEnveloppe:(VSC::Enveloppe::SPtr)enveloppe;
--(void) removeEnveloppe:(VSC::Enveloppe::SPtr)enveloppe;
+-(void) addEnvelope:(VSC::Envelope::SPtr)envelope;
+-(void) removeEnvelope:(VSC::Envelope::SPtr)envelope;
 
--(IBAction) loadEnveloppe:(id)sender;
--(IBAction) saveEnveloppe:(id)sender;
--(IBAction) saveEnveloppeAs:(id)sender;
+-(IBAction) loadEnvelope:(id)sender;
+-(IBAction) saveEnvelope:(id)sender;
+-(IBAction) saveEnvelopeAs:(id)sender;
 
-// slider value maps to seconds represented in the enveloppe vue
+// slider value maps to seconds represented in the envelope vue
 -(IBAction) scaleSliderValueChanged:(id)sender; 
 
 @end

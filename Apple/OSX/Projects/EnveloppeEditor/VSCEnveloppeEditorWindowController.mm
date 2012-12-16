@@ -1,13 +1,13 @@
 //
-//  VCSEnveloppeEditorWindowController.m
-//  EnveloppeEditor
+//  VCSEnvelopeEditorWindowController.m
+//  EnvelopeEditor
 //
 //  Created by Jonathan Thorpe on 11/09/2011.
 //  Copyright 2011 JBAT. All rights reserved.
 //
 
-#import "VSC::EnveloppeEditorWindowController.h"
-#import "VSC::EnveloppeEditorDocument.h"
+#import "VSC::EnvelopeEditorWindowController.h"
+#import "VSC::EnvelopeEditorDocument.h"
 
 #import <string>
 #import <list>
@@ -15,32 +15,32 @@
 
 /*
 #define FILE_MENU_TITLE								@"File"
-#define LOAD_ENVELOPPE_MENU_ITEM_TITLE				@"Load..."
-#define LOAD_RECENT_ENVELOPPE_MENU_ITEM_TITLE		@"Load Recent"
-#define SAVE_ENVELOPPE_MENU_ITEM_TITLE				@"Save"
-#define SAVE_ENVELOPPE_AS_MENU_ITEM_TITLE			@"Save As..."
+#define LOAD_ENVElope_MENU_ITEM_TITLE				@"Load..."
+#define LOAD_RECENT_ENVElope_MENU_ITEM_TITLE		@"Load Recent"
+#define SAVE_ENVElope_MENU_ITEM_TITLE				@"Save"
+#define SAVE_ENVElope_AS_MENU_ITEM_TITLE			@"Save As..."
 */
  
-@interface VSC::EnveloppeEditorWindowController ()
+@interface VSC::EnvelopeEditorWindowController ()
 
 /*
 @property (nonatomic) NSMenu* fileMenu;
 @property (nonatomic) NSMenuItem* fileTitleMenuItem;
 
--(void) updateEnveloppePopUpMenu;
+-(void) updateEnvelopePopUpMenu;
 -(void) checkInterface;
 
--(void) saveEnveloppeAs:(id)sender; 
+-(void) saveEnvelopeAs:(id)sender; 
  */
 
 @end
 
 
-@implementation VSC::EnveloppeEditorWindowController
+@implementation VSC::EnvelopeEditorWindowController
 
-//@synthesize enveloppeView, enveloppeEditorView;
-@synthesize enveloppeController = _enveloppeController;
-//@synthesize loadedTextField, enveloppePopUpButton, testButton, fileMenu, fileTitleMenuItem;
+//@synthesize envelopeView, envelopeEditorView;
+@synthesize envelopeController = _envelopeController;
+//@synthesize loadedTextField, envelopePopUpButton, testButton, fileMenu, fileTitleMenuItem;
 
 #pragma mark - NSWindowController Window Callbacks
 
@@ -54,7 +54,7 @@
     /*
     CALayer *viewLayer = [CALayer layer];
     [viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0, 0.5, 0.0, 0.4)]; //RGB plus Alpha Channel
-    [viewLayer setDelegate:enveloppeView];
+    [viewLayer setDelegate:envelopeView];
     */
      
     /*
@@ -73,7 +73,7 @@
     //[self setWantsLayer:YES]; // view's backing store is using a Core Animation Layer
     
     
-    //[enveloppeView setLayer:viewLayer];
+    //[envelopeView setLayer:viewLayer];
     
     /*
      * We DO want to call [self setWantsLayer:YES]; AFTER setLayer
@@ -91,8 +91,8 @@
      
      */
     
-    //[enveloppeView setWantsLayer:YES];
-    //[enveloppeView setupEnveloppeLayer];
+    //[envelopeView setWantsLayer:YES];
+    //[envelopeView setupEnvelopeLayer];
     //[viewLayer setNeedsDisplay];
     
     
@@ -110,24 +110,24 @@
 
 #pragma mark - Convenience 
 
--(VSC::EnveloppeEditorDocument*) enveloppeEditorDocument {
-	return (VSC::EnveloppeEditorDocument*)[self document];
+-(VSC::EnvelopeEditorDocument*) envelopeEditorDocument {
+	return (VSC::EnvelopeEditorDocument*)[self document];
 }
 
 /*
 
 -(void) checkInterface {
 	
-	if (!currentEnveloppe) {
-		[[fileMenu itemWithTitle:SAVE_ENVELOPPE_MENU_ITEM_TITLE] setEnabled:NO];
-		[[fileMenu itemWithTitle:SAVE_ENVELOPPE_AS_MENU_ITEM_TITLE] setEnabled:NO];
+	if (!currentEnvelope) {
+		[[fileMenu itemWithTitle:SAVE_ENVElope_MENU_ITEM_TITLE] setEnabled:NO];
+		[[fileMenu itemWithTitle:SAVE_ENVElope_AS_MENU_ITEM_TITLE] setEnabled:NO];
 	}
 	else {
-		[[fileMenu itemWithTitle:SAVE_ENVELOPPE_MENU_ITEM_TITLE] setEnabled:YES];
-		[[fileMenu itemWithTitle:SAVE_ENVELOPPE_AS_MENU_ITEM_TITLE] setEnabled:YES];
+		[[fileMenu itemWithTitle:SAVE_ENVElope_MENU_ITEM_TITLE] setEnabled:YES];
+		[[fileMenu itemWithTitle:SAVE_ENVElope_AS_MENU_ITEM_TITLE] setEnabled:YES];
 	}
 	
-	[enveloppePopUpButton selectItem:fileTitleMenuItem];
+	[envelopePopUpButton selectItem:fileTitleMenuItem];
 	
 }
  
@@ -138,7 +138,7 @@
 
 /*
 
--(void) updateEnveloppePopUpMenu {
+-(void) updateEnvelopePopUpMenu {
 	
 	self.fileMenu = [[NSMenu alloc] initWithTitle:FILE_MENU_TITLE];
 	
@@ -147,12 +147,12 @@
 												 keyEquivalent:@""];
 	[fileMenu addItem:fileTitleMenuItem];
 	
-	NSMenuItem* loadItem = [[NSMenuItem alloc] initWithTitle:LOAD_ENVELOPPE_MENU_ITEM_TITLE
-													  action:@selector(loadEnveloppe:) 
+	NSMenuItem* loadItem = [[NSMenuItem alloc] initWithTitle:LOAD_ENVElope_MENU_ITEM_TITLE
+													  action:@selector(loadEnvelope:) 
 											   keyEquivalent:@""];
 	[fileMenu addItem:loadItem];
 	
-	NSMenuItem* loadRecentItem = [[NSMenuItem alloc] initWithTitle:LOAD_RECENT_ENVELOPPE_MENU_ITEM_TITLE
+	NSMenuItem* loadRecentItem = [[NSMenuItem alloc] initWithTitle:LOAD_RECENT_ENVElope_MENU_ITEM_TITLE
 													  action:nil
 											   keyEquivalent:@""];
 	[fileMenu addItem:loadRecentItem];
@@ -160,19 +160,19 @@
 	
 	[fileMenu addItem:[NSMenuItem separatorItem]];
 	
-	NSMenuItem* saveItem = [[NSMenuItem alloc] initWithTitle:SAVE_ENVELOPPE_MENU_ITEM_TITLE
-													  action:@selector(saveEnveloppe:) 
+	NSMenuItem* saveItem = [[NSMenuItem alloc] initWithTitle:SAVE_ENVElope_MENU_ITEM_TITLE
+													  action:@selector(saveEnvelope:) 
 											   keyEquivalent:@""];
 	
 	[fileMenu addItem:saveItem];
 	
-	NSMenuItem* saveAsItem = [[NSMenuItem alloc] initWithTitle:SAVE_ENVELOPPE_AS_MENU_ITEM_TITLE
-													  action:@selector(saveEnveloppeAs:) 
+	NSMenuItem* saveAsItem = [[NSMenuItem alloc] initWithTitle:SAVE_ENVElope_AS_MENU_ITEM_TITLE
+													  action:@selector(saveEnvelopeAs:) 
 											   keyEquivalent:@""];
 	
 	[fileMenu addItem:saveAsItem];
 	
-	[enveloppePopUpButton setMenu:fileMenu];
+	[envelopePopUpButton setMenu:fileMenu];
 	
 }
  

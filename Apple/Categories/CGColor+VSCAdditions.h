@@ -1,6 +1,6 @@
 //
 //  CGColorOperations.h
-//  EnveloppeEditor
+//  EnvelopeEditor
 //
 //  Created by Jonathan Thorpe on 15/03/2011.
 //  Copyright 2011 JBAT. All rights reserved.

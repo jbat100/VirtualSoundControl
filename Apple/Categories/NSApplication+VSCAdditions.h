@@ -1,6 +1,6 @@
 //
 //  NSApplication+VSCPaths.h
-//  EnveloppeEditor
+//  EnvelopeEditor
 //
 //  Created by Jonathan Thorpe on 24/10/2011.
 //  Copyright 2011 JBAT. All rights reserved.

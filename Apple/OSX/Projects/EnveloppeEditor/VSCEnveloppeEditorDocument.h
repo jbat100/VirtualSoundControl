@@ -1,6 +1,6 @@
 //
-//  EnveloppeDocument.h
-//  EnveloppeEditor
+//  EnvelopeDocument.h
+//  EnvelopeEditor
 //
 //  Created by Jonathan Thorpe on 10/03/2011.
 //  Copyright 2011 JBAT. All rights reserved.
@@ -12,44 +12,44 @@
 #include <list>
 #include <boost/shared_ptr.hpp>
 
-#include "VSC::Enveloppe.h"
-#include "VSC::EnveloppePoint.h"
+#include "VSC::Envelope.h"
+#include "VSC::EnvelopePoint.h"
 
-#import "VSC::EnveloppeEditorWindowController.h"
+#import "VSC::EnvelopeEditorWindowController.h"
 #import "VSCMIDITestWindowController.h"
 
-#define DEFAULT_ENVELOPPE_RELATIVE_PATH		@"Default"
+#define DEFAULT_ENVElope_RELATIVE_PATH		@"Default"
 
-@class VSC::EnveloppeEditorWindowController;
+@class VSC::EnvelopeEditorWindowController;
 
-#define EnvIter				std::list<VSC::Enveloppe::SPtr>::iterator 
-#define ConstEnvIter		std::list<VSC::Enveloppe::SPtr>::const_iterator 
+#define EnvIter				std::list<VSC::Envelope::SPtr>::iterator 
+#define ConstEnvIter		std::list<VSC::Envelope::SPtr>::const_iterator 
 
-@interface VSC::EnveloppeEditorDocument : NSDocument {
+@interface VSC::EnvelopeEditorDocument : NSDocument {
 	
-	std::list<VSC::Enveloppe::SPtr> _mainEnveloppeList;
+	std::list<VSC::Envelope::SPtr> _mainEnvelopeList;
 	
-	VSC::EnveloppeEditorWindowController* enveloppeEditorWindowController;
+	VSC::EnvelopeEditorWindowController* envelopeEditorWindowController;
     
     VSCMIDITestWindowController* midiTestWindowController;
 
 }
 
 /*
- *	Enveloppe Base File Paths
+ *	Envelope Base File Paths
  */
--(NSString*) enveloppeBaseFilePath;
+-(NSString*) envelopeBaseFilePath;
 -(NSString*) baseFilePath;
 
 /*
- *	Enveloppe Access/Create/Add/Remove
+ *	Envelope Access/Create/Add/Remove
  */
 
--(void) addEnveloppe:(VSC::Enveloppe::SPtr)enveloppe;
--(void) removeEnveloppe:(VSC::Enveloppe::SPtr)enveloppe;
--(EnvIter) beginMainEnveloppeListIterator;
--(EnvIter) endMainEnveloppeListIterator;
--(void) createDefaultEnveloppe;
--(VSC::Enveloppe::SPtr) defaultEnveloppe;
+-(void) addEnvelope:(VSC::Envelope::SPtr)envelope;
+-(void) removeEnvelope:(VSC::Envelope::SPtr)envelope;
+-(EnvIter) beginMainEnvelopeListIterator;
+-(EnvIter) endMainEnvelopeListIterator;
+-(void) createDefaultEnvelope;
+-(VSC::Envelope::SPtr) defaultEnvelope;
 
 @end
