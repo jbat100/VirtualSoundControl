@@ -7,8 +7,8 @@
  *
  */
 
-#ifndef _VSC_ENVElope_H_
-#define _VSC_ENVElope_H_
+#ifndef _VSC_ENVELOPE_H_
+#define _VSC_ENVELOPE_H_
 
 #include "VSC.h"
 #include "VSCSound.h"

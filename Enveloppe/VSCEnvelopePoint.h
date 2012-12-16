@@ -7,8 +7,8 @@
  *
  */
 
-#ifndef _VSC_ENVElope_POINT_H_
-#define _VSC_ENVElope_POINT_H_
+#ifndef _VSC_ENVELOPE_POINT_H_
+#define _VSC_ENVELOPE_POINT_H_
 
 #include <iostream>
 #include <ostream>
@@ -19,7 +19,7 @@
 #include <boost/serialization/split_member.hpp>
 #include <boost/serialization/nvp.hpp>
 
-#include "VSC::EnvelopeCoordinate.h"
+#include "VSCEnvelopeCoordinate.h"
 #include "VSC.h"
 #include "VSCSound.h"
 

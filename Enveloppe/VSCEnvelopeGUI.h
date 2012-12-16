@@ -7,8 +7,8 @@
  *
  */
 
-#ifndef _VSC_ENVElope_GUI_H_
-#define _VSC_ENVElope_GUI_H_
+#ifndef _VSC_ENVELOPE_GUI_H_
+#define _VSC_ENVELOPE_GUI_H_
 
 #include "VSCGUI.h"
 #include "VSCMath.h"
