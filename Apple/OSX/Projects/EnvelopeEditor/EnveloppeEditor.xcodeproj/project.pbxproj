@@ -1,0 +1,586 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		102C2156141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 102C2155141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib */; };
+		103618AB167C89970063F29D /* VSC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103618A9167C89970063F29D /* VSC.cpp */; };
+		104225C4151A343C00E1F68D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 104225C3151A343C00E1F68D /* CoreFoundation.framework */; };
+		106A54C5143D097B00455BC2 /* libboost_serialization.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106A54C4143D097B00455BC2 /* libboost_serialization.a */; };
+		10946E4E1526050B002B9F66 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		10A168EB14DAEBFC00413E58 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10A168EA14DAEBFC00413E58 /* QuartzCore.framework */; };
+		10C6DC79167DF0070073906E /* VSCEnvelope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10C6DC71167DF0070073906E /* VSCEnvelope.cpp */; };
+		10C6DC7A167DF0070073906E /* VSCEnvelopeCoordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10C6DC73167DF0070073906E /* VSCEnvelopeCoordinate.cpp */; };
+		10C6DC7B167DF0070073906E /* VSCEnvelopeGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10C6DC75167DF0070073906E /* VSCEnvelopeGUI.cpp */; };
+		10C6DC7C167DF0070073906E /* VSCEnvelopePoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10C6DC77167DF0070073906E /* VSCEnvelopePoint.cpp */; };
+		10CDFC2C167DF19300FECF45 /* VSCEnvelopeEditorDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10CDFC2B167DF19300FECF45 /* VSCEnvelopeEditorDocument.mm */; };
+		10CDFC31167DF1A100FECF45 /* VSCEnvelopeEditorWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10CDFC2F167DF1A100FECF45 /* VSCEnvelopeEditorWindowController.mm */; };
+		10CDFC32167DF1A100FECF45 /* VSCEnvelopeEditorWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10CDFC30167DF1A100FECF45 /* VSCEnvelopeEditorWindowController.xib */; };
+		10CDFC39167DF1AB00FECF45 /* VSCEnvelopeController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10CDFC34167DF1AB00FECF45 /* VSCEnvelopeController.mm */; };
+		10CDFC3A167DF1AB00FECF45 /* VSCEnvelopeEditorDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10CDFC36167DF1AB00FECF45 /* VSCEnvelopeEditorDocument.mm */; };
+		10CDFC3B167DF1AB00FECF45 /* VSCEnvelopeEditorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10CDFC38167DF1AB00FECF45 /* VSCEnvelopeEditorView.mm */; };
+		10DE92361413EDE600CC602A /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE92351413EDE600CC602A /* libboost_filesystem.a */; };
+		10DE923E1413EEB200CC602A /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE923D1413EEB200CC602A /* libboost_system.a */; };
+		10E55E78152C827000DB553F /* CGColor+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E6F152C827000DB553F /* CGColor+VSCAdditions.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		10E55E79152C827000DB553F /* NS+VSCGeomOperations.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E71152C827000DB553F /* NS+VSCGeomOperations.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		10E55E7A152C827000DB553F /* NSApplication+VSCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E73152C827000DB553F /* NSApplication+VSCAdditions.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		10E55E7B152C827000DB553F /* NSFileManager+VSCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E75152C827000DB553F /* NSFileManager+VSCAdditions.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		10E55E7C152C827000DB553F /* NSString+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E77152C827000DB553F /* NSString+VSCAdditions.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		10E55E88152C828400DB553F /* VSCBoost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E7E152C828400DB553F /* VSCBoost.cpp */; };
+		10E55E89152C828400DB553F /* VSCColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E80152C828400DB553F /* VSCColor.cpp */; };
+		10E55E8A152C828400DB553F /* VSCException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E82152C828400DB553F /* VSCException.cpp */; };
+		10E55E8B152C828400DB553F /* VSCGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E84152C828400DB553F /* VSCGUI.cpp */; };
+		10E55E8C152C828400DB553F /* VSCMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E86152C828400DB553F /* VSCMath.cpp */; };
+		10FA5F01154A981400AF9603 /* VSCMIDITestWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10E55E9C152C82D100DB553F /* VSCMIDITestWindowController.xib */; };
+		10FB8F3B152DED2C00C24B07 /* VSCSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E93152C82AD00DB553F /* VSCSound.cpp */; };
+		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
+		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
+		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
+		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		102C2155141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSCEnveloppeEditorWindowController.xib; sourceTree = "<group>"; };
+		103618A9167C89970063F29D /* VSC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSC.cpp; sourceTree = "<group>"; };
+		103618AA167C89970063F29D /* VSC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSC.h; sourceTree = "<group>"; };
+		104225C3151A343C00E1F68D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		106A54C4143D097B00455BC2 /* libboost_serialization.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_serialization.a; path = lib/libboost_serialization.a; sourceTree = BOOST_ROOT; };
+		10A168EA14DAEBFC00413E58 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		10C6DC71167DF0070073906E /* VSCEnvelope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCEnvelope.cpp; path = ../../../../Enveloppe/VSCEnvelope.cpp; sourceTree = "<group>"; };
+		10C6DC72167DF0070073906E /* VSCEnvelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCEnvelope.h; path = ../../../../Enveloppe/VSCEnvelope.h; sourceTree = "<group>"; };
+		10C6DC73167DF0070073906E /* VSCEnvelopeCoordinate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCEnvelopeCoordinate.cpp; path = ../../../../Enveloppe/VSCEnvelopeCoordinate.cpp; sourceTree = "<group>"; };
+		10C6DC74167DF0070073906E /* VSCEnvelopeCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCEnvelopeCoordinate.h; path = ../../../../Enveloppe/VSCEnvelopeCoordinate.h; sourceTree = "<group>"; };
+		10C6DC75167DF0070073906E /* VSCEnvelopeGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCEnvelopeGUI.cpp; path = ../../../../Enveloppe/VSCEnvelopeGUI.cpp; sourceTree = "<group>"; };
+		10C6DC76167DF0070073906E /* VSCEnvelopeGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCEnvelopeGUI.h; path = ../../../../Enveloppe/VSCEnvelopeGUI.h; sourceTree = "<group>"; };
+		10C6DC77167DF0070073906E /* VSCEnvelopePoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCEnvelopePoint.cpp; path = ../../../../Enveloppe/VSCEnvelopePoint.cpp; sourceTree = "<group>"; };
+		10C6DC78167DF0070073906E /* VSCEnvelopePoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCEnvelopePoint.h; path = ../../../../Enveloppe/VSCEnvelopePoint.h; sourceTree = "<group>"; };
+		10CDFC2A167DF19300FECF45 /* VSCEnvelopeEditorDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCEnvelopeEditorDocument.h; path = ../../Envelope/VSCEnvelopeEditorDocument.h; sourceTree = "<group>"; };
+		10CDFC2B167DF19300FECF45 /* VSCEnvelopeEditorDocument.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCEnvelopeEditorDocument.mm; path = ../../Envelope/VSCEnvelopeEditorDocument.mm; sourceTree = "<group>"; };
+		10CDFC2E167DF1A100FECF45 /* VSCEnvelopeEditorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCEnvelopeEditorWindowController.h; path = ../../Envelope/VSCEnvelopeEditorWindowController.h; sourceTree = "<group>"; };
+		10CDFC2F167DF1A100FECF45 /* VSCEnvelopeEditorWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCEnvelopeEditorWindowController.mm; path = ../../Envelope/VSCEnvelopeEditorWindowController.mm; sourceTree = "<group>"; };
+		10CDFC30167DF1A100FECF45 /* VSCEnvelopeEditorWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCEnvelopeEditorWindowController.xib; path = ../../Envelope/VSCEnvelopeEditorWindowController.xib; sourceTree = "<group>"; };
+		10CDFC33167DF1AB00FECF45 /* VSCEnvelopeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCEnvelopeController.h; path = ../../Envelope/VSCEnvelopeController.h; sourceTree = "<group>"; };
+		10CDFC34167DF1AB00FECF45 /* VSCEnvelopeController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCEnvelopeController.mm; path = ../../Envelope/VSCEnvelopeController.mm; sourceTree = "<group>"; };
+		10CDFC35167DF1AB00FECF45 /* VSCEnvelopeEditorDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCEnvelopeEditorDocument.h; path = ../../Envelope/VSCEnvelopeEditorDocument.h; sourceTree = "<group>"; };
+		10CDFC36167DF1AB00FECF45 /* VSCEnvelopeEditorDocument.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCEnvelopeEditorDocument.mm; path = ../../Envelope/VSCEnvelopeEditorDocument.mm; sourceTree = "<group>"; };
+		10CDFC37167DF1AB00FECF45 /* VSCEnvelopeEditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCEnvelopeEditorView.h; path = ../../Envelope/VSCEnvelopeEditorView.h; sourceTree = "<group>"; };
+		10CDFC38167DF1AB00FECF45 /* VSCEnvelopeEditorView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCEnvelopeEditorView.mm; path = ../../Envelope/VSCEnvelopeEditorView.mm; sourceTree = "<group>"; };
+		10DE92351413EDE600CC602A /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = lib/libboost_filesystem.a; sourceTree = BOOST_ROOT; };
+		10DE923D1413EEB200CC602A /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = lib/libboost_system.a; sourceTree = BOOST_ROOT; };
+		10E55E6E152C827000DB553F /* CGColor+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CGColor+VSCAdditions.h"; sourceTree = "<group>"; };
+		10E55E6F152C827000DB553F /* CGColor+VSCAdditions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "CGColor+VSCAdditions.mm"; sourceTree = "<group>"; };
+		10E55E70152C827000DB553F /* NS+VSCGeomOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NS+VSCGeomOperations.h"; sourceTree = "<group>"; };
+		10E55E71152C827000DB553F /* NS+VSCGeomOperations.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NS+VSCGeomOperations.mm"; sourceTree = "<group>"; };
+		10E55E72152C827000DB553F /* NSApplication+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSApplication+VSCAdditions.h"; sourceTree = "<group>"; };
+		10E55E73152C827000DB553F /* NSApplication+VSCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSApplication+VSCAdditions.m"; sourceTree = "<group>"; };
+		10E55E74152C827000DB553F /* NSFileManager+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+VSCAdditions.h"; sourceTree = "<group>"; };
+		10E55E75152C827000DB553F /* NSFileManager+VSCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+VSCAdditions.m"; sourceTree = "<group>"; };
+		10E55E76152C827000DB553F /* NSString+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+VSCAdditions.h"; sourceTree = "<group>"; };
+		10E55E77152C827000DB553F /* NSString+VSCAdditions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSString+VSCAdditions.mm"; sourceTree = "<group>"; };
+		10E55E7E152C828400DB553F /* VSCBoost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCBoost.cpp; sourceTree = "<group>"; };
+		10E55E7F152C828400DB553F /* VSCBoost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCBoost.h; sourceTree = "<group>"; };
+		10E55E80152C828400DB553F /* VSCColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCColor.cpp; sourceTree = "<group>"; };
+		10E55E81152C828400DB553F /* VSCColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCColor.h; sourceTree = "<group>"; };
+		10E55E82152C828400DB553F /* VSCException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCException.cpp; sourceTree = "<group>"; };
+		10E55E83152C828400DB553F /* VSCException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCException.h; sourceTree = "<group>"; };
+		10E55E84152C828400DB553F /* VSCGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCGUI.cpp; sourceTree = "<group>"; };
+		10E55E85152C828400DB553F /* VSCGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCGUI.h; sourceTree = "<group>"; };
+		10E55E86152C828400DB553F /* VSCMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCMath.cpp; sourceTree = "<group>"; };
+		10E55E87152C828400DB553F /* VSCMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCMath.h; sourceTree = "<group>"; };
+		10E55E93152C82AD00DB553F /* VSCSound.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCSound.cpp; path = ../../../../Sound/VSCSound.cpp; sourceTree = "<group>"; };
+		10E55E94152C82AD00DB553F /* VSCSound.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCSound.h; path = ../../../../Sound/VSCSound.h; sourceTree = "<group>"; };
+		10E55E9C152C82D100DB553F /* VSCMIDITestWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = VSCMIDITestWindowController.xib; path = ../../MIDI/VSCMIDITestWindowController.xib; sourceTree = "<group>"; };
+		10F05EA9152ED8E70056EA7A /* NSLog+VSCDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSLog+VSCDefinitions.h"; path = "../../../Common/NSLog+VSCDefinitions.h"; sourceTree = "<group>"; };
+		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		1DDD582B0DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		2564AD2C0F5327BB00F57823 /* EnveloppeEditor_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnveloppeEditor_Prefix.pch; sourceTree = "<group>"; };
+		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2A37F4BAFDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
+		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		8D15AC360486D014006FF6A4 /* EnveloppeEditor-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EnveloppeEditor-Info.plist"; sourceTree = "<group>"; };
+		8D15AC370486D014006FF6A4 /* EnveloppeEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EnveloppeEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D15AC330486D014006FF6A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				104225C4151A343C00E1F68D /* CoreFoundation.framework in Frameworks */,
+				10A168EB14DAEBFC00413E58 /* QuartzCore.framework in Frameworks */,
+				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
+				10DE92361413EDE600CC602A /* libboost_filesystem.a in Frameworks */,
+				10DE923E1413EEB200CC602A /* libboost_system.a in Frameworks */,
+				106A54C5143D097B00455BC2 /* libboost_serialization.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1003F7AF1517466400D681DD /* Window Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				10CDFC2E167DF1A100FECF45 /* VSCEnvelopeEditorWindowController.h */,
+				10CDFC2F167DF1A100FECF45 /* VSCEnvelopeEditorWindowController.mm */,
+				10CDFC30167DF1A100FECF45 /* VSCEnvelopeEditorWindowController.xib */,
+			);
+			name = "Window Controllers";
+			sourceTree = "<group>";
+		};
+		1017811F132BF9BF001C6A96 /* Apple */ = {
+			isa = PBXGroup;
+			children = (
+				10F05EA9152ED8E70056EA7A /* NSLog+VSCDefinitions.h */,
+				10E55E6D152C827000DB553F /* Categories */,
+			);
+			name = Apple;
+			sourceTree = "<group>";
+		};
+		102C2147141CFAC400EEEF55 /* Nibs */ = {
+			isa = PBXGroup;
+			children = (
+				102C2155141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib */,
+				10E55E9C152C82D100DB553F /* VSCMIDITestWindowController.xib */,
+				1DDD582A0DA1D0D100B32029 /* MainMenu.xib */,
+			);
+			name = Nibs;
+			sourceTree = "<group>";
+		};
+		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				104225C3151A343C00E1F68D /* CoreFoundation.framework */,
+				2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */,
+				13E42FBA07B3F13500E4EEF1 /* CoreData.framework */,
+				2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */,
+				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
+				10A168EA14DAEBFC00413E58 /* QuartzCore.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A8FEA54F5311CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				10DE923D1413EEB200CC602A /* libboost_system.a */,
+				10DE92351413EDE600CC602A /* libboost_filesystem.a */,
+				106A54C4143D097B00455BC2 /* libboost_serialization.a */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		107A7902132ADF0500C4B1FE /* Enveloppe Document */ = {
+			isa = PBXGroup;
+			children = (
+				10CDFC2A167DF19300FECF45 /* VSCEnvelopeEditorDocument.h */,
+				10CDFC2B167DF19300FECF45 /* VSCEnvelopeEditorDocument.mm */,
+			);
+			name = "Enveloppe Document";
+			sourceTree = "<group>";
+		};
+		107A7903132ADF1500C4B1FE /* Enveloppe */ = {
+			isa = PBXGroup;
+			children = (
+				10E55E93152C82AD00DB553F /* VSCSound.cpp */,
+				10E55E94152C82AD00DB553F /* VSCSound.h */,
+				10C6DC71167DF0070073906E /* VSCEnvelope.cpp */,
+				10C6DC72167DF0070073906E /* VSCEnvelope.h */,
+				10C6DC73167DF0070073906E /* VSCEnvelopeCoordinate.cpp */,
+				10C6DC74167DF0070073906E /* VSCEnvelopeCoordinate.h */,
+				10C6DC75167DF0070073906E /* VSCEnvelopeGUI.cpp */,
+				10C6DC76167DF0070073906E /* VSCEnvelopeGUI.h */,
+				10C6DC77167DF0070073906E /* VSCEnvelopePoint.cpp */,
+				10C6DC78167DF0070073906E /* VSCEnvelopePoint.h */,
+			);
+			name = Enveloppe;
+			sourceTree = "<group>";
+		};
+		107A7904132ADF2000C4B1FE /* Enveloppe View And Controller */ = {
+			isa = PBXGroup;
+			children = (
+				10CDFC33167DF1AB00FECF45 /* VSCEnvelopeController.h */,
+				10CDFC34167DF1AB00FECF45 /* VSCEnvelopeController.mm */,
+				10CDFC35167DF1AB00FECF45 /* VSCEnvelopeEditorDocument.h */,
+				10CDFC36167DF1AB00FECF45 /* VSCEnvelopeEditorDocument.mm */,
+				10CDFC37167DF1AB00FECF45 /* VSCEnvelopeEditorView.h */,
+				10CDFC38167DF1AB00FECF45 /* VSCEnvelopeEditorView.mm */,
+			);
+			name = "Enveloppe View And Controller";
+			sourceTree = "<group>";
+		};
+		10E55E6D152C827000DB553F /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				10E55E6E152C827000DB553F /* CGColor+VSCAdditions.h */,
+				10E55E6F152C827000DB553F /* CGColor+VSCAdditions.mm */,
+				10E55E70152C827000DB553F /* NS+VSCGeomOperations.h */,
+				10E55E71152C827000DB553F /* NS+VSCGeomOperations.mm */,
+				10E55E72152C827000DB553F /* NSApplication+VSCAdditions.h */,
+				10E55E73152C827000DB553F /* NSApplication+VSCAdditions.m */,
+				10E55E74152C827000DB553F /* NSFileManager+VSCAdditions.h */,
+				10E55E75152C827000DB553F /* NSFileManager+VSCAdditions.m */,
+				10E55E76152C827000DB553F /* NSString+VSCAdditions.h */,
+				10E55E77152C827000DB553F /* NSString+VSCAdditions.mm */,
+			);
+			name = Categories;
+			path = ../../../Categories;
+			sourceTree = "<group>";
+		};
+		10E55E7D152C828400DB553F /* Generic */ = {
+			isa = PBXGroup;
+			children = (
+				103618A9167C89970063F29D /* VSC.cpp */,
+				103618AA167C89970063F29D /* VSC.h */,
+				10E55E7E152C828400DB553F /* VSCBoost.cpp */,
+				10E55E7F152C828400DB553F /* VSCBoost.h */,
+				10E55E80152C828400DB553F /* VSCColor.cpp */,
+				10E55E81152C828400DB553F /* VSCColor.h */,
+				10E55E82152C828400DB553F /* VSCException.cpp */,
+				10E55E83152C828400DB553F /* VSCException.h */,
+				10E55E84152C828400DB553F /* VSCGUI.cpp */,
+				10E55E85152C828400DB553F /* VSCGUI.h */,
+				10E55E86152C828400DB553F /* VSCMath.cpp */,
+				10E55E87152C828400DB553F /* VSCMath.h */,
+			);
+			name = Generic;
+			path = ../../../../Generic;
+			sourceTree = "<group>";
+		};
+		19C28FB0FE9D524F11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D15AC370486D014006FF6A4 /* EnveloppeEditor.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2A37F4AAFDCFA73011CA2CEA /* EnveloppeEditor */ = {
+			isa = PBXGroup;
+			children = (
+				2A37F4ABFDCFA73011CA2CEA /* Classes */,
+				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
+				2A37F4B8FDCFA73011CA2CEA /* Resources */,
+				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
+				19C28FB0FE9D524F11CA2CBB /* Products */,
+			);
+			name = EnveloppeEditor;
+			sourceTree = "<group>";
+		};
+		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				10E55E7D152C828400DB553F /* Generic */,
+				1017811F132BF9BF001C6A96 /* Apple */,
+				107A7903132ADF1500C4B1FE /* Enveloppe */,
+				107A7904132ADF2000C4B1FE /* Enveloppe View And Controller */,
+				1003F7AF1517466400D681DD /* Window Controllers */,
+				107A7902132ADF0500C4B1FE /* Enveloppe Document */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		2A37F4AFFDCFA73011CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				2564AD2C0F5327BB00F57823 /* EnveloppeEditor_Prefix.pch */,
+				2A37F4B0FDCFA73011CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				102C2147141CFAC400EEEF55 /* Nibs */,
+				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
+				8D15AC360486D014006FF6A4 /* EnveloppeEditor-Info.plist */,
+				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */,
+				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D15AC270486D014006FF6A4 /* EnveloppeEditor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "EnveloppeEditor" */;
+			buildPhases = (
+				8D15AC2B0486D014006FF6A4 /* Resources */,
+				8D15AC300486D014006FF6A4 /* Sources */,
+				8D15AC330486D014006FF6A4 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EnveloppeEditor;
+			productInstallPath = "$(HOME)/Applications";
+			productName = EnveloppeEditor;
+			productReference = 8D15AC370486D014006FF6A4 /* EnveloppeEditor.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "EnveloppeEditor" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* EnveloppeEditor */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D15AC270486D014006FF6A4 /* EnveloppeEditor */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D15AC2B0486D014006FF6A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
+				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
+				1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */,
+				102C2156141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib in Resources */,
+				10FA5F01154A981400AF9603 /* VSCMIDITestWindowController.xib in Resources */,
+				10CDFC32167DF1A100FECF45 /* VSCEnvelopeEditorWindowController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D15AC300486D014006FF6A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10FB8F3B152DED2C00C24B07 /* VSCSound.cpp in Sources */,
+				10E55E88152C828400DB553F /* VSCBoost.cpp in Sources */,
+				10E55E89152C828400DB553F /* VSCColor.cpp in Sources */,
+				10E55E8A152C828400DB553F /* VSCException.cpp in Sources */,
+				10E55E8B152C828400DB553F /* VSCGUI.cpp in Sources */,
+				10E55E8C152C828400DB553F /* VSCMath.cpp in Sources */,
+				10946E4E1526050B002B9F66 /* main.m in Sources */,
+				10E55E78152C827000DB553F /* CGColor+VSCAdditions.mm in Sources */,
+				10E55E79152C827000DB553F /* NS+VSCGeomOperations.mm in Sources */,
+				10E55E7A152C827000DB553F /* NSApplication+VSCAdditions.m in Sources */,
+				10E55E7B152C827000DB553F /* NSFileManager+VSCAdditions.m in Sources */,
+				10E55E7C152C827000DB553F /* NSString+VSCAdditions.mm in Sources */,
+				103618AB167C89970063F29D /* VSC.cpp in Sources */,
+				10C6DC79167DF0070073906E /* VSCEnvelope.cpp in Sources */,
+				10C6DC7A167DF0070073906E /* VSCEnvelopeCoordinate.cpp in Sources */,
+				10C6DC7B167DF0070073906E /* VSCEnvelopeGUI.cpp in Sources */,
+				10C6DC7C167DF0070073906E /* VSCEnvelopePoint.cpp in Sources */,
+				10CDFC2C167DF19300FECF45 /* VSCEnvelopeEditorDocument.mm in Sources */,
+				10CDFC31167DF1A100FECF45 /* VSCEnvelopeEditorWindowController.mm in Sources */,
+				10CDFC39167DF1AB00FECF45 /* VSCEnvelopeController.mm in Sources */,
+				10CDFC3A167DF1AB00FECF45 /* VSCEnvelopeEditorDocument.mm in Sources */,
+				10CDFC3B167DF1AB00FECF45 /* VSCEnvelopeEditorView.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165FFE840EACC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C1660FE840EACC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1DDD582A0DA1D0D100B32029 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DDD582B0DA1D0D100B32029 /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A37F4BAFDCFA73011CA2CEA /* English */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C05733C808A9546B00998B17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/EnveloppeEditor-ezlqbgktjzfuevbngsdockiipooi/Build/Products/Debug\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = EnveloppeEditor_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					"$(BOOST_ROOT)/include/",
+					"$(STK_ROOT)/include/",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "EnveloppeEditor-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(STK_ROOT)/lib/\"",
+					"\"$(BOOST_ROOT)/lib/\"",
+				);
+				PRODUCT_NAME = EnveloppeEditor;
+			};
+			name = Debug;
+		};
+		C05733C908A9546B00998B17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/EnveloppeEditor-ezlqbgktjzfuevbngsdockiipooi/Build/Products/Debug\"",
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = EnveloppeEditor_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					"$(BOOST_ROOT)/include/",
+					"$(STK_ROOT)/include/",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "EnveloppeEditor-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(STK_ROOT)/lib/\"",
+					"\"$(BOOST_ROOT)/lib/\"",
+				);
+				PRODUCT_NAME = EnveloppeEditor;
+			};
+			name = Release;
+		};
+		C05733CC08A9546B00998B17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VSC_DEBUG,
+					VSC_DEBUG_COCOA_DRAW,
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(BOOST_ROOT)/include/",
+					"$(STK_ROOT)/include/",
+					"$(CORE_PLOT_ROOT)/Source/framework",
+					"$(CORE_PLOT_ROOT)/Source/framework/MacOnly",
+					"$(BULLET_ROOT)/src/",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(BOOST_LIB)",
+					"$(STK_LIB)",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C05733CD08A9546B00998B17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(BOOST_ROOT)/include/",
+					"$(STK_ROOT)/include/",
+					"$(CORE_PLOT_ROOT)/Source/framework",
+					"$(CORE_PLOT_ROOT)/Source/framework/MacOnly",
+					"$(BULLET_ROOT)/src/",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(BOOST_LIB)",
+					"$(STK_LIB)",
+				);
+				OTHER_LDFLAGS = "";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "EnveloppeEditor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C05733C808A9546B00998B17 /* Debug */,
+				C05733C908A9546B00998B17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "EnveloppeEditor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C05733CC08A9546B00998B17 /* Debug */,
+				C05733CD08A9546B00998B17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+}
