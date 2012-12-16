@@ -35,6 +35,9 @@ namespace VSC {
         
     public:
         
+        typedef boost::shared_ptr<Envelope> SPtr;
+        typedef boost::weak_ptr<Envelope>   WPtr;
+        
         static const std::string FileExtension;
         
         /*

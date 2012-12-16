@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCEnvelopeLayer.h"
+#import "VSCOSXEnvelopeLayer.h"
 #import "CGColor+VSCAdditions.h"
 #import "NS+VSCGeomOperations.h"
 
@@ -24,7 +24,7 @@
 @end
 
 
-@implementation VSCEnvelopeLayer
+@implementation VSCOSXEnvelopeLayer
 
 -(id) init {
     

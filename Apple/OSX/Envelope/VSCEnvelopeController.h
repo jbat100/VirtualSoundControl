@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "VSCEnvelopeView.h"
+#import "VSCOSXEnvelopeView.h"
 #import "VSCEnvelope.h"
 
 @protocol VSC::EnvelopeViewDataSource;

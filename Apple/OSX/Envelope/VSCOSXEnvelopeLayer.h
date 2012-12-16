@@ -14,7 +14,7 @@
 #import <map>
 
 
-@protocol VSCEnvelopeEditor <NSObject>
+@protocol VSCOSXEnvelopeEditor <NSObject>
 
 -(BOOL) envelopeIsEditable:(VSC::Envelope::SPtr)envelope;
 -(BOOL) pointIsSelected:(VSC::EnvelopePoint::SPtr)envelopePoint;
@@ -25,9 +25,9 @@
 
 @end
 
-@interface VSCEnvelopeLayer : CALayer 
+@interface VSCOSXEnvelopeLayer : CALayer 
 
-@property (weak) id<VSCEnvelopeEditor> editor;
+@property (weak) id<VSCOSXEnvelopeEditor> editor;
 
 -(void) addEnvelope:(VSC::Envelope::SPtr)envelope;
 -(void) addEnvelope:(VSC::Envelope::SPtr)envelope atIndex:(NSUInteger)index;

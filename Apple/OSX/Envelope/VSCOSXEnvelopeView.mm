@@ -6,7 +6,7 @@
 //  Copyright 2011 JBAT. All rights reserved.
 //
 
-#import "VSCEnvelopeView.h"
+#import "VSCOSXEnvelopeView.h"
 #import "VSCEnvelopeGUI.h"
 #import "VSCSound.h"
 #import "VSC::Color.h"
@@ -22,12 +22,45 @@
 #import <cmath>
 #import <assert.h>
 
-@interface VSC::EnvelopeView ()
+/*
+ * We don't want to call [self setWantsLayer:YES]; BEFORE setLayer as we want a layer hosting view, not a layer backed view
+ 
+ APPLE DOC:
+ 
+ A layer-backed view is a view that is backed by a Core Animation layer.
+ Any drawing done by the view is cached in the backing layer. You configure a layer-backed view by invoking setWantsLayer:
+ with a value of YES. The view class automatically creates a backing layer for you (using makeBackingLayer if overridden), and
+ you must use the view class’s drawing mechanisms. When using layer-backed views you should never interact directly with the layer.
+ Instead you must use the standard view programming practices.
+ 
+ */
+
+//[self setWantsLayer:YES]; // view's backing store is using a Core Animation Layer
+
+//[mainEnveloppeView setLayer:viewLayer];
+
+/*
+ * We DO want to call [self setWantsLayer:YES]; AFTER setLayer
+ *
+ 
+ APPLE DOC:
+ 
+ A layer-hosting view is a view that contains a Core Animation layer that you intend to manipulate directly.
+ You create a layer-hosting view by instantiating a Core Animation layer class and supplying that layer to the
+ view’s setLayer: method. After doing so, you then invoke setWantsLayer: with a value of YES. This method order
+ is crucial. When using a layer-hosting view you should not rely on the view for drawing, nor should you add
+ subviews to the layer-hosting view. The root layer (the layer set using setLayer:) should be treated as the
+ root layer of the layer tree and you should only use Core Animation drawing and animation methods. You still
+ use the view for handling mouse and keyboard events, but any resulting drawing must be handled by Core Animation.
+ 
+ */
+
+@interface VSCEnvelopeView ()
 {
     
 @private
     
-    VSC::Envelope::SPtr     _envelope;
+    VSC::Envelope::SPtr  _envelope;
     VSC::Envelope::List  _backgroundEnvelopeList;
     
     /*
@@ -48,14 +81,11 @@
      */
     VSC::Envelope::PointSet _currentlySelectedPoints;
 	VSC::Envelope::PointSet _pointsInCurrentSelectionRect;
-	
-    /*
-     *  Keeps track of the current mouse action
-     */
-	VSC::EnvelopeViewMouseAction currentMouseAction;
-	BOOL movedSinceMouseDown;
     
 }
+
+@property (nonatomic, assign) VSCEnvelopeViewMouseAction currentMouseAction;
+@property (nonatomic, assign) BOOL movedSinceMouseDown;
 
 @property (nonatomic, assign, readwrite) NSRect currentSelectionRect;
 @property (nonatomic, assign, readwrite) NSPoint currentSelectionOrigin;

@@ -1,5 +1,5 @@
 /*
- *  VSCEnvelopeViewSetup.h
+ *  VSCOSXEnvelopeViewSetup.h
  *  EnvelopeEditor
  *
  *  Created by Jonathan Thorpe on 02/08/2011.

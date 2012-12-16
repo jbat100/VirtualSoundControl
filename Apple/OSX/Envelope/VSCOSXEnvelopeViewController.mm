@@ -1,40 +1,35 @@
 //
-//  VSC::EnvelopeController.m
+//  VSCOSXEnvelopeViewController.m
 //  EnvelopeEditor
 //
-//  Created by Jonathan Thorpe on 4/2/12.
-//  Copyright (c) 2012 JBAT. All rights reserved.
+//  Created by Jonathan Thorpe on 12/16/12.
+//
 //
 
-#import "VSCEnvelopeController.h"
-
+#import "VSCOSXEnvelopeViewController.h"
 #import "NSString+VSCAdditions.h"
 
-@implementation VSC::EnvelopeController
+//typedef std::vector<Envelope::WPtr> Envelopes;
 
-@synthesize envelopeView = _envelopeView;
-@synthesize horizontalScaleSlider = _horizontalScaleSlider;
+@interface VSCOSXEnvelopeViewController ()
 
-@synthesize defaultEnvelopePath = _defaultEnvelppePath;
+@end
 
--(id) init {
-    
-    if ((self = [super init])) {
-        
-        _currentEnvelope = VSC::Envelope::SPtr();
-        
+@implementation VSCOSXEnvelopeViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Initialization code here.
     }
     
     return self;
-    
 }
 
 
--(VSC::Envelope::SPtr) getCurrentEnvelope {
-    return _currentEnvelope;
-}
 
--(void) setCurrentEnvelope:(VSC::Envelope::SPtr)envelope {
+-(void) setEnvelope:(VSC::Envelope::WPtr)envelope {
     _currentEnvelope = envelope;
     [self.envelopeView redrawMainEnvelope];
 }
