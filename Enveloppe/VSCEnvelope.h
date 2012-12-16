@@ -72,19 +72,13 @@ namespace VSC {
             PointDisplacementConflictResolutionMix
         };
         
-        typedef std::list<Envelope::SPtr>                                  List;
-        // set shorthand
-        typedef std::set<EnvelopePoint::SPtr>                              PointSet;
-        // list shorthand and list iterators (as we use them all the time)
-        typedef std::list<EnvelopePoint::SPtr>                             PointList;
-        typedef PointList::iterator                                             PointIterator;
-        typedef PointList::const_iterator                                       ConstPointIterator;
-        typedef PointList::reverse_iterator                                     ReversePointIterator;
-        typedef PointList::const_reverse_iterator                               ConstReversePointIterator;
+        typedef std::set<EnvelopePoint::SPtr>       PointSet;
+        typedef std::vector<EnvelopePoint::SPtr>    Points;
+
         
         Envelope(void);
         // Envelope copy construct and file construct
-        ~Envelope(void);
+        virtual ~Envelope(void);
         
         /* Factory */
         
@@ -97,8 +91,8 @@ namespace VSC {
         
         /* getters / setters */
         
-        void setCurveType(CurveType curveType);
-        CurveType getCurveType(void) const;
+        void setCurveType(CurveType curveType) {mCurveType = curveType;}
+        CurveType getCurveType(void) const {return mCurveType;}
         void setPointDisplacementConflictResolution(PointDisplacementConflictResolution pointDisplacementConflictResolution);
         PointDisplacementConflictResolution getPointDisplacementConflictResolution(void) const;
         
@@ -108,12 +102,12 @@ namespace VSC {
         
         /* envelope limitations */
         
-        void setMinimumTimeStep(Float minimumTimeStep);
-        Float getMinimumTimeStep(void) const;
-        void setAllowedTimeRange(TimeRange range);
-        TimeRange getAllowedTimeRange(void);
-        void setAllowedValueRange(ValueRange range);
-        ValueRange getAllowedValueRange(void);
+        void setMinimumTimeStep(Float minimumTimeStep) {mMinimumTimeStep = minimumTimeStep;}
+        Float getMinimumTimeStep(void) const {return mMinimumTimeStep;}
+        void setAllowedTimeRange(TimeRange range) {mAllowedTimeRange = range;}
+        TimeRange getAllowedTimeRange(void) {return mAllowedTimeRange;}
+        void setAllowedValueRange(ValueRange range) {mAllowedValueRange = range;}
+        ValueRange getAllowedValueRange(void) {return mAllowedValueRange;}
         
         /* edit points */
         
@@ -125,12 +119,7 @@ namespace VSC {
         void removePointsInTimeRange(TimeRange range);
         void removeAllPoints(void);
         
-        /* get points iter */
-        
-        PointIterator getPointBeginIterator(void);
-        PointIterator getPointEndIterator(void);
-        ConstPointIterator getPointBeginConstIterator(void) const;
-        ConstPointIterator getPointEndConstIterator(void) const;
+        const Points& getPoints();
         
         /* get points */
         
@@ -138,14 +127,17 @@ namespace VSC {
         EnvelopePoint::SPtr getFirstPointAfterTime(Float time) const;
         EnvelopePoint::SPtr getFirstPointBeforeTime(Float time) const;
         
-        void getPointsInTimeRange(PointList& pts, TimeRange range) const;
-        void getPointsInValueRange(PointList& pts, ValueRange range) const;
+        Points getPointsInTimeRange(const TimeRange& range) const;
+        Points getPointsInValueRange(const ValueRange& range) const;
         
         int numberOfPoints(void) const;
         
-        // display groups of points simultanuously, one block stops all displacement (single point displace is private)
-        // this is because the envelope is checked for time order and this should be done once all the points in a group 
-        // have been moved
+        /*
+         * display groups of points simultanuously, one block stops all displacement (single point displace is private)
+         * this is because the envelope is checked for time order and this should be done once all the points in a group 
+         * have been moved
+         */
+        
         bool displacePoints(PointList& pts, Float deltaTime, Float deltaValue); 
         
         /* values */
@@ -162,37 +154,48 @@ namespace VSC {
         
         const PointList& getPoints(void) const;
         
+    protected:
+        
+        /*
+         *	Envelope changes calls (mostly for subclasses to update cache tables)
+         */
+        
+        virtual void envelopeChangedBetweenEnvelopePoints(Points::iterator begin, Points::iterator end);
+        virtual void envelopeChangedBetweenEnvelopePointAndNext(Point::SPtr point);
+        virtual void envelopeChanged(void);
+        
+        
     private:
         
         /*
          *	Contains all the envelope points
          */
-        PointList _points;
+        Points mPoints;
         
         /*
          *	The interpolation type determine how values between two envelope points are calculated
          */
-        CurveType _curveType;
+        CurveType mCurveType;
         
         /*
          *	When points are being displaced so that they overlap neighboring points this determines
          *	how the conflict is resolved (block movements, clear neighboring points)
          */
-        PointDisplacementConflictResolution _pointDisplacementConflictResolution;
+        PointDisplacementConflictResolution mPointDisplacementConflictResolution;
         
         /*
          *	The minimum time step between two adjascent envelope points, if a point is added to the envelope,
          *	it's neighbourghs which are closer than this time step will be removed from the envelope
          */
-        Float _minimumTimeStep;
-        TimeRange _allowedTimeRange;
-        ValueRange _allowedValueRange;
+        Float mMinimumTimeStep;
+        TimeRange mAllowedTimeRange;
+        ValueRange mAllowedValueRange;
         
         /*
          *	VSC project data directories will have an envelope sub-directory which will serve as bas for the 
          *	envelope's relative path
          */
-        std::string _filePath;
+        std::string mLoadedFromFilePath;
         
         
         bool isSortedByTime(void) const;
@@ -203,15 +206,7 @@ namespace VSC {
         
         /* move points (disallow manggling...) */
         bool displacePoint(EnvelopePoint::SPtr point, Float deltaTime, Float deltaValue);
-        bool displacePoint(PointIterator pointIt, Float deltaTime, Float deltaValue);
-        
-        /*
-         *	Envelope changes calls (mostly for subclasses to update cache tables)
-         */
-        virtual void envelopeChangedBetweenEnvelopePoints(ConstPointIterator begin, ConstPointIterator end);
-        virtual void envelopeChangedBetweenEnvelopePoints(EnvelopePoint::SPtr begin, EnvelopePoint::SPtr end);
-        virtual void envelopeChangedBetweenEnvelopePointAndNext(EnvelopePoint::SPtr point);
-        virtual void envelopeChanged(void);
+        bool displacePoint(Points::iterator pointIt, Float deltaTime, Float deltaValue);
         
         /*
          *	Print out and serialization (private)
@@ -225,19 +220,19 @@ namespace VSC {
         {
             using boost::serialization::make_nvp;
             // note, version is always the latest when saving
-            ar  & make_nvp("points", _points);
-            ar  & make_nvp("curve_type", _curveType);
-            ar  & make_nvp("point_displacement_conflict_resolution", _pointDisplacementConflictResolution);
-            ar  & make_nvp("minimum_time_step", _minimumTimeStep);
+            ar  & make_nvp("points", mPoints);
+            ar  & make_nvp("curve_type", mCurveType);
+            ar  & make_nvp("point_displacement_conflict_resolution", mPointDisplacementConflictResolution);
+            ar  & make_nvp("minimum_time_step", mMinimumTimeStep);
         }
         template<class Archive>
         void load(Archive & ar, const unsigned int version)
         {
             using boost::serialization::make_nvp;
-            ar  & make_nvp("points", _points);
-            ar  & make_nvp("curve_type", _curveType);
-            ar  & make_nvp("point_displacement_conflict_resolution", _pointDisplacementConflictResolution);
-            ar  & make_nvp("minimum_time_step", _minimumTimeStep);
+            ar  & make_nvp("points", mPoints);
+            ar  & make_nvp("curve_type", mCurveType);
+            ar  & make_nvp("point_displacement_conflict_resolution", mPointDisplacementConflictResolution);
+            ar  & make_nvp("minimum_time_step", mMinimumTimeStep);
         }
         
         BOOST_SERIALIZATION_SPLIT_MEMBER()

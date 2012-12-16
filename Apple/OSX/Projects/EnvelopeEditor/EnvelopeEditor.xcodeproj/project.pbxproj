@@ -195,6 +195,7 @@
 				10C6DC76167DF0070073906E /* VSCEnvelopeGUI.h */,
 				10C6DC77167DF0070073906E /* VSCEnvelopePoint.cpp */,
 				10C6DC78167DF0070073906E /* VSCEnvelopePoint.h */,
+				10CDFC48167E2C2800FECF45 /* OSX */,
 			);
 			name = Enveloppe;
 			sourceTree = "<group>";
@@ -212,6 +213,15 @@
 				10CDFC3D167DF8CC00FECF45 /* VSCOSXEnvelopeLayer.mm */,
 			);
 			name = "Enveloppe View And Controller";
+			sourceTree = "<group>";
+		};
+		10CDFC48167E2C2800FECF45 /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				107A7904132ADF2000C4B1FE /* Enveloppe View And Controller */,
+				1003F7AF1517466400D681DD /* Document and Window */,
+			);
+			name = OSX;
 			sourceTree = "<group>";
 		};
 		10E55E6D152C827000DB553F /* Categories */ = {
@@ -278,8 +288,6 @@
 				10E55E7D152C828400DB553F /* Generic */,
 				1017811F132BF9BF001C6A96 /* Apple */,
 				107A7903132ADF1500C4B1FE /* Enveloppe */,
-				107A7904132ADF2000C4B1FE /* Enveloppe View And Controller */,
-				1003F7AF1517466400D681DD /* Document and Window */,
 			);
 			name = Classes;
 			sourceTree = "<group>";

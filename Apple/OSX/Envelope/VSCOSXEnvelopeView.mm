@@ -57,30 +57,13 @@
 
 @interface VSCEnvelopeView ()
 {
-    
-@private
-    
-    VSC::Envelope::SPtr  _envelope;
-    VSC::Envelope::List  _backgroundEnvelopeList;
-    
-    /*
-     *  An editor setup
-     */
-    VSC::EnvelopeEditorGUIConfig::SPtr _envelopeEditorGUIConfig;
-	
-	/*
-     *  Keep track of the current grid points and their corresponding pixel
-	 *  so that they do not need to be calculated on every draw, need updating
-	 *	when frame/bounds change or view range/zoom changes
-     */
-	
     /*
      *  Keeps track of the currently selected points for group operations (move for example)
      *  A set is more appropriate than a list as we don't care about ordering and adding
      *  without needing to check for presence (sets cannot have duplicates) is an advantage
      */
     VSC::Envelope::PointSet _currentlySelectedPoints;
-	VSC::Envelope::PointSet _pointsInCurrentSelectionRect;
+	VSC::Envelope::PointSet mPointsInCurrentSelectionRect;
     
 }
 
@@ -97,14 +80,8 @@
 
 
 
-@implementation VSC::EnvelopeView
+@implementation VSCEnvelopeView
 
-@synthesize mainEnvelopeLayer = _mainEnvelopeLayer;
-@synthesize backgroundEnvelopesLayer = _backgroundEnvelopesLayer;
-@synthesize dataSource = _dataSource; 
-
-@synthesize currentSelectionRect = _currentSelectionRect;
-@synthesize currentSelectionOrigin = _currentSelectionOrigin;
 
 #pragma mark - NSView Methods
 
@@ -160,7 +137,7 @@
     
     if (!_envelope) {
         _currentlySelectedPoints.clear();
-        _pointsInCurrentSelectionRect.clear();
+        mPointsInCurrentSelectionRect.clear();
     }
     
     for (VSC::Envelope::PointSet::iterator setIt = _currentlySelectedPoints.begin(); setIt != _currentlySelectedPoints.end(); setIt++) {
@@ -172,12 +149,12 @@
         }
     }
     
-    for (VSC::Envelope::PointSet::iterator setIt = _pointsInCurrentSelectionRect.begin(); setIt != _pointsInCurrentSelectionRect.end(); setIt++) {
+    for (VSC::Envelope::PointSet::iterator setIt = mPointsInCurrentSelectionRect.begin(); setIt != mPointsInCurrentSelectionRect.end(); setIt++) {
         VSC::Envelope::ConstPointIterator beginEnvPntIt = _envelope->getPointBeginConstIterator();
         VSC::Envelope::ConstPointIterator endEnvPntIt = _envelope->getPointEndConstIterator();
         VSC::Envelope::ConstPointIterator envPntIt = std::find(beginEnvPntIt, endEnvPntIt, *setIt);
         if (envPntIt == endEnvPntIt) {
-            _pointsInCurrentSelectionRect.erase(setIt);
+            mPointsInCurrentSelectionRect.erase(setIt);
         }
     }
     
@@ -195,9 +172,9 @@
 
 -(BOOL) pointIsSelected:(VSC::EnvelopePoint::SPtr)envelopePoint {
     
-    VSC::Envelope::PointSet::const_iterator pointIt = _pointsInCurrentSelectionRect.find(envelopePoint);
+    VSC::Envelope::PointSet::const_iterator pointIt = mPointsInCurrentSelectionRect.find(envelopePoint);
     
-    if (pointIt != _pointsInCurrentSelectionRect.end()) {
+    if (pointIt != mPointsInCurrentSelectionRect.end()) {
         return YES;
     }
     
@@ -268,7 +245,7 @@
 
 -(void) setEnvelope:(VSC::Envelope::SPtr)envelope {
 	_currentlySelectedPoints.clear();
-	_pointsInCurrentSelectionRect.clear();
+	mPointsInCurrentSelectionRect.clear();
     _envelope = envelope;
 	//[self setNeedsDisplay:YES];
     [self.layer setNeedsDisplay];
@@ -437,7 +414,7 @@
 			 */
 			if (_currentlySelectedPoints.size() > 0) {
 				_currentlySelectedPoints.clear();
-				_pointsInCurrentSelectionRect.clear();
+				mPointsInCurrentSelectionRect.clear();
 				currentMouseAction = VSC::EnvelopeViewMouseActionNone;
 			}
 			
@@ -535,7 +512,7 @@
 		if (envelopePoint) {
 			_envelope->removePoint(envelopePoint);
 			_currentlySelectedPoints.erase(envelopePoint);
-			_pointsInCurrentSelectionRect.erase(envelopePoint);
+			mPointsInCurrentSelectionRect.erase(envelopePoint);
 		}
 	}
 	
@@ -549,7 +526,7 @@
 		
 		[self addPointsInRect:self.currentSelectionRect toPointSet:_currentlySelectedPoints];
 		
-		_pointsInCurrentSelectionRect.clear();
+		mPointsInCurrentSelectionRect.clear();
 		
 		self.currentSelectionRect = NSMakeRect(0.0, 0.0, 0.0, 0.0);
 		self.currentSelectionOrigin = NSMakePoint(0.0, 0.0);
@@ -616,9 +593,9 @@
 		
 		self.currentSelectionRect = NSMakeRect(nx, ny, nw, nh);
 		
-		_pointsInCurrentSelectionRect.clear();
+		mPointsInCurrentSelectionRect.clear();
 		
-		[self addPointsInRect:self.currentSelectionRect toPointSet:_pointsInCurrentSelectionRect];
+		[self addPointsInRect:self.currentSelectionRect toPointSet:mPointsInCurrentSelectionRect];
 		
 	}
 	

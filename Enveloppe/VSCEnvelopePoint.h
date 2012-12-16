@@ -1,11 +1,3 @@
-/*
- *  VSC::EnvelopePoint.h
- *  EnvelopeEditor
- *
- *  Created by Jonathan Thorpe on 29/07/2011.
- *  Copyright 2011 JBAT. All rights reserved.
- *
- */
 
 #ifndef _VSC_ENVELOPE_POINT_H_
 #define _VSC_ENVELOPE_POINT_H_

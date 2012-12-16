@@ -90,8 +90,8 @@ namespace VSC {
         /*
          *	Allowed range
          */
-        Envelope::TimeRange _allowedTimeRange;
-        Envelope::ValueRange _allowedValueRange;
+        Envelope::TimeRange mAllowedTimeRange;
+        Envelope::ValueRange mAllowedValueRange;
         
         /*
          *	Selection rect

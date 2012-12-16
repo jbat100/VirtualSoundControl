@@ -1,11 +1,3 @@
-/*
- *  VSCEnvelope.cpp
- *  EnvelopeEditor
- *
- *  Created by Jonathan Thorpe on 29/07/2011.
- *  Copyright 2011 JBAT. All rights reserved.
- *
- */
 
 #include "VSCEnvelope.h"
 #include "VSCEnvelopePoint.h"
@@ -18,6 +10,8 @@
 #include <cmath>
 #include <assert.h>
 
+#include <boost/assert.hpp>
+#include <boost/foreach.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
@@ -31,7 +25,8 @@ const std::string VSC::Envelope::FileExtension = "vscenv";
  *	Saving and loading
  */
 
-void VSC::Envelope::saveToXMLFile(const char * filepath) {
+void VSC::Envelope::saveToXMLFile(const char * filepath)
+{
     // make an archive
     std::ofstream ofs(filepath);
     assert(ofs.good());
@@ -42,7 +37,8 @@ void VSC::Envelope::saveToXMLFile(const char * filepath) {
 
 #pragma mark - Static Factory Methods
 
-VSC::Envelope::SPtr VSC::Envelope::createFromXMLFile(const char * filepath) {
+VSC::Envelope::SPtr VSC::Envelope::createFromXMLFile(const char * filepath)
+{
     Envelope::SPtr envPtr = Envelope::SPtr(new Envelope());
     // open the archive
     std::ifstream ifs(filepath);
@@ -53,8 +49,8 @@ VSC::Envelope::SPtr VSC::Envelope::createFromXMLFile(const char * filepath) {
     return envPtr;
 }
 
-VSC::Envelope::SPtr VSC::Envelope::createFlatEnvelope(Float duration, unsigned int numberOfPoints, Float value) {
-
+VSC::Envelope::SPtr VSC::Envelope::createFlatEnvelope(Float duration, unsigned int numberOfPoints, Float value)
+{
     Envelope::SPtr envPtr = Envelope::SPtr(new Envelope());
     
     Float step = duration / (Float)(numberOfPoints-1);
@@ -67,11 +63,10 @@ VSC::Envelope::SPtr VSC::Envelope::createFlatEnvelope(Float duration, unsigned i
     }
     
     return envPtr;
-    
 }
 
-VSC::Envelope::SPtr VSC::Envelope::createADSREnvelope(Float attack, Float decay, Float sustain, Float release, Float sustainValue) {
-    
+VSC::Envelope::SPtr VSC::Envelope::createADSREnvelope(Float attack, Float decay, Float sustain, Float release, Float sustainValue)
+{
     Envelope::SPtr envPtr = Envelope::SPtr(new Envelope());
         
     EnvelopePoint::SPtr pntPtr = EnvelopePoint::SPtr(new EnvelopePoint(0.0, 0.0));
@@ -95,161 +90,128 @@ VSC::Envelope::SPtr VSC::Envelope::createADSREnvelope(Float attack, Float decay,
     pntPtr.reset();
     
     return envPtr;
-    
 }
 
-VSC::Envelope::SPtr VSC::Envelope::createEmptyEnvelope(void) {
+VSC::Envelope::SPtr VSC::Envelope::createEmptyEnvelope(void)
+{
     
     Envelope::SPtr envPtr = Envelope::SPtr(new Envelope());
-    
     return envPtr;
-    
 }
 
 #pragma mark - Constructor/Destructor/Defaults
 
-VSC::Envelope::Envelope(void) {
-	_minimumTimeStep = 0.01;
-    _curveType = CurveTypeLinear;
-    _pointDisplacementConflictResolution = PointDisplacementConflictResolutionMix;
-    _allowedTimeRange = TimeRange(0.0, 10.0);
-    _allowedValueRange = ValueRange(0.0, 1.0);
+VSC::Envelope::Envelope(void)
+{
+	mMinimumTimeStep = 0.01;
+    mCurveType = CurveTypeLinear;
+    mPointDisplacementConflictResolution = PointDisplacementConflictResolutionMix;
+    mAllowedTimeRange = TimeRange(0.0, 10.0);
+    mAllowedValueRange = ValueRange(0.0, 1.0);
 }
 
-VSC::Envelope::~Envelope(void) {
+VSC::Envelope::~Envelope(void)
+{
 	std::cout << "Destroying Envelope!" << std::endl;
 }
 
 
 #pragma mark - General Setters/Getters
 
-
-void VSC::Envelope::setCurveType(Envelope::CurveType curveType) {
-	_curveType = curveType;
-}
-
-VSC::Envelope::CurveType VSC::Envelope::getCurveType(void) const {
-	return _curveType;
-}
-
-
-void VSC::Envelope::setPointDisplacementConflictResolution(Envelope::PointDisplacementConflictResolution r) {
-    
-    if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionClear ||
-        _pointDisplacementConflictResolution == PointDisplacementConflictResolutionBlock) {
+void VSC::Envelope::setPointDisplacementConflictResolution(Envelope::PointDisplacementConflictResolution r)
+{
+    if (mPointDisplacementConflictResolution == PointDisplacementConflictResolutionClear ||
+        mPointDisplacementConflictResolution == PointDisplacementConflictResolutionBlock)
+    {
         throw VSCNotImplementedException();
     }
     
-	_pointDisplacementConflictResolution = r;
+	mPointDisplacementConflictResolution = r;
 }
 
-VSC::Envelope::PointDisplacementConflictResolution VSC::Envelope::getPointDisplacementConflictResolution(void) const {
-	return _pointDisplacementConflictResolution;
+VSC::Envelope::PointDisplacementConflictResolution VSC::Envelope::getPointDisplacementConflictResolution(void) const
+{
+	return mPointDisplacementConflictResolution;
 }
 
-void VSC::Envelope::setFilePath(std::string filePath) {
-	_filePath = filePath;
+void VSC::Envelope::setFilePath(std::string filePath)
+{
+	mLoadedFromFilePath = filePath;
 }
 
-std::string VSC::Envelope::getFilePath(void) const {
-	return _filePath;
+std::string VSC::Envelope::getFilePath(void) const
+{
+	return mLoadedFromFilePath;
 }
 
-std::string VSC::Envelope::getName(void) const {
-	return boost::filesystem::path(_filePath).replace_extension(NULL).filename().string();
-}
-
-void VSC::Envelope::setMinimumTimeStep(Float minimumTimeStep) {
-	_minimumTimeStep = minimumTimeStep;
-}
-
-Float VSC::Envelope::getMinimumTimeStep(void) const {
-	return _minimumTimeStep;
+std::string VSC::Envelope::getName(void) const
+{
+	return boost::filesystem::path(mLoadedFromFilePath).replace_extension(NULL).filename().string();
 }
 
 
-void VSC::Envelope::setAllowedTimeRange(TimeRange range) {
-    _allowedTimeRange = range;
-}
-
-VSC::Envelope::TimeRange VSC::Envelope::getAllowedTimeRange(void) {
-    return _allowedTimeRange;
-}
-
-void VSC::Envelope::setAllowedValueRange(ValueRange range) {
-    _allowedValueRange = range;
-}
-
-VSC::Envelope::ValueRange VSC::Envelope::getAllowedValueRange(void) {
-    return _allowedValueRange;
-}
-
-bool VSC::Envelope::isSortedByTime(void) const {
-    
-    if (_points.size() < 1) 
-        return true;
-    
-    ConstPointIterator it = _points.begin();
+bool VSC::Envelope::isSortedByTime(void) const
+{    
+    if (mPoints.size() < 1) return true;
+    Points::iterator it = mPoints.begin();
     Float currentTime = (*it)->getTime();
-    for (; it != _points.end(); it++) {
+    for (; it != mPoints.end(); it++) {
         if ((*it)->getTime() < currentTime) {
             return false;
         }
         currentTime = (*it)->getTime();
     }
-    
     return true;
-    
 }
 
 #pragma mark - Add/Remove Envelope Points
 
 void VSC::Envelope::addPoint(EnvelopePoint::SPtr point) {
     
-    assert(point);
+    BOOST_ASSERT(point);
 	
-    std::cout << "Adding " << *(point.get()) << "\n";
+    std::cout << "Envelope::addPoint " << *(point.get()) << std::endl;
     // check if the point already is in the envelope, no dupicate pointers please ...
     
     // first, if there are no points yet in the envelope then we just push back the new point and return
-    if (_points.size() == 0) {
-        _points.push_back(point);
+    if (mPoints.size() == 0) {
+        mPoints.push_back(point);
         return;
     }
 	
-	PointIterator currentIt;
-	PointIterator nextIt;
+    Points::iterator currentIt;
+	Points::iterator nextIt;
 	
-	PointList pointsToRemove;
+	Points pointsToRemove;
 	
 	// remove close points
-	for (currentIt = _points.begin(); currentIt != _points.end(); currentIt++) {
+	for (currentIt = mPoints.begin(); currentIt != mPoints.end(); currentIt++) {
 		Float difference = std::abs(point->getTime() - (*currentIt)->getTime());
-		if (difference < _minimumTimeStep) {
-			std::cout << "Found point " << *(*currentIt) << " closer than minimum time step (" << _minimumTimeStep << ") ";
+		if (difference < mMinimumTimeStep) {
+			std::cout << "Found point " << *(*currentIt) << " closer than minimum time step (" << mMinimumTimeStep << ") ";
 			std::cout << "by " << difference << "\n";
 			pointsToRemove.push_back(*currentIt);
 		}
 	}
-	removePoints(pointsToRemove);
+	this->removePoints(pointsToRemove);
 	
     // if the time is less than that of the first point in the envelope then add at the beginning
-    currentIt = _points.begin();
+    currentIt = mPoints.begin();
     if ((*currentIt)->getTime() > point->getTime()) {
-        _points.insert(currentIt, point);
+        mPoints.insert(currentIt, point);
     }
     // otherwise find the right spot to insert the point, keeping the points ordered by time 
     else {
         bool found = false;
-        for (currentIt = _points.begin(); currentIt != _points.end(); currentIt++) {
+        for (currentIt = mPoints.begin(); currentIt != mPoints.end(); currentIt++) {
             // is there a next element
             nextIt = currentIt;
             nextIt++;
-            if (nextIt == _points.end()) {
+            if (nextIt == mPoints.end()) {
                 break;
             }
-            EnvelopePoint::SPtr p(*currentIt);
-            EnvelopePoint::SPtr np(*nextIt);
+            const EnvelopePoint::SPtr& p = (*currentIt);
+            const EnvelopePoint::SPtr& np = (*nextIt);
             // insert in the list if the time value is contained between this point's time and next point's time
             if (p->getTime() < point->getTime() && np->getTime() > point->getTime()) {
                 found = true;
@@ -257,71 +219,78 @@ void VSC::Envelope::addPoint(EnvelopePoint::SPtr point) {
             }
         }
         if (found) { // if we found a previous and next point
-            _points.insert(nextIt, point);
+            mPoints.insert(nextIt, point);
         }
         else { // else push back at the end
-            _points.push_back(point);
+            mPoints.push_back(point);
         }
     }
 	
 	//std::cout << "After point add, envelope is: " << *this << "\n";
     
-    assert(isSortedByTime());
+    BOOST_ASSERT(this->isSortedByTime());
 	
 }
 
 void VSC::Envelope::removePoint(EnvelopePoint::SPtr point) {
-	assert(point);
-	std::cout << "In removePoint: " << *point << std::endl;
-	_points.remove(point);
-    assert(isSortedByTime());
+	BOOST_ASSERT(point);
+	std::cout << "Envelope::removePoint: " << *point << std::endl;
+    Points::iterator it = mPoints.find(point);
+    BOOST_ASSERT_MSG(it != mPoints.end(), "Attempted to remove absent point");
+	mPoints.erase(it);
+    BOOST_ASSERT(this->isSortedByTime());
 }
 
-void VSC::Envelope::addPoints(PointList& points) {
-	for (PointIterator it = _points.begin(); it != _points.end(); it++) {
-		addPoint(*it);
-	}
-    assert(isSortedByTime());
+void VSC::Envelope::addPoints(Points& points) {
+    
+    BOOST_FOREACH(EnvelopePoint::SPtr point, points)
+    {
+        this->addPoint(point);
+    }
+    BOOST_ASSERT(isSortedByTime());
 }
 
-void VSC::Envelope::removePoints(PointList& pnts) {
+void VSC::Envelope::removePoints(Points& points) {
 	//std::cout << "In removePoints";
-	if (pnts.size() == 0) {
+	if (points.size() == 0)
+    {
 		//std::cout << ", no points to remove\n";
 	}
-	for (PointIterator it = pnts.begin(); it != pnts.end(); it++) {
-		this->removePoint(*it);
+	BOOST_FOREACH(EnvelopePoint::SPtr point, points)
+    {
+		this->removePoint(point);
 	}
-    this->sortPointsByTime();
-    //assert(isSortedByTime());
+    BOOST_ASSERT(this->isSortedByTime());
 }
 
 void VSC::Envelope::removePointsInTimeRange(TimeRange range){
-	PointList l;
-    std::cout << "Removing points in time range " << range.origin << " - " << range.size << std::endl;
-	this->getPointsInTimeRange(l, range);
+	Points points = this->getPointsInTimeRange(range);
+    //std::cout << "Removing points in time range " << range.origin << " - " << range.size << std::endl;
 	this->removePoints(l);
-    assert(isSortedByTime());
+    BOOST_ASSERT(this->isSortedByTime());
 }
 
 void VSC::Envelope::removeAllPoints(void) {
-	_points.clear();
+	mPoints.clear();
 }
 
 #pragma mark - Change Notification
 
-void VSC::Envelope::envelopeChangedBetweenEnvelopePoints(ConstPointIterator begin, ConstPointIterator end) {
+void VSC::Envelope::envelopeChangedBetweenEnvelopePoints(Points::iterator begin, Points::iterator end)
+{
     std::cout << "In Envelope envelopeChangedBetweenEnvelopePoints " << **begin << " " << **end;
 }
 
 /*
  *	Envelope changes calls (mostly for subclasses to update cache tables)
  */
-void VSC::Envelope::envelopeChangedBetweenEnvelopePoints(EnvelopePoint::SPtr begin, EnvelopePoint::SPtr end) {
+void VSC::Envelope::envelopeChangedBetweenEnvelopePoints(EnvelopePoint::SPtr begin, EnvelopePoint::SPtr end)
+{
 	std::cout << "In Envelope envelopeChangedBetweenEnvelopePoints " << *begin << " " << *end;
 }
 
-void VSC::Envelope::envelopeChangedBetweenEnvelopePointAndNext(EnvelopePoint::SPtr point) {
+void VSC::Envelope::envelopeChangedBetweenEnvelopePointAndNext(EnvelopePoint::SPtr point)
+{
 	std::cout << "In Envelope envelopeChangedBetweenEnvelopePointAndNext " << *point;
 }
 
@@ -331,25 +300,11 @@ void VSC::Envelope::envelopeChanged(void) {
 
 #pragma mark - Point Getters
 
-VSC::Envelope::PointIterator VSC::Envelope::getPointBeginIterator(void) {
-	return _points.begin();
-}
-
-VSC::Envelope::PointIterator VSC::Envelope::getPointEndIterator(void) {
-	return _points.end();
-}
-
-VSC::Envelope::ConstPointIterator VSC::Envelope::getPointBeginConstIterator(void) const {
-	return _points.begin();
-}
-
-VSC::Envelope::ConstPointIterator VSC::Envelope::getPointEndConstIterator(void) const {
-	return _points.end();
-}
 
 /* get points */
 
-VSC::EnvelopePoint::SPtr VSC::Envelope::getPointClosestToTime(Float time) const {
+VSC::EnvelopePoint::SPtr VSC::Envelope::getPointClosestToTime(Float time) const
+{
 	
 	EnvelopePoint::SPtr closestPointBefore = this->getFirstPointBeforeTime(time);
     EnvelopePoint::SPtr closestPointAfter = this->getFirstPointAfterTime(time);
@@ -367,12 +322,13 @@ VSC::EnvelopePoint::SPtr VSC::Envelope::getPointClosestToTime(Float time) const 
 	
 }
 
-VSC::EnvelopePoint::SPtr VSC::Envelope::getFirstPointAfterTime(Float time) const {
+VSC::EnvelopePoint::SPtr VSC::Envelope::getFirstPointAfterTime(Float time) const
+{
 	
-	if (_points.size() == 0) 
+	if (mPoints.size() == 0) 
 		return EnvelopePoint::SPtr();
 	
-	for (ConstPointIterator it = _points.begin(); it != _points.end(); it++) {
+	for (ConstPointIterator it = mPoints.begin(); it != mPoints.end(); it++) {
 		if ((*it)->getTime() > time) {
 			return (*it);
 		}
@@ -382,13 +338,15 @@ VSC::EnvelopePoint::SPtr VSC::Envelope::getFirstPointAfterTime(Float time) const
 	
 }
 
-VSC::EnvelopePoint::SPtr VSC::Envelope::getFirstPointBeforeTime(Float time) const {
+VSC::EnvelopePoint::SPtr VSC::Envelope::getFirstPointBeforeTime(Float time) const
+{
 
-	if (_points.size() == 0) 
-		return EnvelopePoint::SPtr();
+	if (mPoints.size() == 0) return EnvelopePoint::SPtr();
 	
-	for (ConstReversePointIterator it = _points.rbegin(); it != _points.rend(); it++) {
-		if ((*it)->getTime() < time) {
+	for (Points::reverse_iterator it = mPoints.rbegin(); it != mPoints.rend(); it++)
+    {
+		if ((*it)->getTime() < time)
+        {
 			return (*it);
 		}
 	}
@@ -397,22 +355,27 @@ VSC::EnvelopePoint::SPtr VSC::Envelope::getFirstPointBeforeTime(Float time) cons
 	
 }
 
-void VSC::Envelope::getPointsInTimeRange(PointList& l, TimeRange range) const {
+void VSC::Envelope::getPointsInTimeRange(const TimeRange& range) const {
 	
-	for (ConstPointIterator it = _points.begin(); it != _points.end(); it++) {
-		if ((*it)->getTime() > range.origin && (*it)->getTime() < range.origin+ range.size) {
-			l.push_back(*it);
+    Points points;
+    
+	BOOST_FOREACH(EnvelopePoint:SPtr point, mPoints)
+    {
+		if (point->getTime() > range.origin && point->getTime() < range.origin + range.size)
+        {
+			points.push_back(point);
 		}
 	}
-
+    
+    return points;
 }
 
 const VSC::Envelope::PointList& VSC::Envelope::getPoints(void) const {
-    return _points;
+    return mPoints;
 }
 
 int VSC::Envelope::numberOfPoints(void) const {
-	return (int)_points.size();
+	return (int)mPoints.size();
 }
 
 #pragma mark - Point Displacement 
@@ -423,50 +386,50 @@ bool VSC::Envelope::canDisplacePoint(EnvelopePoint::SPtr point, Float deltaTime,
     /*
      *  Check allowed time and value limits 
      */
-    if (deltaTime > 0 && point->getTime() + deltaTime > _allowedTimeRange.origin + _allowedTimeRange.size) {
+    if (deltaTime > 0 && point->getTime() + deltaTime > mAllowedTimeRange.origin + mAllowedTimeRange.size) {
         std::cout << "Cannot move point " << *point << " by time " << deltaTime  << "allowed range ( ";
-        std::cout << _allowedTimeRange.origin << " " << _allowedTimeRange.origin + _allowedTimeRange.size << ")" << std::endl; 
+        std::cout << mAllowedTimeRange.origin << " " << mAllowedTimeRange.origin + mAllowedTimeRange.size << ")" << std::endl; 
         return false;
     }
-    if (deltaTime < 0 && point->getTime() + deltaTime < _allowedTimeRange.origin)  {
+    if (deltaTime < 0 && point->getTime() + deltaTime < mAllowedTimeRange.origin)  {
         std::cout << "Cannot move point " << *point << " by time " << deltaTime  << "allowed range ( ";
-        std::cout << _allowedTimeRange.origin << " " << _allowedTimeRange.origin + _allowedTimeRange.size << ")" << std::endl; 
+        std::cout << mAllowedTimeRange.origin << " " << mAllowedTimeRange.origin + mAllowedTimeRange.size << ")" << std::endl; 
         return false;
     }
-    if (deltaValue > 0 && point->getValue() + deltaValue > _allowedValueRange.origin + _allowedValueRange.size) {
+    if (deltaValue > 0 && point->getValue() + deltaValue > mAllowedValueRange.origin + mAllowedValueRange.size) {
         std::cout << "Cannot move point " << *point << " by value " << deltaValue  << "allowed range ( ";
-        std::cout << _allowedValueRange.origin << " " << _allowedValueRange.origin + _allowedValueRange.size << ")" << std::endl; 
+        std::cout << mAllowedValueRange.origin << " " << mAllowedValueRange.origin + mAllowedValueRange.size << ")" << std::endl; 
         return false;
     }
-    if (deltaValue < 0 && point->getValue() + deltaValue < _allowedValueRange.origin) {
+    if (deltaValue < 0 && point->getValue() + deltaValue < mAllowedValueRange.origin) {
         std::cout << "Cannot move point " << *point << " by value " << deltaValue  << "allowed range ( ";
-        std::cout << _allowedValueRange.origin << " " << _allowedValueRange.origin + _allowedValueRange.size << ")" << std::endl;
+        std::cout << mAllowedValueRange.origin << " " << mAllowedValueRange.origin + mAllowedValueRange.size << ")" << std::endl;
         return false;
     }
     /*
      *  Check point collision according to resolution method
      */
-    if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionNone) return true;
-    if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionMix) return true;
+    if (mPointDisplacementConflictResolution == PointDisplacementConflictResolutionNone) return true;
+    if (mPointDisplacementConflictResolution == PointDisplacementConflictResolutionMix) return true;
     
-    if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionClear) {
+    if (mPointDisplacementConflictResolution == PointDisplacementConflictResolutionClear) {
         
         throw VSCNotImplementedException();
         
     }
     
-    if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionBlock) {
+    if (mPointDisplacementConflictResolution == PointDisplacementConflictResolutionBlock) {
         
         throw VSCNotImplementedException();
         
         /*
         
-        PointIterator pointIt = std::find(_points.begin(), _points.end(), point);
-        if (pointIt == _points.end()) {
+        PointIterator pointIt = std::find(mPoints.begin(), mPoints.end(), point);
+        if (pointIt == mPoints.end()) {
             throw VSCSInvalidArgumentException();
         }
         
-        if (pointIt == _points.begin()) {
+        if (pointIt == mPoints.begin()) {
             PointIterator nextIt = pointIt;
             nextIt++;
         }
@@ -478,26 +441,26 @@ bool VSC::Envelope::canDisplacePoint(EnvelopePoint::SPtr point, Float deltaTime,
     
 }
 
-// this iterator must be an iterator into _points
+// this iterator must be an iterator into mPoints
 bool VSC::Envelope::displacePoint(PointIterator pointIt, Float deltaTime, Float deltaValue) {
 	
     EnvelopePoint::SPtr point = *pointIt;
     
 #ifdef VSC_DEBUG
-    PointIterator selfPointIt = std::find(_points.begin(), _points.end(), point);
-    assert(selfPointIt != _points.end());
+    PointIterator selfPointIt = std::find(mPoints.begin(), mPoints.end(), point);
+    assert(selfPointIt != mPoints.end());
 #endif
     
     if (this->canDisplacePoint(point, deltaTime, deltaValue)) 
     {
         
-        if (_pointDisplacementConflictResolution == PointDisplacementConflictResolutionClear) 
+        if (mPointDisplacementConflictResolution == PointDisplacementConflictResolutionClear) 
         {
             if (deltaTime > 0) {
-                //this->removePointsInTimeRange(TimeRange(point->getTime(), deltaTime + _minimumTimeStep));
+                //this->removePointsInTimeRange(TimeRange(point->getTime(), deltaTime + mMinimumTimeStep));
             }
             if (deltaTime < 0) {
-                //this->removePointsInTimeRange(TimeRange(point->getTime() + deltaTime - _minimumTimeStep, - deltaTime + _minimumTimeStep));
+                //this->removePointsInTimeRange(TimeRange(point->getTime() + deltaTime - mMinimumTimeStep, - deltaTime + mMinimumTimeStep));
             }
         }
         
@@ -511,13 +474,13 @@ bool VSC::Envelope::displacePoint(PointIterator pointIt, Float deltaTime, Float 
 }
 
 bool VSC::Envelope::displacePoint(EnvelopePoint::SPtr point, Float deltaTime, Float deltaValue) {
-	PointIterator pointIt = std::find(_points.begin(), _points.end(), point);
+	PointIterator pointIt = std::find(mPoints.begin(), mPoints.end(), point);
     return this->displacePoint(pointIt, deltaTime, deltaValue);
 }
 
 bool VSC::Envelope::displacePoints(PointList& pts, Float deltaTime, Float deltaValue) {
 	
-    // the list is most likely not the same as _points so we can't just use it with displacePoints which requires
+    // the list is most likely not the same as mPoints so we can't just use it with displacePoints which requires
     // the iterator to be so.
     
     // first we need to check that all the points CAN be displaced
@@ -561,7 +524,7 @@ VSC::Float VSC::Envelope::duration(void) const {
 	/* 
 	 * Get last pointand return its time value
 	 */
-	ConstReversePointIterator rit = _points.rbegin();  
+	ConstReversePointIterator rit = mPoints.rbegin();  
 	
 	return (*rit)->getTime();
 	
@@ -598,7 +561,7 @@ VSC::Float VSC::Envelope::getValueAtTime(Float time) const {
 /* sorting */
 
 void VSC::Envelope::sortPointsByTime(void) {
-	_points.sort(compareEnvelopePointTimes);
+	mPoints.sort(compareEnvelopePointTimes);
 }
 
 #pragma mark - Envelope Extremes
@@ -606,31 +569,31 @@ void VSC::Envelope::sortPointsByTime(void) {
 /* extremes */
 VSC::Float VSC::Envelope::minTime(void) const {
     assert(isSortedByTime());
-    if (_points.size() == 0) throw EnvelopeEmptyException();
-    return (*(_points.begin()))->getTime();
+    if (mPoints.size() == 0) throw EnvelopeEmptyException();
+    return (*(mPoints.begin()))->getTime();
 }
 
 VSC::Float VSC::Envelope::maxTime(void) const {
     assert(isSortedByTime());
-    if (_points.size() == 0) throw EnvelopeEmptyException();
-    ConstPointIterator endIter = _points.end();
+    if (mPoints.size() == 0) throw EnvelopeEmptyException();
+    ConstPointIterator endIter = mPoints.end();
     endIter--;
     return (*endIter)->getTime();
 }
 
 VSC::Float VSC::Envelope::minValue(void) const {
-    if (_points.size() == 0) throw EnvelopeEmptyException();
+    if (mPoints.size() == 0) throw EnvelopeEmptyException();
     Float minValue = std::numeric_limits<Float>::max();
-    for (ConstPointIterator it = _points.begin(); it != _points.end(); it++) {
+    for (ConstPointIterator it = mPoints.begin(); it != mPoints.end(); it++) {
         if ((*it)->getValue() < minValue) minValue = (*it)->getValue();
     }
     return minValue;
 }
 
 Float VSC::Envelope::maxValue(void) const {
-    if (_points.size() == 0) throw EnvelopeEmptyException();
+    if (mPoints.size() == 0) throw EnvelopeEmptyException();
     Float maxValue = std::numeric_limits<Float>::min();
-    for (ConstPointIterator it = _points.begin(); it != _points.end(); it++) {
+    for (ConstPointIterator it = mPoints.begin(); it != mPoints.end(); it++) {
         if ((*it)->getValue() > maxValue) maxValue = (*it)->getValue();
     }
     return maxValue;

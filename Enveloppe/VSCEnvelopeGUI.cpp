@@ -62,8 +62,8 @@ VSC::EnvelopeEditorGUIConfig::EnvelopeEditorGUIConfig(void) {
 void VSC::EnvelopeEditorGUIConfig::setToDefault(void) {
     _timeRange = Envelope::TimeRange(0.0,5.0);
     _valueRange = Envelope::ValueRange(0.0,1.0);
-    _allowedTimeRange = Envelope::TimeRange(0.0,5.0);
-    _allowedValueRange = Envelope::ValueRange(0.0,1.0);
+    mAllowedTimeRange = Envelope::TimeRange(0.0,5.0);
+    mAllowedValueRange = Envelope::ValueRange(0.0,1.0);
 }
 
 
@@ -103,19 +103,19 @@ void VSC::EnvelopeEditorGUIConfig::setValueRange(const Envelope::ValueRange& val
  */
 
 const VSC::Envelope::TimeRange& VSC::EnvelopeEditorGUIConfig::getAllowedTimeRange(void) const {
-    return _allowedTimeRange;
+    return mAllowedTimeRange;
 }
 
 void VSC::EnvelopeEditorGUIConfig::setAllowedTimeRange(const Envelope::TimeRange& timeRange) {
-    _allowedTimeRange = timeRange;
+    mAllowedTimeRange = timeRange;
 }
 
 const VSC::Envelope::ValueRange& VSC::EnvelopeEditorGUIConfig::getAllowedValueRange(void) const {
-    return _allowedValueRange;
+    return mAllowedValueRange;
 }
 
 void VSC::EnvelopeEditorGUIConfig::setAllowedValueRange(const Envelope::ValueRange& valueRange) {
-    _allowedValueRange = valueRange;
+    mAllowedValueRange = valueRange;
 }
 
 Float VSC::EnvelopeEditorGUIConfig::getPointSelectionRadius(void) const {
