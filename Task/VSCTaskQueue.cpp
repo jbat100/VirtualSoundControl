@@ -374,6 +374,7 @@ void VSC::TaskQueue::stepExecution()
 void VSC::TaskQueue::requestStop(bool stop)
 {
     boost::lock_guard<boost::mutex> lock(mRequestStopMutex);
+    if (mTraceExecution) std::cout << "VSC::TaskQueue::requestStop" << stop << std::endl;
     mStopRequested = stop;
     mTaskCondition.notify_one();
 }
@@ -381,7 +382,7 @@ void VSC::TaskQueue::requestStop(bool stop)
 bool VSC::TaskQueue::stopRequested()
 {
     boost::lock_guard<boost::mutex> lock(mRequestStopMutex);
-    if (mTraceExecution) std::cout << "VSC::TaskQueue::stopRequested" << std::endl;
+    //if (mTraceExecution) std::cout << "VSC::TaskQueue::stopRequested" << std::endl;
     bool s = mStopRequested;
     return s;
 }

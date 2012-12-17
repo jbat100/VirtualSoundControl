@@ -7,6 +7,12 @@
 //
 
 #import "VSCIMOSXDelayView.h"
+#import "VSCIMOSXCollisionEventChainController.h"
+
+#include "VSC.h"
+#include "VSCIMDelay.h"
+
+#include <boost/assert.hpp>
 
 @interface VSCIMOSXDelayView ()
 
@@ -38,7 +44,8 @@
 -(id) initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
-    if (self) {
+    if (self)
+    {
         [self commonInit];
     }
     return self;
@@ -46,7 +53,7 @@
 
 -(void) commonInit
 {
-    //self.translatesAutoresizingMaskIntoConstraints = NO;
+    self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -63,9 +70,49 @@
     [(NSNumberFormatter*)[self.delayTextField formatter] setThousandSeparator:@""];
 }
 
+#pragma mark - Custom Setters
+
+-(void) setDelay:(VSC::IM::Delay::WPtr)delay
+{
+    if (delay.lock() != _delay.lock())
+    {
+        _delay = delay;
+        [self reloadInterface];
+    }
+}
+
+#pragma mark - UI Helpers
+
+-(void) reloadInterface
+{
+    VSC::IM::Delay::SPtr d = self.delay.lock();
+    if (d)
+    {
+        VSC::TimeDuration duration = d->getDelay();
+        double milliseconds = (double)duration.total_milliseconds();
+        double seconds = milliseconds/1000.0;
+        [self.delayTextField setDoubleValue:seconds];
+    }
+    else
+    {
+        [self.delayTextField setStringValue:@"-- EMPTY --"];
+    }
+}
+
+#pragma mark - UI Callbacks
+
 -(IBAction) delayChanged:(id)sender
 {
+    BOOST_ASSERT(self.eventChainController);
+    BOOST_ASSERT([self.eventChainController respondsToSelector:@selector(sender:requestsSetDelay:toInterval:)]);
     
+    if ([self.eventChainController respondsToSelector:@selector(sender:requestsSetDelay:toInterval:)])
+    {
+        BOOST_ASSERT(self.delayTextField);
+        BOOST_ASSERT(self.delayTextField == sender);
+        NSTimeInterval delayInterval = (NSTimeInterval)[self.delayTextField doubleValue];
+        [self.eventChainController sender:self requestsSetDelay:self.delay.lock() toInterval:delayInterval];
+    }
 }
 
 @end

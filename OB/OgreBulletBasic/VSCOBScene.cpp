@@ -68,6 +68,104 @@ void VSC::OB::Scene::Element::destroy()
 
 }
 
+bool VSC::OB::Scene::Element::isImmobilized(void)
+{
+    /*
+     *  Checks, defensive programming
+     */
+    
+    if (!mImmobilized)
+    {
+        BOOST_ASSERT(mRigidBody);
+        if (mRigidBody)
+        {
+            btRigidBody* bulletRigidBody = mRigidBody->getBulletRigidBody();
+            BOOST_ASSERT(bulletRigidBody);
+            if (bulletRigidBody)
+            {
+                BOOST_ASSERT((~bulletRigidBody->getCollisionFlags()) & btCollisionObject::CF_KINEMATIC_OBJECT);
+                //BOOST_ASSERT(bulletRigidBody->getActivationState() == ACTIVE_TAG);
+            }
+        }
+    }
+    else
+    {
+        BOOST_ASSERT(mRigidBody);
+        if (mRigidBody)
+        {
+            btRigidBody* bulletRigidBody = mRigidBody->getBulletRigidBody();
+            BOOST_ASSERT(bulletRigidBody);
+            if (bulletRigidBody)
+            {
+                BOOST_ASSERT(bulletRigidBody->getCollisionFlags() & btCollisionObject::CF_KINEMATIC_OBJECT);
+                //BOOST_ASSERT(bulletRigidBody->getActivationState() == DISABLE_DEACTIVATION);
+            }
+        }
+    }
+    
+    return mImmobilized;
+}
+
+void VSC::OB::Scene::Element::setImmobilized(bool immobilized)
+{
+    if (immobilized == mImmobilized) return;
+    
+    mImmobilized = immobilized;
+    
+    BOOST_ASSERT(mRigidBody);
+    if (mRigidBody)
+    {
+        btRigidBody* bulletRigidBody = mRigidBody->getBulletRigidBody();
+        BOOST_ASSERT(bulletRigidBody);
+        if (bulletRigidBody)
+        {
+            if (mImmobilized)
+            {
+                bulletRigidBody->setCollisionFlags( bulletRigidBody->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+                bulletRigidBody->setCollisionFlags( bulletRigidBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+                bulletRigidBody->setMassProps(0.0, btVector3(0.0, 0.0, 0.0));
+            }
+            else
+            {
+                bulletRigidBody->setCollisionFlags( bulletRigidBody->getCollisionFlags() & (~btCollisionObject::CF_KINEMATIC_OBJECT));
+                bulletRigidBody->setCollisionFlags( bulletRigidBody->getCollisionFlags() & (~btCollisionObject::CF_KINEMATIC_OBJECT));
+                bulletRigidBody->setMassProps(mMass, btVector3(0.0, 0.0, 0.0));
+            }
+        }
+    }
+    
+}
+
+void VSC::OB::Scene::Element::setMass(Float mass)
+{
+    BOOST_ASSERT(mass > 0);
+    
+    if (mass == 0.0)
+    {
+        this->setImmobilized(true);
+    }
+    else if (mass > 0.0)
+    {
+        BOOST_ASSERT(mRigidBody);
+        if (mRigidBody)
+        {
+            btRigidBody* bulletRigidBody = mRigidBody->getBulletRigidBody();
+            BOOST_ASSERT(bulletRigidBody);
+            if (bulletRigidBody)
+            {
+                bulletRigidBody->setMassProps(mMass, btVector3(0.0, 0.0, 0.0));
+            }
+        }
+        
+        mMass = mass;
+    }
+}
+
+VSC::Float VSC::OB::Scene::Element::getMass(void)
+{
+    return mMass;
+}
+
 //MARK: - Scene Element Factory
 
 //MARK: - Scene Collision 

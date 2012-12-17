@@ -27,4 +27,6 @@
 -(void) showElementDetailView;
 -(void) showElementCollisionView;
 
+-(IBAction) immobilized:(id)sender;
+
 @end

@@ -208,7 +208,20 @@ const static BOOL traceInterface = YES;
 
 -(void) sender:(id)sender requestsSetDelay:(VSC::IM::Delay::SPtr)delay toInterval:(NSTimeInterval)delayInterval
 {
-    BOOST_ASSERT_MSG(NO, "NOT IMPLEMENTED");
+    BOOST_ASSERT(delay);
+    if (delay)
+    {
+        VSC::TimeDuration duration = boost::posix_time::milliseconds(delayInterval*1000.0);
+        delay->setDelay(duration);
+        
+        BOOST_ASSERT(sender);
+        BOOST_ASSERT([sender isKindOfClass:[VSCIMOSXDelayView class]]);
+        
+        if ([sender isKindOfClass:[VSCIMOSXDelayView class]])
+        {
+            [(VSCIMOSXDelayView*)sender reloadInterface];
+        }
+    }
 }
 
 -(void) senderRequestsEventChainView:(id)sender
@@ -224,7 +237,6 @@ const static BOOL traceInterface = YES;
 
 +(VSCIMOSXCollisionActionView*) newCollisionActionViewWithOwner:(id)owner
 {
-    
     static NSNib* nib = nil;
     static NSString* identifier = [[VSCIMOSXCollisionActionView class] description];
     
@@ -330,8 +342,8 @@ const static BOOL traceInterface = YES;
             VSCIMOSXDelayView* delayView = [tableView makeViewWithIdentifier:[[VSCIMOSXDelayView class] description] owner:self];
             if (delayView) BOOST_ASSERT([delayView isKindOfClass:[VSCIMOSXDelayView class]]);
             else delayView = [[self class] newDelayViewWithOwner:self];
-            [delayView setDelay:VSC::IM::Delay::WPtr(delay)];
             delayView.eventChainController = self;
+            [delayView setDelay:VSC::IM::Delay::WPtr(delay)];
             if (traceInterface) NSLog(@"Returning: %@ with frame: %@", delayView, NSStringFromRect(delayView.frame));
             return delayView;
         }

@@ -20,4 +20,6 @@
 
 @property (assign) IBOutlet id<VSCIMOSXCollisionEventChainController> eventChainController;
 
+-(void) reloadInterface;
+
 @end

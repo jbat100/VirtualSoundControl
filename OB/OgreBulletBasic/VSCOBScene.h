@@ -97,7 +97,7 @@ namespace VSC {
                 typedef boost::weak_ptr<Element>      WPtr;   // Weak pointers are used everywhere else
                 
                 Element(Scene::WPtr scene, OgreBulletDynamics::RigidBody* rigidBody) :
-                mScene(scene), mRigidBody(rigidBody), mSilentCollisions(false) {}
+                mScene(scene), mRigidBody(rigidBody), mSilentCollisions(false), mImmobilized(false) {}
                 
                 virtual ~Element() { destroy(); }
                 
@@ -106,14 +106,20 @@ namespace VSC {
                  *  deliberate design decision.
                  */
                 
-                Scene::SPtr                             getScene(void) const {return mScene.lock();};
-                OgreBulletDynamics::RigidBody*          getRigidBody(void) const {return mRigidBody;}
+                Scene::SPtr getScene(void) const {return mScene.lock();};
+                OgreBulletDynamics::RigidBody* getRigidBody(void) const {return mRigidBody;}
                 
-                bool                                    silentCollisions() const {return mSilentCollisions;}
-                void                                    setSilentCollisions(bool silent) {mSilentCollisions = silent;}
+                bool silentCollisions() const {return mSilentCollisions;}
+                void setSilentCollisions(bool silent) {mSilentCollisions = silent;}
                 
-                std::string                             getName(void) const  {return mName;}
-                int                                     getIdentifier(void) const {return mIdentifier;}
+                std::string getName(void) const  {return mName;}
+                int getIdentifier(void) const {return mIdentifier;}
+                
+                bool isImmobilized(void);
+                void setImmobilized(bool immobilized);
+                
+                void setMass(Float mass);
+                Float getMass(void);
                 
             protected:
                 
@@ -123,10 +129,10 @@ namespace VSC {
                  *  which removes the rigid body from the OgreBulletDynamics::World.
                  */
                 
-                virtual void                            destroy(void);
+                virtual void destroy(void);
                 
-                void                                    setName(std::string n) {mName = n;}
-                void                                    setIdentifier(int i) {mIdentifier = i;}
+                void setName(std::string n) {mName = n;}
+                void setIdentifier(int i) {mIdentifier = i;}
                 
                 
             private:
@@ -134,6 +140,8 @@ namespace VSC {
                 Scene::WPtr                             mScene;
                 OgreBulletDynamics::RigidBody*          mRigidBody;
                 bool                                    mSilentCollisions;
+                bool                                    mImmobilized;
+                Float                                   mMass;
                 
                 std::string                             mName;
                 int                                     mIdentifier;

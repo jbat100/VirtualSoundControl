@@ -27,9 +27,13 @@
 @property (weak) IBOutlet NSTextField* yRotTextField;
 @property (weak) IBOutlet NSTextField* zRotTextField;
 
--(void) reloadWholeInterface;
+@property (weak) IBOutlet NSButton* immobilizedCheckBox;
 
+-(IBAction) immobilized:(id)sender;
+
+-(void) reloadWholeInterface;
 -(void) reloadPositionInterface;
 -(void) reloadPositionInterface:(BOOL)critical;
+-(void) reloadImmobilizedInterface;
 
 @end

@@ -176,6 +176,31 @@ const static BOOL traceInterface = YES;
     
 }
 
+#pragma mark - UI Callbacks
+
+-(IBAction) immobilized:(id)sender
+{
+    BOOST_ASSERT(sender);
+    BOOST_ASSERT(sender == self.elementDetailView.immobilizedCheckBox);
+    
+    if (sender && sender == self.elementDetailView.immobilizedCheckBox)
+    {
+        VSC::OB::Scene::Element::SPtr elem = self.element.lock();
+        BOOST_ASSERT(elem);
+        if (elem)
+        {
+            if ([self.elementDetailView.immobilizedCheckBox state] == NSOnState)
+            {
+                elem->setImmobilized(true);
+            }
+            else
+            {
+                elem->setImmobilized(false);
+            }
+        }
+    }
+}
+
 #pragma mark - UI Helpers
 
 -(void) setupTabBar

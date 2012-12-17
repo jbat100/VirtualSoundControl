@@ -102,7 +102,7 @@
 -(void) reloadWholeInterface
 {
     [self reloadNameInterface];
-    
+    [self reloadImmobilizedInterface];
     [self reloadPositionInterface:YES];
 }
 
@@ -128,6 +128,29 @@
     
     [self.nameTextField setStringValue:@"No Element"];
     [self.idTextField setStringValue:@"id: None"];
+}
+
+-(void) reloadImmobilizedInterface
+{
+    BOOST_ASSERT(self.elementController);
+    
+    if (self.elementController)
+    {
+        VSC::OB::Scene::Element::SPtr element = self.elementController.element.lock();
+        
+        if (element)
+        {
+            bool immobilized = element->isImmobilized();
+            if (immobilized)
+            {
+                self.immobilizedCheckBox.state = NSOnState;
+            }
+            else
+            {
+                self.immobilizedCheckBox.state = NSOffState;
+            }
+        }
+    }
 }
 
 -(void) reloadPositionInterface
@@ -199,6 +222,9 @@
     
     self.lastUpdateDate = [NSDate date];
 }
+
+#pragma mark - UI Callbacks
+
 
 #pragma mark - NSTextFieldDelegate
 
