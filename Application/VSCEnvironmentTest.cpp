@@ -46,7 +46,7 @@ void VSC::EnvironmentTest::internalSetupForEnvironment(Environment::SPtr environ
         description1.size = Ogre::Vector3(1.0, 1.0, 1.0);
         description1.position = Ogre::Vector3(0.0, 1.0, 0.0);
         element1 = elementFactory->addPrimitive(OB::PrimitiveCube, description1);
-        element1->setImmobilized(true);
+        //element1->setImmobilized(true);
         BOOST_ASSERT(element1);
         
         OB::DynamicObject::FactoryDescription description2;

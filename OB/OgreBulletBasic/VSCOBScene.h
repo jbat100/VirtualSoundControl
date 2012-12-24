@@ -173,6 +173,8 @@ namespace VSC {
                 
             protected:
                 
+                void setElementMass(Element::SPtr element, Float mass);
+                
                 
             private:
                 

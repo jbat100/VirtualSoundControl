@@ -12,6 +12,8 @@
 #import "VSCOSXOBSceneElementListView.h"
 #import "VSCOSXOBSceneElementView.h"
 
+#include "VSCOBSceneController.h"
+
 @interface VSCOSXOBSceneController ()
 
 @end
@@ -26,6 +28,8 @@ static const BOOL traceInterface = YES;
 @synthesize elementListView = _elementListView;
 @synthesize sceneView = _sceneView;
 @synthesize sceneDetailView = _sceneDetailView;
+
+@synthesize shootSpeed = _shootSpeed;
 
 -(id) init {
     
@@ -87,6 +91,20 @@ static const BOOL traceInterface = YES;
     bool value = ([(NSButton*)sender state] == NSOnState) ? true : false;
     s->setSetting(setting, value);
     
+}
+
+-(IBAction)shootSpeedSliderAction:(id)sender
+{
+    BOOST_ASSERT(sender == self.sceneDetailView.shootSpeedSlider);
+    if (sender == self.sceneDetailView.shootSpeedSlider)
+    {
+        VSC::Float value = [self.sceneDetailView.shootSpeedSlider doubleValue];
+        BOOST_ASSERT(self.sceneView.internalSceneController);
+        if (self.sceneView.internalSceneController)
+        {
+            //self.sceneView.internalSceneController->setShootSpeed(value);
+        }
+    }
 }
 
 #pragma mark - VSCOBOSXSceneListenerTarget Methods

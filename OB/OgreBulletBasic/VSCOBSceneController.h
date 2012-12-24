@@ -2,6 +2,7 @@
 #ifndef _VSC_OGRE_BULLET_SCENE_CONTROLLER_H_
 #define _VSC_OGRE_BULLET_SCENE_CONTROLLER_H_
 
+#include "VSC.h"
 #include "VSCOB.h"
 #include "VSCOBInterface.h"
 #include "VSCOBKeyBindings.h"
@@ -77,11 +78,11 @@ namespace VSC {
              *  Actions Setter/Getter
              */
             
-            float getShootSpeed(void);
-            void setShootSpeed(float speed);
+            Float getShootSpeed(void);
+            void setShootSpeed(Float speed);
             
-            float getImpulseForce(void);
-            void setImplulseForce(float force);
+            Float getImpulseForce(void);
+            void setImplulseForce(Float force);
             
             /**--------------------------------------------------------------
              *  Utilities
@@ -124,8 +125,8 @@ namespace VSC {
             OgreBulletCollisions::CollisionClosestRayResultCallback     *mCollisionClosestRayResultCallback;
             Ogre::RaySceneQuery                                         *mRayQuery;
             
-            float mShootSpeed;
-            float mImpulseForce;
+            Float mShootSpeed;
+            Float mImpulseForce;
             
             const static bool mTraceUI = false;
             const static bool mTraceFrame = false;

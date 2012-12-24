@@ -35,8 +35,11 @@
 
 @property (weak) IBOutlet NSButton *profileTimingsCheckBox;
 
+@property (weak) IBOutlet NSSlider *shootSpeedSlider;
+
 -(void) reloadInterface;
 -(void) reloadSetting:(VSC::OB::Scene::Setting)setting;
+-(void) reloadShootSpeed;
 
 @property (nonatomic, strong, readonly) NSArray* allCheckBoxes;
 -(VSC::OB::Scene::Setting) settingForCheckBox:(id)checkBox;

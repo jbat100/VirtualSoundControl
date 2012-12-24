@@ -53,12 +53,12 @@ static const Ogre::ColourValue g_minLightColour(0.2, 0.1, 0.0);
 static const Ogre::ColourValue g_maxLightColour(0.5, 0.3, 0.1);
 // -------------------------------------------------------------------------
 
-static const float             gStaticBodyRestitution  = 0.1f;
-static const float             gStaticBodyFriction     = 0.8f;
+static const VSC::Float        gStaticBodyRestitution  = 0.1f;
+static const VSC::Float        gStaticBodyFriction     = 0.8f;
 
-static const float             gDynamicBodyRestitution = 0.6f;
-static const float             gDynamicBodyFriction    = 0.6f;
-static const float             gDynamicBodyMass        = 1.0f;
+static const VSC::Float        gDynamicBodyRestitution = 0.6f;
+static const VSC::Float        gDynamicBodyFriction    = 0.6f;
+static const VSC::Float        gDynamicBodyMass        = 1.0f;
 
 static const Ogre::Vector3     gCubeBodyBounds      = Ogre::Vector3 (1, 1, 1);
 static const Ogre::Vector3     gCylinderBodyBounds  = Ogre::Vector3 (0.5, 1, 0.5); 
@@ -344,8 +344,8 @@ bool VSC::OB::SceneController::mouseMoved(Ogre::RenderWindow* renderWindow,
             }
             
             Ogre::Viewport* v = display->getCamera()->getViewport();
-            float normX = position.x / (float) v->getActualWidth();
-            float normY = 1.0 - (position.y / (float) v->getActualHeight());
+            Float normX = position.x / (Float) v->getActualWidth();
+            Float normY = 1.0 - (position.y / (Float) v->getActualHeight());
             
             Ogre::Ray rayTo = display->getCamera()->getCameraToViewportRay (normX, normY);
             
@@ -583,7 +583,7 @@ bool VSC::OB::SceneController::throwDynamicObjectPrimitive(Ogre::RenderWindow* r
     BOOST_ASSERT(renderWindow);
     if (!renderWindow) return false;
     
-    const float throwDist = 2.0f;
+    const Float throwDist = 2.0f;
     
     Scene::SPtr scene = this->getScene();
     BOOST_ASSERT(scene);

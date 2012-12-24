@@ -140,8 +140,18 @@
     {
         VSC::OB::Scene::Setting setting = [self settingForCheckBox:checkBox];
         if (setting != VSC::OB::Scene::SettingNone) [checkBox setState:[self stateForSceneSetting:setting]];
-        if (checkBox == self.pausePhysicsCheckBox && [self stateForSceneSetting:setting] == NSOnState)
-            NSLog(@"wooaaa");
+        if (checkBox == self.pausePhysicsCheckBox && [self stateForSceneSetting:setting] == NSOnState) NSLog(@"wooaaa");
+    }
+}
+
+-(void) reloadShootSpeed
+{
+    BOOST_ASSERT(self.sceneController);
+    if (self.sceneController)
+    {
+        VSC::Float speed = self.sceneController.shootSpeed;
+        [self.shootSpeedSlider setDoubleValue:speed];
+        
     }
 }
 

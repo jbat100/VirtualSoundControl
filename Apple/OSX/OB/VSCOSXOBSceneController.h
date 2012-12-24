@@ -10,6 +10,7 @@
 #import "VSCOSXEnvironmentController.h"
 #import "VSCOBOSXSceneListener.h"
 
+#include "VSC.h"
 #include "VSCOBScene.h"
 
 @class VSCOBOSXSceneDisplayView;
@@ -26,6 +27,8 @@
 @property (weak) IBOutlet VSCOBOSXSceneDisplayView* sceneView;
 @property (weak) IBOutlet VSCOSXOBSceneDetailView* sceneDetailView;
 
+@property (nonatomic, assign) VSC::Float shootSpeed;
+
 @end
 
 @interface VSCOSXOBSceneController : NSObject <VSCOSXOBSceneController>
@@ -34,5 +37,6 @@
 @property (assign) IBOutlet id<VSCOSXEnvironmentController> environmentController;
 
 -(IBAction)checkBoxAction:(id)sender;
+-(IBAction)shootSpeedSliderAction:(id)sender;
 
 @end

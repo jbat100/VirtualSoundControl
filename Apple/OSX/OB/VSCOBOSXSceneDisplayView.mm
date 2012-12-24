@@ -24,9 +24,6 @@
 
 @property (nonatomic, assign) VSC::OB::OSXInterfaceAdapter::SPtr inputAdapter;
 
-@property (nonatomic, assign) VSC::OB::SceneController::SPtr internalSceneController;
-@property (nonatomic, assign) VSC::OB::DisplayController::SPtr displayController;
-
 @end
 
 @implementation VSCOBOSXSceneDisplayView

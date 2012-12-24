@@ -13,6 +13,8 @@
 #include "VSCOBKeyBindings.h"
 #include "VSCOBDisplay.h"
 #include "VSCOBInterface.h"
+#include "VSCOBSceneController.h"
+#include "VSCOBDisplayController.h"
 
 @interface VSCOBOSXSceneDisplayView : OgreView
 
@@ -20,6 +22,9 @@
 @property (readonly, nonatomic, assign) VSC::OB::Display::WPtr display;
 
 @property (weak) IBOutlet id<VSCOSXOBSceneController> sceneController;
+
+@property (nonatomic, assign) VSC::OB::SceneController::SPtr internalSceneController;
+@property (nonatomic, assign) VSC::OB::DisplayController::SPtr displayController;
 
 // called by controller when the scene changes
 -(void) setupControllerChain;

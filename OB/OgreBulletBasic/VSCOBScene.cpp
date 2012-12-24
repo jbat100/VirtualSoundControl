@@ -168,6 +168,16 @@ VSC::Float VSC::OB::Scene::Element::getMass(void)
 
 //MARK: - Scene Element Factory
 
+void VSC::OB::Scene::ElementFactory::setElementMass(Element::SPtr element, Float mass)
+{
+    BOOST_ASSERT(element);
+    if (element)
+    {
+        element->setMass(mass);
+    }
+    
+}
+
 //MARK: - Scene Collision 
 
 void VSC::OB::Scene::Collision::invalidate()

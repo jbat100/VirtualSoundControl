@@ -121,10 +121,9 @@ VSC::OB::DynamicObject::SPtr VSC::OB::BasicSceneElementFactory::addPrimitive(Pri
     DynamicObject::SPtr object(new VSC::OB::DynamicObject(this->getScene(), entity, rigidBody));
     Scene::Element::SPtr element = boost::static_pointer_cast<Scene::Element>(object);
     
-    element->mMass = description.bodyMass;
+    //this->setElementMass(element, description.bodyMass);
     
     scene->registerElement(element, description.name, mNumberOfObjectsCreated);
-    //scene->registerElement(element, entityName, mNumberOfObjectsCreated);
     
     mNumberOfObjectsCreated++;
 

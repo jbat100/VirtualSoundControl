@@ -58,7 +58,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
     
     /*
      *  Refresh MIDI outputs and open them all

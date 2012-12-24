@@ -202,7 +202,7 @@ public:
  *	Envelope specific 
  */
 
-class VSC::EnvelopeEmptyException : public VSCBaseException
+class VSCEnvelopeEmptyException : public VSCBaseException
 {
     virtual const char* what() const throw()
     {
