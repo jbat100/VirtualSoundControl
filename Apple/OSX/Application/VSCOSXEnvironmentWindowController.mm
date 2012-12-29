@@ -45,8 +45,11 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 @property (weak) IBOutlet DMTabBar* tabBar;
 @property (weak) IBOutlet NSBox* tabBox;
 
+-(void) customInit;
 -(void) reloadSceneInterface;
 -(void) setupTabBar;
+
+-(void) setupTest;
 
 @end
 
@@ -70,9 +73,8 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     self = [super initWithWindow:window];
     if (self)
     {
-        // Initialization code here.
+        [self customInit];
     }
-    
     return self;
 }
 
@@ -81,10 +83,14 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     self = [super initWithWindowNibName:windowNibName];
     if (self)
     {
-        
+        [self customInit];
     }
-    
     return self;
+}
+
+-(void) customInit
+{
+    self.environmentTest = VSC::EnvironmentTest::SPtr(new VSC::EnvironmentTest);
 }
 
 -(void) dealoc
@@ -115,6 +121,8 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     BOOST_ASSERT(self.tabBox);
     
     [self setupTabBar];
+    
+    self.sceneController.shootSpeed = 10.0;
 }
 
 
@@ -322,6 +330,25 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     }
     
     return VSC::IM::CollisionEventChain::SPtr();
+}
+
+#pragma mark - Sensible tests
+
+-(IBAction)resetAction:(id)sender
+{
+    [self setupTest];
+}
+
+-(void)setupTest
+{
+    BOOST_ASSERT(self.environmentTest);
+    VSC::Environment::SPtr env = self.environment.lock();
+    BOOST_ASSERT(env);
+    
+    if (self.environmentTest && env)
+    {
+        self.environmentTest->setupTestForEnvironment(env);
+    }
 }
 
 #pragma mark - Stupid tests

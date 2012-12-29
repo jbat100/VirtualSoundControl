@@ -148,25 +148,21 @@ bool VSC::OB::DisplayController::keyReleased(Ogre::RenderWindow* renderWindow, O
                     
                 case VSC::OB::KeyboardAction::MoveCameraForward:
                     mCameraMovement = (CameraMovement)(mCameraMovement & (~CameraMovementForward));
-                    //mCameraTrans.z += mCameraSpeed;
                     //if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
                     break;
                     
                 case VSC::OB::KeyboardAction::MoveCameraBackward:
                     mCameraMovement = (CameraMovement)(mCameraMovement & (~CameraMovementBackward));
-                    //mCameraTrans.z -= mCameraSpeed;
                     //if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
                     break;
                     
                 case VSC::OB::KeyboardAction::MoveCameraLeft:
                     mCameraMovement = (CameraMovement)(mCameraMovement & (~CameraMovementLeft));
-                    //mCameraTrans.x += mCameraSpeed;
                     //if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
                     break;
                     
                 case VSC::OB::KeyboardAction::MoveCameraRight:
                     mCameraMovement = (CameraMovement)(mCameraMovement & (~CameraMovementRight));
-                    //mCameraTrans.x -= mCameraSpeed;
                     //if (mTraceUI) std::cout << "Camera transform is " << mCameraTrans << std::endl;
                     break;
                     

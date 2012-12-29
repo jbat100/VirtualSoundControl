@@ -42,7 +42,6 @@
 using namespace Ogre;
 using namespace OgreBulletCollisions;
 using namespace OgreBulletDynamics;
-using namespace OIS;
 
 /*
  *  GLOBAL VARIABLES
@@ -192,7 +191,8 @@ void VSC::OB::Scene::Collision::invalidate()
 
 std::ostream& VSC::OB::operator << (std::ostream& stream, const Scene::Collision& collision)
 {
-    stream << "Collision with element: " << *collision.getFirstElement() << " and element: " << *collision.getSecondElement() << std::endl;
+    stream << "Collision with element: " << *collision.getFirstElement() << " and element: " << *collision.getSecondElement();
+    stream << " relative velocity: " << collision.getRelativeCollisionVelocity() << std::endl;
     
     return stream;
 }
@@ -453,6 +453,28 @@ void VSC::OB::Scene::CollisionDetector::updateCollisions()
                 collision->getState() == Collision::StateClose     ||
                 collision->getState() == Collision::StateEnded) 
             {
+                // calculate collision velocity (subtract the object velocity vectors)
+                Element::SPtr firstElement = collision->getFirstElement();
+                Element::SPtr secondElement = collision->getSecondElement();
+                BOOST_ASSERT(firstElement);
+                BOOST_ASSERT(secondElement);
+                if (firstElement && secondElement)
+                {
+                    OgreBulletDynamics::RigidBody* firstBody = firstElement->getRigidBody();
+                    OgreBulletDynamics::RigidBody* secondBody = secondElement->getRigidBody();
+                    BOOST_ASSERT(firstBody);
+                    BOOST_ASSERT(secondBody);
+                    if (firstBody && secondBody)
+                    {
+                        Ogre::Vector3 firstVelocity = firstBody->getLinearVelocity();
+                        Ogre::Vector3 secondVelocity = secondBody->getLinearVelocity();
+                        Ogre::Vector3 relativeVelocity = firstVelocity - secondVelocity;
+                        collision->setFirstElementCollisionVelocity(firstVelocity);
+                        collision->setSecondElementCollisionVelocity(secondVelocity);
+                        collision->setRelativeCollisionVelocity(relativeVelocity);
+                    }
+                }
+                // update state and call listeners
                 collision->setState(Collision::StateOngoing);
                 BOOST_FOREACH (VSC::Listener::WPtr l, this->getListeners())
                 {
@@ -508,9 +530,6 @@ void VSC::OB::Scene::CollisionDetector::updateCollisions()
             }
         }
     }
-    
-    
-    
 }
 
 void VSC::OB::Scene::CollisionDetector::addCollision(Collision::SPtr collision)

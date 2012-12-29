@@ -7,7 +7,6 @@
 #include "VSCListener.h"
 
 #include "OgreBulletDynamics.h"
-#include "OIS.h"
 
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
@@ -223,6 +222,10 @@ namespace VSC {
                 
                 btPersistentManifold* getPersistentManifold(void) {return mPersistentManifold;}
                 
+                const Ogre::Vector3& getFirstElementCollisionVelocity(void) const {return mFirstElementCollisionVelocity;}
+                const Ogre::Vector3& getSecondElementCollisionVelocity(void) const {return mSecondElementCollisionVelocity;}
+                const Ogre::Vector3& getRelativeCollisionVelocity(void) const {return mRelativeCollisionVelocity;}
+                
             protected:
                 
                 void setScene(Scene::WPtr scene);
@@ -251,6 +254,10 @@ namespace VSC {
                 
                 void invalidate();
                 
+                void setFirstElementCollisionVelocity(const Ogre::Vector3& vel) {mFirstElementCollisionVelocity = vel;}
+                void setSecondElementCollisionVelocity(const Ogre::Vector3& vel) {mSecondElementCollisionVelocity = vel;}
+                void setRelativeCollisionVelocity(const Ogre::Vector3& vel) {mRelativeCollisionVelocity = vel;}
+                
             private:
                 
                 Scene::WPtr             mScene;
@@ -262,7 +269,9 @@ namespace VSC {
                 
                 btPersistentManifold*   mPersistentManifold;
                 
-                //PersistentManifolds     mPersistentManifolds;
+                Ogre::Vector3           mFirstElementCollisionVelocity;
+                Ogre::Vector3           mSecondElementCollisionVelocity;
+                Ogre::Vector3           mRelativeCollisionVelocity;
                 
             };
             
@@ -372,6 +381,9 @@ namespace VSC {
             
             ElementFactory::SPtr getElementFactory(void) {return mElementFactory;}
             void setElementFactory(ElementFactory::SPtr factory) {mElementFactory = factory;}
+            
+            //void removeElement(Element::SPtr element);
+            //void removeAllElements(void);
 
             /**--------------------------------------------------------------
              *  MISC Info

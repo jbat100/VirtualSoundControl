@@ -23,7 +23,6 @@
 @end
 
 
-
 @interface VSCIMOSXCollisionMappingView : NSView <VSCIMOSXCollisionMappingView>
 
 +(CGFloat) defaultHeightOfView;

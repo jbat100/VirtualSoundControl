@@ -28,6 +28,10 @@
 @property (strong) IBOutlet VSCOSXOBSceneElementListView* sceneElementListView;
 @property (strong) IBOutlet VSCOSXOBSceneDetailView* sceneDetailView;
 
+@property (nonatomic, assign) VSC::EnvironmentTest::SPtr environmentTest;
+
+-(IBAction)resetAction:(id)sender;
+
 -(void) showSceneElementList;
 -(void) showSceneDetail;
 

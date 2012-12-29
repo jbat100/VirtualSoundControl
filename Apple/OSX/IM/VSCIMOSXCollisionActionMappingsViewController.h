@@ -15,12 +15,14 @@
 @protocol VSCIMOSXCollisionEventChainController;
 
 
-@interface VSCIMOSXCollisionActionMappingsViewController : NSViewController
+@interface VSCIMOSXCollisionActionMappingsViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource>
 
 @property (weak) id<VSCIMOSXCollisionEventChainController> eventChainController;
 
 @property (nonatomic, assign) VSC::IM::CollisionAction::WPtr action;
 
 @property (weak) IBOutlet NSTableView* mappingTableView;
+
+-(IBAction) backToEventChainView:(id)sender;
 
 @end

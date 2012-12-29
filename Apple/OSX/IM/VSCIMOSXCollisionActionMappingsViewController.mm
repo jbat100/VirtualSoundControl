@@ -57,7 +57,8 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
     [nib instantiateNibWithOwner:owner topLevelObjects:&objects];
     for(id object in objects)
     {
-        if([object isKindOfClass:[VSCIMOSXCollisionMappingView class]]) {
+        if([object isKindOfClass:[VSCIMOSXCollisionMappingView class]])
+        {
             v = object;
             v.identifier = identifier;
             break;
@@ -71,6 +72,9 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
 
 -(IBAction) backToEventChainView:(id)sender
 {
+    BOOST_ASSERT(self.eventChainController);
+    BOOST_ASSERT([self.eventChainController respondsToSelector:@selector(senderRequestsEventCollisionChainView:)]);
+    
     [self.eventChainController senderRequestsEventCollisionChainView:self];
 }
 
@@ -153,14 +157,17 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
             
             if (collisionMapping)
             {
-                VSCIMOSXCollisionMappingView* mappingView = [tableView makeViewWithIdentifier:[[VSCIMOSXCollisionMappingView class] description] owner:self];
+                VSCIMOSXCollisionMappingView* mappingView = [tableView makeViewWithIdentifier:[[VSCIMOSXCollisionMappingView class] description]
+                                                                                        owner:self];
+                
                 if (mappingView) BOOST_ASSERT([mappingView isKindOfClass:[VSCIMOSXCollisionMappingView class]]);
                 else mappingView = [[self class] newCollisionMappingViewWithOwner:self];
+                
                 [mappingView setMapping:(VSC::IM::CollisionMapping::WPtr(collisionMapping))];
+                
                 return mappingView;
             }
         }
-        
     }
     
 	return nil;

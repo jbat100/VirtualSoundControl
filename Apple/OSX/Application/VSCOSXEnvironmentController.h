@@ -6,12 +6,12 @@
 #import <Foundation/Foundation.h>
 
 #include "VSCEnvironment.h"
+#include "VSCEnvironmentTest.h"
 #include "VSCOBScene.h"
 #include "VSCIMCollisionEventChain.h"
 
 
 @protocol VSCOSXOBSceneController;
-
 
 /*
  *  Main environment controller protocol

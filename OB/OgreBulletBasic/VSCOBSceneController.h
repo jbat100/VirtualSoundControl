@@ -78,8 +78,8 @@ namespace VSC {
              *  Actions Setter/Getter
              */
             
-            Float getShootSpeed(void);
-            void setShootSpeed(Float speed);
+            Float getShootSpeed(void) {return mShootSpeed;}
+            void setShootSpeed(Float speed) {mShootSpeed = speed;}
             
             Float getImpulseForce(void);
             void setImplulseForce(Float force);

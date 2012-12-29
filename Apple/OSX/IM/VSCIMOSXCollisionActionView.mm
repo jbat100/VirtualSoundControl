@@ -351,6 +351,9 @@ static const BOOL debugDraw = NO;
 
 -(IBAction) showCollisionMappings:(id)sender
 {
+    BOOST_ASSERT(self.eventChainController);
+    BOOST_ASSERT([self.eventChainController respondsToSelector:@selector(sender:requestsShowMappingsForCollisionAction:)]);
+    
     [self.eventChainController sender:self requestsShowMappingsForCollisionAction:self.collisionAction.lock()];
 }
 

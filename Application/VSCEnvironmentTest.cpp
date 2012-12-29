@@ -27,6 +27,9 @@ void VSC::EnvironmentTest::internalSetupForEnvironment(Environment::SPtr environ
     BOOST_ASSERT(scene);
     if (!scene) return;
     
+    // reset scene if it wasn't pristine...
+    //scene->destroyAllElements();
+    
     /*
      *  Create 4 elements...
      */

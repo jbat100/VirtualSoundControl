@@ -175,7 +175,7 @@ const static BOOL traceInterface = YES;
 
 #pragma mark - UI Helpers
 
--(void) sender:(id)sender requestsMappingEditorForAction:(VSC::IM::CollisionAction::SPtr)action
+-(void) sender:(id)sender requestsShowMappingsForCollisionAction:(VSC::IM::CollisionAction::SPtr)action
 {
     if (!self.actionMappingsViewController)
     {
@@ -183,9 +183,16 @@ const static BOOL traceInterface = YES;
                                              initWithNibName:@"VSCIMOSXCollisionActionMappingsViewController" bundle:nil];
         
         BOOST_ASSERT(self.actionMappingsViewController);
-        
+        self.actionMappingsViewController.eventChainController = self;
+    }
+    
+    
+    if ([self.actionMappingsViewController.view superview] != self.view)
+    {
         NSView* actionMappingsView = self.actionMappingsViewController.view;
-                                             
+        
+        [self.view addSubview:actionMappingsView];
+        
         NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(actionMappingsView);
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[actionMappingsView]|"
                                                                           options:0
@@ -224,7 +231,7 @@ const static BOOL traceInterface = YES;
     }
 }
 
--(void) senderRequestsEventChainView:(id)sender
+-(void) senderRequestsEventCollisionChainView:(id)sender
 {
     if ([self.actionMappingsViewController.view superview] == self.view)
     {

@@ -14,6 +14,9 @@
 
 #include "VSCOBSceneController.h"
 
+static const Ogre::Vector3 CameraStartPos = Ogre::Vector3(30.0, 10.0, 0.0);
+static const Ogre::Vector3 CameraStartLookAt = Ogre::Vector3(0.0, 0.0, 0.0);
+
 @interface VSCOSXOBSceneController ()
 
 @end
@@ -49,6 +52,19 @@ static const BOOL traceInterface = YES;
     NSLog(@"%@ DEALLOC", self);
 }
 
+#pragma mark - Scene Helpers
+
+-(void) resetSceneDisplayViews
+{
+    BOOST_ASSERT(self.sceneView);
+    
+    if (self.sceneView)
+    {
+        VSC::OB::Display::SPtr display = self.sceneView.display.lock();
+    }
+    
+}
+
 #pragma mark - Custom Setter
 
 -(void) setScene:(VSC::OB::Scene::WPtr)s
@@ -73,6 +89,16 @@ static const BOOL traceInterface = YES;
     }
     
     [self.elementListView.elementTableView reloadData];
+}
+
+-(void) setShootSpeed:(VSC::Float)shootSpeed
+{
+    _shootSpeed = shootSpeed;
+    BOOST_ASSERT(self.sceneView.internalSceneController);
+    if (self.sceneView.internalSceneController)
+    {
+        self.sceneView.internalSceneController->setShootSpeed(shootSpeed);
+    }
 }
 
 #pragma mark - UI Callbacks
@@ -102,9 +128,14 @@ static const BOOL traceInterface = YES;
         BOOST_ASSERT(self.sceneView.internalSceneController);
         if (self.sceneView.internalSceneController)
         {
-            //self.sceneView.internalSceneController->setShootSpeed(value);
+            self.shootSpeed = value;
         }
     }
+}
+
+-(IBAction)resetAction:(id)sender
+{
+    //[self setupTest];
 }
 
 #pragma mark - VSCOBOSXSceneListenerTarget Methods

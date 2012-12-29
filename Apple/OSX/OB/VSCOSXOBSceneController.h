@@ -12,6 +12,8 @@
 
 #include "VSC.h"
 #include "VSCOBScene.h"
+#include "VSCEnvironment.h"
+#include "VSCEnvironmentTest.h"
 
 @class VSCOBOSXSceneDisplayView;
 @class VSCOSXOBSceneElementListView;
@@ -35,6 +37,8 @@
 
 @property (nonatomic, assign) VSC::OB::OSXSceneListener::SPtr sceneListener;
 @property (assign) IBOutlet id<VSCOSXEnvironmentController> environmentController;
+
+-(void) resetSceneDisplayViews;
 
 -(IBAction)checkBoxAction:(id)sender;
 -(IBAction)shootSpeedSliderAction:(id)sender;
