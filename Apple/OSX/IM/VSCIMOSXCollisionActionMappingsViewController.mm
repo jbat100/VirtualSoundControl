@@ -38,6 +38,13 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
     return self;
 }
 
+-(void)awakeFromNib
+{
+    BOOST_ASSERT(self.mappingTableView);
+    BOOST_ASSERT(self.mappingTableView.delegate == self);
+    BOOST_ASSERT(self.mappingTableView.dataSource == self);
+}
+
 #pragma mark - View Factory Methods
 
 +(VSCIMOSXCollisionMappingView*) newCollisionMappingViewWithOwner:(id)owner
@@ -66,6 +73,14 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
     }
     BOOST_ASSERT(v);
     return v;
+}
+
+
+#pragma mark - UI Helpers
+
+-(void) reloadInterface
+{
+    [self.mappingTableView reloadData];
 }
 
 #pragma mark - UI Callbacks
@@ -160,10 +175,18 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
                 VSCIMOSXCollisionMappingView* mappingView = [tableView makeViewWithIdentifier:[[VSCIMOSXCollisionMappingView class] description]
                                                                                         owner:self];
                 
+                
+                
+                BOOST_ASSERT(mappingView);
+                
+                [mappingView setController:(id)self];
+                
                 if (mappingView) BOOST_ASSERT([mappingView isKindOfClass:[VSCIMOSXCollisionMappingView class]]);
                 else mappingView = [[self class] newCollisionMappingViewWithOwner:self];
                 
                 [mappingView setMapping:(VSC::IM::CollisionMapping::WPtr(collisionMapping))];
+                
+                [mappingView setTarget:target];
                 
                 return mappingView;
             }
@@ -179,9 +202,9 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
     
     if (tableView == self.mappingTableView)
     {
+        /*
         VSC::IM::CollisionAction::SPtr collisionAction = self.action.lock();
         BOOST_ASSERT(collisionAction);
-        
         if (collisionAction)
         {
             const VSC::IM::Targets& targets = collisionAction->getExpectedMappingTargets();
@@ -191,6 +214,9 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
             VSC::IM::CollisionMapping::SPtr collisionMapping = collisionAction->getMappingForTarget(target);
             return [VSCIMOSXCollisionMappingView heightOfViewForCollisionMapping:collisionMapping];
         }
+         */
+        
+        return [VSCIMOSXCollisionMappingView defaultHeight];
     }
     
     BOOST_ASSERT_MSG(false, "Shouldn't reach this point");

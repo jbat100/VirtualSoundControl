@@ -16,7 +16,7 @@
 
 @protocol VSCIMOSXCollisionMappingView <NSObject>
 
-@property (weak) id<VSCIMOSXCollisionActionMappingsController> controller;
+@property (assign) id<VSCIMOSXCollisionActionMappingsController> controller;
 @property (nonatomic, assign) VSC::IM::CollisionMapping::WPtr mapping;
 @property (nonatomic, assign) VSC::IM::Target target;
 
@@ -25,10 +25,14 @@
 
 @interface VSCIMOSXCollisionMappingView : NSView <VSCIMOSXCollisionMappingView>
 
-+(CGFloat) defaultHeightOfView;
++(CGFloat) defaultHeight;
 +(CGFloat) heightOfViewForCollisionMapping:(VSC::IM::CollisionMapping::SPtr)collisionMapping;
 +(NSString*) menuItemStringForCollisionMappingType:(VSCIMOSXCollisionMappingType)mappingType;
 +(VSCIMOSXCollisionMappingType) collisionMappingTypeForMenuItemString:(NSString*)menuItemString;
+
+@property (assign) id<VSCIMOSXCollisionActionMappingsController> controller;
+
+-(void) reloadInterface;
 
 @end
 

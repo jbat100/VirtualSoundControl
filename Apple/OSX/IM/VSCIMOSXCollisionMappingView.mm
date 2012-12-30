@@ -9,6 +9,7 @@
 #import "VSCIMOSXCollisionMappingView.h"
 #import "VSCIMOSXCollisionMappingTypes.h"
 #import "VSCIMOSXCollisionActionMappingsController.h"
+#import "NSString+VSCAdditions.h"
 
 #include "VSCIMTarget.h"
 #include "VSCIMCollisionMapping.h"
@@ -47,7 +48,7 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
 {
     BOOST_ASSERT(!mappingTypeMenuItemStringDict);
     
-    mappingTypeMenuItemStringDict  = @{
+    mappingTypeMenuItemStringDict = @{
     @((int)VSCIMOSXCollisionMappingTypeNone)        : @"No Mapping",
     @((int)VSCIMOSXCollisionMappingTypeConstant)    : @"Constant Mapping",
     @((int)VSCIMOSXCollisionMappingTypeVelocity)    : @"Velocity Mapping",
@@ -55,14 +56,14 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
     };
 }
 
-+(CGFloat) defaultHeightOfView
++(CGFloat) defaultHeight
 {
-    return 40.0;
+    return 56.0;
 }
 
 +(CGFloat) heightOfViewForCollisionMapping:(VSC::IM::CollisionMapping::SPtr)collisionMapping
 {
-    return 40.0;
+    return 56.0;
 }
 
 +(NSString*) menuItemStringForCollisionMappingType:(VSCIMOSXCollisionMappingType)mappingType
@@ -85,9 +86,12 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
     
     if ([keys count] == 1) return (VSCIMOSXCollisionMappingType)[[keys anyObject] intValue];
     
+    BOOST_ASSERT_MSG(false, "No Mapping Type");
+    
     return VSCIMOSXCollisionMappingTypeNone;
 }
 
+#pragma mark - NSView Methods
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -126,35 +130,48 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
 
 -(void) updateInterfaceForNewTarget
 {
-    
+    BOOST_ASSERT(self.targetTextField);
+    [self.targetTextField setStringValue:[NSString stringWithStdString:VSC::IM::stringForTarget(self.target)]];
 }
 
 -(void) updateInterfaceForNewCollisionMapping
 {
+    BOOST_ASSERT(self.mappingPopUpButton);
+    
     NSString* title = [[self class] menuItemStringForCollisionMappingType:self.collisionMappingType];
     
     [self.mappingPopUpButton selectItemWithTitle:title];
     
-    switch (self.collisionMappingType) {
-            
+    switch (self.collisionMappingType)
+    {
         case VSCIMOSXCollisionMappingTypeConstant:
             break;
-            
         case VSCIMOSXCollisionMappingTypeVelocity:
             break;
-            
         case VSCIMOSXCollisionMappingTypeDistance:
             break;
-            
         default:
             break;
     }
-    
 }
 
 -(void) setupCollisionMappingChoice
 {
+    BOOST_ASSERT(self.mappingPopUpButton);
     
+    [self.mappingPopUpButton removeAllItems];
+    
+    for (NSNumber* typeNumber in [mappingTypeMenuItemStringDict allKeys])
+    {
+        NSString* title = [[self class] menuItemStringForCollisionMappingType:(VSCIMOSXCollisionMappingType)[typeNumber intValue]];
+        [self.mappingPopUpButton addItemWithTitle:title];
+    }
+}
+
+-(void) reloadInterface;
+{
+    [self updateInterfaceForNewCollisionMapping];
+    [self updateInterfaceForNewTarget];
 }
 
 #pragma mark - UI Callbacks

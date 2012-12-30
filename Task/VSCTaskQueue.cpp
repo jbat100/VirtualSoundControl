@@ -204,11 +204,11 @@ VSC::TimeDuration VSC::TaskQueue::durationUntilNextQueuedTaskExecutionTime()
 
 void VSC::TaskQueue::threadedExecutionFunction()
 {
-    if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction START" << std::endl;
+    //if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction START" << std::endl;
     
     while (this->stopRequested() == false)
     {
-        if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction BEGIN LOOP" << std::endl;
+        //if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction BEGIN LOOP" << std::endl;
         
         this->stepExecution();
         
@@ -254,10 +254,10 @@ void VSC::TaskQueue::threadedExecutionFunction()
             mTaskCondition.wait(lock);
         }
         
-        if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction END LOOP" << std::endl;
+        //if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction END LOOP" << std::endl;
         
     }
-    if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction END" << std::endl;
+    //if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction END" << std::endl;
 }
 
 void VSC::TaskQueue::stepExecution()
@@ -270,10 +270,10 @@ void VSC::TaskQueue::stepExecution()
         
         try
         {
-            if (mTraceTasks) std::cout << "VSC::TaskQueue::stepExecution START" << std::endl;
+            //if (mTraceTasks) std::cout << "VSC::TaskQueue::stepExecution START" << std::endl;
             mLastStepTime = CurrentTime();
-            if (mTraceExecution) std::cout << "VSC::TaskQueue::stepExecution current time: " << mLastStepTime << std::endl;
-            if (mTraceExecution) std::cout << "VSC::TaskQueue::stepExecution getting tasks to execute..." << std::endl;
+            //if (mTraceExecution) std::cout << "VSC::TaskQueue::stepExecution current time: " << mLastStepTime << std::endl;
+            //if (mTraceExecution) std::cout << "VSC::TaskQueue::stepExecution getting tasks to execute..." << std::endl;
             
             {
                 /*
@@ -331,7 +331,7 @@ void VSC::TaskQueue::stepExecution()
                 
                 localRunningTasks = mRunningTasks;
             }
-            if (mTraceExecution) std::cout << "VSC::TaskQueue::stepExecution got " << localRunningTasks.size() << " task(s) to run" << std::endl;
+            //if (mTraceExecution) std::cout << "VSC::TaskQueue::stepExecution got " << localRunningTasks.size() << " task(s) to run" << std::endl;
         }
         catch (std::exception& e)
         {
@@ -348,7 +348,7 @@ void VSC::TaskQueue::stepExecution()
     
     BOOST_FOREACH(Task::SPtr task, localRunningTasks)
     {
-        if (mTraceExecution) std::cout << "VSC::TaskQueue::stepExecution will stepExecution for task : " << task << std::endl;
+        //if (mTraceExecution) std::cout << "VSC::TaskQueue::stepExecution will stepExecution for task : " << task << std::endl;
         try 
         {
             bool ended = task->stepExecution();
@@ -366,8 +366,7 @@ void VSC::TaskQueue::stepExecution()
             this->cancelTask(task);
         }
     }
-    
-    if (mTraceExecution) std::cout  << "VSC::TaskQueue::stepExecution END" << std::endl;
+    //if (mTraceExecution) std::cout  << "VSC::TaskQueue::stepExecution END" << std::endl;
     
 }
 

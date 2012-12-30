@@ -31,6 +31,8 @@ namespace VSC {
             bool isMuted(void) {return mMuted;}
             void setMuted(bool mute) {mMuted = mute;}
             
+            virtual void createDefaultMappings() {}
+            
             virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
                                                       OB::Scene::Collision::SPtr collision) = 0;
             

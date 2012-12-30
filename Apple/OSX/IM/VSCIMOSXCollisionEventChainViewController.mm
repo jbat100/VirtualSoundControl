@@ -138,6 +138,15 @@ const static BOOL traceInterface = YES;
     else if (sender == self.addCollisionMIDIControlChangeMenuItem)
         event = VSC::IM::Event::SPtr(new VSC::IM::CollisionMIDIControlChangeAction);
     
+    /*
+     *  If we have a collision action, then create the default mappings
+     */
+    VSC::IM::CollisionAction::SPtr collisionAction = boost::dynamic_pointer_cast<VSC::IM::CollisionAction>(event);
+    if (collisionAction)
+    {
+        collisionAction->createDefaultMappings();
+    }
+    
     if (event)
     {
         [self appendEvent:event];
@@ -186,6 +195,8 @@ const static BOOL traceInterface = YES;
         self.actionMappingsViewController.eventChainController = self;
     }
     
+    BOOST_ASSERT(action);
+    self.actionMappingsViewController.action = VSC::IM::CollisionAction::WPtr(action);
     
     if ([self.actionMappingsViewController.view superview] != self.view)
     {
@@ -201,15 +212,10 @@ const static BOOL traceInterface = YES;
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[actionMappingsView]|"
                                                                           options:0
                                                                           metrics:nil
-                                                                            views:viewsDictionary]];
+                                                                          views:viewsDictionary]];
     }
     
-    self.actionMappingsViewController.action = VSC::IM::CollisionAction::WPtr(action);
-    
-    if ([self.actionMappingsViewController.view superview] != self.view)
-    {
-        [self.view addSubview:self.actionMappingsViewController.view];
-    }
+    [self.actionMappingsViewController reloadInterface];
     
 }
 

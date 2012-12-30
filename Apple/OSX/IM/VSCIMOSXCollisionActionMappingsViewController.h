@@ -23,6 +23,8 @@
 
 @property (weak) IBOutlet NSTableView* mappingTableView;
 
+-(void) reloadInterface;
+
 -(IBAction) backToEventChainView:(id)sender;
 
 @end

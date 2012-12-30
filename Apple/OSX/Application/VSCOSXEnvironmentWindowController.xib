@@ -89,7 +89,6 @@
 													<string key="NSFrameSize">{244, 383}</string>
 													<reference key="NSSuperview" ref="267754872"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView"/>
 													<string key="NSReuseIdentifierKey">_NS:11</string>
 												</object>
 											</array>
@@ -289,11 +288,10 @@
 						<string key="NSFrame">{{18, 24}, {167, 21}}</string>
 						<reference key="NSSuperview" ref="313695382"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSSliderCell" key="NSCell" id="123690125">
-							<int key="NSCellFlags">-2080374784</int>
+							<int key="NSCellFlags">-2080112384</int>
 							<int key="NSCellFlags2">0</int>
 							<string key="NSContents"/>
 							<string key="NSCellIdentifier">_NS:9</string>
@@ -610,7 +608,7 @@
 										<string key="NSFrameSize">{234, 315}</string>
 										<reference key="NSSuperview" ref="681522810"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="416516009"/>
+										<reference key="NSNextKeyView" ref="501958230"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
 										<bool key="NSEnabled">YES</bool>
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -626,11 +624,9 @@
 											<reference key="NSTableView" ref="683360583"/>
 										</object>
 										<object class="_NSCornerView" key="NSCornerView" id="1003424456">
-											<reference key="NSNextResponder" ref="135371777"/>
+											<nil key="NSNextResponder"/>
 											<int key="NSvFlags">-2147483392</int>
 											<string key="NSFrame">{{224, 0}, {16, 17}}</string>
-											<reference key="NSSuperview" ref="135371777"/>
-											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="681522810"/>
 											<string key="NSReuseIdentifierKey">_NS:19</string>
 										</object>
@@ -727,7 +723,6 @@
 								<string key="NSFrame">{{1, 119}, {223, 15}}</string>
 								<reference key="NSSuperview" ref="135371777"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:60</string>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<int key="NSsFlags">1</int>
@@ -750,19 +745,17 @@
 								<reference key="NSBGColor" ref="942310540"/>
 								<int key="NScvFlags">4</int>
 							</object>
-							<reference ref="1003424456"/>
 						</array>
 						<string key="NSFrameSize">{236, 333}</string>
 						<reference key="NSSuperview" ref="236663740"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="501958230"/>
+						<reference key="NSNextKeyView" ref="681522810"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="NSsFlags">133682</int>
 						<reference key="NSVScroller" ref="1071292988"/>
 						<reference key="NSHScroller" ref="852236553"/>
 						<reference key="NSContentView" ref="681522810"/>
 						<reference key="NSHeaderClipView" ref="501958230"/>
-						<reference key="NSCornerView" ref="1003424456"/>
 						<bytes key="NSScrollAmts">QSAAAEEgAABCYAAAQmAAAA</bytes>
 						<double key="NSMinMagnification">0.25</double>
 						<double key="NSMaxMagnification">4</double>
@@ -3372,11 +3365,16 @@
 					<string key="className">VSCOSXEnvironmentWindowController</string>
 					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="resetAction:">id</string>
 						<string key="test1:">id</string>
 						<string key="test2:">id</string>
 						<string key="test3:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="resetAction:">
+							<string key="name">resetAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="test1:">
 							<string key="name">test1:</string>
 							<string key="candidateClassName">id</string>

@@ -57,6 +57,7 @@ void VSC::IM::CollisionMIDINoteOnAction::createDefaultMappings()
     BOOST_FOREACH(const Target& target, targets)
     {
         CollisionMapping::SPtr mapping(new CollisionConstantMapping);
+        mapping->setOffset(64.0);
         this->setMappingForTarget(target, mapping);
     }
 }
@@ -103,7 +104,7 @@ void VSC::IM::CollisionMIDINoteOffAction::createDefaultMappings()
     BOOST_FOREACH(const Target& target, targets)
     {
         CollisionMapping::SPtr mapping(new CollisionConstantMapping);
-        
+        mapping->setOffset(64.0);
         this->setMappingForTarget(target, mapping);
     }
 }
@@ -152,7 +153,7 @@ void VSC::IM::CollisionMIDINoteOnAndOffAction::createDefaultMappings()
     BOOST_FOREACH(const Target& target, targets)
     {
         CollisionMapping::SPtr mapping(new CollisionConstantMapping);
-        
+        mapping->setOffset(64.0);
         this->setMappingForTarget(target, mapping);
     }
 }
@@ -200,7 +201,7 @@ void VSC::IM::CollisionMIDIControlChangeAction::createDefaultMappings()
     BOOST_FOREACH(const Target& target, targets)
     {
         CollisionMapping::SPtr mapping(new CollisionConstantMapping);
-        
+        mapping->setOffset(64.0);
         this->setMappingForTarget(target, mapping);
     }
 }
