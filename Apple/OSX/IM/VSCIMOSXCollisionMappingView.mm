@@ -25,7 +25,6 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
 
 @property (weak) IBOutlet NSTextField* targetTextField;
 @property (weak) IBOutlet NSPopUpButton* mappingPopUpButton;
-@property (weak) IBOutlet NSButton* editButton;
 
 @property (assign) VSCIMOSXCollisionMappingType collisionMappingType;
 
@@ -178,7 +177,15 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
 
 -(IBAction) editMapping:(id)sender
 {
+    BOOST_ASSERT(self.controller);
+    BOOST_ASSERT([self.controller respondsToSelector:@selector(sender:requestsEditorForMapping:)]);
     
+    if ([self.controller respondsToSelector:@selector(sender:requestsEditorForMapping:)])
+    {
+        VSC::IM::CollisionMapping::SPtr mapping = self.mapping.lock();
+        BOOST_ASSERT(mapping);
+        [self.controller sender:self requestsEditorForMapping:mapping];
+    }
 }
 
 -(IBAction) mappingTypeSelected:(id)sender

@@ -7,8 +7,11 @@
 //
 
 #import "VSCIMOSXCollisionActionMappingsViewController.h"
+#import "VSCIMOSXCollisionMappingEditViewController.h"
 #import "VSCIMOSXCollisionEventChainController.h"
 #import "VSCIMOSXCollisionMappingView.h"
+
+#include "VSCIMCollisionAction.h"
 
 NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisionMappingViewReuseIdentifier";
 
@@ -27,6 +30,8 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
 
 
 @implementation VSCIMOSXCollisionActionMappingsViewController
+
+@synthesize action = _action;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -115,7 +120,7 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
                       forTarget:(VSC::IM::Target)target;
 {
     
-    VSC::IM::CollisionAction::SPtr collisionAction = self.action.lock();
+    VSC::IM::CollisionAction::SPtr collisionAction = [self action].lock();
     
     BOOST_ASSERT(target != VSC::IM::TargetNone);
     if (target == VSC::IM::TargetNone) return VSC::IM::CollisionMapping::SPtr();
@@ -128,12 +133,62 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
     BOOST_ASSERT(newMapping);
     collisionAction->setMappingForTarget(target, newMapping);
     
+    VSC::IM::CollisionVelocityMapping::SPtr velMapping = boost::dynamic_pointer_cast<VSC::IM::CollisionVelocityMapping>(newMapping);
+    if (velMapping)
+    {
+        velMapping->setOffset(0.0);
+        velMapping->setScaleFactor(3.0);
+    }
+    
     return newMapping;
 }
 
--(void) collisionMappingViewRequestsEditor:(id<VSCIMOSXCollisionMappingView>)view
+-(void) sender:(id)sender requestsEditorForMapping:(VSC::IM::CollisionMapping::SPtr)mapping
 {
+    BOOST_ASSERT(mapping);
+    BOOST_ASSERT(sender);
+    BOOST_ASSERT([sender isKindOfClass:[VSCIMOSXCollisionMappingView class]]);
     
+    if (mapping && [sender isKindOfClass:[VSCIMOSXCollisionMappingView class]])
+    {
+        VSCIMOSXCollisionMappingView* mappingView = (VSCIMOSXCollisionMappingView*)sender;
+        
+        if (self.collisionMappingEditPopover == nil)
+        {
+            self.collisionMappingEditPopover = [[NSPopover alloc] init];
+            self.collisionMappingEditPopover.appearance = NSPopoverAppearanceHUD;
+            self.collisionMappingEditPopover.behavior = NSPopoverBehaviorTransient;
+        }
+        
+        if (self.collisionMappingEditViewController == nil)
+        {
+            self.collisionMappingEditViewController = [[VSCIMOSXCollisionMappingEditViewController alloc]
+                                                       initWithNibName:@"VSCIMOSXCollisionMappingEditViewController"
+                                                       bundle:nil];
+            
+            BOOST_ASSERT(self.collisionMappingEditViewController);
+            
+            BOOST_ASSERT(self.collisionMappingEditViewController.view);
+            BOOST_ASSERT(self.collisionMappingEditViewController.offsetTextField);
+            BOOST_ASSERT(self.collisionMappingEditViewController.scaleFactorTextField);
+        }
+        
+        self.collisionMappingEditViewController.collisionMapping = VSC::IM::CollisionMapping::WPtr(mapping);
+        
+        self.collisionMappingEditPopover.contentViewController = self.collisionMappingEditViewController;
+        self.collisionMappingEditPopover.contentSize = NSMakeSize(213.0, 112.0);
+        
+        [self.collisionMappingEditPopover showRelativeToRect:mappingView.editButton.frame
+                                                      ofView:mappingView
+                                               preferredEdge:NSMinXEdge];
+        
+        /*
+        NSLog(@"view.frame %@, offsetTextField.frame %@, scaleFactorTextField.frame %@",
+              NSStringFromRect(self.collisionMappingEditViewController.view.frame),
+              NSStringFromRect(self.collisionMappingEditViewController.offsetTextField.frame),
+              NSStringFromRect(self.collisionMappingEditViewController.scaleFactorTextField.frame));
+         */
+    }
 }
 
 
@@ -202,20 +257,6 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
     
     if (tableView == self.mappingTableView)
     {
-        /*
-        VSC::IM::CollisionAction::SPtr collisionAction = self.action.lock();
-        BOOST_ASSERT(collisionAction);
-        if (collisionAction)
-        {
-            const VSC::IM::Targets& targets = collisionAction->getExpectedMappingTargets();
-            BOOST_ASSERT(targets.size() > row);
-            if (targets.size() <= row) return 0;
-            VSC::IM::Target target = targets.at(row);
-            VSC::IM::CollisionMapping::SPtr collisionMapping = collisionAction->getMappingForTarget(target);
-            return [VSCIMOSXCollisionMappingView heightOfViewForCollisionMapping:collisionMapping];
-        }
-         */
-        
         return [VSCIMOSXCollisionMappingView defaultHeight];
     }
     

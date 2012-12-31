@@ -15,7 +15,15 @@ VSC::Float VSC::IM::CollisionMapping::mappedValue(VSC::OB::Scene::Element::SPtr 
 {
     Float internalValue = this->internalMappedValue(element, collision);
     
-    return (internalValue * mScaleFactor) + mOffset;
+    Float outputValue = (internalValue * mScaleFactor) + mOffset;
+    
+    if (mTrace)
+    {
+        std::cout << "CollisionMapping::mappedValue: " << outputValue << " (internal value: " << internalValue << ", ";
+        std::cout << "scale factor: " << mScaleFactor << ", offset " << mOffset << ")" << std::endl;
+    }
+    
+    return outputValue;
 }
 
 VSC::Float VSC::IM::CollisionVelocityMapping::internalMappedValue(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision)

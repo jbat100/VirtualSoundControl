@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "VSCIMOSXCollisionMappingTypes.h"
+#import "VSCIMOSXCollisionActionMappingsController.h"
 
 #include "VSCIMCollisionAction.h"
 
@@ -15,13 +16,13 @@
 @protocol VSCIMOSXCollisionEventChainController;
 
 
-@interface VSCIMOSXCollisionActionMappingsViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource>
+@interface VSCIMOSXCollisionActionMappingsViewController : NSViewController
+<VSCIMOSXCollisionActionMappingsController, NSTableViewDelegate, NSTableViewDataSource>
 
 @property (weak) id<VSCIMOSXCollisionEventChainController> eventChainController;
-
-@property (nonatomic, assign) VSC::IM::CollisionAction::WPtr action;
-
-@property (weak) IBOutlet NSTableView* mappingTableView;
+@property (nonatomic, weak) IBOutlet NSTableView* mappingTableView;
+@property (nonatomic, strong) VSCIMOSXCollisionMappingEditViewController* collisionMappingEditViewController;
+@property (nonatomic, strong) NSPopover* collisionMappingEditPopover;
 
 -(void) reloadInterface;
 

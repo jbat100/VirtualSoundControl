@@ -31,6 +31,7 @@
 +(VSCIMOSXCollisionMappingType) collisionMappingTypeForMenuItemString:(NSString*)menuItemString;
 
 @property (assign) id<VSCIMOSXCollisionActionMappingsController> controller;
+@property (weak) IBOutlet NSButton* editButton;
 
 -(void) reloadInterface;
 

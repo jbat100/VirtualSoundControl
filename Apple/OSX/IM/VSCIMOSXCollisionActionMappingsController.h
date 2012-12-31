@@ -11,8 +11,11 @@
 
 #include "VSCIMTarget.h"
 #include "VSCIMCollisionMapping.h"
+#include "VSCIMCollisionAction.h"
 
 @protocol VSCIMOSXCollisionActionMappingsController <NSObject>
+
+@property (nonatomic, assign) VSC::IM::CollisionAction::WPtr action;
 
 -(VSC::IM::CollisionMapping::SPtr) sender:(id)sender
                   requestsMappingWithType:(VSCIMOSXCollisionMappingType)mappingType

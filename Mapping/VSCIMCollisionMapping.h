@@ -34,7 +34,7 @@ namespace VSC {
             typedef boost::shared_ptr<CollisionMapping>     SPtr;
             typedef boost::weak_ptr<CollisionMapping>       WPtr;
             
-            CollisionMapping() : mOffset(0.0), mScaleFactor(0.0) {}
+            CollisionMapping() : mOffset(0.0), mScaleFactor(1.0) {}
             virtual ~CollisionMapping() {}
             
             Float mappedValue(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision);
@@ -55,6 +55,8 @@ namespace VSC {
             virtual Float internalMappedValue(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision) = 0;
             
         private:
+            
+            const static bool mTrace = true;
             
             Float   mOffset;
             Float   mScaleFactor;
