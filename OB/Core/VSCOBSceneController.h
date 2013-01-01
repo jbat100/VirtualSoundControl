@@ -128,7 +128,7 @@ namespace VSC {
             Float mShootSpeed;
             Float mImpulseForce;
             
-            const static bool mTraceUI = false;
+            const static bool mTraceUI = true;
             const static bool mTraceFrame = false;
             
         };

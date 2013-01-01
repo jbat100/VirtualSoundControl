@@ -333,6 +333,7 @@ bool VSC::OB::SceneController::mouseMoved(Ogre::RenderWindow* renderWindow,
     Display::SPtr display = Application::singletonApplication()->getDisplayWithRenderWindow(renderWindow);
     
     InterfaceAdapter::SPtr adapter = this->getInterfaceAdapter();
+    BOOST_ASSERT(adapter);
     
     if (adapter->isMouseButtonPressed(OIS::MB_Left))
     {

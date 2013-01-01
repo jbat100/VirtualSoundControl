@@ -38,7 +38,11 @@ bool VSC::OB::DisplayController::mouseMoved(Ogre::RenderWindow* renderWindow, co
     
     InterfaceAdapter::SPtr adapter = this->getInterfaceAdapter();
     
-    BOOST_ASSERT_MSG(adapter, "Expected adapter");
+    BOOST_ASSERT(adapter);
+    
+    OIS::Keyboard::Modifier modifier = adapter->getCurrentModifier();
+    
+    if (mTraceUI) std::cout << "VSC::OB::DisplayController::mouseMoved modifer " << modifier << std::endl;
     
     if (adapter && adapter->isMouseButtonPressed(OIS::MB_Right))
     {
@@ -207,20 +211,21 @@ bool VSC::OB::DisplayController::frameStarted(const Ogre::FrameEvent& evt)
     {
         if (mTraceUI) std::cout << "VSC::OB::DisplayController detected right mouse, yaw: " << mCameraRotX << ", pitch: " << mCameraRotY << std::endl;
         
-        if (camera) {
+        if (camera)
+        {
             camera->yaw(mCameraRotX);
             camera->pitch(mCameraRotY);
             mCameraRotX = 0;
             mCameraRotY = 0;
         }
-        
-        else {
+        else
+        {
             if (mTraceUI) std::cout << "VSC::OB::DisplayController has no camera " << std::endl;
         }
     }
     
-    if (camera) {
-        
+    if (camera)
+    {
         Ogre::Vector3 trans = Ogre::Vector3::ZERO;
         
         if (mCameraMovement & CameraMovementForward)    trans += Ogre::Vector3(0, 0, -mCameraSpeed);
@@ -228,7 +233,7 @@ bool VSC::OB::DisplayController::frameStarted(const Ogre::FrameEvent& evt)
         if (mCameraMovement & CameraMovementLeft)       trans += Ogre::Vector3(-mCameraSpeed, 0, 0);
         if (mCameraMovement & CameraMovementRight)      trans += Ogre::Vector3(mCameraSpeed, 0, 0);
         
-        if (mTraceUI) std::cout << "VSC::OB::DisplayController::frameStarted trans is " << trans << std::endl;
+        if (mTraceFrame) std::cout << "VSC::OB::DisplayController::frameStarted trans is " << trans << std::endl;
         
         camera->moveRelative(trans*elapsedTime);
     }

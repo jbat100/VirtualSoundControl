@@ -18,7 +18,8 @@ namespace VSC {
         
     public:
         
-        struct Combination {
+        struct Combination
+        {
             OIS::Keyboard::Modifier modifier;
             OIS::KeyCode code;
             bool operator!=(const Combination& p) const;
@@ -36,6 +37,24 @@ namespace VSC {
     };
     
     std::ostream& operator << (std::ostream& stream, const Keyboard::Combination& comb);
+    
+    class Mouse
+    {
+      
+    public:
+        
+        struct Combination
+        {
+            OIS::Keyboard::Modifier modifier;
+            OIS::MouseButtonID button;
+            bool operator!=(const Combination& p) const;
+            bool operator==(const Combination& p) const;
+            bool operator<(const Combination& p) const;
+            Combination(OIS::MouseButtonID b, OIS::Keyboard::Modifier m = (OIS::Keyboard::Modifier)0);
+        };
+        
+        static const Combination NullCombination;
+    };
     
 }
 
