@@ -33,6 +33,8 @@ static const BOOL traceInterface = YES;
 @synthesize sceneDetailView = _sceneDetailView;
 
 @synthesize shootSpeed = _shootSpeed;
+@synthesize cameraSpeed = _cameraSpeed;
+@synthesize cameraSensitivity = _cameraSensitivity;
 
 -(id) init {
     
@@ -101,6 +103,26 @@ static const BOOL traceInterface = YES;
     }
 }
 
+-(void) setCameraSpeed:(VSC::Float)cameraSpeed
+{
+    _cameraSpeed = cameraSpeed;
+    BOOST_ASSERT(self.sceneView.displayController);
+    if (self.sceneView.displayController)
+    {
+        self.sceneView.displayController->setCameraSpeed(cameraSpeed);
+    }
+}
+
+-(void) setCameraSensitivity:(VSC::Float)cameraSensitivity
+{
+    _cameraSensitivity = cameraSensitivity;
+    BOOST_ASSERT(self.sceneView.displayController);
+    if (self.sceneView.displayController)
+    {
+        self.sceneView.displayController->setMouseSensitivity(cameraSensitivity);
+    }
+}
+
 #pragma mark - UI Callbacks
 
 
@@ -124,13 +146,25 @@ static const BOOL traceInterface = YES;
     BOOST_ASSERT(sender == self.sceneDetailView.shootSpeedSlider);
     if (sender == self.sceneDetailView.shootSpeedSlider)
     {
+        /*
         VSC::Float value = [self.sceneDetailView.shootSpeedSlider doubleValue];
         BOOST_ASSERT(self.sceneView.internalSceneController);
         if (self.sceneView.internalSceneController)
         {
             self.shootSpeed = value;
         }
+         */
     }
+}
+
+-(IBAction)cameraSpeedSliderAction:(id)sender
+{
+    
+}
+
+-(IBAction)cameraSensitivitySliderAction:(id)sender
+{
+    
 }
 
 -(IBAction)resetAction:(id)sender

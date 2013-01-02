@@ -36,6 +36,8 @@
 @property (weak) IBOutlet NSButton *profileTimingsCheckBox;
 
 @property (weak) IBOutlet NSSlider *shootSpeedSlider;
+@property (weak) IBOutlet NSSlider *cameraSpeedSlider;
+@property (weak) IBOutlet NSSlider *cameraSensitivitySlider;
 
 -(void) reloadInterface;
 -(void) reloadSetting:(VSC::OB::Scene::Setting)setting;

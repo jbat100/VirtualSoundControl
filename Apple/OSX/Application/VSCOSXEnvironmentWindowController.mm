@@ -114,7 +114,6 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 
 -(void) awakeFromNib
 {
-    
     BOOST_ASSERT(self.sceneElementListView);
     BOOST_ASSERT(self.sceneDetailView);
     BOOST_ASSERT(self.tabBar);
@@ -123,6 +122,8 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     [self setupTabBar];
     
     self.sceneController.shootSpeed = 10.0;
+    self.sceneController.cameraSpeed = 10.0;
+    self.sceneController.cameraSensitivity = 0.13;
 }
 
 

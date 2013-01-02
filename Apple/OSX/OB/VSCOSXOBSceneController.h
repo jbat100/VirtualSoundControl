@@ -30,6 +30,8 @@
 @property (weak) IBOutlet VSCOSXOBSceneDetailView* sceneDetailView;
 
 @property (nonatomic, assign) VSC::Float shootSpeed;
+@property (nonatomic, assign) VSC::Float cameraSpeed;
+@property (nonatomic, assign) VSC::Float cameraSensitivity;
 
 @end
 
@@ -42,5 +44,7 @@
 
 -(IBAction)checkBoxAction:(id)sender;
 -(IBAction)shootSpeedSliderAction:(id)sender;
+-(IBAction)cameraSpeedSliderAction:(id)sender;
+-(IBAction)cameraSensitivitySliderAction:(id)sender;
 
 @end
