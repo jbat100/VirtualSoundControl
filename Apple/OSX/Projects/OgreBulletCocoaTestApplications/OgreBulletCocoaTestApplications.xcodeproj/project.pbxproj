@@ -322,6 +322,12 @@
 		10A8F7B116939F430056D8F7 /* Plugins_d.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Plugins_d.cfg; path = ../../../../../OB/Core/Plugins_d.cfg; sourceTree = "<group>"; };
 		10A8F7B216939F430056D8F7 /* Plugins.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Plugins.cfg; path = ../../../../../OB/Core/Plugins.cfg; sourceTree = "<group>"; };
 		10A8F7B316939F430056D8F7 /* resources.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = resources.cfg; path = ../../../../../OB/Core/resources.cfg; sourceTree = "<group>"; };
+		10A8F7B71693A0AF0056D8F7 /* VSCOBMouseAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBMouseAction.cpp; path = ../../../../../OB/UI/VSCOBMouseAction.cpp; sourceTree = "<group>"; };
+		10A8F7B81693A0AF0056D8F7 /* VSCOBMouseAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOBMouseAction.h; path = ../../../../../OB/UI/VSCOBMouseAction.h; sourceTree = "<group>"; };
+		10A8F7B91693A0AF0056D8F7 /* VSCOBMouseBindings.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBMouseBindings.cpp; path = ../../../../../OB/UI/VSCOBMouseBindings.cpp; sourceTree = "<group>"; };
+		10A8F7BA1693A0AF0056D8F7 /* VSCOBMouseBindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOBMouseBindings.h; path = ../../../../../OB/UI/VSCOBMouseBindings.h; sourceTree = "<group>"; };
+		10A8F7BB1693A0AF0056D8F7 /* VSCOBMouseManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBMouseManager.cpp; path = ../../../../../OB/UI/VSCOBMouseManager.cpp; sourceTree = "<group>"; };
+		10A8F7BC1693A0AF0056D8F7 /* VSCOBMouseManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOBMouseManager.h; path = ../../../../../OB/UI/VSCOBMouseManager.h; sourceTree = "<group>"; };
 		10AF53D6163D2F1B00419EEE /* VSCOSXOBSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneController.h; path = ../../../OB/VSCOSXOBSceneController.h; sourceTree = "<group>"; };
 		10AF53F0163D340000419EEE /* VSCOSXOBSceneController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneController.mm; path = ../../../OB/VSCOSXOBSceneController.mm; sourceTree = "<group>"; };
 		10AF53F7163D76B300419EEE /* VSCOSXEnvironmentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOSXEnvironmentController.h; path = ../../Application/VSCOSXEnvironmentController.h; sourceTree = "<group>"; };
@@ -798,6 +804,12 @@
 				10A8F79A16939F060056D8F7 /* VSCOBKeyboardAction.h */,
 				10A8F79B16939F060056D8F7 /* VSCOBKeyboardManager.cpp */,
 				10A8F79C16939F060056D8F7 /* VSCOBKeyboardManager.h */,
+				10A8F7B71693A0AF0056D8F7 /* VSCOBMouseAction.cpp */,
+				10A8F7B81693A0AF0056D8F7 /* VSCOBMouseAction.h */,
+				10A8F7B91693A0AF0056D8F7 /* VSCOBMouseBindings.cpp */,
+				10A8F7BA1693A0AF0056D8F7 /* VSCOBMouseBindings.h */,
+				10A8F7BB1693A0AF0056D8F7 /* VSCOBMouseManager.cpp */,
+				10A8F7BC1693A0AF0056D8F7 /* VSCOBMouseManager.h */,
 			);
 			name = UI;
 			sourceTree = "<group>";
