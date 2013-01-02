@@ -2,7 +2,10 @@
 #include "VSCOBApplication.h"
 #include "VSCOBDisplayController.h"
 #include "VSCOBInterface.h"
-#include "VSCOBKeyboardAction.h"
+#include "VSCOBKeyBindings.h"
+#include "VSCOBMouseBindings.h"
+
+#include "OIS.h"
 
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
@@ -10,6 +13,7 @@
 VSC::OB::DisplayController::DisplayController() :    
 mCameraSpeed (10.0f),
 mMouseSensitivity (0.13f),
+mCameraRotating (false),
 mCameraRotX (0.0),
 mCameraRotY (0.0),
 mCameraMovement(CameraMovementNone)
@@ -29,27 +33,96 @@ void VSC::OB::DisplayController::shutdown(void)
     Application::singletonApplication()->getOgreRoot()->removeFrameListener(this);
 }
 
+bool VSC::OB::DisplayController::mouseButtonPressed(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& p, OIS::MouseButtonID buttonID)
+{
+    do {
+        
+        MouseBindings::SPtr mouseBindings = this->getOBMouseBindings();
+        BOOST_ASSERT(mouseBindings);
+        if (!mouseBindings) break;
+        
+        InterfaceAdapter::SPtr adapter = this->getInterfaceAdapter();
+        BOOST_ASSERT(adapter);
+        if (!adapter) break;
+        
+        OIS::Keyboard::Modifier modifier = adapter->getCurrentModifier();
+        Mouse::Combination combination(buttonID, modifier);
+        
+        if (mTraceUI)
+        {
+            std::cout << "VSC::OB::DisplayController::mouseButtonPressed buttonID " << buttonID;
+            std::cout << ", modifier " << modifier << std::endl;
+        }
+        
+        const MouseAction::KeySet& actionKeySet = mouseBindings->getActionsForInput(combination);
+        
+        BOOST_FOREACH(const MouseAction::Key& key, actionKeySet)
+        {
+            if (mTraceUI) std::cout << "VSC::OB::DisplayController::mouseButtonPressed action: " << key << std::endl;
+            
+            if (key == MouseAction::CameraMove)
+            {
+                mCameraRotating = true;
+                return true;
+            }
+        }
+        
+    } while (0);
+    
+    return InterfaceResponder::mouseButtonPressed(renderWindow, p, buttonID);
+}
+
+bool VSC::OB::DisplayController::mouseButtonReleased(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& p, OIS::MouseButtonID buttonID)
+{
+    do {
+        
+        MouseBindings::SPtr mouseBindings = this->getOBMouseBindings();
+        BOOST_ASSERT(mouseBindings);
+        if (!mouseBindings) break;
+        
+        InterfaceAdapter::SPtr adapter = this->getInterfaceAdapter();
+        BOOST_ASSERT(adapter);
+        if (!adapter) break;
+        
+        /*
+         *  If the camera is rotating then we don't care about the modifier, if the mouse button matches camera move action,
+         *  then stop rotating
+         */
+        
+        const Mouse::Combination::Set& combinations = mouseBindings->getInputsForAction(MouseAction::CameraMove);
+        
+        BOOST_FOREACH(const Mouse::Combination& combination, combinations)
+        {
+            if (combination.button == buttonID)
+            {
+                mCameraRotating = false;
+                return true;
+            }
+        }
+        
+    } while (0);
+    
+    return InterfaceResponder::mouseButtonPressed(renderWindow, p, buttonID);
+}
+
 // -------------------------------------------------------------------------
 bool VSC::OB::DisplayController::mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
     if (mTraceUI) std::cout << "VSC::OB::DisplayController::mouseMoved position " << position << ", movement " << movement << std::endl;
     
-    //bool handled = true;
-    
-    InterfaceAdapter::SPtr adapter = this->getInterfaceAdapter();
-    
-    BOOST_ASSERT(adapter);
-    
-    OIS::Keyboard::Modifier modifier = adapter->getCurrentModifier();
-    
-    if (mTraceUI) std::cout << "VSC::OB::DisplayController::mouseMoved modifer " << modifier << std::endl;
-    
-    if (adapter && adapter->isMouseButtonPressed(OIS::MB_Right))
+    if (mCameraRotating)
     {
-        if (mTraceUI) std::cout << "VSC::OB::DisplayController::mouseMoved RIGHT BUTTON PRESSED" << std::endl;
+        if (mTraceUI) std::cout << "VSC::OB::DisplayController::mouseMoved mCameraRotating == true" << std::endl;
+        
         mCameraRotX = Ogre::Degree(-movement.x * mMouseSensitivity);
         mCameraRotY = Ogre::Degree(-movement.y * mMouseSensitivity);
-        if (mTraceUI) std::cout << "VSC::OB::DisplayController::mouseMoved mCameraRotX: " << mCameraRotX << " mCameraRotY:" << mCameraRotY << std::endl;
+        
+        if (mTraceUI)
+        {
+            std::cout << "VSC::OB::DisplayController::mouseMoved mCameraRotX: " << mCameraRotX;
+            std::cout << " mCameraRotY:" << mCameraRotY << std::endl;
+        }
+        
         return true;
     }
     
@@ -69,14 +142,14 @@ bool VSC::OB::DisplayController::keyPressed(Ogre::RenderWindow* renderWindow, OI
     bool handled = true;
     
     BOOST_ASSERT_MSG(adapter, "Expected adapter");
-    BOOST_ASSERT_MSG(this->getOgreKeyBindings(), "Expected key bindings");
+    BOOST_ASSERT_MSG(this->getOBKeyBindings(), "Expected key bindings");
     
-    if (adapter && this->getOgreKeyBindings())
+    if (adapter && this->getOBKeyBindings())
     {
         OIS::Keyboard::Modifier modifier = adapter->getCurrentModifier();
         VSC::Keyboard::Combination comb(key, modifier);
         
-        const VSC::OB::KeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
+        const VSC::OB::KeyboardAction::KeySet& actionKeySet = this->getOBKeyBindings()->getActionsForInput(comb);
         
         if (mTraceUI) std::cout << "actionKeySet has " << actionKeySet.size() << " elements" << std::endl;
         
@@ -135,7 +208,7 @@ bool VSC::OB::DisplayController::keyReleased(Ogre::RenderWindow* renderWindow, O
     bool handled = true;
     
     BOOST_ASSERT_MSG(adapter, "Expected adapter");
-    BOOST_ASSERT_MSG(this->getOgreKeyBindings(), "Expected key bindings");
+    BOOST_ASSERT_MSG(this->getOBKeyBindings(), "Expected key bindings");
     
     if (adapter) 
     {
@@ -143,7 +216,7 @@ bool VSC::OB::DisplayController::keyReleased(Ogre::RenderWindow* renderWindow, O
         OIS::Keyboard::Modifier modifier = adapter->getCurrentModifier();
         VSC::Keyboard::Combination comb(key, modifier);
         
-        const VSC::OB::KeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
+        const VSC::OB::KeyboardAction::KeySet& actionKeySet = this->getOBKeyBindings()->getActionsForInput(comb);
         
         BOOST_FOREACH (VSC::OB::KeyboardAction::Key actionKey, actionKeySet) 
         {
@@ -207,7 +280,7 @@ bool VSC::OB::DisplayController::frameStarted(const Ogre::FrameEvent& evt)
     
     Ogre::Camera* camera = this->getDisplay()->getCamera();
     
-    if (adapter && adapter->isMouseButtonPressed(OIS::MB_Right))
+    if (mCameraRotating)
     {
         if (mTraceUI) std::cout << "VSC::OB::DisplayController detected right mouse, yaw: " << mCameraRotX << ", pitch: " << mCameraRotY << std::endl;
         

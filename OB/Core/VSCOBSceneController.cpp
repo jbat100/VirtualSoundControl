@@ -5,13 +5,11 @@
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
 #include "VSCOBInterface.h"
-#include "VSCOBKeyboardAction.h"
+#include "VSCOBKeyBindings.h"
+#include "VSCOBMouseBindings.h"
 #include "VSCOBDynamicObject.h"
 #include "VSCOBBasicSceneElementFactory.h"
 
-/*
- *  OgreBullet Shapes
- */
 #include "OgreBulletCollisionsShape.h"
 #include "Shapes/OgreBulletCollisionsBoxShape.h"
 #include "Shapes/OgreBulletCollisionsSphereShape.h"
@@ -24,18 +22,15 @@
 #include "Shapes/OgreBulletCollisionsConvexHullShape.h"
 #include "Shapes/OgreBulletCollisionsMinkowskiSumShape.h"
 #include "Shapes/OgreBulletCollisionsTrimeshShape.h"
-
-/**
- *  
- */
 #include "Utils/OgreBulletCollisionsMeshToShapeConverter.h"
 #include "OgreBulletCollisionsRay.h"
 #include "Debug/OgreBulletCollisionsDebugLines.h"
-
 #include "OgreBulletDynamicsWorld.h"
 #include "OgreBulletDynamicsRigidBody.h"
 #include "OgreBulletDynamicsConstraint.h"
 #include "Constraints/OgreBulletDynamicsPoint2pointConstraint.h" 
+
+#include <boost/assert.hpp>
 
 using namespace Ogre;
 using namespace OgreBulletCollisions;
@@ -102,8 +97,6 @@ void VSC::OB::SceneController::shutdown()
 {
     Scene::SPtr s = this->getScene();
     
-    //BOOST_ASSERT(this->getScene());
-    
     if (s)
     {
         s->getSceneManager()->destroyQuery(mRayQuery);
@@ -119,25 +112,39 @@ void VSC::OB::SceneController::shutdown()
 
 // MARK Interface
 
-//void VSC::OB::Scene::mouseButtonPressed(OIS::MouseButtonID buttonID)
 bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, OIS::MouseButtonID buttonID)
 {
     
     if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed : " << position << " (" << buttonID << ")" << std::endl;
     
-    Scene::SPtr scene = this->getScene();
-    
-    if (scene)
-    {
+    do {
+       
+        Scene::SPtr scene = this->getScene();
+        BOOST_ASSERT(scene);
+        if (!scene) break;
         
         Display::SPtr display = Application::singletonApplication()->getDisplayWithRenderWindow(renderWindow);
+        BOOST_ASSERT(display);
+        if (!display) break;
         
-        switch (buttonID)
+        InterfaceAdapter::SPtr adapter = this->getInterfaceAdapter();
+        BOOST_ASSERT(adapter);
+        if (!adapter) break;
+        
+        OIS::Keyboard::Modifier modifier = adapter->getCurrentModifier();
+        VSC::Mouse::Combination combination(buttonID, modifier);
+        
+        MouseBindings::SPtr mouseBindings = this->getOBMouseBindings();
+        BOOST_ASSERT(mouseBindings);
+        if (!mouseBindings) break;
+        
+        const OB::MouseAction::KeySet& actionKeySet = this->getOBMouseBindings()->getActionsForInput(combination);
+        
+        
+        BOOST_FOREACH(const OB::MouseAction::Key& key, actionKeySet)
         {
-            case OIS::MB_Left:
+            if (key == MouseAction::ObjectGrab)
             {
-                if (!display) break;
-                
                 // pick a body and try to drag it.
                 Ogre::Vector3 pickPos;
                 Ogre::Ray rayTo;
@@ -199,11 +206,9 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
                 return true;
                 
             }
-                
-            case OIS::MB_Middle:
+            
+            if (key == MouseAction::ObjectImpulse)
             {
-                if (!display) break;
-                
                 // small unique impulse under cursor.
                 Ogre::Vector3 pickPos;
                 Ogre::Ray rayTo;
@@ -237,26 +242,14 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
                     }
                     
                     scene->getDebugLines()->addLine(rayTo.getOrigin(), pickPos);
-                    scene->getDebugLines()->draw();	
+                    scene->getDebugLines()->draw();
                 }
                 
                 return true;
             }
-                
-                
-            case OIS::MB_Right:
-            {
-                break;
-            }
-                
-            default:
-            {
-                if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseButtonPressed unknown mouse button pressed " << buttonID << std::endl;
-                break;
-            }
         }
-    }
-    
+        
+    } while (0);
     
     return VSC::OB::InterfaceResponder::mouseButtonPressed(renderWindow, position, buttonID);
 }
@@ -271,47 +264,43 @@ bool VSC::OB::SceneController::mouseButtonReleased(Ogre::RenderWindow* renderWin
         std::cout << position << " (" << buttonID << ")" << std::endl;
     }
     
-    Scene::SPtr scene = this->getScene();
-    
-    switch (buttonID) 
-    {
-        case OIS::MB_Left:
+    do {
+        
+        Scene::SPtr scene = this->getScene();
+        BOOST_ASSERT(scene);
+        if (!scene) break;
+        
+        MouseBindings::SPtr mouseBindings = this->getOBMouseBindings();
+        BOOST_ASSERT(mouseBindings);
+        if (!mouseBindings) break;
+        
+        const Mouse::Combination::Set& combinations = mouseBindings->getInputsForAction(MouseAction::ObjectGrab);
+        
+        if (mPickConstraint)
         {
-            if (mPickConstraint)
+            // Was dragging, but button released. Remove constraint if mouse button matches even if the modifier is no longer the same...
+            
+            BOOST_FOREACH(const Mouse::Combination& combination, combinations)
             {
-                // was dragging, but button released
-                // Remove constraint
-                scene->getDynamicsWorld()->removeConstraint(mPickConstraint);
-                delete mPickConstraint;
-                
-                mPickConstraint = 0;
-                mPickedBody->forceActivationState();
-                mPickedBody->setDeactivationTime( 0.f );
-                mPickedBody = 0;	
-                
-                scene->getDebugLines()->addLine (Ogre::Vector3::ZERO, Ogre::Vector3::ZERO);	
-                scene->getDebugLines()->draw();  
+                if (combination.button == buttonID)
+                {
+                    scene->getDynamicsWorld()->removeConstraint(mPickConstraint);
+                    delete mPickConstraint;
+                    
+                    mPickConstraint = 0;
+                    mPickedBody->forceActivationState();
+                    mPickedBody->setDeactivationTime(0.f);
+                    mPickedBody = 0;
+                    
+                    scene->getDebugLines()->addLine (Ogre::Vector3::ZERO, Ogre::Vector3::ZERO);
+                    scene->getDebugLines()->draw();
+                    
+                    return true;
+                }
             }
-            
-            return true;
         }
-            
-        case OIS::MB_Middle:
-        {
-            return true; // middle button is handled by scene for shooting
-        }
-            
-        case OIS::MB_Right:
-        {
-            break;
-        }
-            
-        default:
-        {
-            std::cout << "VSC::OB::SceneController::mouseButtonReleased unknown mouse button released " << buttonID << std::endl;
-            break;
-        }
-    }
+        
+    } while (0);
     
     return VSC::OB::InterfaceResponder::mouseButtonReleased(renderWindow, position, buttonID);
 }
@@ -322,21 +311,34 @@ bool VSC::OB::SceneController::mouseButtonReleased(Ogre::RenderWindow* renderWin
 bool VSC::OB::SceneController::mouseMoved(Ogre::RenderWindow* renderWindow,
                                           const Ogre::Vector2& position, const Ogre::Vector2& movement)
 {
-    if (mTraceUI)
-    {
-        std::cout << "VSC::OB::SceneController::mouseMoved position: ";
-        std::cout << position << ", movement: " << movement << "" << std::endl;
-    }
     
-    Scene::SPtr scene = this->getScene();
-    BOOST_ASSERT(scene);
-    Display::SPtr display = Application::singletonApplication()->getDisplayWithRenderWindow(renderWindow);
-    
-    InterfaceAdapter::SPtr adapter = this->getInterfaceAdapter();
-    BOOST_ASSERT(adapter);
-    
-    if (adapter->isMouseButtonPressed(OIS::MB_Left))
-    {
+    do {
+        
+        Scene::SPtr scene = this->getScene();
+        BOOST_ASSERT(scene);
+        if (!scene) break;
+        
+        Display::SPtr display = Application::singletonApplication()->getDisplayWithRenderWindow(renderWindow);
+        BOOST_ASSERT(display);
+        if (!display) break;
+        
+        InterfaceAdapter::SPtr adapter = this->getInterfaceAdapter();
+        BOOST_ASSERT(adapter);
+        if (!adapter) break;
+        
+        OIS::Keyboard::Modifier modifier = adapter->getCurrentModifier();
+        if (mTraceUI)
+        {
+            std::cout << "VSC::OB::SceneController::mouseMoved position: ";
+            std::cout << position << ", movement: " << movement;
+            std::cout << ", modifier is " << modifier << std::endl;
+        }
+        
+        /*
+         *  If we have a picking constraint and the mouse moves, then screw the bindings, we drag the object,
+         *  no matter what...
+         */
+        
         if (mPickConstraint)
         {
             if (mTraceUI)
@@ -357,22 +359,17 @@ bool VSC::OB::SceneController::mouseMoved(Ogre::RenderWindow* renderWindow,
             //keep it at the same picking distance
             const Ogre::Vector3 eyePos(display->getCamera()->getDerivedPosition());
             Ogre::Vector3 dir = rayTo.getDirection () * mOldPickingDistance;
-
+            
             const Ogre::Vector3 newPos (eyePos + dir);
-            p2p->setPivotB (newPos);    
-
+            p2p->setPivotB (newPos);
+            
             scene->getDebugLines()->addLine (mPickedBody->getWorldPosition (), newPos);
             scene->getDebugLines()->draw();
             
+            return true;
         }
         
-        else
-        {
-            if (mTraceUI) std::cout << "VSC::OB::SceneController::mouseMoved Left button is pressed and constraint does not exists" << std::endl;
-        }
-        
-        return true;
-    }
+    } while (0);
 
     return VSC::OB::InterfaceResponder::mouseMoved(renderWindow, position, movement);
 
@@ -421,9 +418,9 @@ bool VSC::OB::SceneController::keyPressed(Ogre::RenderWindow* renderWindow, OIS:
     
     std::cout << "Actual input is " << comb << std::endl;
     
-    BOOST_ASSERT_MSG(this->getOgreKeyBindings(), "Expected key bindings");
+    BOOST_ASSERT_MSG(this->getOBKeyBindings(), "Expected key bindings");
     
-    const VSC::OB::KeyboardAction::KeySet& actionKeySet = this->getOgreKeyBindings()->getActionsForInput(comb);
+    const VSC::OB::KeyboardAction::KeySet& actionKeySet = this->getOBKeyBindings()->getActionsForInput(comb);
     
     BOOST_FOREACH (VSC::OB::KeyboardAction::Key actionKey, actionKeySet) 
     {
@@ -633,7 +630,7 @@ bool VSC::OB::SceneController::throwDynamicObjectPrimitive(Ogre::RenderWindow* r
         case VSC::OB::PrimitiveCone: 
             description.name = "Cone";
             description.size = gConeBodyBounds;
-            object = sceneFactory->addPrimitive(VSC::OB::PrimitiveCylinder, description);
+            object = sceneFactory->addPrimitive(VSC::OB::PrimitiveCone, description);
             break;
             
         default:

@@ -1,11 +1,11 @@
 
-#ifndef _VSC_OGRE_KEYBOARD_MANAGER_H_
-#define _VSC_OGRE_KEYBOARD_MANAGER_H_
+#ifndef _VSC_OGRE_MOUSE_MANAGER_H_
+#define _VSC_OGRE_MOUSE_MANAGER_H_
 
 #include "VSCUI.h"
 #include "VSCBindings.hpp"
-#include "VSCOBKeyboardAction.h"
-#include "VSCOBKeyBindings.h"
+#include "VSCOBMouseAction.h"
+#include "VSCOBMouseBindings.h"
 
 #include <boost/shared_ptr.hpp>
 
@@ -13,20 +13,17 @@ namespace VSC {
     
     namespace OB {
 
-        class KeyboardManager
+        class MouseManager
         {
             
         public:
             
             typedef boost::shared_ptr<KeyboardManager> SPtr;
             
-            KeyboardManager();
-            ~KeyboardManager();
+            MouseManager();
+            ~MouseManager();
             
-            KeyBindings::SPtr generateDefaultBindings(void);
-            
-        private:
-            
+            MouseBindings::SPtr generateDefaultBindings(void);
             
         };
         

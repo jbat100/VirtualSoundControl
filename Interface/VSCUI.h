@@ -20,6 +20,7 @@ namespace VSC {
         
         struct Combination
         {
+            typedef std::set<Combination> Set;
             OIS::Keyboard::Modifier modifier;
             OIS::KeyCode code;
             bool operator!=(const Combination& p) const;
@@ -45,6 +46,7 @@ namespace VSC {
         
         struct Combination
         {
+            typedef std::set<Combination> Set;
             OIS::Keyboard::Modifier modifier;
             OIS::MouseButtonID button;
             bool operator!=(const Combination& p) const;

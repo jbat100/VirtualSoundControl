@@ -14,7 +14,7 @@
 #include "VSCOBSceneController.h"
 #include "VSCOBDisplayController.h"
 #include "VSCOBKeyBindings.h"
-#include "VSCOBKeyboardManager.h"
+#include "VSCOBMouseBindings.h"
 
 #include <boost/assert.hpp>
 
@@ -39,16 +39,19 @@ static const bool mTraceUI = false;
         VSC::OB::Display::SPtr d = VSC::OB::Application::singletonApplication()->createDisplayWithView<VSC::OB::Display>((__bridge void*)self);
         self.display = VSC::OB::Display::WPtr(d);
         
-        VSC::OB::KeyboardManager::SPtr keyboardManager = VSC::OB::KeyboardManager::SPtr(new VSC::OB::KeyboardManager());
-        VSC::OB::KeyBindings::SPtr keyBindings = keyboardManager->generateDefaultBindings();
+        VSC::OB::KeyBindings::SPtr keyBindings = VSC::OB::KeyBindings::generateDefaultBindings();
+        VSC::OB::MouseBindings::SPtr mouseBindings = VSC::OB::MouseBindings::generateDefaultBindings();
         
         self.interfaceResponderChain = VSC::OB::InterfaceResponderChain::SPtr(new VSC::OB::InterfaceResponderChain);
         
         self.internalSceneController = VSC::OB::SceneController::SPtr(new VSC::OB::SceneController);
-        self.internalSceneController->setOgreKeyBindings(keyBindings);
+        self.internalSceneController->setOBKeyBindings(keyBindings);
+        self.internalSceneController->setOBMouseBindings(mouseBindings);
         
         self.displayController = VSC::OB::DisplayController::SPtr(new VSC::OB::DisplayController);
-        self.displayController->setOgreKeyBindings(keyBindings);
+        self.displayController->setOBKeyBindings(keyBindings);
+        self.displayController->setOBMouseBindings(mouseBindings);
+        
         self.displayController->setupWithDisplay(self.display.lock());
         
         self.interfaceResponderChain->appendResponder(boost::static_pointer_cast<VSC::OB::InterfaceResponder>(self.internalSceneController));
@@ -165,6 +168,7 @@ static const bool mTraceUI = false;
 - (void)mouseDown:(NSEvent *)theEvent {
     if (mTraceUI) NSLog(@"%@ mouseDown: %@", self, theEvent);
     self.inputAdapter->mouseDown([self ogreWindow], theEvent);
+    
 }
 
 - (void)mouseUp:(NSEvent *)theEvent {
@@ -211,13 +215,19 @@ static const bool mTraceUI = false;
     self.inputAdapter->otherMouseDragged([self ogreWindow], theEvent);
 }
 
-#pragma mark Scroll Wheel
+#pragma mark - Scroll Wheel
 
 - (void) scrollWheel:(NSEvent *)theEvent {
     if (mTraceUI) NSLog(@"%@ scrollWheel: %@", self, theEvent);
     self.inputAdapter->scrollWheel([self ogreWindow], theEvent);
 }
 
+#pragma mark - Modifiers
+
+- (void)flagsChanged:(NSEvent *)theEvent {
+    if (mTraceUI) NSLog(@"%@ flagsChanged: %@", self, theEvent);
+    self.inputAdapter->modifierChanged([self ogreWindow], theEvent);
+}
 
 
 @end

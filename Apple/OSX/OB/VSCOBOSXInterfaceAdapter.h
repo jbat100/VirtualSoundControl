@@ -50,12 +50,13 @@ namespace VSC {
             void rightMouseUp(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
             void scrollWheel(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
             
+            void modifierChanged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent);
 
             /*
              *  OIS/Cocoa conversion utilities
              */
             OIS::KeyCode keyCodeForEvent(NSEvent* e);
-            OIS::Keyboard::Modifier modiferForCocoaModifierFlags(NSUInteger m);
+            OIS::Keyboard::Modifier modifierForCocoaModifierFlags(NSUInteger m);
             
             /*
              *  Cocoa view

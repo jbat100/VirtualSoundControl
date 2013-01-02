@@ -6,6 +6,7 @@
 #include "VSCOB.h"
 #include "VSCOBInterface.h"
 #include "VSCOBKeyBindings.h"
+#include "VSCOBMouseBindings.h"
 #include "VSCOBScene.h"
 
 #include "OgreBulletDynamics.h"
@@ -22,7 +23,7 @@ namespace VSC {
          *  Used to translate user input to scene actions.
          */
          
-        class SceneController : public InterfaceResponder, public KeyBound
+        class SceneController : public InterfaceResponder, public KeyBound, public MouseBound
         {
         public:
             

@@ -5,7 +5,6 @@
 #include "VSCUI.h"  
 #include "VSCBindings.hpp"
 #include "VSCBound.hpp"
-#include "VSCOBMouseAction.h"
 
 #include <boost/shared_ptr.hpp>
 
@@ -14,6 +13,33 @@
 namespace VSC {
     
     namespace OB {
+        
+        class MouseAction
+        {
+            
+        public:
+            
+            enum Key
+            {
+                None = 0,
+                
+                CameraMove,
+                
+                ObjectGrab,
+                ObjectImpulse,
+                ObjectSelect,
+                ObjectTranslate,
+                ObjectRotate,
+                
+            };
+            
+            typedef std::set<Key>   KeySet;
+            
+            static std::string stringForKey(Key key);
+            
+        };
+        
+        std::ostream& operator << (std::ostream& stream, const MouseAction::Key& key);
 
         class MouseBindings : public VSC::Bindings<MouseAction::Key, VSC::Mouse::Combination>
         {
@@ -24,6 +50,8 @@ namespace VSC {
             
             MouseBindings() {}
             virtual ~MouseBindings() {}
+            
+            static MouseBindings::SPtr generateDefaultBindings(void);
             
         };
 

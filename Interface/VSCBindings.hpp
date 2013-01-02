@@ -88,7 +88,7 @@ const typename Bindings<Action,Input>::InputSet& Bindings<Action,Input>::getInpu
 {
     typename ActionInputsMap::iterator it = mActionInputsMap.find(action);
     
-    if (it == mInputActionsMap.end())
+    if (it == mActionInputsMap.end())
     {
         /*
          *  If we don't have anything, then create an empty set and return that.

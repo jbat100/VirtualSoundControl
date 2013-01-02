@@ -4,7 +4,7 @@
 
 #include "VSCOBInterface.h"
 #include "VSCOBKeyBindings.h"
-#include "VSCOBKeyboardAction.h"
+#include "VSCOBMouseBindings.h"
 #include "VSCOBDisplay.h"
 #include <Ogre/Ogre.h>
 
@@ -15,7 +15,7 @@ namespace VSC {
     
     namespace OB {
 
-        class DisplayController : public InterfaceResponder, public KeyBound, public Ogre::FrameListener
+        class DisplayController : public InterfaceResponder, public KeyBound, public MouseBound, public Ogre::FrameListener
         {
             
         public:
@@ -51,7 +51,8 @@ namespace VSC {
              *  Input Listener Overrides, only need to override these
              *  These can be overriden further to provide special camera control...
              */
-            
+            virtual bool mouseButtonPressed(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& p, OIS::MouseButtonID buttonID);
+            virtual bool mouseButtonReleased(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& p, OIS::MouseButtonID buttonID);
             virtual bool mouseMoved(Ogre::RenderWindow* renderWindow, const Ogre::Vector2& position, const Ogre::Vector2& movement);
             virtual bool keyPressed(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
             virtual bool keyReleased(Ogre::RenderWindow* renderWindow, OIS::KeyCode key);
@@ -93,6 +94,7 @@ namespace VSC {
             
             Float                               mMouseSensitivity;
             Float                               mCameraSpeed;
+            bool                                mCameraRotating; // when mouse dragging
             
             const static bool                   mTraceUI = true;
             const static bool                   mTraceFrame = false;

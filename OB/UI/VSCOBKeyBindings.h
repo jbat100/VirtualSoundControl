@@ -5,7 +5,6 @@
 #include "VSCUI.h"  
 #include "VSCBindings.hpp"
 #include "VSCBound.hpp"
-#include "VSCOBKeyboardAction.h"
 
 #include <boost/shared_ptr.hpp>
 
@@ -14,6 +13,96 @@
 namespace VSC {
     
     namespace OB {
+        
+        class KeyboardAction
+        {
+            
+        public:
+            
+            enum Key
+            {
+                None = 0,
+                
+                /*
+                 *  General
+                 */
+                
+                Quit,
+                SaveScreenShot,
+                
+                /*
+                 *  Movement
+                 */
+                
+                MoveCameraForward,
+                MoveCameraBackward,
+                MoveCameraRight,
+                MoveCameraLeft,
+                
+                /*
+                 *  Debug Display
+                 */
+                
+                ToggleDisplayWireFrame,
+                ToggleDisplayAABB,
+                ToggleFeaturesText,
+                ToggleDisplayContactPoints,
+                ToggleDeactivation,
+                ToggleHelpText,
+                ToggleDrawText,
+                ToggleProfileTimings,
+                ToggleSatComparison,
+                ToggleBulletLCP,
+                ToggleCCD,
+                
+                /*
+                 *  Simulation
+                 */
+                
+                ToggleSimulationPause,
+                SimulationStep,
+                
+                /*
+                 *  Shooting
+                 */
+                
+                IncrementShootSpeed,
+                DecrementShootSpeed,
+                ShootCube,
+                ShootSphere,
+                ShootCylinder,
+                ShootCone,
+                DropCube,
+                DropSphere,
+                DropCylinder,
+                DropCone,
+                
+                /*
+                 *  Vehicle
+                 */
+                
+                VehicleSteerLeft,
+                VehicleSteerRight,
+                VehicleMoveForward,
+                VehicleMoveBackward,
+                VehicleIncrementEngineStyle,
+                VehicleDecrementEngineStyle,
+                VehicleIncrementSteeringStyle,
+                VehicleDecrementSteeringStyle,
+                
+                
+            };
+            
+            typedef std::set<Key>   KeySet;
+            
+            static std::string stringForKey(Key key);
+            
+            static bool actionThrowsDynamicObject(Key key);
+            static bool actionDropsDynamicObject(Key key);
+            
+        };
+        
+        std::ostream& operator << (std::ostream& stream, const KeyboardAction::Key& key);
 
         class KeyBindings : public VSC::Bindings<KeyboardAction::Key, VSC::Keyboard::Combination>
         {
@@ -24,6 +113,8 @@ namespace VSC {
             
             KeyBindings() {}
             virtual ~KeyBindings() {}
+            
+            static KeyBindings::SPtr generateDefaultBindings(void);
             
         };
 
@@ -36,8 +127,8 @@ namespace VSC {
             KeyBound() {}
             virtual ~KeyBound() {}
             
-            void                    setOgreKeyBindings(KeyBindings::SPtr keyBindings);
-            KeyBindings::SPtr       getOgreKeyBindings(void);
+            void                    setOBKeyBindings(KeyBindings::SPtr keyBindings);
+            KeyBindings::SPtr       getOBKeyBindings(void);
             
         private:
             

@@ -147,6 +147,19 @@
 		10D5533A15FA409F002AED81 /* NSString+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10D5533915FA409F002AED81 /* NSString+VSCAdditions.mm */; };
 		10D7AE8B1628554E00DE0F72 /* VSCMIDIOutputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10D7AE891628554D00DE0F72 /* VSCMIDIOutputManager.cpp */; };
 		10D7AE9C1628767F00DE0F72 /* VSCOSXMIDIWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10D7AE951628767F00DE0F72 /* VSCOSXMIDIWindowController.mm */; };
+		10D91D2B16949ADA001F3CFB /* VSCOBInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A8F79516939F060056D8F7 /* VSCOBInterface.cpp */; };
+		10D91D2C16949ADA001F3CFB /* VSCOBKeyBindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A8F79716939F060056D8F7 /* VSCOBKeyBindings.cpp */; };
+		10D91D2D16949ADA001F3CFB /* VSCOBMouseBindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A8F7B91693A0AF0056D8F7 /* VSCOBMouseBindings.cpp */; };
+		10D91D2E16949ADA001F3CFB /* VSCOB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A8F79D16939F2D0056D8F7 /* VSCOB.cpp */; };
+		10D91D2F16949ADA001F3CFB /* VSCOBApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A8F79F16939F2D0056D8F7 /* VSCOBApplication.cpp */; };
+		10D91D3016949ADA001F3CFB /* VSCOBBasicSceneElementFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A8F7A116939F2D0056D8F7 /* VSCOBBasicSceneElementFactory.cpp */; };
+		10D91D3116949ADA001F3CFB /* VSCOBDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A8F7A316939F2D0056D8F7 /* VSCOBDisplay.cpp */; };
+		10D91D3216949ADA001F3CFB /* VSCOBDisplayController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A8F7A516939F2E0056D8F7 /* VSCOBDisplayController.cpp */; };
+		10D91D3316949ADA001F3CFB /* VSCOBDynamicObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A8F7A716939F2E0056D8F7 /* VSCOBDynamicObject.cpp */; };
+		10D91D3416949ADA001F3CFB /* VSCOBResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A8F7A916939F2E0056D8F7 /* VSCOBResourceManager.cpp */; };
+		10D91D3516949ADA001F3CFB /* VSCOBScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A8F7AB16939F2E0056D8F7 /* VSCOBScene.cpp */; };
+		10D91D3616949ADA001F3CFB /* VSCOBSceneController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A8F7AD16939F2E0056D8F7 /* VSCOBSceneController.cpp */; };
+		10D91D3716949ADA001F3CFB /* VSCOBStaticObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10A8F7AF16939F2E0056D8F7 /* VSCOBStaticObject.cpp */; };
 		10E8557415E65048008FF635 /* VSCUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E8557215E65048008FF635 /* VSCUI.cpp */; };
 		10EB5A3B16050D7500F0939E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10EB5A3A16050D7500F0939E /* OpenGL.framework */; };
 		10EB5E5E16298E0B00E0F030 /* VSCOSXApplicationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10EB5E5D16298E0B00E0F030 /* VSCOSXApplicationManager.mm */; };
@@ -295,10 +308,6 @@
 		10A8F79616939F060056D8F7 /* VSCOBInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOBInterface.h; path = ../../../../../OB/UI/VSCOBInterface.h; sourceTree = "<group>"; };
 		10A8F79716939F060056D8F7 /* VSCOBKeyBindings.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBKeyBindings.cpp; path = ../../../../../OB/UI/VSCOBKeyBindings.cpp; sourceTree = "<group>"; };
 		10A8F79816939F060056D8F7 /* VSCOBKeyBindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOBKeyBindings.h; path = ../../../../../OB/UI/VSCOBKeyBindings.h; sourceTree = "<group>"; };
-		10A8F79916939F060056D8F7 /* VSCOBKeyboardAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBKeyboardAction.cpp; path = ../../../../../OB/UI/VSCOBKeyboardAction.cpp; sourceTree = "<group>"; };
-		10A8F79A16939F060056D8F7 /* VSCOBKeyboardAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOBKeyboardAction.h; path = ../../../../../OB/UI/VSCOBKeyboardAction.h; sourceTree = "<group>"; };
-		10A8F79B16939F060056D8F7 /* VSCOBKeyboardManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBKeyboardManager.cpp; path = ../../../../../OB/UI/VSCOBKeyboardManager.cpp; sourceTree = "<group>"; };
-		10A8F79C16939F060056D8F7 /* VSCOBKeyboardManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOBKeyboardManager.h; path = ../../../../../OB/UI/VSCOBKeyboardManager.h; sourceTree = "<group>"; };
 		10A8F79D16939F2D0056D8F7 /* VSCOB.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOB.cpp; path = ../../../../../OB/Core/VSCOB.cpp; sourceTree = "<group>"; };
 		10A8F79E16939F2D0056D8F7 /* VSCOB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOB.h; path = ../../../../../OB/Core/VSCOB.h; sourceTree = "<group>"; };
 		10A8F79F16939F2D0056D8F7 /* VSCOBApplication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBApplication.cpp; path = ../../../../../OB/Core/VSCOBApplication.cpp; sourceTree = "<group>"; };
@@ -322,12 +331,8 @@
 		10A8F7B116939F430056D8F7 /* Plugins_d.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Plugins_d.cfg; path = ../../../../../OB/Core/Plugins_d.cfg; sourceTree = "<group>"; };
 		10A8F7B216939F430056D8F7 /* Plugins.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Plugins.cfg; path = ../../../../../OB/Core/Plugins.cfg; sourceTree = "<group>"; };
 		10A8F7B316939F430056D8F7 /* resources.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = resources.cfg; path = ../../../../../OB/Core/resources.cfg; sourceTree = "<group>"; };
-		10A8F7B71693A0AF0056D8F7 /* VSCOBMouseAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBMouseAction.cpp; path = ../../../../../OB/UI/VSCOBMouseAction.cpp; sourceTree = "<group>"; };
-		10A8F7B81693A0AF0056D8F7 /* VSCOBMouseAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOBMouseAction.h; path = ../../../../../OB/UI/VSCOBMouseAction.h; sourceTree = "<group>"; };
 		10A8F7B91693A0AF0056D8F7 /* VSCOBMouseBindings.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBMouseBindings.cpp; path = ../../../../../OB/UI/VSCOBMouseBindings.cpp; sourceTree = "<group>"; };
 		10A8F7BA1693A0AF0056D8F7 /* VSCOBMouseBindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOBMouseBindings.h; path = ../../../../../OB/UI/VSCOBMouseBindings.h; sourceTree = "<group>"; };
-		10A8F7BB1693A0AF0056D8F7 /* VSCOBMouseManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCOBMouseManager.cpp; path = ../../../../../OB/UI/VSCOBMouseManager.cpp; sourceTree = "<group>"; };
-		10A8F7BC1693A0AF0056D8F7 /* VSCOBMouseManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOBMouseManager.h; path = ../../../../../OB/UI/VSCOBMouseManager.h; sourceTree = "<group>"; };
 		10AF53D6163D2F1B00419EEE /* VSCOSXOBSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneController.h; path = ../../../OB/VSCOSXOBSceneController.h; sourceTree = "<group>"; };
 		10AF53F0163D340000419EEE /* VSCOSXOBSceneController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneController.mm; path = ../../../OB/VSCOSXOBSceneController.mm; sourceTree = "<group>"; };
 		10AF53F7163D76B300419EEE /* VSCOSXEnvironmentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOSXEnvironmentController.h; path = ../../Application/VSCOSXEnvironmentController.h; sourceTree = "<group>"; };
@@ -800,16 +805,8 @@
 				10A8F79616939F060056D8F7 /* VSCOBInterface.h */,
 				10A8F79716939F060056D8F7 /* VSCOBKeyBindings.cpp */,
 				10A8F79816939F060056D8F7 /* VSCOBKeyBindings.h */,
-				10A8F79916939F060056D8F7 /* VSCOBKeyboardAction.cpp */,
-				10A8F79A16939F060056D8F7 /* VSCOBKeyboardAction.h */,
-				10A8F79B16939F060056D8F7 /* VSCOBKeyboardManager.cpp */,
-				10A8F79C16939F060056D8F7 /* VSCOBKeyboardManager.h */,
-				10A8F7B71693A0AF0056D8F7 /* VSCOBMouseAction.cpp */,
-				10A8F7B81693A0AF0056D8F7 /* VSCOBMouseAction.h */,
 				10A8F7B91693A0AF0056D8F7 /* VSCOBMouseBindings.cpp */,
 				10A8F7BA1693A0AF0056D8F7 /* VSCOBMouseBindings.h */,
-				10A8F7BB1693A0AF0056D8F7 /* VSCOBMouseManager.cpp */,
-				10A8F7BC1693A0AF0056D8F7 /* VSCOBMouseManager.h */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1520,6 +1517,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10D91D2B16949ADA001F3CFB /* VSCOBInterface.cpp in Sources */,
+				10D91D2C16949ADA001F3CFB /* VSCOBKeyBindings.cpp in Sources */,
+				10D91D2D16949ADA001F3CFB /* VSCOBMouseBindings.cpp in Sources */,
+				10D91D2E16949ADA001F3CFB /* VSCOB.cpp in Sources */,
+				10D91D2F16949ADA001F3CFB /* VSCOBApplication.cpp in Sources */,
+				10D91D3016949ADA001F3CFB /* VSCOBBasicSceneElementFactory.cpp in Sources */,
+				10D91D3116949ADA001F3CFB /* VSCOBDisplay.cpp in Sources */,
+				10D91D3216949ADA001F3CFB /* VSCOBDisplayController.cpp in Sources */,
+				10D91D3316949ADA001F3CFB /* VSCOBDynamicObject.cpp in Sources */,
+				10D91D3416949ADA001F3CFB /* VSCOBResourceManager.cpp in Sources */,
+				10D91D3516949ADA001F3CFB /* VSCOBScene.cpp in Sources */,
+				10D91D3616949ADA001F3CFB /* VSCOBSceneController.cpp in Sources */,
+				10D91D3716949ADA001F3CFB /* VSCOBStaticObject.cpp in Sources */,
 				10B60D3115505D6D006A6D6E /* main.m in Sources */,
 				10B60D3815505D6D006A6D6E /* VSCAppDelegate.mm in Sources */,
 				109D51B5155998EE0030C161 /* VSCException.cpp in Sources */,

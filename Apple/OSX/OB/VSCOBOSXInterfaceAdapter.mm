@@ -186,13 +186,15 @@ OIS::KeyCode VSC::OB::OSXInterfaceAdapter::keyCodeForEvent(NSEvent* s) {
     
 }
 
-OIS::Keyboard::Modifier VSC::OB::OSXInterfaceAdapter::modiferForCocoaModifierFlags(NSUInteger m) {
+OIS::Keyboard::Modifier VSC::OB::OSXInterfaceAdapter::modifierForCocoaModifierFlags(NSUInteger m) {
     
     OIS::Keyboard::Modifier oisMod = (OIS::Keyboard::Modifier)0;
     
-    if (m && NSShiftKeyMask)        oisMod = (OIS::Keyboard::Modifier) (oisMod | OIS::Keyboard::Shift);
-    if (m && NSControlKeyMask)      oisMod = (OIS::Keyboard::Modifier) (oisMod | OIS::Keyboard::Ctrl);
-    if (m && NSAlternateKeyMask)    oisMod = (OIS::Keyboard::Modifier) (oisMod | OIS::Keyboard::Alt);
+    if (m & NSShiftKeyMask)        oisMod = (OIS::Keyboard::Modifier) (oisMod | OIS::Keyboard::Shift);
+    if (m & NSControlKeyMask)      oisMod = (OIS::Keyboard::Modifier) (oisMod | OIS::Keyboard::Ctrl);
+    if (m & NSAlternateKeyMask)    oisMod = (OIS::Keyboard::Modifier) (oisMod | OIS::Keyboard::Alt);
+    
+    NSLog(@"VSC::OB::OSXInterfaceAdapter::modifierForCocoaModifierFlags %lu, returning %d", m, (int)oisMod);
     
     return oisMod;
     
@@ -237,6 +239,10 @@ void VSC::OB::OSXInterfaceAdapter::mouseMoved(Ogre::RenderWindow* renderWindow, 
 void VSC::OB::OSXInterfaceAdapter::mouseDown(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     
     Ogre::Vector2 location = this->adaptedMouseLocationForEvent(theEvent);
+    
+    OIS::Keyboard::Modifier modifier = this->modifierForCocoaModifierFlags([theEvent modifierFlags]);
+    std::cout << "VSC::OB::OSXInterfaceAdapter::mouseDown modifier: " << modifier;
+    this->modifierChanged(renderWindow, theEvent);
     
     //OIS::MouseButtonID mouseButtonID = this->mouseButtonIdForEvent(theEvent);
     OIS::MouseButtonID mouseButtonID = OIS::MB_Left;
@@ -307,9 +313,14 @@ void VSC::OB::OSXInterfaceAdapter::rightMouseUp(Ogre::RenderWindow* renderWindow
     this->mouseButtonReleased(renderWindow, location, mouseButtonID);
 }
 
-
 void VSC::OB::OSXInterfaceAdapter::scrollWheel(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
     
+}
+
+void VSC::OB::OSXInterfaceAdapter::modifierChanged(Ogre::RenderWindow* renderWindow, NSEvent* theEvent) {
+    OIS::Keyboard::Modifier modifier = this->modifierForCocoaModifierFlags([theEvent modifierFlags]);
+    std::cout << "VSC::OB::OSXInterfaceAdapter::modifierChanged " << modifier << std::endl;
+    InterfaceAdapter::modifierChanged(renderWindow, modifier);
 }
 
 
