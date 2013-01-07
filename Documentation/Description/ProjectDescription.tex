@@ -1,0 +1,289 @@
+\documentclass[a4paper]{article}
+\usepackage{indentfirst}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{booktabs}
+\usepackage{psfrag}
+\pagenumbering{arabic}
+\usepackage[pdftex,
+    pdftitle={Virtual Sound Control Project Description},
+    pdfauthor={Jonathan Thorpe},
+    colorlinks=true, 
+    linkcolor=blue, 
+    citecolor=blue, 
+    urlcolor=blue
+    bookmarksnumbered, 
+    pdfstartview=XYZ, 
+    backref,
+    unicode,
+]{hyperref} 
+\usepackage{hyperref}
+
+
+\def\name{Jonathan B. A. Thorpe}
+\hypersetup{
+  colorlinks = true,
+  urlcolor = blue,
+  pdfauthor = {\name},
+  pdftitle = {\name: Virtual Sound Control Project Description},
+  pdfsubject = {Virtual Sound Control Project Description},
+  pdfpagemode = UseNone
+}
+
+\usepackage{natbib}
+\bibpunct{(}{)}{;}{a}{,}{,}
+
+\begin{document}
+
+\title{Virtual Sound Control Project Description}
+\author{\name\\
+  \href{http://www.nxpsoftware.com/}{NXP Software (Current Employer)},\\
+  \href{mailto:johnny.frenchy@gmail.com}{johnny.frenchy@gmail.com}}
+\date{\today}
+\maketitle
+
+\clearpage
+\tableofcontents
+\clearpage
+
+\section{Introduction}
+
+\paragraph{}
+This document describes the Virtual Sound Control Project (VSCP). This project aims to provide novel tools for designing virtual environments allowing the real-time control of sound synthesis. Current development is focused on the sonification of virtual object manipulations. The project is open source (BSD style licence, allowing use in commercial products), currently developed by the author of this document, but future contributions from other developers and cooperations with academia and industry are hoped for. 
+
+\paragraph{}
+Firstly, some background to the challenges of compound instrument design will be given in Section \ref{NaturalVsCompoundInstrumentDesign}, with specific attention to gestural control and multi-modal feedback. The specific scope and motivations for the VSCP will then be described in Section \ref{ScopeAndMotivation}, explaining some of the main ideas behind the project and clarifying it's goals. Sections \ref{TechnicalConsiderations} goes into fairly detailed technical considerations, explaining choices of platforms, programming languages and libraries. Finally, a current project status is presented in Section \ref{CurrentProjectStatus}, this will be kept up to date as much as time allows.
+
+\section{Background}
+
+\subsection{Natural vs Compound Instrument Design}
+\label{NaturalVsCompoundInstrumentDesign}
+
+\paragraph{}
+When using an acoustic instrument the performer is directly interacting with the physical sound production processes. The relationship between the musician's physical input and the sonic output of the instrument is determined by physical laws. The complex and intricate nature of the acoustic processes allows the sophisticated, organic and highly malleable sound achieved by experienced performers. The processing power offered by widely available modern computing hardware allows complex sound synthesis processes to take place in real time and poses the problem of control and interface design. In deed in the case of software based synthesis, the sound generation processes are decoupled from the performer's control input. This de-coupling characterises ``compound" instruments.
+
+\paragraph{}
+Interfaces allowing real-time control of virtual sound synthesis methods both benefit and suffer from this decoupling. Although the relationship between performer input and sonic output is no longer constraint by the physical laws that govern the behaviour of systems such as membranes, strings or tubes, the problem of designing a sonic production mechanism allowing the same level of expressivity and control as these physical mechanisms is a very challenging one (\cite{wanderley00, schnell02}). Musicians should be allowed to explore the new sound worlds offered to them by ever evolving sound synthesis processes in ways that allow the degree of feeling, intricacy and virtuosity witnessed in purely acoustic performances. 
+
+\paragraph{}
+This problem has been approached in many ways. The separate of physical interfaces from the sound production mechanism gives complete freedom, not only to mimic the types of interaction witnessed in acoustic interments, but to extend them, and adapt them to the new possibilities offered by present sound synthesis techniques.
+
+
+\subsection{Gestural Sound Control}
+
+\paragraph{}
+The ultimate objective of a compound instrument is to allow a high degree of freedom of expression and the effective, intuitive exploration of synthesised soundscapes. A number of interfaces have been developed, which capture control input through devices like buttons, sliders, light beams or touch tables. These have given rise to a number of musical performance modalities, however, they do not allow anywhere near the level of expression offered by acoustic instruments. The simple reason for this is that they capture gestures as a very small number of parameters (position of the hand or finger tips for example).
+
+\paragraph{}
+A complete description of the physical input required for acoustic instruments to generate the rich expression which they are capable of, would be highly multi-dimensional and accurate. If compound instruments are to achieve comparable levels of expression, capture devices need to allow a far more detailed picture of the performer's input than that provided by buttons and sliders. Research in a number of areas such as robotic surgery, micro assembly and industrial/military robotics is driving the development of ever better performing motion capture and tactile feedback devices. Relatively affordable hardware allows amongst others, finger flexion and abduction, pinching and grabbing actions, wrist movements and rotation to be captured potentially allowing high-dimensional gestural capture. Devices such as accelerometers and gyroscopes are getting ever smaller and more accurate and are already used in a number of commercial devices to provide affordable gesture tracking. 
+
+\paragraph{}
+Although some aspects of acoustic instrument control such as elaborate tactile/force feedback are still difficult to reproduce, the technology used for 3D virtual reality shows great potential for the development of real-time sound synthesis control. As well as allowing detailed and accurate gestural capture, sensor technologies potentially outperform other capture techniques in the context of musical performance. They are not, for example dependent on environmental lighting (like techniques such as image analysis) which during a performance should not be relied upon as complex lighting effects are commonly used to enhance musical performances.
+
+\subsection{The Role of Multi-Modal Feedback}
+\label {TheRoleOfMultiModalFeedback}
+
+\paragraph{}
+Sophisticated multi-modal feedback is crucial for the development of technical virtuosity in acoustic instruments. Experimentation and exploration allow musicians to associate subtle and complex nuances in physical input to their sonic results. Although a quasi infinite number of physical parameters are controlled simultaneously, performers do not think of the actual physics of the sound production mechanism, they rely on automatisms developed through experimentation and practice to relate the acoustic output of their instruments with the their physical input. Physical input is then mostly controlled using visual awareness, haptic sensations and proprioception. The importance of immediate multi-modal feedback during instrumental performance and learning cannot be understated. 
+
+\paragraph{}
+The performer's knowledge of the synthesis processes taking place should not be required just like a traditional acoustic performer isn't aware of the physical sound production processes, just of the resulting sonic output and the haptic sensations induced by physical interaction. The importance of real-time multi-modal feedback in the case of compound instruments should therefore be just as paramount as in the case of their acoustic counterparts. This feedback is crucial for the performer to feel more involved and engaged with the instrument. The technology is available for visual and haptic feedback to be provided, however they have to be generated as they do not intrinsically result from the physical input. 
+
+\paragraph{}
+The generated feedback should to some extend mimic expected natural, physical responses so as to allow intuitive knowledge of natural processes to be built upon but should also exploit the dematerialisation of the feedback generation in order to produce new types of feedback providing useful information though they may at first seem unusual or alien to the performer.  
+
+
+\section{Scope and Motivation}
+\label{ScopeAndMotivation}
+
+\paragraph{}
+The problem of gestural control of sound synthesis is known to be a challenging one. \citet{garnett99} frame the problem at hand with a number of questions relating to the manner with which performers should/could conceptualise the relationship between their physical gestures and the sonic results \citep{garnett99}. For example, they ask if the system should produce the same sound given the same gesture, if a slight change in gesture should result in a slight change in sound. More generally they recommend a relation between sounds and gestures analogous to that which we are habituated to from the physics of the non-synthetic world.
+
+\paragraph{}
+\citet{garnett99} attempt to minimise what they refer to as the ``cognitive retraining" problem (which forces performers to retrain their intuitions regarding the sound production mechanisms) by ``allowing the designer to associate particular points in the control parameter space with particular sonic results; [...] from this association [...], the system creates a mapping from the space of control parameters to the space of synthesis parameters [which is] consistent, continuous, and coherent." \citep{garnett99}. 
+
+\paragraph{}
+The VSCP is essentially an extension of this concept.
+
+\subsection{Interaction in Virtual 3D Space}
+
+\paragraph{}
+This section describes the potential interaction within 3D virtual environments for controlling sound real-time sound synthesis. 
+
+\subsubsection{Hardwired Human Abilities}
+
+\paragraph{}
+Humans understand the world in three dimensions. Our natural environment has shaped us so. 
+A huge part of the brain is dedicated to the fine control of the hands and to real world object manipulation allowing incredible levels of potential dexterity given enough practice and experience. Any interface should to some extent allow performers to exploit this great resource and minimise a potential interaction bottleneck. Reducing it to a few parameters (sliders, knobs, keys, light-beams, touch-tables) falls short of capturing the detail and complexity which the human brain is capable of handling, and which is obviously expressed during virtuosic performances on acoustic instruments. 
+
+\subsubsection{Real-world Experience and Intuitions}
+\label{RealWorldExperienceAndIntuitions}
+
+\paragraph{}
+As well as an inbuilt understanding of three dimensional environments, humans also have a natural sense of the sonic properties of real-world objects (depending on size, material, shape etc...). We also have an intuition for the sonic effect of impacts (collisions) on the object. For example a larger collision speed is intuitively linked to a louder, more explosive sound. Or a harder or more salient impactor object is intuitively linked to a brighter, more high-frequency-rich sound (hitting a drum skin with a finger nail as opposed to the palm of the hand is a possible illustration of this). Examples are numerous.
+
+\paragraph{}
+The three dimensional representation of the world which is hard wired in the human brain, combined with a sophisticated intuition for the sonic characteristics of objects within it potentially allow hugely powerful interaction paradigms to be developed. Specifically, by emphasising context sensitive nature of gestures.
+
+\subsubsection{Gestures in Context}
+
+\paragraph{}
+It is important that performers are allowed movements which aren't related to the sound control processes. The feeling that the slightest movement will inevitably affect the sonic output will result in the unwanted effect of feeling trapped or suffocated by the performance environment. ``Instrumentalists simultaneously execute various types of gestures during performance. Some of them are necessary for the production of sound, others may not be clearly related to sound production, but are nevertheless present in most highly-skilled instrumentalists’ performances'' \cite{schnell02}. The context and circumstances in which the performer's gestures will affect (or not) the sonic output should be clear and intuitive. The concept of virtual object interaction is key to addressing this problem and to lighten the performer's cognitive load during gestural sound control by making his gestures context sensitive (like they are in the real world). 
+
+\subsubsection{Collisions, Sound and Multi-Modal Feedback}
+
+\paragraph{}
+Probably the most obvious sonic interaction concept in a virtual environment is that of object collisions. Our natural intuition for colliding objects to produce sound is therefore the first route this project is aiming to explore. As a simplification, objects in a virtual environment can be split in three (non mutually exclusive) categories:
+
+\begin{itemize}
+  \item \textbf{Sonic:} Sonic objects are the sound producers, when an object collides with a sonic object, it triggers a chain of (sonic) events, which (as described later) should be entirely configurable. 
+   \item \textbf{Effector:} An object is an effector if it is used to generate sound by colliding with sonic objects.  
+   \item \textbf{Controller:} Controller objects are controlled by the performer to create collisions with sonic objects directly (in which case they are also effectors) or indirectly (through other effector objects). 
+\end{itemize}
+
+\paragraph{}
+Real-world equivalents of sonic objects would include a drum skin or a guitar string. Pure effector objects would include a bow, a drum stick or a plectrum. Pure controller objects would include the hands of a drummer, or the bowing hand of a violinist. Controller-effectors would include the hands of a tabla player, or the fingers of a finger-picking guitarist. In a 3D virtual environment the controller objects would be, for example, a virtual representation of the performer's hand or other body parts. In simpler interaction paradigms, a controller object could also be a box dragged by a mouse, for example. 
+
+\paragraph{}
+When hit by an effector, a sonic object should, ideally, produce a multi-modal responses to enhance interactive immersion and learning/experimenting effectiveness (see Section \ref{TheRoleOfMultiModalFeedback}). Of course sound should be produced given it is the response of primary importance, but it could be complemented by visual and haptic feedback if the available hardware allows it. Visual feedback could include changes in colour and texture of the sonic object, as well as particle streams or other more elaborate graphical niceties. Even though the generated feedback should emulate real-world phenomena, it can also be extended, giving the sonic objects seemingly magical properties. In any case, the design of the feedback generation process is of paramount importance, and will be expected to be ever-evolving and improving. 
+
+\subsection{Approach to Performance Environment Design}
+\label{PerformanceEnvironmentDesign}
+
+\subsubsection{External Tools for Creating 3D Objects}
+
+\paragraph{}
+There are a number of 3D shape editing environments which can be used to define the original shape of virtual objects. This will therefore not be part of the proposed project. Software packages such as 3DS max are a powerful but expensive option, other possibilities are available such as the Open Inventor graphical toolkit and an interpretive version of it developed by \citet{fels98} called InvenTcl. The Blender freeware package is also very powerful and can be scripted using the high level Python programing language. The development of higher level tools for a performer to shape his performance environment and to visually represent the sonic attributes of virtual objects as he wishes will be the next set of objectives for this project. 
+
+\subsubsection{Mapping Sonic Properties to Visual Cues}
+\label{MappingSonicPropertiesToVisualCues}
+
+\paragraph{}
+In order to reduce the cognitive load imposed on the performer, the environment should give visual cues to the performer regarding the sonic properties of objects. As mentioned in Section \ref{RealWorldExperienceAndIntuitions}, we can, often correctly, infer the sonic character of an object from its visual appearance. For example a large object will be expected to produce more low frequency content than a smaller one; a shiny, metal like object will be expected to produce sharper sounds (in fact we can describe sounds as metal-like, glass-like, wood-like, referring directly to the sound producing material rather than to the sound itself). Mapping visual characteristics to sonic ones therefore seems like an obvious design decision. Specific examples could include:
+
+\begin{itemize}
+  \item Colour, described in RGB space could be used to determine timbre, as a combination of three primitive timbres mapped to the RGB colour components. This would give a continuous three-dimensional colour/timbre mapping.
+  \item Specular reflections (more informally ``shininess"), could represent emphasis on the higher-frequency components of the sound.
+  \item Texture/timbre mapping could be developed and although it is not as straightforward as colour mapping, it offers great potential.  
+  \item Object size/scale can be linked to a timbral frequency shift.
+\end{itemize}
+
+An object with varying surface properties would then produce different sounds depending on the local properties of the collision location. Note that these concept can and should be extended beyond the pure mimicry of real-world objects.
+
+\subsubsection{Mapping Sonic Properties to Collision Parameters}
+\label{MappingSonicPropertiesToCollisionParameters}
+
+As well as visual cues given by the sonic object themselves, parameters describing the effector objects and the effector-sonic object collisions should also have an effect on the resulting sound. Again, as mentioned in Section \ref{RealWorldExperienceAndIntuitions}, humans have natural expectations regarding this, which should be exploited in order to reduce the cognitive load on the performer. Again, a (very much non-exhaustive, non-definitive) list of possibilities:
+
+\begin{itemize}
+  \item Collision velocity (relative velocity of the colliding objects) can be mapped to sound volume, shorter attack times for the volume or filter cutoff envelopes etc...
+  \item The distance of the collision location to a particular point (in local object space or in absolute world space), can be mapped to pitch.
+  \item Effector object properties should also be variable. For example the shape and texture of the effector could be mapped to different excitation signals for synthesisers based on physical modelling.
+\end{itemize}
+
+\subsubsection{Flexibility, Configurability, Extendibility}
+
+\paragraph{}
+The main difference between acoustic and compound instruments is that the effect of physical input on the former is completely determined by the designers, without being constrained by the physical rules which govern the prior (see Section \ref{NaturalVsCompoundInstrumentDesign}). Although defining original control paradigms for untrained musicians to experiment with is desirable, making the interface immutable and preventing musicians from shaping and adapting the interface and sonic generation processes to suit their needs which will inevitably grow in sophistication, individuality and evolve with experience and practice would deprive compound instruments from their main asset.
+
+\paragraph{}
+Musicians should be involved in the design and evolution of their performance environment, and the VSCP aims to address this by providing tools to this end. In the case of three dimensional interaction, performers should be allowed to shape and personalise the virtual objects they interact with as well as defining their sonic properties, by mapping different descriptors, such as visual cues on the surface of sonic or effector objects, collision descriptors or others (see Sections \ref{MappingSonicPropertiesToVisualCues} and \ref{MappingSonicPropertiesToCollisionParameters}) to sound synthesis parameters (which can be as low or high level as need be). The multi-modal feedback generated by the sonic feedback should also be entirely configurable.
+
+\paragraph{}
+Acoustic instruments have been developed, sophisticated and optimised over hundreds, even thousands of years to achieve the best possible results. The design of compound instruments is still in its infancy and reaching optimised forms will require a lot of experimentation and evolution. Just as experimenting with the acoustic properties of raw materials (such as wood, nylon, metal and other materials) were the basis of acoustic instrument design, experimenting with and developing different real time synthesis control paradigms will be the basis of the development of future compound instrument design. Eventually the process of experimentation and environment shaping should allow performance environments to evolve from archetypes into forms which, although unforeseen by the original system developers, will provide a range of progressively optimised control setups and configurations. This should be expected to be a long process, the digital equivalent of the journey from blocks of wood to violins.
+
+\subsubsection{Multiplicity of Interaction Paradigms}
+
+\paragraph{}
+Although the descriptions so far have focused mainly on object collisions, the environment should not constrain the performer to this particular type of control technique. Indeed, the notion that ``an authoring environment for composed instruments has to integrate multiple models of computation and programming paradigms in correspondence to a variety of different interfaces for expressive musical performance'' \citep{schnell02} is very much a guiding principle of the VSCP. As an example, the performer should also be able to control the sound characteristic after the initial contact between effector and sonic object. This process essentially extends the concept of after-touch for electronic keyboards, from a simple volume control to the multi-dimensional control of any number of sonic properties. All sounds should be terminated using a a common gesture, complete clenching of the fist for example. 
+
+\paragraph{}
+More generally, virtual/augmented environment have the potential to incorporate any type of interaction whether it's augmented instruments, 2D/3D pure virtual object collisions (through rigid-body, and possibly later soft-body physics simulations), continuous control of sound synthesis parameters (using hand position or speed for example),  2D/3D composition of loops, activators (discrete event triggering). All these, and others should, ultimately, be goals for the project. Both discrete control events and continuous flows of control data are required for a powerful interface. Also, mixing completely deterministic control of musical processes with high level control of self evolving sets of musical processes could also be allowed. Users should be able to switch effortlessly between different types of control techniques during the performance.
+
+Virtual objects should also allow a wider range of possible actions covering a number of different semantic categories such as discreet event triggering, performance tool selection or continuous real time interpretation of scores and other predefined sequences.
+
+\paragraph{}
+Additionally, although virtual/augmented environment have great potential, physical systems still offer an unparalleled degree of haptic interaction and should also be used as input devices, exciting virtual sound production mechanisms for example. One of the aims of the VSCP is to allow these physical input devices to be used along with the augmented/virtual environmental elements. Using the voice or facial expressions as input control devices is a particularly attractive possibility as it allows both arms/hands to be devoted to the control of other processes. The voice is particularly interesting as an input control mechanism as it is hugely flexible, controllable and yet cheap to capture.
+
+
+\section{Technical Considerations}
+\label{TechnicalConsiderations}
+
+\subsection{Requirements}
+\label{Requirements}
+
+\paragraph{}
+Some fundamental requirements for the project have guided the choice of tools which have been chosen as a basis for the development of the VSCP. 
+
+\begin{itemize}
+  \item \textbf{The tools should be portable.} Although current development is made on OSX, a primary objective of the VSCP is to run on as many platforms as possible, including OSX, iOS, GNU/Linux, Android, Windows, Sony PS, XBox. They should not require any host environment (such as Max/MSP/Jitter) in order to run but should, rather, be able to run natively on each platform.
+  \item \textbf{The tools should have permissive licences.} Although currently a prototyping, experimental project, the possibility of it growing to be incorporated into commercial products should be kept in mind. As such open source projects with licenses permissive enough to allow this are preferred. BSD/MIT style licences are excellent, Apache/Zilb style licenses are alright, LGPL style licences are very much discourage (dynamic linking being impossible on iOS, for example), GPL style licenses are entirely out of the question (although GPL projects such as super-collider can be used as peripheral to VSCP, controlled by MIDI/OSC for example). 
+  \item \textbf{The tools should be fast.} VSCP is a project for real-time interaction. As such, performance is paramount, and libraries designed with this goal in mind are preferred.
+ \end{itemize}
+ 
+
+\subsection{Choice of Programming Languages and Third Party Libraries}
+
+\subsubsection{C++ as the Main Programming Language}
+
+\paragraph{}
+C++ was chosen as the main, cross platform development programming language, as it is a particularly well suited fit to the requirements listed in Section \ref{Requirements}. A number of C++ libraries, also suited to these requirements have been chosen.
+
+\subsubsection{C++ Boost Libraries}
+
+\paragraph{}
+One of the most expertly designed C++ library projects in the world. The Boost C++ libraries are used throughout the project for a wide range of applications, including smart pointers, threads, binding and signals, asserts, loop utilities, timing and date utilities and will probably use more of these excellent libraries as it grows. It is used in place of C++ 11 equivalents, while compilers catch up.
+
+\subsubsection{C++ OGRE Library}
+\label{C++OGRELibrary}
+
+\paragraph{}
+The OGRE (Object-Oriented Graphics Rendering Engine) C++ library, is used for all things relating to graphics. It is mainly designed for games and real-time simulations, so is well suited to the needs of the project. It offers a wide range of useful abstractions for scene managers, meshes, geometric primitives, colours, textures, cameras, lighting, particle systems and much more. Also, a number of side projects offer tools for bridging to popular 3D editing tools  such as Blender, Maya or 3DS Max. 
+
+\subsubsection{C++ Bullet Library}
+
+\paragraph{}
+The Bullet C++ library is a well established collision detection and rigid/soft body physics simulation engine. It is used extensively in games and other real time systems as well as in CG movie production studios. There are also wrappers available to facilitate the synchronisation of Bullet physics simulations and graphics rendered using OGRE (see Section \ref{C++OGRELibrary}).
+
+\subsubsection{C++ OIS Library}
+
+\paragraph{}
+The OIS (Object-Oriented Input System) library offers a cross-platform solution to handle general user input. Keyboard, mouse and different types of joysticks are catered for. 
+
+\subsubsection{C++ STK Library}
+
+\paragraph{}
+The STK (Synthesis Tool Kit) library, is a project aiming to provide a framework to accelerate the development of musical applications. It in corporates the RtMidi and RtAudio libraries which provide cross platform MIDI and audio input/output facilities, adding a layer of synthesis primitives (generators, processors, filters, physical modelling etc...).
+
+\subsubsection{OSX, iOS, Cocoa and Objective-C++}
+
+\paragraph{}
+The main user-interface currently used for development is on OSX. It uses the Cocoa framework, keeping the interface and the core elements as separate as possible to minimise the effort of adapting the interface for other platforms. C++ can be used directly, mixed with the native Objective-C language of the Cocoa framework, in an unholy marriage of syntax where both C++ and Objective-C co-exist without really inter-mixing, named Objective-C++. The same applies to iOS.
+
+\subsubsection{GNU/Linux, WX and GTK C++ Libraries}
+
+Although not currently in development, possible user-interfaces written using WX or GTK would be possibilities for porting VSCP to Linux.
+
+\subsection{Hardware, Sensors and Control}
+
+\subsubsection{Control Input for Virtual/Augmented Reality}
+
+\paragraph{}
+For virtual object manipulation to take place, robust capture devices should allow the movements of the performer to be replicated in the virtual environment with the finest possible detail. A good correspondence between the virtual representation of the performer's movements and the expected movement sensed through proprioception is crucial. Failure to achieve this will result in discomfort, irritation and possible ``virtual sickness''. Calibration is key to providing a comfortable virtual representation and may be achieved by prompting the user for different default arm, hand or finger positions.
+
+\paragraph{}
+Although a virtual/augmented reality setting would be ideal, and should be a long term objective, the possibility Currently the system uses simple mouse and keyboard input, and plans to add support for MIDI/OSC input controllers are in place for the near future. Further ahead the system should allow more sophisticated input devices such as sensors, virtual reality gloves, and devices capable of transmitting haptic feedback. The bulk of VSCP aims to be abstracted away from hardware consideration. However, it should offer be a flexible and extendable system to interface with specific hardware control input devices. Ways of allowing the control input to be routed across the system, adjusted and calibrated, will be necessary as the system evolves to handle a fully fledged virtual/augmented reality experience, if this does indeed occur.
+
+
+\section{Current Project Status}
+\label{CurrentProjectStatus}
+
+
+
+
+\bibliographystyle{plainnat}
+\bibliography{GeneralBib.bib}
+
+\end{document}
