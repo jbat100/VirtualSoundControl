@@ -1,4 +1,4 @@
-###Background
+#Background
 
 VirtualSoundControl is a project in early stages of development aiming to provide a set of tools for the control of sound synthesis through the manipulation of virtual objects, in a 3D virtual reality / game-like setting. Currently in pre-alpha (prototyping) stage, in heavy development.
 
@@ -12,7 +12,7 @@ Collisions are described by a number of parameters, for example:
 
 Each object in the virtual world has a collision action chain which describes how it reacts to collisions, for example it can send note/control signals and trigger envelopes (currently using MIDI/OSC but the engine could be directly incorporated in software synthesisers to control sound synthesis directly). Different collision parameters described above can be mapped to parameters in the sound domain (note channel, pitch and velocity, control value, envelope amplitude and time stretch etc…).
 
-###Dependencies
+#Dependencies
 
 The project is written in portable C++, at least as portable as the libraries it uses, which are listed in this section. All the libraries have been chosen for their recognised performance and stability and, most importantly, their permissive licences (BSD/MIT style) which would allow this project to be used in commercial projects without the usual problems associated with GPL/LGPL style licenses. 
 
@@ -23,41 +23,41 @@ The project is written in portable C++, at least as portable as the libraries it
 
 An OSX interface layer is currently being written on top of the C++ core, using the Cocoa frameworks, in Objective-C++. This interface layer is being kept as separate from the core as possible so that other interface layers can be developed for different environments (GTK, .NET, iOS, Android etc…).
 
-###File Hierarchy
+#File Hierarchy
 
-#Apple
+###Apple
 
 Apple specific files, UI and MVC support classes, Objective-C++ mostly.
 
-#Application
+###Application
 
 Top level application-managing classes, virtual sound control environments, tests, and related classes.
 
-#Envelope
+###Envelope
 
 Abstractions for a envelopes, can be used for MIDI/OSC or audio. 
 
-#Interface
+###Interface
 
 Cross-platform UI abstractions, key bindings, template responder-chains.
 
-#Mapping
+###Mapping
 
 IM Stands for Interface-Mapping. Classes which handle the translation from the virtual object domain to the sound synthesis control domain live here.
 
-#MIDI
+###MIDI
 
 Layer on top of RtMidi, to make things like sending note on/off, control, pitch bend (etc…) messages easier. Also provides higher-level abstractions for midi input/output management. 
 
-#OB
+###OB
 
 Stands for Ogre-Bullet. Layer on top of the Ogre and Bullet C++ libraries (and the OgreBullet wrapper) which gives high level tools for creating scenes, elements (objects), running dynamics and collision detection. 
 
-#Sound
+###Sound
 
 Attempt at an audio sample rate sound synthesiser based on STK. Currently stopped dev on this in favour of sending MIDI/OSC messages to existing synthesisers.
 
-#Task
+###Task
 
 A set of tools used for performing threaded, queued, timed, tasks (with stepped execution) in the background.  
 
