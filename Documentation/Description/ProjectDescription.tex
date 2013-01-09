@@ -21,6 +21,10 @@
 ]{hyperref} 
 \usepackage{hyperref}
 
+%\usepackage{fancyvrb}
+%\DefineVerbatimEnvironment{code}{Verbatim}{fontsize=\small}
+%\DefineVerbatimEnvironment{example}{Verbatim}{fontsize=\small}
+
 
 \def\name{Jonathan B. A. Thorpe}
 \hypersetup{
@@ -280,10 +284,74 @@ Although a virtual/augmented reality setting would be ideal, and should be a lon
 \section{Current Project Status}
 \label{CurrentProjectStatus}
 
+\paragraph{}
+The project is currently hosted on \href{https://github.com/}{Github}. The repository can be found at: 
 
+\vspace{3 mm}
+\href{https://github.com/jbat100/VirtualSoundControl}{https://github.com/jbat100/VirtualSoundControl}
+\vspace{3 mm}
 
+The main active branch being the develop branch, following the \href{http://nvie.com/posts/a-successful-git-branching-model/}{gitflow} branching model.
+
+\subsection{Core Classes (C++)}
+
+Overview of the most important classes and their roles. Proper documentation generate with tools like Doxygen from header comments, will be created when time allows. 
+
+\subsubsection{Application}
+\label{CoreApplication}
+
+\paragraph{}
+Classes in this folder provide global application level tools.
+
+\begin{itemize}
+  \item \textbf{GlobalApplication:} Used to create and monitor \textbf{Environment} (or derived class) instances. Uses a singleton pattern.
+  \item \textbf{Environment:} An abstraction for a performance environment. Currently is composed of a \textbf{Scene} (or subclass) instance (see Section \ref{CoreOB}), and a \textbf{CollisionMapper} (or subclass) instance (see Section \ref{CoreMapping}). Other elements (envelope manager, synthesisers etc) will probably be added later.
+\end{itemize}
+
+\subsubsection{Envelope}
+\label{CoreEnvelope}
+
+\paragraph{}
+Provides abstractions for envelopes which can be used for anything. Main current application is for MIDI/OSC envelopes.
+
+\begin{itemize}
+  \item \textbf{EnvelopeCoordinate:} Time/Value coordinate in envelope space.
+  \item \textbf{EnvelopePoint:} An envelope point (with possible associated control points)
+  \item \textbf{Envelope:} Contains a set of points and abstractions for envelope manipulation.
+\end{itemize}
+
+\subsubsection{Interface}
+\label{CoreInterface}
+
+\paragraph{}
+Provides generic tools for interface related things.
+
+\begin{itemize}
+  \item \textbf{Bindings:} Template class allowing actions to be bound to inputs.
+  \item \textbf{Bound:} Template class which has bindings associated with it.
+  \item \textbf{InterfaceAdapter:} Template class to relay callbacks for keyboard/mouse events from platform specific layer.
+  \item \textbf{Responder:} Template responder chain implementation.
+\end{itemize}
+
+\subsubsection{Mapping}
+\label{CoreMapping}
+
+\subsubsection{MIDI}
+\label{CoreMIDI}
+
+\subsubsection{OB}
+\label{CoreOB}
+
+\subsubsection{Sound}
+\label{CoreSound}
+
+\subsubsection{Task}
+\label{CoreTask}
+
+\subsection{OSX Interface (Objective-C++)}
 
 \bibliographystyle{plainnat}
 \bibliography{GeneralBib.bib}
 
 \end{document}
+
