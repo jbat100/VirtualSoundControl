@@ -304,7 +304,7 @@ Overview of the most important classes and their roles. Proper documentation gen
 Classes in this folder provide global application level tools.
 
 \begin{itemize}
-  \item \textbf{GlobalApplication:} Used to create and monitor \textbf{Environment} (or derived class) instances. Uses a singleton pattern.
+  \item \textbf{GlobalApplication:} Used to create and monitor \textbf{Environment} (or derived class) objects. Uses a singleton pattern.
   \item \textbf{Environment:} An abstraction for a performance environment. Currently is composed of a \textbf{Scene} (or subclass) instance (see Section \ref{CoreOB}), and a \textbf{CollisionMapper} (or subclass) instance (see Section \ref{CoreMapping}). Other elements (envelope manager, synthesisers etc) will probably be added later.
 \end{itemize}
 
@@ -336,14 +336,45 @@ Provides generic tools for interface related things.
 \subsubsection{Mapping}
 \label{CoreMapping}
 
+\paragraph{}
+Provides generic tools for mapping interface input control to actions. Specialist classes allowing collision mapping are also in development.
+
+\begin{itemize}
+  \item \textbf{Event} subclasses (\textbf{Delay} and \textbf{Action}, which is subclassed further) objects are arranged in \textbf{EventChain} objects which can be triggered (triggering all the \textbf{Action} objects in the chain, with appropriate delays).
+  \item When \textbf{Actions} (or subclass) objects are triggered, they produce \textbf{Task} objects which are sort of executable blocks with target execution dates (See Section \ref{CoreTask}).
+  \item \textbf{Mapping} (or subclass) objects provide ways of mapping different \textbf{Action} parameters, when they are triggered, so that they provide varying \textbf{Task} objects.
+  \item \textbf{CollisionMapper:} Listens to Scene \textbf{Collisions} and triggers \textbf{EventChain} objects associated with each Scene \textbf{Element} (see Section \ref{CoreOB}).
+\end{itemize}
+
 \subsubsection{MIDI}
 \label{CoreMIDI}
+
+\paragraph{}
+Provides high level tools to discover MIDI devices, open input/output ports, send and receive MIDI messages. Currently only output is implemented.
+
+\begin{itemize}
+  \item \textbf{MIDIOutput} is used to send MIDI messages to an output port (uses \textbf{MIDIMessageGenerator} internally).
+  \item \textbf{MIDIOutputManager} is used to detect MIDI outputs (using \textbf{MIDIPortManager} internally). Also used to open output ports and giving access to them (by returning \textbf{MIDIOutput} objects).
+\end{itemize}
 
 \subsubsection{OB}
 \label{CoreOB}
 
+\paragraph{}
+Provides abstractions for virtual reality displays, scenes, elements, collisions, element factories as well as cross-platform user interface (see Section \ref{CoreInterface}) controllers for these abstractions.
+
+\begin{itemize}
+  \item \textbf{Scene} objects represents a virtual reality scene. They contain \textbf{Element} objects which are created using \textbf{ElementFactory} (or subclass) objects. 
+  \item \textbf{CollisionDetector} (or subclass) objects are used by scenes to detect collision which are represented by \textbf{Collision} objects. Callbacks are sent to \textbf{CollisionListener} objects when collision related events occur.
+  \item \textbf{Display} objects represent a display of the scene, with an associated camera. This is the last cross-platform link before the OS specific UI elements.
+  \item \textbf{SceneController} and \textbf{DisplayController} objects listen to user input (they are \textbf{Responder} subclasses as described in Section \ref{CoreInterface}). They use this input to control their associated \textbf{Scene} or \textbf{Display} object, respectively.  
+\end{itemize}
+
 \subsubsection{Sound}
 \label{CoreSound}
+
+\paragraph{}
+Attempts at a flexible, multi-channel, real-time sound synthesiser. Not currently in development, switched to sending MIDI/OSC messages to external synthesisers instead.
 
 \subsubsection{Task}
 \label{CoreTask}
