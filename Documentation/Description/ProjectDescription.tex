@@ -183,6 +183,7 @@ As well as visual cues given by the sonic object themselves, parameters describi
 
 \begin{itemize}
   \item Collision velocity (relative velocity of the colliding objects) can be mapped to sound volume, shorter attack times for the volume or filter cutoff envelopes etc...
+  \item Collision direction vector components can be mapped to timbral properties (for example, hitting an object from underneath will have a different sonic effect to hitting it from above).
   \item The distance of the collision location to a particular point (in local object space or in absolute world space), can be mapped to pitch.
   \item Effector object properties should also be variable. For example the shape and texture of the effector could be mapped to different excitation signals for synthesisers based on physical modelling.
 \end{itemize}
@@ -295,7 +296,7 @@ The main active branch being the develop branch, following the \href{http://nvie
 
 \subsection{Core Classes (C++)}
 
-Overview of the most important classes and their roles. Proper documentation generate with tools like Doxygen from header comments, will be created when time allows. 
+Overview of the most important classes and their roles. Proper documentation generate with tools like Doxygen from header comments, will be created when time allows. The content of the root folder in described briefly here. 
 
 \subsubsection{Application}
 \label{CoreApplication}
@@ -357,6 +358,9 @@ Provides high level tools to discover MIDI devices, open input/output ports, sen
   \item \textbf{MIDIOutputManager} is used to detect MIDI outputs (using \textbf{MIDIPortManager} internally). Also used to open output ports and giving access to them (by returning \textbf{MIDIOutput} objects).
 \end{itemize}
 
+\paragraph{}
+Future classes for MIDI input will include \textbf{MIDIInput}, \textbf{MIDIInputManager}, and \textbf{MIDIInputListener}. The MIDI folder also contains \textbf{Task} subclasses for MIDI specific tasks. 
+
 \subsubsection{OB}
 \label{CoreOB}
 
@@ -374,12 +378,23 @@ Provides abstractions for virtual reality displays, scenes, elements, collisions
 \label{CoreSound}
 
 \paragraph{}
-Attempts at a flexible, multi-channel, real-time sound synthesiser. Not currently in development, switched to sending MIDI/OSC messages to external synthesisers instead.
+Attempts at a flexible, multi-channel, real-time sound synthesiser. Not currently in development, switched to sending MIDI/OSC messages to external synthesisers instead. Very motivated to continue development later. 
 
 \subsubsection{Task}
 \label{CoreTask}
 
+\paragraph{}
+Provides abstractions for runnable background tasks.
+
+\begin{itemize}
+  \item \textbf{Task} objects are used to encapsulate behaviour. The behavior is performed by calling ``step'', after which the task can switch to finished state, or not, in which case step should be called again, until the task is finished. Tasks have a target execution date (when they will start execution).
+  \item \textbf{TaskQueue} objects are used to run \textbf{Task} objects. Each queue has a single internal thread which it runs the tasks on in a kind of run loop. On each pass through the loop the queue will ``step'' task execution (once) for each task currently executing (if the task's execution date is not reached then it does nothing). If the task is finished after step, it is removed from the queue. This gives a kind of illusion of parallel execution on a single thread. The time between each iteration is configurable (a queue dedicated to MIDI tasks for example would not not gain much iterating above 400Hz, so it should be as lazy as it can).
+\end{itemize}
+
 \subsection{OSX Interface (Objective-C++)}
+
+\paragraph{}
+Files implementing OSX/iOS specific aspects are located in the Apple directory. Currently the project is being developed using an OSX interface only. It is early stages and everything is being done to facilitate future ports to other platforms. 
 
 \bibliographystyle{plainnat}
 \bibliography{GeneralBib.bib}
