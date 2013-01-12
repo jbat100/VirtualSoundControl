@@ -13,7 +13,6 @@
 
 #include "VSCIMEvent.h"
 
-@class PXListView;
 @class VSCIMOSXCollisionActionMappingsViewController;
 
 @interface VSCIMOSXCollisionEventChainViewController : NSViewController
