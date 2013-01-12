@@ -10,49 +10,99 @@
 #ifndef _VSC_MIDI_OUTPUT_H_
 #define _VSC_MIDI_OUTPUT_H_
 
-#include <set>
-#include <boost/shared_ptr.hpp>
-
-#include "VSCSound.h"
+#include "VSC.h"
 #include "VSCMIDI.h"
 
-#include "RtMidi.h"
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
+#include <boost/thread.hpp>
 
-/*
- *  A detailed table of midi messages can be found here http://www.midi.org/techspecs/midimessages.php
- *
- *  A bit of background information from wiki of MIDI messages http://en.wikipedia.org/wiki/MIDI_1.0
- * 
- *  Using a lot of const referencer passing // http://www.parashift.com/c++-faq-lite/const-correctness.html
- *
- */
+#include <set>
+#include <vector>
 
+namespace VSC {
+    
+    namespace MIDI {
+        
+        class OutputManager;
+                
+        class Output {
+            
+        public:
+            
+            friend class OutputManager;
+            
+            typedef boost::shared_ptr<Output>   SPtr;
+            typedef boost::weak_ptr<Output>     WPtr;
+            
+            enum State {
+                StateNone = 0,
+                StateClosed,
+                StateOpened,
+                StateUnknown
+            };
+            
+            virtual ~Output();
+            
+            const OutputPort& getOutputPort(void) const;
+            
+            std::string getDescription(void);
+            
+            // cannot send const (because RtMidi takes not const so would need to be copied)
+            bool sendMessage(Message& m);
+            
+            bool sendNoteOn(unsigned int channel, unsigned int pitch, unsigned int velocity);
+            bool sendNoteOff(unsigned int channel, unsigned int pitch, unsigned int velocity);
+            bool sendControlChange(unsigned int channel, ControlNumber controlNumber, unsigned int value);
+            bool sendPolyphonicAftertouch(unsigned int channel, unsigned int pitch, unsigned int pressure);
+            bool sendChannelAftertouch(unsigned int channel, unsigned int pressure);
+            
+            void open();
+            void close();
+            
+            State getState(void) {return mState;}
+            
+            const ControlNumbers& getValidControlNumbers(void);
+            bool controlNumberIsValid(const ControlNumber& number);
+            
+        protected:
+            
+            /*
+             *  Contructors are made protected so that only friend class OutputManager can 
+             *  be used to access them. One output object per port with internal mutex protection.
+             */
+            
+            Output(const OutputPort& outputPort);
+            
+            void setOutputPort(const OutputPort& port);     // throws if the output port could not be established
+            
+            void setState(State state) {mState = state;}
+            
+        private:
+            
+            typedef  boost::shared_ptr<RtMidiOut>    RtMidiOutPtr;
+            
+            OutputPort              mOutputPort;
+            RtMidiOutPtr            mMIDIOut;
+            
+            State                   mState;
+            
+            MessageGenerator::SPtr  mMessageGenerator;
+            
+            void createRtMidiOut(void);
+            
+            boost::mutex  mMutex;
+            
+        };
+        
+        std::ostream& operator<<(std::ostream& output, const Output& p);
+        
+        typedef std::vector<Output::SPtr> Outputs;
 
-class VSCMIDIOutput {
+    }
     
-public:
-    
-    VSCMIDIOutput(void);
-    VSCMIDIOutput(VSCMIDIOutputPort outputPort);
-    
-    VSCMIDIOutputPort getOutputPort(void) const;
-    void setOutputPort(VSCMIDIOutputPort const& port);     // throws if the output port could not be established
-    
-    // cannot send const (because RtMidi takes not const so would need to be copied)
-    bool sendMessage(VSCMIDI::Message& m); 
-    
-private:
-    
-    VSCMIDIOutputPort _outputPort;
-    RtMidiOutPtr _midiOut;
-    
-    void createRtMidiOut(void);
-    
-};
+}
 
-std::ostream& operator<<(std::ostream& output, const VSCMIDIOutput& p);
-
-typedef boost::shared_ptr<VSCMIDIOutput> VSCMIDIOutputPtr;
 
 #endif // _VSC_MIDI_OUTPUT_H_
 

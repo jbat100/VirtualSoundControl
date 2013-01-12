@@ -21,13 +21,13 @@ public:
     
     VSCManualController(void);
     
-    virtual VSCSFloat getCurrentControlValue(void) const;
+    virtual Float getCurrentControlValue(void) const;
     
-    void setCurrentControlValue(const VSCSFloat val);
+    void setCurrentControlValue(const Float val);
     
 private:
     
-    VSCSFloat _currentControlValue;
+    Float _currentControlValue;
     
 };
 

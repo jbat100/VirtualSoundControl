@@ -1,6 +1,6 @@
 //
 //  NSFileManager-MenuItems.m
-//  EnveloppeEditor
+//  EnvelopeEditor
 //
 //  Created by Jonathan Thorpe on 27/09/2011.
 //  Copyright 2011 JBAT. All rights reserved.

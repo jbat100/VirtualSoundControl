@@ -7,32 +7,54 @@
  *
  */
 
-#include "VSCMIDIController.h"
+#include "VSCMIDIOutput.h"
 #include "VSCException.h"
 
 #include "RtError.h"
 
 #include <iostream>
 
-VSCMIDIOutput::VSCMIDIOutput(void) {
+VSC::MIDI::Output::Output(const OutputPort& outputPort) : mState(StateClosed) {
     
-    this->createRtMidiOut();
-    
-}
-
-VSCMIDIOutput::VSCMIDIOutput(VSCMIDIOutputPort outputPort) {
+    if (outputPort == OutputPortVoid) throw VSCMIDIException("Expected non OutputPortVoid");
     
     this->createRtMidiOut();
     
     this->setOutputPort(outputPort); // will throw if does not succeed
     
+    mMessageGenerator = MessageGenerator::SPtr(new MessageGenerator);
+    
 }
 
-void VSCMIDIOutput::createRtMidiOut(void) {
+VSC::MIDI::Output::~Output()
+{
+    close();
+    
+    mMIDIOut = RtMidiOutPtr();
+    
+    mOutputPort = OutputPortVoid;
+}
+
+std::string VSC::MIDI::Output::getDescription(void)
+{
+    BOOST_ASSERT(mOutputPort != OutputPortVoid);
+    
+    if (mOutputPort == OutputPortVoid) return "Invalid (void) MIDI Output";
+    
+    std::stringstream stream;
+    
+    stream << mOutputPort.number << " - " << mOutputPort.name << (mOutputPort.isVirtual ? " (Virtual)" : "");
+    
+    return stream.str();
+}
+
+void VSC::MIDI::Output::createRtMidiOut(void) {
+    
+    boost::lock_guard<boost::mutex> lock(mMutex);
     
     // RtMidiOut constructor
     try {
-        _midiOut = RtMidiOutPtr(new RtMidiOut());
+        mMIDIOut = RtMidiOutPtr(new RtMidiOut());
     }
     catch ( RtError &error ) {
         throw VSCMIDIException(error.getMessage());
@@ -41,72 +63,139 @@ void VSCMIDIOutput::createRtMidiOut(void) {
 }
 
 
-VSCMIDIOutputPort VSCMIDIOutput::getOutputPort(void) const {
-    return _outputPort;
-}
-
-void VSCMIDIOutput::setOutputPort(VSCMIDIOutputPort const& port) {
+void VSC::MIDI::Output::open()
+{
     
-    if (port != VSCMIDIOutputPortVoid && _midiOut) {
+    boost::lock_guard<boost::mutex> lock(mMutex);
+    
+    BOOST_ASSERT(mOutputPort != OutputPortVoid);
+    BOOST_ASSERT(mMIDIOut);
+    
+    if (mOutputPort != OutputPortVoid && mMIDIOut) {
         
-        _midiOut->closePort();
+        mMIDIOut->closePort();
         
-        if (port.isVirtual) {
+        if (mOutputPort.isVirtual) {
             try {
-                _midiOut->openVirtualPort(port.name);
+                mMIDIOut->openVirtualPort(mOutputPort.name);
+                mState = StateOpened;
             } catch (RtError &error) {
                 error.printMessage();
-                _outputPort = VSCMIDIOutputPortVoid;
+                mState = StateClosed;
                 throw VSCMIDIException(error.getMessage());
             }
-            _outputPort = port;
-            std::cout << "Successfully opened " << port << std::endl;
+            std::cout << "Successfully opened " << mOutputPort << std::endl;
             return;
         }
         
         else {
             try {
-                if (port.name.size() > 0) _midiOut->openPort(port.number);
-                else _midiOut->openPort(port.number, port.name);
+                if (mOutputPort.name.empty()) mMIDIOut->openPort(mOutputPort.number);
+                else mMIDIOut->openPort(mOutputPort.number, mOutputPort.name);
+                mState = StateOpened;
             } catch (RtError &error) {
                 error.printMessage();
-                _outputPort = VSCMIDIOutputPortVoid;
+                mState = StateClosed;
                 throw VSCMIDIException(error.getMessage());
             }
-            _outputPort = port;
-            std::cout << "Successfully opened " << port << std::endl;
+            std::cout << "Successfully opened " << mOutputPort << std::endl;
         }
         
     }
     
     else {
         
-        if (_midiOut) {
-            _outputPort = VSCMIDIOutputPortVoid;
-            _midiOut->closePort();
+        if (mMIDIOut) {
+            mOutputPort = OutputPortVoid;
+            mMIDIOut->closePort();
+            mState = StateClosed;
         }
         
         else {
-            _outputPort = VSCMIDIOutputPortVoid;
-            throw VSCMIDIException("Expected non nil _midiOut");
+            mOutputPort = OutputPortVoid;
+            mState = StateClosed;
+            throw VSCMIDIException("Expected non nil mMIDIOut");
         }
     }
     
-    
 }
 
-bool VSCMIDIOutput::sendMessage(VSCMIDI::Message& m) {
+void VSC::MIDI::Output::close()
+{
+    if (mMIDIOut) {
+        mMIDIOut->closePort();
+        mState = StateClosed;
+    }
+}
+
+const VSC::MIDI::ControlNumbers& VSC::MIDI::Output::getValidControlNumbers(void)
+{
+    return mMessageGenerator->getValidControlNumbers();
+}
+
+bool VSC::MIDI::Output::controlNumberIsValid(const ControlNumber& number)
+{
+    return mMessageGenerator->controlNumberIsValid(number);
+}
+
+
+const VSC::MIDI::OutputPort& VSC::MIDI::Output::getOutputPort(void) const {
+    return mOutputPort;
+}
+
+void VSC::MIDI::Output::setOutputPort(OutputPort const& port) {
+    mOutputPort = port;
+}
+
+bool VSC::MIDI::Output::sendNoteOn(unsigned int channel, unsigned int pitch, unsigned int velocity)
+{
+    Message m = mMessageGenerator->messageForNote(channel, pitch, velocity, true);
+    this->sendMessage(m);
     
-    if (_midiOut && _outputPort != VSCMIDIOutputPortVoid) {
-        std::cout << *this << " sending " << VSCMIDI::messageDescription(m) << std::endl;
-        _midiOut->sendMessage(&m);
+    return true;
+}
+
+bool VSC::MIDI::Output::sendNoteOff(unsigned int channel, unsigned int pitch, unsigned int velocity)
+{
+    Message m = mMessageGenerator->messageForNote(channel, pitch, velocity, false);
+    this->sendMessage(m);
+    
+    return true;
+}
+
+bool VSC::MIDI::Output::sendControlChange(unsigned int channel, ControlNumber controlNumber, unsigned int value)
+{
+    Message m = mMessageGenerator->messageForControlChange(channel, controlNumber, value);
+    this->sendMessage(m);
+    
+    return true;
+}
+
+bool VSC::MIDI::Output::sendPolyphonicAftertouch(unsigned int channel, unsigned int pitch, unsigned int pressure)
+{
+    return false;
+}
+
+bool VSC::MIDI::Output::sendChannelAftertouch(unsigned int channel, unsigned int pressure)
+{
+    return false;
+}
+
+bool VSC::MIDI::Output::sendMessage(Message& m) {
+    
+    boost::lock_guard<boost::mutex> lock(mMutex);
+    
+    if (mMIDIOut && mOutputPort != OutputPortVoid) {
+        std::cout << *this << " sending " << messageDescription(m) << std::endl;
+        mMIDIOut->sendMessage(&m);
+        return true;
     }
     
     return false;
     
 }
 
-std::ostream& operator<<(std::ostream& output, const VSCMIDIOutput& p) {
+std::ostream& VSC::MIDI::operator<<(std::ostream& output, const Output& p) {
     output << "VSCMIDIOutput (" << p.getOutputPort() << ")";
     return output;
 }

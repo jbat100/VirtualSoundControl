@@ -1,10 +1,3 @@
-//
-//  VSCException.h
-//  EnveloppeEditor
-//
-//  Created by Jonathan Thorpe on 8/30/11.
-//  Copyright 2011 NXP. All rights reserved.
-//
 
 #ifndef _VSC_EXCEPTION_H_
 #define _VSC_EXCEPTION_H_
@@ -85,6 +78,25 @@ class VSCNotImplementedException : public VSCBaseException
     }
 };
 
+
+#pragma mark Bad State
+
+/*------------------------------------------------------------------------------------
+ *	Used when call is made in unexpected state
+ */
+class VSCBadStateException : public VSCBaseException
+{
+    
+public:
+    
+    VSCBadStateException(std::string additionalInfo) : VSCBaseException(additionalInfo) {}
+    
+    virtual const char* what() const throw()
+    {
+        return "Bad State";
+    }
+};
+
 #pragma mark Internal Inconsistency Exception
 
 /*------------------------------------------------------------------------------------
@@ -92,9 +104,14 @@ class VSCNotImplementedException : public VSCBaseException
  */
 class VSCInternalInconsistencyException : public VSCBaseException
 {
+    
+public:
+    
+    VSCInternalInconsistencyException(std::string additionalInfo) : VSCBaseException(additionalInfo) {}
+    
     virtual const char* what() const throw()
     {
-        return "Called Pure Virtual Function";
+        return "Internal Inconsistency";
     }
 };
 
@@ -175,21 +192,21 @@ public:
     
     virtual const char* what() const throw()
     {
-        return "Operation requires non-empty VSCEnveloppe";
+        return "Operation requires non-empty VSC::Envelope";
     }
 };
 
-#pragma mark Enveloppe Specific Exceptions
+#pragma mark Envelope Specific Exceptions
 
 /*------------------------------------------------------------------------------------
  *	Envelope specific 
  */
 
-class VSCEnveloppeEmptyException : public VSCBaseException
+class VSCEnvelopeEmptyException : public VSCBaseException
 {
     virtual const char* what() const throw()
     {
-        return "Operation requires non-empty VSCEnveloppe";
+        return "Operation requires non-empty VSC::Envelope";
     }
 };
 

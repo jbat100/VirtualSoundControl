@@ -1,0 +1,1792 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		100812B21651A89800E975B8 /* VSCBroadcaster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100812B01651A89800E975B8 /* VSCBroadcaster.cpp */; };
+		100812B61651ABE700E975B8 /* VSCListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100812B41651ABE700E975B8 /* VSCListener.cpp */; };
+		101EBB441629AE79006601A2 /* NSArray+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB431629AE79006601A2 /* NSArray+VSCAdditions.mm */; };
+		101EBB8E162B2E2C006601A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 101EBB8D162B2E2C006601A2 /* QuartzCore.framework */; };
+		101EBB90162B2E3C006601A2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 101EBB8F162B2E3B006601A2 /* CoreGraphics.framework */; };
+		101EBB92162B3022006601A2 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 101EBB91162B3022006601A2 /* ApplicationServices.framework */; };
+		102671D11625B4E6002D34B2 /* VSCMIDIOutputChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 102671CF1625B4E6002D34B2 /* VSCMIDIOutputChannel.cpp */; };
+		103006931624763A002A30ED /* VSC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103006911624763A002A30ED /* VSC.cpp */; };
+		103203481632BBE7006ED4FF /* VSCEnvironment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103203461632BBE7006ED4FF /* VSCEnvironment.cpp */; };
+		1033868C156E48AC00CEB288 /* Plugin_BSPSceneManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948C156E483000E70049 /* Plugin_BSPSceneManager.dylib */; };
+		1033868D156E48AC00CEB288 /* Plugin_CgProgramManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */; };
+		1033868E156E48AC00CEB288 /* Plugin_OctreeSceneManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */; };
+		1033868F156E48AC00CEB288 /* Plugin_ParticleFX.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */; };
+		10338690156E48AC00CEB288 /* libConvexDecomposition.2.80.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6947F156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib */; };
+		1033869E156E77E100CEB288 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1033869D156E77E100CEB288 /* Carbon.framework */; };
+		103E77EF166A686C0013ABB6 /* VSCEnvironmentTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103E77ED166A686C0013ABB6 /* VSCEnvironmentTest.cpp */; };
+		104BFB79166D3BC400746CA9 /* VSCOSXMIDIOutputView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 104BFB78166D3BC400746CA9 /* VSCOSXMIDIOutputView.mm */; };
+		104BFB7C166D3D4E00746CA9 /* VSCOSXMIDIWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 104BFB7B166D3D4E00746CA9 /* VSCOSXMIDIWindowController.xib */; };
+		105BAD2216231C860031EE91 /* VSCMIDI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105BAD1A16231C860031EE91 /* VSCMIDI.cpp */; };
+		105BAD2516231C860031EE91 /* VSCMIDIOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105BAD2016231C860031EE91 /* VSCMIDIOutput.cpp */; };
+		105BAD2716231CA50031EE91 /* libstk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 105BAD2616231CA50031EE91 /* libstk.a */; };
+		105BAD2A16232B180031EE91 /* VSCSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105BAD2816232B180031EE91 /* VSCSound.cpp */; };
+		105BAD2E16232B530031EE91 /* VSCController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105BAD2C16232B530031EE91 /* VSCController.cpp */; };
+		105BAD3016232BA40031EE91 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 105BAD2F16232BA40031EE91 /* CoreMIDI.framework */; };
+		105BAD3216232BC90031EE91 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 105BAD3116232BC90031EE91 /* CoreAudio.framework */; };
+		105BAD3D16232D470031EE91 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 105BAD3916232D470031EE91 /* libboost_filesystem.a */; };
+		105BAD3E16232D470031EE91 /* libboost_serialization.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 105BAD3A16232D470031EE91 /* libboost_serialization.a */; };
+		105BAD3F16232D470031EE91 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 105BAD3B16232D470031EE91 /* libboost_system.a */; };
+		105BAD4016232D470031EE91 /* libboost_thread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 105BAD3C16232D470031EE91 /* libboost_thread.a */; };
+		106337D61674C1AC003E528B /* libboost_chrono.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106337D51674C1AC003E528B /* libboost_chrono.a */; };
+		106337D91674FDEF003E528B /* RenderSystem_GL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 106337D81674FDEF003E528B /* RenderSystem_GL.dylib */; };
+		106337DA1674FF80003E528B /* RenderSystem_GL.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 106337D81674FDEF003E528B /* RenderSystem_GL.dylib */; };
+		10681E871670CFF700C7A1BE /* VSCTaskTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10681E851670CFF700C7A1BE /* VSCTaskTest.cpp */; };
+		107C399216A07A4100552221 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 107C398716A07A4100552221 /* Credits.rtf */; };
+		107C399316A07A4100552221 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 107C398916A07A4100552221 /* InfoPlist.strings */; };
+		107C399416A07A4100552221 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 107C398B16A07A4100552221 /* MainMenu.xib */; };
+		107C399516A07A4100552221 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 107C398D16A07A4100552221 /* main.m */; };
+		107C399616A07A4100552221 /* VSCAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 107C398F16A07A4100552221 /* VSCAppDelegate.mm */; };
+		107C399716A07A4100552221 /* VSCApplication-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 107C399016A07A4100552221 /* VSCApplication-Info.plist */; };
+		1091F28415B07C0D00466854 /* VSCLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1091F28215B07C0D00466854 /* VSCLog.cpp */; };
+		109A8E9B16A1A7210023EC1B /* VSCOB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8E6B16A1A7210023EC1B /* VSCOB.cpp */; };
+		109A8E9C16A1A7210023EC1B /* VSCOBApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8E6D16A1A7210023EC1B /* VSCOBApplication.cpp */; };
+		109A8E9D16A1A7210023EC1B /* VSCOBBasicSceneElementFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8E6F16A1A7210023EC1B /* VSCOBBasicSceneElementFactory.cpp */; };
+		109A8E9E16A1A7210023EC1B /* VSCOBDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8E7116A1A7210023EC1B /* VSCOBDisplay.cpp */; };
+		109A8E9F16A1A7210023EC1B /* VSCOBDisplayController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8E7316A1A7210023EC1B /* VSCOBDisplayController.cpp */; };
+		109A8EA016A1A7210023EC1B /* VSCOBDynamicObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8E7516A1A7210023EC1B /* VSCOBDynamicObject.cpp */; };
+		109A8EA116A1A7210023EC1B /* VSCOBResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8E7716A1A7210023EC1B /* VSCOBResourceManager.cpp */; };
+		109A8EA216A1A7210023EC1B /* VSCOBScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8E7916A1A7210023EC1B /* VSCOBScene.cpp */; };
+		109A8EA316A1A7210023EC1B /* VSCOBSceneController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8E7B16A1A7210023EC1B /* VSCOBSceneController.cpp */; };
+		109A8EA416A1A7210023EC1B /* VSCOBStaticObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8E7D16A1A7210023EC1B /* VSCOBStaticObject.cpp */; };
+		109A8EA816A1A7210023EC1B /* Plugins.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 109A8E8716A1A7210023EC1B /* Plugins.cfg */; };
+		109A8EA916A1A7210023EC1B /* Plugins_d.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 109A8E8816A1A7210023EC1B /* Plugins_d.cfg */; };
+		109A8EAA16A1A7210023EC1B /* resources.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 109A8E8916A1A7210023EC1B /* resources.cfg */; };
+		109A8EAB16A1A7210023EC1B /* BetaGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8E8B16A1A7210023EC1B /* BetaGUI.cpp */; };
+		109A8EAC16A1A7210023EC1B /* VSCOBInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8E8D16A1A7210023EC1B /* VSCOBInterface.cpp */; };
+		109A8EAD16A1A7210023EC1B /* VSCOBKeyBindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8E8F16A1A7210023EC1B /* VSCOBKeyBindings.cpp */; };
+		109A8EB116A1A7210023EC1B /* VSCOBMouseBindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8E9716A1A7210023EC1B /* VSCOBMouseBindings.cpp */; };
+		109A8EE216A1A77E0023EC1B /* VSCOBOSXApplicationBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EB516A1A77E0023EC1B /* VSCOBOSXApplicationBridge.mm */; };
+		109A8EE416A1A77E0023EC1B /* VSCOBOSXInterfaceAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EB916A1A77E0023EC1B /* VSCOBOSXInterfaceAdapter.mm */; };
+		109A8EE616A1A77E0023EC1B /* VSCOBOSXSceneCollisionListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EBD16A1A77E0023EC1B /* VSCOBOSXSceneCollisionListener.mm */; };
+		109A8EE716A1A77E0023EC1B /* VSCOBOSXSceneDisplayView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EBF16A1A77E0023EC1B /* VSCOBOSXSceneDisplayView.mm */; };
+		109A8EE816A1A77E0023EC1B /* VSCOBOSXSceneListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EC116A1A77E0023EC1B /* VSCOBOSXSceneListener.mm */; };
+		109A8EE916A1A77E0023EC1B /* VSCOSXOBSceneController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EC316A1A77E0023EC1B /* VSCOSXOBSceneController.mm */; };
+		109A8EEA16A1A77E0023EC1B /* VSCOSXOBSceneDetailView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EC516A1A77E0023EC1B /* VSCOSXOBSceneDetailView.mm */; };
+		109A8EEB16A1A77E0023EC1B /* VSCOSXOBSceneDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109A8EC616A1A77E0023EC1B /* VSCOSXOBSceneDetailView.xib */; };
+		109A8EF016A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8ECE16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.mm */; };
+		109A8EF116A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109A8ECF16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.xib */; };
+		109A8EF216A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8ED216A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.mm */; };
+		109A8EF316A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109A8ED316A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.xib */; };
+		109A8EF616A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8ED916A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.mm */; };
+		109A8EF716A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109A8EDA16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.xib */; };
+		109A8EF816A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EDC16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.mm */; };
+		109A8EF916A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109A8EDD16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.xib */; };
+		109A8EFA16A1A77E0023EC1B /* VSCOSXOBSceneElementListView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EDF16A1A77E0023EC1B /* VSCOSXOBSceneElementListView.mm */; };
+		109A8EFB16A1A77E0023EC1B /* VSCOSXOBSceneElementView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EE116A1A77E0023EC1B /* VSCOSXOBSceneElementView.mm */; };
+		109A8F1316A1A83E0023EC1B /* VSCIMAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EFD16A1A83E0023EC1B /* VSCIMAction.cpp */; };
+		109A8F1416A1A83E0023EC1B /* VSCIMCollisionAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EFF16A1A83E0023EC1B /* VSCIMCollisionAction.cpp */; };
+		109A8F1516A1A83E0023EC1B /* VSCIMCollisionEventChain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F0116A1A83E0023EC1B /* VSCIMCollisionEventChain.cpp */; };
+		109A8F1616A1A83E0023EC1B /* VSCIMCollisionMapped.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F0316A1A83E0023EC1B /* VSCIMCollisionMapped.cpp */; };
+		109A8F1716A1A83E0023EC1B /* VSCIMCollisionMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F0516A1A83E0023EC1B /* VSCIMCollisionMapper.cpp */; };
+		109A8F1816A1A83E0023EC1B /* VSCIMCollisionMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F0716A1A83E0023EC1B /* VSCIMCollisionMapping.cpp */; };
+		109A8F1916A1A83E0023EC1B /* VSCIMCollisionMIDIActions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F0916A1A83E0023EC1B /* VSCIMCollisionMIDIActions.cpp */; };
+		109A8F1A16A1A83E0023EC1B /* VSCIMDelay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F0B16A1A83E0023EC1B /* VSCIMDelay.cpp */; };
+		109A8F1B16A1A83E0023EC1B /* VSCIMEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F0D16A1A83E0023EC1B /* VSCIMEvent.cpp */; };
+		109A8F1C16A1A83E0023EC1B /* VSCIMEventChain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F0F16A1A83E0023EC1B /* VSCIMEventChain.cpp */; };
+		109A8F1D16A1A83E0023EC1B /* VSCIMTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F1116A1A83E0023EC1B /* VSCIMTarget.cpp */; };
+		109A8F3F16A1A8740023EC1B /* VSCIMOSXCollisionActionGlobal.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F2116A1A8740023EC1B /* VSCIMOSXCollisionActionGlobal.mm */; };
+		109A8F4016A1A8740023EC1B /* VSCIMOSXCollisionActionMappingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F2416A1A8740023EC1B /* VSCIMOSXCollisionActionMappingsViewController.mm */; };
+		109A8F4116A1A8740023EC1B /* VSCIMOSXCollisionActionMappingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109A8F2516A1A8740023EC1B /* VSCIMOSXCollisionActionMappingsViewController.xib */; };
+		109A8F4216A1A8740023EC1B /* VSCIMOSXCollisionActionView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F2716A1A8740023EC1B /* VSCIMOSXCollisionActionView.mm */; };
+		109A8F4316A1A8740023EC1B /* VSCIMOSXCollisionActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109A8F2816A1A8740023EC1B /* VSCIMOSXCollisionActionView.xib */; };
+		109A8F4716A1A8740023EC1B /* VSCIMOSXCollisionEventChainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F2F16A1A8740023EC1B /* VSCIMOSXCollisionEventChainViewController.mm */; };
+		109A8F4816A1A8740023EC1B /* VSCIMOSXCollisionEventChainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109A8F3016A1A8740023EC1B /* VSCIMOSXCollisionEventChainViewController.xib */; };
+		109A8F4916A1A8740023EC1B /* VSCIMOSXCollisionMappingEditViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F3216A1A8740023EC1B /* VSCIMOSXCollisionMappingEditViewController.mm */; };
+		109A8F4A16A1A8740023EC1B /* VSCIMOSXCollisionMappingEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109A8F3316A1A8740023EC1B /* VSCIMOSXCollisionMappingEditViewController.xib */; };
+		109A8F4D16A1A8740023EC1B /* VSCIMOSXCollisionMappingTypes.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F3816A1A8740023EC1B /* VSCIMOSXCollisionMappingTypes.mm */; };
+		109A8F4E16A1A8740023EC1B /* VSCIMOSXCollisionMappingView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F3A16A1A8740023EC1B /* VSCIMOSXCollisionMappingView.mm */; };
+		109A8F4F16A1A8740023EC1B /* VSCIMOSXCollisionMappingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109A8F3B16A1A8740023EC1B /* VSCIMOSXCollisionMappingView.xib */; };
+		109A8F5016A1A8740023EC1B /* VSCIMOSXDelayView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F3D16A1A8740023EC1B /* VSCIMOSXDelayView.mm */; };
+		109A8F5116A1A8740023EC1B /* VSCIMOSXDelayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109A8F3E16A1A8740023EC1B /* VSCIMOSXDelayView.xib */; };
+		109D51B5155998EE0030C161 /* VSCException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109D51B3155998EE0030C161 /* VSCException.cpp */; };
+		10AF53FE163D8D7600419EEE /* DMTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53FB163D8D7600419EEE /* DMTabBar.m */; };
+		10AF53FF163D8D7600419EEE /* DMTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53FD163D8D7600419EEE /* DMTabBarItem.m */; };
+		10AF5418163D9A6C00419EEE /* 01-refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AF5409163D9A6C00419EEE /* 01-refresh.png */; };
+		10AF5419163D9A6C00419EEE /* 02-redo.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AF540A163D9A6C00419EEE /* 02-redo.png */; };
+		10AF541A163D9A6C00419EEE /* 06-magnify.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AF540B163D9A6C00419EEE /* 06-magnify.png */; };
+		10AF541B163D9A6C00419EEE /* 11-clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AF540C163D9A6C00419EEE /* 11-clock.png */; };
+		10AF541C163D9A6C00419EEE /* 12-eye.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AF540D163D9A6C00419EEE /* 12-eye.png */; };
+		10AF541D163D9A6C00419EEE /* 16-line-chart.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AF540E163D9A6C00419EEE /* 16-line-chart.png */; };
+		10AF541E163D9A6C00419EEE /* 19-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AF540F163D9A6C00419EEE /* 19-gear.png */; };
+		10AF541F163D9A6C00419EEE /* 20-gear2.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AF5410163D9A6C00419EEE /* 20-gear2.png */; };
+		10AF5420163D9A6C00419EEE /* 55-network.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AF5411163D9A6C00419EEE /* 55-network.png */; };
+		10AF5421163D9A6C00419EEE /* 95-equalizer.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AF5412163D9A6C00419EEE /* 95-equalizer.png */; };
+		10AF5422163D9A6C00419EEE /* 105-piano.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AF5413163D9A6C00419EEE /* 105-piano.png */; };
+		10AF5423163D9A6C00419EEE /* 106-sliders.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AF5414163D9A6C00419EEE /* 106-sliders.png */; };
+		10AF5424163D9A6C00419EEE /* 122-stats.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AF5415163D9A6C00419EEE /* 122-stats.png */; };
+		10AF5425163D9A6C00419EEE /* 157-wrench.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AF5416163D9A6C00419EEE /* 157-wrench.png */; };
+		10AF5426163D9A6C00419EEE /* 158-wrench-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AF5417163D9A6C00419EEE /* 158-wrench-2.png */; };
+		10B60D2515505D6D006A6D6E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60D2415505D6D006A6D6E /* Cocoa.framework */; };
+		10B60EEF155080D9006A6D6E /* libOIS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60EED155080D9006A6D6E /* libOIS.a */; };
+		10B60EF0155080D9006A6D6E /* Ogre.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60EEE155080D9006A6D6E /* Ogre.framework */; };
+		10B60F071550850C006A6D6E /* BulletCollision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60F001550850C006A6D6E /* BulletCollision.framework */; };
+		10B60F081550850C006A6D6E /* BulletDynamics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60F011550850C006A6D6E /* BulletDynamics.framework */; };
+		10B60F091550850C006A6D6E /* BulletMultiThreaded.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60F021550850C006A6D6E /* BulletMultiThreaded.framework */; };
+		10B60F0A1550850C006A6D6E /* BulletSoftBody.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60F031550850C006A6D6E /* BulletSoftBody.framework */; };
+		10B60F0B1550850C006A6D6E /* BulletSoftBodySolvers_OpenCL_Mini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60F041550850C006A6D6E /* BulletSoftBodySolvers_OpenCL_Mini.framework */; };
+		10B60F0C1550850C006A6D6E /* Cg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60F051550850C006A6D6E /* Cg.framework */; };
+		10B60F0D1550850C006A6D6E /* LinearMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B60F061550850C006A6D6E /* LinearMath.framework */; };
+		10CB65B0164E926E000D311F /* VSCOSXEnvironmentWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10CB65AC164E926E000D311F /* VSCOSXEnvironmentWindowController.xib */; };
+		10CB65B1164E926E000D311F /* VSCOSXEnvironmentWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10CB65AE164E926E000D311F /* VSCOSXEnvironmentWindowController.mm */; };
+		10CFE720156CD62000B24399 /* OgreBulletCollisionsDebugContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6D7156CD61F00B24399 /* OgreBulletCollisionsDebugContact.cpp */; };
+		10CFE721156CD62000B24399 /* OgreBulletCollisionsDebugDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6D8156CD61F00B24399 /* OgreBulletCollisionsDebugDrawer.cpp */; };
+		10CFE722156CD62000B24399 /* OgreBulletCollisionsDebugLines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6D9156CD61F00B24399 /* OgreBulletCollisionsDebugLines.cpp */; };
+		10CFE723156CD62000B24399 /* OgreBulletCollisionsDebugShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6DA156CD61F00B24399 /* OgreBulletCollisionsDebugShape.cpp */; };
+		10CFE725156CD62000B24399 /* OgreBulletCollisionsObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6DC156CD61F00B24399 /* OgreBulletCollisionsObject.cpp */; };
+		10CFE726156CD62000B24399 /* OgreBulletCollisionsObjectState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6DD156CD61F00B24399 /* OgreBulletCollisionsObjectState.cpp */; };
+		10CFE727156CD62000B24399 /* OgreBulletCollisionsPrecompiled.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6DE156CD61F00B24399 /* OgreBulletCollisionsPrecompiled.cpp */; };
+		10CFE728156CD62000B24399 /* OgreBulletCollisionsRay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6DF156CD61F00B24399 /* OgreBulletCollisionsRay.cpp */; };
+		10CFE729156CD62000B24399 /* OgreBulletCollisionsShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6E0156CD61F00B24399 /* OgreBulletCollisionsShape.cpp */; };
+		10CFE72A156CD62000B24399 /* OgreBulletCollisionsWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6E1156CD61F00B24399 /* OgreBulletCollisionsWorld.cpp */; };
+		10CFE72B156CD62000B24399 /* OgreBulletCollisionsBoxShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6E3156CD61F00B24399 /* OgreBulletCollisionsBoxShape.cpp */; };
+		10CFE72C156CD62000B24399 /* OgreBulletCollisionsCapsuleShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6E4156CD61F00B24399 /* OgreBulletCollisionsCapsuleShape.cpp */; };
+		10CFE72D156CD62000B24399 /* OgreBulletCollisionsCompoundShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6E5156CD61F00B24399 /* OgreBulletCollisionsCompoundShape.cpp */; };
+		10CFE72E156CD62000B24399 /* OgreBulletCollisionsConeShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6E6156CD61F00B24399 /* OgreBulletCollisionsConeShape.cpp */; };
+		10CFE72F156CD62000B24399 /* OgreBulletCollisionsConvexHullShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6E7156CD61F00B24399 /* OgreBulletCollisionsConvexHullShape.cpp */; };
+		10CFE730156CD62000B24399 /* OgreBulletCollisionsCylinderShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6E8156CD61F00B24399 /* OgreBulletCollisionsCylinderShape.cpp */; };
+		10CFE731156CD62000B24399 /* OgreBulletCollisionsGImpactShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6E9156CD61F00B24399 /* OgreBulletCollisionsGImpactShape.cpp */; };
+		10CFE732156CD62000B24399 /* OgreBulletCollisionsMinkowskiSumShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6EA156CD61F00B24399 /* OgreBulletCollisionsMinkowskiSumShape.cpp */; };
+		10CFE733156CD62000B24399 /* OgreBulletCollisionsMultiSphereShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6EB156CD61F00B24399 /* OgreBulletCollisionsMultiSphereShape.cpp */; };
+		10CFE734156CD62000B24399 /* OgreBulletCollisionsSphereShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6EC156CD61F00B24399 /* OgreBulletCollisionsSphereShape.cpp */; };
+		10CFE735156CD62000B24399 /* OgreBulletCollisionsStaticPlaneShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6ED156CD61F00B24399 /* OgreBulletCollisionsStaticPlaneShape.cpp */; };
+		10CFE736156CD62000B24399 /* OgreBulletCollisionsTriangleShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6EE156CD61F00B24399 /* OgreBulletCollisionsTriangleShape.cpp */; };
+		10CFE737156CD62000B24399 /* OgreBulletCollisionsTrimeshShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6EF156CD61F00B24399 /* OgreBulletCollisionsTrimeshShape.cpp */; };
+		10CFE738156CD62000B24399 /* OgreBulletCollisionsMeshToShapeConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6F1156CD61F00B24399 /* OgreBulletCollisionsMeshToShapeConverter.cpp */; };
+		10CFE73E156CD62000B24399 /* OgreBulletDynamics6DofConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE70C156CD62000B24399 /* OgreBulletDynamics6DofConstraint.cpp */; };
+		10CFE73F156CD62000B24399 /* OgreBulletDynamics6DofSpringConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE70D156CD62000B24399 /* OgreBulletDynamics6DofSpringConstraint.cpp */; };
+		10CFE740156CD62000B24399 /* OgreBulletDynamicsConeTwistConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE70E156CD62000B24399 /* OgreBulletDynamicsConeTwistConstraint.cpp */; };
+		10CFE741156CD62000B24399 /* OgreBulletDynamicsHingeConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE70F156CD62000B24399 /* OgreBulletDynamicsHingeConstraint.cpp */; };
+		10CFE742156CD62000B24399 /* OgreBulletDynamicsPoint2pointConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE710156CD62000B24399 /* OgreBulletDynamicsPoint2pointConstraint.cpp */; };
+		10CFE743156CD62000B24399 /* OgreBulletDynamicsRaycastVehicle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE711156CD62000B24399 /* OgreBulletDynamicsRaycastVehicle.cpp */; };
+		10CFE745156CD62000B24399 /* OgreBulletDynamicsConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE713156CD62000B24399 /* OgreBulletDynamicsConstraint.cpp */; };
+		10CFE746156CD62000B24399 /* OgreBulletDynamicsObjectState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE714156CD62000B24399 /* OgreBulletDynamicsObjectState.cpp */; };
+		10CFE747156CD62000B24399 /* OgreBulletDynamicsPrecompiled.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE715156CD62000B24399 /* OgreBulletDynamicsPrecompiled.cpp */; };
+		10CFE748156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE716156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp */; };
+		10CFE749156CD62000B24399 /* OgreBulletDynamicsWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE717156CD62000B24399 /* OgreBulletDynamicsWorld.cpp */; };
+		10CFE74A156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE719156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp */; };
+		10D5533A15FA409F002AED81 /* NSString+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10D5533915FA409F002AED81 /* NSString+VSCAdditions.mm */; };
+		10D7AE8B1628554E00DE0F72 /* VSCMIDIOutputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10D7AE891628554D00DE0F72 /* VSCMIDIOutputManager.cpp */; };
+		10D7AE9C1628767F00DE0F72 /* VSCOSXMIDIWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10D7AE951628767F00DE0F72 /* VSCOSXMIDIWindowController.mm */; };
+		10E8557415E65048008FF635 /* VSCUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E8557215E65048008FF635 /* VSCUI.cpp */; };
+		10EB5A3B16050D7500F0939E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10EB5A3A16050D7500F0939E /* OpenGL.framework */; };
+		10EB5E5E16298E0B00E0F030 /* VSCOSXApplicationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10EB5E5D16298E0B00E0F030 /* VSCOSXApplicationManager.mm */; };
+		10ED088A1601CD8900053C07 /* VSCBound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10ED08881601CD8900053C07 /* VSCBound.cpp */; };
+		10EE8847163842F100A1902B /* VSCGlobalApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105CDA3A162DA03500532AD0 /* VSCGlobalApplication.cpp */; };
+		10EF8DAC1626CBB700EB8FDE /* VSCTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10EF8DA81626CBB700EB8FDE /* VSCTask.cpp */; };
+		10EF8DAD1626CBB700EB8FDE /* VSCTaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10EF8DAA1626CBB700EB8FDE /* VSCTaskQueue.cpp */; };
+		10EF8DB31627228C00EB8FDE /* VSCMIDITasks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10EF8DB11627228C00EB8FDE /* VSCMIDITasks.cpp */; };
+		10F69480156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6947F156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib */; };
+		10F69483156E3D2700E70049 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F69482156E3D2700E70049 /* IOKit.framework */; };
+		10F69485156E41CB00E70049 /* Ogre.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10B60EEE155080D9006A6D6E /* Ogre.framework */; };
+		10F69490156E483000E70049 /* Plugin_BSPSceneManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948C156E483000E70049 /* Plugin_BSPSceneManager.dylib */; };
+		10F69491156E483000E70049 /* Plugin_CgProgramManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */; };
+		10F69492156E483000E70049 /* Plugin_OctreeSceneManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */; };
+		10F69493156E483000E70049 /* Plugin_ParticleFX.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */; };
+		10F907D8162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F907D0162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		10F69484156E41A500E70049 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				10F69485156E41CB00E70049 /* Ogre.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		10F69486156E41D300E70049 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				106337DA1674FF80003E528B /* RenderSystem_GL.dylib in CopyFiles */,
+				1033868C156E48AC00CEB288 /* Plugin_BSPSceneManager.dylib in CopyFiles */,
+				1033868D156E48AC00CEB288 /* Plugin_CgProgramManager.dylib in CopyFiles */,
+				1033868E156E48AC00CEB288 /* Plugin_OctreeSceneManager.dylib in CopyFiles */,
+				1033868F156E48AC00CEB288 /* Plugin_ParticleFX.dylib in CopyFiles */,
+				10338690156E48AC00CEB288 /* libConvexDecomposition.2.80.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		100812B01651A89800E975B8 /* VSCBroadcaster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCBroadcaster.cpp; path = ../../../../Generic/VSCBroadcaster.cpp; sourceTree = "<group>"; };
+		100812B11651A89800E975B8 /* VSCBroadcaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCBroadcaster.h; path = ../../../../Generic/VSCBroadcaster.h; sourceTree = "<group>"; };
+		100812B41651ABE700E975B8 /* VSCListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCListener.cpp; path = ../../../../Generic/VSCListener.cpp; sourceTree = "<group>"; };
+		100812B51651ABE700E975B8 /* VSCListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCListener.h; path = ../../../../Generic/VSCListener.h; sourceTree = "<group>"; };
+		101EBB421629AE79006601A2 /* NSArray+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+VSCAdditions.h"; path = "../../../Categories/NSArray+VSCAdditions.h"; sourceTree = "<group>"; };
+		101EBB431629AE79006601A2 /* NSArray+VSCAdditions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSArray+VSCAdditions.mm"; path = "../../../Categories/NSArray+VSCAdditions.mm"; sourceTree = "<group>"; };
+		101EBB8D162B2E2C006601A2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		101EBB8F162B2E3B006601A2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		101EBB91162B3022006601A2 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		102671CF1625B4E6002D34B2 /* VSCMIDIOutputChannel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDIOutputChannel.cpp; path = ../../../../MIDI/VSCMIDIOutputChannel.cpp; sourceTree = "<group>"; };
+		102671D01625B4E6002D34B2 /* VSCMIDIOutputChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDIOutputChannel.h; path = ../../../../MIDI/VSCMIDIOutputChannel.h; sourceTree = "<group>"; };
+		103006911624763A002A30ED /* VSC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSC.cpp; path = ../../../../Generic/VSC.cpp; sourceTree = "<group>"; };
+		103006921624763A002A30ED /* VSC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSC.h; path = ../../../../Generic/VSC.h; sourceTree = "<group>"; };
+		103203461632BBE7006ED4FF /* VSCEnvironment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCEnvironment.cpp; path = ../../../../Application/VSCEnvironment.cpp; sourceTree = "<group>"; };
+		103203471632BBE7006ED4FF /* VSCEnvironment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCEnvironment.h; path = ../../../../Application/VSCEnvironment.h; sourceTree = "<group>"; };
+		10338694156E5BB100CEB288 /* OgreOSXCocoaContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaContext.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaContext.h; sourceTree = "<group>"; };
+		10338695156E5BB100CEB288 /* OgreOSXCocoaWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaWindow.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaWindow.h; sourceTree = "<group>"; };
+		10338696156E5BB100CEB288 /* OgreOSXCocoaWindowDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaWindowDelegate.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaWindowDelegate.h; sourceTree = "<group>"; };
+		10338697156E5BE300CEB288 /* OgreOSXContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXContext.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXContext.h; sourceTree = "<group>"; };
+		10338698156E5BE300CEB288 /* OgreOSXGLSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXGLSupport.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXGLSupport.h; sourceTree = "<group>"; };
+		10338699156E5BE300CEB288 /* OgreOSXRenderTexture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXRenderTexture.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXRenderTexture.h; sourceTree = "<group>"; };
+		1033869A156E5BE300CEB288 /* OgreOSXWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXWindow.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXWindow.h; sourceTree = "<group>"; };
+		1033869D156E77E100CEB288 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		103E77ED166A686C0013ABB6 /* VSCEnvironmentTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCEnvironmentTest.cpp; path = ../../../../Application/VSCEnvironmentTest.cpp; sourceTree = "<group>"; };
+		103E77EE166A686C0013ABB6 /* VSCEnvironmentTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCEnvironmentTest.h; path = ../../../../Application/VSCEnvironmentTest.h; sourceTree = "<group>"; };
+		104BFB77166D3BC400746CA9 /* VSCOSXMIDIOutputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXMIDIOutputView.h; path = ../../MIDI/VSCOSXMIDIOutputView.h; sourceTree = "<group>"; };
+		104BFB78166D3BC400746CA9 /* VSCOSXMIDIOutputView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXMIDIOutputView.mm; path = ../../MIDI/VSCOSXMIDIOutputView.mm; sourceTree = "<group>"; };
+		104BFB7B166D3D4E00746CA9 /* VSCOSXMIDIWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXMIDIWindowController.xib; path = ../../MIDI/VSCOSXMIDIWindowController.xib; sourceTree = "<group>"; };
+		105BAD1A16231C860031EE91 /* VSCMIDI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDI.cpp; path = ../../../../MIDI/VSCMIDI.cpp; sourceTree = "<group>"; };
+		105BAD1B16231C860031EE91 /* VSCMIDI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDI.h; path = ../../../../MIDI/VSCMIDI.h; sourceTree = "<group>"; };
+		105BAD2016231C860031EE91 /* VSCMIDIOutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDIOutput.cpp; path = ../../../../MIDI/VSCMIDIOutput.cpp; sourceTree = "<group>"; };
+		105BAD2116231C860031EE91 /* VSCMIDIOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDIOutput.h; path = ../../../../MIDI/VSCMIDIOutput.h; sourceTree = "<group>"; };
+		105BAD2616231CA50031EE91 /* libstk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libstk.a; path = "../../../../../../Libraries/stk-4.4.3/lib/libstk.a"; sourceTree = "<group>"; };
+		105BAD2816232B180031EE91 /* VSCSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCSound.cpp; path = ../../../../Sound/VSCSound.cpp; sourceTree = "<group>"; };
+		105BAD2916232B180031EE91 /* VSCSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCSound.h; path = ../../../../Sound/VSCSound.h; sourceTree = "<group>"; };
+		105BAD2C16232B530031EE91 /* VSCController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCController.cpp; path = ../../../../Controller/VSCController.cpp; sourceTree = "<group>"; };
+		105BAD2D16232B530031EE91 /* VSCController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCController.h; path = ../../../../Controller/VSCController.h; sourceTree = "<group>"; };
+		105BAD2F16232BA40031EE91 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		105BAD3116232BC90031EE91 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		105BAD3916232D470031EE91 /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = lib/libboost_filesystem.a; sourceTree = BOOST_ROOT; };
+		105BAD3A16232D470031EE91 /* libboost_serialization.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_serialization.a; path = lib/libboost_serialization.a; sourceTree = BOOST_ROOT; };
+		105BAD3B16232D470031EE91 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = lib/libboost_system.a; sourceTree = BOOST_ROOT; };
+		105BAD3C16232D470031EE91 /* libboost_thread.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_thread.a; path = lib/libboost_thread.a; sourceTree = BOOST_ROOT; };
+		105CDA3A162DA03500532AD0 /* VSCGlobalApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCGlobalApplication.cpp; path = ../../../../Application/VSCGlobalApplication.cpp; sourceTree = "<group>"; };
+		105CDA3B162DA03500532AD0 /* VSCGlobalApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCGlobalApplication.h; path = ../../../../Application/VSCGlobalApplication.h; sourceTree = "<group>"; };
+		106337D51674C1AC003E528B /* libboost_chrono.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_chrono.a; path = ../../../../../../../../../usr/local/lib/libboost_chrono.a; sourceTree = "<group>"; };
+		106337D81674FDEF003E528B /* RenderSystem_GL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = RenderSystem_GL.dylib; path = ../../../../../../Libraries/OgreSDK/lib/RenderSystem_GL.dylib; sourceTree = "<group>"; };
+		10681E851670CFF700C7A1BE /* VSCTaskTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCTaskTest.cpp; path = ../../../../Task/VSCTaskTest.cpp; sourceTree = "<group>"; };
+		10681E861670CFF700C7A1BE /* VSCTaskTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCTaskTest.h; path = ../../../../Task/VSCTaskTest.h; sourceTree = "<group>"; };
+		107C398816A07A4100552221 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = Credits.rtf; sourceTree = "<group>"; };
+		107C398A16A07A4100552221 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
+		107C398C16A07A4100552221 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainMenu.xib; sourceTree = "<group>"; };
+		107C398D16A07A4100552221 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = VSCApplication/main.m; sourceTree = "<group>"; };
+		107C398E16A07A4100552221 /* VSCAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCAppDelegate.h; path = VSCApplication/VSCAppDelegate.h; sourceTree = "<group>"; };
+		107C398F16A07A4100552221 /* VSCAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCAppDelegate.mm; path = VSCApplication/VSCAppDelegate.mm; sourceTree = "<group>"; };
+		107C399016A07A4100552221 /* VSCApplication-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "VSCApplication-Info.plist"; path = "VSCApplication/VSCApplication-Info.plist"; sourceTree = "<group>"; };
+		107C399116A07A4100552221 /* VSCApplication-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VSCApplication-Prefix.pch"; path = "VSCApplication/VSCApplication-Prefix.pch"; sourceTree = "<group>"; };
+		1091F27C15B0645D00466854 /* VSCNSLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCNSLog.h; path = ../../../Common/VSCNSLog.h; sourceTree = "<group>"; };
+		1091F28215B07C0D00466854 /* VSCLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCLog.cpp; path = ../../../../Generic/VSCLog.cpp; sourceTree = "<group>"; };
+		1091F28315B07C0D00466854 /* VSCLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCLog.h; path = ../../../../Generic/VSCLog.h; sourceTree = "<group>"; };
+		109A8E6B16A1A7210023EC1B /* VSCOB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCOB.cpp; sourceTree = "<group>"; };
+		109A8E6C16A1A7210023EC1B /* VSCOB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOB.h; sourceTree = "<group>"; };
+		109A8E6D16A1A7210023EC1B /* VSCOBApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCOBApplication.cpp; sourceTree = "<group>"; };
+		109A8E6E16A1A7210023EC1B /* VSCOBApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBApplication.h; sourceTree = "<group>"; };
+		109A8E6F16A1A7210023EC1B /* VSCOBBasicSceneElementFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCOBBasicSceneElementFactory.cpp; sourceTree = "<group>"; };
+		109A8E7016A1A7210023EC1B /* VSCOBBasicSceneElementFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBBasicSceneElementFactory.h; sourceTree = "<group>"; };
+		109A8E7116A1A7210023EC1B /* VSCOBDisplay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCOBDisplay.cpp; sourceTree = "<group>"; };
+		109A8E7216A1A7210023EC1B /* VSCOBDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBDisplay.h; sourceTree = "<group>"; };
+		109A8E7316A1A7210023EC1B /* VSCOBDisplayController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCOBDisplayController.cpp; sourceTree = "<group>"; };
+		109A8E7416A1A7210023EC1B /* VSCOBDisplayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBDisplayController.h; sourceTree = "<group>"; };
+		109A8E7516A1A7210023EC1B /* VSCOBDynamicObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCOBDynamicObject.cpp; sourceTree = "<group>"; };
+		109A8E7616A1A7210023EC1B /* VSCOBDynamicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBDynamicObject.h; sourceTree = "<group>"; };
+		109A8E7716A1A7210023EC1B /* VSCOBResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCOBResourceManager.cpp; sourceTree = "<group>"; };
+		109A8E7816A1A7210023EC1B /* VSCOBResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBResourceManager.h; sourceTree = "<group>"; };
+		109A8E7916A1A7210023EC1B /* VSCOBScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCOBScene.cpp; sourceTree = "<group>"; };
+		109A8E7A16A1A7210023EC1B /* VSCOBScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBScene.h; sourceTree = "<group>"; };
+		109A8E7B16A1A7210023EC1B /* VSCOBSceneController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCOBSceneController.cpp; sourceTree = "<group>"; };
+		109A8E7C16A1A7210023EC1B /* VSCOBSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBSceneController.h; sourceTree = "<group>"; };
+		109A8E7D16A1A7210023EC1B /* VSCOBStaticObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCOBStaticObject.cpp; sourceTree = "<group>"; };
+		109A8E7E16A1A7210023EC1B /* VSCOBStaticObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBStaticObject.h; sourceTree = "<group>"; };
+		109A8E8716A1A7210023EC1B /* Plugins.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Plugins.cfg; sourceTree = "<group>"; };
+		109A8E8816A1A7210023EC1B /* Plugins_d.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Plugins_d.cfg; sourceTree = "<group>"; };
+		109A8E8916A1A7210023EC1B /* resources.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = resources.cfg; sourceTree = "<group>"; };
+		109A8E8B16A1A7210023EC1B /* BetaGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BetaGUI.cpp; sourceTree = "<group>"; };
+		109A8E8C16A1A7210023EC1B /* BetaGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BetaGUI.h; sourceTree = "<group>"; };
+		109A8E8D16A1A7210023EC1B /* VSCOBInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCOBInterface.cpp; sourceTree = "<group>"; };
+		109A8E8E16A1A7210023EC1B /* VSCOBInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBInterface.h; sourceTree = "<group>"; };
+		109A8E8F16A1A7210023EC1B /* VSCOBKeyBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCOBKeyBindings.cpp; sourceTree = "<group>"; };
+		109A8E9016A1A7210023EC1B /* VSCOBKeyBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBKeyBindings.h; sourceTree = "<group>"; };
+		109A8E9716A1A7210023EC1B /* VSCOBMouseBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCOBMouseBindings.cpp; sourceTree = "<group>"; };
+		109A8E9816A1A7210023EC1B /* VSCOBMouseBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBMouseBindings.h; sourceTree = "<group>"; };
+		109A8EB416A1A77E0023EC1B /* VSCOBOSXApplicationBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXApplicationBridge.h; path = ../Apple/OSX/OB/VSCOBOSXApplicationBridge.h; sourceTree = "<group>"; };
+		109A8EB516A1A77E0023EC1B /* VSCOBOSXApplicationBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXApplicationBridge.mm; path = ../Apple/OSX/OB/VSCOBOSXApplicationBridge.mm; sourceTree = "<group>"; };
+		109A8EB816A1A77E0023EC1B /* VSCOBOSXInterfaceAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXInterfaceAdapter.h; path = ../Apple/OSX/OB/VSCOBOSXInterfaceAdapter.h; sourceTree = "<group>"; };
+		109A8EB916A1A77E0023EC1B /* VSCOBOSXInterfaceAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXInterfaceAdapter.mm; path = ../Apple/OSX/OB/VSCOBOSXInterfaceAdapter.mm; sourceTree = "<group>"; };
+		109A8EBC16A1A77E0023EC1B /* VSCOBOSXSceneCollisionListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXSceneCollisionListener.h; path = ../Apple/OSX/OB/VSCOBOSXSceneCollisionListener.h; sourceTree = "<group>"; };
+		109A8EBD16A1A77E0023EC1B /* VSCOBOSXSceneCollisionListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXSceneCollisionListener.mm; path = ../Apple/OSX/OB/VSCOBOSXSceneCollisionListener.mm; sourceTree = "<group>"; };
+		109A8EBE16A1A77E0023EC1B /* VSCOBOSXSceneDisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXSceneDisplayView.h; path = ../Apple/OSX/OB/VSCOBOSXSceneDisplayView.h; sourceTree = "<group>"; };
+		109A8EBF16A1A77E0023EC1B /* VSCOBOSXSceneDisplayView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXSceneDisplayView.mm; path = ../Apple/OSX/OB/VSCOBOSXSceneDisplayView.mm; sourceTree = "<group>"; };
+		109A8EC016A1A77E0023EC1B /* VSCOBOSXSceneListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXSceneListener.h; path = ../Apple/OSX/OB/VSCOBOSXSceneListener.h; sourceTree = "<group>"; };
+		109A8EC116A1A77E0023EC1B /* VSCOBOSXSceneListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXSceneListener.mm; path = ../Apple/OSX/OB/VSCOBOSXSceneListener.mm; sourceTree = "<group>"; };
+		109A8EC216A1A77E0023EC1B /* VSCOSXOBSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneController.h; path = ../Apple/OSX/OB/VSCOSXOBSceneController.h; sourceTree = "<group>"; };
+		109A8EC316A1A77E0023EC1B /* VSCOSXOBSceneController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneController.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneController.mm; sourceTree = "<group>"; };
+		109A8EC416A1A77E0023EC1B /* VSCOSXOBSceneDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneDetailView.h; path = ../Apple/OSX/OB/VSCOSXOBSceneDetailView.h; sourceTree = "<group>"; };
+		109A8EC516A1A77E0023EC1B /* VSCOSXOBSceneDetailView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneDetailView.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneDetailView.mm; sourceTree = "<group>"; };
+		109A8EC616A1A77E0023EC1B /* VSCOSXOBSceneDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXOBSceneDetailView.xib; path = ../Apple/OSX/OB/VSCOSXOBSceneDetailView.xib; sourceTree = "<group>"; };
+		109A8ECD16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementCollisionView.h; path = ../Apple/OSX/OB/VSCOSXOBSceneElementCollisionView.h; sourceTree = "<group>"; };
+		109A8ECE16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneElementCollisionView.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneElementCollisionView.mm; sourceTree = "<group>"; };
+		109A8ECF16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXOBSceneElementCollisionView.xib; path = ../Apple/OSX/OB/VSCOSXOBSceneElementCollisionView.xib; sourceTree = "<group>"; };
+		109A8ED016A1A77E0023EC1B /* VSCOSXOBSceneElementController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementController.h; path = ../Apple/OSX/OB/VSCOSXOBSceneElementController.h; sourceTree = "<group>"; };
+		109A8ED116A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementDetailView.h; path = ../Apple/OSX/OB/VSCOSXOBSceneElementDetailView.h; sourceTree = "<group>"; };
+		109A8ED216A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneElementDetailView.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneElementDetailView.mm; sourceTree = "<group>"; };
+		109A8ED316A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXOBSceneElementDetailView.xib; path = ../Apple/OSX/OB/VSCOSXOBSceneElementDetailView.xib; sourceTree = "<group>"; };
+		109A8ED416A1A77E0023EC1B /* VSCOSXOBSceneElementEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementEditor.h; path = ../Apple/OSX/OB/VSCOSXOBSceneElementEditor.h; sourceTree = "<group>"; };
+		109A8ED816A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementInspectorViewController.h; path = ../Apple/OSX/OB/VSCOSXOBSceneElementInspectorViewController.h; sourceTree = "<group>"; };
+		109A8ED916A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneElementInspectorViewController.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneElementInspectorViewController.mm; sourceTree = "<group>"; };
+		109A8EDA16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXOBSceneElementInspectorViewController.xib; path = ../Apple/OSX/OB/VSCOSXOBSceneElementInspectorViewController.xib; sourceTree = "<group>"; };
+		109A8EDB16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementInspectorWindowController.h; path = ../Apple/OSX/OB/VSCOSXOBSceneElementInspectorWindowController.h; sourceTree = "<group>"; };
+		109A8EDC16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneElementInspectorWindowController.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneElementInspectorWindowController.mm; sourceTree = "<group>"; };
+		109A8EDD16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXOBSceneElementInspectorWindowController.xib; path = ../Apple/OSX/OB/VSCOSXOBSceneElementInspectorWindowController.xib; sourceTree = "<group>"; };
+		109A8EDE16A1A77E0023EC1B /* VSCOSXOBSceneElementListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementListView.h; path = ../Apple/OSX/OB/VSCOSXOBSceneElementListView.h; sourceTree = "<group>"; };
+		109A8EDF16A1A77E0023EC1B /* VSCOSXOBSceneElementListView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneElementListView.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneElementListView.mm; sourceTree = "<group>"; };
+		109A8EE016A1A77E0023EC1B /* VSCOSXOBSceneElementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementView.h; path = ../Apple/OSX/OB/VSCOSXOBSceneElementView.h; sourceTree = "<group>"; };
+		109A8EE116A1A77E0023EC1B /* VSCOSXOBSceneElementView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneElementView.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneElementView.mm; sourceTree = "<group>"; };
+		109A8EFD16A1A83E0023EC1B /* VSCIMAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMAction.cpp; sourceTree = "<group>"; };
+		109A8EFE16A1A83E0023EC1B /* VSCIMAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMAction.h; sourceTree = "<group>"; };
+		109A8EFF16A1A83E0023EC1B /* VSCIMCollisionAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMCollisionAction.cpp; sourceTree = "<group>"; };
+		109A8F0016A1A83E0023EC1B /* VSCIMCollisionAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMCollisionAction.h; sourceTree = "<group>"; };
+		109A8F0116A1A83E0023EC1B /* VSCIMCollisionEventChain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMCollisionEventChain.cpp; sourceTree = "<group>"; };
+		109A8F0216A1A83E0023EC1B /* VSCIMCollisionEventChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMCollisionEventChain.h; sourceTree = "<group>"; };
+		109A8F0316A1A83E0023EC1B /* VSCIMCollisionMapped.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMCollisionMapped.cpp; sourceTree = "<group>"; };
+		109A8F0416A1A83E0023EC1B /* VSCIMCollisionMapped.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMCollisionMapped.h; sourceTree = "<group>"; };
+		109A8F0516A1A83E0023EC1B /* VSCIMCollisionMapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMCollisionMapper.cpp; sourceTree = "<group>"; };
+		109A8F0616A1A83E0023EC1B /* VSCIMCollisionMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMCollisionMapper.h; sourceTree = "<group>"; };
+		109A8F0716A1A83E0023EC1B /* VSCIMCollisionMapping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMCollisionMapping.cpp; sourceTree = "<group>"; };
+		109A8F0816A1A83E0023EC1B /* VSCIMCollisionMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMCollisionMapping.h; sourceTree = "<group>"; };
+		109A8F0916A1A83E0023EC1B /* VSCIMCollisionMIDIActions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMCollisionMIDIActions.cpp; sourceTree = "<group>"; };
+		109A8F0A16A1A83E0023EC1B /* VSCIMCollisionMIDIActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMCollisionMIDIActions.h; sourceTree = "<group>"; };
+		109A8F0B16A1A83E0023EC1B /* VSCIMDelay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMDelay.cpp; sourceTree = "<group>"; };
+		109A8F0C16A1A83E0023EC1B /* VSCIMDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMDelay.h; sourceTree = "<group>"; };
+		109A8F0D16A1A83E0023EC1B /* VSCIMEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMEvent.cpp; sourceTree = "<group>"; };
+		109A8F0E16A1A83E0023EC1B /* VSCIMEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMEvent.h; sourceTree = "<group>"; };
+		109A8F0F16A1A83E0023EC1B /* VSCIMEventChain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMEventChain.cpp; sourceTree = "<group>"; };
+		109A8F1016A1A83E0023EC1B /* VSCIMEventChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMEventChain.h; sourceTree = "<group>"; };
+		109A8F1116A1A83E0023EC1B /* VSCIMTarget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMTarget.cpp; sourceTree = "<group>"; };
+		109A8F1216A1A83E0023EC1B /* VSCIMTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMTarget.h; sourceTree = "<group>"; };
+		109A8F2016A1A8740023EC1B /* VSCIMOSXCollisionActionGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXCollisionActionGlobal.h; sourceTree = "<group>"; };
+		109A8F2116A1A8740023EC1B /* VSCIMOSXCollisionActionGlobal.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXCollisionActionGlobal.mm; sourceTree = "<group>"; };
+		109A8F2216A1A8740023EC1B /* VSCIMOSXCollisionActionMappingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXCollisionActionMappingsController.h; sourceTree = "<group>"; };
+		109A8F2316A1A8740023EC1B /* VSCIMOSXCollisionActionMappingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXCollisionActionMappingsViewController.h; sourceTree = "<group>"; };
+		109A8F2416A1A8740023EC1B /* VSCIMOSXCollisionActionMappingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXCollisionActionMappingsViewController.mm; sourceTree = "<group>"; };
+		109A8F2516A1A8740023EC1B /* VSCIMOSXCollisionActionMappingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXCollisionActionMappingsViewController.xib; sourceTree = "<group>"; };
+		109A8F2616A1A8740023EC1B /* VSCIMOSXCollisionActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXCollisionActionView.h; sourceTree = "<group>"; };
+		109A8F2716A1A8740023EC1B /* VSCIMOSXCollisionActionView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXCollisionActionView.mm; sourceTree = "<group>"; };
+		109A8F2816A1A8740023EC1B /* VSCIMOSXCollisionActionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXCollisionActionView.xib; sourceTree = "<group>"; };
+		109A8F2A16A1A8740023EC1B /* VSCIMOSXCollisionEventChainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXCollisionEventChainController.h; sourceTree = "<group>"; };
+		109A8F2E16A1A8740023EC1B /* VSCIMOSXCollisionEventChainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXCollisionEventChainViewController.h; sourceTree = "<group>"; };
+		109A8F2F16A1A8740023EC1B /* VSCIMOSXCollisionEventChainViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXCollisionEventChainViewController.mm; sourceTree = "<group>"; };
+		109A8F3016A1A8740023EC1B /* VSCIMOSXCollisionEventChainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXCollisionEventChainViewController.xib; sourceTree = "<group>"; };
+		109A8F3116A1A8740023EC1B /* VSCIMOSXCollisionMappingEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXCollisionMappingEditViewController.h; sourceTree = "<group>"; };
+		109A8F3216A1A8740023EC1B /* VSCIMOSXCollisionMappingEditViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXCollisionMappingEditViewController.mm; sourceTree = "<group>"; };
+		109A8F3316A1A8740023EC1B /* VSCIMOSXCollisionMappingEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXCollisionMappingEditViewController.xib; sourceTree = "<group>"; };
+		109A8F3716A1A8740023EC1B /* VSCIMOSXCollisionMappingTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXCollisionMappingTypes.h; sourceTree = "<group>"; };
+		109A8F3816A1A8740023EC1B /* VSCIMOSXCollisionMappingTypes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXCollisionMappingTypes.mm; sourceTree = "<group>"; };
+		109A8F3916A1A8740023EC1B /* VSCIMOSXCollisionMappingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXCollisionMappingView.h; sourceTree = "<group>"; };
+		109A8F3A16A1A8740023EC1B /* VSCIMOSXCollisionMappingView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXCollisionMappingView.mm; sourceTree = "<group>"; };
+		109A8F3B16A1A8740023EC1B /* VSCIMOSXCollisionMappingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXCollisionMappingView.xib; sourceTree = "<group>"; };
+		109A8F3C16A1A8740023EC1B /* VSCIMOSXDelayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXDelayView.h; sourceTree = "<group>"; };
+		109A8F3D16A1A8740023EC1B /* VSCIMOSXDelayView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXDelayView.mm; sourceTree = "<group>"; };
+		109A8F3E16A1A8740023EC1B /* VSCIMOSXDelayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXDelayView.xib; sourceTree = "<group>"; };
+		109D51B3155998EE0030C161 /* VSCException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCException.cpp; path = ../../../../Generic/VSCException.cpp; sourceTree = "<group>"; };
+		109D51B4155998EE0030C161 /* VSCException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCException.h; path = ../../../../Generic/VSCException.h; sourceTree = "<group>"; };
+		10AF53F7163D76B300419EEE /* VSCOSXEnvironmentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOSXEnvironmentController.h; path = ../../Application/VSCOSXEnvironmentController.h; sourceTree = "<group>"; };
+		10AF53FA163D8D7600419EEE /* DMTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DMTabBar.h; path = ../../../Submodules/DMTabBar/DMTabBar/DMTabBar/DMTabBar.h; sourceTree = "<group>"; };
+		10AF53FB163D8D7600419EEE /* DMTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DMTabBar.m; path = ../../../Submodules/DMTabBar/DMTabBar/DMTabBar/DMTabBar.m; sourceTree = "<group>"; };
+		10AF53FC163D8D7600419EEE /* DMTabBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DMTabBarItem.h; path = ../../../Submodules/DMTabBar/DMTabBar/DMTabBar/DMTabBarItem.h; sourceTree = "<group>"; };
+		10AF53FD163D8D7600419EEE /* DMTabBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DMTabBarItem.m; path = ../../../Submodules/DMTabBar/DMTabBar/DMTabBar/DMTabBarItem.m; sourceTree = "<group>"; };
+		10AF5401163D8DA200419EEE /* DMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMAppDelegate.h; path = ../../../Submodules/DMTabBar/DMTabBar/DMTabBar/DMAppDelegate.h; sourceTree = "<group>"; };
+		10AF5402163D8DA200419EEE /* DMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DMAppDelegate.m; path = ../../../Submodules/DMTabBar/DMTabBar/DMTabBar/DMAppDelegate.m; sourceTree = "<group>"; };
+		10AF5407163D8FF400419EEE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = ../../../Submodules/DMTabBar/DMTabBar/DMTabBar/en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		10AF5409163D9A6C00419EEE /* 01-refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "01-refresh.png"; path = "../../../../Resources/Icons/Tab/01-refresh.png"; sourceTree = "<group>"; };
+		10AF540A163D9A6C00419EEE /* 02-redo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "02-redo.png"; path = "../../../../Resources/Icons/Tab/02-redo.png"; sourceTree = "<group>"; };
+		10AF540B163D9A6C00419EEE /* 06-magnify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "06-magnify.png"; path = "../../../../Resources/Icons/Tab/06-magnify.png"; sourceTree = "<group>"; };
+		10AF540C163D9A6C00419EEE /* 11-clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "11-clock.png"; path = "../../../../Resources/Icons/Tab/11-clock.png"; sourceTree = "<group>"; };
+		10AF540D163D9A6C00419EEE /* 12-eye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "12-eye.png"; path = "../../../../Resources/Icons/Tab/12-eye.png"; sourceTree = "<group>"; };
+		10AF540E163D9A6C00419EEE /* 16-line-chart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "16-line-chart.png"; path = "../../../../Resources/Icons/Tab/16-line-chart.png"; sourceTree = "<group>"; };
+		10AF540F163D9A6C00419EEE /* 19-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "19-gear.png"; path = "../../../../Resources/Icons/Tab/19-gear.png"; sourceTree = "<group>"; };
+		10AF5410163D9A6C00419EEE /* 20-gear2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "20-gear2.png"; path = "../../../../Resources/Icons/Tab/20-gear2.png"; sourceTree = "<group>"; };
+		10AF5411163D9A6C00419EEE /* 55-network.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "55-network.png"; path = "../../../../Resources/Icons/Tab/55-network.png"; sourceTree = "<group>"; };
+		10AF5412163D9A6C00419EEE /* 95-equalizer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "95-equalizer.png"; path = "../../../../Resources/Icons/Tab/95-equalizer.png"; sourceTree = "<group>"; };
+		10AF5413163D9A6C00419EEE /* 105-piano.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "105-piano.png"; path = "../../../../Resources/Icons/Tab/105-piano.png"; sourceTree = "<group>"; };
+		10AF5414163D9A6C00419EEE /* 106-sliders.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "106-sliders.png"; path = "../../../../Resources/Icons/Tab/106-sliders.png"; sourceTree = "<group>"; };
+		10AF5415163D9A6C00419EEE /* 122-stats.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "122-stats.png"; path = "../../../../Resources/Icons/Tab/122-stats.png"; sourceTree = "<group>"; };
+		10AF5416163D9A6C00419EEE /* 157-wrench.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "157-wrench.png"; path = "../../../../Resources/Icons/Tab/157-wrench.png"; sourceTree = "<group>"; };
+		10AF5417163D9A6C00419EEE /* 158-wrench-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "158-wrench-2.png"; path = "../../../../Resources/Icons/Tab/158-wrench-2.png"; sourceTree = "<group>"; };
+		10B60D2015505D6D006A6D6E /* VSCApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VSCApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		10B60D2415505D6D006A6D6E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		10B60D2715505D6D006A6D6E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		10B60D2815505D6D006A6D6E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		10B60D2915505D6D006A6D6E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		10B60EED155080D9006A6D6E /* libOIS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOIS.a; path = lib/release/libOIS.a; sourceTree = OGRE_SDK; };
+		10B60EEE155080D9006A6D6E /* Ogre.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogre.framework; path = lib/release/Ogre.framework; sourceTree = OGRE_SDK; };
+		10B60EF215508101006A6D6E /* OIS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OIS.h; path = include/OIS/OIS.h; sourceTree = OGRE_SDK; };
+		10B60EF315508101006A6D6E /* OISConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OISConfig.h; path = include/OIS/OISConfig.h; sourceTree = OGRE_SDK; };
+		10B60EF415508101006A6D6E /* OISEffect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OISEffect.h; path = include/OIS/OISEffect.h; sourceTree = OGRE_SDK; };
+		10B60EF515508101006A6D6E /* OISEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OISEvents.h; path = include/OIS/OISEvents.h; sourceTree = OGRE_SDK; };
+		10B60EF615508101006A6D6E /* OISException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OISException.h; path = include/OIS/OISException.h; sourceTree = OGRE_SDK; };
+		10B60EF715508101006A6D6E /* OISFactoryCreator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OISFactoryCreator.h; path = include/OIS/OISFactoryCreator.h; sourceTree = OGRE_SDK; };
+		10B60EF815508101006A6D6E /* OISForceFeedback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OISForceFeedback.h; path = include/OIS/OISForceFeedback.h; sourceTree = OGRE_SDK; };
+		10B60EF915508101006A6D6E /* OISInputManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OISInputManager.h; path = include/OIS/OISInputManager.h; sourceTree = OGRE_SDK; };
+		10B60EFA15508101006A6D6E /* OISInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OISInterface.h; path = include/OIS/OISInterface.h; sourceTree = OGRE_SDK; };
+		10B60EFB15508101006A6D6E /* OISJoyStick.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OISJoyStick.h; path = include/OIS/OISJoyStick.h; sourceTree = OGRE_SDK; };
+		10B60EFC15508101006A6D6E /* OISKeyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OISKeyboard.h; path = include/OIS/OISKeyboard.h; sourceTree = OGRE_SDK; };
+		10B60EFD15508101006A6D6E /* OISMouse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OISMouse.h; path = include/OIS/OISMouse.h; sourceTree = OGRE_SDK; };
+		10B60EFE15508101006A6D6E /* OISObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OISObject.h; path = include/OIS/OISObject.h; sourceTree = OGRE_SDK; };
+		10B60EFF15508101006A6D6E /* OISPrereqs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OISPrereqs.h; path = include/OIS/OISPrereqs.h; sourceTree = OGRE_SDK; };
+		10B60F001550850C006A6D6E /* BulletCollision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletCollision.framework; path = /Library/Frameworks/BulletCollision.framework; sourceTree = "<absolute>"; };
+		10B60F011550850C006A6D6E /* BulletDynamics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletDynamics.framework; path = /Library/Frameworks/BulletDynamics.framework; sourceTree = "<absolute>"; };
+		10B60F021550850C006A6D6E /* BulletMultiThreaded.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletMultiThreaded.framework; path = /Library/Frameworks/BulletMultiThreaded.framework; sourceTree = "<absolute>"; };
+		10B60F031550850C006A6D6E /* BulletSoftBody.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletSoftBody.framework; path = /Library/Frameworks/BulletSoftBody.framework; sourceTree = "<absolute>"; };
+		10B60F041550850C006A6D6E /* BulletSoftBodySolvers_OpenCL_Mini.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BulletSoftBodySolvers_OpenCL_Mini.framework; path = /Library/Frameworks/BulletSoftBodySolvers_OpenCL_Mini.framework; sourceTree = "<absolute>"; };
+		10B60F051550850C006A6D6E /* Cg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cg.framework; path = /Library/Frameworks/Cg.framework; sourceTree = "<absolute>"; };
+		10B60F061550850C006A6D6E /* LinearMath.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinearMath.framework; path = /Library/Frameworks/LinearMath.framework; sourceTree = "<absolute>"; };
+		10B60F10155086F9006A6D6E /* OgreOSXCocoaView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXCocoaView.h; path = include/OGRE/RenderSystems/GL/OSX/OgreOSXCocoaView.h; sourceTree = OGRE_SDK; };
+		10CB65AC164E926E000D311F /* VSCOSXEnvironmentWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXEnvironmentWindowController.xib; path = ../../Application/VSCOSXEnvironmentWindowController.xib; sourceTree = "<group>"; };
+		10CB65AD164E926E000D311F /* VSCOSXEnvironmentWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXEnvironmentWindowController.h; path = ../../Application/VSCOSXEnvironmentWindowController.h; sourceTree = "<group>"; };
+		10CB65AE164E926E000D311F /* VSCOSXEnvironmentWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXEnvironmentWindowController.mm; path = ../../Application/VSCOSXEnvironmentWindowController.mm; sourceTree = "<group>"; };
+		10CFE6B0156CD61F00B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE6B1156CD61F00B24399 /* OgreBulletCollisionsDebugContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsDebugContact.h; sourceTree = "<group>"; };
+		10CFE6B2156CD61F00B24399 /* OgreBulletCollisionsDebugDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsDebugDrawer.h; sourceTree = "<group>"; };
+		10CFE6B3156CD61F00B24399 /* OgreBulletCollisionsDebugLines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsDebugLines.h; sourceTree = "<group>"; };
+		10CFE6B4156CD61F00B24399 /* OgreBulletCollisionsDebugShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsDebugShape.h; sourceTree = "<group>"; };
+		10CFE6B5156CD61F00B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE6B6156CD61F00B24399 /* OgreBulletCollisions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisions.h; sourceTree = "<group>"; };
+		10CFE6B7156CD61F00B24399 /* OgreBulletCollisionsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsObject.h; sourceTree = "<group>"; };
+		10CFE6B8156CD61F00B24399 /* OgreBulletCollisionsObjectState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsObjectState.h; sourceTree = "<group>"; };
+		10CFE6B9156CD61F00B24399 /* OgreBulletCollisionsPreRequisites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsPreRequisites.h; sourceTree = "<group>"; };
+		10CFE6BA156CD61F00B24399 /* OgreBulletCollisionsRay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsRay.h; sourceTree = "<group>"; };
+		10CFE6BB156CD61F00B24399 /* OgreBulletCollisionsShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsShape.h; sourceTree = "<group>"; };
+		10CFE6BC156CD61F00B24399 /* OgreBulletCollisionsWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsWorld.h; sourceTree = "<group>"; };
+		10CFE6BE156CD61F00B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE6BF156CD61F00B24399 /* OgreBulletCollisionsBoxShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsBoxShape.h; sourceTree = "<group>"; };
+		10CFE6C0156CD61F00B24399 /* OgreBulletCollisionsCapsuleShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsCapsuleShape.h; sourceTree = "<group>"; };
+		10CFE6C1156CD61F00B24399 /* OgreBulletCollisionsCompoundShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsCompoundShape.h; sourceTree = "<group>"; };
+		10CFE6C2156CD61F00B24399 /* OgreBulletCollisionsConeShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsConeShape.h; sourceTree = "<group>"; };
+		10CFE6C3156CD61F00B24399 /* OgreBulletCollisionsConvexHullShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsConvexHullShape.h; sourceTree = "<group>"; };
+		10CFE6C4156CD61F00B24399 /* OgreBulletCollisionsCylinderShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsCylinderShape.h; sourceTree = "<group>"; };
+		10CFE6C5156CD61F00B24399 /* OgreBulletCollisionsGImpactShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsGImpactShape.h; sourceTree = "<group>"; };
+		10CFE6C6156CD61F00B24399 /* OgreBulletCollisionsMinkowskiSumShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsMinkowskiSumShape.h; sourceTree = "<group>"; };
+		10CFE6C7156CD61F00B24399 /* OgreBulletCollisionsMultiSphereShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsMultiSphereShape.h; sourceTree = "<group>"; };
+		10CFE6C8156CD61F00B24399 /* OgreBulletCollisionsSphereShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsSphereShape.h; sourceTree = "<group>"; };
+		10CFE6C9156CD61F00B24399 /* OgreBulletCollisionsStaticPlaneShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsStaticPlaneShape.h; sourceTree = "<group>"; };
+		10CFE6CA156CD61F00B24399 /* OgreBulletCollisionsTerrainShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsTerrainShape.h; sourceTree = "<group>"; };
+		10CFE6CB156CD61F00B24399 /* OgreBulletCollisionsTriangleShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsTriangleShape.h; sourceTree = "<group>"; };
+		10CFE6CC156CD61F00B24399 /* OgreBulletCollisionsTrimeshShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsTrimeshShape.h; sourceTree = "<group>"; };
+		10CFE6CE156CD61F00B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE6CF156CD61F00B24399 /* OgreBulletCollisionsMeshToShapeConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletCollisionsMeshToShapeConverter.h; sourceTree = "<group>"; };
+		10CFE6D0156CD61F00B24399 /* OgreBulletConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletConverter.h; sourceTree = "<group>"; };
+		10CFE6D1156CD61F00B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE6D4156CD61F00B24399 /* OgreBulletCollisions_VC8.vcproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = OgreBulletCollisions_VC8.vcproj; sourceTree = "<group>"; };
+		10CFE6D7156CD61F00B24399 /* OgreBulletCollisionsDebugContact.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsDebugContact.cpp; sourceTree = "<group>"; };
+		10CFE6D8156CD61F00B24399 /* OgreBulletCollisionsDebugDrawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsDebugDrawer.cpp; sourceTree = "<group>"; };
+		10CFE6D9156CD61F00B24399 /* OgreBulletCollisionsDebugLines.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsDebugLines.cpp; sourceTree = "<group>"; };
+		10CFE6DA156CD61F00B24399 /* OgreBulletCollisionsDebugShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsDebugShape.cpp; sourceTree = "<group>"; };
+		10CFE6DB156CD61F00B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE6DC156CD61F00B24399 /* OgreBulletCollisionsObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsObject.cpp; sourceTree = "<group>"; };
+		10CFE6DD156CD61F00B24399 /* OgreBulletCollisionsObjectState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsObjectState.cpp; sourceTree = "<group>"; };
+		10CFE6DE156CD61F00B24399 /* OgreBulletCollisionsPrecompiled.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsPrecompiled.cpp; sourceTree = "<group>"; };
+		10CFE6DF156CD61F00B24399 /* OgreBulletCollisionsRay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsRay.cpp; sourceTree = "<group>"; };
+		10CFE6E0156CD61F00B24399 /* OgreBulletCollisionsShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsShape.cpp; sourceTree = "<group>"; };
+		10CFE6E1156CD61F00B24399 /* OgreBulletCollisionsWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsWorld.cpp; sourceTree = "<group>"; };
+		10CFE6E3156CD61F00B24399 /* OgreBulletCollisionsBoxShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsBoxShape.cpp; sourceTree = "<group>"; };
+		10CFE6E4156CD61F00B24399 /* OgreBulletCollisionsCapsuleShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsCapsuleShape.cpp; sourceTree = "<group>"; };
+		10CFE6E5156CD61F00B24399 /* OgreBulletCollisionsCompoundShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsCompoundShape.cpp; sourceTree = "<group>"; };
+		10CFE6E6156CD61F00B24399 /* OgreBulletCollisionsConeShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsConeShape.cpp; sourceTree = "<group>"; };
+		10CFE6E7156CD61F00B24399 /* OgreBulletCollisionsConvexHullShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsConvexHullShape.cpp; sourceTree = "<group>"; };
+		10CFE6E8156CD61F00B24399 /* OgreBulletCollisionsCylinderShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsCylinderShape.cpp; sourceTree = "<group>"; };
+		10CFE6E9156CD61F00B24399 /* OgreBulletCollisionsGImpactShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsGImpactShape.cpp; sourceTree = "<group>"; };
+		10CFE6EA156CD61F00B24399 /* OgreBulletCollisionsMinkowskiSumShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsMinkowskiSumShape.cpp; sourceTree = "<group>"; };
+		10CFE6EB156CD61F00B24399 /* OgreBulletCollisionsMultiSphereShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsMultiSphereShape.cpp; sourceTree = "<group>"; };
+		10CFE6EC156CD61F00B24399 /* OgreBulletCollisionsSphereShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsSphereShape.cpp; sourceTree = "<group>"; };
+		10CFE6ED156CD61F00B24399 /* OgreBulletCollisionsStaticPlaneShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsStaticPlaneShape.cpp; sourceTree = "<group>"; };
+		10CFE6EE156CD61F00B24399 /* OgreBulletCollisionsTriangleShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsTriangleShape.cpp; sourceTree = "<group>"; };
+		10CFE6EF156CD61F00B24399 /* OgreBulletCollisionsTrimeshShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsTrimeshShape.cpp; sourceTree = "<group>"; };
+		10CFE6F1156CD61F00B24399 /* OgreBulletCollisionsMeshToShapeConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletCollisionsMeshToShapeConverter.cpp; sourceTree = "<group>"; };
+		10CFE6F5156CD61F00B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE6F6156CD61F00B24399 /* OgreBulletDynamics6DofConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamics6DofConstraint.h; sourceTree = "<group>"; };
+		10CFE6F7156CD61F00B24399 /* OgreBulletDynamics6DofSpringConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamics6DofSpringConstraint.h; sourceTree = "<group>"; };
+		10CFE6F8156CD61F00B24399 /* OgreBulletDynamicsConeTwistConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsConeTwistConstraint.h; sourceTree = "<group>"; };
+		10CFE6F9156CD61F00B24399 /* OgreBulletDynamicsHingeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsHingeConstraint.h; sourceTree = "<group>"; };
+		10CFE6FA156CD61F00B24399 /* OgreBulletDynamicsPoint2pointConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsPoint2pointConstraint.h; sourceTree = "<group>"; };
+		10CFE6FB156CD61F00B24399 /* OgreBulletDynamicsRaycastVehicle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsRaycastVehicle.h; sourceTree = "<group>"; };
+		10CFE6FC156CD62000B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE6FD156CD62000B24399 /* OgreBulletDynamics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamics.h; sourceTree = "<group>"; };
+		10CFE6FE156CD62000B24399 /* OgreBulletDynamicsConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsConstraint.h; sourceTree = "<group>"; };
+		10CFE6FF156CD62000B24399 /* OgreBulletDynamicsObjectState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsObjectState.h; sourceTree = "<group>"; };
+		10CFE700156CD62000B24399 /* OgreBulletDynamicsPreRequisites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsPreRequisites.h; sourceTree = "<group>"; };
+		10CFE701156CD62000B24399 /* OgreBulletDynamicsRigidBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsRigidBody.h; sourceTree = "<group>"; };
+		10CFE702156CD62000B24399 /* OgreBulletDynamicsWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsWorld.h; sourceTree = "<group>"; };
+		10CFE704156CD62000B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE705156CD62000B24399 /* OgreBulletDynamicsRagDoll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OgreBulletDynamicsRagDoll.h; sourceTree = "<group>"; };
+		10CFE706156CD62000B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE709156CD62000B24399 /* OgreBulletDynamics_VC8.vcproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = OgreBulletDynamics_VC8.vcproj; sourceTree = "<group>"; };
+		10CFE70C156CD62000B24399 /* OgreBulletDynamics6DofConstraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamics6DofConstraint.cpp; sourceTree = "<group>"; };
+		10CFE70D156CD62000B24399 /* OgreBulletDynamics6DofSpringConstraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamics6DofSpringConstraint.cpp; sourceTree = "<group>"; };
+		10CFE70E156CD62000B24399 /* OgreBulletDynamicsConeTwistConstraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsConeTwistConstraint.cpp; sourceTree = "<group>"; };
+		10CFE70F156CD62000B24399 /* OgreBulletDynamicsHingeConstraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsHingeConstraint.cpp; sourceTree = "<group>"; };
+		10CFE710156CD62000B24399 /* OgreBulletDynamicsPoint2pointConstraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsPoint2pointConstraint.cpp; sourceTree = "<group>"; };
+		10CFE711156CD62000B24399 /* OgreBulletDynamicsRaycastVehicle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsRaycastVehicle.cpp; sourceTree = "<group>"; };
+		10CFE712156CD62000B24399 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		10CFE713156CD62000B24399 /* OgreBulletDynamicsConstraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsConstraint.cpp; sourceTree = "<group>"; };
+		10CFE714156CD62000B24399 /* OgreBulletDynamicsObjectState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsObjectState.cpp; sourceTree = "<group>"; };
+		10CFE715156CD62000B24399 /* OgreBulletDynamicsPrecompiled.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsPrecompiled.cpp; sourceTree = "<group>"; };
+		10CFE716156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsRigidBody.cpp; sourceTree = "<group>"; };
+		10CFE717156CD62000B24399 /* OgreBulletDynamicsWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsWorld.cpp; sourceTree = "<group>"; };
+		10CFE719156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsRagDoll.cpp; sourceTree = "<group>"; };
+		10D5533815FA409F002AED81 /* NSString+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+VSCAdditions.h"; path = "../../../Categories/NSString+VSCAdditions.h"; sourceTree = "<group>"; };
+		10D5533915FA409F002AED81 /* NSString+VSCAdditions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSString+VSCAdditions.mm"; path = "../../../Categories/NSString+VSCAdditions.mm"; sourceTree = "<group>"; };
+		10D7AE891628554D00DE0F72 /* VSCMIDIOutputManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDIOutputManager.cpp; path = ../../../../MIDI/VSCMIDIOutputManager.cpp; sourceTree = "<group>"; };
+		10D7AE8A1628554D00DE0F72 /* VSCMIDIOutputManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDIOutputManager.h; path = ../../../../MIDI/VSCMIDIOutputManager.h; sourceTree = "<group>"; };
+		10D7AE941628767F00DE0F72 /* VSCOSXMIDIWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOSXMIDIWindowController.h; path = ../../MIDI/VSCOSXMIDIWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		10D7AE951628767F00DE0F72 /* VSCOSXMIDIWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOSXMIDIWindowController.mm; path = ../../MIDI/VSCOSXMIDIWindowController.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		10E8557215E65048008FF635 /* VSCUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCUI.cpp; path = ../../../../Interface/VSCUI.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		10E8557315E65048008FF635 /* VSCUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCUI.h; path = ../../../../Interface/VSCUI.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		10EB5A3A16050D7500F0939E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		10EB5E5C16298E0B00E0F030 /* VSCOSXApplicationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXApplicationManager.h; path = ../../Application/VSCOSXApplicationManager.h; sourceTree = "<group>"; };
+		10EB5E5D16298E0B00E0F030 /* VSCOSXApplicationManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXApplicationManager.mm; path = ../../Application/VSCOSXApplicationManager.mm; sourceTree = "<group>"; };
+		10EB5E6016298FC000E0F030 /* VSCOSXApplicationManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXApplicationManagerProtocol.h; path = ../../Application/VSCOSXApplicationManagerProtocol.h; sourceTree = "<group>"; };
+		10ED08841601CC2700053C07 /* VSCBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCBindings.cpp; path = ../../../../Interface/VSCBindings.cpp; sourceTree = "<group>"; };
+		10ED08851601CC2700053C07 /* VSCBindings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; name = VSCBindings.hpp; path = ../../../../Interface/VSCBindings.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		10ED08881601CD8900053C07 /* VSCBound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCBound.cpp; path = ../../../../Interface/VSCBound.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		10ED08891601CD8900053C07 /* VSCBound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; name = VSCBound.hpp; path = ../../../../Interface/VSCBound.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		10EF8DA81626CBB700EB8FDE /* VSCTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCTask.cpp; path = ../../../../Task/VSCTask.cpp; sourceTree = "<group>"; };
+		10EF8DA91626CBB700EB8FDE /* VSCTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCTask.h; path = ../../../../Task/VSCTask.h; sourceTree = "<group>"; };
+		10EF8DAA1626CBB700EB8FDE /* VSCTaskQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCTaskQueue.cpp; path = ../../../../Task/VSCTaskQueue.cpp; sourceTree = "<group>"; };
+		10EF8DAB1626CBB700EB8FDE /* VSCTaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCTaskQueue.h; path = ../../../../Task/VSCTaskQueue.h; sourceTree = "<group>"; };
+		10EF8DB11627228C00EB8FDE /* VSCMIDITasks.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDITasks.cpp; path = ../../../../MIDI/VSCMIDITasks.cpp; sourceTree = "<group>"; };
+		10EF8DB21627228C00EB8FDE /* VSCMIDITasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDITasks.h; path = ../../../../MIDI/VSCMIDITasks.h; sourceTree = "<group>"; };
+		10F6947F156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libConvexDecomposition.2.80.dylib; path = "../../../../../../Libraries/bullet-2.80/Extras/ConvexDecomposition/libConvexDecomposition.2.80.dylib"; sourceTree = "<group>"; };
+		10F69482156E3D2700E70049 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		10F6948C156E483000E70049 /* Plugin_BSPSceneManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_BSPSceneManager.dylib; path = lib/Plugin_BSPSceneManager.dylib; sourceTree = OGRE_SDK; };
+		10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_CgProgramManager.dylib; path = lib/Plugin_CgProgramManager.dylib; sourceTree = OGRE_SDK; };
+		10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_OctreeSceneManager.dylib; path = lib/Plugin_OctreeSceneManager.dylib; sourceTree = OGRE_SDK; };
+		10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_ParticleFX.dylib; path = lib/Plugin_ParticleFX.dylib; sourceTree = OGRE_SDK; };
+		10F907D0162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCInterfaceAdapter.cpp; path = ../../../../Interface/VSCInterfaceAdapter.cpp; sourceTree = "<group>"; };
+		10F907D1162ECFF8006C9C0B /* VSCInterfaceAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCInterfaceAdapter.h; path = ../../../../Interface/VSCInterfaceAdapter.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		10B60D1D15505D6D006A6D6E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				106337D91674FDEF003E528B /* RenderSystem_GL.dylib in Frameworks */,
+				101EBB92162B3022006601A2 /* ApplicationServices.framework in Frameworks */,
+				101EBB90162B2E3C006601A2 /* CoreGraphics.framework in Frameworks */,
+				101EBB8E162B2E2C006601A2 /* QuartzCore.framework in Frameworks */,
+				105BAD3216232BC90031EE91 /* CoreAudio.framework in Frameworks */,
+				105BAD3016232BA40031EE91 /* CoreMIDI.framework in Frameworks */,
+				10EB5A3B16050D7500F0939E /* OpenGL.framework in Frameworks */,
+				1033869E156E77E100CEB288 /* Carbon.framework in Frameworks */,
+				10B60D2515505D6D006A6D6E /* Cocoa.framework in Frameworks */,
+				10B60EEF155080D9006A6D6E /* libOIS.a in Frameworks */,
+				10F69480156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib in Frameworks */,
+				10F69490156E483000E70049 /* Plugin_BSPSceneManager.dylib in Frameworks */,
+				10F69491156E483000E70049 /* Plugin_CgProgramManager.dylib in Frameworks */,
+				10F69492156E483000E70049 /* Plugin_OctreeSceneManager.dylib in Frameworks */,
+				10F69493156E483000E70049 /* Plugin_ParticleFX.dylib in Frameworks */,
+				10B60EF0155080D9006A6D6E /* Ogre.framework in Frameworks */,
+				10F69483156E3D2700E70049 /* IOKit.framework in Frameworks */,
+				10B60F071550850C006A6D6E /* BulletCollision.framework in Frameworks */,
+				10B60F081550850C006A6D6E /* BulletDynamics.framework in Frameworks */,
+				10B60F091550850C006A6D6E /* BulletMultiThreaded.framework in Frameworks */,
+				10B60F0A1550850C006A6D6E /* BulletSoftBody.framework in Frameworks */,
+				10B60F0B1550850C006A6D6E /* BulletSoftBodySolvers_OpenCL_Mini.framework in Frameworks */,
+				10B60F0C1550850C006A6D6E /* Cg.framework in Frameworks */,
+				10B60F0D1550850C006A6D6E /* LinearMath.framework in Frameworks */,
+				105BAD2716231CA50031EE91 /* libstk.a in Frameworks */,
+				105BAD3D16232D470031EE91 /* libboost_filesystem.a in Frameworks */,
+				105BAD3E16232D470031EE91 /* libboost_serialization.a in Frameworks */,
+				105BAD3F16232D470031EE91 /* libboost_system.a in Frameworks */,
+				105BAD4016232D470031EE91 /* libboost_thread.a in Frameworks */,
+				106337D61674C1AC003E528B /* libboost_chrono.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		101EBB401629AE6B006601A2 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				101EBB421629AE79006601A2 /* NSArray+VSCAdditions.h */,
+				101EBB431629AE79006601A2 /* NSArray+VSCAdditions.mm */,
+				10D5533815FA409F002AED81 /* NSString+VSCAdditions.h */,
+				10D5533915FA409F002AED81 /* NSString+VSCAdditions.mm */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		101EBB451629B807006601A2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				107C398616A07A4100552221 /* en.lproj */,
+				107C398D16A07A4100552221 /* main.m */,
+				107C398E16A07A4100552221 /* VSCAppDelegate.h */,
+				107C398F16A07A4100552221 /* VSCAppDelegate.mm */,
+				107C399016A07A4100552221 /* VSCApplication-Info.plist */,
+				107C399116A07A4100552221 /* VSCApplication-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1030068F16247548002A30ED /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				105BAD2816232B180031EE91 /* VSCSound.cpp */,
+				105BAD2916232B180031EE91 /* VSCSound.h */,
+			);
+			name = Sound;
+			sourceTree = "<group>";
+		};
+		105BAD1716231C390031EE91 /* Generic */ = {
+			isa = PBXGroup;
+			children = (
+				103006911624763A002A30ED /* VSC.cpp */,
+				103006921624763A002A30ED /* VSC.h */,
+				100812B41651ABE700E975B8 /* VSCListener.cpp */,
+				100812B51651ABE700E975B8 /* VSCListener.h */,
+				100812B01651A89800E975B8 /* VSCBroadcaster.cpp */,
+				100812B11651A89800E975B8 /* VSCBroadcaster.h */,
+				109D51B3155998EE0030C161 /* VSCException.cpp */,
+				109D51B4155998EE0030C161 /* VSCException.h */,
+				1091F27C15B0645D00466854 /* VSCNSLog.h */,
+				1091F28215B07C0D00466854 /* VSCLog.cpp */,
+				1091F28315B07C0D00466854 /* VSCLog.h */,
+			);
+			name = Generic;
+			sourceTree = "<group>";
+		};
+		105BAD1916231C530031EE91 /* MIDI */ = {
+			isa = PBXGroup;
+			children = (
+				10D7AE8D1628766100DE0F72 /* Cocoa */,
+				10D7AE8C1628765000DE0F72 /* Core */,
+			);
+			name = MIDI;
+			sourceTree = "<group>";
+		};
+		105BAD2B16232B480031EE91 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				105BAD2C16232B530031EE91 /* VSCController.cpp */,
+				105BAD2D16232B530031EE91 /* VSCController.h */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		107C398616A07A4100552221 /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				107C398716A07A4100552221 /* Credits.rtf */,
+				107C398916A07A4100552221 /* InfoPlist.strings */,
+				107C398B16A07A4100552221 /* MainMenu.xib */,
+			);
+			name = en.lproj;
+			path = VSCApplication/en.lproj;
+			sourceTree = "<group>";
+		};
+		109A8E6916A1A7210023EC1B /* OB */ = {
+			isa = PBXGroup;
+			children = (
+				109A8E6A16A1A7210023EC1B /* Core */,
+				109A8E8616A1A7210023EC1B /* Resources */,
+				109A8E8A16A1A7210023EC1B /* UI */,
+			);
+			name = OB;
+			path = ../../../../OB;
+			sourceTree = "<group>";
+		};
+		109A8E6A16A1A7210023EC1B /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				109A8E6B16A1A7210023EC1B /* VSCOB.cpp */,
+				109A8E6C16A1A7210023EC1B /* VSCOB.h */,
+				109A8E6D16A1A7210023EC1B /* VSCOBApplication.cpp */,
+				109A8E6E16A1A7210023EC1B /* VSCOBApplication.h */,
+				109A8E6F16A1A7210023EC1B /* VSCOBBasicSceneElementFactory.cpp */,
+				109A8E7016A1A7210023EC1B /* VSCOBBasicSceneElementFactory.h */,
+				109A8E7116A1A7210023EC1B /* VSCOBDisplay.cpp */,
+				109A8E7216A1A7210023EC1B /* VSCOBDisplay.h */,
+				109A8E7316A1A7210023EC1B /* VSCOBDisplayController.cpp */,
+				109A8E7416A1A7210023EC1B /* VSCOBDisplayController.h */,
+				109A8E7516A1A7210023EC1B /* VSCOBDynamicObject.cpp */,
+				109A8E7616A1A7210023EC1B /* VSCOBDynamicObject.h */,
+				109A8E7716A1A7210023EC1B /* VSCOBResourceManager.cpp */,
+				109A8E7816A1A7210023EC1B /* VSCOBResourceManager.h */,
+				109A8E7916A1A7210023EC1B /* VSCOBScene.cpp */,
+				109A8E7A16A1A7210023EC1B /* VSCOBScene.h */,
+				109A8E7B16A1A7210023EC1B /* VSCOBSceneController.cpp */,
+				109A8E7C16A1A7210023EC1B /* VSCOBSceneController.h */,
+				109A8E7D16A1A7210023EC1B /* VSCOBStaticObject.cpp */,
+				109A8E7E16A1A7210023EC1B /* VSCOBStaticObject.h */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		109A8E8616A1A7210023EC1B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				109A8E8716A1A7210023EC1B /* Plugins.cfg */,
+				109A8E8816A1A7210023EC1B /* Plugins_d.cfg */,
+				109A8E8916A1A7210023EC1B /* resources.cfg */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		109A8E8A16A1A7210023EC1B /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				109A8E8B16A1A7210023EC1B /* BetaGUI.cpp */,
+				109A8E8C16A1A7210023EC1B /* BetaGUI.h */,
+				109A8E8D16A1A7210023EC1B /* VSCOBInterface.cpp */,
+				109A8E8E16A1A7210023EC1B /* VSCOBInterface.h */,
+				109A8E8F16A1A7210023EC1B /* VSCOBKeyBindings.cpp */,
+				109A8E9016A1A7210023EC1B /* VSCOBKeyBindings.h */,
+				109A8E9716A1A7210023EC1B /* VSCOBMouseBindings.cpp */,
+				109A8E9816A1A7210023EC1B /* VSCOBMouseBindings.h */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		109A8EB316A1A7680023EC1B /* VSCOSX */ = {
+			isa = PBXGroup;
+			children = (
+				10AF53F8163D76DA00419EEE /* Application */,
+				109A8F1F16A1A8740023EC1B /* IM */,
+				109A8F1E16A1A8580023EC1B /* OB */,
+			);
+			name = VSCOSX;
+			path = ../../../../OB;
+			sourceTree = "<group>";
+		};
+		109A8EFC16A1A83E0023EC1B /* Mapping */ = {
+			isa = PBXGroup;
+			children = (
+				109A8EFD16A1A83E0023EC1B /* VSCIMAction.cpp */,
+				109A8EFE16A1A83E0023EC1B /* VSCIMAction.h */,
+				109A8EFF16A1A83E0023EC1B /* VSCIMCollisionAction.cpp */,
+				109A8F0016A1A83E0023EC1B /* VSCIMCollisionAction.h */,
+				109A8F0116A1A83E0023EC1B /* VSCIMCollisionEventChain.cpp */,
+				109A8F0216A1A83E0023EC1B /* VSCIMCollisionEventChain.h */,
+				109A8F0316A1A83E0023EC1B /* VSCIMCollisionMapped.cpp */,
+				109A8F0416A1A83E0023EC1B /* VSCIMCollisionMapped.h */,
+				109A8F0516A1A83E0023EC1B /* VSCIMCollisionMapper.cpp */,
+				109A8F0616A1A83E0023EC1B /* VSCIMCollisionMapper.h */,
+				109A8F0716A1A83E0023EC1B /* VSCIMCollisionMapping.cpp */,
+				109A8F0816A1A83E0023EC1B /* VSCIMCollisionMapping.h */,
+				109A8F0916A1A83E0023EC1B /* VSCIMCollisionMIDIActions.cpp */,
+				109A8F0A16A1A83E0023EC1B /* VSCIMCollisionMIDIActions.h */,
+				109A8F0B16A1A83E0023EC1B /* VSCIMDelay.cpp */,
+				109A8F0C16A1A83E0023EC1B /* VSCIMDelay.h */,
+				109A8F0D16A1A83E0023EC1B /* VSCIMEvent.cpp */,
+				109A8F0E16A1A83E0023EC1B /* VSCIMEvent.h */,
+				109A8F0F16A1A83E0023EC1B /* VSCIMEventChain.cpp */,
+				109A8F1016A1A83E0023EC1B /* VSCIMEventChain.h */,
+				109A8F1116A1A83E0023EC1B /* VSCIMTarget.cpp */,
+				109A8F1216A1A83E0023EC1B /* VSCIMTarget.h */,
+			);
+			name = Mapping;
+			path = ../../../../Mapping;
+			sourceTree = "<group>";
+		};
+		109A8F1E16A1A8580023EC1B /* OB */ = {
+			isa = PBXGroup;
+			children = (
+				109A8EB416A1A77E0023EC1B /* VSCOBOSXApplicationBridge.h */,
+				109A8EB516A1A77E0023EC1B /* VSCOBOSXApplicationBridge.mm */,
+				109A8EB816A1A77E0023EC1B /* VSCOBOSXInterfaceAdapter.h */,
+				109A8EB916A1A77E0023EC1B /* VSCOBOSXInterfaceAdapter.mm */,
+				109A8EBC16A1A77E0023EC1B /* VSCOBOSXSceneCollisionListener.h */,
+				109A8EBD16A1A77E0023EC1B /* VSCOBOSXSceneCollisionListener.mm */,
+				109A8EBE16A1A77E0023EC1B /* VSCOBOSXSceneDisplayView.h */,
+				109A8EBF16A1A77E0023EC1B /* VSCOBOSXSceneDisplayView.mm */,
+				109A8EC016A1A77E0023EC1B /* VSCOBOSXSceneListener.h */,
+				109A8EC116A1A77E0023EC1B /* VSCOBOSXSceneListener.mm */,
+				109A8EC216A1A77E0023EC1B /* VSCOSXOBSceneController.h */,
+				109A8EC316A1A77E0023EC1B /* VSCOSXOBSceneController.mm */,
+				109A8EC416A1A77E0023EC1B /* VSCOSXOBSceneDetailView.h */,
+				109A8EC516A1A77E0023EC1B /* VSCOSXOBSceneDetailView.mm */,
+				109A8EC616A1A77E0023EC1B /* VSCOSXOBSceneDetailView.xib */,
+				109A8ECD16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.h */,
+				109A8ECE16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.mm */,
+				109A8ECF16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.xib */,
+				109A8ED016A1A77E0023EC1B /* VSCOSXOBSceneElementController.h */,
+				109A8ED116A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.h */,
+				109A8ED216A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.mm */,
+				109A8ED316A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.xib */,
+				109A8ED416A1A77E0023EC1B /* VSCOSXOBSceneElementEditor.h */,
+				109A8ED816A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.h */,
+				109A8ED916A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.mm */,
+				109A8EDA16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.xib */,
+				109A8EDB16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.h */,
+				109A8EDC16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.mm */,
+				109A8EDD16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.xib */,
+				109A8EDE16A1A77E0023EC1B /* VSCOSXOBSceneElementListView.h */,
+				109A8EDF16A1A77E0023EC1B /* VSCOSXOBSceneElementListView.mm */,
+				109A8EE016A1A77E0023EC1B /* VSCOSXOBSceneElementView.h */,
+				109A8EE116A1A77E0023EC1B /* VSCOSXOBSceneElementView.mm */,
+			);
+			name = OB;
+			sourceTree = "<group>";
+		};
+		109A8F1F16A1A8740023EC1B /* IM */ = {
+			isa = PBXGroup;
+			children = (
+				109A8F2016A1A8740023EC1B /* VSCIMOSXCollisionActionGlobal.h */,
+				109A8F2116A1A8740023EC1B /* VSCIMOSXCollisionActionGlobal.mm */,
+				109A8F2216A1A8740023EC1B /* VSCIMOSXCollisionActionMappingsController.h */,
+				109A8F2316A1A8740023EC1B /* VSCIMOSXCollisionActionMappingsViewController.h */,
+				109A8F2416A1A8740023EC1B /* VSCIMOSXCollisionActionMappingsViewController.mm */,
+				109A8F2516A1A8740023EC1B /* VSCIMOSXCollisionActionMappingsViewController.xib */,
+				109A8F2616A1A8740023EC1B /* VSCIMOSXCollisionActionView.h */,
+				109A8F2716A1A8740023EC1B /* VSCIMOSXCollisionActionView.mm */,
+				109A8F2816A1A8740023EC1B /* VSCIMOSXCollisionActionView.xib */,
+				109A8F2A16A1A8740023EC1B /* VSCIMOSXCollisionEventChainController.h */,
+				109A8F2E16A1A8740023EC1B /* VSCIMOSXCollisionEventChainViewController.h */,
+				109A8F2F16A1A8740023EC1B /* VSCIMOSXCollisionEventChainViewController.mm */,
+				109A8F3016A1A8740023EC1B /* VSCIMOSXCollisionEventChainViewController.xib */,
+				109A8F3116A1A8740023EC1B /* VSCIMOSXCollisionMappingEditViewController.h */,
+				109A8F3216A1A8740023EC1B /* VSCIMOSXCollisionMappingEditViewController.mm */,
+				109A8F3316A1A8740023EC1B /* VSCIMOSXCollisionMappingEditViewController.xib */,
+				109A8F3716A1A8740023EC1B /* VSCIMOSXCollisionMappingTypes.h */,
+				109A8F3816A1A8740023EC1B /* VSCIMOSXCollisionMappingTypes.mm */,
+				109A8F3916A1A8740023EC1B /* VSCIMOSXCollisionMappingView.h */,
+				109A8F3A16A1A8740023EC1B /* VSCIMOSXCollisionMappingView.mm */,
+				109A8F3B16A1A8740023EC1B /* VSCIMOSXCollisionMappingView.xib */,
+				109A8F3C16A1A8740023EC1B /* VSCIMOSXDelayView.h */,
+				109A8F3D16A1A8740023EC1B /* VSCIMOSXDelayView.mm */,
+				109A8F3E16A1A8740023EC1B /* VSCIMOSXDelayView.xib */,
+			);
+			name = IM;
+			path = ../Apple/OSX/IM;
+			sourceTree = "<group>";
+		};
+		109D51B2155998CA0030C161 /* VSC */ = {
+			isa = PBXGroup;
+			children = (
+				10F907CE162ECFE7006C9C0B /* Interface */,
+				101EBB401629AE6B006601A2 /* Categories */,
+				10EB5E5A16298CD200E0F030 /* Application */,
+				109A8EFC16A1A83E0023EC1B /* Mapping */,
+				109A8E6916A1A7210023EC1B /* OB */,
+				10EF8DAF1626CBBF00EB8FDE /* Task */,
+				1030068F16247548002A30ED /* Sound */,
+				105BAD2B16232B480031EE91 /* Controller */,
+				105BAD1916231C530031EE91 /* MIDI */,
+				105BAD1716231C390031EE91 /* Generic */,
+			);
+			name = VSC;
+			sourceTree = "<group>";
+		};
+		10AF53F8163D76DA00419EEE /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				10EB5E5C16298E0B00E0F030 /* VSCOSXApplicationManager.h */,
+				10EB5E5D16298E0B00E0F030 /* VSCOSXApplicationManager.mm */,
+				10EB5E6016298FC000E0F030 /* VSCOSXApplicationManagerProtocol.h */,
+				10AF53F7163D76B300419EEE /* VSCOSXEnvironmentController.h */,
+				10CB65AD164E926E000D311F /* VSCOSXEnvironmentWindowController.h */,
+				10CB65AE164E926E000D311F /* VSCOSXEnvironmentWindowController.mm */,
+				10CB65AC164E926E000D311F /* VSCOSXEnvironmentWindowController.xib */,
+			);
+			name = Application;
+			path = ../Apple/OSX/Projects/VSCApplication;
+			sourceTree = "<group>";
+		};
+		10AF53F9163D8CB400419EEE /* DMTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				10AF5400163D8D9700419EEE /* Demo */,
+				10AF53FA163D8D7600419EEE /* DMTabBar.h */,
+				10AF53FB163D8D7600419EEE /* DMTabBar.m */,
+				10AF53FC163D8D7600419EEE /* DMTabBarItem.h */,
+				10AF53FD163D8D7600419EEE /* DMTabBarItem.m */,
+			);
+			name = DMTabBar;
+			sourceTree = "<group>";
+		};
+		10AF5400163D8D9700419EEE /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				10AF5406163D8FF400419EEE /* MainMenu.xib */,
+				10AF5401163D8DA200419EEE /* DMAppDelegate.h */,
+				10AF5402163D8DA200419EEE /* DMAppDelegate.m */,
+			);
+			name = Demo;
+			sourceTree = "<group>";
+		};
+		10AF5408163D9A5A00419EEE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				10AF5409163D9A6C00419EEE /* 01-refresh.png */,
+				10AF540A163D9A6C00419EEE /* 02-redo.png */,
+				10AF540B163D9A6C00419EEE /* 06-magnify.png */,
+				10AF540C163D9A6C00419EEE /* 11-clock.png */,
+				10AF540D163D9A6C00419EEE /* 12-eye.png */,
+				10AF540E163D9A6C00419EEE /* 16-line-chart.png */,
+				10AF540F163D9A6C00419EEE /* 19-gear.png */,
+				10AF5410163D9A6C00419EEE /* 20-gear2.png */,
+				10AF5411163D9A6C00419EEE /* 55-network.png */,
+				10AF5412163D9A6C00419EEE /* 95-equalizer.png */,
+				10AF5413163D9A6C00419EEE /* 105-piano.png */,
+				10AF5414163D9A6C00419EEE /* 106-sliders.png */,
+				10AF5415163D9A6C00419EEE /* 122-stats.png */,
+				10AF5416163D9A6C00419EEE /* 157-wrench.png */,
+				10AF5417163D9A6C00419EEE /* 158-wrench-2.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		10B60D1515505D6D006A6D6E = {
+			isa = PBXGroup;
+			children = (
+				109A8EB316A1A7680023EC1B /* VSCOSX */,
+				101EBB451629B807006601A2 /* Supporting Files */,
+				10AF5408163D9A5A00419EEE /* Resources */,
+				10AF53F9163D8CB400419EEE /* DMTabBar */,
+				109D51B2155998CA0030C161 /* VSC */,
+				10CFE6AC156CD5F700B24399 /* OgreBullet */,
+				10B60F0E155086D0006A6D6E /* Ogre */,
+				10B60EF1155080F3006A6D6E /* OIS */,
+				10B60D2315505D6D006A6D6E /* Frameworks */,
+				10B60D2115505D6D006A6D6E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		10B60D2115505D6D006A6D6E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				10B60D2015505D6D006A6D6E /* VSCApplication.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		10B60D2315505D6D006A6D6E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				106337D51674C1AC003E528B /* libboost_chrono.a */,
+				105BAD3916232D470031EE91 /* libboost_filesystem.a */,
+				105BAD3A16232D470031EE91 /* libboost_serialization.a */,
+				105BAD3B16232D470031EE91 /* libboost_system.a */,
+				105BAD3C16232D470031EE91 /* libboost_thread.a */,
+				105BAD2616231CA50031EE91 /* libstk.a */,
+				10B60EED155080D9006A6D6E /* libOIS.a */,
+				106337D81674FDEF003E528B /* RenderSystem_GL.dylib */,
+				10F6948C156E483000E70049 /* Plugin_BSPSceneManager.dylib */,
+				10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */,
+				10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */,
+				10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */,
+				10F6947F156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib */,
+				101EBB91162B3022006601A2 /* ApplicationServices.framework */,
+				101EBB8D162B2E2C006601A2 /* QuartzCore.framework */,
+				101EBB8F162B2E3B006601A2 /* CoreGraphics.framework */,
+				105BAD3116232BC90031EE91 /* CoreAudio.framework */,
+				105BAD2F16232BA40031EE91 /* CoreMIDI.framework */,
+				10B60F001550850C006A6D6E /* BulletCollision.framework */,
+				10B60F011550850C006A6D6E /* BulletDynamics.framework */,
+				10B60F021550850C006A6D6E /* BulletMultiThreaded.framework */,
+				10B60F031550850C006A6D6E /* BulletSoftBody.framework */,
+				10B60F041550850C006A6D6E /* BulletSoftBodySolvers_OpenCL_Mini.framework */,
+				10B60F051550850C006A6D6E /* Cg.framework */,
+				10B60F061550850C006A6D6E /* LinearMath.framework */,
+				10B60EEE155080D9006A6D6E /* Ogre.framework */,
+				10B60D2415505D6D006A6D6E /* Cocoa.framework */,
+				10F69482156E3D2700E70049 /* IOKit.framework */,
+				10EB5A3A16050D7500F0939E /* OpenGL.framework */,
+				1033869D156E77E100CEB288 /* Carbon.framework */,
+				10B60D2615505D6D006A6D6E /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		10B60D2615505D6D006A6D6E /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				10B60D2715505D6D006A6D6E /* AppKit.framework */,
+				10B60D2815505D6D006A6D6E /* CoreData.framework */,
+				10B60D2915505D6D006A6D6E /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		10B60EF1155080F3006A6D6E /* OIS */ = {
+			isa = PBXGroup;
+			children = (
+				10B60EF215508101006A6D6E /* OIS.h */,
+				10B60EF315508101006A6D6E /* OISConfig.h */,
+				10B60EF415508101006A6D6E /* OISEffect.h */,
+				10B60EF515508101006A6D6E /* OISEvents.h */,
+				10B60EF615508101006A6D6E /* OISException.h */,
+				10B60EF715508101006A6D6E /* OISFactoryCreator.h */,
+				10B60EF815508101006A6D6E /* OISForceFeedback.h */,
+				10B60EF915508101006A6D6E /* OISInputManager.h */,
+				10B60EFA15508101006A6D6E /* OISInterface.h */,
+				10B60EFB15508101006A6D6E /* OISJoyStick.h */,
+				10B60EFC15508101006A6D6E /* OISKeyboard.h */,
+				10B60EFD15508101006A6D6E /* OISMouse.h */,
+				10B60EFE15508101006A6D6E /* OISObject.h */,
+				10B60EFF15508101006A6D6E /* OISPrereqs.h */,
+			);
+			name = OIS;
+			path = ../../Github/VirtualSoundControl/Apple/OSX/Projects/OgreBulletCocoaTestApplications;
+			sourceTree = OGRE_SDK;
+		};
+		10B60F0E155086D0006A6D6E /* Ogre */ = {
+			isa = PBXGroup;
+			children = (
+				10B60F0F155086E5006A6D6E /* OSX */,
+			);
+			name = Ogre;
+			sourceTree = "<group>";
+		};
+		10B60F0F155086E5006A6D6E /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				10338697156E5BE300CEB288 /* OgreOSXContext.h */,
+				10338698156E5BE300CEB288 /* OgreOSXGLSupport.h */,
+				10338699156E5BE300CEB288 /* OgreOSXRenderTexture.h */,
+				1033869A156E5BE300CEB288 /* OgreOSXWindow.h */,
+				10338694156E5BB100CEB288 /* OgreOSXCocoaContext.h */,
+				10338695156E5BB100CEB288 /* OgreOSXCocoaWindow.h */,
+				10338696156E5BB100CEB288 /* OgreOSXCocoaWindowDelegate.h */,
+				10B60F10155086F9006A6D6E /* OgreOSXCocoaView.h */,
+			);
+			name = OSX;
+			sourceTree = "<group>";
+		};
+		10CFE6AC156CD5F700B24399 /* OgreBullet */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6AD156CD61F00B24399 /* Collisions */,
+				10CFE6F2156CD61F00B24399 /* Dynamics */,
+			);
+			name = OgreBullet;
+			path = ../../Github/VirtualSoundControl/Apple/OSX/Projects/OgreBulletCocoaTestApplications;
+			sourceTree = OGREBULLET_ROOT;
+		};
+		10CFE6AD156CD61F00B24399 /* Collisions */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6AE156CD61F00B24399 /* include */,
+				10CFE6D1156CD61F00B24399 /* Makefile.am */,
+				10CFE6D2156CD61F00B24399 /* scripts */,
+				10CFE6D5156CD61F00B24399 /* src */,
+			);
+			path = Collisions;
+			sourceTree = OGREBULLET_ROOT;
+		};
+		10CFE6AE156CD61F00B24399 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6AF156CD61F00B24399 /* Debug */,
+				10CFE6B5156CD61F00B24399 /* Makefile.am */,
+				10CFE6B6156CD61F00B24399 /* OgreBulletCollisions.h */,
+				10CFE6B7156CD61F00B24399 /* OgreBulletCollisionsObject.h */,
+				10CFE6B8156CD61F00B24399 /* OgreBulletCollisionsObjectState.h */,
+				10CFE6B9156CD61F00B24399 /* OgreBulletCollisionsPreRequisites.h */,
+				10CFE6BA156CD61F00B24399 /* OgreBulletCollisionsRay.h */,
+				10CFE6BB156CD61F00B24399 /* OgreBulletCollisionsShape.h */,
+				10CFE6BC156CD61F00B24399 /* OgreBulletCollisionsWorld.h */,
+				10CFE6BD156CD61F00B24399 /* Shapes */,
+				10CFE6CD156CD61F00B24399 /* Utils */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		10CFE6AF156CD61F00B24399 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6B0156CD61F00B24399 /* Makefile.am */,
+				10CFE6B1156CD61F00B24399 /* OgreBulletCollisionsDebugContact.h */,
+				10CFE6B2156CD61F00B24399 /* OgreBulletCollisionsDebugDrawer.h */,
+				10CFE6B3156CD61F00B24399 /* OgreBulletCollisionsDebugLines.h */,
+				10CFE6B4156CD61F00B24399 /* OgreBulletCollisionsDebugShape.h */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		10CFE6BD156CD61F00B24399 /* Shapes */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6BE156CD61F00B24399 /* Makefile.am */,
+				10CFE6BF156CD61F00B24399 /* OgreBulletCollisionsBoxShape.h */,
+				10CFE6C0156CD61F00B24399 /* OgreBulletCollisionsCapsuleShape.h */,
+				10CFE6C1156CD61F00B24399 /* OgreBulletCollisionsCompoundShape.h */,
+				10CFE6C2156CD61F00B24399 /* OgreBulletCollisionsConeShape.h */,
+				10CFE6C3156CD61F00B24399 /* OgreBulletCollisionsConvexHullShape.h */,
+				10CFE6C4156CD61F00B24399 /* OgreBulletCollisionsCylinderShape.h */,
+				10CFE6C5156CD61F00B24399 /* OgreBulletCollisionsGImpactShape.h */,
+				10CFE6C6156CD61F00B24399 /* OgreBulletCollisionsMinkowskiSumShape.h */,
+				10CFE6C7156CD61F00B24399 /* OgreBulletCollisionsMultiSphereShape.h */,
+				10CFE6C8156CD61F00B24399 /* OgreBulletCollisionsSphereShape.h */,
+				10CFE6C9156CD61F00B24399 /* OgreBulletCollisionsStaticPlaneShape.h */,
+				10CFE6CA156CD61F00B24399 /* OgreBulletCollisionsTerrainShape.h */,
+				10CFE6CB156CD61F00B24399 /* OgreBulletCollisionsTriangleShape.h */,
+				10CFE6CC156CD61F00B24399 /* OgreBulletCollisionsTrimeshShape.h */,
+			);
+			path = Shapes;
+			sourceTree = "<group>";
+		};
+		10CFE6CD156CD61F00B24399 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6CE156CD61F00B24399 /* Makefile.am */,
+				10CFE6CF156CD61F00B24399 /* OgreBulletCollisionsMeshToShapeConverter.h */,
+				10CFE6D0156CD61F00B24399 /* OgreBulletConverter.h */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		10CFE6D2156CD61F00B24399 /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6D3156CD61F00B24399 /* VC8 */,
+			);
+			path = scripts;
+			sourceTree = "<group>";
+		};
+		10CFE6D3156CD61F00B24399 /* VC8 */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6D4156CD61F00B24399 /* OgreBulletCollisions_VC8.vcproj */,
+			);
+			path = VC8;
+			sourceTree = "<group>";
+		};
+		10CFE6D5156CD61F00B24399 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6D6156CD61F00B24399 /* Debug */,
+				10CFE6DB156CD61F00B24399 /* Makefile.am */,
+				10CFE6DC156CD61F00B24399 /* OgreBulletCollisionsObject.cpp */,
+				10CFE6DD156CD61F00B24399 /* OgreBulletCollisionsObjectState.cpp */,
+				10CFE6DE156CD61F00B24399 /* OgreBulletCollisionsPrecompiled.cpp */,
+				10CFE6DF156CD61F00B24399 /* OgreBulletCollisionsRay.cpp */,
+				10CFE6E0156CD61F00B24399 /* OgreBulletCollisionsShape.cpp */,
+				10CFE6E1156CD61F00B24399 /* OgreBulletCollisionsWorld.cpp */,
+				10CFE6E2156CD61F00B24399 /* Shapes */,
+				10CFE6F0156CD61F00B24399 /* Utils */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		10CFE6D6156CD61F00B24399 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6D7156CD61F00B24399 /* OgreBulletCollisionsDebugContact.cpp */,
+				10CFE6D8156CD61F00B24399 /* OgreBulletCollisionsDebugDrawer.cpp */,
+				10CFE6D9156CD61F00B24399 /* OgreBulletCollisionsDebugLines.cpp */,
+				10CFE6DA156CD61F00B24399 /* OgreBulletCollisionsDebugShape.cpp */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		10CFE6E2156CD61F00B24399 /* Shapes */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6E3156CD61F00B24399 /* OgreBulletCollisionsBoxShape.cpp */,
+				10CFE6E4156CD61F00B24399 /* OgreBulletCollisionsCapsuleShape.cpp */,
+				10CFE6E5156CD61F00B24399 /* OgreBulletCollisionsCompoundShape.cpp */,
+				10CFE6E6156CD61F00B24399 /* OgreBulletCollisionsConeShape.cpp */,
+				10CFE6E7156CD61F00B24399 /* OgreBulletCollisionsConvexHullShape.cpp */,
+				10CFE6E8156CD61F00B24399 /* OgreBulletCollisionsCylinderShape.cpp */,
+				10CFE6E9156CD61F00B24399 /* OgreBulletCollisionsGImpactShape.cpp */,
+				10CFE6EA156CD61F00B24399 /* OgreBulletCollisionsMinkowskiSumShape.cpp */,
+				10CFE6EB156CD61F00B24399 /* OgreBulletCollisionsMultiSphereShape.cpp */,
+				10CFE6EC156CD61F00B24399 /* OgreBulletCollisionsSphereShape.cpp */,
+				10CFE6ED156CD61F00B24399 /* OgreBulletCollisionsStaticPlaneShape.cpp */,
+				10CFE6EE156CD61F00B24399 /* OgreBulletCollisionsTriangleShape.cpp */,
+				10CFE6EF156CD61F00B24399 /* OgreBulletCollisionsTrimeshShape.cpp */,
+			);
+			path = Shapes;
+			sourceTree = "<group>";
+		};
+		10CFE6F0156CD61F00B24399 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6F1156CD61F00B24399 /* OgreBulletCollisionsMeshToShapeConverter.cpp */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		10CFE6F2156CD61F00B24399 /* Dynamics */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6F3156CD61F00B24399 /* include */,
+				10CFE706156CD62000B24399 /* Makefile.am */,
+				10CFE707156CD62000B24399 /* scripts */,
+				10CFE70A156CD62000B24399 /* src */,
+			);
+			path = Dynamics;
+			sourceTree = OGREBULLET_ROOT;
+		};
+		10CFE6F3156CD61F00B24399 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6F4156CD61F00B24399 /* Constraints */,
+				10CFE6FC156CD62000B24399 /* Makefile.am */,
+				10CFE6FD156CD62000B24399 /* OgreBulletDynamics.h */,
+				10CFE6FE156CD62000B24399 /* OgreBulletDynamicsConstraint.h */,
+				10CFE6FF156CD62000B24399 /* OgreBulletDynamicsObjectState.h */,
+				10CFE700156CD62000B24399 /* OgreBulletDynamicsPreRequisites.h */,
+				10CFE701156CD62000B24399 /* OgreBulletDynamicsRigidBody.h */,
+				10CFE702156CD62000B24399 /* OgreBulletDynamicsWorld.h */,
+				10CFE703156CD62000B24399 /* Prefab */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		10CFE6F4156CD61F00B24399 /* Constraints */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE6F5156CD61F00B24399 /* Makefile.am */,
+				10CFE6F6156CD61F00B24399 /* OgreBulletDynamics6DofConstraint.h */,
+				10CFE6F7156CD61F00B24399 /* OgreBulletDynamics6DofSpringConstraint.h */,
+				10CFE6F8156CD61F00B24399 /* OgreBulletDynamicsConeTwistConstraint.h */,
+				10CFE6F9156CD61F00B24399 /* OgreBulletDynamicsHingeConstraint.h */,
+				10CFE6FA156CD61F00B24399 /* OgreBulletDynamicsPoint2pointConstraint.h */,
+				10CFE6FB156CD61F00B24399 /* OgreBulletDynamicsRaycastVehicle.h */,
+			);
+			path = Constraints;
+			sourceTree = "<group>";
+		};
+		10CFE703156CD62000B24399 /* Prefab */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE704156CD62000B24399 /* Makefile.am */,
+				10CFE705156CD62000B24399 /* OgreBulletDynamicsRagDoll.h */,
+			);
+			path = Prefab;
+			sourceTree = "<group>";
+		};
+		10CFE707156CD62000B24399 /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE708156CD62000B24399 /* VC8 */,
+			);
+			path = scripts;
+			sourceTree = "<group>";
+		};
+		10CFE708156CD62000B24399 /* VC8 */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE709156CD62000B24399 /* OgreBulletDynamics_VC8.vcproj */,
+			);
+			path = VC8;
+			sourceTree = "<group>";
+		};
+		10CFE70A156CD62000B24399 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE70B156CD62000B24399 /* Constraints */,
+				10CFE712156CD62000B24399 /* Makefile.am */,
+				10CFE713156CD62000B24399 /* OgreBulletDynamicsConstraint.cpp */,
+				10CFE714156CD62000B24399 /* OgreBulletDynamicsObjectState.cpp */,
+				10CFE715156CD62000B24399 /* OgreBulletDynamicsPrecompiled.cpp */,
+				10CFE716156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp */,
+				10CFE717156CD62000B24399 /* OgreBulletDynamicsWorld.cpp */,
+				10CFE718156CD62000B24399 /* Prefab */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		10CFE70B156CD62000B24399 /* Constraints */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE70C156CD62000B24399 /* OgreBulletDynamics6DofConstraint.cpp */,
+				10CFE70D156CD62000B24399 /* OgreBulletDynamics6DofSpringConstraint.cpp */,
+				10CFE70E156CD62000B24399 /* OgreBulletDynamicsConeTwistConstraint.cpp */,
+				10CFE70F156CD62000B24399 /* OgreBulletDynamicsHingeConstraint.cpp */,
+				10CFE710156CD62000B24399 /* OgreBulletDynamicsPoint2pointConstraint.cpp */,
+				10CFE711156CD62000B24399 /* OgreBulletDynamicsRaycastVehicle.cpp */,
+			);
+			path = Constraints;
+			sourceTree = "<group>";
+		};
+		10CFE718156CD62000B24399 /* Prefab */ = {
+			isa = PBXGroup;
+			children = (
+				10CFE719156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp */,
+			);
+			path = Prefab;
+			sourceTree = "<group>";
+		};
+		10D7AE8C1628765000DE0F72 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				105BAD1A16231C860031EE91 /* VSCMIDI.cpp */,
+				105BAD1B16231C860031EE91 /* VSCMIDI.h */,
+				10EF8DB11627228C00EB8FDE /* VSCMIDITasks.cpp */,
+				10EF8DB21627228C00EB8FDE /* VSCMIDITasks.h */,
+				105BAD2016231C860031EE91 /* VSCMIDIOutput.cpp */,
+				105BAD2116231C860031EE91 /* VSCMIDIOutput.h */,
+				10D7AE891628554D00DE0F72 /* VSCMIDIOutputManager.cpp */,
+				10D7AE8A1628554D00DE0F72 /* VSCMIDIOutputManager.h */,
+				102671CF1625B4E6002D34B2 /* VSCMIDIOutputChannel.cpp */,
+				102671D01625B4E6002D34B2 /* VSCMIDIOutputChannel.h */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		10D7AE8D1628766100DE0F72 /* Cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				104BFB77166D3BC400746CA9 /* VSCOSXMIDIOutputView.h */,
+				104BFB78166D3BC400746CA9 /* VSCOSXMIDIOutputView.mm */,
+				10D7AE941628767F00DE0F72 /* VSCOSXMIDIWindowController.h */,
+				10D7AE951628767F00DE0F72 /* VSCOSXMIDIWindowController.mm */,
+				104BFB7B166D3D4E00746CA9 /* VSCOSXMIDIWindowController.xib */,
+			);
+			name = Cocoa;
+			sourceTree = "<group>";
+		};
+		10EB5E5A16298CD200E0F030 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				105CDA3B162DA03500532AD0 /* VSCGlobalApplication.h */,
+				105CDA3A162DA03500532AD0 /* VSCGlobalApplication.cpp */,
+				103203471632BBE7006ED4FF /* VSCEnvironment.h */,
+				103203461632BBE7006ED4FF /* VSCEnvironment.cpp */,
+				103E77EE166A686C0013ABB6 /* VSCEnvironmentTest.h */,
+				103E77ED166A686C0013ABB6 /* VSCEnvironmentTest.cpp */,
+			);
+			name = Application;
+			sourceTree = "<group>";
+		};
+		10EF8DAF1626CBBF00EB8FDE /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				10EF8DA81626CBB700EB8FDE /* VSCTask.cpp */,
+				10EF8DA91626CBB700EB8FDE /* VSCTask.h */,
+				10EF8DAA1626CBB700EB8FDE /* VSCTaskQueue.cpp */,
+				10EF8DAB1626CBB700EB8FDE /* VSCTaskQueue.h */,
+				10681E851670CFF700C7A1BE /* VSCTaskTest.cpp */,
+				10681E861670CFF700C7A1BE /* VSCTaskTest.h */,
+			);
+			name = Task;
+			sourceTree = "<group>";
+		};
+		10F907CE162ECFE7006C9C0B /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				10E8557215E65048008FF635 /* VSCUI.cpp */,
+				10E8557315E65048008FF635 /* VSCUI.h */,
+				10ED08881601CD8900053C07 /* VSCBound.cpp */,
+				10ED08891601CD8900053C07 /* VSCBound.hpp */,
+				10ED08841601CC2700053C07 /* VSCBindings.cpp */,
+				10ED08851601CC2700053C07 /* VSCBindings.hpp */,
+				10F907D0162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp */,
+				10F907D1162ECFF8006C9C0B /* VSCInterfaceAdapter.h */,
+			);
+			name = Interface;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		10B60D1F15505D6D006A6D6E /* VSCApplication */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 10B60D3E15505D6D006A6D6E /* Build configuration list for PBXNativeTarget "VSCApplication" */;
+			buildPhases = (
+				10B60D1C15505D6D006A6D6E /* Sources */,
+				10B60D1D15505D6D006A6D6E /* Frameworks */,
+				10B60D1E15505D6D006A6D6E /* Resources */,
+				10F69484156E41A500E70049 /* CopyFiles */,
+				10F69486156E41D300E70049 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VSCApplication;
+			productName = OgreBulletCocoaTestApplications;
+			productReference = 10B60D2015505D6D006A6D6E /* VSCApplication.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		10B60D1715505D6D006A6D6E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = VSC;
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = JBAT;
+			};
+			buildConfigurationList = 10B60D1A15505D6D006A6D6E /* Build configuration list for PBXProject "VSCApplication" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				English,
+			);
+			mainGroup = 10B60D1515505D6D006A6D6E;
+			productRefGroup = 10B60D2115505D6D006A6D6E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				10B60D1F15505D6D006A6D6E /* VSCApplication */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		10B60D1E15505D6D006A6D6E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10AF5418163D9A6C00419EEE /* 01-refresh.png in Resources */,
+				10AF5419163D9A6C00419EEE /* 02-redo.png in Resources */,
+				10AF541A163D9A6C00419EEE /* 06-magnify.png in Resources */,
+				10AF541B163D9A6C00419EEE /* 11-clock.png in Resources */,
+				10AF541C163D9A6C00419EEE /* 12-eye.png in Resources */,
+				10AF541D163D9A6C00419EEE /* 16-line-chart.png in Resources */,
+				10AF541E163D9A6C00419EEE /* 19-gear.png in Resources */,
+				10AF541F163D9A6C00419EEE /* 20-gear2.png in Resources */,
+				10AF5420163D9A6C00419EEE /* 55-network.png in Resources */,
+				10AF5421163D9A6C00419EEE /* 95-equalizer.png in Resources */,
+				10AF5422163D9A6C00419EEE /* 105-piano.png in Resources */,
+				10AF5423163D9A6C00419EEE /* 106-sliders.png in Resources */,
+				10AF5424163D9A6C00419EEE /* 122-stats.png in Resources */,
+				10AF5425163D9A6C00419EEE /* 157-wrench.png in Resources */,
+				10AF5426163D9A6C00419EEE /* 158-wrench-2.png in Resources */,
+				10CB65B0164E926E000D311F /* VSCOSXEnvironmentWindowController.xib in Resources */,
+				104BFB7C166D3D4E00746CA9 /* VSCOSXMIDIWindowController.xib in Resources */,
+				107C399216A07A4100552221 /* Credits.rtf in Resources */,
+				107C399316A07A4100552221 /* InfoPlist.strings in Resources */,
+				107C399416A07A4100552221 /* MainMenu.xib in Resources */,
+				107C399716A07A4100552221 /* VSCApplication-Info.plist in Resources */,
+				109A8EA816A1A7210023EC1B /* Plugins.cfg in Resources */,
+				109A8EA916A1A7210023EC1B /* Plugins_d.cfg in Resources */,
+				109A8EAA16A1A7210023EC1B /* resources.cfg in Resources */,
+				109A8EEB16A1A77E0023EC1B /* VSCOSXOBSceneDetailView.xib in Resources */,
+				109A8EF116A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.xib in Resources */,
+				109A8EF316A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.xib in Resources */,
+				109A8EF716A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.xib in Resources */,
+				109A8EF916A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.xib in Resources */,
+				109A8F4116A1A8740023EC1B /* VSCIMOSXCollisionActionMappingsViewController.xib in Resources */,
+				109A8F4316A1A8740023EC1B /* VSCIMOSXCollisionActionView.xib in Resources */,
+				109A8F4816A1A8740023EC1B /* VSCIMOSXCollisionEventChainViewController.xib in Resources */,
+				109A8F4A16A1A8740023EC1B /* VSCIMOSXCollisionMappingEditViewController.xib in Resources */,
+				109A8F4F16A1A8740023EC1B /* VSCIMOSXCollisionMappingView.xib in Resources */,
+				109A8F5116A1A8740023EC1B /* VSCIMOSXDelayView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		10B60D1C15505D6D006A6D6E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				109D51B5155998EE0030C161 /* VSCException.cpp in Sources */,
+				10CFE720156CD62000B24399 /* OgreBulletCollisionsDebugContact.cpp in Sources */,
+				10CFE721156CD62000B24399 /* OgreBulletCollisionsDebugDrawer.cpp in Sources */,
+				10CFE722156CD62000B24399 /* OgreBulletCollisionsDebugLines.cpp in Sources */,
+				10CFE723156CD62000B24399 /* OgreBulletCollisionsDebugShape.cpp in Sources */,
+				10CFE725156CD62000B24399 /* OgreBulletCollisionsObject.cpp in Sources */,
+				10CFE726156CD62000B24399 /* OgreBulletCollisionsObjectState.cpp in Sources */,
+				10CFE727156CD62000B24399 /* OgreBulletCollisionsPrecompiled.cpp in Sources */,
+				10CFE728156CD62000B24399 /* OgreBulletCollisionsRay.cpp in Sources */,
+				10CFE729156CD62000B24399 /* OgreBulletCollisionsShape.cpp in Sources */,
+				10CFE72A156CD62000B24399 /* OgreBulletCollisionsWorld.cpp in Sources */,
+				10CFE72B156CD62000B24399 /* OgreBulletCollisionsBoxShape.cpp in Sources */,
+				10CFE72C156CD62000B24399 /* OgreBulletCollisionsCapsuleShape.cpp in Sources */,
+				10CFE72D156CD62000B24399 /* OgreBulletCollisionsCompoundShape.cpp in Sources */,
+				10CFE72E156CD62000B24399 /* OgreBulletCollisionsConeShape.cpp in Sources */,
+				10CFE72F156CD62000B24399 /* OgreBulletCollisionsConvexHullShape.cpp in Sources */,
+				10CFE730156CD62000B24399 /* OgreBulletCollisionsCylinderShape.cpp in Sources */,
+				10CFE731156CD62000B24399 /* OgreBulletCollisionsGImpactShape.cpp in Sources */,
+				10CFE732156CD62000B24399 /* OgreBulletCollisionsMinkowskiSumShape.cpp in Sources */,
+				10CFE733156CD62000B24399 /* OgreBulletCollisionsMultiSphereShape.cpp in Sources */,
+				10CFE734156CD62000B24399 /* OgreBulletCollisionsSphereShape.cpp in Sources */,
+				10CFE735156CD62000B24399 /* OgreBulletCollisionsStaticPlaneShape.cpp in Sources */,
+				10CFE736156CD62000B24399 /* OgreBulletCollisionsTriangleShape.cpp in Sources */,
+				10CFE737156CD62000B24399 /* OgreBulletCollisionsTrimeshShape.cpp in Sources */,
+				10CFE738156CD62000B24399 /* OgreBulletCollisionsMeshToShapeConverter.cpp in Sources */,
+				10CFE73E156CD62000B24399 /* OgreBulletDynamics6DofConstraint.cpp in Sources */,
+				10CFE73F156CD62000B24399 /* OgreBulletDynamics6DofSpringConstraint.cpp in Sources */,
+				10CFE740156CD62000B24399 /* OgreBulletDynamicsConeTwistConstraint.cpp in Sources */,
+				10CFE741156CD62000B24399 /* OgreBulletDynamicsHingeConstraint.cpp in Sources */,
+				10CFE742156CD62000B24399 /* OgreBulletDynamicsPoint2pointConstraint.cpp in Sources */,
+				10CFE743156CD62000B24399 /* OgreBulletDynamicsRaycastVehicle.cpp in Sources */,
+				10CFE745156CD62000B24399 /* OgreBulletDynamicsConstraint.cpp in Sources */,
+				10CFE746156CD62000B24399 /* OgreBulletDynamicsObjectState.cpp in Sources */,
+				10CFE747156CD62000B24399 /* OgreBulletDynamicsPrecompiled.cpp in Sources */,
+				10CFE748156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp in Sources */,
+				10CFE749156CD62000B24399 /* OgreBulletDynamicsWorld.cpp in Sources */,
+				10CFE74A156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp in Sources */,
+				1091F28415B07C0D00466854 /* VSCLog.cpp in Sources */,
+				10E8557415E65048008FF635 /* VSCUI.cpp in Sources */,
+				10D5533A15FA409F002AED81 /* NSString+VSCAdditions.mm in Sources */,
+				10ED088A1601CD8900053C07 /* VSCBound.cpp in Sources */,
+				105BAD2216231C860031EE91 /* VSCMIDI.cpp in Sources */,
+				105BAD2516231C860031EE91 /* VSCMIDIOutput.cpp in Sources */,
+				105BAD2A16232B180031EE91 /* VSCSound.cpp in Sources */,
+				105BAD2E16232B530031EE91 /* VSCController.cpp in Sources */,
+				103006931624763A002A30ED /* VSC.cpp in Sources */,
+				102671D11625B4E6002D34B2 /* VSCMIDIOutputChannel.cpp in Sources */,
+				10EF8DAC1626CBB700EB8FDE /* VSCTask.cpp in Sources */,
+				10EF8DAD1626CBB700EB8FDE /* VSCTaskQueue.cpp in Sources */,
+				10EF8DB31627228C00EB8FDE /* VSCMIDITasks.cpp in Sources */,
+				10D7AE8B1628554E00DE0F72 /* VSCMIDIOutputManager.cpp in Sources */,
+				10D7AE9C1628767F00DE0F72 /* VSCOSXMIDIWindowController.mm in Sources */,
+				10EB5E5E16298E0B00E0F030 /* VSCOSXApplicationManager.mm in Sources */,
+				101EBB441629AE79006601A2 /* NSArray+VSCAdditions.mm in Sources */,
+				10F907D8162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp in Sources */,
+				103203481632BBE7006ED4FF /* VSCEnvironment.cpp in Sources */,
+				10EE8847163842F100A1902B /* VSCGlobalApplication.cpp in Sources */,
+				10AF53FE163D8D7600419EEE /* DMTabBar.m in Sources */,
+				10AF53FF163D8D7600419EEE /* DMTabBarItem.m in Sources */,
+				10CB65B1164E926E000D311F /* VSCOSXEnvironmentWindowController.mm in Sources */,
+				100812B21651A89800E975B8 /* VSCBroadcaster.cpp in Sources */,
+				100812B61651ABE700E975B8 /* VSCListener.cpp in Sources */,
+				103E77EF166A686C0013ABB6 /* VSCEnvironmentTest.cpp in Sources */,
+				104BFB79166D3BC400746CA9 /* VSCOSXMIDIOutputView.mm in Sources */,
+				10681E871670CFF700C7A1BE /* VSCTaskTest.cpp in Sources */,
+				107C399516A07A4100552221 /* main.m in Sources */,
+				107C399616A07A4100552221 /* VSCAppDelegate.mm in Sources */,
+				109A8E9B16A1A7210023EC1B /* VSCOB.cpp in Sources */,
+				109A8E9C16A1A7210023EC1B /* VSCOBApplication.cpp in Sources */,
+				109A8E9D16A1A7210023EC1B /* VSCOBBasicSceneElementFactory.cpp in Sources */,
+				109A8E9E16A1A7210023EC1B /* VSCOBDisplay.cpp in Sources */,
+				109A8E9F16A1A7210023EC1B /* VSCOBDisplayController.cpp in Sources */,
+				109A8EA016A1A7210023EC1B /* VSCOBDynamicObject.cpp in Sources */,
+				109A8EA116A1A7210023EC1B /* VSCOBResourceManager.cpp in Sources */,
+				109A8EA216A1A7210023EC1B /* VSCOBScene.cpp in Sources */,
+				109A8EA316A1A7210023EC1B /* VSCOBSceneController.cpp in Sources */,
+				109A8EA416A1A7210023EC1B /* VSCOBStaticObject.cpp in Sources */,
+				109A8EAB16A1A7210023EC1B /* BetaGUI.cpp in Sources */,
+				109A8EAC16A1A7210023EC1B /* VSCOBInterface.cpp in Sources */,
+				109A8EAD16A1A7210023EC1B /* VSCOBKeyBindings.cpp in Sources */,
+				109A8EB116A1A7210023EC1B /* VSCOBMouseBindings.cpp in Sources */,
+				109A8EE216A1A77E0023EC1B /* VSCOBOSXApplicationBridge.mm in Sources */,
+				109A8EE416A1A77E0023EC1B /* VSCOBOSXInterfaceAdapter.mm in Sources */,
+				109A8EE616A1A77E0023EC1B /* VSCOBOSXSceneCollisionListener.mm in Sources */,
+				109A8EE716A1A77E0023EC1B /* VSCOBOSXSceneDisplayView.mm in Sources */,
+				109A8EE816A1A77E0023EC1B /* VSCOBOSXSceneListener.mm in Sources */,
+				109A8EE916A1A77E0023EC1B /* VSCOSXOBSceneController.mm in Sources */,
+				109A8EEA16A1A77E0023EC1B /* VSCOSXOBSceneDetailView.mm in Sources */,
+				109A8EF016A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.mm in Sources */,
+				109A8EF216A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.mm in Sources */,
+				109A8EF616A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.mm in Sources */,
+				109A8EF816A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.mm in Sources */,
+				109A8EFA16A1A77E0023EC1B /* VSCOSXOBSceneElementListView.mm in Sources */,
+				109A8EFB16A1A77E0023EC1B /* VSCOSXOBSceneElementView.mm in Sources */,
+				109A8F1316A1A83E0023EC1B /* VSCIMAction.cpp in Sources */,
+				109A8F1416A1A83E0023EC1B /* VSCIMCollisionAction.cpp in Sources */,
+				109A8F1516A1A83E0023EC1B /* VSCIMCollisionEventChain.cpp in Sources */,
+				109A8F1616A1A83E0023EC1B /* VSCIMCollisionMapped.cpp in Sources */,
+				109A8F1716A1A83E0023EC1B /* VSCIMCollisionMapper.cpp in Sources */,
+				109A8F1816A1A83E0023EC1B /* VSCIMCollisionMapping.cpp in Sources */,
+				109A8F1916A1A83E0023EC1B /* VSCIMCollisionMIDIActions.cpp in Sources */,
+				109A8F1A16A1A83E0023EC1B /* VSCIMDelay.cpp in Sources */,
+				109A8F1B16A1A83E0023EC1B /* VSCIMEvent.cpp in Sources */,
+				109A8F1C16A1A83E0023EC1B /* VSCIMEventChain.cpp in Sources */,
+				109A8F1D16A1A83E0023EC1B /* VSCIMTarget.cpp in Sources */,
+				109A8F3F16A1A8740023EC1B /* VSCIMOSXCollisionActionGlobal.mm in Sources */,
+				109A8F4016A1A8740023EC1B /* VSCIMOSXCollisionActionMappingsViewController.mm in Sources */,
+				109A8F4216A1A8740023EC1B /* VSCIMOSXCollisionActionView.mm in Sources */,
+				109A8F4716A1A8740023EC1B /* VSCIMOSXCollisionEventChainViewController.mm in Sources */,
+				109A8F4916A1A8740023EC1B /* VSCIMOSXCollisionMappingEditViewController.mm in Sources */,
+				109A8F4D16A1A8740023EC1B /* VSCIMOSXCollisionMappingTypes.mm in Sources */,
+				109A8F4E16A1A8740023EC1B /* VSCIMOSXCollisionMappingView.mm in Sources */,
+				109A8F5016A1A8740023EC1B /* VSCIMOSXDelayView.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		107C398716A07A4100552221 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				107C398816A07A4100552221 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		107C398916A07A4100552221 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				107C398A16A07A4100552221 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		107C398B16A07A4100552221 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				107C398C16A07A4100552221 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		10AF5406163D8FF400419EEE /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				10AF5407163D8FF400419EEE /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		10B60D3C15505D6D006A6D6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(OGRE_SDK)/lib/release",
+					/Library/Frameworks/,
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(OGRE_SDK)/include/OGRE/RenderSystems/GL",
+					"$(OGRE_SDK)/include/OGRE",
+					"$(OGRE_SDK)/include/OGRE/RenderSystems",
+					"$(BULLET_ROOT)/src",
+					"$(BULLET_ROOT)/Extras/ConvexDecomposition",
+					"$(OGREBULLET_ROOT)/Collisions/include",
+					"$(OGREBULLET_ROOT)/Dynamics/include",
+					"$(BOOST_ROOT)/include",
+					"$(STK_ROOT)/include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		10B60D3D15505D6D006A6D6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(OGRE_SDK)/lib/release",
+					/Library/Frameworks/,
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(OGRE_SDK)/include/OGRE/RenderSystems/GL",
+					"$(OGRE_SDK)/include/OGRE",
+					"$(OGRE_SDK)/include/OGRE/RenderSystems",
+					"$(BULLET_ROOT)/src",
+					"$(BULLET_ROOT)/Extras/ConvexDecomposition",
+					"$(OGREBULLET_ROOT)/Collisions/include",
+					"$(OGREBULLET_ROOT)/Dynamics/include",
+					"$(BOOST_ROOT)/include",
+					"$(STK_ROOT)/include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		10B60D3F15505D6D006A6D6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../../Libraries/OgreSDK/lib/release\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "VSCApplication/VSCApplication-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/VSCApplication/VSCApplication-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../../Libraries/OgreSDK/lib/release\"",
+					"\"$(SRCROOT)/../../../../../../Libraries/OgreSDK/lib\"",
+					"\"$(SRCROOT)/../../../../../../Libraries/bullet-2.80/Extras/ConvexDecomposition\"",
+					"\"$(SRCROOT)/../../../../../../Libraries/stk-4.4.3/lib\"",
+					"$(BOOST_ROOT)/lib",
+				);
+				PRODUCT_NAME = VSCApplication;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		10B60D4015505D6D006A6D6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../../Libraries/OgreSDK/lib/release\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "VSCApplication/VSCApplication-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/VSCApplication/VSCApplication-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../../Libraries/OgreSDK/lib/release\"",
+					"\"$(SRCROOT)/../../../../../../Libraries/OgreSDK/lib\"",
+					"\"$(SRCROOT)/../../../../../../Libraries/bullet-2.80/Extras/ConvexDecomposition\"",
+					"\"$(SRCROOT)/../../../../../../Libraries/stk-4.4.3/lib\"",
+					"$(BOOST_ROOT)/lib",
+				);
+				PRODUCT_NAME = VSCApplication;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		10B60D1A15505D6D006A6D6E /* Build configuration list for PBXProject "VSCApplication" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				10B60D3C15505D6D006A6D6E /* Debug */,
+				10B60D3D15505D6D006A6D6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		10B60D3E15505D6D006A6D6E /* Build configuration list for PBXNativeTarget "VSCApplication" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				10B60D3F15505D6D006A6D6E /* Debug */,
+				10B60D4015505D6D006A6D6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 10B60D1715505D6D006A6D6E /* Project object */;
+}

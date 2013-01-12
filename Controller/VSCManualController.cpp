@@ -14,11 +14,11 @@ VSCManualController::VSCManualController(void) {
     this->setCurrentControlValue(0);
 }
 
-VSCSFloat VSCManualController::getCurrentControlValue(void) const {
+Float VSCManualController::getCurrentControlValue(void) const {
     return _currentControlValue;
 }
 
-void VSCManualController::setCurrentControlValue(const VSCSFloat val) {
+void VSCManualController::setCurrentControlValue(const Float val) {
     
     if (this->valueIsValid(val)) {
         _currentControlValue = val;

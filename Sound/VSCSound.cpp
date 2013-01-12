@@ -9,50 +9,54 @@
 
 #include "VSCSound.h"
 
+#include <boost/assert.hpp>
+
 #include <cmath>
 #include <cassert>
 
-/*
- *	Static member variable initialization
- */
+VSC::Sound::Pitch::Pitch() : mReferenceAFrequency(440.0)
+{
+    computeMidiNoteFrequencies();
+}
 
-std::vector<VSCSFloat> VSCSound::midiNoteFrequencies;
-VSCSFloat VSCSound::referenceAFrequency = 440.0;
-bool VSCSound::midiNoteFrequenciesAreComputed = false;
-
-
-VSCSFloat VSCSound::logFrequencyToFrequency(VSCSFloat logFreq) {
+VSC::Float VSC::Sound::Pitch::logFrequencyToFrequency(Float logFreq)
+{
 	return std::pow(10.0, logFreq);
 }
 
-VSCSFloat VSCSound::frequencyToLogFrequency(VSCSFloat freq) {
+VSC::Float VSC::Sound::Pitch::frequencyToLogFrequency(Float freq)
+{
 	return std::log10(freq);
 }
 
-VSCSFloat VSCSound::frequencyForMidiNote(VSCSFloat midiNote) {
-	return VSCSound::frequencyForMidiNote((unsigned int)midiNote);
+VSC::Float VSC::Sound::Pitch::frequencyForMidiNote(Float midiNote)
+{
+	return frequencyForMidiNote((unsigned int)midiNote);
 }
 
-VSCSFloat VSCSound::frequencyForMidiNote(unsigned int midiNote) {
-	assert(midiNote >= 0 && midiNote < 127);
-	if (VSCSound::midiNoteFrequenciesAreComputed == false)
-		VSCSound::computeMidiNoteFrequencies();
-	return VSCSound::midiNoteFrequencies[midiNote];
+VSC::Float VSC::Sound::Pitch::frequencyForMidiNote(unsigned int midiNote)
+{
+	BOOST_ASSERT_MSG(midiNote >= 0 && midiNote < 127, "MIDI note should be in range [0-127]");
+	return mMIDINoteFrequencies[midiNote];
 }
 
-void VSCSound::setReferenceAFrequency(VSCSFloat f) {
-	VSCSound::referenceAFrequency = f;
+void VSC::Sound::Pitch::setReferenceAFrequency(Float f)
+{
+	mReferenceAFrequency = f;
+    computeMidiNoteFrequencies();
 }
 
-VSCSFloat VSCSound::getReferenceAFrequency(void) {
-	return VSCSound::referenceAFrequency;
+VSC::Float VSC::Sound::Pitch::getReferenceAFrequency(void)
+{
+	return mReferenceAFrequency;
 }
 
-void VSCSound::computeMidiNoteFrequencies(void) {
-	VSCSound::midiNoteFrequencies.resize(128);
-	for (int x = 0; x < 127; ++x) {
-		VSCSFloat freq = (VSCSound::referenceAFrequency / 32.0) * (std::pow(2.0, ((x - 9.0) / 12.0)));
-		VSCSound::midiNoteFrequencies[x] = freq;
+void VSC::Sound::Pitch::computeMidiNoteFrequencies(void)
+{
+	mMIDINoteFrequencies.resize(128);
+	for (int x = 0; x < 127; ++x)
+    {
+		Float freq = (mReferenceAFrequency / 32.0) * (std::pow(2.0, ((x - 9.0) / 12.0)));
+		mMIDINoteFrequencies[x] = freq;
 	}
-	VSCSound::midiNoteFrequenciesAreComputed = true;
 }
