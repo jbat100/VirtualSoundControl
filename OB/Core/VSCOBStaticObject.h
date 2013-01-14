@@ -1,8 +1,8 @@
 
-#ifndef _VSC_OGRE_BULLET_STATIC_OBJECT_H_
-#define _VSC_OGRE_BULLET_STATIC_OBJECT_H_
+#ifndef _VSC_OB_STATIC_OBJECT_H_
+#define _VSC_OB_STATIC_OBJECT_H_
 
-#include "VSCOBScene.h"
+#include "VSCOB.h"
 
 #include "OgreBulletDynamics.h"
 #include "OgreBulletCollisions.h"
@@ -20,7 +20,7 @@ namespace VSC {
          *  More of a container than a class...
          */
             
-        class StaticObject : public Scene::Element {
+        class StaticObject : public Element {
             
         public:
             
@@ -42,7 +42,7 @@ namespace VSC {
              *  Constructor
              */
             
-            StaticObject(Scene::WPtr scene,
+            StaticObject(Scene_WPtr scene,
                          Ogre::StaticGeometry* staticGeometry,
                          OgreBulletDynamics::RigidBody* rigidBody);
             
@@ -67,5 +67,5 @@ namespace VSC {
     }
 }
 
-#endif //_VSC_OGRE_BULLET_STATIC_OBJECT_H_
+#endif //_VSC_OB_STATIC_OBJECT_H_
 

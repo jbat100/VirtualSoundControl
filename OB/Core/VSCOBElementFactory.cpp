@@ -1,14 +1,15 @@
+/*
+ *  VSC Stuff
+ */
 
-#include "VSCOBBasicSceneElementFactory.h"
+#include "VSCOBElementFactory.h"
+
+#include "VSCOB.h"
+#include "VSCOBElement.h"
 
 #include "OgreBulletCollisions.h"
 #include "OgreBulletDynamics.h"
-
 #include "OgreBulletDynamicsRigidBody.h"
-
-/*
- *  OgreBullet Shapes
- */
 #include "OgreBulletCollisionsShape.h"
 #include "Shapes/OgreBulletCollisionsBoxShape.h"
 #include "Shapes/OgreBulletCollisionsSphereShape.h"
@@ -22,17 +23,27 @@
 #include "Shapes/OgreBulletCollisionsMinkowskiSumShape.h"
 #include "Shapes/OgreBulletCollisionsTrimeshShape.h"
 
-/**
- *
- */
 #include "Utils/OgreBulletCollisionsMeshToShapeConverter.h"
 #include "OgreBulletCollisionsRay.h"
 #include "Debug/OgreBulletCollisionsDebugLines.h"
 
-int VSC::OB::BasicSceneElementFactory::mNumberOfObjectsCreated = 0;
+
+//MARK: - Scene Element Factory
+
+void VSC::OB::ElementFactory::setElementMass(Element::SPtr element, Float mass)
+{
+    BOOST_ASSERT(element);
+    if (element)
+    {
+        element->setMass(mass);
+    }
+    
+}
+
+int VSC::OB::ElementFactory::mNumberOfObjectsCreated = 0;
 
 // -------------------------------------------------------------------------
-void VSC::OB::BasicSceneElementFactory::addGround()
+void VSC::OB::ElementFactory::addGround()
 {
     StaticObject::FactoryDescription description;
     
@@ -43,8 +54,8 @@ void VSC::OB::BasicSceneElementFactory::addGround()
     obj->setSilentCollisions(true);
 }
 
-VSC::OB::DynamicObject::SPtr VSC::OB::BasicSceneElementFactory::addPrimitive(PrimitiveType primitiveType,
-                                                                             const DynamicObject::FactoryDescription& description)
+VSC::OB::DynamicObject::SPtr VSC::OB::ElementFactory::addPrimitive(PrimitiveType primitiveType,
+                                                                   const DynamicObject::FactoryDescription& description)
 {
     
     /*
@@ -104,7 +115,7 @@ VSC::OB::DynamicObject::SPtr VSC::OB::BasicSceneElementFactory::addPrimitive(Pri
     node->attachObject(entity);
     
     /*
-     *  Create an OgreBulletDynamics::RigidBody which handles the Ogre::SceneNode (along with the Ogre::Entity), 
+     *  Create an OgreBulletDynamics::RigidBody which handles the Ogre::SceneNode (along with the Ogre::Entity),
      *  the OgreBulletCollisions::BoxCollisionShape,
      *  friction, mass, position and orientation (quaternion).
      */
@@ -126,13 +137,13 @@ VSC::OB::DynamicObject::SPtr VSC::OB::BasicSceneElementFactory::addPrimitive(Pri
     scene->registerElement(element, description.name, mNumberOfObjectsCreated);
     
     mNumberOfObjectsCreated++;
-
+    
     return object;
 }
 
 
-VSC::OB::DynamicObject::SPtr VSC::OB::BasicSceneElementFactory::addTrimesh(const Ogre::String& meshName,
-                                                                           const DynamicObject::FactoryDescription& description)
+VSC::OB::DynamicObject::SPtr VSC::OB::ElementFactory::addTrimesh(const Ogre::String& meshName,
+                                                                 const DynamicObject::FactoryDescription& description)
 {
     VSC::OB::Scene::SPtr scene = this->getScene();
     
@@ -145,9 +156,9 @@ VSC::OB::DynamicObject::SPtr VSC::OB::BasicSceneElementFactory::addTrimesh(const
     entity->setCastShadows(description.castsShadow);
     Ogre::SceneNode *node = scene->getSceneManager()->getRootSceneNode()->createChildSceneNode();
     node->attachObject(entity);
-
+    
     /*
-     *  Create a OgreBulletCollisions::TriangleMeshCollisionShape from the entity using the 
+     *  Create a OgreBulletCollisions::TriangleMeshCollisionShape from the entity using the
      *  OgreBulletCollisions::StaticMeshToShapeConverter util.
      */
     
@@ -171,7 +182,7 @@ VSC::OB::DynamicObject::SPtr VSC::OB::BasicSceneElementFactory::addTrimesh(const
 }
 
 
-VSC::OB::StaticObject::SPtr VSC::OB::BasicSceneElementFactory::addStaticPlane(const StaticObject::FactoryDescription& description)
+VSC::OB::StaticObject::SPtr VSC::OB::ElementFactory::addStaticPlane(const StaticObject::FactoryDescription& description)
 {
     // Use a load of meshes to represent the floor
     int i = 0;
@@ -211,7 +222,7 @@ VSC::OB::StaticObject::SPtr VSC::OB::BasicSceneElementFactory::addStaticPlane(co
              *  Who takes charge of destroying the entities, the scene manager all by himself?
              *  Looking at the SceneManager class, it would seem so
              *  http://www.ogre3d.org/docs/api/html/classOgre_1_1SceneManager.html#a54d553be3f6098ce229e6db53ec15227
-             *  All the VSC::OB::StaticGeometry has to do is to destroy the Ogre::StaticGeometry via the 
+             *  All the VSC::OB::StaticGeometry has to do is to destroy the Ogre::StaticGeometry via the
              *  Ogre::SceneManager
              */
             
@@ -231,7 +242,7 @@ VSC::OB::StaticObject::SPtr VSC::OB::BasicSceneElementFactory::addStaticPlane(co
     scene->registerElement(element, description.name, mNumberOfObjectsCreated);
     
     mNumberOfObjectsCreated++;
-
+    
     return geom;
 }
 

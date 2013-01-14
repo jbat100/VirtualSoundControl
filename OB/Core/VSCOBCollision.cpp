@@ -1,0 +1,54 @@
+/*
+ *  VSC Stuff
+ */
+
+#include "VSCOBCollision.h"
+
+#include "VSCOB.h"
+#include "VSCException.h"
+#include "VSCOBElement.h"
+#include "VSCOBScene.h"
+
+#include "OgreBulletDynamicsWorld.h"
+#include "OgreBulletDynamicsRigidBody.h"
+#include "OgreBulletDynamicsConstraint.h"
+#include "Constraints/OgreBulletDynamicsPoint2pointConstraint.h" 
+
+#include "btBulletCollisionCommon.h"
+
+#include <boost/foreach.hpp>
+
+#include <limits>
+
+using namespace Ogre;
+using namespace OgreBulletCollisions;
+using namespace OgreBulletDynamics;
+
+
+
+//MARK: - Scene Collision 
+
+void VSC::OB::Collision::invalidate()
+{
+    mFirstElement = Element::SPtr();
+    mSecondElement = Element::SPtr();
+    
+    mState = StateInvalid;
+    
+    mPersistentManifold = 0;
+}
+
+std::ostream& VSC::OB::operator << (std::ostream& stream, const Collision& collision)
+{
+    stream << "Collision with element: " << *collision.getFirstElement() << " and element: " << *collision.getSecondElement();
+    stream << " relative velocity: " << collision.getRelativeCollisionVelocity() << std::endl;
+    
+    return stream;
+}
+
+std::ostream& VSC::OB::operator << (std::ostream& stream, const Element& element)
+{
+    stream << element.getName() << "_" << element.getIdentifier();
+    
+    return stream;
+}

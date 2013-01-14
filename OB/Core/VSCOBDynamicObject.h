@@ -1,8 +1,9 @@
 
-#ifndef _VSC_OGRE_BULLET_DYNAMIC_OBJECT_H_
-#define _VSC_OGRE_BULLET_DYNAMIC_OBJECT_H_
+#ifndef _VSC_OB_DYNAMIC_OBJECT_H_
+#define _VSC_OB_DYNAMIC_OBJECT_H_
 
-#include "VSCOBScene.h"
+#include "VSCOB.h"
+#include "VSCOBElement.h"
 
 #include "OgreBulletDynamics.h"
 #include "OgreBulletCollisions.h"
@@ -20,7 +21,7 @@ namespace VSC {
          *  More of a container than a class...
          */
             
-        class DynamicObject : public Scene::Element {
+        class DynamicObject : public Element {
             
         public:
             
@@ -75,5 +76,5 @@ namespace VSC {
     }
 }
 
-#endif //_VSC_OGRE_BULLET_DYNAMIC_OBJECT_H_
+#endif //_VSC_OB_DYNAMIC_OBJECT_H_
 
