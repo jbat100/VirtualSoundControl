@@ -24,7 +24,7 @@ namespace VSC {
     namespace OB {
         
         /*
-         *  ElementFactory is used to generate Scene::Element and keep a shared_ptr to them. Like Element, it is meant
+         *  ElementFactory is used to generate Element and keep a shared_ptr to them. Like Element, it is meant
          *  to be subclassed to be useful.
          */
         

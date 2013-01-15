@@ -1,5 +1,4 @@
 
-
 #include "VSCIMTarget.h"
 
 #include <boost/assert.hpp>

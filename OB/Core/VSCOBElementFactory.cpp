@@ -6,6 +6,7 @@
 
 #include "VSCOB.h"
 #include "VSCOBElement.h"
+#include "VSCOBScene.h"
 
 #include "OgreBulletCollisions.h"
 #include "OgreBulletDynamics.h"
@@ -130,7 +131,7 @@ VSC::OB::DynamicObject::SPtr VSC::OB::ElementFactory::addPrimitive(PrimitiveType
     
     
     DynamicObject::SPtr object(new VSC::OB::DynamicObject(this->getScene(), entity, rigidBody));
-    Scene::Element::SPtr element = boost::static_pointer_cast<Scene::Element>(object);
+    Element::SPtr element = boost::static_pointer_cast<Element>(object);
     
     //this->setElementMass(element, description.bodyMass);
     
@@ -172,7 +173,7 @@ VSC::OB::DynamicObject::SPtr VSC::OB::ElementFactory::addTrimesh(const Ogre::Str
     sceneRigid->setStaticShape(node, sceneTriMeshShape, description.bodyRestitution, description.bodyFriction, description.position);
     
     DynamicObject::SPtr object(new DynamicObject(this->getScene(), entity, sceneRigid));
-    Scene::Element::SPtr element = boost::static_pointer_cast<Scene::Element>(object);
+    Element::SPtr element = boost::static_pointer_cast<Element>(object);
     
     scene->registerElement(element, description.name, mNumberOfObjectsCreated);
     
@@ -237,7 +238,7 @@ VSC::OB::StaticObject::SPtr VSC::OB::ElementFactory::addStaticPlane(const Static
     rigidPlaneBody->setStaticShape(shape, description.bodyRestitution, description.bodyFriction);
     
     StaticObject::SPtr geom(new StaticObject(this->getScene(), s, rigidPlaneBody));
-    Scene::Element::SPtr element = boost::static_pointer_cast<Scene::Element>(geom);
+    Element::SPtr element = boost::static_pointer_cast<Element>(geom);
     
     scene->registerElement(element, description.name, mNumberOfObjectsCreated);
     

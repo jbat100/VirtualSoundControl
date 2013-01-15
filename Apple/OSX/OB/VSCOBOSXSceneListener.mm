@@ -1,7 +1,9 @@
 
 #import "VSCOBOSXSceneListener.h"
 
-void VSC::OB::OSXSceneListener::sceneRegisteredElement(Scene::SPtr scene, Scene::Element::SPtr element)
+#include "VSCOBElement.h"
+
+void VSC::OB::OSXSceneListener::sceneRegisteredElement(Scene::SPtr scene, Element::SPtr element)
 {
     if (mTarget && [mTarget respondsToSelector:@selector(scene:registeredElement:)])
     {

@@ -1,5 +1,4 @@
 
-
 #include "VSCIMEventChain.h"
 #include "VSCIMEvent.h"
 

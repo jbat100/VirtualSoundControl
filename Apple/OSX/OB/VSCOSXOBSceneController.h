@@ -11,9 +11,7 @@
 #import "VSCOBOSXSceneListener.h"
 
 #include "VSC.h"
-#include "VSCOBScene.h"
-#include "VSCEnvironment.h"
-#include "VSCEnvironmentTest.h"
+#include "VSCOB.h"
 
 @class VSCOBOSXSceneDisplayView;
 @class VSCOSXOBSceneElementListView;
@@ -21,7 +19,7 @@
 
 @protocol VSCOSXOBSceneController <NSTableViewDataSource, NSTableViewDelegate, VSCOBOSXSceneListenerTarget>
 
-@property (nonatomic, assign) VSC::OB::Scene::WPtr scene;
+@property (nonatomic, assign) VSC::OB::Scene_WPtr scene;
 
 @property (assign) id<VSCOSXEnvironmentController> environmentController;
 

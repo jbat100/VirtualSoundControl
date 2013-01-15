@@ -7,9 +7,9 @@
 #ifndef _VSC_IM_COLLISION_EVENT_CHAIN_H_
 #define _VSC_IM_COLLISION_EVENT_CHAIN_H_
 
+#include "VSCOB.h"
 #include "VSCIMEvent.h"
 #include "VSCIMEventChain.h"
-#include "VSCOBScene.h"
 #include "VSCTaskQueue.h"
 #include "VSCIMCollisionAction.h"
 
@@ -29,7 +29,7 @@ namespace VSC {
             typedef boost::shared_ptr<CollisionEventChain>  SPtr;
             typedef boost::weak_ptr<CollisionEventChain>    WPtr;
             
-            void perform(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision);
+            void perform(OB::Element_SPtr element, OB::Collision_SPtr collision);
             
             unsigned int getNumberOfActions(void);
             

@@ -3,7 +3,7 @@
 #define _VSC_OB_STATIC_OBJECT_H_
 
 #include "VSCOB.h"
-
+#include "VSCOBElement.h"
 #include "OgreBulletDynamics.h"
 #include "OgreBulletCollisions.h"
 

@@ -51,7 +51,7 @@ namespace VSC {
             const Collisions&   getCollisions(void) {return mCollisions;}
             Collisions getCollisionsForElementPair(Element_SPtr first, Element_SPtr second);
             
-            Scene::SPtr getScene(void) {return mScene.lock();}
+            Scene_SPtr getScene(void) {return mScene.lock();}
             
             virtual void updateCollisions();
             

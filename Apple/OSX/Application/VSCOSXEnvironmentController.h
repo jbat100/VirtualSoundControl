@@ -31,9 +31,9 @@
 -(void) showEnvironmentInspector;
 -(void) showSceneDetails;
 -(void) showSceneElementList;
--(void) showElementInspectorForElement:(VSC::OB::Scene::Element::SPtr)element;
+-(void) showElementInspectorForElement:(VSC::OB::Element_SPtr)element;
 
--(VSC::IM::CollisionEventChain::SPtr) collisionStartedEventChainForElement:(VSC::OB::Scene::Element::SPtr)element;
--(VSC::IM::CollisionEventChain::SPtr) collisionEndedEventChainForElement:(VSC::OB::Scene::Element::SPtr)element;
+-(VSC::IM::CollisionEventChain::SPtr) collisionStartedEventChainForElement:(VSC::OB::Element_SPtr)element;
+-(VSC::IM::CollisionEventChain::SPtr) collisionEndedEventChainForElement:(VSC::OB::Element_SPtr)element;
 
 @end

@@ -4,6 +4,7 @@
 
 #import <Foundation/Foundation.h>
 
+#include "VSCOB.h"
 #include "VSCOBScene.h"
 
 #include <boost/shared_ptr.hpp>
@@ -13,9 +14,9 @@
 
 @optional
 
--(void) scene:(VSC::OB::Scene::SPtr)scene registeredElement:(VSC::OB::Scene::Element::SPtr)element;
--(void) scene:(VSC::OB::Scene::SPtr)scene changedSetting:(VSC::OB::Scene::Setting)setting toValue:(BOOL)value;
--(void) sceneWasRendered:(VSC::OB::Scene::SPtr)scene;
+-(void) scene:(VSC::OB::Scene_SPtr)scene registeredElement:(VSC::OB::Element_SPtr)element;
+-(void) scene:(VSC::OB::Scene_SPtr)scene changedSetting:(VSC::OB::Scene::Setting)setting toValue:(BOOL)value;
+-(void) sceneWasRendered:(VSC::OB::Scene_SPtr)scene;
 
 @end
 
@@ -40,9 +41,9 @@ namespace VSC
              *  Scene::Listener overrides
              */
             
-            virtual void sceneRegisteredElement(Scene::SPtr scene, Scene::Element::SPtr element);
-            virtual void sceneChangedSetting(Scene::SPtr scene, Scene::Setting setting, bool value);
-            virtual void sceneWasRendered(Scene::SPtr scene);
+            virtual void sceneRegisteredElement(Scene_SPtr scene, Element_SPtr element);
+            virtual void sceneChangedSetting(Scene_SPtr scene, Scene::Setting setting, bool value);
+            virtual void sceneWasRendered(Scene_SPtr scene);
             
         private:
             

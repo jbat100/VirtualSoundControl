@@ -24,6 +24,7 @@
 #include "VSCEnvironment.h"
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
+#include "VSCOBElement.h"
 #include "VSCIMCollisionMapper.h"
 
 #include <Ogre/Ogre.h>
@@ -287,7 +288,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 }
 
 
--(void) showElementInspectorForElement:(VSC::OB::Scene::Element::SPtr)element
+-(void) showElementInspectorForElement:(VSC::OB::Element::SPtr)element
 {
     NSLog(@"%@ showElementInspectorForElement", self);
     
@@ -301,12 +302,12 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     }
     
     BOOST_ASSERT(self.elementInspectorWindowController.elementInspectorViewController);
-    self.elementInspectorWindowController.elementInspectorViewController.element = VSC::OB::Scene::Element::WPtr(element);
+    self.elementInspectorWindowController.elementInspectorViewController.element = VSC::OB::Element::WPtr(element);
     [self.elementInspectorWindowController showWindow:self];
     [self.elementInspectorWindowController.elementInspectorViewController showElementDetailView];
 }
 
--(VSC::IM::CollisionEventChain::SPtr) collisionStartedEventChainForElement:(VSC::OB::Scene::Element::SPtr)element
+-(VSC::IM::CollisionEventChain::SPtr) collisionStartedEventChainForElement:(VSC::OB::Element::SPtr)element
 {
     VSC::Environment::SPtr env = self.environment.lock();
     BOOST_ASSERT(env);
@@ -320,7 +321,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     return VSC::IM::CollisionEventChain::SPtr();
 }
 
--(VSC::IM::CollisionEventChain::SPtr) collisionEndedEventChainForElement:(VSC::OB::Scene::Element::SPtr)element
+-(VSC::IM::CollisionEventChain::SPtr) collisionEndedEventChainForElement:(VSC::OB::Element::SPtr)element
 {
     VSC::Environment::SPtr env = self.environment.lock();
     BOOST_ASSERT(env);

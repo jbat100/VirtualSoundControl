@@ -63,6 +63,14 @@ namespace VSC {
         typedef boost::shared_ptr<CollisionDetector>    CollisionDetector_SPtr;
         typedef boost::weak_ptr<CollisionDetector>      CollisionDetector_WPtr;
         
+        class DynamicObject;
+        typedef boost::shared_ptr<DynamicObject>        DynamicObject_SPtr;
+        typedef boost::weak_ptr<DynamicObject>          DynamicObject_WPtr;
+        
+        class StaticObject;
+        typedef boost::shared_ptr<StaticObject>         StaticObject_SPtr;
+        typedef boost::weak_ptr<StaticObject>           StaticObject_WPtr;
+        
     }
 }
 

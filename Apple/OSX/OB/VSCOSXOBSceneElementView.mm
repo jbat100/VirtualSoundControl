@@ -7,8 +7,10 @@
 //
 
 #import "VSCOSXOBSceneElementView.h"
-
 #import "NSString+VSCAdditions.h"
+
+#include "VSCOBScene.h"
+#include "VSCOBElement.h"
 
 @interface VSCOSXOBSceneElementView ()
 
@@ -48,7 +50,7 @@
     
 }
 
--(void) setElement:(VSC::OB::Scene::Element::WPtr)elem
+-(void) setElement:(VSC::OB::Element::WPtr)elem
 {
     _element = elem;
     [self reload];
@@ -56,7 +58,7 @@
 
 -(void) reload
 {
-    VSC::OB::Scene::Element::SPtr elem = self.element.lock();
+    VSC::OB::Element::SPtr elem = self.element.lock();
     BOOST_ASSERT(elem);
     if (elem)
     {

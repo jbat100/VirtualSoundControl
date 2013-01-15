@@ -3,6 +3,7 @@
 #include "VSCOB.h"
 #include "VSCOBScene.h"
 #include "VSCOBApplication.h"
+#include "VSCOBElement.h"
 #include "VSCException.h"
 
 #include <Ogre/Ogre.h>
@@ -129,7 +130,7 @@ bool VSC::OB::Display::checkSpaceInFront(Float minDist)
     BOOST_ASSERT(scene);
     
     if (scene) {
-        Scene::Element::SPtr element = scene->getElementAtDisplayCoordinate(shared_from_this(), coord, pickPos, rayTo);
+        Element::SPtr element = scene->getElementAtDisplayCoordinate(shared_from_this(), coord, pickPos, rayTo);
         if (element)
         {
             OgreBulletDynamics::RigidBody *body = element->getRigidBody();

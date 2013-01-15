@@ -75,10 +75,10 @@ namespace VSC {
              */
             
             template<typename SceneSubclass>
-            Scene::SPtr createScene(void);
+            Scene_SPtr createScene(void);
             
-            void destroyScene(Scene::SPtr scene);
-            Scene::SPtr sceneWithName(Ogre::String name);
+            void destroyScene(Scene_SPtr scene);
+            Scene_SPtr sceneWithName(Ogre::String name);
             const Scenes& getScenes(void) {return mScenes;}
             
             /*------------------------------------------------------
@@ -143,7 +143,7 @@ namespace VSC {
 }
 
 template<typename SceneSubclass>
-VSC::OB::Scene::SPtr VSC::OB::Application::createScene()
+VSC::OB::Scene_SPtr VSC::OB::Application::createScene()
 {
     if (!mCreatedDisplay)
     {
@@ -156,7 +156,7 @@ VSC::OB::Scene::SPtr VSC::OB::Application::createScene()
     
     if (scene)
     {
-        Scene::SPtr sscene = Scene::SPtr(scene);
+        Scene_SPtr sscene = Scene_SPtr(scene);
         sscene->init();
         mScenes.push_back(sscene);
         return sscene;
@@ -166,7 +166,7 @@ VSC::OB::Scene::SPtr VSC::OB::Application::createScene()
         delete sceneSub;
     }
     
-    return Scene::SPtr();
+    return Scene_SPtr();
 }
 
 template<typename DisplaySubclass>

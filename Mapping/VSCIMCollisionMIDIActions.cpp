@@ -8,6 +8,9 @@
 #include "VSCMIDIOutputManager.h"
 #include "VSCMIDITasks.h"
 
+#include "VSCOBElement.h"
+#include "VSCOBCollision.h"
+
 #include <boost/foreach.hpp>
 
 bool VSC::IM::collisionActionIsMIDI(CollisionAction::SPtr collisionAction)
@@ -62,8 +65,8 @@ void VSC::IM::CollisionMIDINoteOnAction::createDefaultMappings()
     }
 }
 
-VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAction::createTaskForCollision(OB::Scene::Element::SPtr element,
-                                                                           OB::Scene::Collision::SPtr collision)
+VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAction::createTaskForCollision(OB::Element::SPtr element,
+                                                                           OB::Collision::SPtr collision)
 {
     bool gotMappings = this->checkExpectedMappingTargets();
     BOOST_ASSERT(gotMappings);
@@ -109,8 +112,8 @@ void VSC::IM::CollisionMIDINoteOffAction::createDefaultMappings()
     }
 }
 
-VSC::Task::SPtr VSC::IM::CollisionMIDINoteOffAction::createTaskForCollision(OB::Scene::Element::SPtr element,
-                                                                            OB::Scene::Collision::SPtr collision)
+VSC::Task::SPtr VSC::IM::CollisionMIDINoteOffAction::createTaskForCollision(OB::Element::SPtr element,
+                                                                            OB::Collision::SPtr collision)
 {
     bool gotMappings = this->checkExpectedMappingTargets();
     BOOST_ASSERT(gotMappings);
@@ -158,8 +161,8 @@ void VSC::IM::CollisionMIDINoteOnAndOffAction::createDefaultMappings()
     }
 }
 
-VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAndOffAction::createTaskForCollision(OB::Scene::Element::SPtr element,
-                                                                                 OB::Scene::Collision::SPtr collision)
+VSC::Task::SPtr VSC::IM::CollisionMIDINoteOnAndOffAction::createTaskForCollision(OB::Element::SPtr element,
+                                                                                 OB::Collision::SPtr collision)
 {
     bool gotMappings = this->checkExpectedMappingTargets();
     BOOST_ASSERT(gotMappings);
@@ -206,8 +209,8 @@ void VSC::IM::CollisionMIDIControlChangeAction::createDefaultMappings()
     }
 }
 
-VSC::Task::SPtr VSC::IM::CollisionMIDIControlChangeAction::createTaskForCollision(OB::Scene::Element::SPtr element,
-                                                                                  OB::Scene::Collision::SPtr collision)
+VSC::Task::SPtr VSC::IM::CollisionMIDIControlChangeAction::createTaskForCollision(OB::Element::SPtr element,
+                                                                                  OB::Collision::SPtr collision)
 {
     bool gotMappings = this->checkExpectedMappingTargets();
     BOOST_ASSERT(gotMappings);

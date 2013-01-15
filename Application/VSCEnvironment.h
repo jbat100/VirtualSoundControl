@@ -54,11 +54,11 @@ namespace VSC {
         
         State getState(void) {return mState;}
         
-        OB::Scene::SPtr             getOBScene(void) {return mOBScene;}
+        OB::Scene_SPtr             getOBScene(void) {return mOBScene;}
         IM::CollisionMapper::SPtr   getIMCollisionMapper(void) {return mIMCollisionMapper;}
         
         void setIMCollisionMapper(IM::CollisionMapper::SPtr mapper);
-        void setOBScene(OB::Scene::SPtr scene);
+        void setOBScene(OB::Scene_SPtr scene);
         
         void addCollisionEventChain(IM::CollisionEventChain::SPtr actionChain);
         void removeCollisionEventChain(IM::CollisionEventChain::SPtr actionChain);
@@ -77,7 +77,7 @@ namespace VSC {
         
     private:
         
-        OB::Scene::SPtr             mOBScene;
+        OB::Scene_SPtr             mOBScene;
         IM::CollisionMapper::SPtr   mIMCollisionMapper;
 
         IM::CollisionEventChains    mIMCollisionEventChains;

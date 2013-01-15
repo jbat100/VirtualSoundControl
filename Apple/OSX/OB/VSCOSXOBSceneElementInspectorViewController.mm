@@ -16,6 +16,8 @@
 #import "VSCOSXOBSceneElementCollisionView.h"
 #import "DMTabBar.h"
 
+#include "VSCOBScene.h"
+#include "VSCOBElement.h"
 #include "VSCIMCollisionEventChain.h"
 
 #include <boost/assert.hpp>
@@ -117,13 +119,13 @@ const static BOOL traceInterface = YES;
     [self showElementDetailView];
 }
 
--(void) setElement:(VSC::OB::Scene::Element::WPtr)element
+-(void) setElement:(VSC::OB::Element::WPtr)element
 {
     
     if (element.lock() == _element.lock()) return;
     
     // stop listening to the scene of the old element
-    VSC::OB::Scene::Element::SPtr oldElement = _element.lock();
+    VSC::OB::Element::SPtr oldElement = _element.lock();
     if (oldElement)
     {
         VSC::OB::Scene::SPtr scene = oldElement->getScene();
@@ -137,7 +139,7 @@ const static BOOL traceInterface = YES;
     _element = element;
     
     // start listening to the scene of the old element
-    VSC::OB::Scene::Element::SPtr newElement = _element.lock();
+    VSC::OB::Element::SPtr newElement = _element.lock();
     if (newElement)
     {
         VSC::OB::Scene::SPtr scene = newElement->getScene();
@@ -158,7 +160,7 @@ const static BOOL traceInterface = YES;
 
 -(void) updateCollisionEventChains
 {
-    VSC::OB::Scene::Element::SPtr elem = self.element.lock();
+    VSC::OB::Element::SPtr elem = self.element.lock();
     
     VSC::IM::CollisionEventChain::SPtr collisionStartedEventChain = VSC::IM::CollisionEventChain::SPtr();
     VSC::IM::CollisionEventChain::SPtr collisionEndedEventChain = VSC::IM::CollisionEventChain::SPtr();
@@ -185,7 +187,7 @@ const static BOOL traceInterface = YES;
     
     if (sender && sender == self.elementDetailView.immobilizedCheckBox)
     {
-        VSC::OB::Scene::Element::SPtr elem = self.element.lock();
+        VSC::OB::Element::SPtr elem = self.element.lock();
         BOOST_ASSERT(elem);
         if (elem)
         {

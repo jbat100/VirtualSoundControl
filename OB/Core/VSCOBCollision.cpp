@@ -16,15 +16,6 @@
 
 #include "btBulletCollisionCommon.h"
 
-#include <boost/foreach.hpp>
-
-#include <limits>
-
-using namespace Ogre;
-using namespace OgreBulletCollisions;
-using namespace OgreBulletDynamics;
-
-
 
 //MARK: - Scene Collision 
 
@@ -42,13 +33,6 @@ std::ostream& VSC::OB::operator << (std::ostream& stream, const Collision& colli
 {
     stream << "Collision with element: " << *collision.getFirstElement() << " and element: " << *collision.getSecondElement();
     stream << " relative velocity: " << collision.getRelativeCollisionVelocity() << std::endl;
-    
-    return stream;
-}
-
-std::ostream& VSC::OB::operator << (std::ostream& stream, const Element& element)
-{
-    stream << element.getName() << "_" << element.getIdentifier();
     
     return stream;
 }

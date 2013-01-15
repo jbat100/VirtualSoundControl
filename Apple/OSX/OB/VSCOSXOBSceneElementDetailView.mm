@@ -112,7 +112,7 @@
     
     if (self.elementController)
     {
-        VSC::OB::Scene::Element::SPtr element = self.elementController.element.lock();
+        VSC::OB::Element::SPtr element = self.elementController.element.lock();
         
         if (element)
         {
@@ -136,7 +136,7 @@
     
     if (self.elementController)
     {
-        VSC::OB::Scene::Element::SPtr element = self.elementController.element.lock();
+        VSC::OB::Element::SPtr element = self.elementController.element.lock();
         
         if (element)
         {
@@ -171,7 +171,7 @@
     
     if (self.elementController)
     {
-        VSC::OB::Scene::Element::SPtr element = self.elementController.element.lock();
+        VSC::OB::Element::SPtr element = self.elementController.element.lock();
         
         if (element)
         {

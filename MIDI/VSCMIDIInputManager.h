@@ -56,10 +56,10 @@ namespace VSC {
             
             static InputManager::SPtr singletonManager(void);
             
-            void refreshOutputs(void);
+            void refreshInputs(void);
             
-            Input::SPtr getFirstOutput(void);
-            Input::SPtr getFirstActiveOutput(void);
+            Input::SPtr getFirstInput(void);
+            Input::SPtr getFirstOpenedInput(void);
             Input::SPtr getInputWithDescription(const std::string& description);
             const Inputs& getInputs(void);
             
@@ -86,7 +86,7 @@ namespace VSC {
             
             typedef boost::recursive_mutex Mutex;
             
-            Inputs                  mOutputs;
+            Inputs                  mInputs;
             PortManager::SPtr       mPortManager;
             Mutex                   mMutex;
             

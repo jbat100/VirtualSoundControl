@@ -1,13 +1,9 @@
-//
-//  VSCCollisionReceiver.cpp
-//  EnveloppeEditor
-//
-//  Created by Jonathan Thorpe on 4/21/12.
-//  Copyright (c) 2012 JBAT. All rights reserved.
-//
 
 #include "VSCIMCollisionEventChain.h"
 #include "VSCIMDelay.h"
+#include "VSCOBScene.h"
+#include "VSCOBElement.h"
+#include "VSCOBCollision.h"
 #include "VSCException.h"
 #include "VSCTask.h"
 #include "VSCTaskQueue.h"
@@ -33,7 +29,7 @@ bool VSC::IM::CollisionEventChain::checkEvent(Event::SPtr event)
     return false;
 }
 
-void VSC::IM::CollisionEventChain::perform(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision)
+void VSC::IM::CollisionEventChain::perform(OB::Element::SPtr element, OB::Collision::SPtr collision)
 {
     Time executionTime = CurrentTime();
     

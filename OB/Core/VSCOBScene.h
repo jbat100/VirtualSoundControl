@@ -186,8 +186,8 @@ namespace VSC {
              *  Collisions
              */
             
-            CollisionDetector::SPtr getCollisionDetector(void) {return mCollisionDetector;}
-            void setCollisionDetector(CollisionDetector::SPtr detector);
+            CollisionDetector_SPtr getCollisionDetector(void) {return mCollisionDetector;}
+            void setCollisionDetector(CollisionDetector_SPtr detector);
             
             /**--------------------------------------------------------------
              *  Settings
@@ -256,7 +256,7 @@ namespace VSC {
             
             ElementFactory_SPtr                    mElementFactory;
             Elements                                mElements;
-            CollisionDetector::SPtr                 mCollisionDetector;
+            CollisionDetector_SPtr                 mCollisionDetector;
             
             OgreBulletDynamics::DynamicsWorld*      mDynamicsWorld;
             Ogre::SceneManager*                     mSceneManager;

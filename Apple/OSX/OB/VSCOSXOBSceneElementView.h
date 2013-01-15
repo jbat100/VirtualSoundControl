@@ -8,12 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "VSCOBScene.h"
+#include "VSCOB.h"
 #include "VSCOSXEnvironmentController.h"
 
 @interface VSCOSXOBSceneElementView : NSView
 
-@property (nonatomic, assign) VSC::OB::Scene::Element::WPtr element;
+@property (nonatomic, assign) VSC::OB::Element_WPtr element;
 @property (assign) id<VSCOSXEnvironmentController> environmentController;
 
 +(CGFloat) defaultViewHeight;

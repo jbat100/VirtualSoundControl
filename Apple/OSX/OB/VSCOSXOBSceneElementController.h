@@ -12,17 +12,18 @@
 #import "VSCOSXOBSceneElementEditor.h"
 
 #include "VSCOBScene.h"
+#include "VSCOBElement.h"
 #include "VSCIMEvent.h"
 
 @protocol VSCIMOSXCollisionEventChainController;
 
 /*
- *  Main controller for a Scene::Element
+ *  Main controller for a Element
  */
 
 @protocol VSCOSXOBSceneElementController <NSObject>
 
-@property (nonatomic, assign) VSC::OB::Scene::Element::WPtr element;
+@property (nonatomic, assign) VSC::OB::Element_WPtr element;
 
 @property (assign) id <VSCOSXEnvironmentController> environmentController;
 

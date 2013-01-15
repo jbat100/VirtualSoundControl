@@ -7,9 +7,14 @@
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
 #include "VSCOBElementFactory.h"
+#include "VSCOBCollisionDetector.h"
 
 #include "OgreBulletCollisions.h"
+#include "OgreBulletCollisionsObject.h"
+#include "OgreBulletDynamics.h"
 #include "OgreBulletDynamicsWorld.h"
+#include "OgreBulletDynamicsRigidBody.h"
+#include "OgreBulletCollisionsRay.h"
 #include "Debug/OgreBulletCollisionsDebugLines.h"
 
 #include "btBulletCollisionCommon.h"
@@ -313,7 +318,7 @@ void VSC::OB::Scene::destroyAllElements(void)
     mElements.clear();
 }
 
-void VSC::OB::Scene::destroyElement(Scene::Element::SPtr element)
+void VSC::OB::Scene::destroyElement(Element::SPtr element)
 {
     element->destroy();
     
@@ -324,9 +329,9 @@ void VSC::OB::Scene::destroyElement(Scene::Element::SPtr element)
     }
 }
 
-VSC::OB::Scene::Element::SPtr VSC::OB::Scene::getElementWithRigidBody(OgreBulletDynamics::RigidBody* rigidBody)
+VSC::OB::Element::SPtr VSC::OB::Scene::getElementWithRigidBody(OgreBulletDynamics::RigidBody* rigidBody)
 {
-    BOOST_FOREACH (Scene::Element::SPtr element, mElements)
+    BOOST_FOREACH (Element::SPtr element, mElements)
     {
         if (element->getRigidBody() == rigidBody)
         {
@@ -334,11 +339,11 @@ VSC::OB::Scene::Element::SPtr VSC::OB::Scene::getElementWithRigidBody(OgreBullet
         }
     }
     
-    return Scene::Element::SPtr();
+    return Element::SPtr();
 }
 
 
-VSC::OB::Scene::Element::SPtr VSC::OB::Scene::getElementAtDisplayCoordinate(Display::SPtr display,
+VSC::OB::Element::SPtr VSC::OB::Scene::getElementAtDisplayCoordinate(Display::SPtr display,
                                                                             const Ogre::Vector2& p,
                                                                             Ogre::Vector3& ip,
                                                                             Ogre::Ray& r)
@@ -488,7 +493,7 @@ bool VSC::OB::Scene::checkIfEnoughPlaceToAddObjectForDisplay(Display::SPtr displ
     Ogre::Ray rayTo;
     
     Ogre::Vector2 coord(0.5, 0.5);
-    Scene::Element::SPtr element = this->getElementAtDisplayCoordinate(display, coord, pickPos, rayTo);
+    Element::SPtr element = this->getElementAtDisplayCoordinate(display, coord, pickPos, rayTo);
     
     if (element)
     {

@@ -8,8 +8,7 @@
 #include "VSCException.h"
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
-#include "VSCOBBasicSceneElementFactory.h"
-
+#include "VSCOBElement.h"
 
 #include "Utils/OgreBulletCollisionsMeshToShapeConverter.h"
 #include "OgreBulletCollisionsRay.h"
@@ -45,12 +44,11 @@ bool VSC::OB::CollisionDetector::checkListener(VSC::Listener::SPtr listener)
     return false;
 }
 
-VSC::OB::Scene::Collisions VSC::OB::CollisionDetector::getCollisionsForElementPair(Scene::Element::SPtr first,
-                                                                                       Scene::Element::SPtr second)
+VSC::OB::Collisions VSC::OB::CollisionDetector::getCollisionsForElementPair(Element::SPtr first, Element::SPtr second)
 {
     Collisions collisions;
     
-    BOOST_FOREACH(Scene::Collision::SPtr collision, mCollisions)
+    BOOST_FOREACH(Collision::SPtr collision, mCollisions)
     {
         if (collision->getFirstElement() == first && collision->getSecondElement() == second) {
             collisions.push_back(collision);
@@ -62,9 +60,9 @@ VSC::OB::Scene::Collisions VSC::OB::CollisionDetector::getCollisionsForElementPa
     return collisions;
 }
 
-VSC::OB::Scene::Collision::SPtr VSC::OB::CollisionDetector::getCollisionsForPersistentManifold(btPersistentManifold* manifold)
+VSC::OB::Collision::SPtr VSC::OB::CollisionDetector::getCollisionsForPersistentManifold(btPersistentManifold* manifold)
 {
-    BOOST_FOREACH (Scene::Collision::SPtr collision, mCollisions)
+    BOOST_FOREACH (Collision::SPtr collision, mCollisions)
     {
         if (collision->getPersistentManifold() == manifold)
         {
@@ -125,8 +123,8 @@ void VSC::OB::CollisionDetector::updateCollisions()
         /*
         if (rigidBodyA && rigidBodyB)
         {
-            Scene::Element::SPtr elementA = scene->getElementFactory()->getElementWithRigidBody(rigidBodyA);
-            Scene::Element::SPtr elementB = scene->getElementFactory()->getElementWithRigidBody(rigidBodyB);
+            Element::SPtr elementA = scene->getElementFactory()->getElementWithRigidBody(rigidBodyA);
+            Element::SPtr elementB = scene->getElementFactory()->getElementWithRigidBody(rigidBodyB);
             if (elementA && elementB) collision = this->getCollisionForElementPair(elementA, elementB);
         }
          */
@@ -152,8 +150,8 @@ void VSC::OB::CollisionDetector::updateCollisions()
             
             if (rigidBodyA && rigidBodyB)
             {
-                Scene::Element::SPtr elementA = scene->getElementWithRigidBody(rigidBodyA);
-                Scene::Element::SPtr elementB = scene->getElementWithRigidBody(rigidBodyB);
+                Element::SPtr elementA = scene->getElementWithRigidBody(rigidBodyA);
+                Element::SPtr elementB = scene->getElementWithRigidBody(rigidBodyB);
                 
                 BOOST_ASSERT_MSG(elementA && elementB, "Expected elements");
                 

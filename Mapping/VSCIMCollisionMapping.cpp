@@ -8,10 +8,14 @@
 
 #include "VSCIMCollisionMapping.h"
 
+#include "VSCOBScene.h"
+#include "VSCOBElement.h"
+#include "VSCOBCollision.h"
+
 #include <Ogre/Ogre.h>
 #include <boost/assert.hpp>
 
-VSC::Float VSC::IM::CollisionMapping::mappedValue(VSC::OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision)
+VSC::Float VSC::IM::CollisionMapping::mappedValue(VSC::OB::Element::SPtr element, OB::Collision::SPtr collision)
 {
     Float internalValue = this->internalMappedValue(element, collision);
     
@@ -26,7 +30,7 @@ VSC::Float VSC::IM::CollisionMapping::mappedValue(VSC::OB::Scene::Element::SPtr 
     return outputValue;
 }
 
-VSC::Float VSC::IM::CollisionVelocityMapping::internalMappedValue(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision)
+VSC::Float VSC::IM::CollisionVelocityMapping::internalMappedValue(OB::Element::SPtr element, OB::Collision::SPtr collision)
 {
     BOOST_ASSERT(collision);
     
@@ -39,7 +43,7 @@ VSC::Float VSC::IM::CollisionVelocityMapping::internalMappedValue(OB::Scene::Ele
     return 0;
 }
 
-VSC::Float VSC::IM::CollisionDistanceMapping::internalMappedValue(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision)
+VSC::Float VSC::IM::CollisionDistanceMapping::internalMappedValue(OB::Element::SPtr element, OB::Collision::SPtr collision)
 {
     return 0;
 }

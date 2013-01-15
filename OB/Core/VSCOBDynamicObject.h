@@ -52,7 +52,7 @@ namespace VSC {
              *  Constructor
              */
             
-            DynamicObject(Scene::WPtr scene,
+            DynamicObject(Scene_WPtr scene,
                           Ogre::Entity* entity,
                           OgreBulletDynamics::RigidBody* rigidBody);
             

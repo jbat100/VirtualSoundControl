@@ -13,6 +13,10 @@
 #import "VSCOSXOBSceneElementView.h"
 
 #include "VSCOBSceneController.h"
+#include "VSCOBScene.h"
+#include "VSCOBElement.h"
+#include "VSCEnvironment.h"
+#include "VSCEnvironmentTest.h"
 
 static const Ogre::Vector3 CameraStartPos = Ogre::Vector3(30.0, 10.0, 0.0);
 static const Ogre::Vector3 CameraStartLookAt = Ogre::Vector3(0.0, 0.0, 0.0);
@@ -174,7 +178,7 @@ static const BOOL traceInterface = YES;
 
 #pragma mark - VSCOBOSXSceneListenerTarget Methods
 
--(void) scene:(VSC::OB::Scene::SPtr)scene registeredElement:(VSC::OB::Scene::Element::SPtr)element
+-(void) scene:(VSC::OB::Scene::SPtr)scene registeredElement:(VSC::OB::Element::SPtr)element
 {
     [self.elementListView.elementTableView reloadData];
 }
@@ -192,7 +196,7 @@ static const BOOL traceInterface = YES;
     
     if (s)
     {
-        VSC::OB::Scene::Elements& elems = s->getElements();
+        VSC::OB::Elements& elems = s->getElements();
         NSLog(@"%@ numberOfRowsInListView %ld", self, (NSUInteger)(elems.size()));
         return (NSUInteger)(elems.size());
     }
@@ -211,12 +215,12 @@ static const BOOL traceInterface = YES;
         if (traceInterface) NSLog(@"%@ listView:cellForRow: %ld", self, row);
         
         VSC::OB::Scene::SPtr s = self.scene.lock();
-        VSC::OB::Scene::Elements& elems = s->getElements();
+        VSC::OB::Elements& elems = s->getElements();
         BOOST_ASSERT((NSInteger)elems.size() > row);
         if ((NSInteger)elems.size() > row)
         {
-            VSC::OB::Scene::Element::SPtr elem = elems.at(row);
-            VSC::OB::Scene::Element::WPtr weakElem = VSC::OB::Scene::Element::WPtr(elem);
+            VSC::OB::Element::SPtr elem = elems.at(row);
+            VSC::OB::Element::WPtr weakElem = VSC::OB::Element::WPtr(elem);
             VSCOSXOBSceneElementView* elementView = [tableView makeViewWithIdentifier:[[VSCOSXOBSceneElementView class] description] owner:self];
             BOOST_ASSERT(elementView);
             BOOST_ASSERT([elementView isKindOfClass:[VSCOSXOBSceneElementView class]]);

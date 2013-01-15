@@ -4,11 +4,12 @@
 #include "VSCOB.h"
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
+#include "VSCOBElement.h"
+#include "VSCOBElementFactory.h"
 #include "VSCOBInterface.h"
 #include "VSCOBKeyBindings.h"
 #include "VSCOBMouseBindings.h"
 #include "VSCOBDynamicObject.h"
-#include "VSCOBBasicSceneElementFactory.h"
 
 #include "OgreBulletCollisionsShape.h"
 #include "Shapes/OgreBulletCollisionsBoxShape.h"
@@ -159,7 +160,7 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
                 Ogre::Vector2 pos = position;
                 Ogre::Vector2 normPos = Ogre::Vector2( pos.x / v->getActualWidth(), 1.0 - (pos.y / v->getActualHeight()) );
                 
-                Scene::Element::SPtr element = scene->getElementAtDisplayCoordinate(display, normPos, pickPos, rayTo);
+                Element::SPtr element = scene->getElementAtDisplayCoordinate(display, normPos, pickPos, rayTo);
                 
                 if (element)
                 {
@@ -221,7 +222,7 @@ bool VSC::OB::SceneController::mouseButtonPressed(Ogre::RenderWindow* renderWind
                 Ogre::Viewport* v = display->getCamera()->getViewport();
                 Ogre::Vector2 pos = position;
                 
-                Scene::Element::SPtr element = scene->getElementAtDisplayCoordinate(display, pos, pickPos, rayTo);
+                Element::SPtr element = scene->getElementAtDisplayCoordinate(display, pos, pickPos, rayTo);
                 
                 if (element)
                 {
@@ -599,7 +600,7 @@ bool VSC::OB::SceneController::throwDynamicObjectPrimitive(Ogre::RenderWindow* r
     
     bool handled = true;
     
-    BasicSceneElementFactory::SPtr sceneFactory = boost::dynamic_pointer_cast<BasicSceneElementFactory> (scene->getElementFactory());
+    ElementFactory::SPtr sceneFactory = scene->getElementFactory();
     
     VSC::OB::DynamicObject::FactoryDescription description;
     

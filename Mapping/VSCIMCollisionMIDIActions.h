@@ -8,7 +8,7 @@
 #ifndef _VSC_IM_COLLISION_MIDI_ACTION_H_
 #define _VSC_IM_COLLISION_MIDI_ACTION_H_
 
-#include "VSCOBScene.h"
+#include "VSCOB.h"
 #include "VSCIMCollisionMapping.h"
 #include "VSCIMCollisionMapped.h"
 #include "VSCIMCollisionAction.h"
@@ -84,8 +84,8 @@ namespace VSC {
             
             virtual void createDefaultMappings();
             
-            virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
-                                                      OB::Scene::Collision::SPtr collision);
+            virtual Task::SPtr createTaskForCollision(OB::Element_SPtr element,
+                                                      OB::Collision_SPtr collision);
         };
         
         /*
@@ -101,8 +101,8 @@ namespace VSC {
             
             virtual void createDefaultMappings();
             
-            virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
-                                                      OB::Scene::Collision::SPtr collision);
+            virtual Task::SPtr createTaskForCollision(OB::Element_SPtr element,
+                                                      OB::Collision_SPtr collision);
         };
         
         /*
@@ -118,8 +118,8 @@ namespace VSC {
             
             virtual void createDefaultMappings();
             
-            virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
-                                                      OB::Scene::Collision::SPtr collision);
+            virtual Task::SPtr createTaskForCollision(OB::Element_SPtr element,
+                                                      OB::Collision_SPtr collision);
             
         };
         
@@ -132,8 +132,8 @@ namespace VSC {
             
             virtual void createDefaultMappings();
             
-            virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
-                                                      OB::Scene::Collision::SPtr collision);
+            virtual Task::SPtr createTaskForCollision(OB::Element_SPtr element,
+                                                      OB::Collision_SPtr collision);
             
         };
         

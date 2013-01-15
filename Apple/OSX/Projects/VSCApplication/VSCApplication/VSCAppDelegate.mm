@@ -16,6 +16,7 @@
 #include "VSCEnvironment.h"
 #include "VSCOBScene.h"
 #include "VSCOBApplication.h"
+#include "VSCOBElement.h"
 #include "VSCOBResourceManager.h"
 #include "VSCIMCollisionMapper.h"
 #include "VSCMIDI.h"
@@ -149,9 +150,9 @@
     test->setupTestForEnvironment(environment);
 #endif
     
-    const VSC::OB::Scene::Elements& elements = environment->getOBScene()->getElements();
-    VSC::OB::Scene::Element::SPtr element = VSC::OB::Scene::Element::SPtr();
-    BOOST_FOREACH(VSC::OB::Scene::Element::SPtr e, elements)
+    const VSC::OB::Elements& elements = environment->getOBScene()->getElements();
+    VSC::OB::Element::SPtr element = VSC::OB::Element::SPtr();
+    BOOST_FOREACH(VSC::OB::Element::SPtr e, elements)
     {
         VSC::IM::CollisionEventChain::SPtr chain = environment->getIMCollisionMapper()->getEventChainForCollisionStarted(e);
         if (chain->getNumberOfEvents() > 0)

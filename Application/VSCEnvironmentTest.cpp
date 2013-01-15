@@ -4,7 +4,9 @@
 
 #include "VSCOB.h"
 #include "VSCOBScene.h"
-#include "VSCOBBasicSceneElementFactory.h"
+#include "VSCOBElement.h"
+#include "VSCOBElementFactory.h"
+#include "VSCOBDynamicObject.h"
 
 #include "VSCIMCollisionMapper.h"
 #include "VSCIMEvent.h"
@@ -34,8 +36,7 @@ void VSC::EnvironmentTest::internalSetupForEnvironment(Environment::SPtr environ
      *  Create 4 elements...
      */
     
-    OB::Scene::ElementFactory::SPtr factory = scene->getElementFactory();
-    OB::BasicSceneElementFactory::SPtr elementFactory = boost::dynamic_pointer_cast<OB::BasicSceneElementFactory>(factory);
+    OB::ElementFactory::SPtr elementFactory = scene->getElementFactory();
     OB::DynamicObject::SPtr element1 = OB::DynamicObject::SPtr();
     OB::DynamicObject::SPtr element2 = OB::DynamicObject::SPtr();
     OB::DynamicObject::SPtr element3 = OB::DynamicObject::SPtr();

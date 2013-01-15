@@ -2,9 +2,9 @@
 #ifndef _VSC_IM_COLLISION_ACTION_H_
 #define _VSC_IM_COLLISION_ACTION_H_
 
+#include "VSCOB.h"
 #include "VSCIMAction.h"
 #include "VSCIMCollisionMapped.h"
-#include "VSCOBScene.h"
 
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
@@ -33,8 +33,8 @@ namespace VSC {
             
             virtual void createDefaultMappings() {}
             
-            virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
-                                                      OB::Scene::Collision::SPtr collision) = 0;
+            virtual Task::SPtr createTaskForCollision(OB::Element_SPtr element,
+                                                      OB::Collision_SPtr collision) = 0;
             
         private:
             
@@ -59,8 +59,8 @@ namespace VSC {
             
             virtual void createDefaultMappings() {}
             
-            virtual Task::SPtr createTaskForCollision(OB::Scene::Element::SPtr element,
-                                                      OB::Scene::Collision::SPtr collision);
+            virtual Task::SPtr createTaskForCollision(OB::Element_SPtr element,
+                                                      OB::Collision_SPtr collision);
             
         };
 
