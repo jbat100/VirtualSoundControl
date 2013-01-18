@@ -9,13 +9,18 @@
 #import "VSCOSXOBSceneDetailView.h"
 #import "VSCOSXOBSceneController.h"
 
+#import "VSCOSXInterfaceFactory.h"
+#import "VSCOSXKeyedCheckBoxView.h"
+#import "VSCOSXKeyedSliderView.h"
+
 #include "VSCOBScene.h"
 
 @interface VSCOSXOBSceneDetailView ()
 
 -(NSInteger) stateForSceneSetting:(VSC::OB::Scene::Setting)setting;
+-(VSC::OB::Scene::Setting) settingForCheckBox:(id)checkBox;
 
-@property (nonatomic, strong) NSArray* allCheckBoxes;
+@property (nonatomic, strong) NSArray* allCheckBoxViews;
 
 @end
 
@@ -40,26 +45,48 @@
 
 -(void) awakeFromNib
 {
-    NSMutableArray* checkBoxes = [NSMutableArray array];
+    /*
+     *  Perform setup
+     */
     
-    [checkBoxes addObject:self.pausePhysicsCheckBox];
-    [checkBoxes addObject:self.drawWireFrameCheckBox];
-    [checkBoxes addObject:self.drawAABBCheckBox];
-    [checkBoxes addObject:self.drawContactPointsCheckBox];
-    [checkBoxes addObject:self.textCheckBox];
-    [checkBoxes addObject:self.featureTextCheckBox];
-    [checkBoxes addObject:self.enableBulletLCPICheckBox];
-    [checkBoxes addObject:self.enableCCDCheckBox];
-    [checkBoxes addObject:self.enableSatComparisonCheckBox];
-    [checkBoxes addObject:self.profileTimingsCheckBox];
+    BOOST_ASSERT(self.sceneController);
     
-    self.allCheckBoxes = [NSArray arrayWithArray:checkBoxes];
+    VSCOSXInterfaceFactory* factory = [VSCOSXInterfaceFactory defaultFactory];
+    
+    NSMutableArray* viewsForHorizontalConstraints = [NSMutableArray array];
+    NSMutableString* verticalVisualFormat = [NSMutableString stringWithString:@"V:|"];
+    
+    self.pausePhysicsCheckBoxView = [factory newKeyedCheckBoxViewWithOwner:self.sceneController];
+    [self.pausePhysicsCheckBoxView.checkBoxButton bind:@"value" toObject:self.sceneController withKeyPath:@"pausePhysics" options:nil];
+    [self.pausePhysicsCheckBoxView.labelTextField setStringValue:@"Pause Physics"];
+    NSView* pausePhysicsCB = self.pausePhysicsCheckBoxView;
+    [viewsForHorizontalConstraints addObject:pausePhysicsCB];
+    [verticalVisualFormat appendString:@"-[pausePhysicsCB]"];
+    
+    
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(pausePhysicsCB);
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:verticalVisualFormat
+                                                                 options:0
+                                                                 metrics:nil
+                                                                   views:viewsDictionary]];
+    
+    for (NSView* viewForConstraint in viewsForHorizontalConstraints)
+    {
+        NSDictionary *localViewsDictionary = NSDictionaryOfVariableBindings(viewForConstraint);
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[viewForConstraint]-|"
+                                                                     options:0
+                                                                     metrics:nil
+                                                                       views:localViewsDictionary]];
+    }
     
 }
 
 
+
+
 -(VSC::OB::Scene::Setting) settingForCheckBox:(id)checkBox
 {
+    /*
     if (checkBox == self.pausePhysicsCheckBox) return VSC::OB::Scene::SettingPaused;
     else if (checkBox == self.drawWireFrameCheckBox) return VSC::OB::Scene::SettingDrawWireFrame;
     else if (checkBox == self.drawAABBCheckBox) return VSC::OB::Scene::SettingDrawAABB;
@@ -70,12 +97,14 @@
     else if (checkBox == self.enableCCDCheckBox) return VSC::OB::Scene::SettingCCDEnabled;
     else if (checkBox == self.enableSatComparisonCheckBox) return VSC::OB::Scene::SettingSatComparisonEnabled;
     else if (checkBox == self.profileTimingsCheckBox) return VSC::OB::Scene::SettingProfileTimings;
+     */
     
     return VSC::OB::Scene::SettingNone;
 }
 
 -(NSButton*) checkBoxForSetting:(VSC::OB::Scene::Setting)setting
 {
+    /*
     switch (setting)
     {
         case VSC::OB::Scene::SettingPaused:
@@ -111,6 +140,7 @@
         default:
             break;
     }
+     */
     
     return nil;
 }
@@ -136,16 +166,19 @@
 
 -(void) reloadInterface
 {
+    /*
     for (NSButton* checkBox in self.allCheckBoxes)
     {
         VSC::OB::Scene::Setting setting = [self settingForCheckBox:checkBox];
         if (setting != VSC::OB::Scene::SettingNone) [checkBox setState:[self stateForSceneSetting:setting]];
         if (checkBox == self.pausePhysicsCheckBox && [self stateForSceneSetting:setting] == NSOnState) NSLog(@"wooaaa");
     }
+     */
 }
 
 -(void) reloadShootSpeed
 {
+    /*
     BOOST_ASSERT(self.sceneController);
     if (self.sceneController)
     {
@@ -153,10 +186,12 @@
         [self.shootSpeedSlider setDoubleValue:speed];
         
     }
+     */
 }
 
 -(void) reloadSetting:(VSC::OB::Scene::Setting)setting
 {
+    /*
     NSButton* checkBox = (NSButton*)[self checkBoxForSetting:setting];
     
     if (checkBox == self.pausePhysicsCheckBox && [self stateForSceneSetting:setting] == NSOnState)
@@ -166,6 +201,7 @@
     {
         [checkBox setState:[self stateForSceneSetting:setting]];
     }
+     */
 }
 
 @end

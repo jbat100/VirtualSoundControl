@@ -72,7 +72,6 @@
 		109A8EE816A1A77E0023EC1B /* VSCOBOSXSceneListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EC116A1A77E0023EC1B /* VSCOBOSXSceneListener.mm */; };
 		109A8EE916A1A77E0023EC1B /* VSCOSXOBSceneController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EC316A1A77E0023EC1B /* VSCOSXOBSceneController.mm */; };
 		109A8EEA16A1A77E0023EC1B /* VSCOSXOBSceneDetailView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EC516A1A77E0023EC1B /* VSCOSXOBSceneDetailView.mm */; };
-		109A8EEB16A1A77E0023EC1B /* VSCOSXOBSceneDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109A8EC616A1A77E0023EC1B /* VSCOSXOBSceneDetailView.xib */; };
 		109A8EF016A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8ECE16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.mm */; };
 		109A8EF116A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109A8ECF16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.xib */; };
 		109A8EF216A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8ED216A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.mm */; };
@@ -196,6 +195,11 @@
 		10F69491156E483000E70049 /* Plugin_CgProgramManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */; };
 		10F69492156E483000E70049 /* Plugin_OctreeSceneManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */; };
 		10F69493156E483000E70049 /* Plugin_ParticleFX.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */; };
+		10F7514816A9490700F493D6 /* VSCOSXKeyedCheckBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7514716A9490700F493D6 /* VSCOSXKeyedCheckBoxView.m */; };
+		10F7514E16A9494600F493D6 /* VSCOSXKeyedSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7514D16A9494600F493D6 /* VSCOSXKeyedSliderView.m */; };
+		10F7515016A9529100F493D6 /* VSCOSXKeyedCheckBoxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F7514F16A9529100F493D6 /* VSCOSXKeyedCheckBoxView.xib */; };
+		10F7515216A952A700F493D6 /* VSCOSXKeyedSliderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F7515116A952A700F493D6 /* VSCOSXKeyedSliderView.xib */; };
+		10F7515516A979C300F493D6 /* VSCOSXInterfaceFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F7515416A979C300F493D6 /* VSCOSXInterfaceFactory.mm */; };
 		10F907D8162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F907D0162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp */; };
 /* End PBXBuildFile section */
 
@@ -335,7 +339,6 @@
 		109A8EC316A1A77E0023EC1B /* VSCOSXOBSceneController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOSXOBSceneController.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneController.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		109A8EC416A1A77E0023EC1B /* VSCOSXOBSceneDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneDetailView.h; path = ../Apple/OSX/OB/VSCOSXOBSceneDetailView.h; sourceTree = "<group>"; };
 		109A8EC516A1A77E0023EC1B /* VSCOSXOBSceneDetailView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOSXOBSceneDetailView.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneDetailView.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		109A8EC616A1A77E0023EC1B /* VSCOSXOBSceneDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXOBSceneDetailView.xib; path = ../Apple/OSX/OB/VSCOSXOBSceneDetailView.xib; sourceTree = "<group>"; };
 		109A8ECD16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementCollisionView.h; path = ../Apple/OSX/OB/VSCOSXOBSceneElementCollisionView.h; sourceTree = "<group>"; };
 		109A8ECE16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneElementCollisionView.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneElementCollisionView.mm; sourceTree = "<group>"; };
 		109A8ECF16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXOBSceneElementCollisionView.xib; path = ../Apple/OSX/OB/VSCOSXOBSceneElementCollisionView.xib; sourceTree = "<group>"; };
@@ -582,6 +585,14 @@
 		10F6948D156E483000E70049 /* Plugin_CgProgramManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_CgProgramManager.dylib; path = lib/Plugin_CgProgramManager.dylib; sourceTree = OGRE_SDK; };
 		10F6948E156E483000E70049 /* Plugin_OctreeSceneManager.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_OctreeSceneManager.dylib; path = lib/Plugin_OctreeSceneManager.dylib; sourceTree = OGRE_SDK; };
 		10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Plugin_ParticleFX.dylib; path = lib/Plugin_ParticleFX.dylib; sourceTree = OGRE_SDK; };
+		10F7514416A948CB00F493D6 /* VSCOSXKeyedCheckBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXKeyedCheckBoxView.h; path = ../Apple/OSX/Generic/VSCOSXKeyedCheckBoxView.h; sourceTree = "<group>"; };
+		10F7514716A9490700F493D6 /* VSCOSXKeyedCheckBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSCOSXKeyedCheckBoxView.m; path = ../Apple/OSX/Generic/VSCOSXKeyedCheckBoxView.m; sourceTree = "<group>"; };
+		10F7514C16A9494600F493D6 /* VSCOSXKeyedSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXKeyedSliderView.h; path = ../Apple/OSX/Generic/VSCOSXKeyedSliderView.h; sourceTree = "<group>"; };
+		10F7514D16A9494600F493D6 /* VSCOSXKeyedSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSCOSXKeyedSliderView.m; path = ../Apple/OSX/Generic/VSCOSXKeyedSliderView.m; sourceTree = "<group>"; };
+		10F7514F16A9529100F493D6 /* VSCOSXKeyedCheckBoxView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXKeyedCheckBoxView.xib; path = ../Apple/OSX/Generic/VSCOSXKeyedCheckBoxView.xib; sourceTree = "<group>"; };
+		10F7515116A952A700F493D6 /* VSCOSXKeyedSliderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXKeyedSliderView.xib; path = ../Apple/OSX/Generic/VSCOSXKeyedSliderView.xib; sourceTree = "<group>"; };
+		10F7515316A979C300F493D6 /* VSCOSXInterfaceFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXInterfaceFactory.h; path = ../Apple/OSX/Generic/VSCOSXInterfaceFactory.h; sourceTree = "<group>"; };
+		10F7515416A979C300F493D6 /* VSCOSXInterfaceFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXInterfaceFactory.mm; path = ../Apple/OSX/Generic/VSCOSXInterfaceFactory.mm; sourceTree = "<group>"; };
 		10F907D0162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCInterfaceAdapter.cpp; path = ../../../../Interface/VSCInterfaceAdapter.cpp; sourceTree = "<group>"; };
 		10F907D1162ECFF8006C9C0B /* VSCInterfaceAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCInterfaceAdapter.h; path = ../../../../Interface/VSCInterfaceAdapter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -803,9 +814,10 @@
 		109A8EB316A1A7680023EC1B /* VSCOSX */ = {
 			isa = PBXGroup;
 			children = (
-				107A3C0116A36EBC003C0D69 /* MIDI */,
 				10AF53F8163D76DA00419EEE /* Application */,
+				10F7514216A9483600F493D6 /* Generic */,
 				109A8F1F16A1A8740023EC1B /* IM */,
+				107A3C0116A36EBC003C0D69 /* MIDI */,
 				109A8F1E16A1A8580023EC1B /* OB */,
 			);
 			name = VSCOSX;
@@ -859,7 +871,6 @@
 				109A8EC316A1A77E0023EC1B /* VSCOSXOBSceneController.mm */,
 				109A8EC416A1A77E0023EC1B /* VSCOSXOBSceneDetailView.h */,
 				109A8EC516A1A77E0023EC1B /* VSCOSXOBSceneDetailView.mm */,
-				109A8EC616A1A77E0023EC1B /* VSCOSXOBSceneDetailView.xib */,
 				109A8ECD16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.h */,
 				109A8ECE16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.mm */,
 				109A8ECF16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.xib */,
@@ -1390,6 +1401,21 @@
 			name = Task;
 			sourceTree = "<group>";
 		};
+		10F7514216A9483600F493D6 /* Generic */ = {
+			isa = PBXGroup;
+			children = (
+				10F7514416A948CB00F493D6 /* VSCOSXKeyedCheckBoxView.h */,
+				10F7514716A9490700F493D6 /* VSCOSXKeyedCheckBoxView.m */,
+				10F7514F16A9529100F493D6 /* VSCOSXKeyedCheckBoxView.xib */,
+				10F7514C16A9494600F493D6 /* VSCOSXKeyedSliderView.h */,
+				10F7514D16A9494600F493D6 /* VSCOSXKeyedSliderView.m */,
+				10F7515116A952A700F493D6 /* VSCOSXKeyedSliderView.xib */,
+				10F7515316A979C300F493D6 /* VSCOSXInterfaceFactory.h */,
+				10F7515416A979C300F493D6 /* VSCOSXInterfaceFactory.mm */,
+			);
+			name = Generic;
+			sourceTree = "<group>";
+		};
 		10F907CE162ECFE7006C9C0B /* Interface */ = {
 			isa = PBXGroup;
 			children = (
@@ -1484,7 +1510,6 @@
 				109A8EA816A1A7210023EC1B /* Plugins.cfg in Resources */,
 				109A8EA916A1A7210023EC1B /* Plugins_d.cfg in Resources */,
 				109A8EAA16A1A7210023EC1B /* resources.cfg in Resources */,
-				109A8EEB16A1A77E0023EC1B /* VSCOSXOBSceneDetailView.xib in Resources */,
 				109A8EF116A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.xib in Resources */,
 				109A8EF316A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.xib in Resources */,
 				109A8EF716A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.xib in Resources */,
@@ -1495,6 +1520,8 @@
 				109A8F4A16A1A8740023EC1B /* VSCIMOSXCollisionMappingEditViewController.xib in Resources */,
 				109A8F4F16A1A8740023EC1B /* VSCIMOSXCollisionMappingView.xib in Resources */,
 				109A8F5116A1A8740023EC1B /* VSCIMOSXDelayView.xib in Resources */,
+				10F7515016A9529100F493D6 /* VSCOSXKeyedCheckBoxView.xib in Resources */,
+				10F7515216A952A700F493D6 /* VSCOSXKeyedSliderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1623,6 +1650,9 @@
 				10C3721416A455720044D8D8 /* VSCOBCollisionDetector.cpp in Sources */,
 				10C3721516A455720044D8D8 /* VSCOBElement.cpp in Sources */,
 				10C3721616A455720044D8D8 /* VSCOBElementFactory.cpp in Sources */,
+				10F7514816A9490700F493D6 /* VSCOSXKeyedCheckBoxView.m in Sources */,
+				10F7514E16A9494600F493D6 /* VSCOSXKeyedSliderView.m in Sources */,
+				10F7515516A979C300F493D6 /* VSCOSXInterfaceFactory.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -31,6 +31,17 @@
 @property (nonatomic, assign) VSC::Float cameraSpeed;
 @property (nonatomic, assign) VSC::Float cameraSensitivity;
 
+@property (nonatomic, assign) BOOL pausePhysics;
+@property (nonatomic, assign) BOOL drawWireFrame;
+@property (nonatomic, assign) BOOL drawAABB;
+@property (nonatomic, assign) BOOL drawContactPoints;
+@property (nonatomic, assign) BOOL text;
+@property (nonatomic, assign) BOOL featureText;
+@property (nonatomic, assign) BOOL enableBulletLCPI;
+@property (nonatomic, assign) BOOL enableCCD;
+@property (nonatomic, assign) BOOL enableSatComparison;
+@property (nonatomic, assign) BOOL profileTimings;
+
 @end
 
 @interface VSCOSXOBSceneController : NSObject <VSCOSXOBSceneController>

@@ -40,6 +40,17 @@ static const BOOL traceInterface = YES;
 @synthesize cameraSpeed = _cameraSpeed;
 @synthesize cameraSensitivity = _cameraSensitivity;
 
+@synthesize pausePhysics = _pausePhysics;
+@synthesize drawWireFrame = _drawWireFrame;
+@synthesize drawAABB = _drawAABB;
+@synthesize drawContactPoints = _drawContactPoints;
+@synthesize text = _text;
+@synthesize featureText = _featureText;
+@synthesize enableBulletLCPI = _enableBulletLCPI;
+@synthesize enableCCD = _enableCCD;
+@synthesize enableSatComparison = _enableSatComparison;
+@synthesize profileTimings = _profileTimings;
+
 -(id) init {
     
     self = [super init];
@@ -71,7 +82,7 @@ static const BOOL traceInterface = YES;
     
 }
 
-#pragma mark - Custom Setter
+#pragma mark - Custom Setters
 
 -(void) setScene:(VSC::OB::Scene::WPtr)s
 {
@@ -127,11 +138,24 @@ static const BOOL traceInterface = YES;
     }
 }
 
+-(void) setPausePhysics:(BOOL)pausePhysics
+{
+    _pausePhysics = pausePhysics;
+    VSC::OB::Scene::SPtr s = self.scene.lock();
+    BOOST_ASSERT(s);
+    if (s)
+    {
+        s->setSetting(VSC::OB::Scene::SettingPaused, pausePhysics);
+    }
+}
+
 #pragma mark - UI Callbacks
 
 
 -(IBAction)checkBoxAction:(id)sender
 {
+    /*
+     
     VSC::OB::Scene::SPtr s = self.scene.lock();
     BOOST_ASSERT(s); if (!s) return;
     
@@ -142,23 +166,21 @@ static const BOOL traceInterface = YES;
     
     bool value = ([(NSButton*)sender state] == NSOnState) ? true : false;
     s->setSetting(setting, value);
-    
+     
+     */
 }
 
 -(IBAction)shootSpeedSliderAction:(id)sender
 {
+    /*
+    
     BOOST_ASSERT(sender == self.sceneDetailView.shootSpeedSlider);
     if (sender == self.sceneDetailView.shootSpeedSlider)
     {
-        /*
-        VSC::Float value = [self.sceneDetailView.shootSpeedSlider doubleValue];
-        BOOST_ASSERT(self.sceneView.internalSceneController);
-        if (self.sceneView.internalSceneController)
-        {
-            self.shootSpeed = value;
-        }
-         */
+
     }
+     
+     */
 }
 
 -(IBAction)cameraSpeedSliderAction:(id)sender
