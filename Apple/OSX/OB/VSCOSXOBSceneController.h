@@ -28,6 +28,7 @@
 @property (weak) IBOutlet VSCOSXOBSceneDetailView* sceneDetailView;
 
 @property (nonatomic, assign) VSC::Float shootSpeed;
+@property (nonatomic, assign) VSC::Float shootSize;
 @property (nonatomic, assign) VSC::Float cameraSpeed;
 @property (nonatomic, assign) VSC::Float cameraSensitivity;
 

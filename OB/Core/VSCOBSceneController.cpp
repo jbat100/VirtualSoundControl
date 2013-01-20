@@ -67,6 +67,7 @@ static const Real              gSphereBodyBounds    = 1.0f;
 
 VSC::OB::SceneController::SceneController() :
 mShootSpeed (7.f),
+mShootSize (1.0f),
 mImpulseForce (10.f),
 mRayQuery(0),
 mPickConstraint(0),
@@ -590,6 +591,8 @@ bool VSC::OB::SceneController::throwDynamicObjectPrimitive(Ogre::RenderWindow* r
     BOOST_ASSERT(scene == display->getScene());
     if (scene != display->getScene()) return false;
     
+    if (this->getShootSize() > 0.0 == false) return false;
+    
     if(!display) return false;
     
     if (scene->checkIfEnoughPlaceToAddObjectForDisplay(display, throwDist) == false)
@@ -604,6 +607,8 @@ bool VSC::OB::SceneController::throwDynamicObjectPrimitive(Ogre::RenderWindow* r
     
     VSC::OB::DynamicObject::FactoryDescription description;
     
+    description.materialName = "Bullet/box";
+    //description.materialName = "OceanHLSL_GLSL";
     description.position = display->getCamera()->getDerivedPosition();
     
     VSC::OB::DynamicObject::SPtr object;
@@ -612,25 +617,25 @@ bool VSC::OB::SceneController::throwDynamicObjectPrimitive(Ogre::RenderWindow* r
     {
         case VSC::OB::PrimitiveCube:            
             description.name = "Cube";
-            description.size = gCubeBodyBounds;
+            description.size = gCubeBodyBounds*this->getShootSize();
             object = sceneFactory->addPrimitive(VSC::OB::PrimitiveCube, description);
             break;
             
         case VSC::OB::PrimitiveSphere: 
             description.name = "Sphere";
-            description.size = gSphereBodyBounds;
+            description.size = gSphereBodyBounds*this->getShootSize();
             object = sceneFactory->addPrimitive(VSC::OB::PrimitiveSphere, description);
             break;
             
         case VSC::OB::PrimitiveCylinder: 
             description.name = "Cylinder";
-            description.size = gCylinderBodyBounds;
+            description.size = gCylinderBodyBounds*this->getShootSize();
             object = sceneFactory->addPrimitive(VSC::OB::PrimitiveCylinder, description);
             break;
             
         case VSC::OB::PrimitiveCone: 
             description.name = "Cone";
-            description.size = gConeBodyBounds;
+            description.size = gConeBodyBounds*this->getShootSize();
             object = sceneFactory->addPrimitive(VSC::OB::PrimitiveCone, description);
             break;
             

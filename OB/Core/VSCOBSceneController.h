@@ -82,6 +82,9 @@ namespace VSC {
             Float getShootSpeed(void) {return mShootSpeed;}
             void setShootSpeed(Float speed) {mShootSpeed = speed;}
             
+            Float getShootSize(void) {return mShootSize;}
+            void setShootSize(Float size) {mShootSize = size;}
+            
             Float getImpulseForce(void);
             void setImplulseForce(Float force);
             
@@ -127,6 +130,7 @@ namespace VSC {
             Ogre::RaySceneQuery                                         *mRayQuery;
             
             Float mShootSpeed;
+            Float mShootSize;
             Float mImpulseForce;
             
             const static bool mTraceUI = true;

@@ -114,6 +114,7 @@ VSC::OB::DynamicObject::SPtr VSC::OB::ElementFactory::addPrimitive(PrimitiveType
     
     Ogre::SceneNode *node = scene->getSceneManager()->getRootSceneNode()->createChildSceneNode();
     node->attachObject(entity);
+    node->setScale(description.size);
     
     /*
      *  Create an OgreBulletDynamics::RigidBody which handles the Ogre::SceneNode (along with the Ogre::Entity),

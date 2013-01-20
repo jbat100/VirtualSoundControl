@@ -133,6 +133,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     [self setupTabBar];
     
     self.sceneController.shootSpeed = 10.0;
+    self.sceneController.shootSize = 0.2;
     self.sceneController.cameraSpeed = 10.0;
     self.sceneController.cameraSensitivity = 0.13;
     
@@ -341,7 +342,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     
     [self switchEnvironmentInspectorToTabView:self.sceneDetailScrollView];
     
-    [self.sceneDetailView reloadInterface];
+    //[self.sceneDetailView reloadInterface];
     
 }
 

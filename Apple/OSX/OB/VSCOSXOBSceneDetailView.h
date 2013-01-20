@@ -34,13 +34,8 @@
 @property (weak) IBOutlet VSCOSXKeyedCheckBoxView *profileTimingsCheckBoxView;
 
 @property (weak) IBOutlet VSCOSXKeyedSliderView *shootSpeedSliderView;
+@property (weak) IBOutlet VSCOSXKeyedSliderView *shootSizeSliderView;
 @property (weak) IBOutlet VSCOSXKeyedSliderView *cameraSpeedSliderView;
 @property (weak) IBOutlet VSCOSXKeyedSliderView *cameraSensitivitySliderView;
-
--(void) reloadInterface;
--(void) reloadSetting:(VSC::OB::Scene::Setting)setting;
--(void) reloadShootSpeed;
-
-//@property (nonatomic, strong, readonly) NSArray* allCheckBoxViews;
 
 @end

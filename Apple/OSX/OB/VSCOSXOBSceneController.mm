@@ -37,6 +37,7 @@ static const BOOL traceInterface = YES;
 @synthesize sceneDetailView = _sceneDetailView;
 
 @synthesize shootSpeed = _shootSpeed;
+@synthesize shootSize = _shootSize;
 @synthesize cameraSpeed = _cameraSpeed;
 @synthesize cameraSensitivity = _cameraSensitivity;
 
@@ -118,6 +119,16 @@ static const BOOL traceInterface = YES;
     }
 }
 
+-(void) setShootSize:(VSC::Float)shootSize
+{
+    _shootSize = shootSize;
+    BOOST_ASSERT(self.sceneView.internalSceneController);
+    if (self.sceneView.internalSceneController)
+    {
+        self.sceneView.internalSceneController->setShootSize(shootSize);
+    }
+}
+
 -(void) setCameraSpeed:(VSC::Float)cameraSpeed
 {
     _cameraSpeed = cameraSpeed;
@@ -174,51 +185,6 @@ static const BOOL traceInterface = YES;
 #pragma mark - UI Callbacks
 
 
--(IBAction)checkBoxAction:(id)sender
-{
-    /*
-     
-    VSC::OB::Scene::SPtr s = self.scene.lock();
-    BOOST_ASSERT(s); if (!s) return;
-    
-    BOOST_ASSERT(self.sceneDetailView);
-    
-    VSC::OB::Scene::Setting setting = [self.sceneDetailView settingForCheckBox:sender];
-    BOOST_ASSERT(setting != VSC::OB::Scene::SettingNone); if (setting == VSC::OB::Scene::SettingNone) return;
-    
-    bool value = ([(NSButton*)sender state] == NSOnState) ? true : false;
-    s->setSetting(setting, value);
-     
-     */
-}
-
--(IBAction)shootSpeedSliderAction:(id)sender
-{
-    /*
-    
-    BOOST_ASSERT(sender == self.sceneDetailView.shootSpeedSlider);
-    if (sender == self.sceneDetailView.shootSpeedSlider)
-    {
-
-    }
-     
-     */
-}
-
--(IBAction)cameraSpeedSliderAction:(id)sender
-{
-    
-}
-
--(IBAction)cameraSensitivitySliderAction:(id)sender
-{
-    
-}
-
--(IBAction)resetAction:(id)sender
-{
-    //[self setupTest];
-}
 
 #pragma mark - VSCOBOSXSceneListenerTarget Methods
 
@@ -229,7 +195,7 @@ static const BOOL traceInterface = YES;
 
 -(void) scene:(VSC::OB::Scene::SPtr)scene changedSetting:(VSC::OB::Scene::Setting)setting toValue:(BOOL)value
 {
-    [self.sceneDetailView reloadSetting:setting];
+    //[self.sceneDetailView reloadSetting:setting]; // run update on main thread with quietUI bool to avoid cycles
 }
 
 #pragma mark - PXListViewDelegate Methods
