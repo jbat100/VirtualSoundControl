@@ -340,24 +340,70 @@ bool VSC::MIDI::MessageGenerator::floatValueToBytePair(Float value, unsigned cha
     return false;
 }
 
+#pragma mark - MessageAnalyzer
+
+VSC::MIDI::MessageType VSC::MIDI::MessageAnalyzer::messageTypeForMessage(const Message& message)
+{
+    return MessageTypeNone;
+}
+
+bool VSC::MIDI::MessageAnalyzer::dissectNoteOnMessage(const Message& message,
+                                                      unsigned int& channel, unsigned int& pitch, unsigned int& velocity)
+{
+    return false;
+}
+
+bool VSC::MIDI::MessageAnalyzer::dissectNoteOffMessage(const Message& message,
+                                                       unsigned int& channel, unsigned int& pitch, unsigned int& velocity)
+{
+    return false;
+}
+
+bool VSC::MIDI::MessageAnalyzer::dissectPolyphonicAftertouchMessage(const Message& message,
+                                                                    unsigned int& channel, unsigned int& pitch, unsigned int& pressure)
+{
+    return false;
+}
+
+bool VSC::MIDI::MessageAnalyzer::dissectChannelAftertouchMessage(const Message& message,
+                                                                 unsigned int& channel, unsigned int& pressure)
+{
+    return false;
+}
+
+bool VSC::MIDI::MessageAnalyzer::dissectControlChangeMessage(const Message& message,
+                                                             ControlNumber& control, Float& value)
+{
+    return false;
+}
+
+bool VSC::MIDI::MessageAnalyzer::dissectPitchWheelMessage(const Message& message,
+                                                          unsigned int& channel, Float& value)
+{
+    return false;
+}
 
 #pragma mark - PortManager
 
 VSC::MIDI::PortManager::PortManager(void) {
     
     // RtMidiOut constructor
-    try {
+    try
+    {
         mMIDIOut = RtMidiOutPtr(new RtMidiOut());
     }
-    catch ( RtError &error ) {
+    catch ( RtError &error )
+    {
         error.printMessage();
     }
     
     // RtMidiIn constructor
-    try {
+    try
+    {
         mMIDIIn = RtMidiInPtr(new RtMidiIn());
     }
-    catch (RtError &error) {
+    catch (RtError &error)
+    {
         // Handle the exception here
         error.printMessage();
     }
@@ -380,14 +426,17 @@ void VSC::MIDI::PortManager::refreshOutputPorts(void) {
     unsigned int nPorts = mMIDIOut->getPortCount();
     std::string portName;
     //std::cout << "\nThere are " << nPorts << " MIDI output ports available.\n";
-    for ( unsigned int i=0; i<nPorts; i++ ) {
-        try {
+    for ( unsigned int i=0; i<nPorts; i++ )
+    {
+        try
+        {
             portName = mMIDIOut->getPortName(i);
             OutputPort p = {i, portName, false};
             mOutputPorts.push_back(p);
             //std::cout << "  Output Port #" << i+1 << ": " << portName << '\n';
         }
-        catch (RtError &error) {
+        catch (RtError &error)
+        {
             throw VSCMIDIException(error.getMessage());
         }
     }
@@ -395,7 +444,8 @@ void VSC::MIDI::PortManager::refreshOutputPorts(void) {
     
 }
 
-void VSC::MIDI::PortManager::refreshInputPorts(void) {
+void VSC::MIDI::PortManager::refreshInputPorts(void)
+{
     
     mInputPorts.clear();
     
@@ -403,38 +453,47 @@ void VSC::MIDI::PortManager::refreshInputPorts(void) {
     unsigned int nPorts = mMIDIIn->getPortCount();
     //std::cout << "\nThere are " << nPorts << " MIDI input sources available.\n";
     std::string portName;
-    for ( unsigned int i=0; i<nPorts; i++ ) {
-        try {
+    for ( unsigned int i=0; i<nPorts; i++ )
+    {
+        try
+        {
             portName = mMIDIIn->getPortName(i);
             InputPort p = {i, portName, false};
             mInputPorts.push_back(p);
             //std::cout << "  Input Port #" << i+1 << ": " << portName << '\n';
         }
-        catch ( RtError &error ) {
+        catch ( RtError &error )
+        {
             throw VSCMIDIException(error.getMessage());
         }
     }
     
 }
 
-const VSC::MIDI::OutputPorts& VSC::MIDI::PortManager::getOutputPorts(void) const {
+const VSC::MIDI::OutputPorts& VSC::MIDI::PortManager::getOutputPorts(void) const
+{
     return mOutputPorts;
 }
 
-const VSC::MIDI::InputPorts& VSC::MIDI::PortManager::getInputPorts(void) const {
+const VSC::MIDI::InputPorts& VSC::MIDI::PortManager::getInputPorts(void) const
+{
     return mInputPorts;
 }
 
-const std::string VSC::MIDI::PortManager::outputPortDescription(void) const {
+const std::string VSC::MIDI::PortManager::outputPortDescription(void) const
+{
     
     std::ostringstream s;
     
-    if (mOutputPorts.size() == 0) {
+    if (mOutputPorts.size() == 0)
+    {
         s << "No output ports for VSCMIDI " << this << "\n";
     }
-    else {
+    else
+    {
         s << mOutputPorts.size() <<  " output ports for VSCMIDI " << this << ":\n";
-        for (OutputPorts::const_iterator it = mOutputPorts.begin(); it != mOutputPorts.end(); ++it) {
+        for (OutputPorts::const_iterator it = mOutputPorts.begin(); it != mOutputPorts.end(); ++it)
+        {
             s << "    " << *it << "\n";
         }
     }

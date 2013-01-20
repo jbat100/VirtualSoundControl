@@ -8,6 +8,8 @@
 
 #import "VSCOSXOBSceneElementDetailView.h"
 #import "VSCOSXOBSceneElementController.h"
+#import "VSCOSXKeyed3FieldView.h"
+#import "VSCOSXKeyed4FieldView.h"
 
 #import "NSString+VSCAdditions.h"
 
@@ -20,6 +22,8 @@
 
 @property (nonatomic, assign) NSTimeInterval minimumInterfaceUpdateInterval;
 @property (nonatomic, strong) NSDate* lastUpdateDate;
+
+-(void) setupNumericTextFieldNumberFormatter:(NSTextField*)textField;
 
 -(void) commonInit;
 
@@ -62,39 +66,39 @@
 
 -(void) awakeFromNib
 {
-    NSArray* numberTextFields = [self allNumberTextFields];
     
+    
+    
+    NSArray* numberTextFields = [self allNumberTextFields];
     for (NSTextField* textField in numberTextFields)
     {
-        BOOST_ASSERT([textField isKindOfClass:[NSTextField class]]);
-        if ([textField isKindOfClass:[NSTextField class]])
+        [self setupNumericTextFieldNumberFormatter:textField];
+    }
+}
+
+-(void) setupNumericTextFieldNumberFormatter:(NSTextField*)textField
+{
+    BOOST_ASSERT([textField isKindOfClass:[NSTextField class]]);
+    if ([textField isKindOfClass:[NSTextField class]])
+    {
+        NSNumberFormatter* formatter = textField.formatter;
+        BOOST_ASSERT(formatter);
+        BOOST_ASSERT([formatter isKindOfClass:[NSNumberFormatter class]]);
+        if ([formatter isKindOfClass:[NSNumberFormatter class]])
         {
-            NSNumberFormatter* formatter = textField.formatter;
-            BOOST_ASSERT(formatter);
-            BOOST_ASSERT([formatter isKindOfClass:[NSNumberFormatter class]]);
-            if ([formatter isKindOfClass:[NSNumberFormatter class]])
-            {
-                formatter.maximumFractionDigits = 2;
-                formatter.thousandSeparator = @"";
-            }
+            formatter.maximumFractionDigits = 2;
+            formatter.thousandSeparator = @"";
         }
     }
 }
 
 -(NSArray*) allNumberTextFields
 {
-    return @[
-    self.xPosTextField,
-    self.yPosTextField,
-    self.zPosTextField,
-    self.xVelTextField,
-    self.yVelTextField,
-    self.zVelTextField,
-    self.wRotTextField,
-    self.xRotTextField,
-    self.yRotTextField,
-    self.zRotTextField
-    ];
+    NSMutableArray* textFields = [NSMutableArray arrayWithCapacity:10];
+    [textFields addObjectsFromArray:[self.position3FieldView allValueTextFields]];
+    [textFields addObjectsFromArray:[self.velocity3FieldView allValueTextFields]];
+    [textFields addObjectsFromArray:[self.rotation4FieldView allValueTextFields]];
+    return [NSArray arrayWithArray:textFields];
 }
 
 #pragma mark - UI Helpers

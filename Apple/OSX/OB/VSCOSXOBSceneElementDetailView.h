@@ -1,6 +1,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class VSCOSXKeyedCheckBoxView;
+@class VSCOSXKeyed3FieldView;
+@class VSCOSXKeyed4FieldView;
+
 @protocol VSCOSXOBSceneElementController;
 
 @interface VSCOSXOBSceneElementDetailView : NSView
@@ -14,20 +18,10 @@
  *  Position/Rotation
  */
 
-@property (weak) IBOutlet NSTextField* xPosTextField;
-@property (weak) IBOutlet NSTextField* yPosTextField;
-@property (weak) IBOutlet NSTextField* zPosTextField;
-
-@property (weak) IBOutlet NSTextField* xVelTextField;
-@property (weak) IBOutlet NSTextField* yVelTextField;
-@property (weak) IBOutlet NSTextField* zVelTextField;
-
-@property (weak) IBOutlet NSTextField* wRotTextField;
-@property (weak) IBOutlet NSTextField* xRotTextField;
-@property (weak) IBOutlet NSTextField* yRotTextField;
-@property (weak) IBOutlet NSTextField* zRotTextField;
-
-@property (weak) IBOutlet NSButton* immobilizedCheckBox;
+@property (weak) VSCOSXKeyed3FieldView* position3FieldView;
+@property (weak) VSCOSXKeyed3FieldView* velocity3FieldView;
+@property (weak) VSCOSXKeyed4FieldView* rotation4FieldView;
+@property (weak) VSCOSXKeyedCheckBoxView* immobilizedCheckBoxView;
 
 -(IBAction) immobilized:(id)sender;
 

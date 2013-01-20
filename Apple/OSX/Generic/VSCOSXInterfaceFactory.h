@@ -10,6 +10,7 @@
 
 @class VSCOSXKeyedCheckBoxView;
 @class VSCOSXKeyedSliderView;
+@class VSCOSXKeyed3FieldView;
 
 @interface VSCOSXInterfaceFactory : NSObject
 
@@ -17,8 +18,10 @@
 
 @property (strong) NSNib* keyedCheckBoxViewNib;
 @property (strong) NSNib* keyedSliderViewNib;
+@property (strong) NSNib* keyed3FieldViewNib;
 
 -(VSCOSXKeyedCheckBoxView*) newKeyedCheckBoxViewWithOwner:(id)owner;
 -(VSCOSXKeyedSliderView*) newKeyedSliderViewWithOwner:(id)owner;
+-(VSCOSXKeyed3FieldView*) newVSCOSXKeyed3FieldViewWithOwner:(id)owner;
 
 @end

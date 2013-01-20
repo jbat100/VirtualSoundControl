@@ -63,6 +63,8 @@ namespace VSC {
             Input::SPtr getInputWithDescription(const std::string& description);
             const Inputs& getInputs(void);
             
+            const MessageQueue& getMessageQueue();
+            
         protected:
             
             PortManager::SPtr getPortManager(void) {return mPortManager;}
@@ -89,6 +91,8 @@ namespace VSC {
             Inputs                  mInputs;
             PortManager::SPtr       mPortManager;
             Mutex                   mMutex;
+            
+            MessageQueue            mMessageQueue;
             
             static const bool       mTrace = true;
             

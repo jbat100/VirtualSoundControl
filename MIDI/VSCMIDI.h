@@ -20,6 +20,7 @@
 #include <list>
 #include <string>
 #include <vector>
+#include <deque>
 #include <map>
 
 namespace VSC {
@@ -99,6 +100,19 @@ namespace VSC {
         
         typedef std::vector<unsigned char>  Message;
         typedef std::pair<Message, Message> MessagePair;
+        typedef std::deque<Message>         MessageQueue;
+        
+        enum MessageType
+        {
+            MessageTypeNone = 0,
+            MessageTypeNoteOn,
+            MessageTypeNoteOff,
+            MessageTypePolyphonicAftertouch,
+            MessageTypeChannelAftertouch,
+            MessageTypeControlChange,
+            MessageTypePitchWheel,
+            MessageTypeInvalid
+        };
         
         /*
          *  Message description utilities
@@ -174,6 +188,34 @@ namespace VSC {
             
             ControlNumbers mValidControlNumbers;
             
+        };
+        
+        class MessageAnalyzer
+        {
+            
+        public:
+            
+            typedef boost::shared_ptr<MessageAnalyzer> SPtr;
+            
+            MessageType messageTypeForMessage(const Message& message);
+            
+            bool dissectNoteOnMessage(const Message& message,
+                                      unsigned int& channel, unsigned int& pitch, unsigned int& velocity);
+            
+            bool dissectNoteOffMessage(const Message& message,
+                                       unsigned int& channel, unsigned int& pitch, unsigned int& velocity);
+            
+            bool dissectPolyphonicAftertouchMessage(const Message& message,
+                                                    unsigned int& channel, unsigned int& pitch, unsigned int& pressure);
+            
+            bool dissectChannelAftertouchMessage(const Message& message,
+                                                 unsigned int& channel, unsigned int& pressure);
+            
+            bool dissectControlChangeMessage(const Message& message,
+                                             ControlNumber& control, Float& value);
+            
+            bool dissectPitchWheelMessage(const Message& message,
+                                          unsigned int& channel, Float& value);
         };
         
         class PortManager {

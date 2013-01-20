@@ -27,9 +27,10 @@
 
 @property (assign) id <VSCOSXEnvironmentController> environmentController;
 
+@property (nonatomic, assign) BOOL immobilized;
+
 -(void) showElementDetailView;
 -(void) showElementCollisionView;
 
 @end
-
 

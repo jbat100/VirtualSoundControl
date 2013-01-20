@@ -12,31 +12,32 @@ namespace VSC
     namespace MIDI
     {
         void InputCallback(double deltatime, std::vector<unsigned char> *message, void* userData);
+        
+        MessageAnalyzer::SPtr callbackMessageAnalyzer;
     }
 }
 
+VSC::MIDI::MessageAnalyzer::SPtr callbackMessageAnalyzer = VSC::MIDI::MessageAnalyzer::SPtr();
 
-void VSC::MIDI::InputCallback(double deltatime, std::vector<unsigned char> *message, void* userData)
+void VSC::MIDI::InputCallback(double deltatime, std::vector<unsigned char>* message, void* userData)
 {
+    BOOST_ASSERT(message);
+    if (!message) return;
+    
+    BOOST_ASSERT(userData);
     Input* rawInput = dynamic_cast<Input*>((Input*)userData);
     BOOST_ASSERT(rawInput);
     if(!rawInput)
     {
-        std::cout << "ERROR: MIDI Callback UNEXPECTED USERDATA" << std::endl;
+        std::cerr << "ERROR: MIDI Callback UNEXPECTED USERDATA" << std::endl;
         return;
     }
     
     Input::SPtr input = rawInput->shared_from_this();
     
-    unsigned int nBytes = (unsigned int)message->size();
-    for (unsigned int i=0; i<nBytes; i++)
-    {
-        //std::cout << "Byte " << i << " = " << (int)message->at(i) << ", ";
-    }
-    if (nBytes > 0)
-    {
-        //std::cout << "stamp = " << deltatime << std::endl;
-    }
+    const Message& midiMessage = *message;
+    
+    MessageType messageType = callbackMessageAnalyzer->messageTypeForMessage(midiMessage);
 }
 
 VSC::MIDI::Input::Input(const InputPort& inputPort) : mState(StateClosed) {
