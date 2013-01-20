@@ -10,7 +10,7 @@
 
 @interface VSCOSXKeyedCheckBoxView : NSView
 
-@property (nonatomic, weak) NSButton* checkBoxButton;
-@property (nonatomic, weak) NSTextField* labelTextField;
+@property (nonatomic, weak) IBOutlet NSButton* checkBoxButton;
+//@property (nonatomic, weak) IBOutlet NSTextField* labelTextField;
 
 @end

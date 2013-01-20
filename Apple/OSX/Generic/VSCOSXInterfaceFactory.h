@@ -19,6 +19,6 @@
 @property (strong) NSNib* keyedSliderViewNib;
 
 -(VSCOSXKeyedCheckBoxView*) newKeyedCheckBoxViewWithOwner:(id)owner;
--(VSCOSXKeyedCheckBoxView*) newKeyedSliderViewWithOwner:(id)owner;
+-(VSCOSXKeyedSliderView*) newKeyedSliderViewWithOwner:(id)owner;
 
 @end

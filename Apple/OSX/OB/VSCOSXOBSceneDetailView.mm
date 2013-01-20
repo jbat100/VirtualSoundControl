@@ -38,10 +38,15 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    CGContextRef myContext = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
-    CGContextSetGrayFillColor (myContext, 0.8, 1.0);
-    CGContextFillRect(myContext, NSRectToCGRect(self.bounds));
+    //CGContextRef myContext = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+    //CGContextSetGrayFillColor (myContext, 0.3, 1.0);
+    //CGContextFillRect(myContext, NSRectToCGRect(self.bounds));
 }
+
+- (BOOL) isFlipped
+{
+    return YES;
+} 
 
 -(void) awakeFromNib
 {
@@ -56,15 +61,62 @@
     NSMutableArray* viewsForHorizontalConstraints = [NSMutableArray array];
     NSMutableString* verticalVisualFormat = [NSMutableString stringWithString:@"V:|"];
     
+    /*
+     *  Check Boxes
+     */
+    
     self.pausePhysicsCheckBoxView = [factory newKeyedCheckBoxViewWithOwner:self.sceneController];
+    [self addSubview:self.pausePhysicsCheckBoxView];
     [self.pausePhysicsCheckBoxView.checkBoxButton bind:@"value" toObject:self.sceneController withKeyPath:@"pausePhysics" options:nil];
-    [self.pausePhysicsCheckBoxView.labelTextField setStringValue:@"Pause Physics"];
+    [self.pausePhysicsCheckBoxView.checkBoxButton setTitle:@"Pause Physics"];
     NSView* pausePhysicsCB = self.pausePhysicsCheckBoxView;
     [viewsForHorizontalConstraints addObject:pausePhysicsCB];
     [verticalVisualFormat appendString:@"-[pausePhysicsCB]"];
     
+    self.drawAABBCheckBoxView = [factory newKeyedCheckBoxViewWithOwner:self.sceneController];
+    [self addSubview:self.drawAABBCheckBoxView];
+    [self.drawAABBCheckBoxView.checkBoxButton bind:@"value" toObject:self.sceneController withKeyPath:@"drawAABB" options:nil];
+    [self.drawAABBCheckBoxView.checkBoxButton setTitle:@"Draw AABB"];
+    NSView* drawAABBCB = self.drawAABBCheckBoxView;
+    [viewsForHorizontalConstraints addObject:drawAABBCB];
+    [verticalVisualFormat appendString:@"-0-[drawAABBCB]"];
     
-    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(pausePhysicsCB);
+    self.drawWireFrameCheckBoxView = [factory newKeyedCheckBoxViewWithOwner:self.sceneController];
+    [self addSubview:self.drawWireFrameCheckBoxView];
+    [self.drawWireFrameCheckBoxView.checkBoxButton bind:@"value" toObject:self.sceneController withKeyPath:@"drawWireFrame" options:nil];
+    [self.drawWireFrameCheckBoxView.checkBoxButton setTitle:@"Draw WireFrame"];
+    NSView* drawWireFrameCB = self.drawWireFrameCheckBoxView;
+    [viewsForHorizontalConstraints addObject:drawWireFrameCB];
+    [verticalVisualFormat appendString:@"-0-[drawWireFrameCB]"];
+    
+    /*
+     *  Sliders
+     */
+    
+    self.shootSpeedSliderView = [factory newKeyedSliderViewWithOwner:self.sceneController];
+    [self addSubview:self.shootSpeedSliderView];
+    [self.shootSpeedSliderView.slider bind:@"value" toObject:self.sceneController withKeyPath:@"shootSpeed" options:nil];
+    [self.shootSpeedSliderView.valueTextField bind:@"value" toObject:self.sceneController withKeyPath:@"shootSpeed" options:nil];
+    [self.shootSpeedSliderView.labelTextField setStringValue:@"Shoot Speed"];
+    self.shootSpeedSliderView.slider.maxValue = 100.0;
+    self.shootSpeedSliderView.slider.minValue = 0.0;
+    NSView* shootSpeedSV = self.shootSpeedSliderView;
+    [viewsForHorizontalConstraints addObject:shootSpeedSV];
+    [verticalVisualFormat appendString:@"-[shootSpeedSV]"];
+    
+    self.cameraSpeedSliderView = [factory newKeyedSliderViewWithOwner:self.sceneController];
+    [self addSubview:self.cameraSpeedSliderView];
+    [self.cameraSpeedSliderView.slider bind:@"value" toObject:self.sceneController withKeyPath:@"cameraSpeed" options:nil];
+    [self.cameraSpeedSliderView.valueTextField bind:@"value" toObject:self.sceneController withKeyPath:@"cameraSpeed" options:nil];
+    [self.cameraSpeedSliderView.labelTextField setStringValue:@"Camera Speed"];
+    self.cameraSpeedSliderView.slider.maxValue = 100.0;
+    self.cameraSpeedSliderView.slider.minValue = 3.0;
+    NSView* cameraSpeedSV = self.cameraSpeedSliderView;
+    [viewsForHorizontalConstraints addObject:cameraSpeedSV];
+    [verticalVisualFormat appendString:@"-2-[cameraSpeedSV]"];
+    
+    [verticalVisualFormat appendString:@"-|"];
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(pausePhysicsCB, drawAABBCB, drawWireFrameCB, shootSpeedSV, cameraSpeedSV);
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:verticalVisualFormat
                                                                  options:0
                                                                  metrics:nil

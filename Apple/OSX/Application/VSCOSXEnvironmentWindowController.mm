@@ -33,8 +33,6 @@
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
-
-
 NSArray* EnvironmentInspectorTabParamArray = nil;
 
 NSString* const VSCOSXTabTitleSceneSettings = @"Scene Settings";
@@ -44,13 +42,17 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 @interface VSCOSXEnvironmentWindowController ()
 
 @property (weak) IBOutlet DMTabBar* tabBar;
-@property (weak) IBOutlet NSBox* tabBox;
+
+@property (strong) NSArray* tabViewConstraints;
 
 -(void) customInit;
 -(void) reloadSceneInterface;
 -(void) setupTabBar;
-
+-(void) setupConstraints;
 -(void) setupTest;
+
+-(void) resetInspectorView;
+-(void) switchEnvironmentInspectorToTabView:(NSView*)tabView;
 
 @end
 
@@ -115,24 +117,36 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 
 -(void) awakeFromNib
 {
+    BOOST_ASSERT(self.sceneDetailScrollView);
     BOOST_ASSERT(self.sceneElementListView);
     BOOST_ASSERT(self.sceneDetailView);
     BOOST_ASSERT(self.tabBar);
-    BOOST_ASSERT(self.tabBox);
+    //BOOST_ASSERT(self.tabBox);
+    
+    self.sceneDetailScrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.sceneDetailView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.sceneElementListView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [self setupConstraints];
     
     [self setupTabBar];
     
     self.sceneController.shootSpeed = 10.0;
     self.sceneController.cameraSpeed = 10.0;
     self.sceneController.cameraSensitivity = 0.13;
+    
+    self.tabBar.selectedIndex = 0;
 }
 
 
--(BOOL)acceptsFirstResponder {
+-(BOOL)acceptsFirstResponder
+{
     return NO;
 }
 
--(BOOL)acceptsFirstMouse:(NSEvent *)theEvent {
+-(BOOL)acceptsFirstMouse:(NSEvent *)theEvent
+{
     return NO;
 }
 
@@ -145,29 +159,20 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     
 }
 
+#pragma mark - UI Setup
 
--(void) reloadInterface
+-(void) setupConstraints
 {
-    VSC::Environment::SPtr env = self.environment.lock();
-    
-    [self reloadSceneInterface];
+    // setup constraints so that the width of the views are the same as that of their enclosing subviews
+    NSLayoutConstraint* widthConstraint = [NSLayoutConstraint constraintWithItem:self.sceneDetailScrollView
+                                                                       attribute:NSLayoutAttributeWidth
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:self.sceneDetailView
+                                                                       attribute:NSLayoutAttributeWidth
+                                                                      multiplier:1.0
+                                                                        constant:0.0];
+    [self.sceneDetailScrollView addConstraint:widthConstraint];
 }
-
--(void) reloadSceneInterface
-{
-    VSC::Environment::SPtr env = self.environment.lock();
-    
-    if (env)
-    {
-        self.sceneController.scene = VSC::OB::Scene::WPtr(env->getOBScene());
-    }
-    else
-    {
-        self.sceneController.scene = VSC::OB::Scene::WPtr();
-    }
-}
-
-
 
 -(void) setupTabBar
 {
@@ -230,31 +235,96 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     
 }
 
+#pragma mark - UI Helpers
+
+-(void) reloadInterface
+{
+    VSC::Environment::SPtr env = self.environment.lock();
+    [self reloadSceneInterface];
+}
+
+-(void) reloadSceneInterface
+{
+    VSC::Environment::SPtr env = self.environment.lock();
+    
+    if (env)
+    {
+        self.sceneController.scene = VSC::OB::Scene::WPtr(env->getOBScene());
+    }
+    else
+    {
+        self.sceneController.scene = VSC::OB::Scene::WPtr();
+    }
+}
+
+-(void) resetInspectorView
+{
+    NSArray* subviews = [self.environmentInspectorView subviews];
+    
+    // remove all subviews except tabBar
+    for (NSView* subview in subviews)
+    {
+        if (subview != self.tabBar)
+        {
+            [subview removeFromSuperview];
+        }
+    }
+}
+
+-(void) switchEnvironmentInspectorToTabView:(NSView*)tabView
+{
+    if (tabView == nil) return;
+    
+    BOOST_ASSERT(tabView);
+    BOOST_ASSERT([tabView isKindOfClass:[NSView class]]);
+    
+    if ([tabView isKindOfClass:[NSView class]] == NO) return;
+    if ([tabView superview] == self.environmentInspectorView) return;
+    
+    if (self.tabViewConstraints)
+    {
+        [self.environmentInspectorView removeConstraints:self.tabViewConstraints];
+    }
+    
+    [self resetInspectorView];
+    
+    [self.environmentInspectorView  addSubview:tabView];
+
+    NSView* bar = self.tabBar;
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(tabView, bar);
+    
+    NSMutableArray* allConstraints = [NSMutableArray array];
+    
+    NSArray* hConstraints =[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tabView]|"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:viewsDictionary];
+    
+    [allConstraints addObjectsFromArray:hConstraints];
+    [self.environmentInspectorView addConstraints:hConstraints];
+    
+    NSArray* vConstraints =[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bar]-0-[tabView]|"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:viewsDictionary];
+    
+    [allConstraints addObjectsFromArray:vConstraints];
+    [self.environmentInspectorView addConstraints:vConstraints];
+    
+    self.tabViewConstraints = [NSArray arrayWithArray:allConstraints];
+}
+
 
 -(void) showSceneElementList
 {
-    BOOST_ASSERT(self.tabBox);
     BOOST_ASSERT(self.sceneElementListView);
     BOOST_ASSERT(self.sceneElementListView.elementTableView);
     BOOST_ASSERT(self.sceneElementListView.elementTableView.delegate == self.sceneController);
     
-    NSView* boxContentView = [self.tabBox contentView];
     
-    if ([self.sceneElementListView superview] == boxContentView) return; // we are already showing element list
+    if ([self.sceneElementListView superview] == self.environmentInspectorView) return; // we are already showing element list
     
-    [[boxContentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    // remove all old constraints
-    [boxContentView removeConstraints:[boxContentView constraints]];
-    [boxContentView addSubview:self.sceneElementListView];
-    
-    {
-        NSView* elementListView  = self.sceneElementListView;
-        NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(elementListView);
-        [boxContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[elementListView]|"
-                                                                               options:0 metrics:nil views:viewsDictionary]];
-        [boxContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[elementListView]|"
-                                                                               options:0 metrics:nil views:viewsDictionary]];
-    }
+    [self switchEnvironmentInspectorToTabView:self.sceneElementListView];
     
     [self.sceneElementListView.elementTableView reloadData];
     
@@ -262,26 +332,14 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 
 -(void) showSceneDetail
 {
-    BOOST_ASSERT(self.tabBox);
+    BOOST_ASSERT(self.sceneDetailScrollView);
     BOOST_ASSERT(self.sceneDetailView);
     
-    NSView* boxContentView = [self.tabBox contentView];
+    if ([self.sceneDetailView superview] == self.environmentInspectorView) return; // we are already showing element list
     
-    if ([self.sceneDetailView superview] == boxContentView) return; // we are already showing element list
+    [self resetInspectorView];
     
-    [[boxContentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    // remove all old constraints
-    [boxContentView removeConstraints:[boxContentView constraints]];
-    [boxContentView addSubview:self.sceneDetailView];
-    
-    {
-        NSView* sceneDetailView  = self.sceneDetailView;
-        NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(sceneDetailView);
-        [boxContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[sceneDetailView]|"
-                                                                               options:0 metrics:nil views:viewsDictionary]];
-        [boxContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[sceneDetailView]|"
-                                                                               options:0 metrics:nil views:viewsDictionary]];
-    }
+    [self switchEnvironmentInspectorToTabView:self.sceneDetailScrollView];
     
     [self.sceneDetailView reloadInterface];
     

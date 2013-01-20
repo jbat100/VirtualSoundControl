@@ -23,15 +23,19 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
+    //CGContextRef myContext = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+    //CGContextSetGrayFillColor (myContext, 0.4, 1.0);
+    //CGContextFillRect(myContext, NSRectToCGRect(self.bounds));
+    
 }
 
 - (void)awakeFromNib
 {
     assert(self.checkBoxButton);
-    assert(self.labelTextField);
+    //assert(self.labelTextField);
     
     self.checkBoxButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.labelTextField.translatesAutoresizingMaskIntoConstraints = NO;
+    //self.labelTextField.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 @end

@@ -64,7 +64,7 @@
     BOOST_ASSERT(self.keyedSliderViewNib);
     NSArray *objects = nil;
     VSCOSXKeyedSliderView* v = nil;
-    [self.keyedCheckBoxViewNib instantiateNibWithOwner:owner topLevelObjects:&objects];
+    [self.keyedSliderViewNib instantiateNibWithOwner:owner topLevelObjects:&objects];
     for(id object in objects)
     {
         if([object isKindOfClass:[VSCOSXKeyedSliderView class]])

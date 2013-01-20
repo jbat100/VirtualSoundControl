@@ -10,8 +10,8 @@
 
 @interface VSCOSXKeyedSliderView : NSView
 
-@property (nonatomic, weak) NSSlider* slider;
-@property (nonatomic, weak) NSTextField* valueTextField;
-@property (nonatomic, weak) NSTextField* labelTextField;
+@property (nonatomic, weak) IBOutlet NSSlider* slider;
+@property (nonatomic, weak) IBOutlet NSTextField* valueTextField;
+@property (nonatomic, weak) IBOutlet NSTextField* labelTextField;
 
 @end

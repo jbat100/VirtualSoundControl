@@ -149,6 +149,28 @@ static const BOOL traceInterface = YES;
     }
 }
 
+-(void) setDrawAABB:(BOOL)drawAABB
+{
+    _drawAABB = drawAABB;
+    VSC::OB::Scene::SPtr s = self.scene.lock();
+    BOOST_ASSERT(s);
+    if (s)
+    {
+        s->setSetting(VSC::OB::Scene::SettingDrawAABB, drawAABB);
+    }
+}
+
+-(void) setDrawWireFrame:(BOOL)drawWireFrame
+{
+    _drawWireFrame = drawWireFrame;
+    VSC::OB::Scene::SPtr s = self.scene.lock();
+    BOOST_ASSERT(s);
+    if (s)
+    {
+        s->setSetting(VSC::OB::Scene::SettingDrawWireFrame, drawWireFrame);
+    }
+}
+
 #pragma mark - UI Callbacks
 
 
