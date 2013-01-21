@@ -73,6 +73,8 @@ namespace VSC {
             
             typedef  boost::shared_ptr<RtMidiOut>    RtMidiOutPtr;
             
+            ControlNumbers          mValidControlNumbers;
+            
             OutputPort              mOutputPort;
             RtMidiOutPtr            mMIDIOut;
             

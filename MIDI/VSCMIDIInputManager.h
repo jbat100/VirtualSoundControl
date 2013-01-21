@@ -34,20 +34,7 @@ namespace VSC {
                 
                 virtual void midiInputManagerRefreshedInputs(InputManager::SPtr manager) {}
                 
-                virtual void  midiReceivedNoteOn(InputManager::SPtr manager, Input::SPtr input,
-                                                 unsigned int channel, unsigned int pitch, unsigned int velocity) {}
-                
-                virtual void  midiReceivedNoteOff(InputManager::SPtr manager, Input::SPtr input,
-                                                  unsigned int channel, unsigned int pitch, unsigned int velocity) {}
-                
-                virtual void  midiReceivedControlChange(InputManager::SPtr manager, Input::SPtr input,
-                                                        unsigned int channel, ControlNumber controlNumber, unsigned int value) {}
-                
-                virtual void  midiReceivedPolyphonicAftertouch(InputManager::SPtr manager, Input::SPtr input,
-                                                               unsigned int channel, unsigned int pitch, unsigned int pressure) {}
-                
-                virtual void  midiReceivedChannelAftertouch(InputManager::SPtr manager, Input::SPtr input,
-                                                            unsigned int channel, unsigned int pressure) {}
+                virtual void midiInputReceivedMessage(InputManager::SPtr manager, Input::SPtr input, MessageDescription::SPtr description) {}
                 
             };
             
@@ -78,11 +65,7 @@ namespace VSC {
              *  Called by friend class Input, so that the manager can propagate to all Listeners
              */
             
-            void  midiReceivedNoteOn(Input::SPtr input, unsigned int channel, unsigned int pitch, unsigned int velocity) {}
-            void  midiReceivedNoteOff(Input::SPtr input, unsigned int channel, unsigned int pitch, unsigned int velocity) {}
-            void  midiReceivedControlChange(Input::SPtr input, unsigned int channel, ControlNumber controlNumber, unsigned int value) {}
-            void  midiReceivedPolyphonicAftertouch(Input::SPtr input, unsigned int channel, unsigned int pitch, unsigned int pressure) {}
-            void  midiReceivedChannelAftertouch(Input::SPtr input, unsigned int channel, unsigned int pressure) {}
+            void midiInputReceivedMessage(Input::SPtr input, MessageDescription::SPtr description) {}
             
         private:
             

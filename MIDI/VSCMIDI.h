@@ -100,7 +100,6 @@ namespace VSC {
         
         typedef std::vector<unsigned char>  Message;
         typedef std::pair<Message, Message> MessagePair;
-        typedef std::deque<Message>         MessageQueue;
         
         enum MessageType
         {
@@ -109,10 +108,38 @@ namespace VSC {
             MessageTypeNoteOff,
             MessageTypePolyphonicAftertouch,
             MessageTypeChannelAftertouch,
+            MessageTypeProgramChange,
             MessageTypeControlChange,
             MessageTypePitchWheel,
             MessageTypeInvalid
         };
+        
+        enum MessageParameterKey
+        {
+            MessageParameterKeyNone = 0,
+            MessageParameterKeyChannel,
+            MessageParameterKeyPitch,
+            MessageParameterKeyVelocity,
+            MessageParameterKeyPressure,
+            MessageParameterKeyControlNumber,
+            MessageParameterKeyValue,
+            MessageParameterKeyValueMSB,
+            MessageParameterKeyValueLSB,
+            MessageParameterKeyProgram
+        };
+        
+        typedef std::map<MessageParameterKey, unsigned char> MessageParameterMap;
+        
+        struct MessageDescription
+        {
+            MessageDescription(MessageType t, MessageParameterMap m) : type(t), parameterMap(m) {}
+            MessageDescription(const MessageDescription& description);
+            typedef boost::shared_ptr<MessageDescription> SPtr;
+            MessageType type;
+            MessageParameterMap parameterMap;
+        };
+        
+        typedef std::deque<MessageDescription::SPtr> MessageDescriptionQueue;
         
         /*
          *  Message description utilities
@@ -122,101 +149,20 @@ namespace VSC {
         std::string controlNumberToString(ControlNumber num);
         ControlNumber stringToControlNumber(const std::string& desc);
         
-        class MessageGenerator {
-            
-        public:
-            
-            typedef boost::shared_ptr<MessageGenerator> SPtr;
-            
-            MessageGenerator();
-            
-            const ControlNumbers& getValidControlNumbers() {return mValidControlNumbers;}
-            
-            bool controlNumberIsValid(const ControlNumber& number);
-            
-            /*
-             *  Note On/Off messages
-             */
-            
-            Message messageForNote(unsigned int channel, unsigned int pitch, unsigned int velocity, bool on);
-            
-            /*
-             *  Polyphonic aftertouch messages
-             */
-            
-            Message messageForPolyphonicAftertouch(unsigned int channel, unsigned int pitch, unsigned int pressure);
-            
-            /*
-             *  Channel Aftertouch messages, only channel and pressure are specified
-             */
-            
-            Message messageForChannelAftertouch(unsigned int channel, unsigned int pressure);
-            
-            /*
-             *  Low resolution control messages (only one message containing the MSB)
-             */
-            
-            Message messageForControlChange(unsigned int channel, ControlNumber control, unsigned int value);
-            
-            /*
-             *  Control messages can have MSB/LSB (sending two control message)
-             *  http://www.logicprohelp.com/forum/viewtopic.php?f=5&t=81147
-             *
-             *  The second (LSB) message will be sent on the same channel, with controlNumber+32 as 
-             *  described in the link above.
-             *  
-             *  value ranges from 0.00000 to 1.00000
-             */
-            
-            MessagePair messagePairForControlChange(unsigned int channel, ControlNumber control, Float value);
-            
-            /*
-             *  Pitch wheel messages have MSB/LSB within one MIDI message
-             *
-             *  value ranges from 0.00000 to 1.00000
-             */
-            
-            Message messageForPitchWheel(unsigned int channel, Float value);
-            
-        private:
-            
-            /*
-             *  Expects a float value within [0.0, 1.0]
-             */
-            
-            bool floatValueToBytePair(Float value, unsigned char& MSB, unsigned char& LSB);
-            
-            ControlNumbers mValidControlNumbers;
-            
-        };
+        /*
+         *  Expects a float value within [0.0, 1.0]
+         */
         
-        class MessageAnalyzer
-        {
-            
-        public:
-            
-            typedef boost::shared_ptr<MessageAnalyzer> SPtr;
-            
-            MessageType messageTypeForMessage(const Message& message);
-            
-            bool dissectNoteOnMessage(const Message& message,
-                                      unsigned int& channel, unsigned int& pitch, unsigned int& velocity);
-            
-            bool dissectNoteOffMessage(const Message& message,
-                                       unsigned int& channel, unsigned int& pitch, unsigned int& velocity);
-            
-            bool dissectPolyphonicAftertouchMessage(const Message& message,
-                                                    unsigned int& channel, unsigned int& pitch, unsigned int& pressure);
-            
-            bool dissectChannelAftertouchMessage(const Message& message,
-                                                 unsigned int& channel, unsigned int& pressure);
-            
-            bool dissectControlChangeMessage(const Message& message,
-                                             ControlNumber& control, Float& value);
-            
-            bool dissectPitchWheelMessage(const Message& message,
-                                          unsigned int& channel, Float& value);
-        };
+        bool floatValueToBytePair(Float value, unsigned char& MSB, unsigned char& LSB);
+        
+        /*
+         *  Convert between raw midi messages and human understandable description.
+         */
+        
+        Message messageFromDescription(MessageDescription::SPtr description);
+        
+        MessageDescription::SPtr descriptionFromMessage(const Message& message);
+
         
         class PortManager {
             

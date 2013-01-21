@@ -15,6 +15,36 @@ VSC::MIDI::Output::Output(const OutputPort& outputPort) : mState(StateClosed) {
     
     mMessageGenerator = MessageGenerator::SPtr(new MessageGenerator);
     
+    mValidControlNumbers.push_back(ControlBankSelect);
+    mValidControlNumbers.push_back(ControlModulationWheel);
+    mValidControlNumbers.push_back(ControlBreath);
+    mValidControlNumbers.push_back(ControlFootController);
+    mValidControlNumbers.push_back(ControlChannelVolume);
+    mValidControlNumbers.push_back(ControlBalance);
+    mValidControlNumbers.push_back(ControlUndefined1);
+    mValidControlNumbers.push_back(ControlPan);
+    mValidControlNumbers.push_back(ControlExpressionController);
+    mValidControlNumbers.push_back(ControlEffectControl1);
+    mValidControlNumbers.push_back(ControlEffectControl2);
+    mValidControlNumbers.push_back(ControlUndefined2);
+    mValidControlNumbers.push_back(ControlUndefined3);
+    mValidControlNumbers.push_back(ControlGeneralPurposeController1);
+    mValidControlNumbers.push_back(ControlGeneralPurposeController2);
+    mValidControlNumbers.push_back(ControlGeneralPurposeController3);
+    mValidControlNumbers.push_back(ControlGeneralPurposeController4);
+    mValidControlNumbers.push_back(ControlUndefined4);
+    mValidControlNumbers.push_back(ControlUndefined5);
+    mValidControlNumbers.push_back(ControlUndefined6);
+    mValidControlNumbers.push_back(ControlUndefined7);
+    mValidControlNumbers.push_back(ControlUndefined8);
+    mValidControlNumbers.push_back(ControlUndefined9);
+    mValidControlNumbers.push_back(ControlUndefined10);
+    mValidControlNumbers.push_back(ControlUndefined11);
+    mValidControlNumbers.push_back(ControlUndefined12);
+    mValidControlNumbers.push_back(ControlUndefined13);
+    mValidControlNumbers.push_back(ControlUndefined14);
+    mValidControlNumbers.push_back(ControlUndefined15);
+    
 }
 
 VSC::MIDI::Output::~Output()
@@ -121,12 +151,13 @@ void VSC::MIDI::Output::close()
 
 const VSC::MIDI::ControlNumbers& VSC::MIDI::Output::getValidControlNumbers(void)
 {
-    return mMessageGenerator->getValidControlNumbers();
+    return mValidControlNumbers;
 }
 
 bool VSC::MIDI::Output::controlNumberIsValid(const ControlNumber& number)
 {
-    return mMessageGenerator->controlNumberIsValid(number);
+    ControlNumbers::iterator it = std::find(mValidControlNumbers.begin(), mValidControlNumbers.end(), number);
+    return it != mValidControlNumbers.end();
 }
 
 

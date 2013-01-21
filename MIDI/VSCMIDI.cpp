@@ -72,11 +72,16 @@ bool VSC::MIDI::InputPort::operator<(const InputPort& p) const {
 
 boost::once_flag filledControlNumberStringsMapFlag = BOOST_ONCE_INIT;
 
-namespace VSC {
-    namespace MIDI {
+namespace VSC
+{
+    namespace MIDI
+    {
         void FillControlNumberStringsMap();
         typedef std::map<ControlNumber, std::string> ControlNumberStringMap;
         static ControlNumberStringMap controlNumberStringMap;
+        
+        unsigned char statusByteForMessageType(MessageType messageType);
+        MessageType messageTypeForStatusByte(unsigned char statusByte);
     }
 }
 
@@ -184,203 +189,176 @@ std::string VSC::MIDI::messageDescription(const Message& m) {
     
 }
 
-#pragma mark - MIDI MessageGenerator
+#pragma mark - Raw MIDI message / Description Conversions
 
-VSC::MIDI::MessageGenerator::MessageGenerator()
+unsigned char VSC::MIDI::statusByteForMessageType(MessageType messageType)
 {
-    mValidControlNumbers.push_back(ControlBankSelect);
-    mValidControlNumbers.push_back(ControlModulationWheel);
-    mValidControlNumbers.push_back(ControlBreath);
-    mValidControlNumbers.push_back(ControlFootController);
-    mValidControlNumbers.push_back(ControlChannelVolume);
-    mValidControlNumbers.push_back(ControlBalance);
-    mValidControlNumbers.push_back(ControlUndefined1);
-    mValidControlNumbers.push_back(ControlPan);
-    mValidControlNumbers.push_back(ControlExpressionController);
-    mValidControlNumbers.push_back(ControlEffectControl1);
-    mValidControlNumbers.push_back(ControlEffectControl2);
-    mValidControlNumbers.push_back(ControlUndefined2);
-    mValidControlNumbers.push_back(ControlUndefined3);
-    mValidControlNumbers.push_back(ControlGeneralPurposeController1);
-    mValidControlNumbers.push_back(ControlGeneralPurposeController2);
-    mValidControlNumbers.push_back(ControlGeneralPurposeController3);
-    mValidControlNumbers.push_back(ControlGeneralPurposeController4);
-    mValidControlNumbers.push_back(ControlUndefined4);
-    mValidControlNumbers.push_back(ControlUndefined5);
-    mValidControlNumbers.push_back(ControlUndefined6);
-    mValidControlNumbers.push_back(ControlUndefined7);
-    mValidControlNumbers.push_back(ControlUndefined8);
-    mValidControlNumbers.push_back(ControlUndefined9);
-    mValidControlNumbers.push_back(ControlUndefined10);
-    mValidControlNumbers.push_back(ControlUndefined11);
-    mValidControlNumbers.push_back(ControlUndefined12);
-    mValidControlNumbers.push_back(ControlUndefined13);
-    mValidControlNumbers.push_back(ControlUndefined14);               
-    mValidControlNumbers.push_back(ControlUndefined15);
+    
+    switch (messageType)
+    {
+            
+        case MessageTypeNoteOff:
+            return 0x80;
+            
+        case MessageTypeNoteOn:
+            return 0x90;
+            
+        case MessageTypePolyphonicAftertouch:
+            return 0xA0;
+            
+        case MessageTypeControlChange:
+            return 0xB0;
+            
+        case MessageTypeProgramChange:
+            return 0xC0;
+            
+        case MessageTypeChannelAftertouch:
+            return 0xD0;
+            
+        case MessageTypePitchWheel:
+            return 0xE0;
+            
+        default:
+            break;
+    }
+    
+    throw VSCInvalidArgumentException("Invalid message type");
 }
 
-bool VSC::MIDI::MessageGenerator::controlNumberIsValid(const ControlNumber& number)
+VSC::MIDI::MessageType VSC::MIDI::messageTypeForStatusByte(unsigned char statusByte)
 {
-    ControlNumbers::iterator it = std::find(mValidControlNumbers.begin(), mValidControlNumbers.end(), number);
-    return it != mValidControlNumbers.end();
+    unsigned char maskedByte = statusByte & 0xF0;
+    
+    switch (maskedByte)
+    {
+            
+        case 0x80:
+            return MessageTypeNoteOff;
+            
+        case 0x90:
+            return MessageTypeNoteOn;
+            
+        case 0xA0:
+            return MessageTypePolyphonicAftertouch;
+            
+        case 0xB0:
+            return MessageTypeControlChange;
+            
+        case 0xC0:
+            return MessageTypeProgramChange;
+            
+        case 0xD0:
+            return MessageTypeChannelAftertouch;
+            
+        case 0xE0:
+            return MessageTypePitchWheel;
+            
+        default:
+            break;
+    }
+    
+    throw VSCInvalidArgumentException("Invalid status byte");
 }
 
-VSC::MIDI::Message VSC::MIDI::MessageGenerator::messageForNote(unsigned int channel,
-                                                               unsigned int pitch,
-                                                               unsigned int velocity,
-                                                               bool on) {
-    
-    if (channel > 16 || channel < 1) 
-        throw VSCInvalidArgumentException("Channel must be > 0 and < 17");
-    if (pitch > 127) 
-        throw VSCInvalidArgumentException("Pitch must < 128");
-    if (velocity > 127) 
-        throw VSCInvalidArgumentException("Velocity must < 128");
-    
-    Message message (3, 0);
-    
-    unsigned int status;
-    
-    if (on) status = 143;
-    else status = 127;
-    
-    status += channel;
-    
-    message[0] = status;
-    message[1] = pitch;
-    message[2] = velocity;
-    
-    return message;
-    
-}
 
-VSC::MIDI::Message VSC::MIDI::MessageGenerator::messageForPolyphonicAftertouch(unsigned int channel,
-                                                                               unsigned int pitch,
-                                                                               unsigned int pressure) {
-    
-    if (channel > 16 || channel < 1) 
-        throw VSCInvalidArgumentException("Channel must be > 0 and < 17");
-    if (pitch > 127) 
-        throw VSCInvalidArgumentException("Pitch must < 128");
-    if (pressure > 127) 
-        throw VSCInvalidArgumentException("Pressure must < 128");
-    
-    Message message (3, 0);
-    
-    unsigned int status = 159;
-    
-    status += channel;
-    
-    message[0] = status;
-    message[1] = pitch;
-    message[2] = pressure;
-    
-    return message;
-    
-}
-
-VSC::MIDI::Message VSC::MIDI::MessageGenerator::messageForChannelAftertouch(unsigned int channel, unsigned int pressure) {
-    
-    if (channel > 16 || channel < 1) 
-        throw VSCInvalidArgumentException("Channel must be > 0 and < 17");
-    if (pressure > 127) 
-        throw VSCInvalidArgumentException("Pressure must < 128");
-    
-    Message message (3, 0);
-    
-    unsigned int status = 207;
-    
-    status += channel;
-    
-    message[0] = status;
-    message[1] = pressure;
-    message[2] = 0;
-    
-    return message;
-    
-}
-
-VSC::MIDI::Message VSC::MIDI::MessageGenerator::messageForControlChange(unsigned int channel, ControlNumber control, unsigned int value) {
-    
-    if (channel > 16 || channel < 1) 
-        throw VSCInvalidArgumentException("Channel must be > 0 and < 17");
-    if (control > 127) 
-        throw VSCInvalidArgumentException("Control must < 128");
-    if (value > 127) 
-        throw VSCInvalidArgumentException("Pressure must < 128");
-    
-    Message message (3, 0);
-    
-    unsigned int status = 175;
-    
-    status += channel;
-    
-    message[0] = status;
-    message[1] = control;
-    message[2] = value;
-    
-    return message;
-    
-}
-
-VSC::MIDI::MessagePair VSC::MIDI::MessageGenerator::messagePairForControlChange(unsigned int channel, ControlNumber control, Float value)
+VSC::MIDI::Message VSC::MIDI::messageFromDescription(MessageDescription::SPtr description)
 {
-    return MessagePair(Message(3, 0), Message(3, 0));
+    
+    if(!description) throw VSCInvalidArgumentException("Invalid description");
+    
+    unsigned char statusByte = statusByteForMessageType(description->type);
+    
+    switch (statusByte)
+    {
+            
+        case MessageTypeNoteOff:
+        {
+            Message message(3,0);
+            statusByte += description->parameterMap[MessageParameterKeyChannel];
+            message[0] = statusByte;
+            message[1] = description->parameterMap[MessageParameterKeyPitch];
+            message[2] = description->parameterMap[MessageParameterKeyVelocity];
+            return message;
+        }
+        case MessageTypeNoteOn:
+        {
+            Message message(3,0);
+            statusByte += description->parameterMap[MessageParameterKeyChannel];
+            message[0] = statusByte;
+            message[1] = description->parameterMap[MessageParameterKeyPitch];
+            message[2] = description->parameterMap[MessageParameterKeyVelocity];
+            return message;
+        }
+        case MessageTypePolyphonicAftertouch:
+        {
+            Message message(3,0);
+            statusByte += description->parameterMap[MessageParameterKeyChannel];
+            message[0] = statusByte;
+            message[1] = description->parameterMap[MessageParameterKeyPitch];
+            message[2] = description->parameterMap[MessageParameterKeyPressure];
+            return message;
+        }
+        case MessageTypeControlChange:
+        {
+            Message message(3,0);
+            statusByte += description->parameterMap[MessageParameterKeyChannel];
+            message[0] = statusByte;
+            message[1] = description->parameterMap[MessageParameterKeyProgram];
+            message[2] = 0;
+            return message;
+        }
+        case MessageTypeProgramChange:
+        {
+            Message message(3,0);
+            statusByte += description->parameterMap[MessageParameterKeyChannel];
+            message[0] = statusByte;
+            message[1] = description->parameterMap[MessageParameterKeyControlNumber];
+            message[2] = description->parameterMap[MessageParameterKeyValue];
+            return message;
+        }
+        case MessageTypeChannelAftertouch:
+        {
+            Message message(3,0);
+            statusByte += description->parameterMap[MessageParameterKeyChannel];
+            message[0] = statusByte;
+            message[1] = description->parameterMap[MessageParameterKeyPressure];
+            message[2] = 0;
+            return message;
+        }
+        case MessageTypePitchWheel:
+        {
+            Message message(3,0);
+            statusByte += description->parameterMap[MessageParameterKeyChannel];
+            message[0] = statusByte;
+            message[1] = description->parameterMap[MessageParameterKeyValueLSB];
+            message[2] = description->parameterMap[MessageParameterKeyValueMSB];
+            return message;
+        }
+            
+        default:
+            break;
+    }
+    
+    throw VSCInvalidArgumentException("Invalid description");
+    
 }
 
-
-VSC::MIDI::Message VSC::MIDI::MessageGenerator::messageForPitchWheel(unsigned int channel, Float value)
+VSC::MIDI::MessageDescription::SPtr VSC::MIDI::descriptionFromMessage(const Message& message)
 {
-    return Message(3, 0);
+    
 }
 
 
-bool VSC::MIDI::MessageGenerator::floatValueToBytePair(Float value, unsigned char& MSB, unsigned char& LSB)
-{
-    return false;
-}
-
-#pragma mark - MessageAnalyzer
-
-VSC::MIDI::MessageType VSC::MIDI::MessageAnalyzer::messageTypeForMessage(const Message& message)
-{
-    return MessageTypeNone;
-}
-
-bool VSC::MIDI::MessageAnalyzer::dissectNoteOnMessage(const Message& message,
-                                                      unsigned int& channel, unsigned int& pitch, unsigned int& velocity)
+bool VSC::MIDI::floatValueToBytePair(Float value, unsigned char& MSB, unsigned char& LSB)
 {
     return false;
 }
 
-bool VSC::MIDI::MessageAnalyzer::dissectNoteOffMessage(const Message& message,
-                                                       unsigned int& channel, unsigned int& pitch, unsigned int& velocity)
-{
-    return false;
-}
+#pragma mark - Message Analysis
 
-bool VSC::MIDI::MessageAnalyzer::dissectPolyphonicAftertouchMessage(const Message& message,
-                                                                    unsigned int& channel, unsigned int& pitch, unsigned int& pressure)
+VSC::MIDI::MessageDescription::SPtr VSC::MIDI::messageDescriptionForMessage(const Message& message)
 {
-    return false;
-}
-
-bool VSC::MIDI::MessageAnalyzer::dissectChannelAftertouchMessage(const Message& message,
-                                                                 unsigned int& channel, unsigned int& pressure)
-{
-    return false;
-}
-
-bool VSC::MIDI::MessageAnalyzer::dissectControlChangeMessage(const Message& message,
-                                                             ControlNumber& control, Float& value)
-{
-    return false;
-}
-
-bool VSC::MIDI::MessageAnalyzer::dissectPitchWheelMessage(const Message& message,
-                                                          unsigned int& channel, Float& value)
-{
-    return false;
+    return VSC::MIDI::MessageDescription::SPtr();
 }
 
 #pragma mark - PortManager
