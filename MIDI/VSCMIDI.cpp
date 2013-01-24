@@ -1,11 +1,3 @@
-/*
- *  VSCBoost.cpp
- *  EnveloppeEditor
- *
- *  Created by Jonathan Thorpe on 26/08/2011.
- *  Copyright 2011 JBAT. All rights reserved.
- *
- */
 
 #include "VSCMIDI.h"
 #include "VSCException.h"
@@ -82,6 +74,7 @@ namespace VSC
         
         unsigned char statusByteForMessageType(MessageType messageType);
         MessageType messageTypeForStatusByte(unsigned char statusByte);
+        unsigned char channelForStatusByte(unsigned char statusByte);
     }
 }
 
@@ -196,7 +189,6 @@ unsigned char VSC::MIDI::statusByteForMessageType(MessageType messageType)
     
     switch (messageType)
     {
-            
         case MessageTypeNoteOff:
             return 0x80;
             
@@ -260,6 +252,11 @@ VSC::MIDI::MessageType VSC::MIDI::messageTypeForStatusByte(unsigned char statusB
     throw VSCInvalidArgumentException("Invalid status byte");
 }
 
+unsigned char VSC::MIDI::channelForStatusByte(unsigned char statusByte)
+{
+    return statusByte & 0x0F;
+}
+
 
 VSC::MIDI::Message VSC::MIDI::messageFromDescription(MessageDescription::SPtr description)
 {
@@ -298,7 +295,7 @@ VSC::MIDI::Message VSC::MIDI::messageFromDescription(MessageDescription::SPtr de
             message[2] = description->parameterMap[MessageParameterKeyPressure];
             return message;
         }
-        case MessageTypeControlChange:
+        case MessageTypeProgramChange:
         {
             Message message(3,0);
             statusByte += description->parameterMap[MessageParameterKeyChannel];
@@ -307,7 +304,7 @@ VSC::MIDI::Message VSC::MIDI::messageFromDescription(MessageDescription::SPtr de
             message[2] = 0;
             return message;
         }
-        case MessageTypeProgramChange:
+        case MessageTypeControlChange:
         {
             Message message(3,0);
             statusByte += description->parameterMap[MessageParameterKeyChannel];
@@ -346,19 +343,87 @@ VSC::MIDI::Message VSC::MIDI::messageFromDescription(MessageDescription::SPtr de
 VSC::MIDI::MessageDescription::SPtr VSC::MIDI::descriptionFromMessage(const Message& message)
 {
 
+    BOOST_ASSERT(message.size() > 0);
+    if (message.size() == 0) return MessageDescription::SPtr();
+    
+    unsigned char statusByte = message[0];
+    MessageType messageType = messageTypeForStatusByte(message[0]);
+    
+    MessageDescription::SPtr description(new MessageDescription(messageType));
+    
+    /*
+     *  Common treatment for voice messages
+     */
+    
+    switch (messageType)
+    {
+        case MessageTypeNoteOff:
+        case MessageTypeNoteOn:
+        case MessageTypePolyphonicAftertouch:
+        case MessageTypeControlChange:
+        case MessageTypeProgramChange:
+        case MessageTypeChannelAftertouch:
+        case MessageTypePitchWheel:
+            BOOST_ASSERT(message.size() == 3);
+            if (message.size() < 3)
+                return MessageDescription::SPtr();
+            description->parameterMap[MessageParameterKeyChannel] = channelForStatusByte(statusByte);
+        default:
+            break;
+    }
+    
+    /*
+     *  Type specific 
+     */
+    
+    switch (messageType)
+    {
+        case MessageTypeNoteOff:
+        {
+            description->parameterMap[MessageParameterKeyPitch] = message[1];
+            description->parameterMap[MessageParameterKeyVelocity] = message[2];
+        }
+        case MessageTypeNoteOn:
+        {
+            description->parameterMap[MessageParameterKeyPitch] = message[1];
+            description->parameterMap[MessageParameterKeyVelocity] = message[2];
+        }
+        case MessageTypePolyphonicAftertouch:
+        {
+            description->parameterMap[MessageParameterKeyPitch] = message[1];
+            description->parameterMap[MessageParameterKeyPressure] = message[2];
+        }
+        case MessageTypeProgramChange:
+        {
+            description->parameterMap[MessageParameterKeyProgram] = message[1];
+        }
+        case MessageTypeControlChange:
+        {
+            description->parameterMap[MessageParameterKeyControlNumber] = message[1];
+            description->parameterMap[MessageParameterKeyValue] = message[2];
+        }
+        case MessageTypeChannelAftertouch:
+        {
+            description->parameterMap[MessageParameterKeyPressure] = message[1];
+        }
+        case MessageTypePitchWheel:
+        {
+            description->parameterMap[MessageParameterKeyValueLSB] = message[1];
+            description->parameterMap[MessageParameterKeyValueMSB] = message[2];
+        }
+            
+        default:
+            break;
+    }
+    
+    return description;
+
 }
 
 
 bool VSC::MIDI::floatValueToBytePair(Float value, unsigned char& MSB, unsigned char& LSB)
 {
     return false;
-}
-
-#pragma mark - Message Analysis
-
-VSC::MIDI::MessageDescription::SPtr VSC::MIDI::messageDescriptionForMessage(const Message& message)
-{
-    return VSC::MIDI::MessageDescription::SPtr();
 }
 
 #pragma mark - PortManager
