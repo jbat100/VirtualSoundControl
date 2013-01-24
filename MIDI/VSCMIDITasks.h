@@ -58,9 +58,11 @@ namespace VSC {
             
             class Payload : public Task::Payload {
             public:
+                Payload();
                 typedef boost::shared_ptr<Payload> SPtr;
                 Output::SPtr midiOutput;
                 MessageDescription::SPtr messageDescription;
+                TimeDuration delay;
             };
             
             MIDISendMessageTask(Task::Payload::SPtr payload);
@@ -70,10 +72,6 @@ namespace VSC {
             virtual bool stepExecution(void);
             
         };
-        
-        
-        
-
         
     }
     

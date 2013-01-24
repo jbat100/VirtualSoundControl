@@ -50,9 +50,7 @@ namespace VSC {
         
         /*
          *  A detailed table of midi messages can be found here http://www.midi.org/techspecs/midimessages.php
-         *
          *  A bit of background information from wiki of MIDI messages http://en.wikipedia.org/wiki/MIDI_1.0
-         *
          */
         
         enum ControlNumber {

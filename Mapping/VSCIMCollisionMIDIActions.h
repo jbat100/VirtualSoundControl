@@ -1,9 +1,3 @@
-//
-//  VSCIMAction.h
-//
-//  Created by Jonathan Thorpe on 4/21/12.
-//  Copyright (c) 2012 JBAT. All rights reserved.
-//
 
 #ifndef _VSC_IM_COLLISION_MIDI_ACTION_H_
 #define _VSC_IM_COLLISION_MIDI_ACTION_H_
@@ -84,8 +78,7 @@ namespace VSC {
             
             virtual void createDefaultMappings();
             
-            virtual Task::SPtr createTaskForCollision(OB::Element_SPtr element,
-                                                      OB::Collision_SPtr collision);
+            virtual Tasks generateTasksForCollision(OB::Element_SPtr element, OB::Collision_SPtr collision);
         };
         
         /*
@@ -101,8 +94,7 @@ namespace VSC {
             
             virtual void createDefaultMappings();
             
-            virtual Task::SPtr createTaskForCollision(OB::Element_SPtr element,
-                                                      OB::Collision_SPtr collision);
+            virtual Tasks generateTasksForCollision(OB::Element_SPtr element, OB::Collision_SPtr collision);
         };
         
         /*
@@ -118,8 +110,7 @@ namespace VSC {
             
             virtual void createDefaultMappings();
             
-            virtual Task::SPtr createTaskForCollision(OB::Element_SPtr element,
-                                                      OB::Collision_SPtr collision);
+            virtual Tasks generateTasksForCollision(OB::Element_SPtr element, OB::Collision_SPtr collision);
             
         };
         
@@ -132,8 +123,7 @@ namespace VSC {
             
             virtual void createDefaultMappings();
             
-            virtual Task::SPtr createTaskForCollision(OB::Element_SPtr element,
-                                                      OB::Collision_SPtr collision);
+            virtual Tasks generateTasksForCollision(OB::Element_SPtr element, OB::Collision_SPtr collision);
             
         };
         

@@ -5,7 +5,13 @@
 #include "VSCOBElement.h"
 #include "VSCOBCollision.h"
 
-VSC::Task::SPtr VSC::IM::CollisionVoidAction::createTaskForCollision(OB::Element::SPtr element, OB::Collision::SPtr collision)
+VSC::Tasks VSC::IM::CollisionAction::generateTasks(void)
 {
-    return Task::SPtr();
+    return this->generateTasksForCollision(OB::Element::SPtr(), OB::Collision::SPtr());
+}
+
+VSC::Tasks VSC::IM::CollisionVoidAction::generateTasksForCollision(OB::Element::SPtr element, OB::Collision::SPtr collision)
+{
+    Tasks tasks;
+    return tasks;
 }

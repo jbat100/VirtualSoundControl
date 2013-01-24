@@ -1,7 +1,3 @@
-//
-//  Created by Jonathan Thorpe on 4/21/12.
-//  Copyright (c) 2012 JBAT. All rights reserved.
-//
 
 #ifndef _VSC_IM_ACTION_H_
 #define _VSC_IM_ACTION_H_
@@ -35,6 +31,8 @@ namespace VSC {
             
             TaskQueue::SPtr getTaskQueue(void) {return mTaskQueue;}
             void setTaskQueue(TaskQueue::SPtr queue) {mTaskQueue = queue;}
+            
+            virtual Tasks generateTasks();
             
         private:
             

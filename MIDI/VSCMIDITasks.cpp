@@ -31,95 +31,11 @@ VSC::TaskQueue::SPtr VSC::MIDI::SingletonMIDITaskQueue()
     return midiTaskQueue;
 }
 
-// MARK: Note On
-
-VSC::MIDI::MIDINoteOnTask::MIDINoteOnTask(Task::Payload::SPtr payload) : MIDITask(payload)
-{
-    MIDINoteOnTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDINoteOnTask::Payload>(payload);
-    
-    if (!midiPayload)
-    {
-        throw VSCInvalidArgumentException("Payload for MIDINoteOnTask should be MIDINoteOnTask::Payload");
-    }
-}
-
-bool VSC::MIDI::MIDINoteOnTask::stepExecution(void)
-{
-    VSC::Task::stepExecution();
-    
-    MIDINoteOnTask::Payload::SPtr midiPayload = boost::static_pointer_cast<MIDINoteOnTask::Payload>(this->getPayload());
-    
-    midiPayload->midiOutput->sendNoteOn(midiPayload->channel, midiPayload->pitch, midiPayload->velocity);
-    this->setState(StateEnded);
-    
-    return true;
-}
-
-// MARK: Note Off
-
-VSC::MIDI::MIDINoteOffTask::MIDINoteOffTask(Task::Payload::SPtr payload) : MIDITask(payload)
-{
-    MIDINoteOffTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDINoteOffTask::Payload>(payload);
-    
-    if (!midiPayload)
-    {
-        throw VSCInvalidArgumentException("Payload for MIDINoteOffTask should be MIDINoteOffTask::Payload");
-    }
-}
-
-bool VSC::MIDI::MIDINoteOffTask::stepExecution(void)
-{
-    VSC::Task::stepExecution();
-    
-    MIDINoteOffTask::Payload::SPtr midiPayload = boost::static_pointer_cast<MIDINoteOffTask::Payload>(this->getPayload());
-    
-    midiPayload->midiOutput->sendNoteOff(midiPayload->channel, midiPayload->pitch, midiPayload->velocity);
-    this->setState(StateEnded);
-    
-    return true;
-}
-
-// MARK: Note On And Off
-
-VSC::MIDI::MIDINoteOnAndOffTask::MIDINoteOnAndOffTask(Task::Payload::SPtr payload) : MIDITask(payload),
-mSentNoteOn(false)
-{
-    MIDINoteOnAndOffTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDINoteOnAndOffTask::Payload>(payload);
-    
-    if (!midiPayload)
-    {
-        throw VSCInvalidArgumentException("Payload for MIDINoteOnAndOffTask should be MIDINoteOnAndOffTask::Payload");
-    }
-}
-
-
-bool VSC::MIDI::MIDINoteOnAndOffTask::stepExecution(void)
-{
-    
-    MIDINoteOnAndOffTask::Payload::SPtr midiPayload = boost::static_pointer_cast<MIDINoteOnAndOffTask::Payload>(this->getPayload());
-    
-    if (!mSentNoteOn)
-    {
-        midiPayload->midiOutput->sendNoteOn(midiPayload->channel, midiPayload->pitch, midiPayload->onVelocity);
-        mSentNoteOn = true;
-    }
-    
-    if (midiPayload->duration < this->getDurationSinceExecutionTime())
-    {
-        midiPayload->midiOutput->sendNoteOff(midiPayload->channel, midiPayload->pitch, midiPayload->offVelocity);
-        this->setState(StateEnded);
-        
-        return true;
-    }
-
-    return false;
-}
-
 // MARK: Control Change
 
-VSC::MIDI::MIDIControlChangeTask::MIDIControlChangeTask(Task::Payload::SPtr payload) : MIDITask(payload)
+VSC::MIDI::MIDISendMessageTask::MIDISendMessageTask(Task::Payload::SPtr payload) : MIDITask(payload)
 {
-    MIDIControlChangeTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDIControlChangeTask::Payload>(payload);
+    MIDISendMessageTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDISendMessageTask::Payload>(payload);
     BOOST_ASSERT(midiPayload);
     if (!midiPayload)
     {
@@ -127,13 +43,18 @@ VSC::MIDI::MIDIControlChangeTask::MIDIControlChangeTask(Task::Payload::SPtr payl
     }
 }
 
-bool VSC::MIDI::MIDIControlChangeTask::stepExecution(void)
+bool VSC::MIDI::MIDISendMessageTask::stepExecution(void)
 {
-    MIDIControlChangeTask::Payload::SPtr midiPayload = boost::static_pointer_cast<MIDIControlChangeTask::Payload>(this->getPayload());
-    BOOST_ASSERT(midiPayload);
-    midiPayload->midiOutput->sendControlChange(midiPayload->channel, midiPayload->controlNumber, midiPayload->value);
-    this->setState(StateEnded);
+    MIDISendMessageTask::Payload::SPtr payload = boost::static_pointer_cast<MIDISendMessageTask::Payload>(this->getPayload());
+    BOOST_ASSERT(payload);
     
-    return true;
+    if (this->getExecutionStartTime() + payload->delay >= CurrentTime())
+    {
+        payload->midiOutput->sendMessage(payload->messageDescription);
+        this->setState(StateEnded);
+        return true;
+    }
+    
+    return false;
 }
 

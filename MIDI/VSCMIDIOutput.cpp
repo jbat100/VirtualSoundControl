@@ -13,8 +13,6 @@ VSC::MIDI::Output::Output(const OutputPort& outputPort) : mState(StateClosed) {
     
     this->setOutputPort(outputPort); // will throw if does not succeed
     
-    mMessageGenerator = MessageGenerator::SPtr(new MessageGenerator);
-    
     mValidControlNumbers.push_back(ControlBankSelect);
     mValidControlNumbers.push_back(ControlModulationWheel);
     mValidControlNumbers.push_back(ControlBreath);
@@ -165,49 +163,23 @@ const VSC::MIDI::OutputPort& VSC::MIDI::Output::getOutputPort(void) const {
     return mOutputPort;
 }
 
-void VSC::MIDI::Output::setOutputPort(OutputPort const& port) {
+void VSC::MIDI::Output::setOutputPort(OutputPort const& port)
+{
     mOutputPort = port;
 }
 
-bool VSC::MIDI::Output::sendNoteOn(unsigned int channel, unsigned int pitch, unsigned int velocity)
+bool VSC::MIDI::Output::sendMessage(MessageDescription::SPtr description)
 {
-    Message m = mMessageGenerator->messageForNote(channel, pitch, velocity, true);
-    this->sendMessage(m);
-    
-    return true;
-}
-
-bool VSC::MIDI::Output::sendNoteOff(unsigned int channel, unsigned int pitch, unsigned int velocity)
-{
-    Message m = mMessageGenerator->messageForNote(channel, pitch, velocity, false);
-    this->sendMessage(m);
-    
-    return true;
-}
-
-bool VSC::MIDI::Output::sendControlChange(unsigned int channel, ControlNumber controlNumber, unsigned int value)
-{
-    Message m = mMessageGenerator->messageForControlChange(channel, controlNumber, value);
-    this->sendMessage(m);
-    
-    return true;
-}
-
-bool VSC::MIDI::Output::sendPolyphonicAftertouch(unsigned int channel, unsigned int pitch, unsigned int pressure)
-{
-    return false;
-}
-
-bool VSC::MIDI::Output::sendChannelAftertouch(unsigned int channel, unsigned int pressure)
-{
-    return false;
+    Message message = messageFromDescription(description);
+    return this->sendMessage(message);
 }
 
 bool VSC::MIDI::Output::sendMessage(Message& m) {
     
     boost::lock_guard<boost::mutex> lock(mMutex);
     
-    if (mMIDIOut && mOutputPort != OutputPortVoid) {
+    if (mMIDIOut && mOutputPort != OutputPortVoid)
+    {
         std::cout << *this << " sending " << messageDescription(m) << std::endl;
         mMIDIOut->sendMessage(&m);
         return true;
@@ -217,7 +189,8 @@ bool VSC::MIDI::Output::sendMessage(Message& m) {
     
 }
 
-std::ostream& VSC::MIDI::operator<<(std::ostream& output, const Output& p) {
+std::ostream& VSC::MIDI::operator<<(std::ostream& output, const Output& p)
+{
     output << "VSCMIDIOutput (" << p.getOutputPort() << ")";
     return output;
 }

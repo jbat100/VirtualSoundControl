@@ -33,8 +33,8 @@ namespace VSC {
             
             virtual void createDefaultMappings() {}
             
-            virtual Task::SPtr createTaskForCollision(OB::Element_SPtr element,
-                                                      OB::Collision_SPtr collision) = 0;
+            virtual Tasks generateTasks();
+            virtual Tasks generateTasksForCollision(OB::Element_SPtr element, OB::Collision_SPtr collision) = 0;
             
         private:
             
@@ -59,8 +59,7 @@ namespace VSC {
             
             virtual void createDefaultMappings() {}
             
-            virtual Task::SPtr createTaskForCollision(OB::Element_SPtr element,
-                                                      OB::Collision_SPtr collision);
+            virtual Tasks generateTasksForCollision(OB::Element_SPtr element, OB::Collision_SPtr collision);
             
         };
 
