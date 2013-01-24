@@ -345,7 +345,7 @@ VSC::MIDI::Message VSC::MIDI::messageFromDescription(MessageDescription::SPtr de
 
 VSC::MIDI::MessageDescription::SPtr VSC::MIDI::descriptionFromMessage(const Message& message)
 {
-    
+
 }
 
 
