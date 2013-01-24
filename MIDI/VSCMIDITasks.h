@@ -1,11 +1,3 @@
-/*
- *  VSCBoost.h
- *  EnveloppeEditor
- *
- *  Created by Jonathan Thorpe on 26/08/2011.
- *  Copyright 2011 JBAT. All rights reserved.
- *
- */
 
 #ifndef _VSC_MIDI_TASK_H_
 #define _VSC_MIDI_TASK_H_
@@ -62,7 +54,7 @@ namespace VSC {
                 typedef boost::shared_ptr<Payload> SPtr;
                 Output::SPtr midiOutput;
                 MessageDescription::SPtr messageDescription;
-                TimeDuration delay;
+                TimeDuration timeOffset;
             };
             
             MIDISendMessageTask(Task::Payload::SPtr payload);

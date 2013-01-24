@@ -7,14 +7,17 @@
 #include "VSCMIDITasks.h"
 #include "VSCException.h"
 
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/assert.hpp>
 
 boost::once_flag midiSingletonInitilizedFlag = BOOST_ONCE_INIT;
 static VSC::TaskQueue::SPtr midiTaskQueue = VSC::TaskQueue::SPtr();
 
-namespace VSC {
-    namespace MIDI {
+namespace VSC
+{
+    namespace MIDI
+    {
         void InitialiseSingletonMIDITaskQueue();
     }
 }
@@ -31,7 +34,13 @@ VSC::TaskQueue::SPtr VSC::MIDI::SingletonMIDITaskQueue()
     return midiTaskQueue;
 }
 
-// MARK: Control Change
+VSC::MIDI::MIDISendMessageTask::Payload::Payload() :
+midiOutput(Output::SPtr()),
+messageDescription(MessageDescription::SPtr(new MessageDescription)),
+timeOffset(boost::posix_time::seconds(0))
+{
+    
+}
 
 VSC::MIDI::MIDISendMessageTask::MIDISendMessageTask(Task::Payload::SPtr payload) : MIDITask(payload)
 {
@@ -48,7 +57,7 @@ bool VSC::MIDI::MIDISendMessageTask::stepExecution(void)
     MIDISendMessageTask::Payload::SPtr payload = boost::static_pointer_cast<MIDISendMessageTask::Payload>(this->getPayload());
     BOOST_ASSERT(payload);
     
-    if (this->getExecutionStartTime() + payload->delay >= CurrentTime())
+    if (this->getExecutionStartTime() + payload->timeOffset >= CurrentTime())
     {
         payload->midiOutput->sendMessage(payload->messageDescription);
         this->setState(StateEnded);
