@@ -18,10 +18,10 @@
  *  Position/Rotation
  */
 
-@property (weak) VSCOSXKeyed3FieldView* position3FieldView;
-@property (weak) VSCOSXKeyed3FieldView* velocity3FieldView;
-@property (weak) VSCOSXKeyed4FieldView* rotation4FieldView;
-@property (weak) VSCOSXKeyedCheckBoxView* immobilizedCheckBoxView;
+@property (nonatomic, strong) VSCOSXKeyed3FieldView* positionFieldView;
+@property (nonatomic, strong) VSCOSXKeyed3FieldView* velocityFieldView;
+@property (nonatomic, strong) VSCOSXKeyed4FieldView* rotationFieldView;
+@property (nonatomic, strong) VSCOSXKeyedCheckBoxView* immobilizedCheckBoxView;
 
 -(IBAction) immobilized:(id)sender;
 

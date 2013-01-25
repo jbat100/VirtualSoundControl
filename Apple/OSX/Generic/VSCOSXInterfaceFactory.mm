@@ -11,6 +11,7 @@
 #import "VSCOSXKeyedCheckBoxView.h"
 #import "VSCOSXKeyedSliderView.h"
 #import "VSCOSXKeyed3FieldView.h"
+#import "VSCOSXKeyed4FieldView.h"
 
 #include <boost/assert.hpp>
 
@@ -90,6 +91,27 @@
     for(id object in objects)
     {
         if([object isKindOfClass:[VSCOSXKeyed3FieldView class]])
+        {
+            v = object;
+            v.identifier = identifier;
+            break;
+        }
+    }
+    BOOST_ASSERT(v);
+    v.translatesAutoresizingMaskIntoConstraints = NO;
+    return v;
+}
+
+-(VSCOSXKeyed4FieldView*) newVSCOSXKeyed4FieldViewWithOwner:(id)owner
+{
+    NSString* identifier = [[VSCOSXKeyed4FieldView class] description];
+    BOOST_ASSERT(self.keyed4FieldViewNib);
+    NSArray *objects = nil;
+    VSCOSXKeyed4FieldView* v = nil;
+    [self.keyed4FieldViewNib instantiateNibWithOwner:owner topLevelObjects:&objects];
+    for(id object in objects)
+    {
+        if([object isKindOfClass:[VSCOSXKeyed4FieldView class]])
         {
             v = object;
             v.identifier = identifier;

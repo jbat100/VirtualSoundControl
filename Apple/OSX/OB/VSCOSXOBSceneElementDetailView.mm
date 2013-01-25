@@ -8,6 +8,9 @@
 
 #import "VSCOSXOBSceneElementDetailView.h"
 #import "VSCOSXOBSceneElementController.h"
+#import "VSCOSXInterfaceFactory.h"
+
+#import "VSCOSXKeyedCheckBoxView.h"
 #import "VSCOSXKeyed3FieldView.h"
 #import "VSCOSXKeyed4FieldView.h"
 
@@ -66,7 +69,67 @@
 
 -(void) awakeFromNib
 {
+    VSCOSXInterfaceFactory* factory = [VSCOSXInterfaceFactory defaultFactory];
     
+    NSMutableArray* viewsForHorizontalConstraints = [NSMutableArray array];
+    NSMutableString* verticalVisualFormat = [NSMutableString stringWithString:@"V:|"];
+    
+    /*
+     *  Title
+     */
+    
+    /*
+     *  Check Boxes
+     */
+    
+    self.immobilizedCheckBoxView = [factory newKeyedCheckBoxViewWithOwner:self.elementController];
+    [self addSubview:self.immobilizedCheckBoxView];
+    [self.immobilizedCheckBoxView.checkBoxButton bind:@"value" toObject:self.elementController withKeyPath:@"immobilized" options:nil];
+    [self.immobilizedCheckBoxView.checkBoxButton setTitle:@"Immobilized"];
+    NSView* immobilizedCB = self.immobilizedCheckBoxView;
+    [viewsForHorizontalConstraints addObject:immobilizedCB];
+    [verticalVisualFormat appendString:@"-[immobilizedCB]"];
+    
+    /*
+     *  Field Views
+     */
+    
+    self.positionFieldView = [factory newKeyed3FieldViewWithOwner:self.elementController];
+    [self addSubview:self.positionFieldView];
+    [self.positionFieldView.labelTextField setStringValue:@"Position"];
+    NSView* positionFV = self.positionFieldView;
+    [viewsForHorizontalConstraints addObject:positionFV];
+    [verticalVisualFormat appendString:@"-2-[positionFV]"];
+    
+    self.velocityFieldView = [factory newKeyed3FieldViewWithOwner:self.elementController];
+    [self addSubview:self.velocityFieldView];
+    [self.velocityFieldView.labelTextField setStringValue:@"Velocity"];
+    NSView* velocityFV = self.velocityFieldView;
+    [viewsForHorizontalConstraints addObject:velocityFV];
+    [verticalVisualFormat appendString:@"-2-[velocityFV]"];
+    
+    self.rotationFieldView = [factory newKeyed4FieldViewWithOwner:self.elementController];
+    [self addSubview:self.rotationFieldView];
+    [self.rotationFieldView.labelTextField setStringValue:@"Rotation"];
+    NSView* rotationFV = self.rotationFieldView;
+    [viewsForHorizontalConstraints addObject:rotationFV];
+    [verticalVisualFormat appendString:@"-2-[rotationFV]"];
+    
+    [verticalVisualFormat appendString:@"-|"];
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(positionFV);
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:verticalVisualFormat
+                                                                 options:0
+                                                                 metrics:nil
+                                                                   views:viewsDictionary]];
+    
+    for (NSView* viewForConstraint in viewsForHorizontalConstraints)
+    {
+        NSDictionary *localViewsDictionary = NSDictionaryOfVariableBindings(viewForConstraint);
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[viewForConstraint]-|"
+                                                                     options:0
+                                                                     metrics:nil
+                                                                       views:localViewsDictionary]];
+    }
     
     
     NSArray* numberTextFields = [self allNumberTextFields];
@@ -95,9 +158,9 @@
 -(NSArray*) allNumberTextFields
 {
     NSMutableArray* textFields = [NSMutableArray arrayWithCapacity:10];
-    [textFields addObjectsFromArray:[self.position3FieldView allValueTextFields]];
-    [textFields addObjectsFromArray:[self.velocity3FieldView allValueTextFields]];
-    [textFields addObjectsFromArray:[self.rotation4FieldView allValueTextFields]];
+    [textFields addObjectsFromArray:[self.positionFieldView allValueTextFields]];
+    [textFields addObjectsFromArray:[self.velocityFieldView allValueTextFields]];
+    [textFields addObjectsFromArray:[self.rotationFieldView allValueTextFields]];
     return [NSArray arrayWithArray:textFields];
 }
 

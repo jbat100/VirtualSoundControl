@@ -44,17 +44,22 @@ void VSC::IM::CollisionEventChain::perform(OB::Element::SPtr element, OB::Collis
         CollisionAction::SPtr action = boost::dynamic_pointer_cast<CollisionAction>(event);
         if (action)
         {
-            Task::SPtr task = action->createTaskForCollision(element, collision);
-            BOOST_ASSERT(task);
-            if (task)
+            Tasks tasks = action->generateTasksForCollision(element, collision);
+            
+            BOOST_FOREACH(Task::SPtr task, tasks)
             {
-                task->setExecutionStartTime(executionTime);
-                BOOST_ASSERT(action->getTaskQueue());
-                if (action->getTaskQueue())
+                BOOST_ASSERT(task);
+                if (task)
                 {
-                    action->getTaskQueue()->enqueueTask(task);
+                    task->setExecutionStartTime(executionTime);
+                    BOOST_ASSERT(action->getTaskQueue());
+                    if (action->getTaskQueue())
+                    {
+                        action->getTaskQueue()->enqueueTask(task);
+                    }
                 }
             }
+            
             continue;
         }
         BOOST_ASSERT_MSG(false, "Unexpected event type");

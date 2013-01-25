@@ -88,7 +88,7 @@ VSC::Tasks VSC::IM::CollisionMIDINoteOnAction::generateTasksForCollision(OB::Ele
         payload->messageDescription->parameterMap[MIDI::MessageParameterKeyPitch] = (unsigned char) pitchMapping->mappedValue(element, collision);
         payload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) velocityMapping->mappedValue(element, collision);
         payload->midiOutput = this->getMIDIOutput();
-        MIDI::MIDISendMessageTask::SPtr task(new MIDI::MIDISendMessageTask(boost::static_pointer_cast<Task::Payload>(payload)));
+        MIDI::MIDISendMessageTask::SPtr task(new MIDI::MIDISendMessageTask(boost::dynamic_pointer_cast<Task::Payload>(payload)));
         tasks.push_back(task);
     }
     else
@@ -139,7 +139,7 @@ VSC::Tasks VSC::IM::CollisionMIDINoteOffAction::generateTasksForCollision(OB::El
         payload->messageDescription->parameterMap[MIDI::MessageParameterKeyPitch] = (unsigned char) pitchMapping->mappedValue(element, collision);
         payload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) velocityMapping->mappedValue(element, collision);
         payload->midiOutput = this->getMIDIOutput();
-        MIDI::MIDISendMessageTask::SPtr task(new MIDI::MIDISendMessageTask(boost::static_pointer_cast<Task::Payload>(payload)));
+        MIDI::MIDISendMessageTask::SPtr task(new MIDI::MIDISendMessageTask(boost::dynamic_pointer_cast<Task::Payload>(payload)));
         tasks.push_back(task);
     }
     else
@@ -191,7 +191,7 @@ VSC::Tasks VSC::IM::CollisionMIDINoteOnAndOffAction::generateTasksForCollision(O
         onPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyPitch] = (unsigned char) pitchMapping->mappedValue(element, collision);
         payload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) velocityOnMapping->mappedValue(element, collision);
         onPayload->midiOutput = this->getMIDIOutput();
-        MIDI::MIDISendMessageTask::SPtr onTask(new MIDI::MIDISendMessageTask(boost::static_pointer_cast<Task::Payload>(onPayload)));
+        MIDI::MIDISendMessageTask::SPtr onTask(new MIDI::MIDISendMessageTask(boost::dynamic_pointer_cast<Task::Payload>(onPayload)));
         tasks.push_back(onTask);
         
         Float duration = durationMapping->mappedValue(element, collision);
@@ -206,7 +206,7 @@ VSC::Tasks VSC::IM::CollisionMIDINoteOnAndOffAction::generateTasksForCollision(O
         offPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyPitch] = (unsigned char) pitchMapping->mappedValue(element, collision);
         offPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) velocityOffMapping->mappedValue(element, collision);
         offPayload->midiOutput = this->getMIDIOutput();
-        MIDI::MIDISendMessageTask::SPtr offTask(new MIDI::MIDISendMessageTask(boost::static_pointer_cast<Task::Payload>(offPayload)));
+        MIDI::MIDISendMessageTask::SPtr offTask(new MIDI::MIDISendMessageTask(boost::dynamic_pointer_cast<Task::Payload>(offPayload)));
         tasks.push_back(offTask);
     }
     else
@@ -251,7 +251,7 @@ VSC::Tasks VSC::IM::CollisionMIDIControlChangeAction::generateTasksForCollision(
         payload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char)this->getChannel();
         payload->messageDescription->parameterMap[MIDI::MessageParameterKeyValue] = (unsigned char) valueMapping->mappedValue(element, collision);
         payload->midiOutput = this->getMIDIOutput();
-        MIDI::MIDISendMessageTask::SPtr task(new MIDI::MIDISendMessageTask(boost::static_pointer_cast<Task::Payload>(payload)));
+        MIDI::MIDISendMessageTask::SPtr task(new MIDI::MIDISendMessageTask(boost::dynamic_pointer_cast<Task::Payload>(payload)));
         tasks.push_back(task);
     }
     else

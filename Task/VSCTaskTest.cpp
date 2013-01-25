@@ -56,6 +56,8 @@ void VSC::TaskTest::internalPerformTestWithTaskQueue(TaskQueue::SPtr queue)
      */
     
     {
+        /*
+         
         MIDI::MIDINoteOnTask::Payload::SPtr payload;
         payload = MIDI::MIDINoteOnTask::Payload::SPtr(new MIDI::MIDINoteOnTask::Payload);
         
@@ -68,6 +70,8 @@ void VSC::TaskTest::internalPerformTestWithTaskQueue(TaskQueue::SPtr queue)
         onTask->setExecutionStartTime(VSC::CurrentTime() + boost::posix_time::seconds(1.0));
         
         queue->enqueueTask(onTask);
+         
+         */
     }
     
     /*
@@ -75,6 +79,8 @@ void VSC::TaskTest::internalPerformTestWithTaskQueue(TaskQueue::SPtr queue)
      */
     
     {
+        /*
+        
         MIDI::MIDINoteOffTask::Payload::SPtr payload;
         payload = MIDI::MIDINoteOffTask::Payload::SPtr(new MIDI::MIDINoteOffTask::Payload);
         
@@ -87,6 +93,8 @@ void VSC::TaskTest::internalPerformTestWithTaskQueue(TaskQueue::SPtr queue)
         offTask->setExecutionStartTime(VSC::CurrentTime() + boost::posix_time::seconds(2.0));
         
         queue->enqueueTask(offTask);
+         
+         */
     }
     
 }

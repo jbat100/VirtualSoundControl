@@ -13,7 +13,6 @@
 		101EBB8E162B2E2C006601A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 101EBB8D162B2E2C006601A2 /* QuartzCore.framework */; };
 		101EBB90162B2E3C006601A2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 101EBB8F162B2E3B006601A2 /* CoreGraphics.framework */; };
 		101EBB92162B3022006601A2 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 101EBB91162B3022006601A2 /* ApplicationServices.framework */; };
-		102671D11625B4E6002D34B2 /* VSCMIDIOutputChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 102671CF1625B4E6002D34B2 /* VSCMIDIOutputChannel.cpp */; };
 		103006931624763A002A30ED /* VSC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103006911624763A002A30ED /* VSC.cpp */; };
 		103203481632BBE7006ED4FF /* VSCEnvironment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103203461632BBE7006ED4FF /* VSCEnvironment.cpp */; };
 		1033868C156E48AC00CEB288 /* Plugin_BSPSceneManager.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948C156E483000E70049 /* Plugin_BSPSceneManager.dylib */; };
@@ -244,8 +243,6 @@
 		101EBB8D162B2E2C006601A2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		101EBB8F162B2E3B006601A2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		101EBB91162B3022006601A2 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
-		102671CF1625B4E6002D34B2 /* VSCMIDIOutputChannel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDIOutputChannel.cpp; path = ../../../../MIDI/VSCMIDIOutputChannel.cpp; sourceTree = "<group>"; };
-		102671D01625B4E6002D34B2 /* VSCMIDIOutputChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDIOutputChannel.h; path = ../../../../MIDI/VSCMIDIOutputChannel.h; sourceTree = "<group>"; };
 		103006911624763A002A30ED /* VSC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSC.cpp; path = ../../../../Generic/VSC.cpp; sourceTree = "<group>"; };
 		103006921624763A002A30ED /* VSC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSC.h; path = ../../../../Generic/VSC.h; sourceTree = "<group>"; };
 		103203461632BBE7006ED4FF /* VSCEnvironment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCEnvironment.cpp; path = ../../../../Application/VSCEnvironment.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -712,8 +709,6 @@
 				105BAD2116231C860031EE91 /* VSCMIDIOutput.h */,
 				10D7AE891628554D00DE0F72 /* VSCMIDIOutputManager.cpp */,
 				10D7AE8A1628554D00DE0F72 /* VSCMIDIOutputManager.h */,
-				102671CF1625B4E6002D34B2 /* VSCMIDIOutputChannel.cpp */,
-				102671D01625B4E6002D34B2 /* VSCMIDIOutputChannel.h */,
 			);
 			name = MIDI;
 			sourceTree = "<group>";
@@ -882,9 +877,9 @@
 				109A8ECD16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.h */,
 				109A8ECE16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.mm */,
 				109A8ECF16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.xib */,
-				109A8ED016A1A77E0023EC1B /* VSCOSXOBSceneElementController.h */,
 				109A8ED116A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.h */,
 				109A8ED216A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.mm */,
+				109A8ED016A1A77E0023EC1B /* VSCOSXOBSceneElementController.h */,
 				109A8ED416A1A77E0023EC1B /* VSCOSXOBSceneElementEditor.h */,
 				109A8ED816A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.h */,
 				109A8ED916A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.mm */,
@@ -1592,7 +1587,6 @@
 				105BAD2A16232B180031EE91 /* VSCSound.cpp in Sources */,
 				105BAD2E16232B530031EE91 /* VSCController.cpp in Sources */,
 				103006931624763A002A30ED /* VSC.cpp in Sources */,
-				102671D11625B4E6002D34B2 /* VSCMIDIOutputChannel.cpp in Sources */,
 				10EF8DAC1626CBB700EB8FDE /* VSCTask.cpp in Sources */,
 				10EF8DAD1626CBB700EB8FDE /* VSCTaskQueue.cpp in Sources */,
 				10EF8DB31627228C00EB8FDE /* VSCMIDITasks.cpp in Sources */,

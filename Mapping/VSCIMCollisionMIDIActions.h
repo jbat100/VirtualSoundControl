@@ -6,7 +6,8 @@
 #include "VSCIMCollisionMapping.h"
 #include "VSCIMCollisionMapped.h"
 #include "VSCIMCollisionAction.h"
-#include "VSCMIDIOutputChannel.h"
+#include "VSCMIDI.h"
+#include "VSCMIDIOutput.h"
 
 #include <boost/shared_ptr.hpp>
 
