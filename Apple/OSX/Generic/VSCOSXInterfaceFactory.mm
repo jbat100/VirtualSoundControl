@@ -15,6 +15,12 @@
 
 #include <boost/assert.hpp>
 
+@interface VSCOSXInterfaceFactory ()
+
+-(NSView*) newViewWithIdentifier:(NSString*)identifier nib:(NSNib*)nib owner:(id)owner;
+
+@end
+
 @implementation VSCOSXInterfaceFactory
 
 +(VSCOSXInterfaceFactory*) defaultFactory
@@ -32,12 +38,29 @@
         interfaceFactory.keyedSliderViewNib = [[NSNib alloc] initWithNibNamed:
                                                  [[VSCOSXKeyedSliderView class] description] bundle:nil];
         
+        interfaceFactory.keyed3FieldViewNib = [[NSNib alloc] initWithNibNamed:
+                                               [[VSCOSXKeyed3FieldView class] description] bundle:nil];
+        
+        interfaceFactory.keyed4FieldViewNib = [[NSNib alloc] initWithNibNamed:
+                                               [[VSCOSXKeyed4FieldView class] description] bundle:nil];
+        
+        interfaceFactory.keyedCollisionActionCommonViewNib = [[NSNib alloc] initWithNibNamed:
+                                                              @"VSCIMOSXCollisionActionCommonView" bundle:nil];
+        
+        interfaceFactory.keyedCollisionActionMIDIViewNib = [[NSNib alloc] initWithNibNamed:
+                                                            @"VSCIMOSXCollisionActionMIDIView" bundle:nil];
+        
+        interfaceFactory.keyedCollisionActionMIDIControlViewNib = [[NSNib alloc] initWithNibNamed:
+                                                                   @"VSCIMOSXCollisionActionMIDIControlView" bundle:nil];
+        
     });
     
     BOOST_ASSERT(interfaceFactory);
     
     return interfaceFactory;
 }
+
+#pragma mark Generic Views
 
 -(VSCOSXKeyedCheckBoxView*) newKeyedCheckBoxViewWithOwner:(id)owner
 {
@@ -81,7 +104,7 @@
     return v;
 }
 
--(VSCOSXKeyed3FieldView*) newVSCOSXKeyed3FieldViewWithOwner:(id)owner
+-(VSCOSXKeyed3FieldView*) newKeyed3FieldViewWithOwner:(id)owner
 {
     NSString* identifier = [[VSCOSXKeyed3FieldView class] description];
     BOOST_ASSERT(self.keyed3FieldViewNib);
@@ -102,7 +125,7 @@
     return v;
 }
 
--(VSCOSXKeyed4FieldView*) newVSCOSXKeyed4FieldViewWithOwner:(id)owner
+-(VSCOSXKeyed4FieldView*) newKeyed4FieldViewWithOwner:(id)owner
 {
     NSString* identifier = [[VSCOSXKeyed4FieldView class] description];
     BOOST_ASSERT(self.keyed4FieldViewNib);
@@ -122,5 +145,58 @@
     v.translatesAutoresizingMaskIntoConstraints = NO;
     return v;
 }
+
+#pragma mark Collision Action Views
+
+-(NSView*) newViewWithIdentifier:(NSString*)identifier nib:(NSNib*)nib owner:(id)owner
+{    
+    BOOST_ASSERT(nib);
+    NSArray *objects = nil;
+    NSView* v = nil;
+    [nib instantiateNibWithOwner:owner topLevelObjects:&objects];
+    for(id object in objects)
+    {
+        if([object isKindOfClass:[NSView class]])
+        {
+            NSView* local = (NSView*)object;
+            if ([local.identifier isEqualToString:identifier])
+            {
+                v = local;
+            }
+            break;
+        }
+    }
+    BOOST_ASSERT(v);
+    v.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    for (NSView* subview in v.subviews)
+    {
+        subview.translatesAutoresizingMaskIntoConstraints = NO;
+    }
+    
+    return v;
+}
+
+-(NSView*) newCollisionActionCommonViewWithOwner:(id)owner
+{
+    static NSString* identifier = @"VSCIMOSXCollisionActionCommonView";
+    
+    return [self newViewWithIdentifier:identifier nib:self.keyedCollisionActionCommonViewNib owner:owner];
+}
+
+-(NSView*) newCollisionActionMIDIViewWithOwner:(id)owner
+{
+    static NSString* identifier = @"VSCIMOSXCollisionActionMIDIView";
+    
+    return [self newViewWithIdentifier:identifier nib:self.keyedCollisionActionMIDIViewNib owner:owner];
+}
+
+-(NSView*) newCollisionActionMIDIControlViewWithOwner:(id)owner
+{
+    static NSString* identifier = @"VSCIMOSXCollisionActionMIDIControlView";
+    
+    return [self newViewWithIdentifier:identifier nib:self.keyedCollisionActionMIDIControlViewNib owner:owner];
+}
+
 
 @end

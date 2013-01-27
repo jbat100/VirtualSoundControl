@@ -17,6 +17,10 @@
 
 +(VSCOSXInterfaceFactory*) defaultFactory;
 
+/*
+ *  Generic
+ */
+
 @property (strong) NSNib* keyedCheckBoxViewNib;
 @property (strong) NSNib* keyedSliderViewNib;
 @property (strong) NSNib* keyed3FieldViewNib;
@@ -26,5 +30,18 @@
 -(VSCOSXKeyedSliderView*) newKeyedSliderViewWithOwner:(id)owner;
 -(VSCOSXKeyed3FieldView*) newKeyed3FieldViewWithOwner:(id)owner;
 -(VSCOSXKeyed4FieldView*) newKeyed4FieldViewWithOwner:(id)owner;
+
+/*
+ *  Collision Action Views
+ */
+
+@property (strong) NSNib* keyedCollisionActionCommonViewNib;
+@property (strong) NSNib* keyedCollisionActionMIDIViewNib;
+@property (strong) NSNib* keyedCollisionActionMIDIControlViewNib;
+
+-(NSView*) newCollisionActionCommonViewWithOwner:(id)owner;
+-(NSView*) newCollisionActionMIDIViewWithOwner:(id)owner;
+-(NSView*) newCollisionActionMIDIControlViewWithOwner:(id)owner;
+
 
 @end

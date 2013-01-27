@@ -44,9 +44,17 @@
 @property (nonatomic, strong) IBOutlet NSPopUpButton* midiControlNumberPopUpButton;
 
 -(IBAction) showCollisionMappings:(id)sender;
--(IBAction) refreshMIDIInterface:(id)sender;
 -(IBAction) midiOutputSelected:(id)sender;
--(IBAction) refreshMIDIControlNumbers:(id)sender;
 -(IBAction) midiControlNumberSelected:(id)sender;
+
+-(IBAction) refreshMIDIOutputs:(id)sender;
+-(IBAction) refreshMIDIControlNumbers:(id)sender;
+
+/*
+ *  Debugging
+ */
+
+-(void) printUIDescription;
+
 
 @end

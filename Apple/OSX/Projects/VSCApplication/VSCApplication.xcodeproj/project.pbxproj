@@ -137,6 +137,10 @@
 		10C3721416A455720044D8D8 /* VSCOBCollisionDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10C3720D16A455720044D8D8 /* VSCOBCollisionDetector.cpp */; };
 		10C3721516A455720044D8D8 /* VSCOBElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10C3720F16A455720044D8D8 /* VSCOBElement.cpp */; };
 		10C3721616A455720044D8D8 /* VSCOBElementFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10C3721116A455720044D8D8 /* VSCOBElementFactory.cpp */; };
+		10C78E3416B55DEF00811F6A /* VSCIMOSXCollisionActionCommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10C78E3316B55DEF00811F6A /* VSCIMOSXCollisionActionCommonView.xib */; };
+		10C78E3716B55FC900811F6A /* VSCIMOSXCollisionActionMIDIView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10C78E3616B55FC900811F6A /* VSCIMOSXCollisionActionMIDIView.xib */; };
+		10C78E3916B55FF800811F6A /* VSCIMOSXCollisionActionMIDIControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10C78E3816B55FF800811F6A /* VSCIMOSXCollisionActionMIDIControlView.xib */; };
+		10C78E3C16B563C600811F6A /* VSCOSXInterfaceFactory+CollisionAction.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10C78E3B16B563C600811F6A /* VSCOSXInterfaceFactory+CollisionAction.mm */; };
 		10CB65B0164E926E000D311F /* VSCOSXEnvironmentWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10CB65AC164E926E000D311F /* VSCOSXEnvironmentWindowController.xib */; };
 		10CB65B1164E926E000D311F /* VSCOSXEnvironmentWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10CB65AE164E926E000D311F /* VSCOSXEnvironmentWindowController.mm */; };
 		10CFE720156CD62000B24399 /* OgreBulletCollisionsDebugContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE6D7156CD61F00B24399 /* OgreBulletCollisionsDebugContact.cpp */; };
@@ -464,6 +468,11 @@
 		10C3721016A455720044D8D8 /* VSCOBElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBElement.h; sourceTree = "<group>"; };
 		10C3721116A455720044D8D8 /* VSCOBElementFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = VSCOBElementFactory.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		10C3721216A455720044D8D8 /* VSCOBElementFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBElementFactory.h; sourceTree = "<group>"; };
+		10C78E3316B55DEF00811F6A /* VSCIMOSXCollisionActionCommonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXCollisionActionCommonView.xib; sourceTree = "<group>"; };
+		10C78E3616B55FC900811F6A /* VSCIMOSXCollisionActionMIDIView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXCollisionActionMIDIView.xib; sourceTree = "<group>"; };
+		10C78E3816B55FF800811F6A /* VSCIMOSXCollisionActionMIDIControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXCollisionActionMIDIControlView.xib; sourceTree = "<group>"; };
+		10C78E3A16B563C600811F6A /* VSCOSXInterfaceFactory+CollisionAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VSCOSXInterfaceFactory+CollisionAction.h"; sourceTree = "<group>"; };
+		10C78E3B16B563C600811F6A /* VSCOSXInterfaceFactory+CollisionAction.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "VSCOSXInterfaceFactory+CollisionAction.mm"; sourceTree = "<group>"; };
 		10CB65AC164E926E000D311F /* VSCOSXEnvironmentWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXEnvironmentWindowController.xib; path = ../../Application/VSCOSXEnvironmentWindowController.xib; sourceTree = "<group>"; };
 		10CB65AD164E926E000D311F /* VSCOSXEnvironmentWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXEnvironmentWindowController.h; path = ../../Application/VSCOSXEnvironmentWindowController.h; sourceTree = "<group>"; };
 		10CB65AE164E926E000D311F /* VSCOSXEnvironmentWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOSXEnvironmentWindowController.mm; path = ../../Application/VSCOSXEnvironmentWindowController.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -898,6 +907,8 @@
 		109A8F1F16A1A8740023EC1B /* IM */ = {
 			isa = PBXGroup;
 			children = (
+				10C78E3A16B563C600811F6A /* VSCOSXInterfaceFactory+CollisionAction.h */,
+				10C78E3B16B563C600811F6A /* VSCOSXInterfaceFactory+CollisionAction.mm */,
 				109A8F2016A1A8740023EC1B /* VSCIMOSXCollisionActionGlobal.h */,
 				109A8F2116A1A8740023EC1B /* VSCIMOSXCollisionActionGlobal.mm */,
 				109A8F2216A1A8740023EC1B /* VSCIMOSXCollisionActionMappingsController.h */,
@@ -907,6 +918,9 @@
 				109A8F2616A1A8740023EC1B /* VSCIMOSXCollisionActionView.h */,
 				109A8F2716A1A8740023EC1B /* VSCIMOSXCollisionActionView.mm */,
 				109A8F2816A1A8740023EC1B /* VSCIMOSXCollisionActionView.xib */,
+				10C78E3316B55DEF00811F6A /* VSCIMOSXCollisionActionCommonView.xib */,
+				10C78E3616B55FC900811F6A /* VSCIMOSXCollisionActionMIDIView.xib */,
+				10C78E3816B55FF800811F6A /* VSCIMOSXCollisionActionMIDIControlView.xib */,
 				109A8F2A16A1A8740023EC1B /* VSCIMOSXCollisionEventChainController.h */,
 				109A8F2E16A1A8740023EC1B /* VSCIMOSXCollisionEventChainViewController.h */,
 				109A8F2F16A1A8740023EC1B /* VSCIMOSXCollisionEventChainViewController.mm */,
@@ -1531,6 +1545,9 @@
 				10F7515216A952A700F493D6 /* VSCOSXKeyedSliderView.xib in Resources */,
 				10F115F516AC7FCC000A9EBB /* VSCOSXKeyed3FieldView.xib in Resources */,
 				10F115FA16AC8B73000A9EBB /* VSCOSXKeyed4FieldView.xib in Resources */,
+				10C78E3416B55DEF00811F6A /* VSCIMOSXCollisionActionCommonView.xib in Resources */,
+				10C78E3716B55FC900811F6A /* VSCIMOSXCollisionActionMIDIView.xib in Resources */,
+				10C78E3916B55FF800811F6A /* VSCIMOSXCollisionActionMIDIControlView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1663,6 +1680,7 @@
 				10F7515516A979C300F493D6 /* VSCOSXInterfaceFactory.mm in Sources */,
 				10F115F316AC7F47000A9EBB /* VSCOSXKeyed3FieldView.m in Sources */,
 				10F115F816AC8B3B000A9EBB /* VSCOSXKeyed4FieldView.m in Sources */,
+				10C78E3C16B563C600811F6A /* VSCOSXInterfaceFactory+CollisionAction.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

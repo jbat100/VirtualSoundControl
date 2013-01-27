@@ -29,12 +29,12 @@ NSArray* ElementInspectorTabParamArray = nil;
 
 @interface VSCOSXOBSceneElementInspectorViewController ()
 
-@property (weak) IBOutlet DMTabBar* tabBar;
-@property (weak) IBOutlet NSBox* mainBox;
+@property (nonatomic, strong) NSArray* tabViewConstraints;
 
 @property (nonatomic, assign) VSC::OB::OSXSceneListener::SPtr sceneListener;
 
 -(void) setupTabBar;
+-(void) resetInspectorView;
 -(void) updateCollisionEventChains;
 
 @end
@@ -45,6 +45,7 @@ const static BOOL traceInterface = YES;
 
 @synthesize element = _element;
 @synthesize environmentController = _environmentController;
+@synthesize immobilized;
 
 + (void)load
 {
@@ -82,35 +83,34 @@ const static BOOL traceInterface = YES;
 - (void) awakeFromNib
 {
     BOOST_ASSERT(self.view);
-    self.view.translatesAutoresizingMaskIntoConstraints = NO;
-    
     BOOST_ASSERT(self.tabBar);
-    [self setupTabBar];
-    
-    BOOST_ASSERT(self.mainBox.contentView);
+    BOOST_ASSERT(self.elementCollisionView);
+    BOOST_ASSERT(self.elementCollisionView.elementController == self);
     BOOST_ASSERT(self.elementDetailView);
     BOOST_ASSERT(self.elementDetailView.elementController == self);
     
+    self.view.translatesAutoresizingMaskIntoConstraints = NO;
+    self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
+    self.elementCollisionView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.elementDetailView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    
+    [self setupTabBar];
+    
     [self.elementDetailView reloadWholeInterface];
     
-    BOOST_ASSERT(self.elementCollisionView);
-    BOOST_ASSERT(self.elementCollisionView.elementController == self);
-    
-    BOOST_ASSERT(self.elementCollisionView.collisionStartedEventChainBox);
-    if (self.elementCollisionView.collisionStartedEventChainBox)
+    if (self.elementCollisionView)
     {
-        NSView* boxContentView = self.elementCollisionView.collisionStartedEventChainBox.contentView;
         NSView* eventChainView = self.collisionStartedEventChainViewController.view;
         
-        BOOST_ASSERT(boxContentView);
         BOOST_ASSERT(eventChainView);
         
-        [boxContentView addSubview:eventChainView];
+        [self.elementCollisionView addSubview:eventChainView];
         
         NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(eventChainView);
-        [boxContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[eventChainView]|"
+        [self.elementCollisionView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[eventChainView]|"
                                                                                options:0 metrics:nil views:viewsDictionary]];
-        [boxContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[eventChainView]|"
+        [self.elementCollisionView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[eventChainView]|"
                                                                                options:0 metrics:nil views:viewsDictionary]];
         
         [self.collisionStartedEventChainViewController reloadInterface];
@@ -152,10 +152,21 @@ const static BOOL traceInterface = YES;
     
     if (traceInterface) NSLog(@"%@ setElement %p", self, newElement.get());
     
+    [self reloadImmobilizedInterface];
+    
     [self.elementDetailView reloadWholeInterface];
     
     [self updateCollisionEventChains];
     
+}
+
+-(void) setImmobilized:(BOOL)immobilized
+{
+    VSC::OB::Element::SPtr element = self.element.lock();
+    if (element)
+    {
+        element->setImmobilized(immobilized ? true : false);
+    }
 }
 
 -(void) updateCollisionEventChains
@@ -178,28 +189,13 @@ const static BOOL traceInterface = YES;
     
 }
 
-#pragma mark - UI Callbacks
-
--(IBAction) immobilized:(id)sender
+-(void) reloadImmobilizedInterface
 {
-    BOOST_ASSERT(sender);
-    BOOST_ASSERT(sender == self.elementDetailView.immobilizedCheckBox);
+    VSC::OB::Element::SPtr element = self.element.lock();
     
-    if (sender && sender == self.elementDetailView.immobilizedCheckBox)
+    if (element)
     {
-        VSC::OB::Element::SPtr elem = self.element.lock();
-        BOOST_ASSERT(elem);
-        if (elem)
-        {
-            if ([self.elementDetailView.immobilizedCheckBox state] == NSOnState)
-            {
-                elem->setImmobilized(true);
-            }
-            else
-            {
-                elem->setImmobilized(false);
-            }
-        }
+        self.immobilized = element->isImmobilized() ? YES : NO;
     }
 }
 
@@ -256,33 +252,71 @@ const static BOOL traceInterface = YES;
     }];
 }
 
+-(void) resetInspectorView
+{
+    NSArray* subviews = self.view.subviews;
+    
+    for (NSView* v in subviews)
+    {
+        BOOST_ASSERT([v isKindOfClass:[NSView class]]);
+        if (v != self.tabBar && [v isKindOfClass:[NSView class]])
+        {
+            [v removeFromSuperview];
+        }
+    }
+}
+
+-(void) switchElementInspectorToTabView:(NSView*)tabView
+{
+    if (tabView == nil) return;
+    
+    BOOST_ASSERT(tabView);
+    BOOST_ASSERT([tabView isKindOfClass:[NSView class]]);
+    
+    if ([tabView isKindOfClass:[NSView class]] == NO) return;
+    if ([tabView superview] == self.view) return;
+    
+    if (self.tabViewConstraints)
+    {
+        [self.view removeConstraints:self.tabViewConstraints];
+    }
+    
+    [self resetInspectorView];
+    
+    [self.view addSubview:tabView];
+    
+    NSView* bar = self.tabBar;
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(tabView, bar);
+    
+    NSMutableArray* allConstraints = [NSMutableArray array];
+    
+    NSArray* hConstraints =[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tabView]|"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:viewsDictionary];
+    
+    [allConstraints addObjectsFromArray:hConstraints];
+    [self.view addConstraints:hConstraints];
+    
+    NSArray* vConstraints =[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bar]-0-[tabView]|"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:viewsDictionary];
+    
+    [allConstraints addObjectsFromArray:vConstraints];
+    [self.view addConstraints:vConstraints];
+    
+    self.tabViewConstraints = [NSArray arrayWithArray:allConstraints];
+}
+
 
 -(void) showElementDetailView
 {
     if (traceInterface) NSLog(@"%@ showElementDetailView", self);
     
     BOOST_ASSERT(self.elementDetailView);
-    BOOST_ASSERT(self.mainBox);
-    
-    self.tabBar.selectedIndex = 0;
-    NSView* boxContentView = self.mainBox.contentView;
-    
-    if ([self.elementDetailView superview] == boxContentView) return; // we are already showing the element detail view...
-    
-    [[boxContentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    // remove all old constraints
-    [boxContentView removeConstraints:[boxContentView constraints]];
-    [boxContentView addSubview:self.elementDetailView];
-    
-    {
-        NSView* detailView = self.elementDetailView;
-        NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(detailView);
-        [boxContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[detailView]|"
-                                                                               options:0 metrics:nil views:viewsDictionary]];
-        [boxContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[detailView]|"
-                                                                               options:0 metrics:nil views:viewsDictionary]];
-    }
-    
+
+    [self switchElementInspectorToTabView:self.elementDetailView];
 }
 
 -(void) showElementCollisionView
@@ -290,26 +324,8 @@ const static BOOL traceInterface = YES;
     if (traceInterface) NSLog(@"%@ showElementCollisionView", self);
     
     BOOST_ASSERT(self.elementCollisionView);
-    BOOST_ASSERT(self.mainBox);
     
-    self.tabBar.selectedIndex = 0;
-    NSView* boxContentView = self.mainBox.contentView;
-    
-    if ([self.elementCollisionView superview] == boxContentView) return; // we are already showing the element detail view...
-    
-    [[boxContentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    // remove all old constraints
-    [boxContentView removeConstraints:[boxContentView constraints]];
-    [boxContentView addSubview:self.elementCollisionView];
-    
-    {
-        NSView* collisionView = self.elementCollisionView;
-        NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(collisionView);
-        [boxContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[collisionView]|"
-                                                                               options:0 metrics:nil views:viewsDictionary]];
-        [boxContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[collisionView]|"
-                                                                               options:0 metrics:nil views:viewsDictionary]];
-    }
+    [self switchElementInspectorToTabView:self.elementCollisionView];
     
     [self updateCollisionEventChains];
     

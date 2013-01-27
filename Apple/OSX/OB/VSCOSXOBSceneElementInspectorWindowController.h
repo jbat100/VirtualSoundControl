@@ -18,6 +18,4 @@
 
 @property (strong) VSCOSXOBSceneElementInspectorViewController* elementInspectorViewController;
 
-@property (weak) IBOutlet NSBox* mainBox;
-
 @end

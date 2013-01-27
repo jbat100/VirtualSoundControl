@@ -12,12 +12,8 @@ namespace VSC
     namespace MIDI
     {
         void InputCallback(double deltatime, std::vector<unsigned char> *message, void* userData);
-        
-        MessageAnalyzer::SPtr callbackMessageAnalyzer;
     }
 }
-
-VSC::MIDI::MessageAnalyzer::SPtr callbackMessageAnalyzer = VSC::MIDI::MessageAnalyzer::SPtr();
 
 void VSC::MIDI::InputCallback(double deltatime, std::vector<unsigned char>* message, void* userData)
 {
@@ -37,7 +33,7 @@ void VSC::MIDI::InputCallback(double deltatime, std::vector<unsigned char>* mess
     
     const Message& midiMessage = *message;
     
-    MessageType messageType = callbackMessageAnalyzer->messageTypeForMessage(midiMessage);
+    MessageDescription::SPtr messageDescription = descriptionFromMessage(midiMessage);
 }
 
 VSC::MIDI::Input::Input(const InputPort& inputPort) : mState(StateClosed) {

@@ -139,7 +139,7 @@ namespace VSC {
          *  Message description utilities
          */
         
-        std::string messageDescription(const Message& m);
+        std::string messageToString(const Message& m);
         std::string controlNumberToString(ControlNumber num);
         ControlNumber stringToControlNumber(const std::string& desc);
         

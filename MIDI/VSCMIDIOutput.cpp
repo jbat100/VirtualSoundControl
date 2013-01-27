@@ -141,7 +141,8 @@ void VSC::MIDI::Output::open()
 
 void VSC::MIDI::Output::close()
 {
-    if (mMIDIOut) {
+    if (mMIDIOut)
+    {
         mMIDIOut->closePort();
         mState = StateClosed;
     }
@@ -180,7 +181,7 @@ bool VSC::MIDI::Output::sendMessage(Message& m) {
     
     if (mMIDIOut && mOutputPort != OutputPortVoid)
     {
-        std::cout << *this << " sending " << messageDescription(m) << std::endl;
+        std::cout << *this << " sending " << messageToString(m) << std::endl;
         mMIDIOut->sendMessage(&m);
         return true;
     }

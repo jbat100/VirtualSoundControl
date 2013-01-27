@@ -16,45 +16,53 @@ const VSC::MIDI::OutputPort     VSC::MIDI::OutputPortVoid   = {std::numeric_limi
 const VSC::MIDI::InputPort      VSC::MIDI::InputPortVoid    = {std::numeric_limits<unsigned int>::max(), "", false};
 
 
-std::ostream& VSC::MIDI::operator<<(std::ostream& output, const OutputPort& p) {
+std::ostream& VSC::MIDI::operator<<(std::ostream& output, const OutputPort& p)
+{
     output << "VSCMIDIOutputPort {" << p.number << "; " << p.name;
     if (p.isVirtual) output << "; virtual";
     output << "}";
     return output;
 }
 
-std::ostream& VSC::MIDI::operator<<(std::ostream& output, const InputPort& p) {
+std::ostream& VSC::MIDI::operator<<(std::ostream& output, const InputPort& p)
+{
     output << "VSCMIDIInputPort {" << p.number << "; " << p.name;
     if (p.isVirtual) output << "; virtual";
     output << "}";
     return output;
 }
 
-bool VSC::MIDI::OutputPort::operator!=(const OutputPort& p) const {
+bool VSC::MIDI::OutputPort::operator!=(const OutputPort& p) const
+{
     return !(*this == p);
 }
 
-bool VSC::MIDI::OutputPort::operator==(const OutputPort& p) const {
+bool VSC::MIDI::OutputPort::operator==(const OutputPort& p) const
+{
     if (p.isVirtual != isVirtual || p.number != number || p.name.compare(name) != 0) return false;
     return true;
 }
 
-bool VSC::MIDI::OutputPort::operator<(const OutputPort& p) const {
+bool VSC::MIDI::OutputPort::operator<(const OutputPort& p) const
+{
     if (number != p.number) return number < p.number;
     if (isVirtual != p.isVirtual) return isVirtual;
     return p.name.compare(name) < 0;
 }
 
-bool VSC::MIDI::InputPort::operator!=(const InputPort& p) const {
+bool VSC::MIDI::InputPort::operator!=(const InputPort& p) const
+{
     return !(*this == p);
 }
 
-bool VSC::MIDI::InputPort::operator==(const InputPort& p) const {
+bool VSC::MIDI::InputPort::operator==(const InputPort& p) const
+{
     if (p.isVirtual != isVirtual || p.number != number || p.name.compare(name) != 0) return false;
     return true;
 }
 
-bool VSC::MIDI::InputPort::operator<(const InputPort& p) const {
+bool VSC::MIDI::InputPort::operator<(const InputPort& p) const
+{
     if (number != p.number) return number < p.number;
     if (isVirtual != p.isVirtual) return isVirtual;
     return p.name.compare(name) < 0;
@@ -148,34 +156,82 @@ VSC::MIDI::ControlNumber VSC::MIDI::stringToControlNumber(const std::string& des
 
 #pragma mark - MIDI Messages
 
-std::string VSC::MIDI::messageDescription(const Message& m) {
+std::string VSC::MIDI::messageToString(const Message& message)
+{
     
     std::stringstream o;
     
     o << "MIDI Message: ";
     
-    // if note message ff
-    if (m[0] >= 128 && m[0] < 144)
+    BOOST_ASSERT(message.size() > 0);
+    if (message.size() == 0)
     {
-        o << "Note OFF (channel " << (unsigned int) m[0]-127;
-        o << ", pitch " << (unsigned int) m[1];
-        o << ", velocity " << (unsigned int) m[2] << ")";
+        o << "Empty";
+        return o.str();
     }
     
-    // if note message on
-    else if (m[0] >= 144 && m[0] < 160)
-    {
-        o << "Note ON (channel " << (unsigned int) m[0]-143;
-        o << ", pitch " << (unsigned int) m[1];
-        o << ", velocity " << (unsigned int) m[2] << ")";
-    }
+    MessageDescription::SPtr description = descriptionFromMessage(message);
+    MessageType messageType = description->type;
     
-    // if control
-    else if (m[0] >= 176 && m[0] < 192)
+    switch (messageType)
     {
-        o << "Control (channel " << (unsigned int) m[0]-175;
-        o << ", control " << controlNumberToString((ControlNumber)m[1]);
-        o << ", value " << (unsigned int) m[2] << ")";
+        case MessageTypeNoteOff:
+        {
+            o << "Note Off, ";
+            o << "channel: " << (int)description->parameterMap[MessageParameterKeyChannel] << ", ";
+            o << "pitch: " << (int)description->parameterMap[MessageParameterKeyPitch] << ", ";
+            o << "velocity: " << (int)description->parameterMap[MessageParameterKeyVelocity];
+            break;
+        }
+        case MessageTypeNoteOn:
+        {
+            o << "Note On, ";
+            o << "channel: " << (int)description->parameterMap[MessageParameterKeyChannel] << ", ";
+            o << "picth: " << (int)description->parameterMap[MessageParameterKeyPitch] << ", ";
+            o << "velocity: " << (int)description->parameterMap[MessageParameterKeyVelocity];
+            break;
+        }
+        case MessageTypePolyphonicAftertouch:
+        {
+            o << "Polyphonic Aftertouch, ";
+            o << "channel: " << (int)description->parameterMap[MessageParameterKeyChannel] << ", ";
+            o << "picth: " << (int)description->parameterMap[MessageParameterKeyPitch] << ", ";
+            o << "pressure: " << (int)description->parameterMap[MessageParameterKeyPressure];
+            break;
+        }
+        case MessageTypeProgramChange:
+        {
+            o << "Program Change, ";
+            o << "channel: " << (int)description->parameterMap[MessageParameterKeyChannel] << ", ";
+            o << "program: " << (int)description->parameterMap[MessageParameterKeyProgram];
+            break;
+        }
+        case MessageTypeControlChange:
+        {
+            o << "Control Change, ";
+            o << "channel: " << (int)description->parameterMap[MessageParameterKeyChannel] << ", ";
+            o << "number: " << (int)description->parameterMap[MessageParameterKeyControlNumber] << ", ";
+            o << "value: " << (int)description->parameterMap[MessageParameterKeyValue];
+            break;
+        }
+        case MessageTypeChannelAftertouch:
+        {
+            o << "Channel Aftertouch, ";
+            o << "channel: " << (int)description->parameterMap[MessageParameterKeyChannel] << ", ";
+            o << "pressure: " << (int)description->parameterMap[MessageParameterKeyPressure];
+            break;
+        }
+        case MessageTypePitchWheel:
+        {
+            o << "Pitch Wheel, ";
+            o << "channel: " << (int)description->parameterMap[MessageParameterKeyChannel] << ", ";
+            o << "LSB: " << (int)description->parameterMap[MessageParameterKeyValueLSB] << ", ";
+            o << "MSB: " << (int)description->parameterMap[MessageParameterKeyValueMSB];
+            break;
+        }
+            
+        default:
+            break;
     }
     
     return o.str();
@@ -260,12 +316,14 @@ unsigned char VSC::MIDI::channelForStatusByte(unsigned char statusByte)
 
 VSC::MIDI::Message VSC::MIDI::messageFromDescription(MessageDescription::SPtr description)
 {
+    BOOST_ASSERT(description);
     
     if(!description) throw VSCInvalidArgumentException("Invalid description");
     
-    unsigned char statusByte = statusByteForMessageType(description->type);
+    MessageType messageType = description->type;
+    unsigned char statusByte = statusByteForMessageType(messageType);
     
-    switch (statusByte)
+    switch (messageType)
     {
             
         case MessageTypeNoteOff:

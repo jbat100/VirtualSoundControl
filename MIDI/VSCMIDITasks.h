@@ -63,6 +63,10 @@ namespace VSC {
             
             virtual bool stepExecution(void);
             
+        private:
+            
+            static const bool mTraceExecution = true;
+            
         };
         
     }

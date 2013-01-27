@@ -9,6 +9,7 @@
 #import "VSCIMOSXCollisionActionView.h"
 #import "VSCIMOSXCollisionEventChainController.h"
 #import "VSCOSXOBSceneElementEditor.h"
+#import "VSCOSXInterfaceFactory.h"
 #import "NSString+VSCAdditions.h"
 
 #include "VSCMIDI.h"
@@ -24,12 +25,12 @@ NSString* const VSCIMOSXNoMidiOutputString          = @"No MIDI Output";
 NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
 
 /*
- *  Heights should agree with nib
+ *  Heights should agree with nib (+ <margin>)
  */
 
-const CGFloat VSCIMOSXCollisionActionViewBaseHeight = 50.0;
-const CGFloat VSCIMOSXCollisionActionViewMIDISetupHeight = 50.0;
-const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
+const CGFloat VSCIMOSXCollisionActionViewBaseHeight = 36.0 + 6;
+const CGFloat VSCIMOSXCollisionActionViewMIDISetupHeight = 39.0 + 4;
+const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 15.0;
 
 /*
  *  Private internals
@@ -49,7 +50,8 @@ const CGFloat VSCIMOSXCollisionActionViewMIDIControlSetupHeight = 26.0;
 @property (strong) IBOutlet NSLayoutConstraint* mainViewBottomConstraint;
 
 -(void) commonInit;
--(void) updateMIDIInterface;
+-(void) reset;
+-(void) updateMIDIOutputs;
 -(void) updateMIDIControlNumbers;
 
 @end
@@ -83,7 +85,8 @@ static const BOOL debugDraw = NO;
 
 +(void) initialize
 {
-    if (!actionTypeMenuItemStringDict) {
+    if (!actionTypeMenuItemStringDict)
+    {
         actionTypeMenuItemStringDict = @{
         @((int)VSCIMOSXCollisionActionTypeMIDINoteOn)           : @"MIDI Note On",
         @((int)VSCIMOSXCollisionActionTypeMIDINoteOnAndOff)     : @"MIDI Note On and Off",
@@ -116,6 +119,8 @@ static const BOOL debugDraw = NO;
     
     return (VSCIMOSXCollisionActionType)[[types anyObject] intValue];
 }
+
+
 
 #pragma mark - NSView Methods
 
@@ -178,26 +183,33 @@ static const BOOL debugDraw = NO;
 -(void) awakeFromNib
 {
     self.translatesAutoresizingMaskIntoConstraints = NO;
-    BOOST_ASSERT(self.mainView);
-    self.mainView.translatesAutoresizingMaskIntoConstraints = NO;
-    BOOST_ASSERT(self.midiSetupView);
-    self.midiSetupView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    //BOOST_ASSERT(self.mainView);
+    //self.mainView.translatesAutoresizingMaskIntoConstraints = NO;
+    //BOOST_ASSERT(self.midiSetupView);
+    //self.midiSetupView.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 #pragma mark - Custom Setter
 
--(void) setCollisionAction:(VSC::IM::CollisionAction::WPtr)action {
-    
+-(void) setCollisionAction:(VSC::IM::CollisionAction::WPtr)action
+{
     if (action.lock() != _collisionAction.lock())
     {
         _collisionAction = action;
         self.currentActionType = VSCIMOSXCollisionActionTypeForCollisionAction(_collisionAction.lock());
         [self setupInterfaceForNewCollisionAction];
     }
-    
 }
 
 #pragma mark - UI Helper
+
+-(void) reset
+{
+    // start from zero
+    [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self removeConstraints:[self constraints]];
+}
 
 -(void) setupInterfaceForNewCollisionAction
 {
@@ -208,72 +220,73 @@ static const BOOL debugDraw = NO;
      *  Setup the view and its subviews according to action type
      */
     
-    NSDictionary *viewsDictionary = nil;
-    // start from zero
-    [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [self removeConstraints:[self constraints]];
+    NSMutableArray* viewsForHorizontalConstraints = [NSMutableArray array];
+    NSMutableString* verticalLayoutVisualFormat = [NSMutableString stringWithString:@"V:|"];
+    NSMutableDictionary* viewBindingsDictionary = [NSMutableDictionary dictionary];
+    
+    if (self.mainView == nil)
+    {
+        self.mainView = [[VSCOSXInterfaceFactory defaultFactory] newCollisionActionCommonViewWithOwner:self];
+    }
     
     BOOST_ASSERT(self.mainView);
     [self addSubview:self.mainView];
-    NSView* mainView = self.mainView;
-    
-    CGRect f = self.frame;
-    f.size.height = [[self class] heightOfViewForCollisionAction:action];
-    self.frame = f;
-    
-    
-    viewsDictionary = NSDictionaryOfVariableBindings(mainView);
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[mainView]|" options:0
-                                                                 metrics:nil views:viewsDictionary]];
-    
-    NSArray* vConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[mainView]|"
-                                                                    options:0 metrics:nil views:viewsDictionary];
+    [viewsForHorizontalConstraints addObject:self.mainView];
+    [viewBindingsDictionary setValue:self.mainView forKey:@"mainView"];
+    [verticalLayoutVisualFormat appendString:@"-2-[mainView]"];
     
     
     if (VSC::IM::collisionActionIsMIDI(action))
     {
-        NSView* midiView = self.midiSetupView;
+        if (self.midiSetupView == nil)
+        {
+            self.midiSetupView = [[VSCOSXInterfaceFactory defaultFactory] newCollisionActionMIDIViewWithOwner:self];
+        }
         
-        BOOST_ASSERT(midiView);
-        [self addSubview:midiView];
-        
-        viewsDictionary = NSDictionaryOfVariableBindings(mainView, midiView);
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[midiView]|" options:0
-                                                                     metrics:nil views:viewsDictionary]];
-        
-        vConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[mainView][midiView]|" options:0
-                                                               metrics:nil views:viewsDictionary];
-
+        BOOST_ASSERT(self.midiSetupView);
+        [self addSubview:self.midiSetupView];
+        [viewsForHorizontalConstraints addObject:self.midiSetupView];
+        [viewBindingsDictionary setValue:self.midiSetupView forKey:@"midiSetupView"];
+        [verticalLayoutVisualFormat appendString:@"-4-[midiSetupView]"];
     }
     
-    [self addConstraints:vConstraints];
+    [verticalLayoutVisualFormat appendString:@"-4-|"];
     
     /*
-     *  Now that we've set up the view properly, we can update it
+     *  Apply constraints
+     */
+
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:verticalLayoutVisualFormat
+                                                                 options:0
+                                                                 metrics:nil
+                                                                   views:viewBindingsDictionary]];
+    
+    for (NSView* viewForConstraint in viewsForHorizontalConstraints)
+    {
+        NSDictionary *localViewsDictionary = NSDictionaryOfVariableBindings(viewForConstraint);
+        
+        NSArray* contraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-4-[viewForConstraint]-4-|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:localViewsDictionary];
+        
+        [self addConstraints:contraints];
+    }
+    
+    /*
+     *  Update interface
      */
     
     [self.actionTypeTextField setStringValue:[[self class] stringForActionType:self.currentActionType]];
     
     if (VSC::IM::collisionActionIsMIDI(action))
     {
-        [self updateMIDIInterface];
-        
-        VSC::IM::CollisionMIDIAction::SPtr midiAction;
-        midiAction = boost::dynamic_pointer_cast<VSC::IM::CollisionMIDIAction>(self.collisionAction.lock());
-        BOOST_ASSERT(midiAction);
-        
-        if (midiAction)
-        {
-            [self.midiChannelTextField setIntegerValue:midiAction->getChannel()];
-        }
-        else
-        {
-            [self.midiChannelTextField setStringValue:@"No channel"];
-        }
+        [self updateMIDIOutputs];
+        [self updateMIDIChannel];
     }
 }
 
--(void) updateMIDIInterface
+-(void) updateMIDIOutputs
 {
     VSC::MIDI::OutputManager::SPtr outputManager = VSC::MIDI::OutputManager::singletonManager();
     BOOST_ASSERT(outputManager);
@@ -317,6 +330,22 @@ static const BOOL debugDraw = NO;
     }
 }
 
+-(void) updateMIDIChannel
+{
+    VSC::IM::CollisionMIDIAction::SPtr midiAction;
+    midiAction = boost::dynamic_pointer_cast<VSC::IM::CollisionMIDIAction>(self.collisionAction.lock());
+    BOOST_ASSERT(midiAction);
+    
+    if (midiAction)
+    {
+        [self.midiChannelTextField setIntegerValue:midiAction->getChannel()];
+    }
+    else
+    {
+        [self.midiChannelTextField setStringValue:@"No channel"];
+    }
+}
+
 -(void) updateMIDIControlNumbers
 {
     VSC::IM::CollisionAction::SPtr action = self.collisionAction.lock();
@@ -357,9 +386,9 @@ static const BOOL debugDraw = NO;
     [self.eventChainController sender:self requestsShowMappingsForCollisionAction:self.collisionAction.lock()];
 }
 
--(IBAction) refreshMIDIInterface:(id)sender
+-(IBAction) refreshMIDIOutputs:(id)sender
 {
-    [self updateMIDIInterface];
+    [self updateMIDIOutputs];
 }
 
 -(IBAction) midiOutputSelected:(id)sender
@@ -425,6 +454,12 @@ static const BOOL debugDraw = NO;
     }
 }
 
+#pragma mark Debugging
 
+-(void) printUIDescription
+{
+    NSLog(@"%@ %@, mainView.frame %@, midiSetupView.frame %@", self, NSStringFromRect(self.frame),
+          NSStringFromRect(self.mainView.frame), NSStringFromRect(self.midiSetupView.frame));
+}
 
 @end

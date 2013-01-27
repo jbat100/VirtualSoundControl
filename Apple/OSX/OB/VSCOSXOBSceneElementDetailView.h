@@ -28,6 +28,7 @@
 -(void) reloadWholeInterface;
 -(void) reloadPositionInterface;
 -(void) reloadPositionInterface:(BOOL)critical;
--(void) reloadImmobilizedInterface;
+
+-(void) printUIDescription;
 
 @end

@@ -146,9 +146,9 @@
     [self.applicationManager startOgreRendering];
     
 #ifdef VSCOSX_SETUP_ENVIRONMENT_TEST
+    
     VSC::EnvironmentTest::SPtr test = VSC::EnvironmentTest::SPtr(new VSC::EnvironmentTest);
     test->setupTestForEnvironment(environment);
-#endif
     
     const VSC::OB::Elements& elements = environment->getOBScene()->getElements();
     VSC::OB::Element::SPtr element = VSC::OB::Element::SPtr();
@@ -164,6 +164,10 @@
     
     BOOST_ASSERT(element);
     if (element) [self.environmentWindowController showElementInspectorForElement:element];
+    
+#endif
+    
+
     
 #endif
     

@@ -189,7 +189,7 @@ VSC::Tasks VSC::IM::CollisionMIDINoteOnAndOffAction::generateTasksForCollision(O
         onPayload->messageDescription->type = MIDI::MessageTypeNoteOn;
         onPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char)this->getChannel();
         onPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyPitch] = (unsigned char) pitchMapping->mappedValue(element, collision);
-        payload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) velocityOnMapping->mappedValue(element, collision);
+        onPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) velocityOnMapping->mappedValue(element, collision);
         onPayload->midiOutput = this->getMIDIOutput();
         MIDI::MIDISendMessageTask::SPtr onTask(new MIDI::MIDISendMessageTask(boost::dynamic_pointer_cast<Task::Payload>(onPayload)));
         tasks.push_back(onTask);
@@ -203,8 +203,8 @@ VSC::Tasks VSC::IM::CollisionMIDINoteOnAndOffAction::generateTasksForCollision(O
         offPayload->timeOffset = timeDuration;
         offPayload->messageDescription->type = MIDI::MessageTypeNoteOff;
         offPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char)this->getChannel();
-        offPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyPitch] = (unsigned char) pitchMapping->mappedValue(element, collision);
-        offPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) velocityOffMapping->mappedValue(element, collision);
+        offPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyPitch] = (unsigned char)pitchMapping->mappedValue(element, collision);
+        offPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char)velocityOffMapping->mappedValue(element, collision);
         offPayload->midiOutput = this->getMIDIOutput();
         MIDI::MIDISendMessageTask::SPtr offTask(new MIDI::MIDISendMessageTask(boost::dynamic_pointer_cast<Task::Payload>(offPayload)));
         tasks.push_back(offTask);

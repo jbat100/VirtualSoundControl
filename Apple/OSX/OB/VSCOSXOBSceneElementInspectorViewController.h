@@ -11,6 +11,7 @@
 #import "VSCOSXOBSceneElementController.h"
 #import "VSCOBOSXSceneListener.h"
 
+@class DMTabBar;
 @class VSCOSXOBSceneElementDetailView;
 @class VSCOSXOBSceneElementCollisionView;
 @class VSCIMOSXCollisionEventChainViewController;
@@ -24,9 +25,13 @@
 @property (strong) VSCIMOSXCollisionEventChainViewController* collisionStartedEventChainViewController;
 @property (strong) VSCIMOSXCollisionEventChainViewController* collisionEndedEventChainViewController;
 
+@property (weak) IBOutlet DMTabBar* tabBar;
+
 -(void) showElementDetailView;
 -(void) showElementCollisionView;
 
 -(IBAction) immobilized:(id)sender;
+
+-(void) reloadImmobilizedInterface;
 
 @end

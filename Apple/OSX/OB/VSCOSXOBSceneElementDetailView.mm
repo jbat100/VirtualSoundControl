@@ -65,6 +65,9 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
+    CGContextRef myContext = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+    CGContextSetGrayFillColor (myContext, 0.8, 1.0);
+    CGContextFillRect(myContext, NSRectToCGRect(self.bounds));
 }
 
 -(void) awakeFromNib
@@ -116,7 +119,10 @@
     [verticalVisualFormat appendString:@"-2-[rotationFV]"];
     
     [verticalVisualFormat appendString:@"-|"];
-    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(positionFV);
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(immobilizedCB, positionFV, velocityFV, rotationFV);
+    
+    NSLog(@"VerticalVisualFormat: %@", verticalVisualFormat);
+    
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:verticalVisualFormat
                                                                  options:0
                                                                  metrics:nil
@@ -144,6 +150,8 @@
     BOOST_ASSERT([textField isKindOfClass:[NSTextField class]]);
     if ([textField isKindOfClass:[NSTextField class]])
     {
+        textField.font = [NSFont fontWithName:@"System" size:11];
+        
         NSNumberFormatter* formatter = textField.formatter;
         BOOST_ASSERT(formatter);
         BOOST_ASSERT([formatter isKindOfClass:[NSNumberFormatter class]]);
@@ -164,12 +172,21 @@
     return [NSArray arrayWithArray:textFields];
 }
 
+#pragma mark - UI Debug
+
+-(void) printUIDescription
+{
+    NSLog(@"self.positionFieldView %@ %@", self.positionFieldView, NSStringFromRect(self.positionFieldView.frame));
+    NSLog(@"self.velocityFieldView %@ %@", self.velocityFieldView, NSStringFromRect(self.velocityFieldView.frame));
+    NSLog(@"self.rotationFieldView %@ %@", self.rotationFieldView, NSStringFromRect(self.rotationFieldView.frame));
+    
+}
+
 #pragma mark - UI Helpers
 
 -(void) reloadWholeInterface
 {
     [self reloadNameInterface];
-    [self reloadImmobilizedInterface];
     [self reloadPositionInterface:YES];
 }
 
@@ -195,29 +212,6 @@
     
     [self.nameTextField setStringValue:@"No Element"];
     [self.idTextField setStringValue:@"id: None"];
-}
-
--(void) reloadImmobilizedInterface
-{
-    BOOST_ASSERT(self.elementController);
-    
-    if (self.elementController)
-    {
-        VSC::OB::Element::SPtr element = self.elementController.element.lock();
-        
-        if (element)
-        {
-            bool immobilized = element->isImmobilized();
-            if (immobilized)
-            {
-                self.immobilizedCheckBox.state = NSOnState;
-            }
-            else
-            {
-                self.immobilizedCheckBox.state = NSOffState;
-            }
-        }
-    }
 }
 
 -(void) reloadPositionInterface
@@ -248,9 +242,9 @@
             {
                 const Ogre::Vector3& linearVelocity = rigidBody->getLinearVelocity();
                 
-                [self.xVelTextField setDoubleValue:linearVelocity.x];
-                [self.yVelTextField setDoubleValue:linearVelocity.y];
-                [self.zVelTextField setDoubleValue:linearVelocity.z];
+                [self.velocityFieldView.value1TextField setDoubleValue:linearVelocity.x];
+                [self.velocityFieldView.value2TextField setDoubleValue:linearVelocity.y];
+                [self.velocityFieldView.value3TextField setDoubleValue:linearVelocity.z];
                 
                 Ogre::Node* node = rigidBody->getSceneNode();
                 //BOOST_ASSERT(node);
@@ -258,29 +252,29 @@
                 {
                     const Ogre::Vector3& position = node->getPosition();
                     
-                    [self.xPosTextField setDoubleValue:position.x];
-                    [self.yPosTextField setDoubleValue:position.y];
-                    [self.zPosTextField setDoubleValue:position.z];
+                    [self.positionFieldView.value1TextField setDoubleValue:position.x];
+                    [self.positionFieldView.value2TextField setDoubleValue:position.y];
+                    [self.positionFieldView.value3TextField setDoubleValue:position.z];
                     
                     const Ogre::Quaternion& rotation = node->getOrientation();
                     
-                    [self.xRotTextField setDoubleValue:rotation.x];
-                    [self.yRotTextField setDoubleValue:rotation.y];
-                    [self.zRotTextField setDoubleValue:rotation.z];
-                    [self.wRotTextField setDoubleValue:rotation.w];
+                    [self.rotationFieldView.value1TextField setDoubleValue:rotation.x];
+                    [self.rotationFieldView.value2TextField setDoubleValue:rotation.y];
+                    [self.rotationFieldView.value3TextField setDoubleValue:rotation.z];
+                    [self.rotationFieldView.value4TextField setDoubleValue:rotation.w];
                     
                 }
                 
                 else
                 {
-                    [self.xPosTextField setStringValue:@"N/A"];
-                    [self.yPosTextField setStringValue:@"N/A"];
-                    [self.zPosTextField setStringValue:@"N/A"];
+                    [self.positionFieldView.value1TextField setStringValue:@"N/A"];
+                    [self.positionFieldView.value2TextField setStringValue:@"N/A"];
+                    [self.positionFieldView.value3TextField setStringValue:@"N/A"];
                     
-                    [self.xRotTextField setStringValue:@"N/A"];
-                    [self.yRotTextField setStringValue:@"N/A"];
-                    [self.zRotTextField setStringValue:@"N/A"];
-                    [self.wRotTextField setStringValue:@"N/A"];
+                    [self.rotationFieldView.value1TextField setStringValue:@"N/A"];
+                    [self.rotationFieldView.value2TextField setStringValue:@"N/A"];
+                    [self.rotationFieldView.value3TextField setStringValue:@"N/A"];
+                    [self.rotationFieldView.value4TextField setStringValue:@"N/A"];
                 }
             }
             

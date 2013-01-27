@@ -8,6 +8,10 @@
 
 #import "VSCOSXOBSceneElementInspectorWindowController.h"
 #import "VSCOSXOBSceneElementInspectorViewController.h"
+#import "VSCOSXOBSceneElementDetailView.h"
+#import "VSCOSXOBSceneElementCollisionView.h"
+
+#import "DMTabBar.h"
 
 @interface VSCOSXOBSceneElementInspectorWindowController ()
 
@@ -65,10 +69,12 @@ const static BOOL traceInterface = YES;
 - (void)printUIDescription
 {
     NSLog(@"------------------%@ printUIDescription----------------------", self);
-    NSLog(@"self.mainBox : %@, %@", self.mainBox, NSStringFromRect(self.mainBox.frame));
-    NSLog(@"self.mainBox.contentView : %@, %@", self.mainBox.contentView, NSStringFromRect([(NSView*)[self.mainBox contentView] frame]));
-    NSLog(@"self.elementInspectorViewController.view %@, %@",
-          self.elementInspectorViewController.view, NSStringFromRect(self.elementInspectorViewController.view.frame));
+    NSView* inspectorView = self.elementInspectorViewController.view;
+    NSView* tabBar = self.elementInspectorViewController.tabBar;
+    NSView* windowContentView = [[self window] contentView];
+    NSLog(@"windowContentView %@, %@", windowContentView, NSStringFromRect(windowContentView.frame));
+    NSLog(@"inspectorView %@, %@", inspectorView, NSStringFromRect(inspectorView.frame));
+    NSLog(@"tabBar %@, %@", tabBar, NSStringFromRect(tabBar.frame));
     NSLog(@"-------------------------------------------------------------");
 }
 
@@ -78,31 +84,27 @@ const static BOOL traceInterface = YES;
     
     if (traceInterface) NSLog(@"%@ windowDidLoad", self);
     
+    NSView* contentView = [self.window contentView];
+    
     BOOST_ASSERT(self.elementInspectorViewController);
-    BOOST_ASSERT(self.mainBox);
+    BOOST_ASSERT([contentView isKindOfClass:[NSView class]]);
     
-    if (self.elementInspectorViewController && self.mainBox)
-    {
-        BOOST_ASSERT([self.mainBox contentView]);
-        //[self.elementInspectorViewController view].frame = self.mainBox.bounds;
-        [[self.mainBox contentView] addSubview:[self.elementInspectorViewController view]];
-    }
-    
-    //if (traceInterface) [self printUIDescription];
-    
-    NSView* boxContentView = [self.mainBox contentView];
-    //boxContentView.translatesAutoresizingMaskIntoConstraints = NO;
     NSView* elementInspectorView = [self.elementInspectorViewController view];
+    elementInspectorView.translatesAutoresizingMaskIntoConstraints = NO;
     
-    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(boxContentView, elementInspectorView);
-    [boxContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[elementInspectorView]|"
+    [contentView addSubview:elementInspectorView];
+    
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(elementInspectorView);
+    [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[elementInspectorView]|"
                                                                            options:0
                                                                            metrics:nil
                                                                              views:viewsDictionary]];
-    [boxContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[elementInspectorView]|"
+    [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[elementInspectorView]|"
                                                                            options:0
                                                                            metrics:nil
                                                                              views:viewsDictionary]];
+    
+    //[self.elementInspectorViewController showElementDetailView];
 
     self.window.delegate = self;
 }
@@ -113,8 +115,9 @@ const static BOOL traceInterface = YES;
 {
     if (traceInterface)
     {
-        //NSLog(@"%@ windowDidResize: %@", self, notification);
+        NSLog(@"%@ windowDidResize: %@", self, notification);
         //[self printUIDescription];
+        //[self.elementInspectorViewController.elementDetailView printUIDescription];
     }
 }
 

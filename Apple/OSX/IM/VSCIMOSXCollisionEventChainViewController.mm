@@ -75,6 +75,8 @@ const static BOOL traceInterface = YES;
     BOOST_ASSERT(self.addEventButton);
     BOOST_ASSERT(self.removeEventButton);
     BOOST_ASSERT(self.addEventMenu);
+    self.addEventButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.removeEventButton.translatesAutoresizingMaskIntoConstraints = NO;
     
     BOOST_ASSERT(self.addDelayMenuItem);
     BOOST_ASSERT(self.addCollisionMIDINoteOnMenuItem);
@@ -91,6 +93,13 @@ const static BOOL traceInterface = YES;
 -(void) reloadInterface
 {
     [self.eventTableView reloadData];
+}
+
+#pragma mark - Debugging
+
+-(void) printUIDescription
+{
+    //NSArray* actionViews = [self.eventTableView ]
 }
 
 #pragma mark - UI Callbacks
@@ -273,7 +282,7 @@ const static BOOL traceInterface = YES;
     }
     BOOST_ASSERT(v);
     BOOST_ASSERT(v.eventChainController == owner);
-    //v.translatesAutoresizingMaskIntoConstraints = NO;
+    v.translatesAutoresizingMaskIntoConstraints = NO;
     return v;
 }
 
@@ -346,6 +355,7 @@ const static BOOL traceInterface = YES;
             [actionView setCollisionAction:(VSC::IM::CollisionAction::WPtr(action))];
             actionView.eventChainController = self;
             if (traceInterface) NSLog(@"Returning: %@ with frame: %@", actionView, NSStringFromRect(actionView.frame));
+            [actionView setNeedsLayout:YES];
             return actionView;
         }
         
@@ -358,6 +368,7 @@ const static BOOL traceInterface = YES;
             delayView.eventChainController = self;
             [delayView setDelay:VSC::IM::Delay::WPtr(delay)];
             if (traceInterface) NSLog(@"Returning: %@ with frame: %@", delayView, NSStringFromRect(delayView.frame));
+            [delayView setNeedsLayout:YES];
             return delayView;
         }
         
@@ -420,9 +431,23 @@ const static BOOL traceInterface = YES;
     
     [rowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         NSView* v = [self.eventTableView viewAtColumn:0 row:idx makeIfNecessary:NO];
-        NSLog(@"Row %ld: %@ with frame %@", idx, v, NSStringFromRect(v.frame));
+        //NSLog(@"Row %ld: %@ with frame %@", idx, v, NSStringFromRect(v.frame));
+        if ([v isKindOfClass:[VSCIMOSXCollisionActionView class]])
+        {
+            VSCIMOSXCollisionActionView* actionView = (VSCIMOSXCollisionActionView*)v;
+            [actionView setNeedsLayout:YES];
+            [actionView printUIDescription];
+        }
     }];
     
+}
+
+- (void)tableView:(NSTableView *)aTableView
+  willDisplayCell:(id)aCell
+   forTableColumn:(NSTableColumn *)aTableColumn
+              row:(NSInteger)rowIndex
+{
+    NSLog(@"HERE!!");
 }
 
 

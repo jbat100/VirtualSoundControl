@@ -54,12 +54,10 @@ void VSC::MIDI::InputManager::refreshInputs(void)
     
     BOOST_ASSERT(mPortManager);
     
-    if (mPortManager) {
-        
+    if (mPortManager)
+    {
         mPortManager->refreshInputPorts();
-        
         InputPorts ports = mPortManager->getInputPorts();
-        
         BOOST_FOREACH(const InputPort& inputPort, ports)
         {
             Input::SPtr input = this->getInputForPort(inputPort);
@@ -69,9 +67,7 @@ void VSC::MIDI::InputManager::refreshInputs(void)
                 mInputs.push_back(input);
             }
         }
-        
         if (mTrace) std::cout << "Refreshed inputs (got " << mInputs.size() << " input(s))" << std::endl;
-        
     }
     
 }
@@ -79,7 +75,6 @@ void VSC::MIDI::InputManager::refreshInputs(void)
 const VSC::MIDI::Inputs& VSC::MIDI::InputManager::getInputs(void)
 {
     boost::lock_guard<Mutex> lock(mMutex);
-    
     return mInputs;
 }
 
@@ -105,7 +100,6 @@ VSC::MIDI::Input::SPtr VSC::MIDI::InputManager::getFirstOpenedInput(void)
 VSC::MIDI::Input::SPtr VSC::MIDI::InputManager::getInputWithDescription(const std::string& description)
 {
     boost::lock_guard<Mutex> lock(mMutex);
-    
     BOOST_FOREACH(Input::SPtr input, mInputs)
     {
         if (input->getDescription().compare(description) == 0) return input;
@@ -117,7 +111,6 @@ VSC::MIDI::Input::SPtr VSC::MIDI::InputManager::getInputWithDescription(const st
 VSC::MIDI::Input::SPtr VSC::MIDI::InputManager::getInputForPort(const InputPort& port)
 {
     boost::lock_guard<Mutex> lock(mMutex);
-    
     BOOST_FOREACH(Input::SPtr input, mInputs)
     {
         if (input->getInputPort() == port) return input;

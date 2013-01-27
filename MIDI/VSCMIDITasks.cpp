@@ -48,21 +48,41 @@ VSC::MIDI::MIDISendMessageTask::MIDISendMessageTask(Task::Payload::SPtr payload)
     BOOST_ASSERT(midiPayload);
     if (!midiPayload)
     {
-        throw VSCInvalidArgumentException("Payload for MIDIControlChangeTask should be MIDIControlChangeTask::Payload");
+        throw VSCInvalidArgumentException("Payload for MIDISendMessageTask should be MIDISendMessageTask::Payload");
     }
 }
 
 bool VSC::MIDI::MIDISendMessageTask::stepExecution(void)
 {
+    if (mTraceExecution) std::cout << "VSC::MIDI::MIDISendMessageTask::stepExecution:" << std::endl;
+    
     MIDISendMessageTask::Payload::SPtr payload = boost::static_pointer_cast<MIDISendMessageTask::Payload>(this->getPayload());
     BOOST_ASSERT(payload);
-    
-    if (this->getExecutionStartTime() + payload->timeOffset >= CurrentTime())
+    if (!payload)
     {
+        throw VSCInvalidArgumentException("Payload for MIDISendMessageTask should be MIDISendMessageTask::Payload");
+    }
+    
+    Time targetTime = this->getExecutionStartTime() + payload->timeOffset;
+    Time currentTime = CurrentTime();
+    
+    if (mTraceExecution)
+    {
+        std::cout << "    Execution time: " << this->getExecutionStartTime() << std::endl;
+        std::cout << "    Time offset: " << payload->timeOffset << std::endl;
+        std::cout << "    Target time: " << targetTime << std::endl;
+        std::cout << "    Current time: " << currentTime << std::endl;
+    }
+    
+    if (targetTime <= CurrentTime())
+    {
+        if (mTraceExecution) std::cout << "    Executing!!!" << std::endl;
         payload->midiOutput->sendMessage(payload->messageDescription);
         this->setState(StateEnded);
         return true;
     }
+    
+    if (mTraceExecution) std::cout << "    Not yet!!!" << std::endl;
     
     return false;
 }

@@ -46,4 +46,10 @@
 
 -(void) reloadInterface;
 
+/*
+ *  Debug
+ */
+
+-(void) printUIDescription;
+
 @end
