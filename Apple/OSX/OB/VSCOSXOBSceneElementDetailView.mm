@@ -179,7 +179,6 @@
     NSLog(@"self.positionFieldView %@ %@", self.positionFieldView, NSStringFromRect(self.positionFieldView.frame));
     NSLog(@"self.velocityFieldView %@ %@", self.velocityFieldView, NSStringFromRect(self.velocityFieldView.frame));
     NSLog(@"self.rotationFieldView %@ %@", self.rotationFieldView, NSStringFromRect(self.rotationFieldView.frame));
-    
 }
 
 #pragma mark - UI Helpers

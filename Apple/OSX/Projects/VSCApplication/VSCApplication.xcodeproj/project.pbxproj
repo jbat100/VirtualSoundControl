@@ -39,6 +39,8 @@
 		106337D91674FDEF003E528B /* RenderSystem_GL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 106337D81674FDEF003E528B /* RenderSystem_GL.dylib */; };
 		106337DA1674FF80003E528B /* RenderSystem_GL.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 106337D81674FDEF003E528B /* RenderSystem_GL.dylib */; };
 		10681E871670CFF700C7A1BE /* VSCTaskTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10681E851670CFF700C7A1BE /* VSCTaskTest.cpp */; };
+		106D1A3D16B6813800093380 /* VSCOBProximityDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106D1A3B16B6813800093380 /* VSCOBProximityDetector.cpp */; };
+		106D1A4116B682E400093380 /* VSCOBProximity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106D1A3F16B682E400093380 /* VSCOBProximity.cpp */; };
 		107A3C0716A36F4C003C0D69 /* VSCMIDIInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107A3C0316A36F4C003C0D69 /* VSCMIDIInput.cpp */; };
 		107A3C0816A36F4C003C0D69 /* VSCMIDIInputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107A3C0516A36F4C003C0D69 /* VSCMIDIInputManager.cpp */; };
 		107C399216A07A4100552221 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 107C398716A07A4100552221 /* Credits.rtf */; };
@@ -285,6 +287,10 @@
 		106337D81674FDEF003E528B /* RenderSystem_GL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = RenderSystem_GL.dylib; path = ../../../../../../Libraries/OgreSDK/lib/RenderSystem_GL.dylib; sourceTree = "<group>"; };
 		10681E851670CFF700C7A1BE /* VSCTaskTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCTaskTest.cpp; path = ../../../../Task/VSCTaskTest.cpp; sourceTree = "<group>"; };
 		10681E861670CFF700C7A1BE /* VSCTaskTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCTaskTest.h; path = ../../../../Task/VSCTaskTest.h; sourceTree = "<group>"; };
+		106D1A3B16B6813800093380 /* VSCOBProximityDetector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCOBProximityDetector.cpp; sourceTree = "<group>"; };
+		106D1A3C16B6813800093380 /* VSCOBProximityDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBProximityDetector.h; sourceTree = "<group>"; };
+		106D1A3F16B682E400093380 /* VSCOBProximity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCOBProximity.cpp; sourceTree = "<group>"; };
+		106D1A4016B682E400093380 /* VSCOBProximity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBProximity.h; sourceTree = "<group>"; };
 		107A3C0316A36F4C003C0D69 /* VSCMIDIInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDIInput.cpp; path = ../../../../MIDI/VSCMIDIInput.cpp; sourceTree = "<group>"; };
 		107A3C0416A36F4C003C0D69 /* VSCMIDIInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDIInput.h; path = ../../../../MIDI/VSCMIDIInput.h; sourceTree = "<group>"; };
 		107A3C0516A36F4C003C0D69 /* VSCMIDIInputManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDIInputManager.cpp; path = ../../../../MIDI/VSCMIDIInputManager.cpp; sourceTree = "<group>"; };
@@ -782,10 +788,14 @@
 				109A8E7816A1A7210023EC1B /* VSCOBResourceManager.h */,
 				109A8E7916A1A7210023EC1B /* VSCOBScene.cpp */,
 				109A8E7A16A1A7210023EC1B /* VSCOBScene.h */,
+				106D1A3F16B682E400093380 /* VSCOBProximity.cpp */,
+				106D1A4016B682E400093380 /* VSCOBProximity.h */,
 				10C3720B16A455720044D8D8 /* VSCOBCollision.cpp */,
 				10C3720C16A455720044D8D8 /* VSCOBCollision.h */,
 				10C3720D16A455720044D8D8 /* VSCOBCollisionDetector.cpp */,
 				10C3720E16A455720044D8D8 /* VSCOBCollisionDetector.h */,
+				106D1A3B16B6813800093380 /* VSCOBProximityDetector.cpp */,
+				106D1A3C16B6813800093380 /* VSCOBProximityDetector.h */,
 				10C3720F16A455720044D8D8 /* VSCOBElement.cpp */,
 				10C3721016A455720044D8D8 /* VSCOBElement.h */,
 				10C3721116A455720044D8D8 /* VSCOBElementFactory.cpp */,
@@ -1681,6 +1691,8 @@
 				10F115F316AC7F47000A9EBB /* VSCOSXKeyed3FieldView.m in Sources */,
 				10F115F816AC8B3B000A9EBB /* VSCOSXKeyed4FieldView.m in Sources */,
 				10C78E3C16B563C600811F6A /* VSCOSXInterfaceFactory+CollisionAction.mm in Sources */,
+				106D1A3D16B6813800093380 /* VSCOBProximityDetector.cpp in Sources */,
+				106D1A4116B682E400093380 /* VSCOBProximity.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

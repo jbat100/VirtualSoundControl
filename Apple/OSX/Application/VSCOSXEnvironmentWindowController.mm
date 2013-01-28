@@ -374,7 +374,15 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     if (env)
     {
         BOOST_ASSERT(env->getIMCollisionMapper());
-        if (env->getIMCollisionMapper()) return env->getIMCollisionMapper()->getEventChainForCollisionStarted(element);
+        if (env->getIMCollisionMapper())
+        {
+            VSC::IM::CollisionEventChains chains;
+            if (chains.size() > 0)
+            {
+                VSC::IM::CollisionEventChain::SPtr chain = *(chains.begin());
+                return chain;
+            }
+        }
     }
     
     return VSC::IM::CollisionEventChain::SPtr();
@@ -385,10 +393,12 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     VSC::Environment::SPtr env = self.environment.lock();
     BOOST_ASSERT(env);
     
+    /*
     if (env)
     {
         return env->getIMCollisionMapper()->getEventChainForCollisionEnded(element);
     }
+     */
     
     return VSC::IM::CollisionEventChain::SPtr();
 }

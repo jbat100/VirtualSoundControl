@@ -1,6 +1,6 @@
 
-#ifndef _VSC_OGRE_BULLET_SCENE_H_
-#define _VSC_OGRE_BULLET_SCENE_H_
+#ifndef _VSC_OB_COLLISION_DETECTOR_H_
+#define _VSC_OB_COLLISION_DETECTOR_H_
 
 #include "VSCOB.h"
 #include "VSCOBCollision.h"
@@ -77,5 +77,5 @@ namespace VSC {
     }
 }
 
-#endif //_VSC_OGRE_BULLET_SCENE_H_
+#endif //_VSC_OB_COLLISION_DETECTOR_H_
 

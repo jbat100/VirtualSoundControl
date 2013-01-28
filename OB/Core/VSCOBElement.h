@@ -64,6 +64,9 @@ namespace VSC {
             void setMass(Float mass);
             Float getMass(void);
             
+            virtual Ogre::Vector3 getPosition(void);
+            virtual Ogre::Vector3 getVelocity(void);
+            
         protected:
             
             /*

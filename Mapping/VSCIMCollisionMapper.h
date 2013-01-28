@@ -31,11 +31,14 @@ namespace VSC {
              *  Action Chains
              */
             
-            void setActionChainForCollisionStarted(CollisionEventChain::SPtr actionChain, OB::Element_SPtr element);
-            void setActionChainForCollisionEnded(CollisionEventChain::SPtr actionChain, OB::Element_SPtr element);
+            void addActionChainForCollisionStarted(CollisionEventChain::SPtr actionChain, OB::Element_SPtr element);
+            void addActionChainForCollisionEnded(CollisionEventChain::SPtr actionChain, OB::Element_SPtr element);
             
-            CollisionEventChain::SPtr getEventChainForCollisionStarted(OB::Element_SPtr element);
-            CollisionEventChain::SPtr getEventChainForCollisionEnded(OB::Element_SPtr element);
+            void removeActionChainForCollisionStarted(CollisionEventChain::SPtr actionChain, OB::Element_SPtr element);
+            void removeActionChainForCollisionEnded(CollisionEventChain::SPtr actionChain, OB::Element_SPtr element);
+            
+            CollisionEventChains& getEventChainsForCollisionStarted(OB::Element_SPtr element);
+            CollisionEventChains& getEventChainsForCollisionEnded(OB::Element_SPtr element);
             
             /**
              *  CollisionDetector::Listener
@@ -51,7 +54,7 @@ namespace VSC {
             
         private:
             
-            typedef std::map<OB::Element_SPtr, CollisionEventChain::SPtr> CollisionEventChainMap;
+            typedef std::map<OB::Element_SPtr, CollisionEventChains> CollisionEventChainMap;
             
             CollisionEventChainMap mCollisionStartedEventChainMap;
             CollisionEventChainMap mCollisionEndedEventChainMap;

@@ -145,5 +145,33 @@ VSC::Float VSC::OB::Element::getMass(void)
     return mMass;
 }
 
+Ogre::Vector3 VSC::OB::Element::getPosition(void)
+{
+    OgreBulletDynamics::RigidBody* body = this->getRigidBody();
+    
+    BOOST_ASSERT(body);
+    if (!body) return Ogre::Vector3::ZERO;
+    
+    Ogre::SceneNode* node = body->getSceneNode();
+    BOOST_ASSERT(node);
+    if (!node) return Ogre::Vector3::ZERO;
+    
+    return node->getPosition();
+}
+
+Ogre::Vector3 VSC::OB::Element::getVelocity(void)
+{
+    OgreBulletDynamics::RigidBody* body = this->getRigidBody();
+    
+    BOOST_ASSERT(body);
+    if (body)
+    {
+        return body->getLinearVelocity();
+    }
+    
+    return Ogre::Vector3::ZERO;
+
+}
+
 
 

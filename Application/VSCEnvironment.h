@@ -77,7 +77,7 @@ namespace VSC {
         
     private:
         
-        OB::Scene_SPtr             mOBScene;
+        OB::Scene_SPtr              mOBScene;
         IM::CollisionMapper::SPtr   mIMCollisionMapper;
 
         IM::CollisionEventChains    mIMCollisionEventChains;

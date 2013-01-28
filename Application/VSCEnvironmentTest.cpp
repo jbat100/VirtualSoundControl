@@ -78,14 +78,17 @@ void VSC::EnvironmentTest::internalSetupForEnvironment(Environment::SPtr environ
     }
     
     /*
-     *  Get collision mapper and 
+     *  Get collision mapper and create a new chain for element 1
      */
     
     IM::CollisionMapper::SPtr collisionMapper = environment->getIMCollisionMapper();
     BOOST_ASSERT(collisionMapper);
     if (collisionMapper)
     {
-        IM::CollisionEventChain::SPtr chain = collisionMapper->getEventChainForCollisionStarted(element1);
+        IM::CollisionEventChains& chains = collisionMapper->getEventChainsForCollisionStarted(element1);
+        
+        IM::CollisionEventChain::SPtr chain(new IM::CollisionEventChain);
+        chains.push_back(chain);
         
         IM::Event::SPtr event;
         IM::CollisionMIDINoteOnAction::SPtr noteOnAction;

@@ -17,7 +17,9 @@ namespace VSC {
     
     namespace IM {
         
-        
+        /*
+         *  OBSOLETE See MIDIAction (can be configured to be trigered by collision or whatever else)
+         */
         
         /*
          *  A abstract class for all MIDI Actions

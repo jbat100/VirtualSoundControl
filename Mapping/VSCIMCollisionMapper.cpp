@@ -7,36 +7,34 @@
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
-void VSC::IM::CollisionMapper::setActionChainForCollisionStarted(CollisionEventChain::SPtr actionChain, OB::Element::SPtr element)
+void VSC::IM::CollisionMapper::addActionChainForCollisionStarted(CollisionEventChain::SPtr actionChain, OB::Element::SPtr element)
 {
-    mCollisionStartedEventChainMap[element] = actionChain;
+    CollisionEventChains& actionChains = mCollisionStartedEventChainMap[element];
+    CollisionEventChains::iterator it = std::find(actionChains.begin(), actionChains.end(), actionChain);
+    if (it == actionChains.end())
+    {
+        actionChains.push_back(actionChain);
+    }
 }
 
-void VSC::IM::CollisionMapper::setActionChainForCollisionEnded(CollisionEventChain::SPtr actionChain, OB::Element::SPtr element)
+void VSC::IM::CollisionMapper::addActionChainForCollisionEnded(CollisionEventChain::SPtr actionChain, OB::Element::SPtr element)
 {
-    mCollisionEndedEventChainMap[element] = actionChain;
+    CollisionEventChains& actionChains = mCollisionEndedEventChainMap[element];
+    CollisionEventChains::iterator it = std::find(actionChains.begin(), actionChains.end(), actionChain);
+    if (it == actionChains.end())
+    {
+        actionChains.push_back(actionChain);
+    }
 }
 
-VSC::IM::CollisionEventChain::SPtr VSC::IM::CollisionMapper::getEventChainForCollisionStarted(OB::Element::SPtr element)
+VSC::IM::CollisionEventChains& VSC::IM::CollisionMapper::getEventChainsForCollisionStarted(OB::Element::SPtr element)
 {
-    VSC::IM::CollisionEventChain::SPtr chain = mCollisionStartedEventChainMap[element];
-    if (chain) return chain;
-    
-    if (mTraceCollisions) std::cout << "CollisionMapper::getEventChainForCollisionStarted, creating action chain" << std::endl;
-    chain = VSC::IM::CollisionEventChain::SPtr(new VSC::IM::CollisionEventChain);
-    mCollisionStartedEventChainMap[element] = chain;
-    return chain;
+    return mCollisionStartedEventChainMap[element];
 }
 
-VSC::IM::CollisionEventChain::SPtr VSC::IM::CollisionMapper::getEventChainForCollisionEnded(OB::Element::SPtr element)
+VSC::IM::CollisionEventChains& VSC::IM::CollisionMapper::getEventChainsForCollisionEnded(OB::Element::SPtr element)
 {
-    VSC::IM::CollisionEventChain::SPtr chain = mCollisionEndedEventChainMap[element];
-    if (chain) return chain;
-    
-    if (mTraceCollisions) std::cout << "CollisionMapper::getEventChainForCollisionEnded, creating action chain" << std::endl;
-    chain = VSC::IM::CollisionEventChain::SPtr(new VSC::IM::CollisionEventChain);
-    mCollisionEndedEventChainMap[element] = chain;
-    return chain;
+    return mCollisionEndedEventChainMap[element];
 }
 
 void VSC::IM::CollisionMapper::collisionProspectDetected(OB::Collision::SPtr collision)
@@ -71,11 +69,15 @@ void VSC::IM::CollisionMapper::collisionDetected(OB::Collision::SPtr collision)
             BOOST_ASSERT(element);
             if (element)
             {
-                CollisionEventChain::SPtr actionChain = this->getEventChainForCollisionStarted(element);
+                CollisionEventChains actionChains = this->getEventChainsForCollisionStarted(element);
                 
-                if (actionChain)
+                BOOST_FOREACH(CollisionEventChain::SPtr actionChain, actionChains)
                 {
-                    actionChain->perform(element, collision);
+                    BOOST_ASSERT(actionChain);
+                    if (actionChain)
+                    {
+                        actionChain->perform(element, collision);
+                    }
                 }
             }
         }

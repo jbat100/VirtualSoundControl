@@ -1,6 +1,6 @@
 
-#ifndef _VSC_OGRE_BULLET_H_
-#define _VSC_OGRE_BULLET_H_
+#ifndef _VSC_OB_H_
+#define _VSC_OB_H_
 
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
@@ -19,13 +19,13 @@ namespace VSC {
         {
             QueryMaskNone                   = 0,
             QueryMaskAny					= 1<<0,
-            QueryMaskRagdoll				= 1<<1,
-            QueryMaskGeometry				= 1<<2,
-            QueryMaskVehicle				= 1<<3,
-            QueryMaskStaticGeometry         = 1<<4
+            QueryMaskGeometry				= 1<<1,
+            QueryMaskStaticGeometry         = 1<<2,
+            QueryMaskPhantom                = 1<<3
         };
         
-        enum PrimitiveType {
+        enum PrimitiveType
+        {
             PrimitiveNone = 0,
             PrimitiveCube,
             PrimitiveSphere,
@@ -63,6 +63,15 @@ namespace VSC {
         typedef boost::shared_ptr<CollisionDetector>    CollisionDetector_SPtr;
         typedef boost::weak_ptr<CollisionDetector>      CollisionDetector_WPtr;
         
+        class Proximity;
+        typedef boost::shared_ptr<Proximity>            Proximity_SPtr;
+        typedef boost::weak_ptr<Proximity>              Proximity_WPtr;
+        typedef std::vector<Proximity_SPtr>             Proximities;
+        
+        class ProximityDetector;
+        typedef boost::shared_ptr<ProximityDetector>    ProximityDetector_SPtr;
+        typedef boost::weak_ptr<ProximityDetector>      ProximityDetector_WPtr;
+        
         class DynamicObject;
         typedef boost::shared_ptr<DynamicObject>        DynamicObject_SPtr;
         typedef boost::weak_ptr<DynamicObject>          DynamicObject_WPtr;
@@ -74,5 +83,5 @@ namespace VSC {
     }
 }
 
-#endif //_VSC_OGRE_BULLET_H_
+#endif //_VSC_OB_H_
 

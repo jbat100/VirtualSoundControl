@@ -16,6 +16,10 @@ namespace VSC {
     
     namespace IM {
         
+        /*
+         *  OBSOLETE see CollisionMappingSet class
+         */
+        
         class CollisionMapped {
             
         public:
