@@ -8,8 +8,8 @@
 
 #include "VSCOB.h"
 #include "VSCOBCollisionDetector.h"
-#include "VSCIMCollisionAction.h"
-#include "VSCIMCollisionEventChain.h"
+#include "VSCIMAction.h"
+#include "VSCIMEventChain.h"
 
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
@@ -31,14 +31,14 @@ namespace VSC {
              *  Action Chains
              */
             
-            void addActionChainForCollisionStarted(CollisionEventChain::SPtr actionChain, OB::Element_SPtr element);
-            void addActionChainForCollisionEnded(CollisionEventChain::SPtr actionChain, OB::Element_SPtr element);
+            void addEventChainForCollisionStarted(EventChain::SPtr actionChain, OB::Element_SPtr element);
+            void addEventChainForCollisionEnded(EventChain::SPtr actionChain, OB::Element_SPtr element);
             
-            void removeActionChainForCollisionStarted(CollisionEventChain::SPtr actionChain, OB::Element_SPtr element);
-            void removeActionChainForCollisionEnded(CollisionEventChain::SPtr actionChain, OB::Element_SPtr element);
+            void removeEventChainForCollisionStarted(EventChain::SPtr actionChain, OB::Element_SPtr element);
+            void removeEventChainForCollisionEnded(EventChain::SPtr actionChain, OB::Element_SPtr element);
             
-            CollisionEventChains& getEventChainsForCollisionStarted(OB::Element_SPtr element);
-            CollisionEventChains& getEventChainsForCollisionEnded(OB::Element_SPtr element);
+            EventChains& getEventChainsForCollisionStarted(OB::Element_SPtr element);
+            EventChains& getEventChainsForCollisionEnded(OB::Element_SPtr element);
             
             /**
              *  CollisionDetector::Listener
@@ -54,10 +54,10 @@ namespace VSC {
             
         private:
             
-            typedef std::map<OB::Element_SPtr, CollisionEventChains> CollisionEventChainMap;
+            typedef std::map<OB::Element_SPtr, EventChains> ElementEventChainMap;
             
-            CollisionEventChainMap mCollisionStartedEventChainMap;
-            CollisionEventChainMap mCollisionEndedEventChainMap;
+            ElementEventChainMap mCollisionStartedEventChainMap;
+            ElementEventChainMap mCollisionEndedEventChainMap;
             
             static const bool mTraceCollisions = true;
             
