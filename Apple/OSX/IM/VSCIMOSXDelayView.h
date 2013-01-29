@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #include "VSCIMDelay.h"
 
-@protocol VSCIMOSXCollisionEventChainController;
+@protocol VSCIMOSXEventChainController;
 
 
 @interface VSCIMOSXDelayView : NSView
@@ -18,7 +18,7 @@
 
 @property (nonatomic, assign) VSC::IM::Delay::WPtr delay;
 
-@property (assign) IBOutlet id<VSCIMOSXCollisionEventChainController> eventChainController;
+@property (assign) IBOutlet id<VSCIMOSXEventChainController> eventChainController;
 
 -(void) reloadInterface;
 

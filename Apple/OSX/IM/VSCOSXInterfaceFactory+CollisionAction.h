@@ -1,5 +1,5 @@
 //
-//  VSCOSXInterfaceFactory+CollisionAction.h
+//  VSCOSXInterfaceFactory+Action.h
 //  VSCApplication
 //
 //  Created by Jonathan Thorpe on 1/27/13.

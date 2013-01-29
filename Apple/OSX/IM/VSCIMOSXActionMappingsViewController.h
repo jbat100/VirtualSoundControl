@@ -13,13 +13,13 @@
 #include "VSCIMAction.h"
 
 @class VSCIMOSXMappingEditViewController;
-@protocol VSCIMOSXCollisionEventChainController;
+@protocol VSCIMOSXEventChainController;
 
 
 @interface VSCIMOSXActionMappingsViewController : NSViewController
 <VSCIMOSXActionMappingsController, NSTableViewDelegate, NSTableViewDataSource>
 
-@property (weak) id<VSCIMOSXCollisionEventChainController> eventChainController;
+@property (weak) id<VSCIMOSXEventChainController> eventChainController;
 @property (nonatomic, weak) IBOutlet NSTableView* mappingTableView;
 @property (nonatomic, strong) VSCIMOSXMappingEditViewController* collisionMappingEditViewController;
 @property (nonatomic, strong) NSPopover* collisionMappingEditPopover;

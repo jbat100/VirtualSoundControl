@@ -14,7 +14,7 @@
 
 #include "VSCIMAction.h"
 
-@protocol VSCIMOSXCollisionEventChainController;
+@protocol VSCIMOSXEventChainController;
 
 /*
  *  The actual NSView subclass which displays the collision action parameters and allows 
@@ -23,13 +23,13 @@
 
 @interface VSCIMOSXActionView : NSView
 
-+(CGFloat) heightOfViewForCollisionAction:(VSC::IM::CollisionAction::SPtr)collisionAction;
-+(NSString*) stringForActionType:(VSCIMOSXActionType)actionType;
-+(VSCIMOSXActionType) actionTypeForString:(NSString*)menuItemString;
++(CGFloat) heightOfViewForAction:(VSC::IM::Action::SPtr)collisionAction;
++(NSString*) stringForActionType:(VSC::IM::ActionType)actionType;
++(VSC::IM::ActionType) actionTypeForString:(NSString*)menuItemString;
 
-@property (assign) IBOutlet id<VSCIMOSXCollisionEventChainController> eventChainController;
+@property (assign) IBOutlet id<VSCIMOSXEventChainController> eventChainController;
 
-@property (nonatomic, assign) VSC::IM::CollisionAction::WPtr collisionAction;
+@property (nonatomic, assign) VSC::IM::Action::WPtr collisionAction;
 
 
 @property (nonatomic, strong) IBOutlet NSView* mainView;

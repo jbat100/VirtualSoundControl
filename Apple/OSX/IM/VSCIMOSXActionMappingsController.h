@@ -15,7 +15,7 @@
 
 @protocol VSCIMOSXActionMappingsController <NSObject>
 
-@property (nonatomic, assign) VSC::IM::CollisionAction::WPtr action;
+@property (nonatomic, assign) VSC::IM::Action::WPtr action;
 
 -(VSC::IM::Mapping::SPtr) sender:(id)sender
                   requestsMappingWithType:(VSCIMOSXMappingType)mappingType

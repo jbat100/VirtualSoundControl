@@ -154,7 +154,7 @@
     VSC::OB::Element::SPtr element = VSC::OB::Element::SPtr();
     BOOST_FOREACH(VSC::OB::Element::SPtr e, elements)
     {
-        VSC::IM::CollisionEventChains chains = environment->getIMCollisionMapper()->getEventChainsForCollisionStarted(e);
+        VSC::IM::EventChains chains = environment->getIMCollisionMapper()->getEventChainsForCollisionStarted(e);
         if (chains.size() > 0)
         {
             element = e;

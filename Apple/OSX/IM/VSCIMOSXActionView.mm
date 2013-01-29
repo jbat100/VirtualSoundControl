@@ -7,7 +7,7 @@
 //
 
 #import "VSCIMOSXActionView.h"
-#import "VSCIMOSXCollisionEventChainController.h"
+#import "VSCIMOSXEventChainController.h"
 #import "VSCOSXOBSceneElementEditor.h"
 #import "VSCOSXInterfaceFactory.h"
 #import "NSString+VSCAdditions.h"
@@ -42,7 +42,7 @@ const CGFloat VSCIMOSXActionViewMIDIControlSetupHeight = 15.0;
  *  Used by all action types
  */
 
-@property (nonatomic, assign) VSCIMOSXActionType currentActionType;
+@property (nonatomic, assign) VSC::IM::ActionType currentActionType;
 
 /*
  *  Constraints!
@@ -65,7 +65,7 @@ static const BOOL debugDraw = NO;
 
 #pragma mark - Static Methods
 
-+(CGFloat) heightOfViewForCollisionAction:(VSC::IM::CollisionAction::SPtr)collisionAction 
++(CGFloat) heightOfViewForAction:(VSC::IM::Action::SPtr)collisionAction 
 {
     
     CGFloat totalHeight = VSCIMOSXActionViewBaseHeight;
@@ -88,22 +88,22 @@ static const BOOL debugDraw = NO;
     if (!actionTypeMenuItemStringDict)
     {
         actionTypeMenuItemStringDict = @{
-        @((int)VSCIMOSXActionTypeMIDINoteOn)           : @"MIDI Note On",
-        @((int)VSCIMOSXActionTypeMIDINoteOnAndOff)     : @"MIDI Note On and Off",
-        @((int)VSCIMOSXActionTypeMIDINoteOff)          : @"MIDI Note Off",
-        @((int)VSCIMOSXActionTypeMIDIControlChange)    : @"MIDI Control Change"
+        @((int)VSC::IM::ActionTypeMIDINoteOn)           : @"MIDI Note On",
+        @((int)VSC::IM::ActionTypeMIDINoteOnAndOff)     : @"MIDI Note On and Off",
+        @((int)VSC::IM::ActionTypeMIDINoteOff)          : @"MIDI Note Off",
+        @((int)VSC::IM::ActionTypeMIDIControlChange)    : @"MIDI Control Change"
         };
     }
 }
 
-+(NSString*) stringForActionType:(VSCIMOSXActionType)actionType
++(NSString*) stringForActionType:(VSC::IM::ActionType)actionType
 {
     BOOST_ASSERT(actionTypeMenuItemStringDict);
     
     return [actionTypeMenuItemStringDict objectForKey:@((int)actionType)];
 }
 
-+(VSCIMOSXActionType) actionTypeForString:(NSString*)menuItemString
++(VSC::IM::ActionType) actionTypeForString:(NSString*)menuItemString
 {
     BOOST_ASSERT(actionTypeMenuItemStringDict);
     
@@ -115,9 +115,9 @@ static const BOOL debugDraw = NO;
     
     BOOST_ASSERT([types count] < 2);
     
-    if ([types count] == 0) return VSCIMOSXActionTypeNone;
+    if ([types count] == 0) return VSC::IM::ActionTypeNone;
     
-    return (VSCIMOSXActionType)[[types anyObject] intValue];
+    return (VSC::IM::ActionType)[[types anyObject] intValue];
 }
 
 
@@ -145,7 +145,7 @@ static const BOOL debugDraw = NO;
 
 -(void) commonInit
 {
-    self.currentActionType = VSCIMOSXActionTypeNone;
+    self.currentActionType = VSC::IM::ActionTypeNone;
     self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
@@ -156,11 +156,11 @@ static const BOOL debugDraw = NO;
     {
         switch (self.currentActionType)
         {
-            case VSCIMOSXActionTypeMIDINoteOn:
+            case VSC::IM::ActionTypeMIDINoteOn:
                 CGContextSetRGBFillColor (myContext, 1.0, 0.0, 0.0, 1.0);
                 break;
                 
-            case VSCIMOSXActionTypeMIDINoteOff:
+            case VSC::IM::ActionTypeMIDINoteOff:
                 CGContextSetRGBFillColor (myContext, 0.0, 1.0, 0.0, 1.0);
                 break;
                 
@@ -192,13 +192,13 @@ static const BOOL debugDraw = NO;
 
 #pragma mark - Custom Setter
 
--(void) setCollisionAction:(VSC::IM::CollisionAction::WPtr)action
+-(void) setAction:(VSC::IM::Action::WPtr)action
 {
     if (action.lock() != _collisionAction.lock())
     {
         _collisionAction = action;
-        self.currentActionType = VSCIMOSXActionTypeForCollisionAction(_collisionAction.lock());
-        [self setupInterfaceForNewCollisionAction];
+        self.currentActionType = VSC::IM::VSC::IM::actionTypeForAction(_collisionAction.lock());
+        [self setupInterfaceForNewAction];
     }
 }
 
@@ -211,10 +211,10 @@ static const BOOL debugDraw = NO;
     [self removeConstraints:[self constraints]];
 }
 
--(void) setupInterfaceForNewCollisionAction
+-(void) setupInterfaceForNewAction
 {
     
-    VSC::IM::CollisionAction::SPtr action = self.collisionAction.lock();
+    VSC::IM::Action::SPtr action = self.collisionAction.lock();
     
     /*
      *  Setup the view and its subviews according to action type
@@ -226,7 +226,7 @@ static const BOOL debugDraw = NO;
     
     if (self.mainView == nil)
     {
-        self.mainView = [[VSCOSXInterfaceFactory defaultFactory] newCollisionActionCommonViewWithOwner:self];
+        self.mainView = [[VSCOSXInterfaceFactory defaultFactory] newActionCommonViewWithOwner:self];
     }
     
     BOOST_ASSERT(self.mainView);
@@ -240,7 +240,7 @@ static const BOOL debugDraw = NO;
     {
         if (self.midiSetupView == nil)
         {
-            self.midiSetupView = [[VSCOSXInterfaceFactory defaultFactory] newCollisionActionMIDIViewWithOwner:self];
+            self.midiSetupView = [[VSCOSXInterfaceFactory defaultFactory] newActionMIDIViewWithOwner:self];
         }
         
         BOOST_ASSERT(self.midiSetupView);
@@ -348,7 +348,7 @@ static const BOOL debugDraw = NO;
 
 -(void) updateMIDIControlNumbers
 {
-    VSC::IM::CollisionAction::SPtr action = self.collisionAction.lock();
+    VSC::IM::Action::SPtr action = self.collisionAction.lock();
     BOOST_ASSERT(VSC::IM::collisionActionIsMIDIControl(action));
     
     [self.midiControlNumberPopUpButton removeAllItems];
@@ -381,9 +381,9 @@ static const BOOL debugDraw = NO;
 -(IBAction) showMappings:(id)sender
 {
     BOOST_ASSERT(self.eventChainController);
-    BOOST_ASSERT([self.eventChainController respondsToSelector:@selector(sender:requestsShowMappingsForCollisionAction:)]);
+    BOOST_ASSERT([self.eventChainController respondsToSelector:@selector(sender:requestsShowMappingsForAction:)]);
     
-    [self.eventChainController sender:self requestsShowMappingsForCollisionAction:self.collisionAction.lock()];
+    [self.eventChainController sender:self requestsShowMappingsForAction:self.collisionAction.lock()];
 }
 
 -(IBAction) refreshMIDIOutputs:(id)sender

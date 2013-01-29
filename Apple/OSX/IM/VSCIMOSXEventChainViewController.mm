@@ -1,12 +1,12 @@
 //
-//  VSCIMOSXCollisionEventChainViewController.m
+//  VSCIMOSXEventChainViewController.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 11/27/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCIMOSXCollisionEventChainViewController.h"
+#import "VSCIMOSXEventChainViewController.h"
 
 #import "VSCOSXOBSceneElementEditor.h"
 #import "VSCOSXOBSceneElementController.h"
@@ -19,16 +19,16 @@
 #include "VSCIMDelay.h"
 #include "VSCIMAction.h"
 #include "VSCIMCollisionMIDIActions.h"
-#include "VSCIMCollisionEventChain.h"
+#include "VSCIMEventChain.h"
 
 #include <boost/assert.hpp>
 
 NSString* const VSCIMOSXActionViewReuseIdentifier      = @"VSCIMOSXActionViewReuseIdentifier";
 NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDelayViewReuseIdentifier";
 
-@interface VSCIMOSXCollisionEventChainViewController ()
+@interface VSCIMOSXEventChainViewController ()
 
-+(VSCIMOSXActionView*) newCollisionActionViewWithOwner:(id)owner;
++(VSCIMOSXActionView*) newActionViewWithOwner:(id)owner;
 +(VSCIMOSXDelayView*) newDelayViewWithOwner:(id)owner;
 
 -(void) customInit;
@@ -38,7 +38,7 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDela
 
 @end
 
-@implementation VSCIMOSXCollisionEventChainViewController
+@implementation VSCIMOSXEventChainViewController
 
 const static BOOL traceInterface = YES;
 
@@ -113,7 +113,7 @@ const static BOOL traceInterface = YES;
     
     if (index >= 0)
     {
-        VSC::IM::CollisionEventChain::SPtr chain = self.eventChain.lock();
+        VSC::IM::EventChain::SPtr chain = self.eventChain.lock();
         BOOST_ASSERT(chain);
         BOOST_ASSERT(chain->getNumberOfEvents() > index);
         if (chain && chain->getNumberOfEvents() > index) return chain->getEvents().at(index);
@@ -150,7 +150,7 @@ const static BOOL traceInterface = YES;
     /*
      *  If we have a collision action, then create the default mappings
      */
-    VSC::IM::CollisionAction::SPtr collisionAction = boost::dynamic_pointer_cast<VSC::IM::CollisionAction>(event);
+    VSC::IM::Action::SPtr collisionAction = boost::dynamic_pointer_cast<VSC::IM::Action>(event);
     if (collisionAction)
     {
         collisionAction->createDefaultMappings();
@@ -164,7 +164,7 @@ const static BOOL traceInterface = YES;
 
 -(void) appendEvent:(VSC::IM::Event::SPtr)event
 {
-    VSC::IM::CollisionEventChain::SPtr chain = self.eventChain.lock();
+    VSC::IM::EventChain::SPtr chain = self.eventChain.lock();
     
     BOOST_ASSERT(chain);
     BOOST_ASSERT(event);
@@ -178,7 +178,7 @@ const static BOOL traceInterface = YES;
 
 -(void) removeEvent:(VSC::IM::Event::SPtr)event
 {
-    VSC::IM::CollisionEventChain::SPtr chain = self.eventChain.lock();
+    VSC::IM::EventChain::SPtr chain = self.eventChain.lock();
     
     BOOST_ASSERT(chain);
     BOOST_ASSERT(event);
@@ -193,7 +193,7 @@ const static BOOL traceInterface = YES;
 
 #pragma mark - UI Helpers
 
--(void) sender:(id)sender requestsShowMappingsForCollisionAction:(VSC::IM::CollisionAction::SPtr)action
+-(void) sender:(id)sender requestsShowMappingsForAction:(VSC::IM::Action::SPtr)action
 {
     if (!self.actionMappingsViewController)
     {
@@ -205,7 +205,7 @@ const static BOOL traceInterface = YES;
     }
     
     BOOST_ASSERT(action);
-    self.actionMappingsViewController.action = VSC::IM::CollisionAction::WPtr(action);
+    self.actionMappingsViewController.action = VSC::IM::Action::WPtr(action);
     
     if ([self.actionMappingsViewController.view superview] != self.view)
     {
@@ -257,7 +257,7 @@ const static BOOL traceInterface = YES;
 
 #pragma mark - View Factory Methods
 
-+(VSCIMOSXActionView*) newCollisionActionViewWithOwner:(id)owner
++(VSCIMOSXActionView*) newActionViewWithOwner:(id)owner
 {
     static NSNib* nib = nil;
     static NSString* identifier = [[VSCIMOSXActionView class] description];
@@ -324,7 +324,7 @@ const static BOOL traceInterface = YES;
     
     if (aTableView == self.eventTableView)
     {
-        VSC::IM::CollisionEventChain::SPtr chain = self.eventChain.lock();
+        VSC::IM::EventChain::SPtr chain = self.eventChain.lock();
         //BOOST_ASSERT(chain);
         if (chain) return chain->getNumberOfEvents();
         else if (traceInterface) NSLog(@"%@ numberOfRowsInTableView for %@ NO CHAIN", self, aTableView);
@@ -341,18 +341,18 @@ const static BOOL traceInterface = YES;
     {
         if (traceInterface) NSLog(@"%@ listView:cellForRow: %ld", self, row);
         
-        VSC::IM::CollisionEventChain::SPtr chain = self.eventChain.lock();
+        VSC::IM::EventChain::SPtr chain = self.eventChain.lock();
         BOOST_ASSERT(chain);
         VSC::IM::Event::SPtr event = VSC::IM::Event::SPtr();
         if (chain) event = chain->getEventAtIndex((unsigned int)row);
         
-        VSC::IM::CollisionAction::SPtr action = boost::dynamic_pointer_cast<VSC::IM::CollisionAction>(event);
+        VSC::IM::Action::SPtr action = boost::dynamic_pointer_cast<VSC::IM::Action>(event);
         if (action)
         {
             VSCIMOSXActionView* actionView = [tableView makeViewWithIdentifier:[[VSCIMOSXActionView class] description] owner:self];
             if (actionView) BOOST_ASSERT([actionView isKindOfClass:[VSCIMOSXActionView class]]);
-            else actionView = [[self class] newCollisionActionViewWithOwner:self];
-            [actionView setCollisionAction:(VSC::IM::CollisionAction::WPtr(action))];
+            else actionView = [[self class] newActionViewWithOwner:self];
+            [actionView setAction:(VSC::IM::Action::WPtr(action))];
             actionView.eventChainController = self;
             if (traceInterface) NSLog(@"Returning: %@ with frame: %@", actionView, NSStringFromRect(actionView.frame));
             [actionView setNeedsLayout:YES];
@@ -386,7 +386,7 @@ const static BOOL traceInterface = YES;
     {
         if (traceInterface) NSLog(@"%@ heightOfRow: %ld", self, row);
         
-        VSC::IM::CollisionEventChain::SPtr chain = self.eventChain.lock();
+        VSC::IM::EventChain::SPtr chain = self.eventChain.lock();
         BOOST_ASSERT(chain);
         
         if (row >= chain->getNumberOfEvents())
@@ -398,10 +398,10 @@ const static BOOL traceInterface = YES;
         VSC::IM::Event::SPtr event = VSC::IM::Event::SPtr();
         if (chain) event = chain->getEventAtIndex((unsigned int)row);
         
-        VSC::IM::CollisionAction::SPtr action = boost::dynamic_pointer_cast<VSC::IM::CollisionAction>(event);
+        VSC::IM::Action::SPtr action = boost::dynamic_pointer_cast<VSC::IM::Action>(event);
         if (action)
         {
-            CGFloat h = [VSCIMOSXActionView heightOfViewForCollisionAction:action];
+            CGFloat h = [VSCIMOSXActionView heightOfViewForAction:action];
             if (traceInterface) NSLog(@"Returning: %f", h);
             return h;
         }
@@ -414,7 +414,7 @@ const static BOOL traceInterface = YES;
             return h;
         }
         
-        BOOST_ASSERT_MSG(false, "Expected CollisionAction or Delay");
+        BOOST_ASSERT_MSG(false, "Expected Action or Delay");
     }
     
     return 0;

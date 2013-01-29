@@ -8,7 +8,7 @@
 
 #import "VSCIMOSXActionMappingsViewController.h"
 #import "VSCIMOSXMappingEditViewController.h"
-#import "VSCIMOSXCollisionEventChainController.h"
+#import "VSCIMOSXEventChainController.h"
 #import "VSCIMOSXMappingView.h"
 
 #include "VSCIMAction.h"
@@ -120,7 +120,7 @@ NSString* const VSCIMOSXMappingViewReuseIdentifier = @"VSCIMOSXMappingViewReuseI
                       forTarget:(VSC::IM::Target)target;
 {
     
-    VSC::IM::CollisionAction::SPtr collisionAction = [self action].lock();
+    VSC::IM::Action::SPtr collisionAction = [self action].lock();
     
     BOOST_ASSERT(target != VSC::IM::TargetNone);
     if (target == VSC::IM::TargetNone) return VSC::IM::Mapping::SPtr();
@@ -200,7 +200,7 @@ NSString* const VSCIMOSXMappingViewReuseIdentifier = @"VSCIMOSXMappingViewReuseI
     
     if (aTableView == self.mappingTableView)
     {
-        VSC::IM::CollisionAction::SPtr collisionAction = self.action.lock();
+        VSC::IM::Action::SPtr collisionAction = self.action.lock();
         BOOST_ASSERT(collisionAction);
         if (collisionAction) return collisionAction->getExpectedMappingTargets().size();
     }
@@ -214,7 +214,7 @@ NSString* const VSCIMOSXMappingViewReuseIdentifier = @"VSCIMOSXMappingViewReuseI
     
     if (tableView == self.mappingTableView)
     {
-        VSC::IM::CollisionAction::SPtr collisionAction = self.action.lock();
+        VSC::IM::Action::SPtr collisionAction = self.action.lock();
         BOOST_ASSERT(collisionAction);
         
         if (collisionAction)

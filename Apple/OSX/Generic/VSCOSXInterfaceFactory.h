@@ -35,13 +35,13 @@
  *  Collision Action Views
  */
 
-@property (strong) NSNib* keyedCollisionActionCommonViewNib;
-@property (strong) NSNib* keyedCollisionActionMIDIViewNib;
-@property (strong) NSNib* keyedCollisionActionMIDIControlViewNib;
+@property (strong) NSNib* keyedActionCommonViewNib;
+@property (strong) NSNib* keyedActionMIDIViewNib;
+@property (strong) NSNib* keyedActionMIDIControlViewNib;
 
--(NSView*) newCollisionActionCommonViewWithOwner:(id)owner;
--(NSView*) newCollisionActionMIDIViewWithOwner:(id)owner;
--(NSView*) newCollisionActionMIDIControlViewWithOwner:(id)owner;
+-(NSView*) newActionCommonViewWithOwner:(id)owner;
+-(NSView*) newActionMIDIViewWithOwner:(id)owner;
+-(NSView*) newActionMIDIControlViewWithOwner:(id)owner;
 
 
 @end

@@ -1,5 +1,5 @@
 //
-//  VSCIMOSXCollisionEventChainViewController.h
+//  VSCIMOSXEventChainViewController.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 11/27/12.
@@ -9,14 +9,14 @@
 #import <Cocoa/Cocoa.h>
 #import "VSCOSXOBSceneElementEditor.h"
 #import "VSCOSXOBSceneElementController.h"
-#import "VSCIMOSXCollisionEventChainController.h"
+#import "VSCIMOSXEventChainController.h"
 
 #include "VSCIMEvent.h"
 
 @class VSCIMOSXActionMappingsViewController;
 
-@interface VSCIMOSXCollisionEventChainViewController : NSViewController
-<VSCIMOSXCollisionEventChainController, NSTableViewDataSource, NSTableViewDelegate>
+@interface VSCIMOSXEventChainViewController : NSViewController
+<VSCIMOSXEventChainController, NSTableViewDataSource, NSTableViewDelegate>
 
 /*
  *  Event chain interface

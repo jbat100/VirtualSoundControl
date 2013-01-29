@@ -15,7 +15,7 @@
 #include "VSCOBElement.h"
 #include "VSCIMEvent.h"
 
-@protocol VSCIMOSXCollisionEventChainController;
+@protocol VSCIMOSXEventChainController;
 
 /*
  *  Main controller for a Element

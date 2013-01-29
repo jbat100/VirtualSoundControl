@@ -9,8 +9,8 @@
 #import "VSCOSXOBSceneElementInspectorViewController.h"
 
 #import "VSCOSXEnvironmentController.h"
-#import "VSCIMOSXCollisionEventChainController.h"
-#import "VSCIMOSXCollisionEventChainViewController.h"
+#import "VSCIMOSXEventChainController.h"
+#import "VSCIMOSXEventChainViewController.h"
 #import "VSCOSXOBSceneElementEditor.h"
 #import "VSCOSXOBSceneElementDetailView.h"
 #import "VSCOSXOBSceneElementCollisionView.h"
@@ -18,7 +18,7 @@
 
 #include "VSCOBScene.h"
 #include "VSCOBElement.h"
-#include "VSCIMCollisionEventChain.h"
+#include "VSCIMEventChain.h"
 
 #include <boost/assert.hpp>
 
@@ -35,7 +35,7 @@ NSArray* ElementInspectorTabParamArray = nil;
 
 -(void) setupTabBar;
 -(void) resetInspectorView;
--(void) updateCollisionEventChains;
+-(void) updateEventChains;
 
 @end
 
@@ -64,14 +64,14 @@ const static BOOL traceInterface = YES;
         BOOST_ASSERT(self.sceneListener);
         if (self.sceneListener) self.sceneListener->setTarget(self);
         
-        self.collisionStartedEventChainViewController = [[VSCIMOSXCollisionEventChainViewController alloc]
-                                                         initWithNibName:@"VSCIMOSXCollisionEventChainViewController"
+        self.collisionStartedEventChainViewController = [[VSCIMOSXEventChainViewController alloc]
+                                                         initWithNibName:@"VSCIMOSXEventChainViewController"
                                                          bundle:nil];
         BOOST_ASSERT(self.collisionStartedEventChainViewController);
         self.collisionStartedEventChainViewController.elementController = self;
         
-        self.collisionEndedEventChainViewController = [[VSCIMOSXCollisionEventChainViewController alloc]
-                                                       initWithNibName:@"VSCIMOSXCollisionEventChainViewController"
+        self.collisionEndedEventChainViewController = [[VSCIMOSXEventChainViewController alloc]
+                                                       initWithNibName:@"VSCIMOSXEventChainViewController"
                                                        bundle:nil];
         BOOST_ASSERT(self.collisionEndedEventChainViewController);
         self.collisionEndedEventChainViewController.elementController = self;
@@ -156,7 +156,7 @@ const static BOOL traceInterface = YES;
     
     [self.elementDetailView reloadWholeInterface];
     
-    [self updateCollisionEventChains];
+    [self updateEventChains];
     
 }
 
@@ -169,12 +169,12 @@ const static BOOL traceInterface = YES;
     }
 }
 
--(void) updateCollisionEventChains
+-(void) updateEventChains
 {
     VSC::OB::Element::SPtr elem = self.element.lock();
     
-    VSC::IM::CollisionEventChain::SPtr collisionStartedEventChain = VSC::IM::CollisionEventChain::SPtr();
-    VSC::IM::CollisionEventChain::SPtr collisionEndedEventChain = VSC::IM::CollisionEventChain::SPtr();
+    VSC::IM::EventChain::SPtr collisionStartedEventChain = VSC::IM::EventChain::SPtr();
+    VSC::IM::EventChain::SPtr collisionEndedEventChain = VSC::IM::EventChain::SPtr();
     
     if (elem)
     {
@@ -327,7 +327,7 @@ const static BOOL traceInterface = YES;
     
     [self switchElementInspectorToTabView:self.elementCollisionView];
     
-    [self updateCollisionEventChains];
+    [self updateEventChains];
     
 }
 

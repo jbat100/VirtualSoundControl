@@ -7,7 +7,7 @@
 //
 
 #import "VSCIMOSXDelayView.h"
-#import "VSCIMOSXCollisionEventChainController.h"
+#import "VSCIMOSXEventChainController.h"
 
 #include "VSC.h"
 #include "VSCIMDelay.h"

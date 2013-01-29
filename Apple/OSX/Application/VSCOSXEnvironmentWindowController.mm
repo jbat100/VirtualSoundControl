@@ -366,7 +366,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     [self.elementInspectorWindowController.elementInspectorViewController showElementDetailView];
 }
 
--(VSC::IM::CollisionEventChain::SPtr) collisionStartedEventChainForElement:(VSC::OB::Element::SPtr)element
+-(VSC::IM::EventChain::SPtr) collisionStartedEventChainForElement:(VSC::OB::Element::SPtr)element
 {
     VSC::Environment::SPtr env = self.environment.lock();
     BOOST_ASSERT(env);
@@ -376,19 +376,19 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
         BOOST_ASSERT(env->getIMCollisionMapper());
         if (env->getIMCollisionMapper())
         {
-            VSC::IM::CollisionEventChains chains;
+            VSC::IM::EventChains chains;
             if (chains.size() > 0)
             {
-                VSC::IM::CollisionEventChain::SPtr chain = *(chains.begin());
+                VSC::IM::EventChain::SPtr chain = *(chains.begin());
                 return chain;
             }
         }
     }
     
-    return VSC::IM::CollisionEventChain::SPtr();
+    return VSC::IM::EventChain::SPtr();
 }
 
--(VSC::IM::CollisionEventChain::SPtr) collisionEndedEventChainForElement:(VSC::OB::Element::SPtr)element
+-(VSC::IM::EventChain::SPtr) collisionEndedEventChainForElement:(VSC::OB::Element::SPtr)element
 {
     VSC::Environment::SPtr env = self.environment.lock();
     BOOST_ASSERT(env);
@@ -400,7 +400,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     }
      */
     
-    return VSC::IM::CollisionEventChain::SPtr();
+    return VSC::IM::EventChain::SPtr();
 }
 
 #pragma mark - Sensible tests

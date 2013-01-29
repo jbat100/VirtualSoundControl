@@ -44,13 +44,13 @@
         interfaceFactory.keyed4FieldViewNib = [[NSNib alloc] initWithNibNamed:
                                                [[VSCOSXKeyed4FieldView class] description] bundle:nil];
         
-        interfaceFactory.keyedCollisionActionCommonViewNib = [[NSNib alloc] initWithNibNamed:
+        interfaceFactory.keyedActionCommonViewNib = [[NSNib alloc] initWithNibNamed:
                                                               @"VSCIMOSXActionCommonView" bundle:nil];
         
-        interfaceFactory.keyedCollisionActionMIDIViewNib = [[NSNib alloc] initWithNibNamed:
+        interfaceFactory.keyedActionMIDIViewNib = [[NSNib alloc] initWithNibNamed:
                                                             @"VSCIMOSXActionMIDIView" bundle:nil];
         
-        interfaceFactory.keyedCollisionActionMIDIControlViewNib = [[NSNib alloc] initWithNibNamed:
+        interfaceFactory.keyedActionMIDIControlViewNib = [[NSNib alloc] initWithNibNamed:
                                                                    @"VSCIMOSXActionMIDIControlView" bundle:nil];
         
     });
@@ -177,25 +177,25 @@
     return v;
 }
 
--(NSView*) newCollisionActionCommonViewWithOwner:(id)owner
+-(NSView*) newActionCommonViewWithOwner:(id)owner
 {
     static NSString* identifier = @"VSCIMOSXActionCommonView";
     
-    return [self newViewWithIdentifier:identifier nib:self.keyedCollisionActionCommonViewNib owner:owner];
+    return [self newViewWithIdentifier:identifier nib:self.keyedActionCommonViewNib owner:owner];
 }
 
--(NSView*) newCollisionActionMIDIViewWithOwner:(id)owner
+-(NSView*) newActionMIDIViewWithOwner:(id)owner
 {
     static NSString* identifier = @"VSCIMOSXActionMIDIView";
     
-    return [self newViewWithIdentifier:identifier nib:self.keyedCollisionActionMIDIViewNib owner:owner];
+    return [self newViewWithIdentifier:identifier nib:self.keyedActionMIDIViewNib owner:owner];
 }
 
--(NSView*) newCollisionActionMIDIControlViewWithOwner:(id)owner
+-(NSView*) newActionMIDIControlViewWithOwner:(id)owner
 {
     static NSString* identifier = @"VSCIMOSXActionMIDIControlView";
     
-    return [self newViewWithIdentifier:identifier nib:self.keyedCollisionActionMIDIControlViewNib owner:owner];
+    return [self newViewWithIdentifier:identifier nib:self.keyedActionMIDIControlViewNib owner:owner];
 }
 
 

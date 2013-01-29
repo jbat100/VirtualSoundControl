@@ -14,7 +14,7 @@
 @class DMTabBar;
 @class VSCOSXOBSceneElementDetailView;
 @class VSCOSXOBSceneElementCollisionView;
-@class VSCIMOSXCollisionEventChainViewController;
+@class VSCIMOSXEventChainViewController;
 
 @interface VSCOSXOBSceneElementInspectorViewController : NSViewController
 <VSCOSXOBSceneElementController, VSCOBOSXSceneListenerTarget>
@@ -22,8 +22,8 @@
 @property (strong) IBOutlet VSCOSXOBSceneElementDetailView* elementDetailView;
 @property (strong) IBOutlet VSCOSXOBSceneElementCollisionView* elementCollisionView;
 
-@property (strong) VSCIMOSXCollisionEventChainViewController* collisionStartedEventChainViewController;
-@property (strong) VSCIMOSXCollisionEventChainViewController* collisionEndedEventChainViewController;
+@property (strong) VSCIMOSXEventChainViewController* collisionStartedEventChainViewController;
+@property (strong) VSCIMOSXEventChainViewController* collisionEndedEventChainViewController;
 
 @property (weak) IBOutlet DMTabBar* tabBar;
 
