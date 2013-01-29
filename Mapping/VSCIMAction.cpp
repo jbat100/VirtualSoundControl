@@ -6,16 +6,32 @@
 
 //MARK: - Task Generation
 
-VSC::Tasks VSC::IM::Action::generateTasks()
+const VSC::Tasks VSC::IM::Action::generateTasks()
 {
-    Tasks tasks;
-    return tasks;
+    ValueMap valueMap;
+    
+    BOOST_FOREACH(const Target& target, mRequiredMappingTargets)
+    {
+        Mapping::SPtr mapping = this->getMappingForTarget(target);
+        Float value = mapping->mappedValue();
+        valueMap[target] = value;
+    }
+    
+    return this->generateTasksWithValueMap(valueMap);
 }
 
-VSC::Tasks VSC::IM::Action::generateTasksForCollision(OB::Collision_SPtr collision, OB::Element_SPtr effector)
+const VSC::Tasks VSC::IM::Action::generateTasksForCollision(OB::Collision_SPtr collision, OB::Element_SPtr effector)
 {
-    Tasks tasks;
-    return tasks;
+    ValueMap valueMap;
+    
+    BOOST_FOREACH(const Target& target, mRequiredMappingTargets)
+    {
+        CollisionMapping::SPtr mapping = this->getCollisionMappingForTarget(target);
+        Float value = mapping->mappedValue(collision, effector);
+        valueMap[target] = value;
+    }
+    
+    return this->generateTasksWithValueMap(valueMap);
 }
 
 //MARK: - Mapping Requirements

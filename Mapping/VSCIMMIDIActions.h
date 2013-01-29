@@ -125,9 +125,9 @@ namespace VSC {
          *  Utilies and shortcuts
          */
         
-        bool collisionActionIsMIDI(CollisionAction::SPtr collisionAction);
+        bool actionIsMIDI(Action::SPtr action);
     
-        bool collisionActionIsMIDIControl(CollisionAction::SPtr collisionAction);
+        bool actionIsMIDIControl(Action::SPtr action);
 
     }
     

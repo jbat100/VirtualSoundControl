@@ -51,8 +51,8 @@ namespace VSC {
              *  virtual Tasks generateTasksWithValueMap(Action::ValueMap& valueMap) = 0;
              */
             
-            Tasks generateTasks(void);
-            Tasks generateTasksForCollision(OB::Collision_SPtr collision, OB::Element_SPtr effector);
+            const Tasks generateTasks(void);
+            const Tasks generateTasksForCollision(OB::Collision_SPtr collision, OB::Element_SPtr effector);
             
             /*
              *  Mappings
@@ -75,7 +75,7 @@ namespace VSC {
             bool checkRequiredMappings(void);
             
             // this is the only generate function which should be subclassed
-            virtual Tasks generateTasksWithValueMap(Action::ValueMap& valueMap) = 0;
+            virtual const Tasks generateTasksWithValueMap(Action::ValueMap& valueMap) = 0;
             
         private:
             
