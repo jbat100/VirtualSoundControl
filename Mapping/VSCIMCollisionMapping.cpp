@@ -1,3 +1,10 @@
+//
+//  VSCCollisionReceiver.cpp
+//  EnveloppeEditor
+//
+//  Created by Jonathan Thorpe on 4/21/12.
+//  Copyright (c) 2012 JBAT. All rights reserved.
+//
 
 #include "VSCIMCollisionMapping.h"
 
@@ -8,62 +15,35 @@
 #include <Ogre/Ogre.h>
 #include <boost/assert.hpp>
 
-VSC::OB::Element_SPtr VSC::IM::CollisionMapping::getCollisionEffectee(OB::Collision_SPtr collision, OB::Element_SPtr effector)
+VSC::Float VSC::IM::CollisionMapping::mappedValue(VSC::OB::Element::SPtr element, OB::Collision::SPtr collision)
 {
-    BOOST_ASSERT(collision);
-    BOOST_ASSERT(effector);
+    Float internalValue = this->internalMappedValue(element, collision);
     
-    OB::Element::SPtr effectee = OB::Element::SPtr();
+    Float outputValue = (internalValue * mScaleFactor) + mOffset;
     
-    if (collision && effector)
+    if (mTrace)
     {
-        if (effector == collision->getFirstElement())
-        {
-            effectee = collision->getSecondElement();
-        }
-        else if (effector == collision->getSecondElement())
-        {
-            effectee = collision->getFirstElement();
-        }
-        else
-        {
-            BOOST_ASSERT_MSG(false, "Effector should be collision object");
-        }
+        std::cout << "CollisionMapping::mappedValue: " << outputValue << " (internal value: " << internalValue << ", ";
+        std::cout << "scale factor: " << mScaleFactor << ", offset " << mOffset << ")" << std::endl;
     }
     
-    return effectee;
+    return outputValue;
 }
 
-VSC::Float VSC::IM::CollisionVelocityMapping::mappedValue(OB::Collision::SPtr collision, OB::Element::SPtr effector)
+VSC::Float VSC::IM::CollisionVelocityMapping::internalMappedValue(OB::Element::SPtr element, OB::Collision::SPtr collision)
 {
     BOOST_ASSERT(collision);
-    
-    Float rawValue = 0.0;
     
     if (collision)
     {
         const Ogre::Vector3& relativeVelocity = collision->getRelativeCollisionVelocity();
-        rawValue = (Float) relativeVelocity.length();
+        return (Float) relativeVelocity.length();
     }
     
-    return this->applyOffsetAndScaleFactor(rawValue);
+    return 0;
 }
 
-
-VSC::Float VSC::IM::CollisionDistanceMapping::mappedValue(OB::Collision::SPtr collision, OB::Element::SPtr effector)
+VSC::Float VSC::IM::CollisionDistanceMapping::internalMappedValue(OB::Element::SPtr element, OB::Collision::SPtr collision)
 {
-    BOOST_ASSERT(collision);
-    BOOST_ASSERT(effector);
-    
-    Float rawValue = 0.0;
-    
-    OB::Element::SPtr effectee = this->getCollisionEffectee(collision, effector);
-    BOOST_ASSERT(effectee);
-    
-    if (effectee)
-    {
-        // get distance from collision location to reference point
-    }
-    
-    return this->applyOffsetAndScaleFactor(rawValue);
+    return 0;
 }

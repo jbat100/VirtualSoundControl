@@ -7,7 +7,6 @@
 #define _VSC_IM_EVENT_CHAIN_H_
 
 #include "VSCIMEvent.h"
-#include "VSCOB.h"
 
 #include <boost/shared_ptr.hpp>
 
@@ -33,11 +32,10 @@ namespace VSC {
             void insertEventAtIndex(Event::SPtr event, unsigned int index);
             void insertEventAfterEvent(Event::SPtr insertedEvent, Event::SPtr event);
             void insertEventBeforeEvent(Event::SPtr insertedEvent, Event::SPtr event);
-            void swapEvents(Event::SPtr firstEvent, Event::SPtr secondEvent);
-            void removeEvent(Event::SPtr event);
             
-            virtual void perform(void);
-            virtual void performForCollision(OB::Collision_SPtr collision, OB::Element_SPtr effector);
+            void swapEvents(Event::SPtr firstEvent, Event::SPtr secondEvent);
+            
+            void removeEvent(Event::SPtr event);
             
         protected:
             
@@ -45,7 +43,7 @@ namespace VSC {
              *  Can be over-ridden by subclass to reject invalid events.
              */
             
-            virtual bool checkEvent(Event::SPtr event);
+            virtual bool checkEvent(Event::SPtr event) {return true;}
             
         private:
             

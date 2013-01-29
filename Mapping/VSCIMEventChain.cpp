@@ -1,10 +1,6 @@
 
 #include "VSCIMEventChain.h"
 #include "VSCIMEvent.h"
-#include "VSCIMDelay.h"
-#include "VSCIMAction.h"
-
-#include "VSCOBCollision.h"
 
 #include "VSCException.h"
 #include "VSCTask.h"
@@ -120,54 +116,4 @@ void VSC::IM::EventChain::swapEvents(Event::SPtr firstEvent, Event::SPtr secondE
 void VSC::IM::EventChain::removeEvent(Event::SPtr event)
 {
     
-}
-
-bool VSC::IM::EventChain::checkEvent(Event::SPtr event)
-{
-    Delay::SPtr delay = boost::dynamic_pointer_cast<Delay>(event);
-    if (delay) return true;
-    
-    Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
-    if (action) return true;
-    
-    BOOST_ASSERT_MSG(false, "Event should be either Delay or CollisionAction");
-    
-    return false;
-}
-
-void VSC::IM::EventChain::performForCollision(OB::Collision::SPtr collision)
-{
-    Time executionTime = CurrentTime();
-    
-    BOOST_FOREACH(Event::SPtr event, this->getEvents())
-    {
-        Delay::SPtr delay = boost::dynamic_pointer_cast<Delay>(event);
-        if (delay)
-        {
-            executionTime += delay->getDelay();
-            continue;
-        }
-        Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
-        if (action)
-        {
-            Tasks tasks = action->generateTasksForCollision(collision);
-            
-            BOOST_FOREACH(Task::SPtr task, tasks)
-            {
-                BOOST_ASSERT(task);
-                if (task)
-                {
-                    task->setExecutionStartTime(executionTime);
-                    BOOST_ASSERT(action->getTaskQueue());
-                    if (action->getTaskQueue())
-                    {
-                        action->getTaskQueue()->enqueueTask(task);
-                    }
-                }
-            }
-            
-            continue;
-        }
-        BOOST_ASSERT_MSG(false, "Unexpected event type");
-    }
 }

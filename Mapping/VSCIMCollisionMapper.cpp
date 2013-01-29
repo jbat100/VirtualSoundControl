@@ -7,32 +7,32 @@
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
-void VSC::IM::CollisionMapper::addEventChainForCollisionStarted(EventChain::SPtr eventChain, OB::Element::SPtr element)
+void VSC::IM::CollisionMapper::addActionChainForCollisionStarted(CollisionEventChain::SPtr actionChain, OB::Element::SPtr element)
 {
-    EventChains& eventChains = mCollisionStartedEventChainMap[element];
-    EventChains::iterator it = std::find(eventChains.begin(), eventChains.end(), eventChain);
-    if (it == eventChains.end())
+    CollisionEventChains& actionChains = mCollisionStartedEventChainMap[element];
+    CollisionEventChains::iterator it = std::find(actionChains.begin(), actionChains.end(), actionChain);
+    if (it == actionChains.end())
     {
-        eventChains.push_back(eventChain);
+        actionChains.push_back(actionChain);
     }
 }
 
-void VSC::IM::CollisionMapper::addEventChainForCollisionEnded(EventChain::SPtr eventChain, OB::Element::SPtr element)
+void VSC::IM::CollisionMapper::addActionChainForCollisionEnded(CollisionEventChain::SPtr actionChain, OB::Element::SPtr element)
 {
-    EventChains& eventChains = mCollisionEndedEventChainMap[element];
-    EventChains::iterator it = std::find(eventChains.begin(), eventChains.end(), eventChain);
-    if (it == eventChains.end())
+    CollisionEventChains& actionChains = mCollisionEndedEventChainMap[element];
+    CollisionEventChains::iterator it = std::find(actionChains.begin(), actionChains.end(), actionChain);
+    if (it == actionChains.end())
     {
-        eventChains.push_back(eventChain);
+        actionChains.push_back(actionChain);
     }
 }
 
-VSC::IM::EventChains& VSC::IM::CollisionMapper::getEventChainsForCollisionStarted(OB::Element::SPtr element)
+VSC::IM::CollisionEventChains& VSC::IM::CollisionMapper::getEventChainsForCollisionStarted(OB::Element::SPtr element)
 {
     return mCollisionStartedEventChainMap[element];
 }
 
-VSC::IM::EventChains& VSC::IM::CollisionMapper::getEventChainsForCollisionEnded(OB::Element::SPtr element)
+VSC::IM::CollisionEventChains& VSC::IM::CollisionMapper::getEventChainsForCollisionEnded(OB::Element::SPtr element)
 {
     return mCollisionEndedEventChainMap[element];
 }
@@ -60,33 +60,25 @@ void VSC::IM::CollisionMapper::collisionDetected(OB::Collision::SPtr collision)
     
     if (collision)
     {
-        /*
-         *  Get event chains for first element and perform them with second element as effector
-         */
+        OB::Elements bothElements;
+        bothElements.push_back(collision->getFirstElement());
+        bothElements.push_back(collision->getSecondElement());
         
-        EventChains firstElementEventChains = this->getEventChainsForCollisionStarted(collision->getFirstElement());
-        
-        BOOST_FOREACH(EventChain::SPtr eventChain, firstElementEventChains)
+        BOOST_FOREACH(OB::Element::SPtr element, bothElements)
         {
-            BOOST_ASSERT(eventChain);
-            if (eventChain)
+            BOOST_ASSERT(element);
+            if (element)
             {
-                eventChain->performForCollision(collision, collision->getSecondElement());
-            }
-        }
-        
-        /*
-         *  Get event chains for second element and perform them with first element as effector
-         */
-        
-        EventChains secondElementEventChains = this->getEventChainsForCollisionStarted(collision->getSecondElement());
-        
-        BOOST_FOREACH(EventChain::SPtr eventChain, secondElementEventChains)
-        {
-            BOOST_ASSERT(eventChain);
-            if (eventChain)
-            {
-                eventChain->performForCollision(collision, collision->getFirstElement());
+                CollisionEventChains actionChains = this->getEventChainsForCollisionStarted(element);
+                
+                BOOST_FOREACH(CollisionEventChain::SPtr actionChain, actionChains)
+                {
+                    BOOST_ASSERT(actionChain);
+                    if (actionChain)
+                    {
+                        actionChain->perform(element, collision);
+                    }
+                }
             }
         }
     }
