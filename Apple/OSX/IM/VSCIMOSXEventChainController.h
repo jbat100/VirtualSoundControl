@@ -1,7 +1,7 @@
 
 #import <Foundation/Foundation.h>
 
-#include "VSCIMCollisionAction.h"
+#include "VSCIMAction.h"
 #include "VSCIMCollisionEventChain.h"
 
 #include "VSCIMDelay.h"

@@ -1,23 +1,23 @@
 //
-//  VSCIMOSXCollisionMappingView.m
+//  VSCIMOSXMappingView.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 10/28/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCIMOSXCollisionMappingView.h"
-#import "VSCIMOSXCollisionMappingTypes.h"
-#import "VSCIMOSXCollisionActionMappingsController.h"
+#import "VSCIMOSXMappingView.h"
+#import "VSCIMOSXMappingTypes.h"
+#import "VSCIMOSXActionMappingsController.h"
 #import "NSString+VSCAdditions.h"
 
 #include "VSCIMTarget.h"
-#include "VSCIMCollisionMapping.h"
+#include "VSCIMMapping.h"
 
 NSDictionary* mappingTypeMenuItemStringDict = nil;
 
 
-@interface VSCIMOSXCollisionMappingView ()
+@interface VSCIMOSXMappingView ()
 
 /*
  *  Interface elements common to all mappings
@@ -26,18 +26,18 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
 @property (weak) IBOutlet NSTextField* targetTextField;
 @property (weak) IBOutlet NSPopUpButton* mappingPopUpButton;
 
-@property (assign) VSCIMOSXCollisionMappingType collisionMappingType;
+@property (assign) VSCIMOSXMappingType collisionMappingType;
 
 -(IBAction) editMapping:(id)sender;
 -(IBAction) mappingTypeSelected:(id)sender;
 
--(void) setupCollisionMappingChoice;
--(void) updateInterfaceForNewCollisionMapping;
+-(void) setupMappingChoice;
+-(void) updateInterfaceForNewMapping;
 -(void) updateInterfaceForNewTarget;
 
 @end
 
-@implementation VSCIMOSXCollisionMappingView
+@implementation VSCIMOSXMappingView
 
 @synthesize controller = _controller;
 @synthesize mapping = _mapping;
@@ -48,10 +48,10 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
     BOOST_ASSERT(!mappingTypeMenuItemStringDict);
     
     mappingTypeMenuItemStringDict = @{
-    @((int)VSCIMOSXCollisionMappingTypeNone)        : @"No Mapping",
-    @((int)VSCIMOSXCollisionMappingTypeConstant)    : @"Constant Mapping",
-    @((int)VSCIMOSXCollisionMappingTypeVelocity)    : @"Velocity Mapping",
-    @((int)VSCIMOSXCollisionMappingTypeDistance)    : @"Distance Mapping"
+    @((int)VSCIMOSXMappingTypeNone)        : @"No Mapping",
+    @((int)VSCIMOSXMappingTypeConstant)    : @"Constant Mapping",
+    @((int)VSCIMOSXMappingTypeVelocity)    : @"Velocity Mapping",
+    @((int)VSCIMOSXMappingTypeDistance)    : @"Distance Mapping"
     };
 }
 
@@ -60,18 +60,18 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
     return 56.0;
 }
 
-+(CGFloat) heightOfViewForCollisionMapping:(VSC::IM::CollisionMapping::SPtr)collisionMapping
++(CGFloat) heightOfViewForMapping:(VSC::IM::Mapping::SPtr)collisionMapping
 {
     return 56.0;
 }
 
-+(NSString*) menuItemStringForCollisionMappingType:(VSCIMOSXCollisionMappingType)mappingType
++(NSString*) menuItemStringForMappingType:(VSCIMOSXMappingType)mappingType
 {
     BOOST_ASSERT(mappingTypeMenuItemStringDict);
     return [mappingTypeMenuItemStringDict objectForKey:@((int)mappingType)];
 }
 
-+(VSCIMOSXCollisionMappingType) collisionMappingTypeForMenuItemString:(NSString*)menuItemString
++(VSCIMOSXMappingType) collisionMappingTypeForMenuItemString:(NSString*)menuItemString
 {
     BOOST_ASSERT(mappingTypeMenuItemStringDict);
     
@@ -83,11 +83,11 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
     
     BOOST_ASSERT([keys count] < 2);
     
-    if ([keys count] == 1) return (VSCIMOSXCollisionMappingType)[[keys anyObject] intValue];
+    if ([keys count] == 1) return (VSCIMOSXMappingType)[[keys anyObject] intValue];
     
     BOOST_ASSERT_MSG(false, "No Mapping Type");
     
-    return VSCIMOSXCollisionMappingTypeNone;
+    return VSCIMOSXMappingTypeNone;
 }
 
 #pragma mark - NSView Methods
@@ -105,7 +105,7 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
 
 -(void) awakeFromNib
 {
-    [self setupCollisionMappingChoice];
+    [self setupMappingChoice];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -113,12 +113,12 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
     // Drawing code here.
 }
 
--(void) setMapping:(VSC::IM::CollisionMapping::WPtr)mapping
+-(void) setMapping:(VSC::IM::Mapping::WPtr)mapping
 {
     _mapping = mapping;
-    self.collisionMappingType = VSCIMOSXCollisionMappingTypeForCollisionMapping(_mapping.lock());
+    self.collisionMappingType = VSCIMOSXMappingTypeForMapping(_mapping.lock());
     
-    [self updateInterfaceForNewCollisionMapping];
+    [self updateInterfaceForNewMapping];
 }
 
 -(void) setTarget:(VSC::IM::Target)target
@@ -133,28 +133,28 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
     [self.targetTextField setStringValue:[NSString stringWithStdString:VSC::IM::stringForTarget(self.target)]];
 }
 
--(void) updateInterfaceForNewCollisionMapping
+-(void) updateInterfaceForNewMapping
 {
     BOOST_ASSERT(self.mappingPopUpButton);
     
-    NSString* title = [[self class] menuItemStringForCollisionMappingType:self.collisionMappingType];
+    NSString* title = [[self class] menuItemStringForMappingType:self.collisionMappingType];
     
     [self.mappingPopUpButton selectItemWithTitle:title];
     
     switch (self.collisionMappingType)
     {
-        case VSCIMOSXCollisionMappingTypeConstant:
+        case VSCIMOSXMappingTypeConstant:
             break;
-        case VSCIMOSXCollisionMappingTypeVelocity:
+        case VSCIMOSXMappingTypeVelocity:
             break;
-        case VSCIMOSXCollisionMappingTypeDistance:
+        case VSCIMOSXMappingTypeDistance:
             break;
         default:
             break;
     }
 }
 
--(void) setupCollisionMappingChoice
+-(void) setupMappingChoice
 {
     BOOST_ASSERT(self.mappingPopUpButton);
     
@@ -162,14 +162,14 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
     
     for (NSNumber* typeNumber in [mappingTypeMenuItemStringDict allKeys])
     {
-        NSString* title = [[self class] menuItemStringForCollisionMappingType:(VSCIMOSXCollisionMappingType)[typeNumber intValue]];
+        NSString* title = [[self class] menuItemStringForMappingType:(VSCIMOSXMappingType)[typeNumber intValue]];
         [self.mappingPopUpButton addItemWithTitle:title];
     }
 }
 
 -(void) reloadInterface;
 {
-    [self updateInterfaceForNewCollisionMapping];
+    [self updateInterfaceForNewMapping];
     [self updateInterfaceForNewTarget];
 }
 
@@ -182,7 +182,7 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
     
     if ([self.controller respondsToSelector:@selector(sender:requestsEditorForMapping:)])
     {
-        VSC::IM::CollisionMapping::SPtr mapping = self.mapping.lock();
+        VSC::IM::Mapping::SPtr mapping = self.mapping.lock();
         BOOST_ASSERT(mapping);
         [self.controller sender:self requestsEditorForMapping:mapping];
     }
@@ -194,20 +194,20 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
     BOOST_ASSERT(self.controller);
     BOOST_ASSERT([self.controller respondsToSelector:@selector(sender:requestsMappingWithType:forTarget:)]);
     
-    VSC::IM::CollisionMapping::SPtr newMapping = VSC::IM::CollisionMapping::SPtr();
+    VSC::IM::Mapping::SPtr newMapping = VSC::IM::Mapping::SPtr();
     
     if (self.target != VSC::IM::TargetNone)
     {
         NSString* menuItemTitle = [[self.mappingPopUpButton selectedItem] title];
-        VSCIMOSXCollisionMappingType requestedType = [[self class] collisionMappingTypeForMenuItemString:menuItemTitle];
-        BOOST_ASSERT(requestedType != VSCIMOSXCollisionMappingTypeNone);
-        if (requestedType != VSCIMOSXCollisionMappingTypeNone)
+        VSCIMOSXMappingType requestedType = [[self class] collisionMappingTypeForMenuItemString:menuItemTitle];
+        BOOST_ASSERT(requestedType != VSCIMOSXMappingTypeNone);
+        if (requestedType != VSCIMOSXMappingTypeNone)
         {
             newMapping = [self.controller sender:self requestsMappingWithType:requestedType forTarget:self.target];
         }
     }
     
-    self.mapping = VSC::IM::CollisionMapping::WPtr(newMapping);
+    self.mapping = VSC::IM::Mapping::WPtr(newMapping);
 }
 
 

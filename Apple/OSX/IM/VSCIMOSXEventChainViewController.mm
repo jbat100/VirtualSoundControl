@@ -10,8 +10,8 @@
 
 #import "VSCOSXOBSceneElementEditor.h"
 #import "VSCOSXOBSceneElementController.h"
-#import "VSCIMOSXCollisionActionMappingsViewController.h"
-#import "VSCIMOSXCollisionActionView.h"
+#import "VSCIMOSXActionMappingsViewController.h"
+#import "VSCIMOSXActionView.h"
 #import "VSCIMOSXDelayView.h"
 
 #include "VSCIMCollisionMapper.h"
@@ -23,12 +23,12 @@
 
 #include <boost/assert.hpp>
 
-NSString* const VSCIMOSXCollisionActionViewReuseIdentifier      = @"VSCIMOSXCollisionActionViewReuseIdentifier";
+NSString* const VSCIMOSXActionViewReuseIdentifier      = @"VSCIMOSXActionViewReuseIdentifier";
 NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDelayViewReuseIdentifier";
 
 @interface VSCIMOSXCollisionEventChainViewController ()
 
-+(VSCIMOSXCollisionActionView*) newCollisionActionViewWithOwner:(id)owner;
++(VSCIMOSXActionView*) newCollisionActionViewWithOwner:(id)owner;
 +(VSCIMOSXDelayView*) newDelayViewWithOwner:(id)owner;
 
 -(void) customInit;
@@ -197,8 +197,8 @@ const static BOOL traceInterface = YES;
 {
     if (!self.actionMappingsViewController)
     {
-        self.actionMappingsViewController = [[VSCIMOSXCollisionActionMappingsViewController alloc]
-                                             initWithNibName:@"VSCIMOSXCollisionActionMappingsViewController" bundle:nil];
+        self.actionMappingsViewController = [[VSCIMOSXActionMappingsViewController alloc]
+                                             initWithNibName:@"VSCIMOSXActionMappingsViewController" bundle:nil];
         
         BOOST_ASSERT(self.actionMappingsViewController);
         self.actionMappingsViewController.eventChainController = self;
@@ -257,24 +257,24 @@ const static BOOL traceInterface = YES;
 
 #pragma mark - View Factory Methods
 
-+(VSCIMOSXCollisionActionView*) newCollisionActionViewWithOwner:(id)owner
++(VSCIMOSXActionView*) newCollisionActionViewWithOwner:(id)owner
 {
     static NSNib* nib = nil;
-    static NSString* identifier = [[VSCIMOSXCollisionActionView class] description];
+    static NSString* identifier = [[VSCIMOSXActionView class] description];
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         BOOST_ASSERT(!nib);
-        nib = [[NSNib alloc] initWithNibNamed:[[VSCIMOSXCollisionActionView class] description] bundle:nil];
+        nib = [[NSNib alloc] initWithNibNamed:[[VSCIMOSXActionView class] description] bundle:nil];
     });
     BOOST_ASSERT(nib);
     
     NSArray *objects = nil;
-    VSCIMOSXCollisionActionView* v = nil;
+    VSCIMOSXActionView* v = nil;
     [nib instantiateNibWithOwner:owner topLevelObjects:&objects];
     for(id object in objects)
     {
-        if([object isKindOfClass:[VSCIMOSXCollisionActionView class]]) {
+        if([object isKindOfClass:[VSCIMOSXActionView class]]) {
             v = object;
             v.identifier = identifier;
             break;
@@ -349,8 +349,8 @@ const static BOOL traceInterface = YES;
         VSC::IM::CollisionAction::SPtr action = boost::dynamic_pointer_cast<VSC::IM::CollisionAction>(event);
         if (action)
         {
-            VSCIMOSXCollisionActionView* actionView = [tableView makeViewWithIdentifier:[[VSCIMOSXCollisionActionView class] description] owner:self];
-            if (actionView) BOOST_ASSERT([actionView isKindOfClass:[VSCIMOSXCollisionActionView class]]);
+            VSCIMOSXActionView* actionView = [tableView makeViewWithIdentifier:[[VSCIMOSXActionView class] description] owner:self];
+            if (actionView) BOOST_ASSERT([actionView isKindOfClass:[VSCIMOSXActionView class]]);
             else actionView = [[self class] newCollisionActionViewWithOwner:self];
             [actionView setCollisionAction:(VSC::IM::CollisionAction::WPtr(action))];
             actionView.eventChainController = self;
@@ -401,7 +401,7 @@ const static BOOL traceInterface = YES;
         VSC::IM::CollisionAction::SPtr action = boost::dynamic_pointer_cast<VSC::IM::CollisionAction>(event);
         if (action)
         {
-            CGFloat h = [VSCIMOSXCollisionActionView heightOfViewForCollisionAction:action];
+            CGFloat h = [VSCIMOSXActionView heightOfViewForCollisionAction:action];
             if (traceInterface) NSLog(@"Returning: %f", h);
             return h;
         }
@@ -432,9 +432,9 @@ const static BOOL traceInterface = YES;
     [rowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         NSView* v = [self.eventTableView viewAtColumn:0 row:idx makeIfNecessary:NO];
         //NSLog(@"Row %ld: %@ with frame %@", idx, v, NSStringFromRect(v.frame));
-        if ([v isKindOfClass:[VSCIMOSXCollisionActionView class]])
+        if ([v isKindOfClass:[VSCIMOSXActionView class]])
         {
-            VSCIMOSXCollisionActionView* actionView = (VSCIMOSXCollisionActionView*)v;
+            VSCIMOSXActionView* actionView = (VSCIMOSXActionView*)v;
             [actionView setNeedsLayout:YES];
             [actionView printUIDescription];
         }

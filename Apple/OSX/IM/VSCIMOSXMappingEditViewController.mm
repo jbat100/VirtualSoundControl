@@ -1,22 +1,22 @@
 //
-//  VSCIMOSXCollisionMappingEditViewController.m
+//  VSCIMOSXMappingEditViewController.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 10/31/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCIMOSXCollisionMappingEditViewController.h"
+#import "VSCIMOSXMappingEditViewController.h"
 
 #include <boost/assert.hpp>
 
-@interface VSCIMOSXCollisionMappingEditViewController ()
+@interface VSCIMOSXMappingEditViewController ()
 
 -(void) reloadInterface;
 
 @end
 
-@implementation VSCIMOSXCollisionMappingEditViewController
+@implementation VSCIMOSXMappingEditViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,7 +29,7 @@
     return self;
 }
 
--(void) setCollisionMapping:(VSC::IM::CollisionMapping::WPtr)collisionMapping
+-(void) setMapping:(VSC::IM::Mapping::WPtr)collisionMapping
 {
     if (collisionMapping.lock() != _collisionMapping.lock())
     {
@@ -40,7 +40,7 @@
 
 -(void) reloadInterface
 {
-    VSC::IM::CollisionMapping::SPtr mapping = _collisionMapping.lock();
+    VSC::IM::Mapping::SPtr mapping = _collisionMapping.lock();
     BOOST_ASSERT(mapping);
     if (mapping)
     {

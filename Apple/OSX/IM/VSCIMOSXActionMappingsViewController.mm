@@ -1,35 +1,35 @@
 //
-//  VSCIMOSXCollisionActionMappingsViewController.m
+//  VSCIMOSXActionMappingsViewController.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 11/27/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCIMOSXCollisionActionMappingsViewController.h"
-#import "VSCIMOSXCollisionMappingEditViewController.h"
+#import "VSCIMOSXActionMappingsViewController.h"
+#import "VSCIMOSXMappingEditViewController.h"
 #import "VSCIMOSXCollisionEventChainController.h"
-#import "VSCIMOSXCollisionMappingView.h"
+#import "VSCIMOSXMappingView.h"
 
-#include "VSCIMCollisionAction.h"
+#include "VSCIMAction.h"
 
-NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisionMappingViewReuseIdentifier";
+NSString* const VSCIMOSXMappingViewReuseIdentifier = @"VSCIMOSXMappingViewReuseIdentifier";
 
-@interface VSCIMOSXCollisionActionMappingsViewController ()
+@interface VSCIMOSXActionMappingsViewController ()
 
 @property (weak) IBOutlet NSButton* backToEventChainViewButton;
-@property (strong) VSCIMOSXCollisionMappingEditViewController* mappingEditViewController;
+@property (strong) VSCIMOSXMappingEditViewController* mappingEditViewController;
 @property (strong) NSPopover* mappingEditPopover;
 
 -(IBAction) backToEventChainView:(id)sender;
--(BOOL) checkMappingView:(id<VSCIMOSXCollisionMappingView>)v;
+-(BOOL) checkMappingView:(id<VSCIMOSXMappingView>)v;
 
-+(VSCIMOSXCollisionMappingView*) newCollisionMappingViewWithOwner:(id)owner;
++(VSCIMOSXMappingView*) newMappingViewWithOwner:(id)owner;
 
 @end
 
 
-@implementation VSCIMOSXCollisionActionMappingsViewController
+@implementation VSCIMOSXActionMappingsViewController
 
 @synthesize action = _action;
 
@@ -52,24 +52,24 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
 
 #pragma mark - View Factory Methods
 
-+(VSCIMOSXCollisionMappingView*) newCollisionMappingViewWithOwner:(id)owner
++(VSCIMOSXMappingView*) newMappingViewWithOwner:(id)owner
 {
     static NSNib* nib = nil;
-    static NSString* identifier = [[VSCIMOSXCollisionMappingView class] description];
+    static NSString* identifier = [[VSCIMOSXMappingView class] description];
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         BOOST_ASSERT(!nib);
-        nib = [[NSNib alloc] initWithNibNamed:[[VSCIMOSXCollisionMappingView class] description] bundle:nil];
+        nib = [[NSNib alloc] initWithNibNamed:[[VSCIMOSXMappingView class] description] bundle:nil];
     });
     BOOST_ASSERT(nib);
     
     NSArray *objects = nil;
-    VSCIMOSXCollisionMappingView* v = nil;
+    VSCIMOSXMappingView* v = nil;
     [nib instantiateNibWithOwner:owner topLevelObjects:&objects];
     for(id object in objects)
     {
-        if([object isKindOfClass:[VSCIMOSXCollisionMappingView class]])
+        if([object isKindOfClass:[VSCIMOSXMappingView class]])
         {
             v = object;
             v.identifier = identifier;
@@ -100,7 +100,7 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
 
 #pragma mark - Helpers
 
--(BOOL) checkMappingView:(id<VSCIMOSXCollisionMappingView>)v
+-(BOOL) checkMappingView:(id<VSCIMOSXMappingView>)v
 {
     BOOST_ASSERT([v respondsToSelector:@selector(target)]);
     BOOST_ASSERT([v respondsToSelector:@selector(mapping)]);
@@ -113,23 +113,23 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
     return YES;
 }
 
-#pragma mark - VSCIMOSXCollisionMappingController Methods
+#pragma mark - VSCIMOSXMappingController Methods
 
--(VSC::IM::CollisionMapping::SPtr) sender:(id)sender
-                  requestsMappingWithType:(VSCIMOSXCollisionMappingType)mappingType
+-(VSC::IM::Mapping::SPtr) sender:(id)sender
+                  requestsMappingWithType:(VSCIMOSXMappingType)mappingType
                       forTarget:(VSC::IM::Target)target;
 {
     
     VSC::IM::CollisionAction::SPtr collisionAction = [self action].lock();
     
     BOOST_ASSERT(target != VSC::IM::TargetNone);
-    if (target == VSC::IM::TargetNone) return VSC::IM::CollisionMapping::SPtr();
+    if (target == VSC::IM::TargetNone) return VSC::IM::Mapping::SPtr();
     
-    VSC::IM::CollisionMapping::SPtr currentMapping = collisionAction->getMappingForTarget(target);
-    VSCIMOSXCollisionMappingType currentMappingType = VSCIMOSXCollisionMappingTypeForCollisionMapping(currentMapping);
+    VSC::IM::Mapping::SPtr currentMapping = collisionAction->getMappingForTarget(target);
+    VSCIMOSXMappingType currentMappingType = VSCIMOSXMappingTypeForMapping(currentMapping);
     if (currentMappingType == mappingType) return currentMapping;
     
-    VSC::IM::CollisionMapping::SPtr newMapping = VSCIMOSXCreateCollisionMappingWithType(mappingType);
+    VSC::IM::Mapping::SPtr newMapping = VSCIMOSXCreateMappingWithType(mappingType);
     BOOST_ASSERT(newMapping);
     collisionAction->setMappingForTarget(target, newMapping);
     
@@ -143,15 +143,15 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
     return newMapping;
 }
 
--(void) sender:(id)sender requestsEditorForMapping:(VSC::IM::CollisionMapping::SPtr)mapping
+-(void) sender:(id)sender requestsEditorForMapping:(VSC::IM::Mapping::SPtr)mapping
 {
     BOOST_ASSERT(mapping);
     BOOST_ASSERT(sender);
-    BOOST_ASSERT([sender isKindOfClass:[VSCIMOSXCollisionMappingView class]]);
+    BOOST_ASSERT([sender isKindOfClass:[VSCIMOSXMappingView class]]);
     
-    if (mapping && [sender isKindOfClass:[VSCIMOSXCollisionMappingView class]])
+    if (mapping && [sender isKindOfClass:[VSCIMOSXMappingView class]])
     {
-        VSCIMOSXCollisionMappingView* mappingView = (VSCIMOSXCollisionMappingView*)sender;
+        VSCIMOSXMappingView* mappingView = (VSCIMOSXMappingView*)sender;
         
         if (self.collisionMappingEditPopover == nil)
         {
@@ -162,8 +162,8 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
         
         if (self.collisionMappingEditViewController == nil)
         {
-            self.collisionMappingEditViewController = [[VSCIMOSXCollisionMappingEditViewController alloc]
-                                                       initWithNibName:@"VSCIMOSXCollisionMappingEditViewController"
+            self.collisionMappingEditViewController = [[VSCIMOSXMappingEditViewController alloc]
+                                                       initWithNibName:@"VSCIMOSXMappingEditViewController"
                                                        bundle:nil];
             
             BOOST_ASSERT(self.collisionMappingEditViewController);
@@ -173,7 +173,7 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
             BOOST_ASSERT(self.collisionMappingEditViewController.scaleFactorTextField);
         }
         
-        self.collisionMappingEditViewController.collisionMapping = VSC::IM::CollisionMapping::WPtr(mapping);
+        self.collisionMappingEditViewController.collisionMapping = VSC::IM::Mapping::WPtr(mapping);
         
         self.collisionMappingEditPopover.contentViewController = self.collisionMappingEditViewController;
         self.collisionMappingEditPopover.contentSize = NSMakeSize(213.0, 112.0);
@@ -223,11 +223,11 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
             BOOST_ASSERT(targets.size() > row);
             if (targets.size() <= row) return nil;
             VSC::IM::Target target = targets.at(row);
-            VSC::IM::CollisionMapping::SPtr collisionMapping = collisionAction->getMappingForTarget(target);
+            VSC::IM::Mapping::SPtr collisionMapping = collisionAction->getMappingForTarget(target);
             
             if (collisionMapping)
             {
-                VSCIMOSXCollisionMappingView* mappingView = [tableView makeViewWithIdentifier:[[VSCIMOSXCollisionMappingView class] description]
+                VSCIMOSXMappingView* mappingView = [tableView makeViewWithIdentifier:[[VSCIMOSXMappingView class] description]
                                                                                         owner:self];
                 
                 
@@ -236,10 +236,10 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
                 
                 [mappingView setController:(id)self];
                 
-                if (mappingView) BOOST_ASSERT([mappingView isKindOfClass:[VSCIMOSXCollisionMappingView class]]);
-                else mappingView = [[self class] newCollisionMappingViewWithOwner:self];
+                if (mappingView) BOOST_ASSERT([mappingView isKindOfClass:[VSCIMOSXMappingView class]]);
+                else mappingView = [[self class] newMappingViewWithOwner:self];
                 
-                [mappingView setMapping:(VSC::IM::CollisionMapping::WPtr(collisionMapping))];
+                [mappingView setMapping:(VSC::IM::Mapping::WPtr(collisionMapping))];
                 
                 [mappingView setTarget:target];
                 
@@ -257,7 +257,7 @@ NSString* const VSCIMOSXCollisionMappingViewReuseIdentifier = @"VSCIMOSXCollisio
     
     if (tableView == self.mappingTableView)
     {
-        return [VSCIMOSXCollisionMappingView defaultHeight];
+        return [VSCIMOSXMappingView defaultHeight];
     }
     
     BOOST_ASSERT_MSG(false, "Shouldn't reach this point");

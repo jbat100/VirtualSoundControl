@@ -5,7 +5,7 @@
 #include "VSCOB.h"
 #include "VSCIMCollisionMapping.h"
 #include "VSCIMCollisionMapped.h"
-#include "VSCIMCollisionAction.h"
+#include "VSCIMAction.h"
 #include "VSCMIDI.h"
 #include "VSCMIDIOutput.h"
 

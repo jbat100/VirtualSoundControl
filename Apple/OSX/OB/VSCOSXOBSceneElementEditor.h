@@ -2,7 +2,7 @@
 
 #import <Foundation/Foundation.h>
 
-#include "VSCIMCollisionAction.h"
+#include "VSCIMAction.h"
 
 /*
  *  VSCOSXOBSceneElementEditor, meant for the main inspector view
@@ -17,9 +17,9 @@
 
 
 /*
- *  VSCIMOSXCollisionActionEditor
+ *  VSCIMOSXActionEditor
  */
 
-@protocol VSCIMOSXCollisionActionEditor <NSObject>
+@protocol VSCIMOSXActionEditor <NSObject>
 
 @end

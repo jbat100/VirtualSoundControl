@@ -1,5 +1,5 @@
 //
-//  VSCIMOSXCollisionMappingEditViewController.h
+//  VSCIMOSXMappingEditViewController.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 10/31/12.
@@ -7,14 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "VSCIMOSXCollisionMappingTypes.h"
+#import "VSCIMOSXMappingTypes.h"
 
 #include "VSC.h"
-#include "VSCIMCollisionMapping.h"
+#include "VSCIMMapping.h"
 
-@interface VSCIMOSXCollisionMappingEditViewController : NSViewController
+@interface VSCIMOSXMappingEditViewController : NSViewController
 
-@property (nonatomic, assign) VSC::IM::CollisionMapping::WPtr collisionMapping;
+@property (nonatomic, assign) VSC::IM::Mapping::WPtr collisionMapping;
 
 // binding targets
 

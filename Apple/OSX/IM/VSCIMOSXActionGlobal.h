@@ -1,5 +1,5 @@
 //
-//  VSCIMOSXCollisionActionGlobal.h
+//  VSCIMOSXActionGlobal.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 10/31/12.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#include "VSCIMCollisionAction.h"
+#include "VSCIMAction.h"
 
 /*
  *  Action types enum, used to avoid having to downcast constantly to check action type.
@@ -17,14 +17,14 @@
  *  place. No extention possible, which is a serious restriction.
  */
 
-typedef enum _VSCIMOSXCollisionActionType {
-    VSCIMOSXCollisionActionTypeNone = 0,
-    VSCIMOSXCollisionActionTypeVoid,
-    VSCIMOSXCollisionActionTypeMIDINoteOn,
-    VSCIMOSXCollisionActionTypeMIDINoteOnAndOff,
-    VSCIMOSXCollisionActionTypeMIDINoteOff,
-    VSCIMOSXCollisionActionTypeMIDIControlChange
-} VSCIMOSXCollisionActionType;
+typedef enum _VSCIMOSXActionType {
+    VSCIMOSXActionTypeNone = 0,
+    VSCIMOSXActionTypeVoid,
+    VSCIMOSXActionTypeMIDINoteOn,
+    VSCIMOSXActionTypeMIDINoteOnAndOff,
+    VSCIMOSXActionTypeMIDINoteOff,
+    VSCIMOSXActionTypeMIDIControlChange
+} VSCIMOSXActionType;
 
 /*
  *  Performs dynamic casts until it gets the type, very slow, use as little as possible
@@ -32,12 +32,12 @@ typedef enum _VSCIMOSXCollisionActionType {
  *  is set)
  */
 
-VSCIMOSXCollisionActionType VSCIMOSXCollisionActionTypeForCollisionAction(VSC::IM::CollisionAction::SPtr action);
+VSCIMOSXActionType VSCIMOSXActionTypeForCollisionAction(VSC::IM::CollisionAction::SPtr action);
 
 /*
- *  Use by controllers (VSCIMOSXCollisionActionController protocol) to create actions based on type
+ *  Use by controllers (VSCIMOSXActionController protocol) to create actions based on type
  */
 
-VSC::IM::CollisionAction::SPtr VSCIMOSXCreateCollisionActionWithType(VSCIMOSXCollisionActionType actionType);
+VSC::IM::CollisionAction::SPtr VSCIMOSXCreateCollisionActionWithType(VSCIMOSXActionType actionType);
 
 

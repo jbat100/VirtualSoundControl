@@ -1,55 +1,55 @@
 //
-//  VSCIMOSXCollisionActionGlobal.h
+//  VSCIMOSXActionGlobal.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 10/31/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCIMOSXCollisionActionGlobal.h"
+#import "VSCIMOSXActionGlobal.h"
 
 #include "VSCIMCollisionMIDIActions.h"
 
-VSCIMOSXCollisionActionType VSCIMOSXCollisionActionTypeForCollisionAction(VSC::IM::CollisionAction::SPtr action)
+VSCIMOSXActionType VSCIMOSXActionTypeForCollisionAction(VSC::IM::CollisionAction::SPtr action)
 {
     if (action)
     {
         if (boost::dynamic_pointer_cast<VSC::IM::CollisionVoidAction>(action))
-            return VSCIMOSXCollisionActionTypeVoid;
+            return VSCIMOSXActionTypeVoid;
         
         if (boost::dynamic_pointer_cast<VSC::IM::CollisionMIDINoteOnAction>(action))
-            return VSCIMOSXCollisionActionTypeMIDINoteOn;
+            return VSCIMOSXActionTypeMIDINoteOn;
         
         if (boost::dynamic_pointer_cast<VSC::IM::CollisionMIDINoteOnAndOffAction>(action))
-            return VSCIMOSXCollisionActionTypeMIDINoteOnAndOff;
+            return VSCIMOSXActionTypeMIDINoteOnAndOff;
         
         if (boost::dynamic_pointer_cast<VSC::IM::CollisionMIDINoteOffAction>(action))
-            return VSCIMOSXCollisionActionTypeMIDINoteOff;
+            return VSCIMOSXActionTypeMIDINoteOff;
         
         if (boost::dynamic_pointer_cast<VSC::IM::CollisionMIDIControlChangeAction>(action))
-            return VSCIMOSXCollisionActionTypeMIDIControlChange;
+            return VSCIMOSXActionTypeMIDIControlChange;
     }
     
-    return VSCIMOSXCollisionActionTypeNone;
+    return VSCIMOSXActionTypeNone;
 }
 
-VSC::IM::CollisionAction::SPtr VSCIMOSXCreateCollisionActionWithType(VSCIMOSXCollisionActionType actionType)
+VSC::IM::CollisionAction::SPtr VSCIMOSXCreateCollisionActionWithType(VSCIMOSXActionType actionType)
 {
     switch (actionType) {
         
-        case VSCIMOSXCollisionActionTypeMIDINoteOn:
+        case VSCIMOSXActionTypeMIDINoteOn:
             return VSC::IM::CollisionAction::SPtr(new VSC::IM::CollisionMIDINoteOnAction);
             break;
             
-        case VSCIMOSXCollisionActionTypeMIDINoteOnAndOff:
+        case VSCIMOSXActionTypeMIDINoteOnAndOff:
             return VSC::IM::CollisionAction::SPtr(new VSC::IM::CollisionMIDINoteOnAndOffAction);
             break;
             
-        case VSCIMOSXCollisionActionTypeMIDINoteOff:
+        case VSCIMOSXActionTypeMIDINoteOff:
             return VSC::IM::CollisionAction::SPtr(new VSC::IM::CollisionMIDINoteOffAction);
             break;
             
-        case VSCIMOSXCollisionActionTypeMIDIControlChange:
+        case VSCIMOSXActionTypeMIDIControlChange:
             return VSC::IM::CollisionAction::SPtr(new VSC::IM::CollisionMIDIControlChangeAction);
             break;
             

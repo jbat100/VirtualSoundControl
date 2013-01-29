@@ -1,5 +1,5 @@
 //
-//  VSCIMCollisionActionView.h
+//  VSCIMActionView.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 10/28/12.
@@ -8,11 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "VSCIMOSXCollisionActionGlobal.h"
-#import "VSCIMOSXCollisionMappingTypes.h"
-#import "VSCIMOSXCollisionMappingView.h"
+#import "VSCIMOSXActionGlobal.h"
+#import "VSCIMOSXMappingTypes.h"
+#import "VSCIMOSXMappingView.h"
 
-#include "VSCIMCollisionAction.h"
+#include "VSCIMAction.h"
 
 @protocol VSCIMOSXCollisionEventChainController;
 
@@ -21,11 +21,11 @@
  *  the type of action to be switched.
  */
 
-@interface VSCIMOSXCollisionActionView : NSView
+@interface VSCIMOSXActionView : NSView
 
 +(CGFloat) heightOfViewForCollisionAction:(VSC::IM::CollisionAction::SPtr)collisionAction;
-+(NSString*) stringForActionType:(VSCIMOSXCollisionActionType)actionType;
-+(VSCIMOSXCollisionActionType) actionTypeForString:(NSString*)menuItemString;
++(NSString*) stringForActionType:(VSCIMOSXActionType)actionType;
++(VSCIMOSXActionType) actionTypeForString:(NSString*)menuItemString;
 
 @property (assign) IBOutlet id<VSCIMOSXCollisionEventChainController> eventChainController;
 
@@ -43,7 +43,7 @@
 @property (nonatomic, strong) IBOutlet NSView* midiControlSetupView;
 @property (nonatomic, strong) IBOutlet NSPopUpButton* midiControlNumberPopUpButton;
 
--(IBAction) showCollisionMappings:(id)sender;
+-(IBAction) showMappings:(id)sender;
 -(IBAction) midiOutputSelected:(id)sender;
 -(IBAction) midiControlNumberSelected:(id)sender;
 

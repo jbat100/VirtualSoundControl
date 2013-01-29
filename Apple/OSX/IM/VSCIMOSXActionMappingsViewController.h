@@ -1,5 +1,5 @@
 //
-//  VSCIMOSXCollisionActionMappingsViewController.h
+//  VSCIMOSXActionMappingsViewController.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 11/27/12.
@@ -7,21 +7,21 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "VSCIMOSXCollisionMappingTypes.h"
-#import "VSCIMOSXCollisionActionMappingsController.h"
+#import "VSCIMOSXMappingTypes.h"
+#import "VSCIMOSXActionMappingsController.h"
 
-#include "VSCIMCollisionAction.h"
+#include "VSCIMAction.h"
 
-@class VSCIMOSXCollisionMappingEditViewController;
+@class VSCIMOSXMappingEditViewController;
 @protocol VSCIMOSXCollisionEventChainController;
 
 
-@interface VSCIMOSXCollisionActionMappingsViewController : NSViewController
-<VSCIMOSXCollisionActionMappingsController, NSTableViewDelegate, NSTableViewDataSource>
+@interface VSCIMOSXActionMappingsViewController : NSViewController
+<VSCIMOSXActionMappingsController, NSTableViewDelegate, NSTableViewDataSource>
 
 @property (weak) id<VSCIMOSXCollisionEventChainController> eventChainController;
 @property (nonatomic, weak) IBOutlet NSTableView* mappingTableView;
-@property (nonatomic, strong) VSCIMOSXCollisionMappingEditViewController* collisionMappingEditViewController;
+@property (nonatomic, strong) VSCIMOSXMappingEditViewController* collisionMappingEditViewController;
 @property (nonatomic, strong) NSPopover* collisionMappingEditPopover;
 
 -(void) reloadInterface;

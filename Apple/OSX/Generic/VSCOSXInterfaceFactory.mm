@@ -45,13 +45,13 @@
                                                [[VSCOSXKeyed4FieldView class] description] bundle:nil];
         
         interfaceFactory.keyedCollisionActionCommonViewNib = [[NSNib alloc] initWithNibNamed:
-                                                              @"VSCIMOSXCollisionActionCommonView" bundle:nil];
+                                                              @"VSCIMOSXActionCommonView" bundle:nil];
         
         interfaceFactory.keyedCollisionActionMIDIViewNib = [[NSNib alloc] initWithNibNamed:
-                                                            @"VSCIMOSXCollisionActionMIDIView" bundle:nil];
+                                                            @"VSCIMOSXActionMIDIView" bundle:nil];
         
         interfaceFactory.keyedCollisionActionMIDIControlViewNib = [[NSNib alloc] initWithNibNamed:
-                                                                   @"VSCIMOSXCollisionActionMIDIControlView" bundle:nil];
+                                                                   @"VSCIMOSXActionMIDIControlView" bundle:nil];
         
     });
     
@@ -179,21 +179,21 @@
 
 -(NSView*) newCollisionActionCommonViewWithOwner:(id)owner
 {
-    static NSString* identifier = @"VSCIMOSXCollisionActionCommonView";
+    static NSString* identifier = @"VSCIMOSXActionCommonView";
     
     return [self newViewWithIdentifier:identifier nib:self.keyedCollisionActionCommonViewNib owner:owner];
 }
 
 -(NSView*) newCollisionActionMIDIViewWithOwner:(id)owner
 {
-    static NSString* identifier = @"VSCIMOSXCollisionActionMIDIView";
+    static NSString* identifier = @"VSCIMOSXActionMIDIView";
     
     return [self newViewWithIdentifier:identifier nib:self.keyedCollisionActionMIDIViewNib owner:owner];
 }
 
 -(NSView*) newCollisionActionMIDIControlViewWithOwner:(id)owner
 {
-    static NSString* identifier = @"VSCIMOSXCollisionActionMIDIControlView";
+    static NSString* identifier = @"VSCIMOSXActionMIDIControlView";
     
     return [self newViewWithIdentifier:identifier nib:self.keyedCollisionActionMIDIControlViewNib owner:owner];
 }
