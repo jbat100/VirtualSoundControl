@@ -10,16 +10,16 @@
 
 #include "VSCIMMapping.h"
 
-typedef enum _VSCIMOSXMappingType {
-    VSCIMOSXMappingTypeNone = 0,
-    VSCIMOSXMappingTypeConstant,
-    VSCIMOSXMappingTypeVelocity,
-    VSCIMOSXMappingTypeDistance
-} VSCIMOSXMappingType;
+typedef enum _VSC::IM::MappingType {
+    VSC::IM::MappingTypeNone = 0,
+    VSC::IM::MappingTypeConstant,
+    VSC::IM::MappingTypeVelocity,
+    VSC::IM::MappingTypeDistance
+} VSC::IM::MappingType;
 
-VSCIMOSXMappingType VSCIMOSXMappingTypeForMapping(VSC::IM::Mapping::SPtr collisionMapping);
+VSC::IM::MappingType VSC::IM::MappingTypeForMapping(VSC::IM::Mapping::SPtr collisionMapping);
 
-VSC::IM::Mapping::SPtr VSCIMOSXCreateMappingWithType(VSCIMOSXMappingType mappingType);
+VSC::IM::Mapping::SPtr VSCIMOSXCreateMappingWithType(VSC::IM::MappingType mappingType);
 
 
 

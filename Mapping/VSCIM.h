@@ -42,6 +42,24 @@ namespace VSC
          */
         
         std::string stringForActionType(ActionType actionType);
+        
+        /*
+         *  Mapping type enum
+         */
+        
+        enum MappingType
+        {
+            MappingTypeNone = 0,
+            MappingTypeConstant,
+            MappingTypeCollisionVelocity,
+            MappingTypeCollisionDistance
+        };
+        
+        MappingType mappingTypeForMapping(Mapping::SPtr mapping);
+        
+        Mapping::SPtr createMappingWithType(MappingType mappingType);
+        
+        std::string stringForMappingType(MappingType mappingType);
     }
 }
 

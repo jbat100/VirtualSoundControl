@@ -26,8 +26,20 @@ const VSC::Tasks VSC::IM::Action::generateTasksForCollision(OB::Collision_SPtr c
     
     BOOST_FOREACH(const Target& target, mRequiredMappingTargets)
     {
-        CollisionMapping::SPtr mapping = this->getCollisionMappingForTarget(target);
-        Float value = mapping->mappedValue(collision, effector);
+        Float value = 0.0;
+        Mapping::SPtr mapping = this->getCollisionMappingForTarget(target);
+        
+        CollisionMapping::SPtr collisionMapping = boost::dynamic_pointer_cast<CollisionMapping>(mapping);
+        
+        if (collisionMapping)
+        {
+            value = collisionMapping->mappedValue(collision, effector);
+        }
+        else
+        {
+            value = mapping->mappedValue();
+        }
+        
         valueMap[target] = value;
     }
     
@@ -58,7 +70,7 @@ VSC::IM::Mapping::SPtr VSC::IM::Action::getMappingForTarget(Target target)
     return mMappingMap[target];
 }
 
-VSC::IM::CollisionMapping::SPtr VSC::IM::Action::getCollisionMappingForTarget(Target target)
+VSC::IM::Mapping::SPtr VSC::IM::Action::getCollisionMappingForTarget(Target target)
 {
     return mCollisionMappingMap[target];
 }
@@ -70,7 +82,7 @@ void VSC::IM::Action::setMappingForTarget(Mapping::SPtr mapping, Target target)
     mMappingMap[target] = mapping;
 }
 
-void VSC::IM::Action::setCollisionMappingForTarget(CollisionMapping::SPtr mapping, Target target)
+void VSC::IM::Action::setCollisionMappingForTarget(Mapping::SPtr mapping, Target target)
 {
     mCollisionMappingMap[target] = mapping;
 }

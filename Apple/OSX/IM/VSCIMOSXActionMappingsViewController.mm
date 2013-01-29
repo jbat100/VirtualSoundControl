@@ -116,7 +116,7 @@ NSString* const VSCIMOSXMappingViewReuseIdentifier = @"VSCIMOSXMappingViewReuseI
 #pragma mark - VSCIMOSXMappingController Methods
 
 -(VSC::IM::Mapping::SPtr) sender:(id)sender
-                  requestsMappingWithType:(VSCIMOSXMappingType)mappingType
+                  requestsMappingWithType:(VSC::IM::MappingType)mappingType
                       forTarget:(VSC::IM::Target)target;
 {
     
@@ -126,10 +126,10 @@ NSString* const VSCIMOSXMappingViewReuseIdentifier = @"VSCIMOSXMappingViewReuseI
     if (target == VSC::IM::TargetNone) return VSC::IM::Mapping::SPtr();
     
     VSC::IM::Mapping::SPtr currentMapping = collisionAction->getMappingForTarget(target);
-    VSCIMOSXMappingType currentMappingType = VSCIMOSXMappingTypeForMapping(currentMapping);
+    VSC::IM::MappingType currentMappingType = VSC::IM::MappingTypeForMapping(currentMapping);
     if (currentMappingType == mappingType) return currentMapping;
     
-    VSC::IM::Mapping::SPtr newMapping = VSCIMOSXCreateMappingWithType(mappingType);
+    VSC::IM::Mapping::SPtr newMapping = VSC::IM::createMappingWithType(mappingType);
     BOOST_ASSERT(newMapping);
     collisionAction->setMappingForTarget(target, newMapping);
     

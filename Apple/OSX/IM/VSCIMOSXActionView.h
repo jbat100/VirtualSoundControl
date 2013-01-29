@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "VSCIMOSXActionGlobal.h"
-#import "VSCIMOSXMappingTypes.h"
+#import "VSC::IM::MappingTypes.h"
 #import "VSCIMOSXMappingView.h"
 
 #include "VSCIMAction.h"

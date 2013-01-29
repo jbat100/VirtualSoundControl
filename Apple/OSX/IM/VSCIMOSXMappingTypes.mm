@@ -8,35 +8,35 @@
 
 #import <Foundation/Foundation.h>
 
-#import "VSCIMOSXMappingTypes.h"
+#import "VSC::IM::MappingTypes.h"
 
-VSCIMOSXMappingType VSCIMOSXMappingTypeForMapping(VSC::IM::Mapping::SPtr collisionMapping)
+VSC::IM::MappingType VSC::IM::MappingTypeForMapping(VSC::IM::Mapping::SPtr collisionMapping)
 {
     if (collisionMapping)
     {
-        if (boost::dynamic_pointer_cast<VSC::IM::CollisionConstantMapping>(collisionMapping)) return VSCIMOSXMappingTypeConstant;
+        if (boost::dynamic_pointer_cast<VSC::IM::CollisionConstantMapping>(collisionMapping)) return VSC::IM::MappingTypeConstant;
         
-        if (boost::dynamic_pointer_cast<VSC::IM::CollisionVelocityMapping>(collisionMapping)) return VSCIMOSXMappingTypeVelocity;
+        if (boost::dynamic_pointer_cast<VSC::IM::CollisionVelocityMapping>(collisionMapping)) return VSC::IM::MappingTypeVelocity;
         
-        if (boost::dynamic_pointer_cast<VSC::IM::CollisionDistanceMapping>(collisionMapping)) return VSCIMOSXMappingTypeDistance;
+        if (boost::dynamic_pointer_cast<VSC::IM::CollisionDistanceMapping>(collisionMapping)) return VSC::IM::MappingTypeDistance;
     }
     
-    return VSCIMOSXMappingTypeNone;
+    return VSC::IM::MappingTypeNone;
 }
 
-VSC::IM::Mapping::SPtr VSCIMOSXCreateMappingWithType(VSCIMOSXMappingType mappingType)
+VSC::IM::Mapping::SPtr VSCIMOSXCreateMappingWithType(VSC::IM::MappingType mappingType)
 {
     switch (mappingType) {
             
-        case VSCIMOSXMappingTypeConstant:
+        case VSC::IM::MappingTypeConstant:
             return VSC::IM::Mapping::SPtr(new VSC::IM::CollisionConstantMapping);
             break;
             
-        case VSCIMOSXMappingTypeVelocity:
+        case VSC::IM::MappingTypeVelocity:
             return VSC::IM::Mapping::SPtr(new VSC::IM::CollisionVelocityMapping);
             break;
             
-        case VSCIMOSXMappingTypeDistance:
+        case VSC::IM::MappingTypeDistance:
             return VSC::IM::Mapping::SPtr(new VSC::IM::CollisionDistanceMapping);
             break;
             

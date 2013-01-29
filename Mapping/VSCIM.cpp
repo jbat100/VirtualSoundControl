@@ -1,7 +1,8 @@
 
-#include "VSCIMActionTypes.h"
+#include "VSCIM.h"
 #include "VSCIMAction.h"
 #include "VSCIMMIDIActions.h"
+#include "VSCIMCollisionMapping.h"
 
 VSC::IM::ActionType VSC::IM::actionTypeForAction(Action::SPtr action)
 {
@@ -61,6 +62,63 @@ std::string VSC::IM::stringForActionType(ActionType actionType)
             
         case ActionTypeMIDIControlChange:
             return "MIDI Control Change";
+            
+        default:
+            break;
+    }
+    
+    return "Unknown Action";
+}
+
+VSC::IM::MappingType VSC::IM::mappingTypeForMapping(Mapping::SPtr mapping)
+{
+    if (mapping)
+    {
+        if (boost::dynamic_pointer_cast<Mapping>(mapping))
+            return MappingTypeConstant;
+        
+        if (boost::dynamic_pointer_cast<CollisionVelocityMapping>(mapping))
+            return MappingTypeCollisionVelocity;
+        
+        if (boost::dynamic_pointer_cast<CollisionDistanceMapping>(mapping))
+            return MappingTypeCollisionDistance;
+    }
+    
+    return MappingTypeNone;
+}
+
+VSC::IM::Mapping::SPtr VSC::IM::createMappingWithType(MappingType mappingType)
+{
+    switch (mappingType)
+    {
+        case MappingTypeConstant:
+            return Mapping::SPtr(new Mapping);
+            
+        case MappingTypeCollisionVelocity:
+            return Mapping::SPtr(new CollisionVelocityMapping);
+            
+        case MappingTypeCollisionDistance:
+            return Mapping::SPtr(new CollisionDistanceMapping);
+            
+        default:
+            break;
+    }
+    
+    return Mapping::SPtr();
+}
+
+std::string VSC::IM::stringForMappingType(MappingType mappingType)
+{
+    switch (mappingType)
+    {
+        case MappingTypeConstant:
+            return "Constant";
+            
+        case MappingTypeCollisionVelocity:
+            return "Collision Velocity";
+            
+        case MappingTypeCollisionDistance:
+            return "Collision Distance";
             
         default:
             break;

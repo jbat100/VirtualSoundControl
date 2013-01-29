@@ -7,7 +7,7 @@
 //
 
 #import "VSCIMOSXMappingView.h"
-#import "VSCIMOSXMappingTypes.h"
+#import "VSC::IM::MappingTypes.h"
 #import "VSCIMOSXActionMappingsController.h"
 #import "NSString+VSCAdditions.h"
 
@@ -26,7 +26,7 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
 @property (weak) IBOutlet NSTextField* targetTextField;
 @property (weak) IBOutlet NSPopUpButton* mappingPopUpButton;
 
-@property (assign) VSCIMOSXMappingType collisionMappingType;
+@property (assign) VSC::IM::MappingType collisionMappingType;
 
 -(IBAction) editMapping:(id)sender;
 -(IBAction) mappingTypeSelected:(id)sender;
@@ -48,10 +48,10 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
     BOOST_ASSERT(!mappingTypeMenuItemStringDict);
     
     mappingTypeMenuItemStringDict = @{
-    @((int)VSCIMOSXMappingTypeNone)        : @"No Mapping",
-    @((int)VSCIMOSXMappingTypeConstant)    : @"Constant Mapping",
-    @((int)VSCIMOSXMappingTypeVelocity)    : @"Velocity Mapping",
-    @((int)VSCIMOSXMappingTypeDistance)    : @"Distance Mapping"
+    @((int)VSC::IM::MappingTypeNone)        : @"No Mapping",
+    @((int)VSC::IM::MappingTypeConstant)    : @"Constant Mapping",
+    @((int)VSC::IM::MappingTypeCollisionVelocity)    : @"Velocity Mapping",
+    @((int)VSC::IM::MappingTypeCollisionDistance)    : @"Distance Mapping"
     };
 }
 
@@ -65,13 +65,13 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
     return 56.0;
 }
 
-+(NSString*) menuItemStringForMappingType:(VSCIMOSXMappingType)mappingType
++(NSString*) menuItemStringForMappingType:(VSC::IM::MappingType)mappingType
 {
     BOOST_ASSERT(mappingTypeMenuItemStringDict);
     return [mappingTypeMenuItemStringDict objectForKey:@((int)mappingType)];
 }
 
-+(VSCIMOSXMappingType) collisionMappingTypeForMenuItemString:(NSString*)menuItemString
++(VSC::IM::MappingType) collisionMappingTypeForMenuItemString:(NSString*)menuItemString
 {
     BOOST_ASSERT(mappingTypeMenuItemStringDict);
     
@@ -83,11 +83,11 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
     
     BOOST_ASSERT([keys count] < 2);
     
-    if ([keys count] == 1) return (VSCIMOSXMappingType)[[keys anyObject] intValue];
+    if ([keys count] == 1) return (VSC::IM::MappingType)[[keys anyObject] intValue];
     
     BOOST_ASSERT_MSG(false, "No Mapping Type");
     
-    return VSCIMOSXMappingTypeNone;
+    return VSC::IM::MappingTypeNone;
 }
 
 #pragma mark - NSView Methods
@@ -116,7 +116,7 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
 -(void) setMapping:(VSC::IM::Mapping::WPtr)mapping
 {
     _mapping = mapping;
-    self.collisionMappingType = VSCIMOSXMappingTypeForMapping(_mapping.lock());
+    self.collisionMappingType = VSC::IM::MappingTypeForMapping(_mapping.lock());
     
     [self updateInterfaceForNewMapping];
 }
@@ -143,11 +143,11 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
     
     switch (self.collisionMappingType)
     {
-        case VSCIMOSXMappingTypeConstant:
+        case VSC::IM::MappingTypeConstant:
             break;
-        case VSCIMOSXMappingTypeVelocity:
+        case VSC::IM::MappingTypeCollisionVelocity:
             break;
-        case VSCIMOSXMappingTypeDistance:
+        case VSC::IM::MappingTypeCollisionDistance:
             break;
         default:
             break;
@@ -162,7 +162,7 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
     
     for (NSNumber* typeNumber in [mappingTypeMenuItemStringDict allKeys])
     {
-        NSString* title = [[self class] menuItemStringForMappingType:(VSCIMOSXMappingType)[typeNumber intValue]];
+        NSString* title = [[self class] menuItemStringForMappingType:(VSC::IM::MappingType)[typeNumber intValue]];
         [self.mappingPopUpButton addItemWithTitle:title];
     }
 }
@@ -199,9 +199,9 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
     if (self.target != VSC::IM::TargetNone)
     {
         NSString* menuItemTitle = [[self.mappingPopUpButton selectedItem] title];
-        VSCIMOSXMappingType requestedType = [[self class] collisionMappingTypeForMenuItemString:menuItemTitle];
-        BOOST_ASSERT(requestedType != VSCIMOSXMappingTypeNone);
-        if (requestedType != VSCIMOSXMappingTypeNone)
+        VSC::IM::MappingType requestedType = [[self class] collisionMappingTypeForMenuItemString:menuItemTitle];
+        BOOST_ASSERT(requestedType != VSC::IM::MappingTypeNone);
+        if (requestedType != VSC::IM::MappingTypeNone)
         {
             newMapping = [self.controller sender:self requestsMappingWithType:requestedType forTarget:self.target];
         }

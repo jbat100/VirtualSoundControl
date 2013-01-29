@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "VSCIMOSXMappingTypes.h"
+#import "VSC::IM::MappingTypes.h"
 #import "VSCIMOSXActionMappingsController.h"
 
 #include "VSCIMAction.h"

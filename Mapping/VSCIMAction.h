@@ -33,7 +33,6 @@ namespace VSC {
             typedef boost::shared_ptr<Action> SPtr;
             
             typedef std::map<Target, Mapping::SPtr>             MappingMap;
-            typedef std::map<Target, CollisionMapping::SPtr>    CollisionMappingMap;
             typedef std::map<Target, Float>                     ValueMap;
             
             Action() {}
@@ -63,10 +62,10 @@ namespace VSC {
             const Targets& getRequiredMappingTargets(void) {return mRequiredMappingTargets;}
             
             Mapping::SPtr           getMappingForTarget(const Target target);
-            CollisionMapping::SPtr  getCollisionMappingForTarget(const Target target);
+            Mapping::SPtr           getCollisionMappingForTarget(const Target target);
             
             void                    setMappingForTarget(Mapping::SPtr mapping, const Target target);
-            void                    setCollisionMappingForTarget(CollisionMapping::SPtr mapping, const Target target);
+            void                    setCollisionMappingForTarget(Mapping::SPtr mapping, const Target target);
             
         protected:
             
@@ -85,7 +84,7 @@ namespace VSC {
             
             Targets                 mRequiredMappingTargets;
             
-            CollisionMappingMap     mCollisionMappingMap;
+            MappingMap              mCollisionMappingMap;
             
             MappingMap              mMappingMap;
             

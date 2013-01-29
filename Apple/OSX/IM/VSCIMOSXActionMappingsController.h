@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "VSCIMOSXMappingTypes.h"
+#import "VSC::IM::MappingTypes.h"
 
 #include "VSCIMTarget.h"
 #include "VSCIMMapping.h"
@@ -18,7 +18,7 @@
 @property (nonatomic, assign) VSC::IM::Action::WPtr action;
 
 -(VSC::IM::Mapping::SPtr) sender:(id)sender
-                  requestsMappingWithType:(VSCIMOSXMappingType)mappingType
+                  requestsMappingWithType:(VSC::IM::MappingType)mappingType
                                 forTarget:(VSC::IM::Target)target;
 
 -(void) sender:(id)sender requestsEditorForMapping:(VSC::IM::Mapping::SPtr)mapping;

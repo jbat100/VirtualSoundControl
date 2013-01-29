@@ -18,7 +18,7 @@
 		100F58FE16B7D33900F38860 /* VSCIMOSXEventChainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 100F58F516B7D33900F38860 /* VSCIMOSXEventChainViewController.mm */; };
 		100F58FF16B7D33900F38860 /* VSCIMOSXEventChainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 100F58F616B7D33900F38860 /* VSCIMOSXEventChainViewController.xib */; };
 		100F590216B7D38E00F38860 /* VSCIMOSXActionCommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 100F590116B7D38E00F38860 /* VSCIMOSXActionCommonView.xib */; };
-		100F590916B7EDE100F38860 /* VSCIMActionTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100F590716B7EDE100F38860 /* VSCIMActionTypes.cpp */; };
+		100F591E16B7F6B400F38860 /* VSCIM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100F591C16B7F6B400F38860 /* VSCIM.cpp */; };
 		101D566316B71B8F00F5E860 /* VSCIMMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101D566116B71B8F00F5E860 /* VSCIMMapping.cpp */; };
 		101D566616B73EC200F5E860 /* VSCIMMIDIActions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101D566416B73EC200F5E860 /* VSCIMMIDIActions.cpp */; };
 		101EBB441629AE79006601A2 /* NSArray+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB431629AE79006601A2 /* NSArray+VSCAdditions.mm */; };
@@ -103,7 +103,6 @@
 		109A8F1D16A1A83E0023EC1B /* VSCIMTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F1116A1A83E0023EC1B /* VSCIMTarget.cpp */; };
 		109A8F4916A1A8740023EC1B /* VSCIMOSXMappingEditViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F3216A1A8740023EC1B /* VSCIMOSXMappingEditViewController.mm */; };
 		109A8F4A16A1A8740023EC1B /* VSCIMOSXMappingEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109A8F3316A1A8740023EC1B /* VSCIMOSXMappingEditViewController.xib */; };
-		109A8F4D16A1A8740023EC1B /* VSCIMOSXMappingTypes.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F3816A1A8740023EC1B /* VSCIMOSXMappingTypes.mm */; };
 		109A8F4E16A1A8740023EC1B /* VSCIMOSXMappingView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F3A16A1A8740023EC1B /* VSCIMOSXMappingView.mm */; };
 		109A8F4F16A1A8740023EC1B /* VSCIMOSXMappingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109A8F3B16A1A8740023EC1B /* VSCIMOSXMappingView.xib */; };
 		109A8F5016A1A8740023EC1B /* VSCIMOSXDelayView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F3D16A1A8740023EC1B /* VSCIMOSXDelayView.mm */; };
@@ -255,8 +254,8 @@
 		100F58F516B7D33900F38860 /* VSCIMOSXEventChainViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXEventChainViewController.mm; sourceTree = "<group>"; };
 		100F58F616B7D33900F38860 /* VSCIMOSXEventChainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXEventChainViewController.xib; sourceTree = "<group>"; };
 		100F590116B7D38E00F38860 /* VSCIMOSXActionCommonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXActionCommonView.xib; sourceTree = "<group>"; };
-		100F590716B7EDE100F38860 /* VSCIMActionTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMActionTypes.cpp; sourceTree = "<group>"; };
-		100F590816B7EDE100F38860 /* VSCIMActionTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMActionTypes.h; sourceTree = "<group>"; };
+		100F591C16B7F6B400F38860 /* VSCIM.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIM.cpp; sourceTree = "<group>"; };
+		100F591D16B7F6B400F38860 /* VSCIM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIM.h; sourceTree = "<group>"; };
 		101D566116B71B8F00F5E860 /* VSCIMMapping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMMapping.cpp; sourceTree = "<group>"; };
 		101D566216B71B8F00F5E860 /* VSCIMMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMMapping.h; sourceTree = "<group>"; };
 		101D566416B73EC200F5E860 /* VSCIMMIDIActions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMMIDIActions.cpp; sourceTree = "<group>"; };
@@ -400,8 +399,6 @@
 		109A8F3116A1A8740023EC1B /* VSCIMOSXMappingEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXMappingEditViewController.h; sourceTree = "<group>"; };
 		109A8F3216A1A8740023EC1B /* VSCIMOSXMappingEditViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXMappingEditViewController.mm; sourceTree = "<group>"; };
 		109A8F3316A1A8740023EC1B /* VSCIMOSXMappingEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXMappingEditViewController.xib; sourceTree = "<group>"; };
-		109A8F3716A1A8740023EC1B /* VSCIMOSXMappingTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXMappingTypes.h; sourceTree = "<group>"; };
-		109A8F3816A1A8740023EC1B /* VSCIMOSXMappingTypes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXMappingTypes.mm; sourceTree = "<group>"; };
 		109A8F3916A1A8740023EC1B /* VSCIMOSXMappingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXMappingView.h; sourceTree = "<group>"; };
 		109A8F3A16A1A8740023EC1B /* VSCIMOSXMappingView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXMappingView.mm; sourceTree = "<group>"; };
 		109A8F3B16A1A8740023EC1B /* VSCIMOSXMappingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXMappingView.xib; sourceTree = "<group>"; };
@@ -840,10 +837,10 @@
 		109A8EFC16A1A83E0023EC1B /* Mapping */ = {
 			isa = PBXGroup;
 			children = (
+				100F591D16B7F6B400F38860 /* VSCIM.h */,
+				100F591C16B7F6B400F38860 /* VSCIM.cpp */,
 				109A8EFD16A1A83E0023EC1B /* VSCIMAction.cpp */,
 				109A8EFE16A1A83E0023EC1B /* VSCIMAction.h */,
-				100F590716B7EDE100F38860 /* VSCIMActionTypes.cpp */,
-				100F590816B7EDE100F38860 /* VSCIMActionTypes.h */,
 				109A8F0516A1A83E0023EC1B /* VSCIMCollisionMapper.cpp */,
 				109A8F0616A1A83E0023EC1B /* VSCIMCollisionMapper.h */,
 				109A8F0716A1A83E0023EC1B /* VSCIMMapping.cpp */,
@@ -923,8 +920,6 @@
 				109A8F3116A1A8740023EC1B /* VSCIMOSXMappingEditViewController.h */,
 				109A8F3216A1A8740023EC1B /* VSCIMOSXMappingEditViewController.mm */,
 				109A8F3316A1A8740023EC1B /* VSCIMOSXMappingEditViewController.xib */,
-				109A8F3716A1A8740023EC1B /* VSCIMOSXMappingTypes.h */,
-				109A8F3816A1A8740023EC1B /* VSCIMOSXMappingTypes.mm */,
 				109A8F3916A1A8740023EC1B /* VSCIMOSXMappingView.h */,
 				109A8F3A16A1A8740023EC1B /* VSCIMOSXMappingView.mm */,
 				109A8F3B16A1A8740023EC1B /* VSCIMOSXMappingView.xib */,
@@ -1653,7 +1648,6 @@
 				109A8F1C16A1A83E0023EC1B /* VSCIMEventChain.cpp in Sources */,
 				109A8F1D16A1A83E0023EC1B /* VSCIMTarget.cpp in Sources */,
 				109A8F4916A1A8740023EC1B /* VSCIMOSXMappingEditViewController.mm in Sources */,
-				109A8F4D16A1A8740023EC1B /* VSCIMOSXMappingTypes.mm in Sources */,
 				109A8F4E16A1A8740023EC1B /* VSCIMOSXMappingView.mm in Sources */,
 				109A8F5016A1A8740023EC1B /* VSCIMOSXDelayView.mm in Sources */,
 				107A3C0716A36F4C003C0D69 /* VSCMIDIInput.cpp in Sources */,
@@ -1674,7 +1668,7 @@
 				100F58F816B7D33900F38860 /* VSCIMOSXActionMappingsViewController.mm in Sources */,
 				100F58FC16B7D33900F38860 /* VSCIMOSXActionView.mm in Sources */,
 				100F58FE16B7D33900F38860 /* VSCIMOSXEventChainViewController.mm in Sources */,
-				100F590916B7EDE100F38860 /* VSCIMActionTypes.cpp in Sources */,
+				100F591E16B7F6B400F38860 /* VSCIM.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

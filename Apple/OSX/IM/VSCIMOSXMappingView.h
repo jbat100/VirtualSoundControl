@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "VSCIMOSXMappingTypes.h"
+#import "VSC::IM::MappingTypes.h"
 
 #include "VSCIMTarget.h"
 #include "VSCIMMapping.h"
@@ -27,8 +27,8 @@
 
 +(CGFloat) defaultHeight;
 +(CGFloat) heightOfViewForMapping:(VSC::IM::Mapping::SPtr)collisionMapping;
-+(NSString*) menuItemStringForMappingType:(VSCIMOSXMappingType)mappingType;
-+(VSCIMOSXMappingType) collisionMappingTypeForMenuItemString:(NSString*)menuItemString;
++(NSString*) menuItemStringForMappingType:(VSC::IM::MappingType)mappingType;
++(VSC::IM::MappingType) collisionMappingTypeForMenuItemString:(NSString*)menuItemString;
 
 @property (assign) id<VSCIMOSXActionMappingsController> controller;
 @property (weak) IBOutlet NSButton* editButton;
