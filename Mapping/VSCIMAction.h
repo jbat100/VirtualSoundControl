@@ -20,7 +20,8 @@ namespace VSC {
     namespace IM {
         
         /*
-         *  A very abstract class to provide an interface for performable actions.
+         *  A class to provide an interface for performable actions, with mappings
+         *  depending on the trigger (Collision, Gesture, VocalCommand...).
          *  Subclasses should provide a way to generate tasks which will be queued
          *  on the action's task queue.
          */
@@ -31,9 +32,6 @@ namespace VSC {
         public:
             
             typedef boost::shared_ptr<Action> SPtr;
-            
-            typedef std::map<Target, Mapping::SPtr>             MappingMap;
-            typedef std::map<Target, Float>                     ValueMap;
             
             Action() {}
             virtual ~Action() {}
@@ -53,25 +51,7 @@ namespace VSC {
             const Tasks generateTasks(void);
             const Tasks generateTasksForCollision(OB::Collision_SPtr collision, OB::Element_SPtr effector);
             
-            /*
-             *  Mappings
-             */
-            
-            virtual void createDefaultMappings() {}
-            
-            const Targets& getRequiredMappingTargets(void) {return mRequiredMappingTargets;}
-            
-            Mapping::SPtr           getMappingForTarget(const Target target);
-            Mapping::SPtr           getCollisionMappingForTarget(const Target target);
-            
-            void                    setMappingForTarget(Mapping::SPtr mapping, const Target target);
-            void                    setCollisionMappingForTarget(Mapping::SPtr mapping, const Target target);
-            
         protected:
-            
-            void addRequiredMappingTarget(Target target);
-            
-            bool checkRequiredMappings(void);
             
             // this is the only generate function which should be subclassed
             virtual const Tasks generateTasksWithValueMap(Action::ValueMap& valueMap) = 0;
@@ -81,12 +61,6 @@ namespace VSC {
             TaskQueue::SPtr         mTaskQueue;
             
             bool                    mMuted;
-            
-            Targets                 mRequiredMappingTargets;
-            
-            MappingMap              mCollisionMappingMap;
-            
-            MappingMap              mMappingMap;
             
         };
 

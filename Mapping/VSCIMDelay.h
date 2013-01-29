@@ -7,9 +7,8 @@
 #define _VSC_IM_DELAY_H_
 
 #include "VSC.h"
-#include "VSCTask.h"
-#include "VSCTaskQueue.h"
 #include "VSCIMEvent.h"
+#include "VSCOB.h"
 
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
@@ -24,23 +23,20 @@ namespace VSC {
          *  Simple delay class subclassing Event, to be used in event chains
          */
         
-        class Delay : public Event {
+        class Delay : public Event
+        {
             
         public:
             
             typedef boost::shared_ptr<Delay>    SPtr;
             typedef boost::weak_ptr<Delay>      WPtr;
             
-            Delay() {}
-            Delay(const TimeDuration& duration) : mDelay(duration) {}
-            Delay(const Float& seconds);
+            Delay(void);
+         
+            virtual void createDefaultMappings(void);
             
-            void setDelay(TimeDuration delay) {mDelay = delay;}
-            TimeDuration getDelay(void) {return mDelay;}
-            
-        private:
-            
-            TimeDuration        mDelay;
+            TimeDuration getDuration(void);
+            TimeDuration getDurationForCollision(OB::Collision_SPtr collision, OB::Element_SPtr effector);
             
         };
 
