@@ -16,6 +16,7 @@
 @class VSCOSXOBSceneElementInspectorWindowController;
 @class VSCOSXOBSceneElementListView;
 @class VSCOSXOBSceneDetailView;
+@class VSCIMOSXEventChainListView;
 
 /*
  *  This is the main window controller 
@@ -28,8 +29,10 @@
 @property (nonatomic, weak) IBOutlet NSSplitView* splitView;
 @property (nonatomic, strong) IBOutlet NSView* environmentInspectorView;
 @property (nonatomic, strong) IBOutlet NSScrollView* sceneDetailScrollView;
+
 @property (nonatomic, strong) IBOutlet VSCOSXOBSceneElementListView* sceneElementListView;
 @property (nonatomic, strong) IBOutlet VSCOSXOBSceneDetailView* sceneDetailView;
+@property (nonatomic, strong) IBOutlet VSCIMOSXEventChainListView* eventChainListView;
 
 @property (nonatomic, assign) VSC::EnvironmentTest::SPtr environmentTest;
 

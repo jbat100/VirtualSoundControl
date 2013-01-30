@@ -10,6 +10,8 @@
 
 @interface VSCIMOSXEventChainListView : NSView
 
+@property (assign) id<VSCOSXEnvironmentController> environmentController;
+
 @property (nonatomic, strong) IBOutlet NSButton* addButton;
 @property (nonatomic, strong) IBOutlet NSButton* removeButton;
 
