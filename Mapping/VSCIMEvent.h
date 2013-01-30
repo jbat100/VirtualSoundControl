@@ -1,7 +1,3 @@
-//
-//  Created by Jonathan Thorpe on 4/21/12.
-//  Copyright (c) 2012 JBAT. All rights reserved.
-//
 
 #ifndef _VSC_IM_EVENT_H_
 #define _VSC_IM_EVENT_H_
@@ -18,16 +14,19 @@
 
 #include <vector>
 
-namespace VSC {
+namespace VSC
+{
     
-    namespace IM {
+    namespace IM
+    {
         
         /*
          *  A very very abstract class to provide a container for event chains
          *  currently planned subclasses include delay events and action events.
          */
         
-        class Event {
+        class Event
+        {
             
         public:
             
@@ -48,11 +47,11 @@ namespace VSC {
             
             const Targets& getRequiredMappingTargets(void) {return mRequiredMappingTargets;}
             
-            Mapping::SPtr           getMappingForTarget(const Target target);
-            Mapping::SPtr           getCollisionMappingForTarget(const Target target);
+            Mapping::SPtr getMappingForTarget(const Target target);
+            Mapping::SPtr getCollisionMappingForTarget(const Target target);
             
-            void                    setMappingForTarget(Mapping::SPtr mapping, const Target target);
-            void                    setCollisionMappingForTarget(Mapping::SPtr mapping, const Target target);
+            void setMappingForTarget(Mapping::SPtr mapping, const Target target);
+            void setCollisionMappingForTarget(Mapping::SPtr mapping, const Target target);
             
         protected:
             
