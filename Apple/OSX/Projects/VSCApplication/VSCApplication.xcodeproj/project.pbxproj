@@ -205,6 +205,8 @@
 		10F8503116B92D10007485F8 /* VSCIMOSXMappingTypes.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F8502016B92D10007485F8 /* VSCIMOSXMappingTypes.mm */; };
 		10F8503216B92D10007485F8 /* VSCIMOSXMappingView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F8502216B92D10007485F8 /* VSCIMOSXMappingView.mm */; };
 		10F8503316B92D10007485F8 /* VSCIMOSXMappingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8502316B92D10007485F8 /* VSCIMOSXMappingView.xib */; };
+		10F8503616B92E3A007485F8 /* VSCIMOSXEventChainListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F8503516B92E3A007485F8 /* VSCIMOSXEventChainListView.m */; };
+		10F8503C16B94700007485F8 /* VSCUsernamed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F8503A16B94700007485F8 /* VSCUsernamed.cpp */; };
 		10F907D8162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F907D0162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp */; };
 /* End PBXBuildFile section */
 
@@ -604,6 +606,10 @@
 		10F8502116B92D10007485F8 /* VSCIMOSXMappingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXMappingView.h; sourceTree = "<group>"; };
 		10F8502216B92D10007485F8 /* VSCIMOSXMappingView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXMappingView.mm; sourceTree = "<group>"; };
 		10F8502316B92D10007485F8 /* VSCIMOSXMappingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXMappingView.xib; sourceTree = "<group>"; };
+		10F8503416B92E3A007485F8 /* VSCIMOSXEventChainListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXEventChainListView.h; sourceTree = "<group>"; };
+		10F8503516B92E3A007485F8 /* VSCIMOSXEventChainListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSCIMOSXEventChainListView.m; sourceTree = "<group>"; };
+		10F8503A16B94700007485F8 /* VSCUsernamed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCUsernamed.cpp; path = ../../../../Generic/VSCUsernamed.cpp; sourceTree = "<group>"; };
+		10F8503B16B94700007485F8 /* VSCUsernamed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCUsernamed.h; path = ../../../../Generic/VSCUsernamed.h; sourceTree = "<group>"; };
 		10F907D0162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCInterfaceAdapter.cpp; path = ../../../../Interface/VSCInterfaceAdapter.cpp; sourceTree = "<group>"; };
 		10F907D1162ECFF8006C9C0B /* VSCInterfaceAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCInterfaceAdapter.h; path = ../../../../Interface/VSCInterfaceAdapter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -687,6 +693,8 @@
 			children = (
 				103006911624763A002A30ED /* VSC.cpp */,
 				103006921624763A002A30ED /* VSC.h */,
+				10F8503A16B94700007485F8 /* VSCUsernamed.cpp */,
+				10F8503B16B94700007485F8 /* VSCUsernamed.h */,
 				100812B41651ABE700E975B8 /* VSCListener.cpp */,
 				100812B51651ABE700E975B8 /* VSCListener.h */,
 				100812B01651A89800E975B8 /* VSCBroadcaster.cpp */,
@@ -1414,6 +1422,8 @@
 		10F8500816B92D10007485F8 /* Chain */ = {
 			isa = PBXGroup;
 			children = (
+				10F8503416B92E3A007485F8 /* VSCIMOSXEventChainListView.h */,
+				10F8503516B92E3A007485F8 /* VSCIMOSXEventChainListView.m */,
 				10F8500916B92D10007485F8 /* VSCIMOSXEventChainController.h */,
 				10F8500A16B92D10007485F8 /* VSCIMOSXEventChainViewController.h */,
 				10F8500B16B92D10007485F8 /* VSCIMOSXEventChainViewController.mm */,
@@ -1699,6 +1709,8 @@
 				10F8502F16B92D10007485F8 /* VSCIMOSXMappingEditViewController.mm in Sources */,
 				10F8503116B92D10007485F8 /* VSCIMOSXMappingTypes.mm in Sources */,
 				10F8503216B92D10007485F8 /* VSCIMOSXMappingView.mm in Sources */,
+				10F8503616B92E3A007485F8 /* VSCIMOSXEventChainListView.m in Sources */,
+				10F8503C16B94700007485F8 /* VSCUsernamed.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

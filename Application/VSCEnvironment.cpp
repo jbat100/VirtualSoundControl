@@ -3,72 +3,114 @@
 #include "VSCEnvironment.h"
 #include "VSCOBScene.h"
 
+#include <boost/foreach.hpp>
 #include <boost/assert.hpp>
 
-VSC::Environment::Environment()
+using namespace VSC;
+using namespace VSC::IM;
+using namespace VSC::OB;
+
+Environment::Environment()
 {
     
 }
 
-void VSC::Environment::setIMCollisionMapper(IM::CollisionMapper::SPtr mapper)
+void Environment::setCollisionMapper(CollisionMapper::SPtr mapper)
 {
-    if (mIMCollisionMapper && mOBScene && mOBScene->getCollisionDetector())
+    if (mCollisionMapper && mScene && mScene->getCollisionDetector())
     {
-        mOBScene->getCollisionDetector()->removeListener(mIMCollisionMapper);
+        mScene->getCollisionDetector()->removeListener(mCollisionMapper);
     }
     
-    mIMCollisionMapper = mapper;
+    mCollisionMapper = mapper;
     
-    if (mOBScene && mOBScene->getCollisionDetector())
+    if (mScene && mScene->getCollisionDetector())
     {
-        mOBScene->getCollisionDetector()->addListener(mIMCollisionMapper);
+        mScene->getCollisionDetector()->addListener(mCollisionMapper);
     }
 }
 
-void VSC::Environment::setOBScene(OB::Scene::SPtr scene)
+void Environment::setScene(Scene::SPtr scene)
 {
-    if (mOBScene && mOBScene->getCollisionDetector() && mIMCollisionMapper)
+    if (mScene && mScene->getCollisionDetector() && mCollisionMapper)
     {
-        mOBScene->getCollisionDetector()->removeListener(mIMCollisionMapper);
+        mScene->getCollisionDetector()->removeListener(mCollisionMapper);
     }
     
-    mOBScene = scene;
+    mScene = scene;
     
-    if (mOBScene)
+    if (mScene)
     {
-        BOOST_ASSERT_MSG(mOBScene->getCollisionDetector(), "Scenes added to Environement should have a collision detector");
+        BOOST_ASSERT_MSG(mScene->getCollisionDetector(), "Scenes added to Environement should have a collision detector");
         
-        if (mOBScene->getCollisionDetector() && mIMCollisionMapper)
+        if (mScene->getCollisionDetector() && mCollisionMapper)
         {
-            mOBScene->getCollisionDetector()->addListener(mIMCollisionMapper);
+            mScene->getCollisionDetector()->addListener(mCollisionMapper);
         }
     }
 }
 
-void VSC::Environment::addCollisionEventChain(IM::CollisionEventChain::SPtr actionChain)
+EventChain::SPtr Environment::createEventChain(void)
 {
-    BOOST_ASSERT(actionChain);
-    if (!actionChain) return;
+    EventChain::SPtr eventChain = EventChain::SPtr(new EventChain);
     
-    IM::CollisionEventChains::iterator it = std::find(mIMCollisionEventChains.begin(), mIMCollisionEventChains.end(), actionChain);
-    BOOST_ASSERT(it == mIMCollisionEventChains.end());
+    BOOST_ASSERT(eventChain);
     
-    if (it == mIMCollisionEventChains.end())
+    if (eventChain)
     {
-        mIMCollisionEventChains.push_back(actionChain);
+        std::string username = this->generateUsernameForNewEventChain();
+        eventChain->setUsername(username);
+        mEventChains.push_back(eventChain);
+    }
+    
+    return eventChain;
+    
+}
+
+void VSC::Environment::destroyEventChain(EventChain::SPtr eventChain)
+{
+    BOOST_ASSERT(eventChain);
+    if (!eventChain) return;
+    
+    EventChains::iterator it = std::find(mEventChains.begin(), mEventChains.end(), eventChain);
+    BOOST_ASSERT(it != mEventChains.end());
+    
+    if (it != mEventChains.end())
+    {
+        mEventChains.erase(it);
     }
 }
 
-void VSC::Environment::removeCollisionEventChain(IM::CollisionEventChain::SPtr actionChain)
+EventChain::SPtr getEventChainWithUsername(std::string username)
 {
-    BOOST_ASSERT(actionChain);
-    if (!actionChain) return;
-    
-    IM::CollisionEventChains::iterator it = std::find(mIMCollisionEventChains.begin(), mIMCollisionEventChains.end(), actionChain);
-    BOOST_ASSERT(it != mIMCollisionEventChains.end());
-    
-    if (it != mIMCollisionEventChains.end())
+    BOOST_FOREACH(EventChain::SPtr eventChain, mEventChains)
     {
-        mIMCollisionEventChains.erase(it);
+        BOOST_ASSERT(eventChain);
+        if (eventChain && eventChain->getUsername().compare(username) == 0)
+        {
+            return eventChain;
+        }
     }
+    return EventChain::SPtr();
+}
+
+std::string Environment::generateUsernameForNewEventChain(void)
+{
+    static std::string baseName = "Event Chain";
+    
+    int count = 1;
+    while (count < mEventChains.size() + 1)
+    {
+        std::stringstream usernameStream;
+        usernameStream << baseName << " " << count;
+        std::string username = usernameStream.str();
+        if (!this->getEventChainWithUsername(username))
+        {
+            return username;
+        }
+    }
+    
+    BOOST_ASSERT_MSG(false, "Could not generate user name...");
+    
+    return "";
 }

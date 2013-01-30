@@ -134,10 +134,10 @@
     
     VSC::OB::Scene::SPtr scene = obApplication->createScene<VSC::OB::Scene>();
     BOOST_ASSERT(scene);
-    environment->setOBScene(scene);
+    environment->setScene(scene);
     
     VSC::IM::CollisionMapper::SPtr collisionMapper = VSC::IM::CollisionMapper::SPtr(new VSC::IM::CollisionMapper);
-    environment->setIMCollisionMapper(collisionMapper);
+    environment->setCollisionMapper(collisionMapper);
     
     self.environmentWindowController.environment = environment;
     
@@ -150,11 +150,11 @@
     VSC::EnvironmentTest::SPtr test = VSC::EnvironmentTest::SPtr(new VSC::EnvironmentTest);
     test->setupTestForEnvironment(environment);
     
-    const VSC::OB::Elements& elements = environment->getOBScene()->getElements();
+    const VSC::OB::Elements& elements = environment->getScene()->getElements();
     VSC::OB::Element::SPtr element = VSC::OB::Element::SPtr();
     BOOST_FOREACH(VSC::OB::Element::SPtr e, elements)
     {
-        VSC::IM::EventChains chains = environment->getIMCollisionMapper()->getEventChainsForCollisionStarted(e);
+        VSC::IM::EventChains chains = environment->getCollisionMapper()->getEventChainsForCollisionStarted(e);
         if (chains.size() > 0)
         {
             element = e;

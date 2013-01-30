@@ -11,7 +11,7 @@
 #include "VSCIMCollisionMapper.h"
 #include "VSCIMEvent.h"
 #include "VSCIMDelay.h"
-#include "VSCIMCollisionEventChain.h"
+#include "VSCIMEventChain.h"
 #include "VSCIMCollisionMIDIActions.h"
 
 void VSC::EnvironmentTest::setupTestForEnvironment(Environment::SPtr environment)
@@ -25,7 +25,7 @@ void VSC::EnvironmentTest::internalSetupForEnvironment(Environment::SPtr environ
     BOOST_ASSERT(environment);
     if (!environment) return;
     
-    OB::Scene::SPtr scene = environment->getOBScene();
+    OB::Scene::SPtr scene = environment->getScene();
     BOOST_ASSERT(scene);
     if (!scene) return;
     
@@ -81,13 +81,13 @@ void VSC::EnvironmentTest::internalSetupForEnvironment(Environment::SPtr environ
      *  Get collision mapper and create a new chain for element 1
      */
     
-    IM::CollisionMapper::SPtr collisionMapper = environment->getIMCollisionMapper();
+    IM::CollisionMapper::SPtr collisionMapper = environment->getCollisionMapper();
     BOOST_ASSERT(collisionMapper);
     if (collisionMapper)
     {
-        IM::CollisionEventChains& chains = collisionMapper->getEventChainsForCollisionStarted(element1);
+        IM::EventChains& chains = collisionMapper->getEventChainsForCollisionStarted(element1);
         
-        IM::CollisionEventChain::SPtr chain(new IM::CollisionEventChain);
+        IM::EventChain::SPtr chain(new IM::EventChain);
         chains.push_back(chain);
         
         IM::Event::SPtr event;

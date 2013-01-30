@@ -250,7 +250,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     
     if (env)
     {
-        self.sceneController.scene = VSC::OB::Scene::WPtr(env->getOBScene());
+        self.sceneController.scene = VSC::OB::Scene::WPtr(env->getScene());
     }
     else
     {
@@ -373,8 +373,8 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     
     if (env)
     {
-        BOOST_ASSERT(env->getIMCollisionMapper());
-        if (env->getIMCollisionMapper())
+        BOOST_ASSERT(env->getCollisionMapper());
+        if (env->getCollisionMapper())
         {
             VSC::IM::EventChains chains;
             if (chains.size() > 0)
@@ -396,7 +396,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     /*
     if (env)
     {
-        return env->getIMCollisionMapper()->getEventChainForCollisionEnded(element);
+        return env->getCollisionMapper()->getEventChainForCollisionEnded(element);
     }
      */
     

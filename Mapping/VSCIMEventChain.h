@@ -1,26 +1,30 @@
-//
-//  Created by Jonathan Thorpe on 4/21/12.
-//  Copyright (c) 2012 JBAT. All rights reserved.
-//
 
 #ifndef _VSC_IM_EVENT_CHAIN_H_
 #define _VSC_IM_EVENT_CHAIN_H_
 
+#include "VSC.h"
 #include "VSCIMEvent.h"
 #include "VSCOB.h"
+#include "VSCUsernamed.h"
 
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 
-
-namespace VSC {
+namespace VSC
+{
     
-    namespace IM {
+    namespace IM
+    {
         
-        class EventChain {
+        class EventChain : public Usernamed
+        {
             
         public:
             
-            typedef boost::shared_ptr<EventChain> SPtr;
+            friend class Environment;
+            
+            typedef boost::shared_ptr<EventChain>   SPtr;
+            typedef boost::weak_ptr<EventChain>     WPtr;
             
             virtual ~EventChain() {}
             
@@ -40,6 +44,12 @@ namespace VSC {
             virtual void performForCollision(OB::Collision_SPtr collision, OB::Element_SPtr effector);
             
         protected:
+            
+            /*
+             *  Constructor is protected so that it can only be called by friend class Environment
+             */
+            
+            EventChain() {}
             
             /*
              *  Can be over-ridden by subclass to reject invalid events.
