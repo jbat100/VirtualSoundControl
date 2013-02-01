@@ -33,7 +33,7 @@
 -(void) showSceneElementList;
 -(void) showElementInspectorForElement:(VSC::OB::Element_SPtr)element;
 
--(VSC::IM::EventChain::SPtr) collisionStartedEventChainForElement:(VSC::OB::Element_SPtr)element;
--(VSC::IM::EventChain::SPtr) collisionEndedEventChainForElement:(VSC::OB::Element_SPtr)element;
+-(VSC::IM::EventChains) collisionStartedEventChainsForElement:(VSC::OB::Element_SPtr)element;
+-(VSC::IM::EventChains) collisionEndedEventChainsForElement:(VSC::OB::Element_SPtr)element;
 
 @end

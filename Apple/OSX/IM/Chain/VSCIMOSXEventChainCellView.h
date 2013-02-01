@@ -10,6 +10,8 @@
 
 #include "VSCIMEventChain.h"
 
+@protocol VSCOSXEnvironmentController;
+
 @interface VSCIMOSXEventChainCellView : NSView
 
 @property (assign) id<VSCOSXEnvironmentController> environmentController;
@@ -18,6 +20,7 @@
 
 @property (nonatomic, strong) IBOutlet NSTextField* labelTextField;
 @property (nonatomic, strong) IBOutlet NSButton* editButton;
+@property (nonatomic, strong) IBOutlet NSImageView* imageView;
 
 -(IBAction) editButtonClicked:(id)sender;
 

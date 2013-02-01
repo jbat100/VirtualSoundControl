@@ -403,6 +403,10 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     return VSC::IM::EventChain::SPtr();
 }
 
+#pragma mark - NSTableView Delegate and DataSource Methods
+
+
+
 #pragma mark - Sensible tests
 
 -(IBAction)resetAction:(id)sender
