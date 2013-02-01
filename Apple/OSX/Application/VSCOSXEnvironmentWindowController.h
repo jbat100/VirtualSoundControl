@@ -22,7 +22,7 @@
  *  This is the main window controller 
  */
 
-@interface VSCOSXEnvironmentWindowController : NSWindowController <VSCOSXEnvironmentController>
+@interface VSCOSXEnvironmentWindowController : NSWindowController <VSCOSXEnvironmentController, NSTableViewDelegate, NSTableViewDataSource>
 
 @property (strong) VSCOSXOBSceneElementInspectorWindowController* elementInspectorWindowController;
 
