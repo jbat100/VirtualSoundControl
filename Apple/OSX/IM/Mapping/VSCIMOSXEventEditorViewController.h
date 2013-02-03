@@ -1,5 +1,5 @@
 //
-//  VSCIMOSXEventMappingsViewController.h
+//  VSCIMOSXEventEditorViewController.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 11/27/12.
@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "VSC::IM::MappingTypes.h"
-#import "VSCIMOSXEventMappingsController.h"
+#import "VSCIMOSXEventEditor.h"
 
 #include "VSCIMAction.h"
 
@@ -16,8 +16,8 @@
 @protocol VSCIMOSXEventChainController;
 
 
-@interface VSCIMOSXEventMappingsViewController : NSViewController
-<VSCIMOSXEventMappingsController, NSTableViewDelegate, NSTableViewDataSource>
+@interface VSCIMOSXEventEditorViewController : NSViewController
+<VSCIMOSXEventEditor, NSTableViewDelegate, NSTableViewDataSource>
 
 @property (weak) id<VSCIMOSXEventChainController> eventChainController;
 @property (nonatomic, weak) IBOutlet NSTableView* mappingTableView;

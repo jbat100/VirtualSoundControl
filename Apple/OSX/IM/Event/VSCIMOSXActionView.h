@@ -9,10 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 #import "VSCIMOSXActionGlobal.h"
-#import "VSC::IM::MappingTypes.h"
-#import "VSCIMOSXMappingView.h"
+#import "VSCIMOSXEventView.h"
 
-#include "VSCIMAction.h"
+#include "VSCIM.h"
 
 @protocol VSCIMOSXEventChainController;
 
@@ -21,16 +20,11 @@
  *  the type of action to be switched.
  */
 
-@interface VSCIMOSXActionView : NSView
+@interface VSCIMOSXActionView : VSCIMOSXEventView
 
-+(CGFloat) heightOfViewForAction:(VSC::IM::Action::SPtr)collisionAction;
++(CGFloat) heightOfViewForAction:(VSC::IM::Action_SPtr)collisionAction;
 +(NSString*) stringForActionType:(VSC::IM::ActionType)actionType;
 +(VSC::IM::ActionType) actionTypeForString:(NSString*)menuItemString;
-
-@property (assign) IBOutlet id<VSCIMOSXEventChainController> eventChainController;
-
-@property (nonatomic, assign) VSC::IM::Action::WPtr collisionAction;
-
 
 @property (nonatomic, strong) IBOutlet NSView* mainView;
 @property (nonatomic, strong) IBOutlet NSTextField* actionTypeTextField;
@@ -43,7 +37,8 @@
 @property (nonatomic, strong) IBOutlet NSView* midiControlSetupView;
 @property (nonatomic, strong) IBOutlet NSPopUpButton* midiControlNumberPopUpButton;
 
--(IBAction) showMappings:(id)sender;
+-(VSC::IM::Action_SPtr) action; // return cast event from VSCIMOSXEventView
+
 -(IBAction) midiOutputSelected:(id)sender;
 -(IBAction) midiControlNumberSelected:(id)sender;
 

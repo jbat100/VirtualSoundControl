@@ -12,11 +12,11 @@
 #include "VSCIMTarget.h"
 #include "VSCIMMapping.h"
 
-@protocol VSCIMOSXEventMappingsController;
+@protocol VSCIMOSXEventEditor;
 
 @protocol VSCIMOSXMappingView <NSObject>
 
-@property (assign) id<VSCIMOSXEventMappingsController> controller;
+@property (assign) id<VSCIMOSXEventEditor> controller;
 @property (nonatomic, assign) VSC::IM::Mapping::WPtr mapping;
 @property (nonatomic, assign) VSC::IM::Target target;
 
@@ -30,7 +30,7 @@
 +(NSString*) menuItemStringForMappingType:(VSC::IM::MappingType)mappingType;
 +(VSC::IM::MappingType) collisionMappingTypeForMenuItemString:(NSString*)menuItemString;
 
-@property (assign) id<VSCIMOSXEventMappingsController> controller;
+@property (assign) id<VSCIMOSXEventEditor> controller;
 @property (weak) IBOutlet NSButton* editButton;
 
 -(void) reloadInterface;

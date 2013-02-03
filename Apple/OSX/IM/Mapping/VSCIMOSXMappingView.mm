@@ -8,7 +8,7 @@
 
 #import "VSCIMOSXMappingView.h"
 #import "VSC::IM::MappingTypes.h"
-#import "VSCIMOSXEventMappingsController.h"
+#import "VSCIMOSXEventEditor.h"
 #import "NSString+VSCAdditions.h"
 
 #include "VSCIMTarget.h"

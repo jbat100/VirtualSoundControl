@@ -10,7 +10,7 @@
 
 #import "VSCOSXOBSceneElementEditor.h"
 #import "VSCOSXOBSceneElementController.h"
-#import "VSCIMOSXEventMappingsViewController.h"
+#import "VSCIMOSXEventEditorViewController.h"
 #import "VSCIMOSXActionView.h"
 #import "VSCIMOSXDelayView.h"
 
@@ -24,14 +24,18 @@
 #include <boost/assert.hpp>
 
 NSString* const VSCIMOSXActionViewReuseIdentifier      = @"VSCIMOSXActionViewReuseIdentifier";
-NSString* const VSCIMOSXDelayViewReuseIdentifier                = @"VSCIMOSXDelayViewReuseIdentifier";
+NSString* const VSCIMOSXDelayViewReuseIdentifier       = @"VSCIMOSXDelayViewReuseIdentifier";
 
 @interface VSCIMOSXEventChainViewController ()
+
+@property (nonatomic, strong) NSArray* mainViewConstraints;
 
 +(VSCIMOSXActionView*) newActionViewWithOwner:(id)owner;
 +(VSCIMOSXDelayView*) newDelayViewWithOwner:(id)owner;
 
 -(void) customInit;
+
+-(void) switchToView:(NSView*)newView;
 
 -(void) appendEvent:(VSC::IM::Event::SPtr)event;
 -(void) removeEvent:(VSC::IM::Event::SPtr)event;
@@ -103,6 +107,7 @@ const static BOOL traceInterface = YES;
 }
 
 #pragma mark - UI Callbacks
+
 
 
 #pragma mark - Event Select/Add/Remove
@@ -195,45 +200,44 @@ const static BOOL traceInterface = YES;
 
 -(void) switchToView:(NSView*)newView
 {
-    if (tabView == nil) return;
-    
-    BOOST_ASSERT(tabView);
-    BOOST_ASSERT([tabView isKindOfClass:[NSView class]]);
-    
-    if ([tabView isKindOfClass:[NSView class]] == NO) return;
-    if ([tabView superview] == self.environmentInspectorView) return;
-    
-    if (self.tabViewConstraints)
-    {
-        [self.environmentInspectorView removeConstraints:self.tabViewConstraints];
-    }
-    
     [self resetInspectorView];
     
-    [self.environmentInspectorView  addSubview:tabView];
+    if (newView == nil) return;
     
-    NSView* bar = self.tabBar;
-    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(tabView, bar);
+    BOOST_ASSERT(newView);
+    BOOST_ASSERT([newView isKindOfClass:[NSView class]]);
+    
+    if ([newView isKindOfClass:[NSView class]] == NO) return;
+    if ([newView superview] == self.view) return;
+    
+    if (self.mainViewConstraints)
+    {
+        [self.view removeConstraints:self.mainViewConstraints];
+    }
+    
+    [self.view addSubview:newView];
+    
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(newView);
     
     NSMutableArray* allConstraints = [NSMutableArray array];
     
-    NSArray* hConstraints =[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tabView]|"
+    NSArray* hConstraints =[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[newView]-0-|"
                                                                    options:0
                                                                    metrics:nil
                                                                      views:viewsDictionary];
     
     [allConstraints addObjectsFromArray:hConstraints];
-    [self.environmentInspectorView addConstraints:hConstraints];
+    [self.view addConstraints:hConstraints];
     
-    NSArray* vConstraints =[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bar]-0-[tabView]|"
+    NSArray* vConstraints =[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[newView]-0-|"
                                                                    options:0
                                                                    metrics:nil
                                                                      views:viewsDictionary];
     
     [allConstraints addObjectsFromArray:vConstraints];
-    [self.environmentInspectorView addConstraints:vConstraints];
+    [self.view addConstraints:vConstraints];
     
-    self.tabViewConstraints = [NSArray arrayWithArray:allConstraints];
+    self.mainViewConstraints = [NSArray arrayWithArray:allConstraints];
 }
 
 
@@ -242,8 +246,8 @@ const static BOOL traceInterface = YES;
 {
     if (!self.actionMappingsViewController)
     {
-        self.actionMappingsViewController = [[VSCIMOSXEventMappingsViewController alloc]
-                                             initWithNibName:@"VSCIMOSXEventMappingsViewController" bundle:nil];
+        self.actionMappingsViewController = [[VSCIMOSXEventEditorViewController alloc]
+                                             initWithNibName:@"VSCIMOSXEventEditorViewController" bundle:nil];
         
         BOOST_ASSERT(self.actionMappingsViewController);
         self.actionMappingsViewController.eventChainController = self;

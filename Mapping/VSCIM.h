@@ -29,6 +29,19 @@ namespace VSC
         typedef boost::weak_ptr<EventChain>     EventChain_WPtr;
         typedef std::vector<EventChain_SPtr>    EventChains;
         
+        class Action;
+        typedef boost::shared_ptr<Action>       Action_SPtr;
+        typedef boost::weak_ptr<Action>         Action_WPtr;
+        
+        class Delay;
+        typedef boost::shared_ptr<Delay>        Delay_SPtr;
+        typedef boost::weak_ptr<Delay>          Delay_WPtr;
+        
+        class Mapping;
+        typedef boost::shared_ptr<Mapping>      Mapping_SPtr;
+        typedef boost::weak_ptr<Mapping>        Mapping_WPtr;
+        typedef std::vector<Mapping_SPtr>       Mappings;
+        
         /*
          *  Action types enum, used to avoid having to downcast constantly to check action type.
          *  Not sure whether this is the best way of doing things. Should collision actions be polymorphic

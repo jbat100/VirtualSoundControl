@@ -1,0 +1,21 @@
+//
+//  VSCIMOSXEventView.h
+//  VSCApplication
+//
+//  Created by Jonathan Thorpe on 2/3/13.
+//  Copyright (c) 2013 JBAT. All rights reserved.
+//
+
+#import <Cocoa/Cocoa.h>
+
+#include "VSCIM.h"
+
+@interface VSCIMOSXEventView : NSView
+
+@property (assign) IBOutlet id<VSCIMOSXEventChainController> eventChainController;
+
+@property (nonatomic, assign) VSC::IM::Event_WPtr event;
+
+-(IBAction) showMappings:(id)sender;
+
+@end
