@@ -102,7 +102,7 @@ static const bool mTraceUI = false;
 {
     BOOST_ASSERT(self.sceneController);
     
-    id<VSCOSXOBSceneController> controller = self.sceneController;
+    id<VSCOBOSXSceneController> controller = self.sceneController;
     
     if (controller)
     {

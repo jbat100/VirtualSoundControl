@@ -10,11 +10,11 @@
  *  VSCIMOSXEventChainController, meant for the VSCIMOSXEventChainView
  */
 
-@protocol VSCOSXOBSceneElementController;
+@protocol VSCOBOSXElementController;
 
 @protocol VSCIMOSXEventChainController <NSObject>
 
-@property (assign) id<VSCOSXOBSceneElementController> elementController;
+@property (assign) id<VSCOBOSXElementController> elementController;
 @property (nonatomic, assign) VSC::IM::EventChain::WPtr eventChain;
 
 -(void) sender:(id)sender requestsShowMappingsForAction:(VSC::IM::Action::SPtr)action;

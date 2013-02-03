@@ -1,19 +1,19 @@
 //
-//  VSCOSXOBSceneElementInspectorViewController.m
+//  VSCOBOSXElementInspectorViewController.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 11/27/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCOSXOBSceneElementInspectorViewController.h"
+#import "VSCOBOSXElementInspectorViewController.h"
 
 #import "VSCOSXEnvironmentController.h"
 #import "VSCIMOSXEventChainController.h"
 #import "VSCIMOSXEventChainViewController.h"
-#import "VSCOSXOBSceneElementEditor.h"
-#import "VSCOSXOBSceneElementDetailView.h"
-#import "VSCOSXOBSceneElementCollisionView.h"
+#import "VSCOBOSXElementEditor.h"
+#import "VSCOBOSXElementDetailView.h"
+#import "VSCOBOSXElementCollisionView.h"
 #import "DMTabBar.h"
 
 #include "VSCOBScene.h"
@@ -27,7 +27,7 @@ NSString* const VSCOSXTabTitleElementCollision = @"Collision";
 
 NSArray* ElementInspectorTabParamArray = nil;
 
-@interface VSCOSXOBSceneElementInspectorViewController ()
+@interface VSCOBOSXElementInspectorViewController ()
 
 @property (nonatomic, strong) NSArray* tabViewConstraints;
 
@@ -39,7 +39,7 @@ NSArray* ElementInspectorTabParamArray = nil;
 
 @end
 
-@implementation VSCOSXOBSceneElementInspectorViewController
+@implementation VSCOBOSXElementInspectorViewController
 
 const static BOOL traceInterface = YES;
 

@@ -1,5 +1,5 @@
 //
-//  VSCOSXOBSceneElementEventChainView.h
+//  VSCOBOSXElementEventChainView.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 10/28/12.
@@ -13,11 +13,11 @@
  *  collision edit views for different stages of the collision.
  */
 
-@protocol VSCOSXOBSceneElementController;
+@protocol VSCOBOSXElementController;
 
-@interface VSCOSXOBSceneElementCollisionView : NSView
+@interface VSCOBOSXElementCollisionView : NSView
 
-@property (assign) IBOutlet id<VSCOSXOBSceneElementController> elementController;
+@property (assign) IBOutlet id<VSCOBOSXElementController> elementController;
 
 @property (weak) IBOutlet NSBox* collisionStartedEventChainBox;
 @property (weak) IBOutlet NSBox* collisionEndedEventChainBox;

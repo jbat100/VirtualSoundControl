@@ -7,8 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
-#import "VSCIMOSXActionGlobal.h"
 #import "VSCIMOSXEventView.h"
 
 #include "VSCIM.h"

@@ -42,13 +42,13 @@
 #define VSCOSX_SETUP_ENVIRONMENT_TEST
 
 #ifdef VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW
-#import "VSCOSXOBSceneElementInspectorWindowController.h"
+#import "VSCOBOSXElementInspectorWindowController.h"
 #endif
 
 @interface VSCAppDelegate ()
 
 #ifdef VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW
-@property (nonatomic, strong) VSCOSXOBSceneElementInspectorWindowController* testElementInspectorWindowController;
+@property (nonatomic, strong) VSCOBOSXElementInspectorWindowController* testElementInspectorWindowController;
 #endif
 
 
@@ -90,8 +90,8 @@
     [self showMIDIWindow:nil];
     
 #ifdef VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW
-    self.testElementInspectorWindowController = [[VSCOSXOBSceneElementInspectorWindowController alloc]
-                                                 initWithWindowNibName:@"VSCOSXOBSceneElementInspectorWindowController"];
+    self.testElementInspectorWindowController = [[VSCOBOSXElementInspectorWindowController alloc]
+                                                 initWithWindowNibName:@"VSCOBOSXElementInspectorWindowController"];
     BOOST_ASSERT(self.testElementInspectorWindowController);
     [self.testElementInspectorWindowController showWindow:self];
 #endif

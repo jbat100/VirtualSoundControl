@@ -7,7 +7,11 @@
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
-void VSC::IM::CollisionMapper::addEventChainForCollisionStarted(EventChain::SPtr eventChain, OB::Element::SPtr element)
+using namespace VSC;
+using namespace VSC::IM;
+using namespace VSC::OB;
+
+void CollisionMapper::addEventChainForCollisionStarted(EventChain::SPtr eventChain, Element::SPtr element)
 {
     EventChains& eventChains = mCollisionStartedEventChainMap[element];
     EventChains::iterator it = std::find(eventChains.begin(), eventChains.end(), eventChain);
@@ -17,7 +21,7 @@ void VSC::IM::CollisionMapper::addEventChainForCollisionStarted(EventChain::SPtr
     }
 }
 
-void VSC::IM::CollisionMapper::addEventChainForCollisionEnded(EventChain::SPtr eventChain, OB::Element::SPtr element)
+void CollisionMapper::addEventChainForCollisionEnded(EventChain::SPtr eventChain, Element::SPtr element)
 {
     EventChains& eventChains = mCollisionEndedEventChainMap[element];
     EventChains::iterator it = std::find(eventChains.begin(), eventChains.end(), eventChain);
@@ -27,32 +31,32 @@ void VSC::IM::CollisionMapper::addEventChainForCollisionEnded(EventChain::SPtr e
     }
 }
 
-VSC::IM::EventChains& VSC::IM::CollisionMapper::getEventChainsForCollisionStarted(OB::Element::SPtr element)
+const EventChains& CollisionMapper::getEventChainsForCollisionStarted(Element::SPtr element)
 {
     return mCollisionStartedEventChainMap[element];
 }
 
-VSC::IM::EventChains& VSC::IM::CollisionMapper::getEventChainsForCollisionEnded(OB::Element::SPtr element)
+const EventChains& CollisionMapper::getEventChainsForCollisionEnded(Element::SPtr element)
 {
     return mCollisionEndedEventChainMap[element];
 }
 
-void VSC::IM::CollisionMapper::collisionProspectDetected(OB::Collision::SPtr collision)
+void CollisionMapper::collisionProspectDetected(Collision::SPtr collision)
 {
     //if (mTraceCollisions) std::cout << "Collision prospect detected: " << *collision << std::endl;
 }
 
-void VSC::IM::CollisionMapper::collisionProspectUpdated(OB::Collision::SPtr collision)
+void CollisionMapper::collisionProspectUpdated(Collision::SPtr collision)
 {
     //if (mTraceCollisions) std::cout << "Collision prospect updated: " << *collision << std::endl;
 }
 
-void VSC::IM::CollisionMapper::collisionProspectEnded(OB::Collision::SPtr collision)
+void CollisionMapper::collisionProspectEnded(Collision::SPtr collision)
 {
     //if (mTraceCollisions) std::cout << "Collision prospect ended: " << *collision << std::endl;
 }
 
-void VSC::IM::CollisionMapper::collisionDetected(OB::Collision::SPtr collision)
+void CollisionMapper::collisionDetected(Collision::SPtr collision)
 {
     if (mTraceCollisions) std::cout << "Collision detected: " << *collision << std::endl;
     
@@ -93,12 +97,12 @@ void VSC::IM::CollisionMapper::collisionDetected(OB::Collision::SPtr collision)
 
 }
 
-void VSC::IM::CollisionMapper::collisionUpdated(OB::Collision::SPtr collision)
+void CollisionMapper::collisionUpdated(Collision::SPtr collision)
 {
     //if (mTraceCollisions) std::cout << "Collision updated: " << *collision << std::endl;
 }
 
-void VSC::IM::CollisionMapper::collisionEnded(OB::Collision::SPtr collision)
+void CollisionMapper::collisionEnded(Collision::SPtr collision)
 {
     //if (mTraceCollisions) std::cout << "Collision ended: " << *collision << std::endl;
 }

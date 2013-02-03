@@ -1,18 +1,18 @@
 //
-//  VSCOSXOBSceneElementView.m
+//  VSCOBOSXElementView.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 12/3/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCOSXOBSceneElementView.h"
+#import "VSCOBOSXElementView.h"
 #import "NSString+VSCAdditions.h"
 
 #include "VSCOBScene.h"
 #include "VSCOBElement.h"
 
-@interface VSCOSXOBSceneElementView ()
+@interface VSCOBOSXElementView ()
 
 @property (nonatomic, strong) IBOutlet NSTextField* nameTextField;
 @property (nonatomic, strong) IBOutlet NSButton* inspectorButton;
@@ -22,7 +22,7 @@
 @end
 
 
-@implementation VSCOSXOBSceneElementView
+@implementation VSCOBOSXElementView
 
 +(CGFloat) defaultViewHeight
 {

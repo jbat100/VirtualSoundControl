@@ -1,5 +1,5 @@
 //
-//  VSCSceneElementInspectorWindowController.h
+//  VSCElementInspectorWindowController.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 11/10/12.
@@ -8,14 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "VSCOSXOBSceneElementController.h"
+#import "VSCOBOSXElementController.h"
 #import "VSCOBOSXSceneListener.h"
 
-@class VSCOSXOBSceneElementInspectorViewController;
+@class VSCOBOSXElementInspectorViewController;
 
 
-@interface VSCOSXOBSceneElementInspectorWindowController : NSWindowController <NSWindowDelegate>
+@interface VSCOBOSXElementInspectorWindowController : NSWindowController <NSWindowDelegate>
 
-@property (strong) VSCOSXOBSceneElementInspectorViewController* elementInspectorViewController;
+@property (strong) VSCOBOSXElementInspectorViewController* elementInspectorViewController;
 
 @end

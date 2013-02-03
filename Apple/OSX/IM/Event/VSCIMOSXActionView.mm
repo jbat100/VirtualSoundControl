@@ -8,16 +8,20 @@
 
 #import "VSCIMOSXActionView.h"
 #import "VSCIMOSXEventChainController.h"
-#import "VSCOSXOBSceneElementEditor.h"
+#import "VSCOBOSXElementEditor.h"
 #import "VSCOSXInterfaceFactory.h"
 #import "NSString+VSCAdditions.h"
 
 #include "VSCMIDI.h"
 #include "VSCMIDIOutputManager.h"
-#include "VSCIMCollisionMIDIActions.h"
+#include "VSCIMEvent.h"
+#include "VSCIMAction.h"
+#include "VSCIMMIDIActions.h"
 
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 
 NSDictionary* actionTypeMenuItemStringDict = nil;
 
@@ -70,12 +74,12 @@ static const BOOL debugDraw = NO;
     
     CGFloat totalHeight = VSCIMOSXActionViewBaseHeight;
     
-    if (VSC::IM::collisionActionIsMIDI(collisionAction))
+    if (VSC::IM::actionIsMIDIAction(collisionAction))
     {
         totalHeight += VSCIMOSXActionViewMIDISetupHeight;
     }
     
-    if (VSC::IM::collisionActionIsMIDIControl(collisionAction))
+    if (VSC::IM::actionIsMIDIControlAction(collisionAction))
     {
         totalHeight += VSCIMOSXActionViewMIDIControlSetupHeight;
     }
@@ -190,16 +194,34 @@ static const BOOL debugDraw = NO;
     //self.midiSetupView.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
+#pragma mark - Action Getter
+
+-(VSC::IM::Action_SPtr) action
+{
+    VSC::IM::Event::SPtr actionEvent = self.event.lock();
+    BOOST_ASSERT(actionEvent);
+    VSC::IM::Action::SPtr action = boost::dynamic_pointer_cast<VSC::IM::Action>(actionEvent);
+    BOOST_ASSERT(action);
+    return action;
+}
+
 #pragma mark - Custom Setter
 
--(void) setAction:(VSC::IM::Action::WPtr)action
+-(void) setEvent:(VSC::IM::Event::WPtr)weakEvent
 {
-    if (action.lock() != _collisionAction.lock())
-    {
-        _collisionAction = action;
-        self.currentActionType = VSC::IM::VSC::IM::actionTypeForAction(_collisionAction.lock());
-        [self setupInterfaceForNewAction];
-    }
+    [super setEvent:weakEvent];
+    self.currentActionType = VSC::IM::VSC::IM::actionTypeForAction(weakEvent.lock());
+    [self setupInterfaceForNewAction];
+}
+
+-(BOOL) checkEvent:(VSC::IM::Event::SPtr)testEvent
+{
+    BOOST_ASSERT(testEvent);
+    if (!testEvent) return YES;
+    VSC::IM::Action::SPtr action = boost::dynamic_pointer_cast<VSC::IM::Action>(testEvent);
+    BOOST_ASSERT(action);
+    if (action) return YES;
+    return NO;
 }
 
 #pragma mark - UI Helper
@@ -214,7 +236,7 @@ static const BOOL debugDraw = NO;
 -(void) setupInterfaceForNewAction
 {
     
-    VSC::IM::Action::SPtr action = self.collisionAction.lock();
+    VSC::IM::Action::SPtr action = [self action];
     
     /*
      *  Setup the view and its subviews according to action type
@@ -236,7 +258,7 @@ static const BOOL debugDraw = NO;
     [verticalLayoutVisualFormat appendString:@"-2-[mainView]"];
     
     
-    if (VSC::IM::collisionActionIsMIDI(action))
+    if (VSC::IM::actionIsMIDIAction(action))
     {
         if (self.midiSetupView == nil)
         {
@@ -279,7 +301,7 @@ static const BOOL debugDraw = NO;
     
     [self.actionTypeTextField setStringValue:[[self class] stringForActionType:self.currentActionType]];
     
-    if (VSC::IM::collisionActionIsMIDI(action))
+    if (VSC::IM::actionIsMIDIAction(action))
     {
         [self updateMIDIOutputs];
         [self updateMIDIChannel];
@@ -304,13 +326,13 @@ static const BOOL debugDraw = NO;
             [self.midiOutputPopUpButton addItemWithTitle:title];
         }
         
-        VSC::IM::CollisionMIDIAction::SPtr action;
-        action = boost::dynamic_pointer_cast<VSC::IM::CollisionMIDIAction>(self.collisionAction.lock());
-        BOOST_ASSERT(action);
+        VSC::IM::Action::SPtr action = [self action];
+        VSC::IM::MIDIAction::SPtr collisionAction = boost::dynamic_pointer_cast<VSC::IM::MIDIAction>(action);
+        BOOST_ASSERT(collisionAction);
         
-        if (action)
+        if (collisionAction)
         {
-            VSC::MIDI::Output::SPtr midiOutput = action->getMIDIOutput();
+            VSC::MIDI::Output::SPtr midiOutput = collisionAction->getMIDIOutput();
             if (midiOutput)
             {
                 NSString* title = [NSString stringWithStdString:midiOutput->getDescription()];
@@ -326,14 +348,13 @@ static const BOOL debugDraw = NO;
             [self.midiOutputPopUpButton selectItemWithTitle:VSCIMOSXNoMidiOutputString];
         }
         
-        if (VSC::IM::collisionActionIsMIDIControl(action)) [self updateMIDIControlNumbers];
+        if (VSC::IM::actionIsMIDIControlAction(action)) [self updateMIDIControlNumbers];
     }
 }
 
 -(void) updateMIDIChannel
 {
-    VSC::IM::CollisionMIDIAction::SPtr midiAction;
-    midiAction = boost::dynamic_pointer_cast<VSC::IM::CollisionMIDIAction>(self.collisionAction.lock());
+    VSC::IM::MIDIAction::SPtr midiAction = boost::dynamic_pointer_cast<VSC::IM::MIDIAction>([self action]);
     BOOST_ASSERT(midiAction);
     
     if (midiAction)
@@ -348,13 +369,13 @@ static const BOOL debugDraw = NO;
 
 -(void) updateMIDIControlNumbers
 {
-    VSC::IM::Action::SPtr action = self.collisionAction.lock();
-    BOOST_ASSERT(VSC::IM::collisionActionIsMIDIControl(action));
+    VSC::IM::Action::SPtr action = [self action];
+    BOOST_ASSERT(VSC::IM::actionIsMIDIControlAction(action));
     
     [self.midiControlNumberPopUpButton removeAllItems];
     
-    VSC::IM::CollisionMIDIControlAction::SPtr controlAction;
-    controlAction = boost::dynamic_pointer_cast<VSC::IM::CollisionMIDIControlAction>(self.collisionAction.lock());
+    VSC::IM::MIDIControlAction::SPtr controlAction;
+    controlAction = boost::dynamic_pointer_cast<VSC::IM::MIDIControlAction>(self.collisionAction.lock());
     
     BOOST_ASSERT(controlAction);
     
@@ -378,13 +399,6 @@ static const BOOL debugDraw = NO;
 
 #pragma mark - UI Callbacks
 
--(IBAction) showMappings:(id)sender
-{
-    BOOST_ASSERT(self.eventChainController);
-    BOOST_ASSERT([self.eventChainController respondsToSelector:@selector(sender:requestsShowMappingsForAction:)]);
-    
-    [self.eventChainController sender:self requestsShowMappingsForAction:self.collisionAction.lock()];
-}
 
 -(IBAction) refreshMIDIOutputs:(id)sender
 {
@@ -396,7 +410,7 @@ static const BOOL debugDraw = NO;
     BOOST_ASSERT(self.midiOutputPopUpButton);
     VSC::MIDI::OutputManager::SPtr outputManager = VSC::MIDI::OutputManager::singletonManager();
     BOOST_ASSERT(outputManager);
-    VSC::IM::CollisionMIDIAction::SPtr action = boost::dynamic_pointer_cast<VSC::IM::CollisionMIDIAction>(self.collisionAction.lock());
+    VSC::IM::MIDIAction::SPtr action = boost::dynamic_pointer_cast<VSC::IM::MIDIAction>([self action]);
     BOOST_ASSERT(action);
     
     if (action && outputManager && self.midiOutputPopUpButton)
@@ -431,7 +445,7 @@ static const BOOL debugDraw = NO;
 -(IBAction) midiControlNumberSelected:(id)sender
 {
     BOOST_ASSERT(self.midiControlNumberPopUpButton);
-    VSC::IM::CollisionMIDIControlAction::SPtr action = boost::dynamic_pointer_cast<VSC::IM::CollisionMIDIControlAction>(self.collisionAction.lock());
+    VSC::IM::MIDIControlAction::SPtr action = boost::dynamic_pointer_cast<VSC::IM::MIDIControlAction>([self action]);
     BOOST_ASSERT(action);
     
     if (action && self.midiControlNumberPopUpButton)

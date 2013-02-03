@@ -1,5 +1,5 @@
 //
-//  VSCOSXOBSceneDetailView.h
+//  VSCOBOSXSceneDetailView.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 11/17/12.
@@ -12,15 +12,15 @@
 
 @class VSCOSXKeyedCheckBoxView;
 @class VSCOSXKeyedSliderView;
-@protocol VSCOSXOBSceneController;
+@protocol VSCOBOSXSceneController;
 
 /*
  *  A view to display scene settings
  */
 
-@interface VSCOSXOBSceneDetailView : NSView
+@interface VSCOBOSXSceneDetailView : NSView
 
-@property (weak) IBOutlet id<VSCOSXOBSceneController> sceneController;
+@property (weak) IBOutlet id<VSCOBOSXSceneController> sceneController;
 
 @property (weak) IBOutlet VSCOSXKeyedCheckBoxView *pausePhysicsCheckBoxView;
 @property (weak) IBOutlet VSCOSXKeyedCheckBoxView *drawWireFrameCheckBoxView;

@@ -4,7 +4,6 @@
 
 #include "VSCOB.h"
 #include "VSCIMCollisionMapping.h"
-#include "VSCIMCollisionMapped.h"
 #include "VSCIMAction.h"
 #include "VSCMIDI.h"
 #include "VSCMIDIOutput.h"
@@ -72,7 +71,7 @@ namespace VSC {
             
             virtual void createDefaultMappings();
             
-            virtual Tasks generateTasksWithValueMap(Action::ValueMap& valueMap);
+            virtual const Tasks generateTasksWithValueMap(Action::ValueMap& valueMap);
         };
         
         /*
@@ -88,7 +87,7 @@ namespace VSC {
             
             virtual void createDefaultMappings();
             
-            virtual Tasks generateTasksWithValueMap(Action::ValueMap& valueMap);
+            virtual const Tasks generateTasksWithValueMap(Action::ValueMap& valueMap);
         };
         
         /*
@@ -104,7 +103,7 @@ namespace VSC {
             
             virtual void createDefaultMappings();
             
-            virtual Tasks generateTasksWithValueMap(Action::ValueMap& valueMap);
+            virtual const Tasks generateTasksWithValueMap(Action::ValueMap& valueMap);
             
         };
         
@@ -117,7 +116,7 @@ namespace VSC {
             
             virtual void createDefaultMappings();
             
-            virtual Tasks generateTasksWithValueMap(Action::ValueMap& valueMap);
+            virtual const Tasks generateTasksWithValueMap(Action::ValueMap& valueMap);
             
         };
         
@@ -125,9 +124,9 @@ namespace VSC {
          *  Utilies and shortcuts
          */
         
-        bool actionIsMIDI(Action::SPtr action);
+        bool actionIsMIDIAction(Action::SPtr action);
     
-        bool actionIsMIDIControl(Action::SPtr action);
+        bool actionIsMIDIActionControlAction(Action::SPtr action);
 
     }
     

@@ -144,7 +144,7 @@ void VSC::IM::EventChain::performForCollision(OB::Collision::SPtr collision)
         Delay::SPtr delay = boost::dynamic_pointer_cast<Delay>(event);
         if (delay)
         {
-            executionTime += delay->getDelay();
+            executionTime += delay->getDuration();
             continue;
         }
         Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);

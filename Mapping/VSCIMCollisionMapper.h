@@ -37,8 +37,8 @@ namespace VSC {
             void removeEventChainForCollisionStarted(EventChain::SPtr actionChain, OB::Element_SPtr element);
             void removeEventChainForCollisionEnded(EventChain::SPtr actionChain, OB::Element_SPtr element);
             
-            EventChains& getEventChainsForCollisionStarted(OB::Element_SPtr element);
-            EventChains& getEventChainsForCollisionEnded(OB::Element_SPtr element);
+            const EventChains& getEventChainsForCollisionStarted(OB::Element_SPtr element);
+            const EventChains& getEventChainsForCollisionEnded(OB::Element_SPtr element);
             
             /**
              *  CollisionDetector::Listener

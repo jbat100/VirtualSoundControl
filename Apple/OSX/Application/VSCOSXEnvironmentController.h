@@ -11,7 +11,7 @@
 #include "VSCIM.h"
 
 
-@protocol VSCOSXOBSceneController;
+@protocol VSCOBOSXSceneController;
 
 /*
  *  Main environment controller protocol
@@ -26,11 +26,11 @@
 /*
  *  Sub-controllers
  */
-@property (strong) IBOutlet id<VSCOSXOBSceneController> sceneController;
+@property (strong) IBOutlet id<VSCOBOSXSceneController> sceneController;
 
 -(void) showEnvironmentInspector;
 -(void) showSceneDetails;
--(void) showSceneElementList;
+-(void) showElementList;
 -(void) showElementInspectorForElement:(VSC::OB::Element_SPtr)element;
 -(void) showEventChainEditor:(VSC::IM::EventChain_SPtr)eventChain;
 

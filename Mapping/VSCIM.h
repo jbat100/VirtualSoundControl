@@ -2,8 +2,6 @@
 #ifndef _VSC_IM_H_
 #define _VSC_IM_H_
 
-#include "VSCIMAction.h"
-
 #include <string>
 
 #include <boost/shared_ptr.hpp>
@@ -64,13 +62,13 @@ namespace VSC
          *  is set)
          */
         
-        ActionType actionTypeForAction(Action::SPtr action);
+        ActionType actionTypeForAction(Action_SPtr action);
         
         /*
          *  Use by controllers (VSCIMOSXActionController protocol) to create actions based on type
          */
         
-        Action::SPtr createActionWithType(ActionType actionType);
+        Action_SPtr createActionWithType(ActionType actionType);
         
         /*
          *  Used for UI/Debug display
@@ -90,9 +88,9 @@ namespace VSC
             MappingTypeCollisionDistance
         };
         
-        MappingType mappingTypeForMapping(Mapping::SPtr mapping);
+        MappingType mappingTypeForMapping(Mapping_SPtr mapping);
         
-        Mapping::SPtr createMappingWithType(MappingType mappingType);
+        Mapping_SPtr createMappingWithType(MappingType mappingType);
         
         std::string stringForMappingType(MappingType mappingType);
     }

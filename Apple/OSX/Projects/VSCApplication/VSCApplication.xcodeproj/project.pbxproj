@@ -207,7 +207,6 @@
 		10F8502E16B92D10007485F8 /* VSCIMOSXEventMappingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8501B16B92D10007485F8 /* VSCIMOSXEventMappingsViewController.xib */; };
 		10F8502F16B92D10007485F8 /* VSCIMOSXMappingEditViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F8501D16B92D10007485F8 /* VSCIMOSXMappingEditViewController.mm */; };
 		10F8503016B92D10007485F8 /* VSCIMOSXMappingEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8501E16B92D10007485F8 /* VSCIMOSXMappingEditViewController.xib */; };
-		10F8503116B92D10007485F8 /* VSCIMOSXMappingTypes.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F8502016B92D10007485F8 /* VSCIMOSXMappingTypes.mm */; };
 		10F8503216B92D10007485F8 /* VSCIMOSXMappingView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F8502216B92D10007485F8 /* VSCIMOSXMappingView.mm */; };
 		10F8503316B92D10007485F8 /* VSCIMOSXMappingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8502316B92D10007485F8 /* VSCIMOSXMappingView.xib */; };
 		10F8503616B92E3A007485F8 /* VSCIMOSXEventChainListView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F8503516B92E3A007485F8 /* VSCIMOSXEventChainListView.mm */; };
@@ -252,8 +251,8 @@
 		100F591D16B7F6B400F38860 /* VSCIM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIM.h; sourceTree = "<group>"; };
 		101D566116B71B8F00F5E860 /* VSCIMMapping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMMapping.cpp; sourceTree = "<group>"; };
 		101D566216B71B8F00F5E860 /* VSCIMMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMMapping.h; sourceTree = "<group>"; };
-		101D566416B73EC200F5E860 /* VSCIMMIDIActions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMMIDIActions.cpp; sourceTree = "<group>"; };
-		101D566516B73EC200F5E860 /* VSCIMMIDIActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMMIDIActions.h; sourceTree = "<group>"; };
+		101D566416B73EC200F5E860 /* VSCIMMIDIActions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = VSCIMMIDIActions.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		101D566516B73EC200F5E860 /* VSCIMMIDIActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = VSCIMMIDIActions.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		101EBB421629AE79006601A2 /* NSArray+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+VSCAdditions.h"; path = "../../../Categories/NSArray+VSCAdditions.h"; sourceTree = "<group>"; };
 		101EBB431629AE79006601A2 /* NSArray+VSCAdditions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSArray+VSCAdditions.mm"; path = "../../../Categories/NSArray+VSCAdditions.mm"; sourceTree = "<group>"; };
 		101EBB8D162B2E2C006601A2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -602,7 +601,7 @@
 		10F8500F16B92D10007485F8 /* VSCIMOSXActionMIDIControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXActionMIDIControlView.xib; sourceTree = "<group>"; };
 		10F8501016B92D10007485F8 /* VSCIMOSXActionMIDIView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXActionMIDIView.xib; sourceTree = "<group>"; };
 		10F8501116B92D10007485F8 /* VSCIMOSXActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXActionView.h; sourceTree = "<group>"; };
-		10F8501216B92D10007485F8 /* VSCIMOSXActionView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXActionView.mm; sourceTree = "<group>"; };
+		10F8501216B92D10007485F8 /* VSCIMOSXActionView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = VSCIMOSXActionView.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10F8501316B92D10007485F8 /* VSCIMOSXActionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXActionView.xib; sourceTree = "<group>"; };
 		10F8501416B92D10007485F8 /* VSCIMOSXDelayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXDelayView.h; sourceTree = "<group>"; };
 		10F8501516B92D10007485F8 /* VSCIMOSXDelayView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXDelayView.mm; sourceTree = "<group>"; };
@@ -614,8 +613,6 @@
 		10F8501C16B92D10007485F8 /* VSCIMOSXMappingEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXMappingEditViewController.h; sourceTree = "<group>"; };
 		10F8501D16B92D10007485F8 /* VSCIMOSXMappingEditViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXMappingEditViewController.mm; sourceTree = "<group>"; };
 		10F8501E16B92D10007485F8 /* VSCIMOSXMappingEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXMappingEditViewController.xib; sourceTree = "<group>"; };
-		10F8501F16B92D10007485F8 /* VSCIMOSXMappingTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXMappingTypes.h; sourceTree = "<group>"; };
-		10F8502016B92D10007485F8 /* VSCIMOSXMappingTypes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXMappingTypes.mm; sourceTree = "<group>"; };
 		10F8502116B92D10007485F8 /* VSCIMOSXMappingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXMappingView.h; sourceTree = "<group>"; };
 		10F8502216B92D10007485F8 /* VSCIMOSXMappingView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXMappingView.mm; sourceTree = "<group>"; };
 		10F8502316B92D10007485F8 /* VSCIMOSXMappingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXMappingView.xib; sourceTree = "<group>"; };
@@ -1479,8 +1476,6 @@
 				10F8501C16B92D10007485F8 /* VSCIMOSXMappingEditViewController.h */,
 				10F8501D16B92D10007485F8 /* VSCIMOSXMappingEditViewController.mm */,
 				10F8501E16B92D10007485F8 /* VSCIMOSXMappingEditViewController.xib */,
-				10F8501F16B92D10007485F8 /* VSCIMOSXMappingTypes.h */,
-				10F8502016B92D10007485F8 /* VSCIMOSXMappingTypes.mm */,
 				10F8502116B92D10007485F8 /* VSCIMOSXMappingView.h */,
 				10F8502216B92D10007485F8 /* VSCIMOSXMappingView.mm */,
 				10F8502316B92D10007485F8 /* VSCIMOSXMappingView.xib */,
@@ -1730,7 +1725,6 @@
 				10F8502B16B92D10007485F8 /* VSCIMOSXDelayView.mm in Sources */,
 				10F8502D16B92D10007485F8 /* VSCIMOSXEventEditorViewController.mm in Sources */,
 				10F8502F16B92D10007485F8 /* VSCIMOSXMappingEditViewController.mm in Sources */,
-				10F8503116B92D10007485F8 /* VSCIMOSXMappingTypes.mm in Sources */,
 				10F8503216B92D10007485F8 /* VSCIMOSXMappingView.mm in Sources */,
 				10F8503616B92E3A007485F8 /* VSCIMOSXEventChainListView.mm in Sources */,
 				10F8503C16B94700007485F8 /* VSCUsernamed.cpp in Sources */,

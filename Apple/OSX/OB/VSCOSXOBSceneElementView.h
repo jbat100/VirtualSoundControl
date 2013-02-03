@@ -1,5 +1,5 @@
 //
-//  VSCOSXOBSceneElementView.h
+//  VSCOBOSXElementView.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 12/3/12.
@@ -11,7 +11,7 @@
 #include "VSCOB.h"
 #include "VSCOSXEnvironmentController.h"
 
-@interface VSCOSXOBSceneElementView : NSView
+@interface VSCOBOSXElementView : NSView
 
 @property (nonatomic, assign) VSC::OB::Element_WPtr element;
 @property (assign) id<VSCOSXEnvironmentController> environmentController;

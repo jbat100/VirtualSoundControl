@@ -1,5 +1,5 @@
 //
-//  VSCOSXOBSceneElementInspectorViewController.h
+//  VSCOBOSXElementInspectorViewController.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 11/27/12.
@@ -8,19 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "VSCOSXOBSceneElementController.h"
+#import "VSCOBOSXElementController.h"
 #import "VSCOBOSXSceneListener.h"
 
 @class DMTabBar;
-@class VSCOSXOBSceneElementDetailView;
-@class VSCOSXOBSceneElementCollisionView;
+@class VSCOBOSXElementDetailView;
+@class VSCOBOSXElementCollisionView;
 @class VSCIMOSXEventChainViewController;
 
-@interface VSCOSXOBSceneElementInspectorViewController : NSViewController
-<VSCOSXOBSceneElementController, VSCOBOSXSceneListenerTarget>
+@interface VSCOBOSXElementInspectorViewController : NSViewController
+<VSCOBOSXElementController, VSCOBOSXSceneListenerTarget>
 
-@property (strong) IBOutlet VSCOSXOBSceneElementDetailView* elementDetailView;
-@property (strong) IBOutlet VSCOSXOBSceneElementCollisionView* elementCollisionView;
+@property (strong) IBOutlet VSCOBOSXElementDetailView* elementDetailView;
+@property (strong) IBOutlet VSCOBOSXElementCollisionView* elementCollisionView;
 
 @property (strong) VSCIMOSXEventChainViewController* collisionStartedEventChainViewController;
 @property (strong) VSCIMOSXEventChainViewController* collisionEndedEventChainViewController;

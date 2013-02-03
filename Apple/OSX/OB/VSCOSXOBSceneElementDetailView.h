@@ -5,11 +5,11 @@
 @class VSCOSXKeyed3FieldView;
 @class VSCOSXKeyed4FieldView;
 
-@protocol VSCOSXOBSceneElementController;
+@protocol VSCOBOSXElementController;
 
-@interface VSCOSXOBSceneElementDetailView : NSView
+@interface VSCOBOSXElementDetailView : NSView
 
-@property (assign) IBOutlet id<VSCOSXOBSceneElementController> elementController;
+@property (assign) IBOutlet id<VSCOBOSXElementController> elementController;
 
 @property (weak) IBOutlet NSTextField* nameTextField;
 @property (weak) IBOutlet NSTextField* idTextField;

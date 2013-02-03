@@ -1,16 +1,16 @@
 //
-//  VSCOSXOBSceneElementListView.m
+//  VSCOBOSXElementListView.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 11/10/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCOSXOBSceneElementListView.h"
+#import "VSCOBOSXElementListView.h"
 
 #include <boost/assert.hpp>
 
-@implementation VSCOSXOBSceneElementListView
+@implementation VSCOBOSXElementListView
 
 -(void) dealoc
 {

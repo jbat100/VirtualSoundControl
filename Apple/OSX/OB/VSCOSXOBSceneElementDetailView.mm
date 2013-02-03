@@ -1,13 +1,13 @@
 //
-//  VSCOSXOBSceneElementDetailView.m
+//  VSCOBOSXElementDetailView.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 10/28/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCOSXOBSceneElementDetailView.h"
-#import "VSCOSXOBSceneElementController.h"
+#import "VSCOBOSXElementDetailView.h"
+#import "VSCOBOSXElementController.h"
 #import "VSCOSXInterfaceFactory.h"
 
 #import "VSCOSXKeyedCheckBoxView.h"
@@ -21,7 +21,7 @@
 #include <Ogre/Ogre.h>
 #include <boost/assert.hpp>
 
-@interface VSCOSXOBSceneElementDetailView ()
+@interface VSCOBOSXElementDetailView ()
 
 @property (nonatomic, assign) NSTimeInterval minimumInterfaceUpdateInterval;
 @property (nonatomic, strong) NSDate* lastUpdateDate;
@@ -34,7 +34,7 @@
 
 @end
 
-@implementation VSCOSXOBSceneElementDetailView
+@implementation VSCOBOSXElementDetailView
 
 - (id)initWithFrame:(NSRect)frame
 {

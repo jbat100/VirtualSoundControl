@@ -8,8 +8,8 @@
 
 #import "VSCIMOSXEventChainViewController.h"
 
-#import "VSCOSXOBSceneElementEditor.h"
-#import "VSCOSXOBSceneElementController.h"
+#import "VSCOBOSXElementEditor.h"
+#import "VSCOBOSXElementController.h"
 #import "VSCIMOSXEventEditorViewController.h"
 #import "VSCIMOSXActionView.h"
 #import "VSCIMOSXDelayView.h"
@@ -18,7 +18,7 @@
 #include "VSCIMEvent.h"
 #include "VSCIMDelay.h"
 #include "VSCIMAction.h"
-#include "VSCIMCollisionMIDIActions.h"
+#include "VSCIMMIDIActions.h"
 #include "VSCIMEventChain.h"
 
 #include <boost/assert.hpp>
@@ -144,13 +144,13 @@ const static BOOL traceInterface = YES;
     if (sender == self.addDelayMenuItem)
         event = VSC::IM::Event::SPtr(new VSC::IM::Delay);
     else if (sender == self.addCollisionMIDINoteOnMenuItem)
-        event = VSC::IM::Event::SPtr(new VSC::IM::CollisionMIDINoteOnAction);
+        event = VSC::IM::Event::SPtr(new VSC::IM::MIDINoteOnAction);
     else if (sender == self.addCollisionMIDINoteOffMenuItem)
-        event = VSC::IM::Event::SPtr(new VSC::IM::CollisionMIDINoteOffAction);
+        event = VSC::IM::Event::SPtr(new VSC::IM::MIDINoteOffAction);
     else if (sender == self.addCollisionMIDINoteOnAndOffMenuItem)
-        event = VSC::IM::Event::SPtr(new VSC::IM::CollisionMIDINoteOnAndOffAction);
+        event = VSC::IM::Event::SPtr(new VSC::IM::MIDINoteOnAndOffAction);
     else if (sender == self.addCollisionMIDIControlChangeMenuItem)
-        event = VSC::IM::Event::SPtr(new VSC::IM::CollisionMIDIControlChangeAction);
+        event = VSC::IM::Event::SPtr(new VSC::IM::MIDIControlChangeAction);
     
     /*
      *  If we have a collision action, then create the default mappings

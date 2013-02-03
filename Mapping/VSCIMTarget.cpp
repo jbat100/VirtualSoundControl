@@ -29,7 +29,7 @@ void VSC::IM::InitialiseTargetDescriptionMap(void)
     targetDescriptionMap[TargetVelocityOn]      = "Velocity On";
     targetDescriptionMap[TargetVelocityOff]     = "Velocity Off";
     targetDescriptionMap[TargetDuration]        = "Duration";
-    targetDescriptionMap[TargetControlValue]    = "Control Value";
+    targetDescriptionMap[TargetValue]    = "Control Value";
     
 }
 

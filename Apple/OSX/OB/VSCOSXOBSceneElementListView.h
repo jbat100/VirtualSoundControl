@@ -1,5 +1,5 @@
 //
-//  VSCOSXOBSceneElementListView.h
+//  VSCOBOSXElementListView.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 11/10/12.
@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface VSCOSXOBSceneElementListView : NSView
+@interface VSCOBOSXElementListView : NSView
 
 @property (weak) IBOutlet NSTableView* elementTableView;
 

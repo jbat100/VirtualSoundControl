@@ -1,19 +1,19 @@
 //
-//  VSCSceneElementInspectorWindowController.m
+//  VSCElementInspectorWindowController.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 11/10/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCOSXOBSceneElementInspectorWindowController.h"
-#import "VSCOSXOBSceneElementInspectorViewController.h"
-#import "VSCOSXOBSceneElementDetailView.h"
-#import "VSCOSXOBSceneElementCollisionView.h"
+#import "VSCOBOSXElementInspectorWindowController.h"
+#import "VSCOBOSXElementInspectorViewController.h"
+#import "VSCOBOSXElementDetailView.h"
+#import "VSCOBOSXElementCollisionView.h"
 
 #import "DMTabBar.h"
 
-@interface VSCOSXOBSceneElementInspectorWindowController ()
+@interface VSCOBOSXElementInspectorWindowController ()
 
 @property (nonatomic, assign) BOOL calledCustomInit;
 
@@ -23,7 +23,7 @@
 
 @end
 
-@implementation VSCOSXOBSceneElementInspectorWindowController
+@implementation VSCOBOSXElementInspectorWindowController
 
 const static BOOL traceInterface = YES;
 
@@ -56,8 +56,8 @@ const static BOOL traceInterface = YES;
     
     if (traceInterface) NSLog(@"%@ customInit", self);
     
-    self.elementInspectorViewController = [[VSCOSXOBSceneElementInspectorViewController alloc]
-                                           initWithNibName:@"VSCOSXOBSceneElementInspectorViewController"
+    self.elementInspectorViewController = [[VSCOBOSXElementInspectorViewController alloc]
+                                           initWithNibName:@"VSCOBOSXElementInspectorViewController"
                                            bundle:nil];
     
     BOOST_ASSERT(self.elementInspectorViewController);

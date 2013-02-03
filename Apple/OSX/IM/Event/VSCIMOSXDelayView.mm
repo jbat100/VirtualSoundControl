@@ -70,25 +70,37 @@
     [(NSNumberFormatter*)[self.delayTextField formatter] setThousandSeparator:@""];
 }
 
+#pragma mark - Delay Getter
+
+-(VSC::IM::Delay::SPtr) delay
+{
+    VSC::IM::Event::SPtr delayEvent = self.event.lock();
+    BOOST_ASSERT(delayEvent);
+    VSC::IM::Delay::SPtr delay = boost::dynamic_pointer_cast<VSC::IM::Delay>(delayEvent);
+    BOOST_ASSERT(delay);
+    return delay;
+}
+
 #pragma mark - Custom Setters
 
--(void) setDelay:(VSC::IM::Delay::WPtr)delay
+-(BOOL) checkEvent:(VSC::IM::Event::SPtr)testEvent
 {
-    if (delay.lock() != _delay.lock())
-    {
-        _delay = delay;
-        [self reloadInterface];
-    }
+    BOOST_ASSERT(testEvent);
+    if (!testEvent) return YES;
+    VSC::IM::Delay::SPtr delay = boost::dynamic_pointer_cast<VSC::IM::Delay>(testEvent);
+    BOOST_ASSERT(delay);
+    if (delay) return YES;
+    return NO;
 }
 
 #pragma mark - UI Helpers
 
 -(void) reloadInterface
 {
-    VSC::IM::Delay::SPtr d = self.delay.lock();
-    if (d)
+    VSC::IM::Delay::SPtr delay = [self delay];
+    if (delay)
     {
-        VSC::TimeDuration duration = d->getDelay();
+        VSC::TimeDuration duration = delay->getDuration();
         double milliseconds = (double)duration.total_milliseconds();
         double seconds = milliseconds/1000.0;
         [self.delayTextField setDoubleValue:seconds];
@@ -111,7 +123,7 @@
         BOOST_ASSERT(self.delayTextField);
         BOOST_ASSERT(self.delayTextField == sender);
         NSTimeInterval delayInterval = (NSTimeInterval)[self.delayTextField doubleValue];
-        [self.eventChainController sender:self requestsSetDelay:self.delay.lock() toInterval:delayInterval];
+        [self.eventChainController sender:self requestsSetDelay:[self delay] toInterval:delayInterval];
     }
 }
 

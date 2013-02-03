@@ -81,7 +81,7 @@ void VSC::Environment::destroyEventChain(EventChain::SPtr eventChain)
     }
 }
 
-EventChain::SPtr getEventChainWithUsername(std::string username)
+EventChain::SPtr Environment::getEventChainWithUsername(std::string username)
 {
     BOOST_FOREACH(EventChain::SPtr eventChain, mEventChains)
     {

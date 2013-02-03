@@ -7,8 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "VSCOSXOBSceneElementEditor.h"
-#import "VSCOSXOBSceneElementController.h"
+#import "VSCOBOSXElementEditor.h"
+#import "VSCOBOSXElementController.h"
 #import "VSCIMOSXEventChainController.h"
 
 #include "VSCIMEvent.h"

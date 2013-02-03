@@ -5,10 +5,10 @@
 #include "VSCIMAction.h"
 
 /*
- *  VSCOSXOBSceneElementEditor, meant for the main inspector view
+ *  VSCOBOSXElementEditor, meant for the main inspector view
  */
 
-@protocol VSCOSXOBSceneElementEditor <NSObject>
+@protocol VSCOBOSXElementEditor <NSObject>
 
 -(void) senderRequestsDetailView:(id)sender;
 -(void) senderRequestsCollisionView:(id)sender;

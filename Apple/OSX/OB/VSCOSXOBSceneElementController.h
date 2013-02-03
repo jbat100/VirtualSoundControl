@@ -1,5 +1,5 @@
 //
-//  VSCOSXOBSceneElementInspectorController.h
+//  VSCOBOSXElementInspectorController.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 11/10/12.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "VSCOSXEnvironmentController.h"
-#import "VSCOSXOBSceneElementEditor.h"
+#import "VSCOBOSXElementEditor.h"
 
 #include "VSCOBScene.h"
 #include "VSCOBElement.h"
@@ -21,7 +21,7 @@
  *  Main controller for a Element
  */
 
-@protocol VSCOSXOBSceneElementController <NSObject>
+@protocol VSCOBOSXElementController <NSObject>
 
 @property (nonatomic, assign) VSC::OB::Element_WPtr element;
 

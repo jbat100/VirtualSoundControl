@@ -18,4 +18,13 @@
 
 -(IBAction) showMappings:(id)sender;
 
+-(void) reloadInterface;
+
+/**
+ *  Gives subclasses the oportunity to refuse events if they are not the right subclass
+ *  of VSC::IM::Event
+ */
+
+-(BOOL) checkEvent:(VSC::IM::Event_SPtr)testEvent;
+
 @end

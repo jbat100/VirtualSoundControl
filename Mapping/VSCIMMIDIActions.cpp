@@ -4,23 +4,23 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#include "VSCIMCollisionMIDIActions.h"
+#include "VSCIMMIDIActions.h"
 #include "VSCMIDIOutputManager.h"
 #include "VSCMIDITasks.h"
 
-#include "VSCOBElement.h"
-#include "VSCOBCollision.h"
-
 #include <boost/foreach.hpp>
 
-bool VSC::IM::actionIsMIDI(Action::SPtr action)
+using namespace VSC;
+using namespace VSC::IM;
+
+bool actionIsMIDIAction(Action::SPtr action)
 {
     if (boost::dynamic_pointer_cast<MIDIAction>(action)) return true;
     
     return false;
 }
 
-bool VSC::IM::actionIsMIDIControl(Action::SPtr action)
+bool actionIsMIDIControlAction(Action::SPtr action)
 {
     if (boost::dynamic_pointer_cast<MIDIControlAction>(action)) return true;
     
@@ -28,7 +28,7 @@ bool VSC::IM::actionIsMIDIControl(Action::SPtr action)
 }
 
 
-VSC::IM::MIDIAction::MIDIAction() :
+MIDIAction::MIDIAction() :
 mChannel(1)
 {
     this->setTaskQueue(MIDI::SingletonMIDITaskQueue());
@@ -42,18 +42,18 @@ mChannel(1)
     }
 }
 
-VSC::IM::MIDIControlAction::MIDIControlAction() : mControlNumber(MIDI::ControlBreath)
+MIDIControlAction::MIDIControlAction() : mControlNumber(MIDI::ControlBreath)
 {
     
 }
 
-VSC::IM::MIDINoteOnAction::MIDINoteOnAction()
+MIDINoteOnAction::MIDINoteOnAction()
 {
     this->addRequiredMappingTarget(TargetPitch);
     this->addRequiredMappingTarget(TargetVelocityOn);
 }
 
-void VSC::IM::MIDINoteOnAction::createDefaultMappings()
+void MIDINoteOnAction::createDefaultMappings()
 {
     const Targets& targets = this->getRequiredMappingTargets();
     
@@ -61,12 +61,12 @@ void VSC::IM::MIDINoteOnAction::createDefaultMappings()
     {
         Mapping::SPtr mapping(new Mapping);
         mapping->setOffset(64.0);
-        this->setMappingForTarget(target, mapping);
+        this->setMappingForTarget(mapping, target);
     }
 }
 
 
-VSC::Tasks VSC::IM::MIDINoteOnAction::generateTasksWithValueMap(Action::ValueMap& valueMap)
+Tasks MIDINoteOnAction::generateTasksWithValueMap(Action::ValueMap& valueMap)
 {
     Tasks tasks;
     
@@ -75,7 +75,7 @@ VSC::Tasks VSC::IM::MIDINoteOnAction::generateTasksWithValueMap(Action::ValueMap
     payload->messageDescription->type = MIDI::MessageTypeNoteOn;
     payload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char) this->getChannel();
     payload->messageDescription->parameterMap[MIDI::MessageParameterKeyPitch] = (unsigned char) valueMap[TargetPitch];
-    payload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) valueMap[TargetVelocity];
+    payload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) valueMap[TargetVelocityOn];
     payload->midiOutput = this->getMIDIOutput();
     MIDI::MIDISendMessageTask::SPtr task(new MIDI::MIDISendMessageTask(boost::dynamic_pointer_cast<Task::Payload>(payload)));
     tasks.push_back(task);
@@ -83,13 +83,13 @@ VSC::Tasks VSC::IM::MIDINoteOnAction::generateTasksWithValueMap(Action::ValueMap
     return tasks;
 }
 
-VSC::IM::MIDINoteOffAction::MIDINoteOffAction()
+MIDINoteOffAction::MIDINoteOffAction()
 {
     this->addRequiredMappingTarget(TargetPitch);
     this->addRequiredMappingTarget(TargetVelocityOff);
 }
 
-void VSC::IM::CollisionMIDINoteOffAction::createDefaultMappings()
+void MIDINoteOffAction::createDefaultMappings()
 {
     const Targets& targets = this->getRequiredMappingTargets();
     
@@ -101,7 +101,7 @@ void VSC::IM::CollisionMIDINoteOffAction::createDefaultMappings()
     }
 }
 
-VSC::Tasks VSC::IM::CollisionMIDINoteOffAction::generateTasksWithValueMap(Action::ValueMap& valueMap)
+const Tasks MIDINoteOffAction::generateTasksWithValueMap(Action::ValueMap& valueMap)
 {
     Tasks tasks;
     
@@ -110,7 +110,7 @@ VSC::Tasks VSC::IM::CollisionMIDINoteOffAction::generateTasksWithValueMap(Action
     payload->messageDescription->type = MIDI::MessageTypeNoteOff;
     payload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char)this->getChannel();
     payload->messageDescription->parameterMap[MIDI::MessageParameterKeyPitch] = (unsigned char) valueMap[TargetPitch];
-    payload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) valueMap[TargetVelocity];
+    payload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) valueMap[TargetVelocityOff];
     payload->midiOutput = this->getMIDIOutput();
     MIDI::MIDISendMessageTask::SPtr task(new MIDI::MIDISendMessageTask(boost::dynamic_pointer_cast<Task::Payload>(payload)));
     tasks.push_back(task);
@@ -118,7 +118,7 @@ VSC::Tasks VSC::IM::CollisionMIDINoteOffAction::generateTasksWithValueMap(Action
     return tasks;
 }
 
-VSC::IM::CollisionMIDINoteOnAndOffAction::CollisionMIDINoteOnAndOffAction()
+MIDINoteOnAndOffAction::MIDINoteOnAndOffAction()
 {
     this->addRequiredMappingTarget(TargetPitch);
     this->addRequiredMappingTarget(TargetVelocityOn);
@@ -126,7 +126,7 @@ VSC::IM::CollisionMIDINoteOnAndOffAction::CollisionMIDINoteOnAndOffAction()
     this->addRequiredMappingTarget(TargetVelocityOff);
 }
 
-void VSC::IM::CollisionMIDINoteOnAndOffAction::createDefaultMappings()
+void MIDINoteOnAndOffAction::createDefaultMappings()
 {
     const Targets& targets = this->getRequiredMappingTargets();
     
@@ -138,7 +138,7 @@ void VSC::IM::CollisionMIDINoteOnAndOffAction::createDefaultMappings()
     }
 }
 
-VSC::Tasks VSC::IM::CollisionMIDINoteOnAndOffAction::generateTasksWithValueMap(Action::ValueMap& valueMap)
+const Tasks MIDINoteOnAndOffAction::generateTasksWithValueMap(Action::ValueMap& valueMap)
 {
     Tasks tasks;
     
@@ -170,12 +170,12 @@ VSC::Tasks VSC::IM::CollisionMIDINoteOnAndOffAction::generateTasksWithValueMap(A
     return tasks;
 }
 
-VSC::IM::MIDIControlChangeAction::MIDIControlChangeAction()
+MIDIControlChangeAction::MIDIControlChangeAction()
 {
-    this->addRequiredMappingTarget(TargetControlValue);
+    this->addRequiredMappingTarget(TargetValue);
 }
 
-void VSC::IM::CollisionMIDIControlChangeAction::createDefaultMappings()
+void MIDIControlChangeAction::createDefaultMappings()
 {
     const Targets& targets = this->getRequiredMappingTargets();
     
@@ -187,7 +187,7 @@ void VSC::IM::CollisionMIDIControlChangeAction::createDefaultMappings()
     }
 }
 
-VSC::Tasks VSC::IM::CollisionMIDIControlChangeAction::generateTasksWithValueMap(Action::ValueMap& valueMap)
+const Tasks MIDIControlChangeAction::generateTasksWithValueMap(Action::ValueMap& valueMap)
 {
     Tasks tasks;
     

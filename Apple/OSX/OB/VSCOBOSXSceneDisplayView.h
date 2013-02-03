@@ -8,7 +8,7 @@
 
 #import "OgreOSXCocoaView.h"
 
-#import "VSCOSXOBSceneController.h"
+#import "VSCOBOSXSceneController.h"
 
 #include "VSCOBKeyBindings.h"
 #include "VSCOBDisplay.h"
@@ -21,7 +21,7 @@
 @property (nonatomic, assign) VSC::OB::InterfaceResponderChain::SPtr interfaceResponderChain;
 @property (readonly, nonatomic, assign) VSC::OB::Display::WPtr display;
 
-@property (weak) IBOutlet id<VSCOSXOBSceneController> sceneController;
+@property (weak) IBOutlet id<VSCOBOSXSceneController> sceneController;
 
 @property (nonatomic, assign) VSC::OB::SceneController::SPtr internalSceneController;
 @property (nonatomic, assign) VSC::OB::DisplayController::SPtr displayController;

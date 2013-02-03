@@ -8,13 +8,13 @@
 
 #import "VSCOSXEnvironmentWindowController.h"
 #import "VSCOSXApplicationManager.h"
-#import "VSCOSXOBSceneController.h"
+#import "VSCOBOSXSceneController.h"
 #import "VSCOBOSXSceneDisplayView.h"
-#import "VSCOSXOBSceneElementInspectorWindowController.h"
-#import "VSCOSXOBSceneElementInspectorViewController.h"
+#import "VSCOBOSXElementInspectorWindowController.h"
+#import "VSCOBOSXElementInspectorViewController.h"
 #import "VSCOSXEnvironmentController.h"
-#import "VSCOSXOBSceneElementListView.h"
-#import "VSCOSXOBSceneDetailView.h"
+#import "VSCOBOSXElementListView.h"
+#import "VSCOBOSXSceneDetailView.h"
 
 #import "NSString+VSCAdditions.h"
 #import "NSArray+VSCAdditions.h"
@@ -38,7 +38,7 @@
 NSArray* EnvironmentInspectorTabParamArray = nil;
 
 NSString* const VSCOSXTabTitleSceneSettings = @"Scene Settings";
-NSString* const VSCOSXTabTitleSceneElements = @"Scene Elements";
+NSString* const VSCOSXTabTitleElements = @"Scene Elements";
 NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 
 @interface VSCOSXEnvironmentWindowController ()
@@ -67,7 +67,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     
     EnvironmentInspectorTabParamArray = @[
     @{@"image": [NSImage imageNamed:@"158-wrench-2.png"], @"title": VSCOSXTabTitleSceneSettings},
-    @{@"image": [NSImage imageNamed:@"12-eye"], @"title": VSCOSXTabTitleSceneElements},
+    @{@"image": [NSImage imageNamed:@"12-eye"], @"title": VSCOSXTabTitleElements},
     @{@"image": [NSImage imageNamed:@"122-stats"], @"title": VSCOSXTabTitleEnveloppes}
     ];
     
@@ -120,14 +120,14 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 -(void) awakeFromNib
 {
     BOOST_ASSERT(self.sceneDetailScrollView);
-    BOOST_ASSERT(self.sceneElementListView);
+    BOOST_ASSERT(self.ElementListView);
     BOOST_ASSERT(self.sceneDetailView);
     BOOST_ASSERT(self.tabBar);
     //BOOST_ASSERT(self.tabBox);
     
     self.sceneDetailScrollView.translatesAutoresizingMaskIntoConstraints = NO;
     self.sceneDetailView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.sceneElementListView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.ElementListView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self setupConstraints];
@@ -213,10 +213,10 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
             NSLog(@"%@ will select %lu/%@", self.tabBar, tabBarItemIndex, tabBarItem);
             //[self.tabView selectTabViewItem:[tabView.tabViewItems objectAtIndex:tabBarItemIndex]];
             
-            if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleSceneElements])
+            if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleElements])
             {
                 NSLog(@"Selected scene element list tab");
-                [self showSceneElementList];
+                [self showElementList];
             }
             else if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleSceneSettings])
             {
@@ -318,18 +318,18 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 }
 
 
--(void) showSceneElementList
+-(void) showElementList
 {
-    BOOST_ASSERT(self.sceneElementListView);
-    BOOST_ASSERT(self.sceneElementListView.elementTableView);
-    BOOST_ASSERT(self.sceneElementListView.elementTableView.delegate == self.sceneController);
+    BOOST_ASSERT(self.ElementListView);
+    BOOST_ASSERT(self.ElementListView.elementTableView);
+    BOOST_ASSERT(self.ElementListView.elementTableView.delegate == self.sceneController);
     
     
-    if ([self.sceneElementListView superview] == self.environmentInspectorView) return; // we are already showing element list
+    if ([self.ElementListView superview] == self.environmentInspectorView) return; // we are already showing element list
     
-    [self switchEnvironmentInspectorToTabView:self.sceneElementListView];
+    [self switchEnvironmentInspectorToTabView:self.ElementListView];
     
-    [self.sceneElementListView.elementTableView reloadData];
+    [self.ElementListView.elementTableView reloadData];
     
 }
 
@@ -355,8 +355,8 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     
     if (!self.elementInspectorWindowController)
     {
-        NSString* nibName = @"VSCOSXOBSceneElementInspectorWindowController";
-        self.elementInspectorWindowController = [[VSCOSXOBSceneElementInspectorWindowController alloc] initWithWindowNibName:nibName];
+        NSString* nibName = @"VSCOBOSXElementInspectorWindowController";
+        self.elementInspectorWindowController = [[VSCOBOSXElementInspectorWindowController alloc] initWithWindowNibName:nibName];
         BOOST_ASSERT(self.elementInspectorWindowController);
         BOOST_ASSERT(self.elementInspectorWindowController.elementInspectorViewController);
         self.elementInspectorWindowController.elementInspectorViewController.environmentController = self;

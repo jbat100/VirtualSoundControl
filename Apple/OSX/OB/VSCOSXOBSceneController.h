@@ -1,5 +1,5 @@
 //
-//  VSCOBSceneElementListController.h
+//  VSCOBElementListController.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 10/28/12.
@@ -14,18 +14,18 @@
 #include "VSCOB.h"
 
 @class VSCOBOSXSceneDisplayView;
-@class VSCOSXOBSceneElementListView;
-@class VSCOSXOBSceneDetailView;
+@class VSCOBOSXElementListView;
+@class VSCOBOSXSceneDetailView;
 
-@protocol VSCOSXOBSceneController <NSTableViewDataSource, NSTableViewDelegate, VSCOBOSXSceneListenerTarget>
+@protocol VSCOBOSXSceneController <NSTableViewDataSource, NSTableViewDelegate, VSCOBOSXSceneListenerTarget>
 
 @property (nonatomic, assign) VSC::OB::Scene_WPtr scene;
 
 @property (assign) id<VSCOSXEnvironmentController> environmentController;
 
-@property (weak) IBOutlet VSCOSXOBSceneElementListView* elementListView;
+@property (weak) IBOutlet VSCOBOSXElementListView* elementListView;
 @property (weak) IBOutlet VSCOBOSXSceneDisplayView* sceneView;
-@property (weak) IBOutlet VSCOSXOBSceneDetailView* sceneDetailView;
+@property (weak) IBOutlet VSCOBOSXSceneDetailView* sceneDetailView;
 
 @property (nonatomic, assign) VSC::Float shootSpeed;
 @property (nonatomic, assign) VSC::Float shootSize;
@@ -45,7 +45,7 @@
 
 @end
 
-@interface VSCOSXOBSceneController : NSObject <VSCOSXOBSceneController>
+@interface VSCOBOSXSceneController : NSObject <VSCOBOSXSceneController>
 
 @property (nonatomic, assign) VSC::OB::OSXSceneListener::SPtr sceneListener;
 @property (assign) IBOutlet id<VSCOSXEnvironmentController> environmentController;

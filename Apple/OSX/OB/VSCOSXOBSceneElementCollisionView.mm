@@ -1,20 +1,20 @@
 //
-//  VSCOSXOBSceneElementEventChainView.m
+//  VSCOBOSXElementEventChainView.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 10/28/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCOSXOBSceneElementCollisionView.h"
+#import "VSCOBOSXElementCollisionView.h"
 
-@interface VSCOSXOBSceneElementCollisionView ()
+@interface VSCOBOSXElementCollisionView ()
 
 -(void) customInit;
 
 @end
 
-@implementation VSCOSXOBSceneElementCollisionView
+@implementation VSCOBOSXElementCollisionView
 
 - (id)initWithFrame:(NSRect)frame
 {

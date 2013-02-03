@@ -11,9 +11,10 @@
 #include <string>
 #include <vector>
 
-namespace VSC {
-    
-    namespace IM {
+namespace VSC
+{
+    namespace IM
+    {
         
         enum Target {
             TargetNone = 0,
@@ -22,7 +23,7 @@ namespace VSC {
             TargetVelocityOn,
             TargetVelocityOff,
             TargetDuration,
-            TargetControlValue
+            TargetValue
         };
         
         typedef std::vector<Target> Targets;
@@ -31,7 +32,6 @@ namespace VSC {
         const Target targetForString(const std::string& s);
 
     }
-    
 }
 
 #endif // _VSC_IM_TARGET_H_

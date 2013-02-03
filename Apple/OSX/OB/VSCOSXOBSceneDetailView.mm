@@ -1,13 +1,13 @@
 //
-//  VSCOSXOBSceneDetailView.m
+//  VSCOBOSXSceneDetailView.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 11/17/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCOSXOBSceneDetailView.h"
-#import "VSCOSXOBSceneController.h"
+#import "VSCOBOSXSceneDetailView.h"
+#import "VSCOBOSXSceneController.h"
 
 #import "VSCOSXInterfaceFactory.h"
 #import "VSCOSXKeyedCheckBoxView.h"
@@ -15,12 +15,12 @@
 
 #include "VSCOBScene.h"
 
-@interface VSCOSXOBSceneDetailView ()
+@interface VSCOBOSXSceneDetailView ()
 
 
 @end
 
-@implementation VSCOSXOBSceneDetailView
+@implementation VSCOBOSXSceneDetailView
 
 - (id)initWithFrame:(NSRect)frame
 {

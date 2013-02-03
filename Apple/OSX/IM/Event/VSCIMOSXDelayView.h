@@ -7,19 +7,18 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#include "VSCIMDelay.h"
+#import "VSCIMOSXEventView.h"
+
+#include "VSCIM.h"
 
 @protocol VSCIMOSXEventChainController;
 
 
-@interface VSCIMOSXDelayView : NSView
+@interface VSCIMOSXDelayView : VSCIMOSXEventView
 
 +(CGFloat) defaultViewHeight;
 
-@property (nonatomic, assign) VSC::IM::Delay::WPtr delay;
+-(VSC::IM::Delay_SPtr) delay;
 
-@property (assign) IBOutlet id<VSCIMOSXEventChainController> eventChainController;
-
--(void) reloadInterface;
 
 @end

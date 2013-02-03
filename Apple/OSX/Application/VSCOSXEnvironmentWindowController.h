@@ -13,9 +13,9 @@
 #include "VSCEnvironment.h"
 
 @class VSCOBOSXSceneDisplayView;
-@class VSCOSXOBSceneElementInspectorWindowController;
-@class VSCOSXOBSceneElementListView;
-@class VSCOSXOBSceneDetailView;
+@class VSCOBOSXElementInspectorWindowController;
+@class VSCOBOSXElementListView;
+@class VSCOBOSXSceneDetailView;
 @class VSCIMOSXEventChainListView;
 
 /*
@@ -24,21 +24,21 @@
 
 @interface VSCOSXEnvironmentWindowController : NSWindowController <VSCOSXEnvironmentController, NSTableViewDelegate, NSTableViewDataSource>
 
-@property (strong) VSCOSXOBSceneElementInspectorWindowController* elementInspectorWindowController;
+@property (strong) VSCOBOSXElementInspectorWindowController* elementInspectorWindowController;
 
 @property (nonatomic, weak) IBOutlet NSSplitView* splitView;
 @property (nonatomic, strong) IBOutlet NSView* environmentInspectorView;
 @property (nonatomic, strong) IBOutlet NSScrollView* sceneDetailScrollView;
 
-@property (nonatomic, strong) IBOutlet VSCOSXOBSceneElementListView* sceneElementListView;
-@property (nonatomic, strong) IBOutlet VSCOSXOBSceneDetailView* sceneDetailView;
+@property (nonatomic, strong) IBOutlet VSCOBOSXElementListView* ElementListView;
+@property (nonatomic, strong) IBOutlet VSCOBOSXSceneDetailView* sceneDetailView;
 @property (nonatomic, strong) IBOutlet VSCIMOSXEventChainListView* eventChainListView;
 
 @property (nonatomic, assign) VSC::EnvironmentTest::SPtr environmentTest;
 
 -(IBAction)resetAction:(id)sender;
 
--(void) showSceneElementList;
+-(void) showElementList;
 -(void) showSceneDetail;
 
 - (IBAction)test1:(id)sender;

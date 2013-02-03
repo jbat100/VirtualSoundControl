@@ -1,16 +1,16 @@
 //
-//  VSCOBSceneElementListController.m
+//  VSCOBElementListController.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 10/28/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCOSXOBSceneController.h"
+#import "VSCOBOSXSceneController.h"
 #import "VSCOBOSXSceneDisplayView.h"
-#import "VSCOSXOBSceneDetailView.h"
-#import "VSCOSXOBSceneElementListView.h"
-#import "VSCOSXOBSceneElementView.h"
+#import "VSCOBOSXSceneDetailView.h"
+#import "VSCOBOSXElementListView.h"
+#import "VSCOBOSXElementView.h"
 
 #include "VSCOBSceneController.h"
 #include "VSCOBScene.h"
@@ -21,11 +21,11 @@
 static const Ogre::Vector3 CameraStartPos = Ogre::Vector3(30.0, 10.0, 0.0);
 static const Ogre::Vector3 CameraStartLookAt = Ogre::Vector3(0.0, 0.0, 0.0);
 
-@interface VSCOSXOBSceneController ()
+@interface VSCOBOSXSceneController ()
 
 @end
 
-@implementation VSCOSXOBSceneController
+@implementation VSCOBOSXSceneController
 
 static const BOOL traceInterface = YES;
 
@@ -231,9 +231,9 @@ static const BOOL traceInterface = YES;
         {
             VSC::OB::Element::SPtr elem = elems.at(row);
             VSC::OB::Element::WPtr weakElem = VSC::OB::Element::WPtr(elem);
-            VSCOSXOBSceneElementView* elementView = [tableView makeViewWithIdentifier:[[VSCOSXOBSceneElementView class] description] owner:self];
+            VSCOBOSXElementView* elementView = [tableView makeViewWithIdentifier:[[VSCOBOSXElementView class] description] owner:self];
             BOOST_ASSERT(elementView);
-            BOOST_ASSERT([elementView isKindOfClass:[VSCOSXOBSceneElementView class]]);
+            BOOST_ASSERT([elementView isKindOfClass:[VSCOBOSXElementView class]]);
             elementView.environmentController = self.environmentController;
             elementView.element = weakElem;
             
@@ -250,7 +250,7 @@ static const BOOL traceInterface = YES;
     
     if (tableView == self.elementListView.elementTableView)
     {
-        return [VSCOSXOBSceneElementView defaultViewHeight];
+        return [VSCOBOSXElementView defaultViewHeight];
     }
     
     return 0;
