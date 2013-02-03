@@ -75,17 +75,6 @@
 		109A8EE616A1A77E0023EC1B /* VSCOBOSXSceneCollisionListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EBD16A1A77E0023EC1B /* VSCOBOSXSceneCollisionListener.mm */; };
 		109A8EE716A1A77E0023EC1B /* VSCOBOSXSceneDisplayView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EBF16A1A77E0023EC1B /* VSCOBOSXSceneDisplayView.mm */; };
 		109A8EE816A1A77E0023EC1B /* VSCOBOSXSceneListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EC116A1A77E0023EC1B /* VSCOBOSXSceneListener.mm */; };
-		109A8EE916A1A77E0023EC1B /* VSCOSXOBSceneController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EC316A1A77E0023EC1B /* VSCOSXOBSceneController.mm */; };
-		109A8EEA16A1A77E0023EC1B /* VSCOSXOBSceneDetailView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EC516A1A77E0023EC1B /* VSCOSXOBSceneDetailView.mm */; };
-		109A8EF016A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8ECE16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.mm */; };
-		109A8EF116A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109A8ECF16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.xib */; };
-		109A8EF216A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8ED216A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.mm */; };
-		109A8EF616A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8ED916A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.mm */; };
-		109A8EF716A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109A8EDA16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.xib */; };
-		109A8EF816A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EDC16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.mm */; };
-		109A8EF916A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 109A8EDD16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.xib */; };
-		109A8EFA16A1A77E0023EC1B /* VSCOSXOBSceneElementListView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EDF16A1A77E0023EC1B /* VSCOSXOBSceneElementListView.mm */; };
-		109A8EFB16A1A77E0023EC1B /* VSCOSXOBSceneElementView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EE116A1A77E0023EC1B /* VSCOSXOBSceneElementView.mm */; };
 		109A8F1316A1A83E0023EC1B /* VSCIMAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8EFD16A1A83E0023EC1B /* VSCIMAction.cpp */; };
 		109A8F1716A1A83E0023EC1B /* VSCIMCollisionMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F0516A1A83E0023EC1B /* VSCIMCollisionMapper.cpp */; };
 		109A8F1816A1A83E0023EC1B /* VSCIMMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F0716A1A83E0023EC1B /* VSCIMMapping.cpp */; };
@@ -167,6 +156,15 @@
 		10CFE748156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE716156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp */; };
 		10CFE749156CD62000B24399 /* OgreBulletDynamicsWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE717156CD62000B24399 /* OgreBulletDynamicsWorld.cpp */; };
 		10CFE74A156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE719156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp */; };
+		10CFF59A16BF2D360039C194 /* VSCOBOSXElementCollisionView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10CFF58A16BF2D350039C194 /* VSCOBOSXElementCollisionView.mm */; };
+		10CFF59B16BF2D360039C194 /* VSCOBOSXElementCollisionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10CFF58B16BF2D350039C194 /* VSCOBOSXElementCollisionView.xib */; };
+		10CFF59C16BF2D360039C194 /* VSCOBOSXElementDetailView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10CFF58E16BF2D360039C194 /* VSCOBOSXElementDetailView.mm */; };
+		10CFF59D16BF2D360039C194 /* VSCOBOSXElementInspectorViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10CFF59116BF2D360039C194 /* VSCOBOSXElementInspectorViewController.mm */; };
+		10CFF59E16BF2D360039C194 /* VSCOBOSXElementInspectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10CFF59216BF2D360039C194 /* VSCOBOSXElementInspectorViewController.xib */; };
+		10CFF59F16BF2D360039C194 /* VSCOBOSXElementInspectorWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10CFF59416BF2D360039C194 /* VSCOBOSXElementInspectorWindowController.mm */; };
+		10CFF5A016BF2D360039C194 /* VSCOBOSXElementInspectorWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10CFF59516BF2D360039C194 /* VSCOBOSXElementInspectorWindowController.xib */; };
+		10CFF5A116BF2D360039C194 /* VSCOBOSXElementListView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10CFF59716BF2D360039C194 /* VSCOBOSXElementListView.mm */; };
+		10CFF5A216BF2D360039C194 /* VSCOBOSXElementView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10CFF59916BF2D360039C194 /* VSCOBOSXElementView.mm */; };
 		10D5533A15FA409F002AED81 /* NSString+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10D5533915FA409F002AED81 /* NSString+VSCAdditions.mm */; };
 		10D7AE8B1628554E00DE0F72 /* VSCMIDIOutputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10D7AE891628554D00DE0F72 /* VSCMIDIOutputManager.cpp */; };
 		10D7AE9C1628767F00DE0F72 /* VSCOSXMIDIWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10D7AE951628767F00DE0F72 /* VSCOSXMIDIWindowController.mm */; };
@@ -356,27 +354,6 @@
 		109A8EBF16A1A77E0023EC1B /* VSCOBOSXSceneDisplayView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOBOSXSceneDisplayView.mm; path = ../Apple/OSX/OB/VSCOBOSXSceneDisplayView.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		109A8EC016A1A77E0023EC1B /* VSCOBOSXSceneListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOBOSXSceneListener.h; path = ../Apple/OSX/OB/VSCOBOSXSceneListener.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		109A8EC116A1A77E0023EC1B /* VSCOBOSXSceneListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOBOSXSceneListener.mm; path = ../Apple/OSX/OB/VSCOBOSXSceneListener.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		109A8EC216A1A77E0023EC1B /* VSCOSXOBSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOSXOBSceneController.h; path = ../Apple/OSX/OB/VSCOSXOBSceneController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		109A8EC316A1A77E0023EC1B /* VSCOSXOBSceneController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOSXOBSceneController.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneController.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		109A8EC416A1A77E0023EC1B /* VSCOSXOBSceneDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneDetailView.h; path = ../Apple/OSX/OB/VSCOSXOBSceneDetailView.h; sourceTree = "<group>"; };
-		109A8EC516A1A77E0023EC1B /* VSCOSXOBSceneDetailView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOSXOBSceneDetailView.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneDetailView.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		109A8ECD16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementCollisionView.h; path = ../Apple/OSX/OB/VSCOSXOBSceneElementCollisionView.h; sourceTree = "<group>"; };
-		109A8ECE16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneElementCollisionView.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneElementCollisionView.mm; sourceTree = "<group>"; };
-		109A8ECF16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXOBSceneElementCollisionView.xib; path = ../Apple/OSX/OB/VSCOSXOBSceneElementCollisionView.xib; sourceTree = "<group>"; };
-		109A8ED016A1A77E0023EC1B /* VSCOSXOBSceneElementController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementController.h; path = ../Apple/OSX/OB/VSCOSXOBSceneElementController.h; sourceTree = "<group>"; };
-		109A8ED116A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementDetailView.h; path = ../Apple/OSX/OB/VSCOSXOBSceneElementDetailView.h; sourceTree = "<group>"; };
-		109A8ED216A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOSXOBSceneElementDetailView.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneElementDetailView.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		109A8ED416A1A77E0023EC1B /* VSCOSXOBSceneElementEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementEditor.h; path = ../Apple/OSX/OB/VSCOSXOBSceneElementEditor.h; sourceTree = "<group>"; };
-		109A8ED816A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementInspectorViewController.h; path = ../Apple/OSX/OB/VSCOSXOBSceneElementInspectorViewController.h; sourceTree = "<group>"; };
-		109A8ED916A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOSXOBSceneElementInspectorViewController.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneElementInspectorViewController.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		109A8EDA16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXOBSceneElementInspectorViewController.xib; path = ../Apple/OSX/OB/VSCOSXOBSceneElementInspectorViewController.xib; sourceTree = "<group>"; };
-		109A8EDB16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementInspectorWindowController.h; path = ../Apple/OSX/OB/VSCOSXOBSceneElementInspectorWindowController.h; sourceTree = "<group>"; };
-		109A8EDC16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneElementInspectorWindowController.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneElementInspectorWindowController.mm; sourceTree = "<group>"; };
-		109A8EDD16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXOBSceneElementInspectorWindowController.xib; path = ../Apple/OSX/OB/VSCOSXOBSceneElementInspectorWindowController.xib; sourceTree = "<group>"; };
-		109A8EDE16A1A77E0023EC1B /* VSCOSXOBSceneElementListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementListView.h; path = ../Apple/OSX/OB/VSCOSXOBSceneElementListView.h; sourceTree = "<group>"; };
-		109A8EDF16A1A77E0023EC1B /* VSCOSXOBSceneElementListView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXOBSceneElementListView.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneElementListView.mm; sourceTree = "<group>"; };
-		109A8EE016A1A77E0023EC1B /* VSCOSXOBSceneElementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXOBSceneElementView.h; path = ../Apple/OSX/OB/VSCOSXOBSceneElementView.h; sourceTree = "<group>"; };
-		109A8EE116A1A77E0023EC1B /* VSCOSXOBSceneElementView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = VSCOSXOBSceneElementView.mm; path = ../Apple/OSX/OB/VSCOSXOBSceneElementView.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		109A8EFD16A1A83E0023EC1B /* VSCIMAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMAction.cpp; sourceTree = "<group>"; };
 		109A8EFE16A1A83E0023EC1B /* VSCIMAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMAction.h; sourceTree = "<group>"; };
 		109A8F0516A1A83E0023EC1B /* VSCIMCollisionMapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = VSCIMCollisionMapper.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -551,6 +528,27 @@
 		10CFE716156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsRigidBody.cpp; sourceTree = "<group>"; };
 		10CFE717156CD62000B24399 /* OgreBulletDynamicsWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsWorld.cpp; sourceTree = "<group>"; };
 		10CFE719156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsRagDoll.cpp; sourceTree = "<group>"; };
+		10CFF58916BF2D350039C194 /* VSCOBOSXElementCollisionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXElementCollisionView.h; path = ../Apple/OSX/OB/VSCOBOSXElementCollisionView.h; sourceTree = "<group>"; };
+		10CFF58A16BF2D350039C194 /* VSCOBOSXElementCollisionView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXElementCollisionView.mm; path = ../Apple/OSX/OB/VSCOBOSXElementCollisionView.mm; sourceTree = "<group>"; };
+		10CFF58B16BF2D350039C194 /* VSCOBOSXElementCollisionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOBOSXElementCollisionView.xib; path = ../Apple/OSX/OB/VSCOBOSXElementCollisionView.xib; sourceTree = "<group>"; };
+		10CFF58C16BF2D350039C194 /* VSCOBOSXElementController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXElementController.h; path = ../Apple/OSX/OB/VSCOBOSXElementController.h; sourceTree = "<group>"; };
+		10CFF58D16BF2D350039C194 /* VSCOBOSXElementDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXElementDetailView.h; path = ../Apple/OSX/OB/VSCOBOSXElementDetailView.h; sourceTree = "<group>"; };
+		10CFF58E16BF2D360039C194 /* VSCOBOSXElementDetailView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXElementDetailView.mm; path = ../Apple/OSX/OB/VSCOBOSXElementDetailView.mm; sourceTree = "<group>"; };
+		10CFF58F16BF2D360039C194 /* VSCOBOSXElementEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXElementEditor.h; path = ../Apple/OSX/OB/VSCOBOSXElementEditor.h; sourceTree = "<group>"; };
+		10CFF59016BF2D360039C194 /* VSCOBOSXElementInspectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXElementInspectorViewController.h; path = ../Apple/OSX/OB/VSCOBOSXElementInspectorViewController.h; sourceTree = "<group>"; };
+		10CFF59116BF2D360039C194 /* VSCOBOSXElementInspectorViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXElementInspectorViewController.mm; path = ../Apple/OSX/OB/VSCOBOSXElementInspectorViewController.mm; sourceTree = "<group>"; };
+		10CFF59216BF2D360039C194 /* VSCOBOSXElementInspectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOBOSXElementInspectorViewController.xib; path = ../Apple/OSX/OB/VSCOBOSXElementInspectorViewController.xib; sourceTree = "<group>"; };
+		10CFF59316BF2D360039C194 /* VSCOBOSXElementInspectorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXElementInspectorWindowController.h; path = ../Apple/OSX/OB/VSCOBOSXElementInspectorWindowController.h; sourceTree = "<group>"; };
+		10CFF59416BF2D360039C194 /* VSCOBOSXElementInspectorWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXElementInspectorWindowController.mm; path = ../Apple/OSX/OB/VSCOBOSXElementInspectorWindowController.mm; sourceTree = "<group>"; };
+		10CFF59516BF2D360039C194 /* VSCOBOSXElementInspectorWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOBOSXElementInspectorWindowController.xib; path = ../Apple/OSX/OB/VSCOBOSXElementInspectorWindowController.xib; sourceTree = "<group>"; };
+		10CFF59616BF2D360039C194 /* VSCOBOSXElementListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXElementListView.h; path = ../Apple/OSX/OB/VSCOBOSXElementListView.h; sourceTree = "<group>"; };
+		10CFF59716BF2D360039C194 /* VSCOBOSXElementListView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXElementListView.mm; path = ../Apple/OSX/OB/VSCOBOSXElementListView.mm; sourceTree = "<group>"; };
+		10CFF59816BF2D360039C194 /* VSCOBOSXElementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXElementView.h; path = ../Apple/OSX/OB/VSCOBOSXElementView.h; sourceTree = "<group>"; };
+		10CFF59916BF2D360039C194 /* VSCOBOSXElementView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXElementView.mm; path = ../Apple/OSX/OB/VSCOBOSXElementView.mm; sourceTree = "<group>"; };
+		10CFF5A316BF2D5A0039C194 /* VSCOBOSXSceneController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXSceneController.h; path = ../Apple/OSX/OB/VSCOBOSXSceneController.h; sourceTree = "<group>"; };
+		10CFF5A416BF2D5A0039C194 /* VSCOBOSXSceneController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXSceneController.mm; path = ../Apple/OSX/OB/VSCOBOSXSceneController.mm; sourceTree = "<group>"; };
+		10CFF5A516BF2D5A0039C194 /* VSCOBOSXSceneDetailView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXSceneDetailView.h; path = ../Apple/OSX/OB/VSCOBOSXSceneDetailView.h; sourceTree = "<group>"; };
+		10CFF5A616BF2D5A0039C194 /* VSCOBOSXSceneDetailView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXSceneDetailView.mm; path = ../Apple/OSX/OB/VSCOBOSXSceneDetailView.mm; sourceTree = "<group>"; };
 		10D5533815FA409F002AED81 /* NSString+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+VSCAdditions.h"; path = "../../../Categories/NSString+VSCAdditions.h"; sourceTree = "<group>"; };
 		10D5533915FA409F002AED81 /* NSString+VSCAdditions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSString+VSCAdditions.mm"; path = "../../../Categories/NSString+VSCAdditions.mm"; sourceTree = "<group>"; };
 		10D7AE891628554D00DE0F72 /* VSCMIDIOutputManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDIOutputManager.cpp; path = ../../../../MIDI/VSCMIDIOutputManager.cpp; sourceTree = "<group>"; };
@@ -896,27 +894,27 @@
 				109A8EBF16A1A77E0023EC1B /* VSCOBOSXSceneDisplayView.mm */,
 				109A8EC016A1A77E0023EC1B /* VSCOBOSXSceneListener.h */,
 				109A8EC116A1A77E0023EC1B /* VSCOBOSXSceneListener.mm */,
-				109A8EC216A1A77E0023EC1B /* VSCOSXOBSceneController.h */,
-				109A8EC316A1A77E0023EC1B /* VSCOSXOBSceneController.mm */,
-				109A8EC416A1A77E0023EC1B /* VSCOSXOBSceneDetailView.h */,
-				109A8EC516A1A77E0023EC1B /* VSCOSXOBSceneDetailView.mm */,
-				109A8ECD16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.h */,
-				109A8ECE16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.mm */,
-				109A8ECF16A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.xib */,
-				109A8ED116A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.h */,
-				109A8ED216A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.mm */,
-				109A8ED016A1A77E0023EC1B /* VSCOSXOBSceneElementController.h */,
-				109A8ED416A1A77E0023EC1B /* VSCOSXOBSceneElementEditor.h */,
-				109A8ED816A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.h */,
-				109A8ED916A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.mm */,
-				109A8EDA16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.xib */,
-				109A8EDB16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.h */,
-				109A8EDC16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.mm */,
-				109A8EDD16A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.xib */,
-				109A8EDE16A1A77E0023EC1B /* VSCOSXOBSceneElementListView.h */,
-				109A8EDF16A1A77E0023EC1B /* VSCOSXOBSceneElementListView.mm */,
-				109A8EE016A1A77E0023EC1B /* VSCOSXOBSceneElementView.h */,
-				109A8EE116A1A77E0023EC1B /* VSCOSXOBSceneElementView.mm */,
+				10CFF58916BF2D350039C194 /* VSCOBOSXElementCollisionView.h */,
+				10CFF58A16BF2D350039C194 /* VSCOBOSXElementCollisionView.mm */,
+				10CFF58B16BF2D350039C194 /* VSCOBOSXElementCollisionView.xib */,
+				10CFF58C16BF2D350039C194 /* VSCOBOSXElementController.h */,
+				10CFF58D16BF2D350039C194 /* VSCOBOSXElementDetailView.h */,
+				10CFF58E16BF2D360039C194 /* VSCOBOSXElementDetailView.mm */,
+				10CFF58F16BF2D360039C194 /* VSCOBOSXElementEditor.h */,
+				10CFF59016BF2D360039C194 /* VSCOBOSXElementInspectorViewController.h */,
+				10CFF59116BF2D360039C194 /* VSCOBOSXElementInspectorViewController.mm */,
+				10CFF59216BF2D360039C194 /* VSCOBOSXElementInspectorViewController.xib */,
+				10CFF59316BF2D360039C194 /* VSCOBOSXElementInspectorWindowController.h */,
+				10CFF59416BF2D360039C194 /* VSCOBOSXElementInspectorWindowController.mm */,
+				10CFF59516BF2D360039C194 /* VSCOBOSXElementInspectorWindowController.xib */,
+				10CFF59616BF2D360039C194 /* VSCOBOSXElementListView.h */,
+				10CFF59716BF2D360039C194 /* VSCOBOSXElementListView.mm */,
+				10CFF59816BF2D360039C194 /* VSCOBOSXElementView.h */,
+				10CFF59916BF2D360039C194 /* VSCOBOSXElementView.mm */,
+				10CFF5A316BF2D5A0039C194 /* VSCOBOSXSceneController.h */,
+				10CFF5A416BF2D5A0039C194 /* VSCOBOSXSceneController.mm */,
+				10CFF5A516BF2D5A0039C194 /* VSCOBOSXSceneDetailView.h */,
+				10CFF5A616BF2D5A0039C194 /* VSCOBOSXSceneDetailView.mm */,
 			);
 			name = OB;
 			sourceTree = "<group>";
@@ -1577,9 +1575,6 @@
 				109A8EA816A1A7210023EC1B /* Plugins.cfg in Resources */,
 				109A8EA916A1A7210023EC1B /* Plugins_d.cfg in Resources */,
 				109A8EAA16A1A7210023EC1B /* resources.cfg in Resources */,
-				109A8EF116A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.xib in Resources */,
-				109A8EF716A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.xib in Resources */,
-				109A8EF916A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.xib in Resources */,
 				10F7515016A9529100F493D6 /* VSCOSXKeyedCheckBoxView.xib in Resources */,
 				10F7515216A952A700F493D6 /* VSCOSXKeyedSliderView.xib in Resources */,
 				10F115F516AC7FCC000A9EBB /* VSCOSXKeyed3FieldView.xib in Resources */,
@@ -1595,6 +1590,9 @@
 				10F8503316B92D10007485F8 /* VSCIMOSXMappingView.xib in Resources */,
 				10A764E816BEA4E800B9F9A2 /* VSCIMOSXEventChainCellView.xib in Resources */,
 				10A764ED16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.xib in Resources */,
+				10CFF59B16BF2D360039C194 /* VSCOBOSXElementCollisionView.xib in Resources */,
+				10CFF59E16BF2D360039C194 /* VSCOBOSXElementInspectorViewController.xib in Resources */,
+				10CFF5A016BF2D360039C194 /* VSCOBOSXElementInspectorWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1689,14 +1687,6 @@
 				109A8EE616A1A77E0023EC1B /* VSCOBOSXSceneCollisionListener.mm in Sources */,
 				109A8EE716A1A77E0023EC1B /* VSCOBOSXSceneDisplayView.mm in Sources */,
 				109A8EE816A1A77E0023EC1B /* VSCOBOSXSceneListener.mm in Sources */,
-				109A8EE916A1A77E0023EC1B /* VSCOSXOBSceneController.mm in Sources */,
-				109A8EEA16A1A77E0023EC1B /* VSCOSXOBSceneDetailView.mm in Sources */,
-				109A8EF016A1A77E0023EC1B /* VSCOSXOBSceneElementCollisionView.mm in Sources */,
-				109A8EF216A1A77E0023EC1B /* VSCOSXOBSceneElementDetailView.mm in Sources */,
-				109A8EF616A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorViewController.mm in Sources */,
-				109A8EF816A1A77E0023EC1B /* VSCOSXOBSceneElementInspectorWindowController.mm in Sources */,
-				109A8EFA16A1A77E0023EC1B /* VSCOSXOBSceneElementListView.mm in Sources */,
-				109A8EFB16A1A77E0023EC1B /* VSCOSXOBSceneElementView.mm in Sources */,
 				109A8F1316A1A83E0023EC1B /* VSCIMAction.cpp in Sources */,
 				109A8F1716A1A83E0023EC1B /* VSCIMCollisionMapper.cpp in Sources */,
 				109A8F1816A1A83E0023EC1B /* VSCIMMapping.cpp in Sources */,
@@ -1731,6 +1721,12 @@
 				1068513E16B9D02800505F04 /* VSCIMOSXEventChainCellView.mm in Sources */,
 				10A764EC16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.m in Sources */,
 				10A764F016BEEE9800B9F9A2 /* VSCIMOSXEventView.m in Sources */,
+				10CFF59A16BF2D360039C194 /* VSCOBOSXElementCollisionView.mm in Sources */,
+				10CFF59C16BF2D360039C194 /* VSCOBOSXElementDetailView.mm in Sources */,
+				10CFF59D16BF2D360039C194 /* VSCOBOSXElementInspectorViewController.mm in Sources */,
+				10CFF59F16BF2D360039C194 /* VSCOBOSXElementInspectorWindowController.mm in Sources */,
+				10CFF5A116BF2D360039C194 /* VSCOBOSXElementListView.mm in Sources */,
+				10CFF5A216BF2D360039C194 /* VSCOBOSXElementView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
