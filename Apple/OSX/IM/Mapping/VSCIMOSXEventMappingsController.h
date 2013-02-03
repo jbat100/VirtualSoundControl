@@ -1,5 +1,5 @@
 //
-//  VSCIMOSXActionMappingsController.h
+//  VSCIMOSXEventMappingsController.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 11/27/12.
@@ -13,7 +13,7 @@
 #include "VSCIMMapping.h"
 #include "VSCIMAction.h"
 
-@protocol VSCIMOSXActionMappingsController <NSObject>
+@protocol VSCIMOSXEventMappingsController <NSObject>
 
 @property (nonatomic, assign) VSC::IM::Action::WPtr action;
 

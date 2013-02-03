@@ -3,6 +3,7 @@
 #define _VSC_IM_EVENT_CHAIN_H_
 
 #include "VSC.h"
+#include "VSCIM.h"
 #include "VSCIMEvent.h"
 #include "VSCOB.h"
 #include "VSCUsernamed.h"
@@ -62,8 +63,6 @@ namespace VSC
             Events mEvents;
             
         };
-        
-        typedef std::vector<EventChain::SPtr> EventChains;
 
     }
     

@@ -50,7 +50,6 @@ const static BOOL traceInterface = YES;
 
 -(void) customInit
 {
-    
     static BOOL calledOnce = NO;
     
     BOOST_ASSERT(calledOnce == NO);

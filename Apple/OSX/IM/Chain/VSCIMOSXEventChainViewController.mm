@@ -10,7 +10,7 @@
 
 #import "VSCOSXOBSceneElementEditor.h"
 #import "VSCOSXOBSceneElementController.h"
-#import "VSCIMOSXActionMappingsViewController.h"
+#import "VSCIMOSXEventMappingsViewController.h"
 #import "VSCIMOSXActionView.h"
 #import "VSCIMOSXDelayView.h"
 
@@ -193,12 +193,57 @@ const static BOOL traceInterface = YES;
 
 #pragma mark - UI Helpers
 
+-(void) switchToView:(NSView*)newView
+{
+    if (tabView == nil) return;
+    
+    BOOST_ASSERT(tabView);
+    BOOST_ASSERT([tabView isKindOfClass:[NSView class]]);
+    
+    if ([tabView isKindOfClass:[NSView class]] == NO) return;
+    if ([tabView superview] == self.environmentInspectorView) return;
+    
+    if (self.tabViewConstraints)
+    {
+        [self.environmentInspectorView removeConstraints:self.tabViewConstraints];
+    }
+    
+    [self resetInspectorView];
+    
+    [self.environmentInspectorView  addSubview:tabView];
+    
+    NSView* bar = self.tabBar;
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(tabView, bar);
+    
+    NSMutableArray* allConstraints = [NSMutableArray array];
+    
+    NSArray* hConstraints =[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tabView]|"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:viewsDictionary];
+    
+    [allConstraints addObjectsFromArray:hConstraints];
+    [self.environmentInspectorView addConstraints:hConstraints];
+    
+    NSArray* vConstraints =[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bar]-0-[tabView]|"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:viewsDictionary];
+    
+    [allConstraints addObjectsFromArray:vConstraints];
+    [self.environmentInspectorView addConstraints:vConstraints];
+    
+    self.tabViewConstraints = [NSArray arrayWithArray:allConstraints];
+}
+
+
+
 -(void) sender:(id)sender requestsShowMappingsForAction:(VSC::IM::Action::SPtr)action
 {
     if (!self.actionMappingsViewController)
     {
-        self.actionMappingsViewController = [[VSCIMOSXActionMappingsViewController alloc]
-                                             initWithNibName:@"VSCIMOSXActionMappingsViewController" bundle:nil];
+        self.actionMappingsViewController = [[VSCIMOSXEventMappingsViewController alloc]
+                                             initWithNibName:@"VSCIMOSXEventMappingsViewController" bundle:nil];
         
         BOOST_ASSERT(self.actionMappingsViewController);
         self.actionMappingsViewController.eventChainController = self;

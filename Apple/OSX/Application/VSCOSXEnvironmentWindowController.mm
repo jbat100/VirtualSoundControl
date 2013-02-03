@@ -22,9 +22,11 @@
 #import "DMTabBar.h"
 
 #include "VSCEnvironment.h"
+#include "VSCOB.h"
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
 #include "VSCOBElement.h"
+#include "VSCIM.h"
 #include "VSCIMCollisionMapper.h"
 
 #include <Ogre/Ogre.h>
@@ -366,45 +368,45 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     [self.elementInspectorWindowController.elementInspectorViewController showElementDetailView];
 }
 
--(VSC::IM::EventChain::SPtr) collisionStartedEventChainForElement:(VSC::OB::Element::SPtr)element
+-(const VSC::IM::EventChains) collisionStartedEventChainsForElement:(VSC::OB::Element::SPtr)element
 {
     VSC::Environment::SPtr env = self.environment.lock();
     BOOST_ASSERT(env);
     
+    VSC::IM::EventChains eventChains;
+    
     if (env)
     {
-        BOOST_ASSERT(env->getCollisionMapper());
-        if (env->getCollisionMapper())
+        VSC::IM::CollisionMapper::SPtr mapper = env->getCollisionMapper();
+        BOOST_ASSERT(mapper);
+        if (mapper)
         {
-            VSC::IM::EventChains chains;
-            if (chains.size() > 0)
-            {
-                VSC::IM::EventChain::SPtr chain = *(chains.begin());
-                return chain;
-            }
+            return mapper->getEventChainsForCollisionStarted(element);
         }
     }
     
-    return VSC::IM::EventChain::SPtr();
+    return eventChains;
 }
 
--(VSC::IM::EventChain::SPtr) collisionEndedEventChainForElement:(VSC::OB::Element::SPtr)element
+-(const VSC::IM::EventChains) collisionEndedEventChainsForElement:(VSC::OB::Element::SPtr)element
 {
     VSC::Environment::SPtr env = self.environment.lock();
     BOOST_ASSERT(env);
     
-    /*
+    VSC::IM::EventChains eventChains;
+    
     if (env)
     {
-        return env->getCollisionMapper()->getEventChainForCollisionEnded(element);
+        VSC::IM::CollisionMapper::SPtr mapper = env->getCollisionMapper();
+        BOOST_ASSERT(mapper);
+        if (mapper)
+        {
+            return mapper->getEventChainsForCollisionEnded(element);
+        }
     }
-     */
     
-    return VSC::IM::EventChain::SPtr();
+    return eventChains;
 }
-
-#pragma mark - NSTableView Delegate and DataSource Methods
-
 
 
 #pragma mark - Sensible tests

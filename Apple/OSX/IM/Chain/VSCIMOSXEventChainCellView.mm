@@ -7,11 +7,17 @@
 //
 
 #import "VSCIMOSXEventChainCellView.h"
+#import "VSCOSXEnvironmentController.h"
 #import "NSString+VSCAdditions.h"
 
 #include <boost/assert.hpp>
 
 @implementation VSCIMOSXEventChainCellView
+
++(CGFloat) defaultViewHeight
+{
+    return 60.0;
+}
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -31,7 +37,7 @@
 -(void) awakeFromNib
 {
     BOOST_ASSERT(self.labelTextField);
-    BOOST_ASSERT(self.editButton)
+    BOOST_ASSERT(self.editButton);
 }
 
 -(void) setEventChain:(VSC::IM::EventChain::WPtr)chain
@@ -53,4 +59,20 @@
     }
 }
 
+-(IBAction) editButtonClicked:(id)sender
+{
+    VSC::IM::EventChain::SPtr chain = self.eventChain.lock();
+    BOOST_ASSERT(chain);
+    if (chain)
+    {
+        BOOST_ASSERT(self.environmentController);
+        BOOST_ASSERT([self.environmentController respondsToSelector:@selector(showEventChainEditor:)]);
+        if (self.environmentController && [self.environmentController respondsToSelector:@selector(showEventChainEditor:)])
+        {
+            [self.environmentController showEventChainEditor:chain];
+        }
+    }
+}
+
 @end
+

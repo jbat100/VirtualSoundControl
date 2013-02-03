@@ -13,7 +13,7 @@
 
 #include "VSCIMEvent.h"
 
-@class VSCIMOSXActionMappingsViewController;
+@class VSCIMOSXEventMappingsViewController;
 
 @interface VSCIMOSXEventChainViewController : NSViewController
 <VSCIMOSXEventChainController, NSTableViewDataSource, NSTableViewDelegate>
@@ -42,7 +42,7 @@
  *  Mapping list view
  */
 
-@property (strong)  VSCIMOSXActionMappingsViewController* actionMappingsViewController;
+@property (strong)  VSCIMOSXEventMappingsViewController* actionMappingsViewController;
 
 -(void) reloadInterface;
 

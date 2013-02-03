@@ -22,6 +22,8 @@
 @property (nonatomic, strong) IBOutlet NSButton* editButton;
 @property (nonatomic, strong) IBOutlet NSImageView* imageView;
 
++(CGFloat) defaultViewHeight;
+
 -(IBAction) editButtonClicked:(id)sender;
 
 @end

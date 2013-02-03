@@ -1,12 +1,34 @@
 
+#ifndef _VSC_IM_H_
+#define _VSC_IM_H_
+
 #include "VSCIMAction.h"
 
 #include <string>
+
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
+
+#include <vector>
 
 namespace VSC
 {
     namespace IM
     {
+        /**
+         *  Forward class declarations
+         */
+        
+        class Event;
+        typedef boost::shared_ptr<Event>        Event_SPtr;
+        typedef boost::weak_ptr<Event>          Event_WPtr;
+        typedef std::vector<Event_SPtr>         Events;
+        
+        class EventChain;
+        typedef boost::shared_ptr<EventChain>   EventChain_SPtr;
+        typedef boost::weak_ptr<EventChain>     EventChain_WPtr;
+        typedef std::vector<EventChain_SPtr>    EventChains;
+        
         /*
          *  Action types enum, used to avoid having to downcast constantly to check action type.
          *  Not sure whether this is the best way of doing things. Should collision actions be polymorphic
@@ -63,4 +85,4 @@ namespace VSC
     }
 }
 
-
+#endif // _VSC_IM_H_

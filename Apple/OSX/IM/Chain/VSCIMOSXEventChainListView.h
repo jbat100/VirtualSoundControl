@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+@protocol VSCOSXEnvironmentController;
+
 @interface VSCIMOSXEventChainListView : NSView
 
 @property (assign) id<VSCOSXEnvironmentController> environmentController;

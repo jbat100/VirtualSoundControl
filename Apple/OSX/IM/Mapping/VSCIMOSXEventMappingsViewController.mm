@@ -1,12 +1,12 @@
 //
-//  VSCIMOSXActionMappingsViewController.m
+//  VSCIMOSXEventMappingsViewController.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 11/27/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCIMOSXActionMappingsViewController.h"
+#import "VSCIMOSXEventMappingsViewController.h"
 #import "VSCIMOSXMappingEditViewController.h"
 #import "VSCIMOSXEventChainController.h"
 #import "VSCIMOSXMappingView.h"
@@ -15,7 +15,7 @@
 
 NSString* const VSCIMOSXMappingViewReuseIdentifier = @"VSCIMOSXMappingViewReuseIdentifier";
 
-@interface VSCIMOSXActionMappingsViewController ()
+@interface VSCIMOSXEventMappingsViewController ()
 
 @property (weak) IBOutlet NSButton* backToEventChainViewButton;
 @property (strong) VSCIMOSXMappingEditViewController* mappingEditViewController;
@@ -29,7 +29,7 @@ NSString* const VSCIMOSXMappingViewReuseIdentifier = @"VSCIMOSXMappingViewReuseI
 @end
 
 
-@implementation VSCIMOSXActionMappingsViewController
+@implementation VSCIMOSXEventMappingsViewController
 
 @synthesize action = _action;
 

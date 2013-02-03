@@ -7,8 +7,8 @@
 
 #include "VSCEnvironment.h"
 #include "VSCEnvironmentTest.h"
-#include "VSCOBScene.h"
-#include "VSCIMEventChain.h"
+#include "VSCOB.h"
+#include "VSCIM.h"
 
 
 @protocol VSCOSXOBSceneController;
@@ -32,8 +32,9 @@
 -(void) showSceneDetails;
 -(void) showSceneElementList;
 -(void) showElementInspectorForElement:(VSC::OB::Element_SPtr)element;
+-(void) showEventChainEditor:(VSC::IM::EventChain_SPtr)eventChain;
 
--(VSC::IM::EventChains) collisionStartedEventChainsForElement:(VSC::OB::Element_SPtr)element;
--(VSC::IM::EventChains) collisionEndedEventChainsForElement:(VSC::OB::Element_SPtr)element;
+-(const VSC::IM::EventChains) collisionStartedEventChainsForElement:(VSC::OB::Element_SPtr)element;
+-(const VSC::IM::EventChains) collisionEndedEventChainsForElement:(VSC::OB::Element_SPtr)element;
 
 @end
