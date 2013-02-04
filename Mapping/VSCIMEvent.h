@@ -5,9 +5,8 @@
 #include "VSC.h"
 #include "VSCTask.h"
 #include "VSCTaskQueue.h"
+#include "VSCIM.h"
 #include "VSCIMTarget.h"
-#include "VSCIMMapping.h"
-#include "VSCIMCollisionMapping.h"
 
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
@@ -33,8 +32,8 @@ namespace VSC
             typedef boost::shared_ptr<Event>    SPtr;
             typedef boost::weak_ptr<Event>      WPtr;
             
-            typedef std::map<Target, Mapping::SPtr>             MappingMap;
-            typedef std::map<Target, Float>                     ValueMap;
+            typedef std::map<Target, Mapping_SPtr>  MappingMap;
+            typedef std::map<Target, Float>         ValueMap;
             
             Event() {}
             virtual ~Event() {}
@@ -47,11 +46,11 @@ namespace VSC
             
             const Targets& getRequiredMappingTargets(void) {return mRequiredMappingTargets;}
             
-            Mapping::SPtr getMappingForTarget(const Target target);
-            Mapping::SPtr getCollisionMappingForTarget(const Target target);
+            Mapping_SPtr getMappingForTarget(const Target target);
+            Mapping_SPtr getCollisionMappingForTarget(const Target target);
             
-            void setMappingForTarget(Mapping::SPtr mapping, const Target target);
-            void setCollisionMappingForTarget(Mapping::SPtr mapping, const Target target);
+            void setMappingForTarget(Mapping_SPtr mapping, const Target target);
+            void setCollisionMappingForTarget(Mapping_SPtr mapping, const Target target);
             
         protected:
             

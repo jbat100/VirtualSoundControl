@@ -7,14 +7,14 @@
 //
 
 #import "VSCIMOSXMappingView.h"
-#import "VSC::IM::MappingTypes.h"
 #import "VSCIMOSXEventEditor.h"
 #import "NSString+VSCAdditions.h"
 
+#include "VSCIM.h"
 #include "VSCIMTarget.h"
 #include "VSCIMMapping.h"
 
-NSDictionary* mappingTypeMenuItemStringDict = nil;
+//NSDictionary* mappingTypeMenuItemStringDict = nil;
 
 
 @interface VSCIMOSXMappingView ()
@@ -45,14 +45,7 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
 
 +(void) initialize
 {
-    BOOST_ASSERT(!mappingTypeMenuItemStringDict);
-    
-    mappingTypeMenuItemStringDict = @{
-    @((int)VSC::IM::MappingTypeNone)        : @"No Mapping",
-    @((int)VSC::IM::MappingTypeConstant)    : @"Constant Mapping",
-    @((int)VSC::IM::MappingTypeCollisionVelocity)    : @"Velocity Mapping",
-    @((int)VSC::IM::MappingTypeCollisionDistance)    : @"Distance Mapping"
-    };
+
 }
 
 +(CGFloat) defaultHeight
@@ -67,27 +60,12 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
 
 +(NSString*) menuItemStringForMappingType:(VSC::IM::MappingType)mappingType
 {
-    BOOST_ASSERT(mappingTypeMenuItemStringDict);
-    return [mappingTypeMenuItemStringDict objectForKey:@((int)mappingType)];
+    return [NSString stringWithStdString:VSC::IM::stringForMappingType(mappingType)];
 }
 
 +(VSC::IM::MappingType) collisionMappingTypeForMenuItemString:(NSString*)menuItemString
 {
-    BOOST_ASSERT(mappingTypeMenuItemStringDict);
-    
-    NSSet* keys = [mappingTypeMenuItemStringDict keysOfEntriesPassingTest:^BOOL(id key, id obj, BOOL *stop) {
-        if ([obj isKindOfClass:[NSString class]] == NO) return false;
-        if ([(NSString*)obj isEqualToString:menuItemString]) return true;
-        return false;
-    }];
-    
-    BOOST_ASSERT([keys count] < 2);
-    
-    if ([keys count] == 1) return (VSC::IM::MappingType)[[keys anyObject] intValue];
-    
-    BOOST_ASSERT_MSG(false, "No Mapping Type");
-    
-    return VSC::IM::MappingTypeNone;
+    return VSC::IM::mappingTypeForString([menuItemString stdString]);
 }
 
 #pragma mark - NSView Methods
@@ -113,6 +91,8 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
     // Drawing code here.
 }
 
+#pragma mark - Setters and Getters
+
 -(void) setMapping:(VSC::IM::Mapping::WPtr)mapping
 {
     _mapping = mapping;
@@ -125,6 +105,11 @@ NSDictionary* mappingTypeMenuItemStringDict = nil;
 {
     _target = target;
     [self updateInterfaceForNewTarget];
+}
+
+-(std::set<VSC::IM::MappingType>&) allowedMappingTypes
+{
+    return allowedMappingTypes;
 }
 
 -(void) updateInterfaceForNewTarget

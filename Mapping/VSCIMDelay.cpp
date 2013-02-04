@@ -1,16 +1,24 @@
 
 #include "VSCIMDelay.h"
+#include "VSCIMMapping.h"
+#include "VSCIMCollisionMapping.h"
+#include "VSCOBCollision.h"
+#include "VSCOBElement.h"
 
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-VSC::IM::Delay::Delay(void)
+using namespace VSC;
+using namespace VSC::IM;
+using namespace VSC::OB;
+
+Delay::Delay(void)
 {
     this->addRequiredMappingTarget(TargetDuration);
 }
 
-void VSC::IM::Delay::createDefaultMappings(void)
+void Delay::createDefaultMappings(void)
 {
     Mapping::SPtr defaultMapping = Mapping::SPtr(new Mapping);
     defaultMapping->setOffset(1.0);
@@ -21,7 +29,7 @@ void VSC::IM::Delay::createDefaultMappings(void)
     this->setCollisionMappingForTarget(collisionMapping, TargetDuration);
 }
 
-VSC::TimeDuration VSC::IM::Delay::getDuration(void)
+VSC::TimeDuration Delay::getDuration(void)
 {
     Mapping::SPtr mapping = this->getMappingForTarget(TargetDuration);
     
@@ -38,7 +46,7 @@ VSC::TimeDuration VSC::IM::Delay::getDuration(void)
     return boost::posix_time::milliseconds(milliseconds);
 }
 
-VSC::TimeDuration VSC::IM::Delay::getDurationForCollision(OB::Collision_SPtr collision, OB::Element_SPtr effector)
+VSC::TimeDuration Delay::getDurationForCollision(Collision_SPtr collision, Element_SPtr effector)
 {
     Mapping::SPtr mapping = this->getCollisionMappingForTarget(TargetDuration);
     Float seconds = 0.0;

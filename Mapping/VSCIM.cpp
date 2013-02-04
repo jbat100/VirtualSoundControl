@@ -4,7 +4,10 @@
 #include "VSCIMMIDIActions.h"
 #include "VSCIMCollisionMapping.h"
 
-VSC::IM::ActionType VSC::IM::actionTypeForAction(Action::SPtr action)
+using namespace VSC;
+using namespace VSC::IM;
+
+ActionType actionTypeForAction(Action::SPtr action)
 {
     if (action)
     {
@@ -24,7 +27,7 @@ VSC::IM::ActionType VSC::IM::actionTypeForAction(Action::SPtr action)
     return ActionTypeNone;
 }
 
-VSC::IM::Action::SPtr VSC::IM::createActionWithType(ActionType actionType)
+Action::SPtr createActionWithType(ActionType actionType)
 {
     switch (actionType)
     {
@@ -47,7 +50,7 @@ VSC::IM::Action::SPtr VSC::IM::createActionWithType(ActionType actionType)
     return Action::SPtr();
 }
 
-std::string VSC::IM::stringForActionType(ActionType actionType)
+std::string stringForActionType(ActionType actionType)
 {
     switch (actionType)
     {
@@ -70,7 +73,7 @@ std::string VSC::IM::stringForActionType(ActionType actionType)
     return "Unknown Action";
 }
 
-VSC::IM::MappingType VSC::IM::mappingTypeForMapping(Mapping::SPtr mapping)
+MappingType mappingTypeForMapping(Mapping::SPtr mapping)
 {
     if (mapping)
     {
@@ -87,7 +90,7 @@ VSC::IM::MappingType VSC::IM::mappingTypeForMapping(Mapping::SPtr mapping)
     return MappingTypeNone;
 }
 
-VSC::IM::Mapping::SPtr VSC::IM::createMappingWithType(MappingType mappingType)
+Mapping::SPtr createMappingWithType(MappingType mappingType)
 {
     switch (mappingType)
     {
@@ -107,10 +110,23 @@ VSC::IM::Mapping::SPtr VSC::IM::createMappingWithType(MappingType mappingType)
     return Mapping::SPtr();
 }
 
-std::string VSC::IM::stringForMappingType(MappingType mappingType)
+MappingType mappingTypeForString(const std::string& s)
+{
+    if (!s.compare("No Mapping")) return MappingTypeNone;
+    if (!s.compare("Constant")) return MappingTypeConstant;
+    if (!s.compare("Collision Velocity")) return MappingTypeCollisionVelocity;
+    if (!s.compare("Collision Distance")) return MappingTypeCollisionDistance;
+    
+    return MappingTypeNone;
+}
+
+std::string stringForMappingType(MappingType mappingType)
 {
     switch (mappingType)
     {
+        case MappingTypeNone:
+            return "No Mapping";
+            
         case MappingTypeConstant:
             return "Constant";
             

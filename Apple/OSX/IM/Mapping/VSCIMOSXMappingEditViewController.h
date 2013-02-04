@@ -7,14 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "VSC::IM::MappingTypes.h"
 
 #include "VSC.h"
-#include "VSCIMMapping.h"
+#include "VSCIM.h"
 
 @interface VSCIMOSXMappingEditViewController : NSViewController
 
-@property (nonatomic, assign) VSC::IM::Mapping::WPtr collisionMapping;
+@property (nonatomic, assign) VSC::IM::Mapping_WPtr collisionMapping;
 
 // binding targets
 

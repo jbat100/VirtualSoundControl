@@ -1,10 +1,15 @@
 
 #include "VSCIMEvent.h"
+#include "VSCIMMapping.h"
 
+#include <boost/foreach.hpp>
+
+using namespace VSC;
+using namespace VSC::IM;
 
 //MARK: - Mapping Requirements
 
-bool VSC::IM::Action::checkRequiredMappings(void)
+bool Event::checkRequiredMappings(void)
 {
     BOOST_FOREACH(const Target& target, mRequiredMappingTargets)
     {
@@ -13,7 +18,7 @@ bool VSC::IM::Action::checkRequiredMappings(void)
     return true;
 }
 
-void VSC::IM::Action::addRequiredMappingTarget(Target target)
+void Event::addRequiredMappingTarget(Target target)
 {
     Targets::iterator it = std::find(mRequiredMappingTargets.begin(), mRequiredMappingTargets.end(), target);
     if (it == mRequiredMappingTargets.end()) mRequiredMappingTargets.push_back(target);
@@ -21,24 +26,24 @@ void VSC::IM::Action::addRequiredMappingTarget(Target target)
 
 //MARK: - Mapping Getters
 
-VSC::IM::Mapping::SPtr VSC::IM::Action::getMappingForTarget(Target target)
+Mapping::SPtr Event::getMappingForTarget(Target target)
 {
     return mMappingMap[target];
 }
 
-VSC::IM::Mapping::SPtr VSC::IM::Action::getCollisionMappingForTarget(Target target)
+Mapping::SPtr Event::getCollisionMappingForTarget(Target target)
 {
     return mCollisionMappingMap[target];
 }
 
 //MARK: - Mapping Setters
 
-void VSC::IM::Action::setMappingForTarget(Mapping::SPtr mapping, Target target)
+void Event::setMappingForTarget(Mapping::SPtr mapping, Target target)
 {
     mMappingMap[target] = mapping;
 }
 
-void VSC::IM::Action::setCollisionMappingForTarget(Mapping::SPtr mapping, Target target)
+void Event::setCollisionMappingForTarget(Mapping::SPtr mapping, Target target)
 {
     mCollisionMappingMap[target] = mapping;
 }

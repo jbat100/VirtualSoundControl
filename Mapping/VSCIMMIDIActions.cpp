@@ -66,7 +66,7 @@ void MIDINoteOnAction::createDefaultMappings()
 }
 
 
-Tasks MIDINoteOnAction::generateTasksWithValueMap(Action::ValueMap& valueMap)
+const Tasks MIDINoteOnAction::generateTasksWithValueMap(Action::ValueMap& valueMap)
 {
     Tasks tasks;
     

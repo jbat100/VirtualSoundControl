@@ -2,12 +2,11 @@
 #ifndef _VSC_IM_H_
 #define _VSC_IM_H_
 
-#include <string>
-
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 
 #include <vector>
+#include <set>
 
 namespace VSC
 {
@@ -88,11 +87,15 @@ namespace VSC
             MappingTypeCollisionDistance
         };
         
+        typedef std::set<MappingType> MappingTypeSet;
+        
         MappingType mappingTypeForMapping(Mapping_SPtr mapping);
         
         Mapping_SPtr createMappingWithType(MappingType mappingType);
         
         std::string stringForMappingType(MappingType mappingType);
+        
+        MappingType mappingTypeForString(const std::string& s);
     }
 }
 

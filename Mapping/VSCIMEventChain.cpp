@@ -5,6 +5,7 @@
 #include "VSCIMAction.h"
 
 #include "VSCOBCollision.h"
+#include "VSCOBElement.h"
 
 #include "VSCException.h"
 #include "VSCTask.h"
@@ -12,12 +13,16 @@
 
 #include <boost/foreach.hpp>
 
-unsigned int VSC::IM::EventChain::getNumberOfEvents(void)
+using namespace VSC;
+using namespace VSC::IM;
+using namespace VSC::OB;
+
+unsigned int EventChain::getNumberOfEvents(void)
 {
     return (unsigned int) mEvents.size();
 }
 
-VSC::IM::Event::SPtr VSC::IM::EventChain::getEventAtIndex(unsigned int index)
+Event::SPtr EventChain::getEventAtIndex(unsigned int index)
 {
     BOOST_ASSERT(this->getNumberOfEvents() > index);
     
@@ -29,7 +34,7 @@ VSC::IM::Event::SPtr VSC::IM::EventChain::getEventAtIndex(unsigned int index)
     return Event::SPtr();
 }
 
-void VSC::IM::EventChain::appendEvent(Event::SPtr event)
+void EventChain::appendEvent(Event::SPtr event)
 {
     if (!this->checkEvent(event))        
     {
@@ -47,14 +52,14 @@ void VSC::IM::EventChain::appendEvent(Event::SPtr event)
     }
 }
 
-void VSC::IM::EventChain::prependEvent(Event::SPtr event)
+void EventChain::prependEvent(Event::SPtr event)
 {
     this->checkEvent(event);
     
     this->insertEventAtIndex(event, 0);
 }
 
-void VSC::IM::EventChain::insertEventAtIndex(Event::SPtr event, unsigned int index)
+void EventChain::insertEventAtIndex(Event::SPtr event, unsigned int index)
 {
     if (index > getNumberOfEvents())
     {
@@ -76,7 +81,7 @@ void VSC::IM::EventChain::insertEventAtIndex(Event::SPtr event, unsigned int ind
     }
 }
 
-void VSC::IM::EventChain::insertEventAfterEvent(Event::SPtr insertedEvent, Event::SPtr event)
+void EventChain::insertEventAfterEvent(Event::SPtr insertedEvent, Event::SPtr event)
 {
     this->checkEvent(insertedEvent);
     
@@ -87,7 +92,7 @@ void VSC::IM::EventChain::insertEventAfterEvent(Event::SPtr insertedEvent, Event
     mEvents.insert(it, insertedEvent);
 }
 
-void VSC::IM::EventChain::insertEventBeforeEvent(Event::SPtr insertedEvent, Event::SPtr event)
+void EventChain::insertEventBeforeEvent(Event::SPtr insertedEvent, Event::SPtr event)
 {
     this->checkEvent(insertedEvent);
     
@@ -97,7 +102,7 @@ void VSC::IM::EventChain::insertEventBeforeEvent(Event::SPtr insertedEvent, Even
     mEvents.insert(it, insertedEvent);
 }
 
-void VSC::IM::EventChain::swapEvents(Event::SPtr firstEvent, Event::SPtr secondEvent)
+void EventChain::swapEvents(Event::SPtr firstEvent, Event::SPtr secondEvent)
 {
     Events::iterator firstIt = std::find(mEvents.begin(), mEvents.end(), firstEvent);
     Events::iterator secondIt = std::find(mEvents.begin(), mEvents.end(), secondEvent);
@@ -117,12 +122,21 @@ void VSC::IM::EventChain::swapEvents(Event::SPtr firstEvent, Event::SPtr secondE
     }
 }
 
-void VSC::IM::EventChain::removeEvent(Event::SPtr event)
+void EventChain::removeEvent(Event::SPtr event)
 {
-    
+    BOOST_ASSERT(event);
+    if (event)
+    {
+        Events::iterator it = std::find(mEvents.begin(), mEvents.end(), event);
+        BOOST_ASSERT(it != mEvents.end());
+        if (it != mEvents.end())
+        {
+            mEvents.erase(it);
+        }
+    }
 }
 
-bool VSC::IM::EventChain::checkEvent(Event::SPtr event)
+bool EventChain::checkEvent(Event::SPtr event)
 {
     Delay::SPtr delay = boost::dynamic_pointer_cast<Delay>(event);
     if (delay) return true;
@@ -135,7 +149,7 @@ bool VSC::IM::EventChain::checkEvent(Event::SPtr event)
     return false;
 }
 
-void VSC::IM::EventChain::performForCollision(OB::Collision::SPtr collision)
+void EventChain::performForCollision(Collision::SPtr collision, Element::SPtr effector)
 {
     Time executionTime = CurrentTime();
     
@@ -150,7 +164,7 @@ void VSC::IM::EventChain::performForCollision(OB::Collision::SPtr collision)
         Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
         if (action)
         {
-            Tasks tasks = action->generateTasksForCollision(collision);
+            Tasks tasks = action->generateTasksForCollision(collision, effector);
             
             BOOST_FOREACH(Task::SPtr task, tasks)
             {

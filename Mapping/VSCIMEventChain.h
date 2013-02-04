@@ -4,7 +4,6 @@
 
 #include "VSC.h"
 #include "VSCIM.h"
-#include "VSCIMEvent.h"
 #include "VSCOB.h"
 #include "VSCUsernamed.h"
 
@@ -31,15 +30,15 @@ namespace VSC
             
             unsigned int getNumberOfEvents(void);
             const Events& getEvents(void) {return mEvents;}
-            Event::SPtr getEventAtIndex(unsigned int index);
+            Event_SPtr getEventAtIndex(unsigned int index);
 
-            void appendEvent(Event::SPtr event);
-            void prependEvent(Event::SPtr event);
-            void insertEventAtIndex(Event::SPtr event, unsigned int index);
-            void insertEventAfterEvent(Event::SPtr insertedEvent, Event::SPtr event);
-            void insertEventBeforeEvent(Event::SPtr insertedEvent, Event::SPtr event);
-            void swapEvents(Event::SPtr firstEvent, Event::SPtr secondEvent);
-            void removeEvent(Event::SPtr event);
+            void appendEvent(Event_SPtr event);
+            void prependEvent(Event_SPtr event);
+            void insertEventAtIndex(Event_SPtr event, unsigned int index);
+            void insertEventAfterEvent(Event_SPtr insertedEvent, Event_SPtr event);
+            void insertEventBeforeEvent(Event_SPtr insertedEvent, Event_SPtr event);
+            void swapEvents(Event_SPtr firstEvent, Event_SPtr secondEvent);
+            void removeEvent(Event_SPtr event);
             
             virtual void perform(void);
             virtual void performForCollision(OB::Collision_SPtr collision, OB::Element_SPtr effector);
@@ -56,7 +55,7 @@ namespace VSC
              *  Can be over-ridden by subclass to reject invalid events.
              */
             
-            virtual bool checkEvent(Event::SPtr event);
+            virtual bool checkEvent(Event_SPtr event);
             
         private:
             

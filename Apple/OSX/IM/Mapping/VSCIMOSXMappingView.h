@@ -7,31 +7,36 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "VSC::IM::MappingTypes.h"
 
+#include "VSCIM.h"
 #include "VSCIMTarget.h"
-#include "VSCIMMapping.h"
+
+#include <vector>
 
 @protocol VSCIMOSXEventEditor;
 
 @protocol VSCIMOSXMappingView <NSObject>
 
 @property (assign) id<VSCIMOSXEventEditor> controller;
-@property (nonatomic, assign) VSC::IM::Mapping::WPtr mapping;
+@property (nonatomic, assign) VSC::IM::Mapping_WPtr mapping;
 @property (nonatomic, assign) VSC::IM::Target target;
 
 @end
 
 
 @interface VSCIMOSXMappingView : NSView <VSCIMOSXMappingView>
+{
+    @private
+    VSC::IM::MappingTypeSet allowedMappingTypes;
+}
 
 +(CGFloat) defaultHeight;
-+(CGFloat) heightOfViewForMapping:(VSC::IM::Mapping::SPtr)collisionMapping;
-+(NSString*) menuItemStringForMappingType:(VSC::IM::MappingType)mappingType;
-+(VSC::IM::MappingType) collisionMappingTypeForMenuItemString:(NSString*)menuItemString;
++(CGFloat) heightOfViewForMapping:(VSC::IM::Mapping_SPtr)collisionMapping;
 
 @property (assign) id<VSCIMOSXEventEditor> controller;
 @property (weak) IBOutlet NSButton* editButton;
+
+-(const VSC::IM::MappingTypeSet&) allowedMappingTypes;
 
 -(void) reloadInterface;
 

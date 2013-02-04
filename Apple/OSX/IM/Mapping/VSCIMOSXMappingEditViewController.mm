@@ -8,6 +8,7 @@
 
 #import "VSCIMOSXMappingEditViewController.h"
 
+#include "VSCIMMapping.h"
 #include <boost/assert.hpp>
 
 @interface VSCIMOSXMappingEditViewController ()
