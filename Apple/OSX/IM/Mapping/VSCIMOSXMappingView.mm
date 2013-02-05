@@ -107,7 +107,7 @@
     [self updateInterfaceForNewTarget];
 }
 
--(std::set<VSC::IM::MappingType>&) allowedMappingTypes
+-(VSC::IM::MappingTypeSet&) allowedMappingTypes
 {
     return allowedMappingTypes;
 }

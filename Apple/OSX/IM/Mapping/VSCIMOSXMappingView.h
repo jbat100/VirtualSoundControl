@@ -36,7 +36,7 @@
 @property (assign) id<VSCIMOSXEventEditor> controller;
 @property (weak) IBOutlet NSButton* editButton;
 
--(const VSC::IM::MappingTypeSet&) allowedMappingTypes;
+-(VSC::IM::MappingTypeSet&) allowedMappingTypes;
 
 -(void) reloadInterface;
 
