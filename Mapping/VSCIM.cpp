@@ -11,7 +11,7 @@ namespace VSC
 {
     namespace IM
     {
-        void InitialiseDescriptionMaps(void);
+        void InitialiseMaps(void);
         
         typedef boost::bimap<Target, std::string>       TargetDescriptionMap;
         typedef boost::bimap<MappingType, std::string>  MappingDescriptionMap;
@@ -21,9 +21,9 @@ namespace VSC
         typedef MappingDescriptionMap::value_type       MappingDescriptionPair;
         typedef ActionDescriptionMap::value_type        ActionDescriptionPair;
         
-        static TargetDescriptionMap     targetDescriptionMap;
-        static MappingDescriptionMap    mappingDescriptionMap;
-        static ActionDescriptionMap     actionDescriptionMap;
+        TargetDescriptionMap     targetDescriptionMap;
+        MappingDescriptionMap    mappingDescriptionMap;
+        ActionDescriptionMap     actionDescriptionMap;
     }
 }
 
@@ -37,7 +37,7 @@ VSC::IM::MappingDescriptionMap mappingDescriptionMap;
 VSC::IM::ActionDescriptionMap actionDescriptionMap;
 
 
-void InitialiseDescriptionMaps(void)
+void InitialiseMaps(void)
 {
     BOOST_ASSERT(targetDescriptionMap.empty());
     BOOST_ASSERT(mappingDescriptionMap.empty());
@@ -146,7 +146,7 @@ Mapping::SPtr createMappingWithType(MappingType mappingType)
 
 std::string stringForActionType(const ActionType actionType)
 {
-    boost::call_once(&InitialiseDescriptionMaps, createdDescriptionsMapFlag);
+    boost::call_once(&InitialiseMaps, createdDescriptionsMapFlag);
     std::string s = actionDescriptionMap.left.at(actionType);
     BOOST_ASSERT_MSG(s.empty(), "Unexpected: Unknown ActionType");
     if (s.empty()) s = "Unknown Action Type";
@@ -155,14 +155,14 @@ std::string stringForActionType(const ActionType actionType)
 
 ActionType actionTypeForString(const std::string& s)
 {
-    boost::call_once(&InitialiseDescriptionMaps, createdDescriptionsMapFlag);
+    boost::call_once(&InitialiseMaps, createdDescriptionsMapFlag);
     ActionType t = actionDescriptionMap.right.at(s);
     return t;
 }
 
 std::string stringForMappingType(const MappingType mappingType)
 {
-    boost::call_once(&InitialiseDescriptionMaps, createdDescriptionsMapFlag);
+    boost::call_once(&InitialiseMaps, createdDescriptionsMapFlag);
     std::string s = actionDescriptionMap.left.at(actionType);
     BOOST_ASSERT_MSG(s.empty(), "Unexpected: unknown MappingType");
     if (s.empty()) s = "Unknown Mapping Type";
@@ -171,7 +171,7 @@ std::string stringForMappingType(const MappingType mappingType)
 
 MappingType mappingTypeForString(const std::string& s)
 {
-    boost::call_once(&InitialiseDescriptionMaps, createdDescriptionsMapFlag);
+    boost::call_once(&InitialiseMaps, createdDescriptionsMapFlag);
     MappingType t = mappingDescriptionMap.right.at(s);
     return t;
 }
@@ -179,7 +179,7 @@ MappingType mappingTypeForString(const std::string& s)
 
 std::string stringForTarget(const Target target)
 {
-    boost::call_once(&InitialiseDescriptionMaps, createdDescriptionsMapFlag);
+    boost::call_once(&InitialiseMaps, createdDescriptionsMapFlag);
     std::string s = targetDescriptionMap.left.at(target);
     BOOST_ASSERT_MSG(s.empty(), "Unexpected: Unknown Target");
     if (s.empty()) s = "Unknown Target";
@@ -188,7 +188,7 @@ std::string stringForTarget(const Target target)
 
 const Target targetForString(const std::string& s)
 {
-    boost::call_once(&InitialiseDescriptionMaps, createdDescriptionsMapFlag);
+    boost::call_once(&InitialiseMaps, createdDescriptionsMapFlag);
     Target t = targetDescriptionMap.right.at(s);
     return t;
 }

@@ -8,12 +8,22 @@
 #include <Ogre/Ogre.h>
 #include <boost/assert.hpp>
 
-VSC::OB::Element_SPtr VSC::IM::CollisionMapping::getCollisionEffectee(OB::Collision_SPtr collision, OB::Element_SPtr effector)
+using namespace VSC;
+using namespace VSC::IM;
+using namespace VSC::OB;
+
+CollisionMapping::CollisionMapping()
+{
+    this->allowMappingType(MappingTypeCollisionVelocity);
+    this->allowMappingType(MappingTypeCollisionDistance);
+}
+
+Element_SPtr CollisionMapping::getCollisionEffectee(Collision_SPtr collision, Element_SPtr effector)
 {
     BOOST_ASSERT(collision);
     BOOST_ASSERT(effector);
     
-    OB::Element::SPtr effectee = OB::Element::SPtr();
+    Element::SPtr effectee = Element::SPtr();
     
     if (collision && effector)
     {
@@ -34,7 +44,7 @@ VSC::OB::Element_SPtr VSC::IM::CollisionMapping::getCollisionEffectee(OB::Collis
     return effectee;
 }
 
-VSC::Float VSC::IM::CollisionVelocityMapping::mappedValue(OB::Collision::SPtr collision, OB::Element::SPtr effector)
+Float CollisionVelocityMapping::mappedValue(Collision::SPtr collision, Element::SPtr effector)
 {
     BOOST_ASSERT(collision);
     
@@ -50,14 +60,14 @@ VSC::Float VSC::IM::CollisionVelocityMapping::mappedValue(OB::Collision::SPtr co
 }
 
 
-VSC::Float VSC::IM::CollisionDistanceMapping::mappedValue(OB::Collision::SPtr collision, OB::Element::SPtr effector)
+Float CollisionDistanceMapping::mappedValue(Collision::SPtr collision, Element::SPtr effector)
 {
     BOOST_ASSERT(collision);
     BOOST_ASSERT(effector);
     
     Float rawValue = 0.0;
     
-    OB::Element::SPtr effectee = this->getCollisionEffectee(collision, effector);
+    Element::SPtr effectee = this->getCollisionEffectee(collision, effector);
     BOOST_ASSERT(effectee);
     
     if (effectee)

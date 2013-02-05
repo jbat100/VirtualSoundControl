@@ -143,17 +143,10 @@
 -(void) setupMappingChoice
 {
     BOOST_ASSERT(self.mappingPopUpButton);
-    
     [self.mappingPopUpButton removeAllItems];
-    
-    BOOST_FOREACH (const MappingType& mappingType, mAllowedMappingTypes)
+    BOOST_FOREACH (const VSC::IM::MappingType& mappingType, mAllowedMappingTypes)
     {
-        
-    }
-    
-    for (NSNumber* typeNumber in [mappingTypeMenuItemStringDict allKeys])
-    {
-        NSString* title = [[self class] menuItemStringForMappingType:(VSC::IM::MappingType)[typeNumber intValue]];
+        NSString* title = [NSString stringWithStdString:VSC::IM::stringForMappingType(mappingType)];
         [self.mappingPopUpButton addItemWithTitle:title];
     }
 }

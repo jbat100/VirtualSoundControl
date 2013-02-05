@@ -119,6 +119,23 @@ namespace VSC
         std::string stringForTarget(const Target target);
         
         const Target targetForString(const std::string& s);
+        
+        /**
+         *  Triggers
+         */
+        
+        enum Trigger {
+            TriggerNone = 0,
+            TriggerPlain,
+            TriggerCollision,
+            TriggerProximity
+        };
+        
+        typedef std::vector<Trigger> Triggers;
+        
+        std::string stringForTarget(const Target target);
+        
+        const Target targetForString(const std::string& s);
     }
 }
 

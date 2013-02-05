@@ -19,9 +19,12 @@
 <VSCIMOSXEventEditor, NSTableViewDelegate, NSTableViewDataSource>
 
 @property (weak) id<VSCIMOSXEventChainController> eventChainController;
-@property (nonatomic, weak) IBOutlet NSTableView* mappingTableView;
+
 @property (nonatomic, strong) VSCIMOSXMappingEditViewController* collisionMappingEditViewController;
 @property (nonatomic, strong) NSPopover* collisionMappingEditPopover;
+
+@property (nonatomic, weak) IBOutlet NSTableView* mappingTableView;
+@property (nonatomic, weak) IBOutlet NSTableView* collisionMappingTableView;
 
 -(void) reloadInterface;
 

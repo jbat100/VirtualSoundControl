@@ -1,10 +1,7 @@
 
 #import <Foundation/Foundation.h>
 
-#include "VSCIMAction.h"
-#include "VSCIMEventChain.h"
-
-#include "VSCIMDelay.h"
+#include "VSCIM.h"
 
 /*
  *  VSCIMOSXEventChainController, meant for the VSCIMOSXEventChainView
@@ -15,10 +12,10 @@
 @protocol VSCIMOSXEventChainController <NSObject>
 
 @property (assign) id<VSCOBOSXElementController> elementController;
-@property (nonatomic, assign) VSC::IM::EventChain::WPtr eventChain;
+@property (nonatomic, assign) VSC::IM::EventChain_WPtr eventChain;
 
--(void) sender:(id)sender requestsShowMappingsForAction:(VSC::IM::Action::SPtr)action;
--(void) sender:(id)sender requestsSetDelay:(VSC::IM::Delay::SPtr)delay toInterval:(NSTimeInterval)delayInterval;
+-(void) sender:(id)sender requestsShowMappingsForEvent:(VSC::IM::Event_SPtr)action;
+-(void) sender:(id)sender requestsSetDelay:(VSC::IM::Delay_SPtr)delay toInterval:(NSTimeInterval)delayInterval;
 -(void) senderRequestsEventCollisionChainView:(id)sender;
 
 @end

@@ -242,7 +242,7 @@ const static BOOL traceInterface = YES;
 
 
 
--(void) sender:(id)sender requestsShowMappingsForAction:(VSC::IM::Action::SPtr)action
+-(void) sender:(id)sender requestsShowMappingsForEvent:(VSC::IM::Action::SPtr)action
 {
     if (!self.actionMappingsViewController)
     {

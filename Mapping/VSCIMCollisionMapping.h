@@ -17,14 +17,15 @@ namespace VSC
     namespace IM
     {
     
-        class CollisionMapping : public Mapping {
+        class CollisionMapping : public Mapping
+        {
             
         public:
             
             typedef boost::shared_ptr<CollisionMapping>     SPtr;
             typedef boost::weak_ptr<CollisionMapping>       WPtr;
             
-            CollisionMapping() {}
+            CollisionMapping();
             virtual ~CollisionMapping() {}
             
             virtual Float mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector) = 0;
@@ -40,53 +41,6 @@ namespace VSC
         };
         
         typedef std::vector<CollisionMapping::SPtr> CollisionMappings;
-        
-        /*
-         *  Constant mapping (which can be modulated with offset, then modulators and scale factor)
-         */
-        
-        class CollisionConstantMapping : public CollisionMapping
-        {
-            
-        public:
-            
-            virtual Float mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector) {return 0.0;}
-            
-        };
-        
-        /*
-         *  Velocity mapping (which can be modulated with offset, then modulators and scale factor)
-         *  Relative velocity of the two objects at collision time.
-         */
-        
-        class CollisionVelocityMapping : public CollisionMapping
-        {
-            
-        public:
-            
-            virtual Float mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector);
-            
-        };
-        
-        /*
-         *  Distance mapping (which can be modulated with offset, then modulators and scale factor)
-         *  Distance of the collision point from another specified point.
-         */
-        
-        class CollisionDistanceMapping : public CollisionMapping {
-            
-        public:
-            
-            const Ogre::Vector3& getReferencePoint(void) {return mReferencePoint;}
-            void setReferencePoint(const Ogre::Vector3 p) {mReferencePoint = p;}
-            
-            virtual Float mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector);
-            
-        private:
-            
-            Ogre::Vector3   mReferencePoint;
-            
-        };
         
     }
     

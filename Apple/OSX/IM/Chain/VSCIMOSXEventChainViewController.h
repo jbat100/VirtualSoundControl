@@ -11,7 +11,7 @@
 #import "VSCOBOSXElementController.h"
 #import "VSCIMOSXEventChainController.h"
 
-#include "VSCIMEvent.h"
+#include "VSCIM.h"
 
 @class VSCIMOSXEventEditorViewController;
 
@@ -36,7 +36,7 @@
 -(IBAction) menuItemAction:(id)sender;
 -(IBAction) listViewTest:(id)sender;
 
--(VSC::IM::Event::SPtr) selectedChainEvent;
+-(VSC::IM::Event_SPtr) selectedChainEvent;
 
 /*
  *  Mapping list view

@@ -7,6 +7,9 @@
 //
 
 #import "VSCIMOSXEventView.h"
+#import "VSCIMOSXEventChainController.h"
+
+#include "VSCIMEvent.h"
 
 @implementation VSCIMOSXEventView
 
@@ -28,9 +31,9 @@
 -(IBAction) showMappings:(id)sender
 {
     BOOST_ASSERT(self.eventChainController);
-    BOOST_ASSERT([self.eventChainController respondsToSelector:@selector(sender:requestsShowMappingsForAction:)]);
+    BOOST_ASSERT([self.eventChainController respondsToSelector:@selector(sender:requestsShowMappingsForEvent:)]);
     
-    [self.eventChainController sender:self requestsShowMappingsForAction:self.collisionAction.lock()];
+    [self.eventChainController sender:self requestsShowMappingsForEvent:self.event.lock()];
 }
 
 -(void) reloadInterface
