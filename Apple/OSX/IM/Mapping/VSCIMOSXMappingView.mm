@@ -11,8 +11,9 @@
 #import "NSString+VSCAdditions.h"
 
 #include "VSCIM.h"
-#include "VSCIMTarget.h"
 #include "VSCIMMapping.h"
+
+#include <boost/foreach.hpp>
 
 //NSDictionary* mappingTypeMenuItemStringDict = nil;
 
@@ -96,7 +97,7 @@
 -(void) setMapping:(VSC::IM::Mapping::WPtr)mapping
 {
     _mapping = mapping;
-    self.collisionMappingType = VSC::IM::MappingTypeForMapping(_mapping.lock());
+    self.collisionMappingType = VSC::IM::mappingTypeForMapping(_mapping.lock());
     
     [self updateInterfaceForNewMapping];
 }
@@ -109,7 +110,7 @@
 
 -(VSC::IM::MappingTypeSet&) allowedMappingTypes
 {
-    return allowedMappingTypes;
+    return mAllowedMappingTypes;
 }
 
 -(void) updateInterfaceForNewTarget
@@ -144,6 +145,11 @@
     BOOST_ASSERT(self.mappingPopUpButton);
     
     [self.mappingPopUpButton removeAllItems];
+    
+    BOOST_FOREACH (const MappingType& mappingType, mAllowedMappingTypes)
+    {
+        
+    }
     
     for (NSNumber* typeNumber in [mappingTypeMenuItemStringDict allKeys])
     {

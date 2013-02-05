@@ -11,8 +11,6 @@
 
 #include "VSCIM.h"
 
-@protocol VSCIMOSXEventChainController;
-
 /*
  *  The actual NSView subclass which displays the collision action parameters and allows 
  *  the type of action to be switched.
@@ -20,9 +18,7 @@
 
 @interface VSCIMOSXActionView : VSCIMOSXEventView
 
-+(CGFloat) heightOfViewForAction:(VSC::IM::Action_SPtr)collisionAction;
-+(NSString*) stringForActionType:(VSC::IM::ActionType)actionType;
-+(VSC::IM::ActionType) actionTypeForString:(NSString*)menuItemString;
++(CGFloat) heightOfViewForAction:(VSC::IM::Action_SPtr)action;
 
 @property (nonatomic, strong) IBOutlet NSView* mainView;
 @property (nonatomic, strong) IBOutlet NSTextField* actionTypeTextField;

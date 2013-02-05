@@ -10,6 +10,8 @@
 
 #include "VSCIM.h"
 
+@protocol VSCIMOSXEventChainController;
+
 @interface VSCIMOSXEventView : NSView
 
 @property (assign) IBOutlet id<VSCIMOSXEventChainController> eventChainController;

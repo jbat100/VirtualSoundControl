@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 #include "VSCIM.h"
-#include "VSCIMTarget.h"
+
 
 #include <vector>
 
@@ -27,7 +27,7 @@
 @interface VSCIMOSXMappingView : NSView <VSCIMOSXMappingView>
 {
     @private
-    VSC::IM::MappingTypeSet allowedMappingTypes;
+    VSC::IM::MappingTypeSet mAllowedMappingTypes;
 }
 
 +(CGFloat) defaultHeight;

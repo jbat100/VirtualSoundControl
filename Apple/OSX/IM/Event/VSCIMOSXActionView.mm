@@ -65,21 +65,19 @@ const CGFloat VSCIMOSXActionViewMIDIControlSetupHeight = 15.0;
 
 static const BOOL debugDraw = NO;
 
-@synthesize collisionAction = _collisionAction;
-
 #pragma mark - Static Methods
 
-+(CGFloat) heightOfViewForAction:(VSC::IM::Action::SPtr)collisionAction 
++(CGFloat) heightOfViewForAction:(VSC::IM::Action::SPtr)action
 {
     
     CGFloat totalHeight = VSCIMOSXActionViewBaseHeight;
     
-    if (VSC::IM::actionIsMIDIAction(collisionAction))
+    if (VSC::IM::actionIsMIDIAction(action))
     {
         totalHeight += VSCIMOSXActionViewMIDISetupHeight;
     }
     
-    if (VSC::IM::actionIsMIDIControlAction(collisionAction))
+    if (VSC::IM::actionIsMIDIControlAction(action))
     {
         totalHeight += VSCIMOSXActionViewMIDIControlSetupHeight;
     }
@@ -89,42 +87,8 @@ static const BOOL debugDraw = NO;
 
 +(void) initialize
 {
-    if (!actionTypeMenuItemStringDict)
-    {
-        actionTypeMenuItemStringDict = @{
-        @((int)VSC::IM::ActionTypeMIDINoteOn)           : @"MIDI Note On",
-        @((int)VSC::IM::ActionTypeMIDINoteOnAndOff)     : @"MIDI Note On and Off",
-        @((int)VSC::IM::ActionTypeMIDINoteOff)          : @"MIDI Note Off",
-        @((int)VSC::IM::ActionTypeMIDIControlChange)    : @"MIDI Control Change"
-        };
-    }
+
 }
-
-+(NSString*) stringForActionType:(VSC::IM::ActionType)actionType
-{
-    BOOST_ASSERT(actionTypeMenuItemStringDict);
-    
-    return [actionTypeMenuItemStringDict objectForKey:@((int)actionType)];
-}
-
-+(VSC::IM::ActionType) actionTypeForString:(NSString*)menuItemString
-{
-    BOOST_ASSERT(actionTypeMenuItemStringDict);
-    
-    NSSet* types = [actionTypeMenuItemStringDict keysOfEntriesPassingTest:^BOOL(id key, id obj, BOOL *stop) {
-        if ([obj isKindOfClass:[NSString class]] == NO) return false;
-        if ([(NSString*)obj isEqualToString:menuItemString]) return true;
-        return false;
-    }];
-    
-    BOOST_ASSERT([types count] < 2);
-    
-    if ([types count] == 0) return VSC::IM::ActionTypeNone;
-    
-    return (VSC::IM::ActionType)[[types anyObject] intValue];
-}
-
-
 
 #pragma mark - NSView Methods
 
@@ -210,7 +174,9 @@ static const BOOL debugDraw = NO;
 -(void) setEvent:(VSC::IM::Event::WPtr)weakEvent
 {
     [super setEvent:weakEvent];
-    self.currentActionType = VSC::IM::VSC::IM::actionTypeForAction(weakEvent.lock());
+    VSC::IM::Action::SPtr action = boost::dynamic_pointer_cast<VSC::IM::Action>(weakEvent.lock());
+    BOOST_ASSERT(action);
+    self.currentActionType = VSC::IM::actionTypeForAction(action);
     [self setupInterfaceForNewAction];
 }
 
@@ -299,7 +265,7 @@ static const BOOL debugDraw = NO;
      *  Update interface
      */
     
-    [self.actionTypeTextField setStringValue:[[self class] stringForActionType:self.currentActionType]];
+    [self.actionTypeTextField setStringValue:[NSString stringWithStdString:VSC::IM::stringForActionType(self.currentActionType)]];
     
     if (VSC::IM::actionIsMIDIAction(action))
     {
@@ -375,7 +341,7 @@ static const BOOL debugDraw = NO;
     [self.midiControlNumberPopUpButton removeAllItems];
     
     VSC::IM::MIDIControlAction::SPtr controlAction;
-    controlAction = boost::dynamic_pointer_cast<VSC::IM::MIDIControlAction>(self.collisionAction.lock());
+    controlAction = boost::dynamic_pointer_cast<VSC::IM::MIDIControlAction>([self action]);
     
     BOOST_ASSERT(controlAction);
     

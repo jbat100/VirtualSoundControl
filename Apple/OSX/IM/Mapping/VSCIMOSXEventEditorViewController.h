@@ -7,10 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "VSC::IM::MappingTypes.h"
 #import "VSCIMOSXEventEditor.h"
 
-#include "VSCIMAction.h"
+#include "VSCIM.h"
 
 @class VSCIMOSXMappingEditViewController;
 @protocol VSCIMOSXEventChainController;

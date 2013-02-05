@@ -3,7 +3,7 @@
 #define _VSC_IM_MAPPING_H_
 
 #include "VSC.h"
-#include "VSCIMTarget.h"
+
 
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>

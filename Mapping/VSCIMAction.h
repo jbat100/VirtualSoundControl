@@ -7,7 +7,7 @@
 #include "VSCTask.h"
 #include "VSCTaskQueue.h"
 #include "VSCIMEvent.h"
-#include "VSCIMTarget.h"
+
 #include "VSCIMMapping.h"
 #include "VSCIMCollisionMapping.h"
 
