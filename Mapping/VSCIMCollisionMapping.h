@@ -5,16 +5,17 @@
 #include "VSC.h"
 #include "VSCOB.h"
 #include "VSCIMMapping.h"
-#include "VSCIMTarget.h"
 
 #include <Ogre/Ogre.h>
 
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 
-namespace VSC {
+namespace VSC
+{
     
-    namespace IM {
+    namespace IM
+    {
     
         class CollisionMapping : public Mapping {
             

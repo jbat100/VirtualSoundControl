@@ -73,7 +73,9 @@ namespace VSC
          *  Used for UI/Debug display
          */
         
-        std::string stringForActionType(ActionType actionType);
+        std::string stringForActionType(const ActionType actionType);
+        
+        ActionType actionTypeForString(const std::string& s);
         
         /*
          *  Mapping type enum
@@ -93,9 +95,30 @@ namespace VSC
         
         Mapping_SPtr createMappingWithType(MappingType mappingType);
         
-        std::string stringForMappingType(MappingType mappingType);
+        std::string stringForMappingType(const MappingType mappingType);
         
         MappingType mappingTypeForString(const std::string& s);
+        
+        
+        /**
+         *  Targets
+         */
+        
+        enum Target {
+            TargetNone = 0,
+            TargetChannel,
+            TargetPitch,
+            TargetVelocityOn,
+            TargetVelocityOff,
+            TargetDuration,
+            TargetValue
+        };
+        
+        typedef std::vector<Target> Targets;
+        
+        std::string stringForTarget(const Target target);
+        
+        const Target targetForString(const std::string& s);
     }
 }
 

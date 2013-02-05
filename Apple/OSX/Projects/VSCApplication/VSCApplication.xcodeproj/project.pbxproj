@@ -81,7 +81,6 @@
 		109A8F1A16A1A83E0023EC1B /* VSCIMDelay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F0B16A1A83E0023EC1B /* VSCIMDelay.cpp */; };
 		109A8F1B16A1A83E0023EC1B /* VSCIMEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F0D16A1A83E0023EC1B /* VSCIMEvent.cpp */; };
 		109A8F1C16A1A83E0023EC1B /* VSCIMEventChain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F0F16A1A83E0023EC1B /* VSCIMEventChain.cpp */; };
-		109A8F1D16A1A83E0023EC1B /* VSCIMTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109A8F1116A1A83E0023EC1B /* VSCIMTarget.cpp */; };
 		109D51B5155998EE0030C161 /* VSCException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109D51B3155998EE0030C161 /* VSCException.cpp */; };
 		10A764E816BEA4E800B9F9A2 /* VSCIMOSXEventChainCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10A764E716BEA4E800B9F9A2 /* VSCIMOSXEventChainCellView.xib */; };
 		10A764EC16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A764EA16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.m */; };
@@ -366,8 +365,6 @@
 		109A8F0E16A1A83E0023EC1B /* VSCIMEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMEvent.h; sourceTree = "<group>"; };
 		109A8F0F16A1A83E0023EC1B /* VSCIMEventChain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMEventChain.cpp; sourceTree = "<group>"; };
 		109A8F1016A1A83E0023EC1B /* VSCIMEventChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMEventChain.h; sourceTree = "<group>"; };
-		109A8F1116A1A83E0023EC1B /* VSCIMTarget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMTarget.cpp; sourceTree = "<group>"; };
-		109A8F1216A1A83E0023EC1B /* VSCIMTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMTarget.h; sourceTree = "<group>"; };
 		109D51B3155998EE0030C161 /* VSCException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCException.cpp; path = ../../../../Generic/VSCException.cpp; sourceTree = "<group>"; };
 		109D51B4155998EE0030C161 /* VSCException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCException.h; path = ../../../../Generic/VSCException.h; sourceTree = "<group>"; };
 		10A764E716BEA4E800B9F9A2 /* VSCIMOSXEventChainCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXEventChainCellView.xib; sourceTree = "<group>"; };
@@ -874,8 +871,6 @@
 				109A8F1016A1A83E0023EC1B /* VSCIMEventChain.h */,
 				101D566116B71B8F00F5E860 /* VSCIMMapping.cpp */,
 				101D566216B71B8F00F5E860 /* VSCIMMapping.h */,
-				109A8F1116A1A83E0023EC1B /* VSCIMTarget.cpp */,
-				109A8F1216A1A83E0023EC1B /* VSCIMTarget.h */,
 			);
 			name = Mapping;
 			path = ../../../../Mapping;
@@ -1693,7 +1688,6 @@
 				109A8F1A16A1A83E0023EC1B /* VSCIMDelay.cpp in Sources */,
 				109A8F1B16A1A83E0023EC1B /* VSCIMEvent.cpp in Sources */,
 				109A8F1C16A1A83E0023EC1B /* VSCIMEventChain.cpp in Sources */,
-				109A8F1D16A1A83E0023EC1B /* VSCIMTarget.cpp in Sources */,
 				107A3C0716A36F4C003C0D69 /* VSCMIDIInput.cpp in Sources */,
 				107A3C0816A36F4C003C0D69 /* VSCMIDIInputManager.cpp in Sources */,
 				10C3721316A455720044D8D8 /* VSCOBCollision.cpp in Sources */,

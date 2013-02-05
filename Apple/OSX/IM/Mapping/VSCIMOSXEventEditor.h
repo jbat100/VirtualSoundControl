@@ -7,19 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "VSC::IM::MappingTypes.h"
 
 #include "VSCIM.h"
-#include "VSCIMTarget.h"
+
 
 
 @protocol VSCIMOSXEventEditor <NSObject>
 
-@property (nonatomic, assign) VSC::IM::Action::WPtr action;
+@property (nonatomic, assign) VSC::IM::Event_WPtr event;
 
 -(VSC::IM::Mapping_SPtr) sender:(id)sender
-requestsMappingWithType:(VSC::IM::MappingType)mappingType
-                       forTarget:(VSC::IM::Target)target;
+        requestsMappingWithType:(VSC::IM::MappingType)mappingType
+                      forTarget:(VSC::IM::Target)target;
 
 -(void) sender:(id)sender requestsEditorForMapping:(VSC::IM::Mapping_SPtr)mapping;
 

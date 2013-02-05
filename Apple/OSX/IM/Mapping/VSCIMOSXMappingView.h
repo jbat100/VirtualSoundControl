@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 #include "VSCIM.h"
-#include "VSCIMTarget.h"
+
 
 #include <vector>
 
@@ -27,7 +27,7 @@
 @interface VSCIMOSXMappingView : NSView <VSCIMOSXMappingView>
 {
     @private
-    VSC::IM::MappingTypeSet allowedMappingTypes;
+    VSC::IM::MappingTypeSet mAllowedMappingTypes;
 }
 
 +(CGFloat) defaultHeight;
@@ -36,7 +36,7 @@
 @property (assign) id<VSCIMOSXEventEditor> controller;
 @property (weak) IBOutlet NSButton* editButton;
 
--(const VSC::IM::MappingTypeSet&) allowedMappingTypes;
+-(VSC::IM::MappingTypeSet&) allowedMappingTypes;
 
 -(void) reloadInterface;
 

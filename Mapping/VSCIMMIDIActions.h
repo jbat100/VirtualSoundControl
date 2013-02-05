@@ -126,7 +126,7 @@ namespace VSC {
         
         bool actionIsMIDIAction(Action::SPtr action);
     
-        bool actionIsMIDIActionControlAction(Action::SPtr action);
+        bool actionIsMIDIControlAction(Action::SPtr action);
 
     }
     

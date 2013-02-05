@@ -4,8 +4,65 @@
 #include "VSCIMMIDIActions.h"
 #include "VSCIMCollisionMapping.h"
 
+#include <boost/foreach.hpp>
+#include <boost/bimap.hpp>
+
+namespace VSC
+{
+    namespace IM
+    {
+        void InitialiseDescriptionMaps(void);
+        
+        typedef boost::bimap<Target, std::string>       TargetDescriptionMap;
+        typedef boost::bimap<MappingType, std::string>  MappingDescriptionMap;
+        typedef boost::bimap<ActionType, std::string>   ActionDescriptionMap;
+        
+        typedef TargetDescriptionMap::value_type        TargetDescriptionPair;
+        typedef MappingDescriptionMap::value_type       MappingDescriptionPair;
+        typedef ActionDescriptionMap::value_type        ActionDescriptionPair;
+        
+        static TargetDescriptionMap     targetDescriptionMap;
+        static MappingDescriptionMap    mappingDescriptionMap;
+        static ActionDescriptionMap     actionDescriptionMap;
+    }
+}
+
 using namespace VSC;
 using namespace VSC::IM;
+
+boost::once_flag createdDescriptionsMapFlag = BOOST_ONCE_INIT;
+
+VSC::IM::TargetDescriptionMap targetDescriptionMap;
+VSC::IM::MappingDescriptionMap mappingDescriptionMap;
+VSC::IM::ActionDescriptionMap actionDescriptionMap;
+
+
+void InitialiseDescriptionMaps(void)
+{
+    BOOST_ASSERT(targetDescriptionMap.empty());
+    BOOST_ASSERT(mappingDescriptionMap.empty());
+    BOOST_ASSERT(actionDescriptionMap.empty());
+    
+    targetDescriptionMap.insert(TargetDescriptionPair(TargetNone, "No Target"));
+    targetDescriptionMap.insert(TargetDescriptionPair(TargetChannel, "Channel"));
+    targetDescriptionMap.insert(TargetDescriptionPair(TargetPitch,  "Pitch"));
+    targetDescriptionMap.insert(TargetDescriptionPair(TargetVelocityOn, "Velocity On"));
+    targetDescriptionMap.insert(TargetDescriptionPair(TargetVelocityOff, "Velocity Off"));
+    targetDescriptionMap.insert(TargetDescriptionPair(TargetDuration, "Duration"));
+    targetDescriptionMap.insert(TargetDescriptionPair(TargetValue, "Control Value"));
+    
+    mappingDescriptionMap.insert(MappingDescriptionPair(MappingTypeNone, "No Mapping"));
+    mappingDescriptionMap.insert(MappingDescriptionPair(MappingTypeConstant, "Constant"));
+    mappingDescriptionMap.insert(MappingDescriptionPair(MappingTypeCollisionVelocity, "Collision Velocity"));
+    mappingDescriptionMap.insert(MappingDescriptionPair(MappingTypeCollisionDistance, "Collision Distance"));
+    
+    actionDescriptionMap.insert(ActionDescriptionPair(ActionTypeNone, "No Action"));
+    actionDescriptionMap.insert(ActionDescriptionPair(ActionTypeMIDINoteOn, "MIDI Note On"));
+    actionDescriptionMap.insert(ActionDescriptionPair(ActionTypeMIDINoteOnAndOff, "MIDI Note On And Off"));
+    actionDescriptionMap.insert(ActionDescriptionPair(ActionTypeMIDINoteOff, "MIDI Note Off"));
+    actionDescriptionMap.insert(ActionDescriptionPair(ActionTypeMIDIControlChange, "MIDI Control Change"));
+    
+}
 
 ActionType actionTypeForAction(Action::SPtr action)
 {
@@ -50,29 +107,6 @@ Action::SPtr createActionWithType(ActionType actionType)
     return Action::SPtr();
 }
 
-std::string stringForActionType(ActionType actionType)
-{
-    switch (actionType)
-    {
-        case ActionTypeMIDINoteOn:
-            return "MIDI Note On";
-            
-        case ActionTypeMIDINoteOnAndOff:
-            return "MIDI Note On And Off";
-            
-        case ActionTypeMIDINoteOff:
-            return "MIDI Note Off";
-            
-        case ActionTypeMIDIControlChange:
-            return "MIDI Control Change";
-            
-        default:
-            break;
-    }
-    
-    return "Unknown Action";
-}
-
 MappingType mappingTypeForMapping(Mapping::SPtr mapping)
 {
     if (mapping)
@@ -110,34 +144,52 @@ Mapping::SPtr createMappingWithType(MappingType mappingType)
     return Mapping::SPtr();
 }
 
-MappingType mappingTypeForString(const std::string& s)
+std::string stringForActionType(const ActionType actionType)
 {
-    if (!s.compare("No Mapping")) return MappingTypeNone;
-    if (!s.compare("Constant")) return MappingTypeConstant;
-    if (!s.compare("Collision Velocity")) return MappingTypeCollisionVelocity;
-    if (!s.compare("Collision Distance")) return MappingTypeCollisionDistance;
-    
-    return MappingTypeNone;
+    boost::call_once(&InitialiseDescriptionMaps, createdDescriptionsMapFlag);
+    std::string s = actionDescriptionMap.left.at(actionType);
+    BOOST_ASSERT_MSG(s.empty(), "Unexpected: Unknown ActionType");
+    if (s.empty()) s = "Unknown Action Type";
+    return s;
 }
 
-std::string stringForMappingType(MappingType mappingType)
+ActionType actionTypeForString(const std::string& s)
 {
-    switch (mappingType)
-    {
-        case MappingTypeNone:
-            return "No Mapping";
-            
-        case MappingTypeConstant:
-            return "Constant";
-            
-        case MappingTypeCollisionVelocity:
-            return "Collision Velocity";
-            
-        case MappingTypeCollisionDistance:
-            return "Collision Distance";
-            
-        default:
-            break;
-    }
+    boost::call_once(&InitialiseDescriptionMaps, createdDescriptionsMapFlag);
+    ActionType t = actionDescriptionMap.right.at(s);
+    return t;
+}
+
+std::string stringForMappingType(const MappingType mappingType)
+{
+    boost::call_once(&InitialiseDescriptionMaps, createdDescriptionsMapFlag);
+    std::string s = actionDescriptionMap.left.at(actionType);
+    BOOST_ASSERT_MSG(s.empty(), "Unexpected: unknown MappingType");
+    if (s.empty()) s = "Unknown Mapping Type";
+    return s;
+}
+
+MappingType mappingTypeForString(const std::string& s)
+{
+    boost::call_once(&InitialiseDescriptionMaps, createdDescriptionsMapFlag);
+    MappingType t = mappingDescriptionMap.right.at(s);
+    return t;
+}
+
+
+std::string stringForTarget(const Target target)
+{
+    boost::call_once(&InitialiseDescriptionMaps, createdDescriptionsMapFlag);
+    std::string s = targetDescriptionMap.left.at(target);
+    BOOST_ASSERT_MSG(s.empty(), "Unexpected: Unknown Target");
+    if (s.empty()) s = "Unknown Target";
+    return s;
+}
+
+const Target targetForString(const std::string& s)
+{
+    boost::call_once(&InitialiseDescriptionMaps, createdDescriptionsMapFlag);
+    Target t = targetDescriptionMap.right.at(s);
+    return t;
 }
 
