@@ -37,25 +37,16 @@ namespace VSC {
             MappingType getMappingType(void) {return mMappingType;}
             bool setMappingType(MappingType mappingType);
             
-            /**
-             Mapping::Setup provides a way for additional information relative to particular
-             mapping types to be provided without the need to subclass the mapping itself.
-             */
-            
-            enum SetupType
+            class Implementation
             {
-                SetupTypeNone = 0,
-                SetupTypeReferencePoint
+            public:
+                typedef boost::shared_ptr<Implementation>   SPtr;
+                typedef boost::weak_ptr<Implementation>     WPtr;
+                virtual Float mappedValue() = 0;
             };
-            struct Setup;
-            struct ReferencePointSetup;
-            typedef boost::shared_ptr<Setup>            Setup_SPtr;
-            typedef boost::weak_ptr<Setup>              Setup_WPtr;
-            typedef std::map<SetupType, Setup_SPtr>     SetupMap;
+            class ImplementationConstant;
             
-            Setup_SPtr getSetupForSetupType(SetupType setupType) {return mSetupMap[setupType];}
-            
-            const SetupMap& getSetupMap(void) {return mSetupMap;}
+            Implementation::SPtr getImplementation(void);
             
         protected:
             
@@ -82,36 +73,15 @@ namespace VSC {
             Float   mOffset;
             Float   mScaleFactor;
             
-            MappingType     mMappingType;
+            MappingType             mMappingType;
             
-            MappingTypeSet  mAllowedMappingTypeSet;
+            MappingTypeSet          mAllowedMappingTypeSet;
             
-            SetupMap        mSetupMap;
+            Implementation::SPtr    mImplementation;
             
         };
         
         typedef std::vector<Mapping::SPtr> Mappings;
-        
-        /*
-         *  Distance setup, for mappings which are dependant on a reference
-         */
-        
-        struct Mapping::Setup
-        {
-            typedef boost::shared_ptr<Setup>      SPtr;
-            typedef boost::weak_ptr<Setup>        WPtr;
-        };
-        
-        /*
-         *  Distance setup, for mappings which are dependant on a reference
-         */
-        
-        struct Mapping::ReferencePointSetup : public Mapping::Setup
-        {
-            ReferencePointSetup();
-            static Ogre::Vector3 defaultReferencePoint;
-            Ogre::Vector3 referencePoint;
-        };
         
     }
     

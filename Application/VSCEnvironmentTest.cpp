@@ -12,7 +12,7 @@
 #include "VSCIMEvent.h"
 #include "VSCIMDelay.h"
 #include "VSCIMEventChain.h"
-#include "VSCIMMIDIActions.h"
+#include "VSCIMActionImplementations.h"
 
 using namespace VSC;
 using namespace VSC::IM;

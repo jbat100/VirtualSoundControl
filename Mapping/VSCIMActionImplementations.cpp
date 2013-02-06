@@ -4,35 +4,19 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#include "VSCIMMIDIActions.h"
+#include "VSCIMActionImplementations.h"
 #include "VSCMIDIOutputManager.h"
 #include "VSCMIDITasks.h"
+#include "VSCMIDI.h"
 
 #include <boost/foreach.hpp>
 
 using namespace VSC;
 using namespace VSC::IM;
 
-bool actionIsMIDIAction(Action::SPtr action)
-{
-    if (boost::dynamic_pointer_cast<MIDIAction>(action)) return true;
-    
-    return false;
-}
 
-bool actionIsMIDIControlAction(Action::SPtr action)
+MIDIOutputOwner::MIDIOutputOwner()
 {
-    if (boost::dynamic_pointer_cast<MIDIControlAction>(action)) return true;
-    
-    return false;
-}
-
-
-MIDIAction::MIDIAction() :
-mChannel(1)
-{
-    this->setTaskQueue(MIDI::SingletonMIDITaskQueue());
-    
     MIDI::OutputManager::SPtr outputManager = MIDI::OutputManager::singletonManager();
     BOOST_ASSERT(outputManager);
     if (outputManager)
@@ -40,33 +24,16 @@ mChannel(1)
         // Get the first openend MIDI output...
         mMIDIOutput = outputManager->getFirstOpenedOutput();
     }
-}
-
-MIDIControlAction::MIDIControlAction() : mControlNumber(MIDI::ControlBreath)
-{
-    
-}
-
-MIDINoteOnAction::MIDINoteOnAction()
-{
-    this->addRequiredMappingTarget(TargetPitch);
-    this->addRequiredMappingTarget(TargetVelocityOn);
-}
-
-void MIDINoteOnAction::createDefaultMappings()
-{
-    const Targets& targets = this->getRequiredMappingTargets();
-    
-    BOOST_FOREACH(const Target& target, targets)
+    else
     {
-        Mapping::SPtr mapping(new Mapping);
-        mapping->setOffset(64.0);
-        this->setMappingForTarget(mapping, target);
+        mMIDIOutput = MIDI::OutputManager::SPtr();
     }
 }
 
 
-const Tasks MIDINoteOnAction::generateTasksWithValueMap(Action::ValueMap& valueMap)
+//MARK: MIDINoteOn
+
+const Tasks Action::ImplementationMIDINoteOn::generateTasksWithValueMap(Event::ValueMap& valueMap)
 {
     Tasks tasks;
     
@@ -83,25 +50,29 @@ const Tasks MIDINoteOnAction::generateTasksWithValueMap(Action::ValueMap& valueM
     return tasks;
 }
 
-MIDINoteOffAction::MIDINoteOffAction()
+void Action::ImplementationMIDINoteOn::setupMappings(Action::SPtr action)
 {
-    this->addRequiredMappingTarget(TargetPitch);
-    this->addRequiredMappingTarget(TargetVelocityOff);
-}
-
-void MIDINoteOffAction::createDefaultMappings()
-{
-    const Targets& targets = this->getRequiredMappingTargets();
-    
-    BOOST_FOREACH(const Target& target, targets)
+    BOOST_ASSERT(action);
+    if (action)
     {
-        Mapping::SPtr mapping(new Mapping);
-        mapping->setOffset(64.0);
-        this->setMappingForTarget(mapping, target);
+        action->addRequiredMappingTarget(TargetPitch);
+        action->addRequiredMappingTarget(TargetVelocityOn);
+        
+        const Targets& targets = action->getRequiredMappingTargets();
+        
+        BOOST_FOREACH(const Target& target, targets)
+        {
+            Mapping::SPtr mapping(new Mapping);
+            mapping->setMappingType(MappingTypeConstant);
+            mapping->setOffset(64.0);
+            action->setMappingForTarget(mapping, target);
+        }
     }
 }
 
-const Tasks MIDINoteOffAction::generateTasksWithValueMap(Action::ValueMap& valueMap)
+//MARK: MIDINoteOff
+
+const Tasks Action::ImplementationMIDINoteOff::generateTasksWithValueMap(Event::ValueMap& valueMap)
 {
     Tasks tasks;
     
@@ -118,27 +89,29 @@ const Tasks MIDINoteOffAction::generateTasksWithValueMap(Action::ValueMap& value
     return tasks;
 }
 
-MIDINoteOnAndOffAction::MIDINoteOnAndOffAction()
+void Action::ImplementationMIDINoteOff::setupMappings(Action::SPtr action)
 {
-    this->addRequiredMappingTarget(TargetPitch);
-    this->addRequiredMappingTarget(TargetVelocityOn);
-    this->addRequiredMappingTarget(TargetDuration);
-    this->addRequiredMappingTarget(TargetVelocityOff);
-}
-
-void MIDINoteOnAndOffAction::createDefaultMappings()
-{
-    const Targets& targets = this->getRequiredMappingTargets();
-    
-    BOOST_FOREACH(const Target& target, targets)
+    BOOST_ASSERT(action);
+    if (action)
     {
-        Mapping::SPtr mapping(new Mapping);
-        mapping->setOffset(64.0);
-        this->setMappingForTarget(mapping, target);
+        action->addRequiredMappingTarget(TargetPitch);
+        action->addRequiredMappingTarget(TargetVelocityOff);
+        
+        const Targets& targets = action->getRequiredMappingTargets();
+        
+        BOOST_FOREACH(const Target& target, targets)
+        {
+            Mapping::SPtr mapping(new Mapping);
+            mapping->setMappingType(MappingTypeConstant);
+            mapping->setOffset(64.0);
+            action->setMappingForTarget(mapping, target);
+        }
     }
 }
 
-const Tasks MIDINoteOnAndOffAction::generateTasksWithValueMap(Action::ValueMap& valueMap)
+//MARK: MIDINoteOnAndOff
+
+const Tasks Action::ImplementationMIDINoteOnAndOff::generateTasksWithValueMap(Event::ValueMap& valueMap)
 {
     Tasks tasks;
     
@@ -170,24 +143,31 @@ const Tasks MIDINoteOnAndOffAction::generateTasksWithValueMap(Action::ValueMap& 
     return tasks;
 }
 
-MIDIControlChangeAction::MIDIControlChangeAction()
+void Action::ImplementationMIDINoteOnAndOff::setupMappings(Action::SPtr action)
 {
-    this->addRequiredMappingTarget(TargetValue);
-}
-
-void MIDIControlChangeAction::createDefaultMappings()
-{
-    const Targets& targets = this->getRequiredMappingTargets();
-    
-    BOOST_FOREACH(const Target& target, targets)
+    BOOST_ASSERT(action);
+    if (action)
     {
-        Mapping::SPtr mapping(new Mapping);
-        mapping->setOffset(64.0);
-        this->setMappingForTarget(mapping, target);
+        action->addRequiredMappingTarget(TargetPitch);
+        action->addRequiredMappingTarget(TargetVelocityOn);
+        action->addRequiredMappingTarget(TargetDuration);
+        action->addRequiredMappingTarget(TargetVelocityOff);
+        
+        const Targets& targets = action->getRequiredMappingTargets();
+        
+        BOOST_FOREACH(const Target& target, targets)
+        {
+            Mapping::SPtr mapping(new Mapping);
+            mapping->setMappingType(MappingTypeConstant);
+            mapping->setOffset(64.0);
+            action->setMappingForTarget(mapping, target);
+        }
     }
 }
 
-const Tasks MIDIControlChangeAction::generateTasksWithValueMap(Action::ValueMap& valueMap)
+//MARK: MIDIControlChange
+
+const Tasks Action::ImplementationMIDIControlChange::generateTasksWithValueMap(Event::ValueMap& valueMap)
 {
     Tasks tasks;
     
@@ -199,7 +179,27 @@ const Tasks MIDIControlChangeAction::generateTasksWithValueMap(Action::ValueMap&
     payload->midiOutput = this->getMIDIOutput();
     MIDI::MIDISendMessageTask::SPtr task(new MIDI::MIDISendMessageTask(boost::dynamic_pointer_cast<Task::Payload>(payload)));
     tasks.push_back(task);
-
+    
     return tasks;
 }
+
+void Action::ImplementationMIDIControlChange::setupMappings(Action::SPtr action)
+{
+    BOOST_ASSERT(action);
+    if (action)
+    {
+        action->addRequiredMappingTarget(TargetValue);
+        
+        const Targets& targets = action->getRequiredMappingTargets();
+        
+        BOOST_FOREACH(const Target& target, targets)
+        {
+            Mapping::SPtr mapping(new Mapping);
+            mapping->setMappingType(MappingTypeConstant);
+            mapping->setOffset(64.0);
+            action->setMappingForTarget(mapping, target);
+        }
+    }
+}
+
 

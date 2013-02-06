@@ -1,7 +1,7 @@
 
 #include "VSCIM.h"
 #include "VSCIMAction.h"
-#include "VSCIMMIDIActions.h"
+#include "VSCIMActionImplementations.h"
 #include "VSCIMCollisionMapping.h"
 
 #include <boost/foreach.hpp>

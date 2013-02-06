@@ -12,6 +12,7 @@
 #include "VSCIMMapping.h"
 #include "VSCIMCollisionMapping.h"
 
+#include <boost/enable_shared_from_this.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 
@@ -28,7 +29,7 @@ namespace VSC {
          *  on the action's task queue.
          */
         
-        class Action : public Event
+        class Action : public Event, public boost::enable_shared_from_this<Action>
         {
             
         public:
@@ -69,7 +70,7 @@ namespace VSC {
                 typedef boost::shared_ptr<Implementation>   SPtr;
                 typedef boost::weak_ptr<Implementation>     WPtr;
                 virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap) = 0;
-                virtual void createDefaultMappings() = 0;
+                virtual void setupMappings(Action::SPtr action) = 0;
             };
             class ImplementationMIDINoteOn;
             class ImplementationMIDINoteOff;

@@ -18,7 +18,7 @@
 #include "VSCIMEvent.h"
 #include "VSCIMDelay.h"
 #include "VSCIMAction.h"
-#include "VSCIMMIDIActions.h"
+#include "VSCIMActionImplementations.h"
 #include "VSCIMEventChain.h"
 
 #include <boost/assert.hpp>

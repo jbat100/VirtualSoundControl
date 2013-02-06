@@ -16,7 +16,7 @@
 #include "VSCMIDIOutputManager.h"
 #include "VSCIMEvent.h"
 #include "VSCIMAction.h"
-#include "VSCIMMIDIActions.h"
+#include "VSCIMActionImplementations.h"
 
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
