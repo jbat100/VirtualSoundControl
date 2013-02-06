@@ -10,7 +10,6 @@
 		100812B21651A89800E975B8 /* VSCBroadcaster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100812B01651A89800E975B8 /* VSCBroadcaster.cpp */; };
 		100812B61651ABE700E975B8 /* VSCListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100812B41651ABE700E975B8 /* VSCListener.cpp */; };
 		100F591E16B7F6B400F38860 /* VSCIM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100F591C16B7F6B400F38860 /* VSCIM.cpp */; };
-		101416EC16C19D94006CC6F0 /* VSCIMCollisionMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101416EA16C19D94006CC6F0 /* VSCIMCollisionMapping.cpp */; };
 		101D566616B73EC200F5E860 /* VSCIMActionImplementations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101D566416B73EC200F5E860 /* VSCIMActionImplementations.cpp */; };
 		101EBB441629AE79006601A2 /* NSArray+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB431629AE79006601A2 /* NSArray+VSCAdditions.mm */; };
 		101EBB8E162B2E2C006601A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 101EBB8D162B2E2C006601A2 /* QuartzCore.framework */; };
@@ -248,8 +247,6 @@
 		100812B51651ABE700E975B8 /* VSCListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCListener.h; path = ../../../../Generic/VSCListener.h; sourceTree = "<group>"; };
 		100F591C16B7F6B400F38860 /* VSCIM.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIM.cpp; sourceTree = "<group>"; };
 		100F591D16B7F6B400F38860 /* VSCIM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIM.h; sourceTree = "<group>"; };
-		101416EA16C19D94006CC6F0 /* VSCIMCollisionMapping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMCollisionMapping.cpp; sourceTree = "<group>"; };
-		101416EB16C19D94006CC6F0 /* VSCIMCollisionMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMCollisionMapping.h; sourceTree = "<group>"; };
 		101D566416B73EC200F5E860 /* VSCIMActionImplementations.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = VSCIMActionImplementations.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		101D566516B73EC200F5E860 /* VSCIMActionImplementations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = VSCIMActionImplementations.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		101EBB421629AE79006601A2 /* NSArray+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+VSCAdditions.h"; path = "../../../Categories/NSArray+VSCAdditions.h"; sourceTree = "<group>"; };
@@ -867,8 +864,6 @@
 				109A8EFE16A1A83E0023EC1B /* VSCIMAction.h */,
 				109A8F0716A1A83E0023EC1B /* VSCIMMapping.cpp */,
 				109A8F0816A1A83E0023EC1B /* VSCIMMapping.h */,
-				101416EA16C19D94006CC6F0 /* VSCIMCollisionMapping.cpp */,
-				101416EB16C19D94006CC6F0 /* VSCIMCollisionMapping.h */,
 				109A8F0516A1A83E0023EC1B /* VSCIMCollisionMapper.cpp */,
 				109A8F0616A1A83E0023EC1B /* VSCIMCollisionMapper.h */,
 				101D566416B73EC200F5E860 /* VSCIMActionImplementations.cpp */,
@@ -1730,7 +1725,6 @@
 				10CFF59F16BF2D360039C194 /* VSCOBOSXElementInspectorWindowController.mm in Sources */,
 				10CFF5A116BF2D360039C194 /* VSCOBOSXElementListView.mm in Sources */,
 				10CFF5A216BF2D360039C194 /* VSCOBOSXElementView.mm in Sources */,
-				101416EC16C19D94006CC6F0 /* VSCIMCollisionMapping.cpp in Sources */,
 				10FCF4C116C2776D00D493F2 /* VSCMIDIOwners.cpp in Sources */,
 				10FCF4C416C27C9100D493F2 /* VSCIMMappingImplementations.cpp in Sources */,
 			);

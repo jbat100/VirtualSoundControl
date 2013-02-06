@@ -59,7 +59,6 @@ namespace VSC {
             const Tasks generateTasksForCollision(OB::Collision_SPtr collision, OB::Element_SPtr effector);
             const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
             
-            
             /*
              *  Implementation
              */

@@ -4,6 +4,7 @@
 
 #include "VSC.h"
 #include "VSCIM.h"
+#include "VSCOB.h"
 
 #include <Ogre/Ogre.h>
 
@@ -26,7 +27,24 @@ namespace VSC {
             Mapping();
             virtual ~Mapping() {}
             
-            virtual Float mappedValue(void);
+            /**
+             *  Plain Value Mapping
+             */
+            
+            Float mappedValue(void);
+            
+            /**
+             *  Collision Value Mapping
+             */
+            
+            Float mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector);
+            
+            MappingType getMappingType(void) {return mMappingType;}
+            bool setMappingType(MappingType mappingType);
+            
+            /**
+             *  Scale and Offset
+             */
             
             Float getOffset(void) {return mOffset;}
             void setOffset(Float offset) {mOffset = offset;}
@@ -34,17 +52,21 @@ namespace VSC {
             Float getScaleFactor(void) {return mScaleFactor;}
             void setScaleFactor(Float factor) {mScaleFactor = factor;}
             
-            MappingType getMappingType(void) {return mMappingType;}
-            bool setMappingType(MappingType mappingType);
+            /**
+             *  Implementation
+             */
             
             class Implementation
             {
             public:
                 typedef boost::shared_ptr<Implementation>   SPtr;
                 typedef boost::weak_ptr<Implementation>     WPtr;
-                virtual Float mappedValue() = 0;
+                virtual Float mappedValue() {return 0.0;}
+                virtual Float mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector) {return 0.0;}
             };
             class ImplementationConstant;
+            class ImplementationCollisionVelocity;
+            class ImplementationCollisionDistance;
             
             Implementation::SPtr getImplementation(void);
             
@@ -52,21 +74,7 @@ namespace VSC {
             
             Float applyOffsetAndScaleFactor(Float rawValue);
             
-            /**
-              Called by subclasses in their constructor to define allowed mapping types
-             */
-            
-            void allowMappingType(const MappingType mappingType);
-            
-            /**
-             Called by setMappingType to allow sublasses to update potential additional setup 
-             */
-            
-            virtual void updateSetups(void);
-            
         private:
-            
-            bool checkMappingType(const MappingType mappingType);
             
             const static bool mTrace = true;
             
@@ -74,8 +82,6 @@ namespace VSC {
             Float   mScaleFactor;
             
             MappingType             mMappingType;
-            
-            MappingTypeSet          mAllowedMappingTypeSet;
             
             Implementation::SPtr    mImplementation;
             

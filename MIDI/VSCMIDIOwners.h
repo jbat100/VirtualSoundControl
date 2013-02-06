@@ -1,6 +1,6 @@
 
-#ifndef _VSC_MIDI_H_
-#define _VSC_MIDI_H_
+#ifndef _VSC_MIDI_OWNERS_H_
+#define _VSC_MIDI_OWNERS_H_
 
 #include "VSC.h"
 #include "VSCMIDI.h"
@@ -53,4 +53,4 @@ namespace VSC
     
 }
 
-#endif
+#endif // _VSC_MIDI_OWNERS_H_

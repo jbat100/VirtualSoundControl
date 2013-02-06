@@ -32,8 +32,9 @@ namespace VSC
             typedef boost::shared_ptr<Event>    SPtr;
             typedef boost::weak_ptr<Event>      WPtr;
             
-            typedef std::map<Target, Mapping_SPtr>  MappingMap;
-            typedef std::map<Target, Float>         ValueMap;
+            typedef std::map<Target, Mapping_SPtr>      TargetMappings;
+            typedef std::map<Trigger, TargetMappings>   TriggerTargetMappings;
+            typedef std::map<Target, Float>             TargetValues;
             
             Event() {}
             virtual ~Event() {}
@@ -46,11 +47,7 @@ namespace VSC
             
             const Targets& getRequiredMappingTargets(void) {return mRequiredMappingTargets;}
             
-            Mapping_SPtr getMappingForTarget(const Target target);
-            Mapping_SPtr getCollisionMappingForTarget(const Target target);
-            
-            void setMappingForTarget(Mapping_SPtr mapping, const Target target);
-            void setCollisionMappingForTarget(Mapping_SPtr mapping, const Target target);
+            Mapping_SPtr getMapping(const Trigger trigger, const Target target);
             
         protected:
             
@@ -64,9 +61,7 @@ namespace VSC
             
             Targets                 mRequiredMappingTargets;
             
-            MappingMap              mCollisionMappingMap;
-            
-            MappingMap              mMappingMap;
+            TriggerTargetMappings   mMappingMap;
             
         };
 

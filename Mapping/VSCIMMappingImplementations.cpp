@@ -4,202 +4,67 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#include "VSCIMActionImplementations.h"
-#include "VSCMIDIOutputManager.h"
-#include "VSCMIDITasks.h"
-#include "VSCMIDI.h"
+#include "VSCIMMappingImplementations.h"
+
+#include "VSCOBCollision.h"
+#include "VSCOBElement.h"
+
+#include <Ogre/Ogre.h>
 
 #include <boost/foreach.hpp>
 
 using namespace VSC;
 using namespace VSC::IM;
+using namespace VSC::OB;
+
+Ogre::Vector3 ReferencePointOwner::defaultReferencePoint = Ogre::Vector3::ZERO;
 
 
-MIDIOutputOwner::MIDIOutputOwner()
+
+
+Float Mapping::ImplementationConstant::mappedValue()
 {
-    MIDI::OutputManager::SPtr outputManager = MIDI::OutputManager::singletonManager();
-    BOOST_ASSERT(outputManager);
-    if (outputManager)
+    return 0.0;
+}
+
+Float Mapping::ImplementationConstant::mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector)
+{
+    return 0.0;
+}
+
+
+Float Mapping::ImplementationCollisionVelocity::mappedValue()
+{
+    BOOST_ASSERT_MSG(false, "Should be calling collision trigger");
+    return 0.0;
+}
+
+Float Mapping::ImplementationCollisionVelocity::mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector)
+{
+    BOOST_ASSERT(collision);
+    BOOST_ASSERT(effector);
+    
+    const Ogre::Vector3& relativeVelocity = collision->getRelativeCollisionVelocity();
+    return (Float) relativeVelocity.length();
+}
+
+Float Mapping::ImplementationCollisionDistance::mappedValue()
+{
+    BOOST_ASSERT_MSG(false, "Should be calling collision trigger");
+    return 0.0;
+}
+
+Float Mapping::ImplementationCollisionDistance::mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector)
+{
+    BOOST_ASSERT(collision);
+    BOOST_ASSERT(effector);
+    
+    Element::SPtr effectee = getCollisionEffectee(collision, effector);
+    BOOST_ASSERT(effectee);
+    if (effectee)
     {
-        // Get the first openend MIDI output...
-        mMIDIOutput = outputManager->getFirstOpenedOutput();
+        // get distance from collision location to reference point
     }
-    else
-    {
-        mMIDIOutput = MIDI::OutputManager::SPtr();
-    }
+    return 0.0;
 }
-
-
-//MARK: MIDINoteOn
-
-const Tasks Action::ImplementationMIDINoteOn::generateTasksWithValueMap(Event::ValueMap& valueMap)
-{
-    Tasks tasks;
-    
-    MIDI::MIDISendMessageTask::Payload::SPtr payload(new MIDI::MIDISendMessageTask::Payload);
-    BOOST_ASSERT(payload->messageDescription);
-    payload->messageDescription->type = MIDI::MessageTypeNoteOn;
-    payload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char) this->getChannel();
-    payload->messageDescription->parameterMap[MIDI::MessageParameterKeyPitch] = (unsigned char) valueMap[TargetPitch];
-    payload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) valueMap[TargetVelocityOn];
-    payload->midiOutput = this->getMIDIOutput();
-    MIDI::MIDISendMessageTask::SPtr task(new MIDI::MIDISendMessageTask(boost::dynamic_pointer_cast<Task::Payload>(payload)));
-    tasks.push_back(task);
-    
-    return tasks;
-}
-
-void Action::ImplementationMIDINoteOn::setupMappings(Action::SPtr action)
-{
-    BOOST_ASSERT(action);
-    if (action)
-    {
-        action->addRequiredMappingTarget(TargetPitch);
-        action->addRequiredMappingTarget(TargetVelocityOn);
-        
-        const Targets& targets = action->getRequiredMappingTargets();
-        
-        BOOST_FOREACH(const Target& target, targets)
-        {
-            Mapping::SPtr mapping(new Mapping);
-            mapping->setMappingType(MappingTypeConstant);
-            mapping->setOffset(64.0);
-            action->setMappingForTarget(mapping, target);
-        }
-    }
-}
-
-//MARK: MIDINoteOff
-
-const Tasks Action::ImplementationMIDINoteOff::generateTasksWithValueMap(Event::ValueMap& valueMap)
-{
-    Tasks tasks;
-    
-    MIDI::MIDISendMessageTask::Payload::SPtr payload(new MIDI::MIDISendMessageTask::Payload);
-    BOOST_ASSERT(payload->messageDescription);
-    payload->messageDescription->type = MIDI::MessageTypeNoteOff;
-    payload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char)this->getChannel();
-    payload->messageDescription->parameterMap[MIDI::MessageParameterKeyPitch] = (unsigned char) valueMap[TargetPitch];
-    payload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) valueMap[TargetVelocityOff];
-    payload->midiOutput = this->getMIDIOutput();
-    MIDI::MIDISendMessageTask::SPtr task(new MIDI::MIDISendMessageTask(boost::dynamic_pointer_cast<Task::Payload>(payload)));
-    tasks.push_back(task);
-    
-    return tasks;
-}
-
-void Action::ImplementationMIDINoteOff::setupMappings(Action::SPtr action)
-{
-    BOOST_ASSERT(action);
-    if (action)
-    {
-        action->addRequiredMappingTarget(TargetPitch);
-        action->addRequiredMappingTarget(TargetVelocityOff);
-        
-        const Targets& targets = action->getRequiredMappingTargets();
-        
-        BOOST_FOREACH(const Target& target, targets)
-        {
-            Mapping::SPtr mapping(new Mapping);
-            mapping->setMappingType(MappingTypeConstant);
-            mapping->setOffset(64.0);
-            action->setMappingForTarget(mapping, target);
-        }
-    }
-}
-
-//MARK: MIDINoteOnAndOff
-
-const Tasks Action::ImplementationMIDINoteOnAndOff::generateTasksWithValueMap(Event::ValueMap& valueMap)
-{
-    Tasks tasks;
-    
-    MIDI::MIDISendMessageTask::Payload::SPtr onPayload(new MIDI::MIDISendMessageTask::Payload);
-    BOOST_ASSERT(onPayload->messageDescription);
-    onPayload->messageDescription->type = MIDI::MessageTypeNoteOn;
-    onPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char)this->getChannel();
-    onPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyPitch] = (unsigned char) valueMap[TargetPitch];
-    onPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) valueMap[TargetVelocityOn];
-    onPayload->midiOutput = this->getMIDIOutput();
-    MIDI::MIDISendMessageTask::SPtr onTask(new MIDI::MIDISendMessageTask(boost::dynamic_pointer_cast<Task::Payload>(onPayload)));
-    tasks.push_back(onTask);
-    
-    Float duration = valueMap[TargetDuration];
-    long milliseconds = (long) std::floor(duration * 1000.0);
-    TimeDuration timeDuration = boost::posix_time::millisec(milliseconds);
-    
-    MIDI::MIDISendMessageTask::Payload::SPtr offPayload(new MIDI::MIDISendMessageTask::Payload);
-    BOOST_ASSERT(offPayload->messageDescription);
-    offPayload->timeOffset = timeDuration;
-    offPayload->messageDescription->type = MIDI::MessageTypeNoteOff;
-    offPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char)this->getChannel();
-    offPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyPitch] = (unsigned char) valueMap[TargetPitch];
-    offPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) valueMap[TargetVelocityOff];
-    offPayload->midiOutput = this->getMIDIOutput();
-    MIDI::MIDISendMessageTask::SPtr offTask(new MIDI::MIDISendMessageTask(boost::dynamic_pointer_cast<Task::Payload>(offPayload)));
-    tasks.push_back(offTask);
-    
-    return tasks;
-}
-
-void Action::ImplementationMIDINoteOnAndOff::setupMappings(Action::SPtr action)
-{
-    BOOST_ASSERT(action);
-    if (action)
-    {
-        action->addRequiredMappingTarget(TargetPitch);
-        action->addRequiredMappingTarget(TargetVelocityOn);
-        action->addRequiredMappingTarget(TargetDuration);
-        action->addRequiredMappingTarget(TargetVelocityOff);
-        
-        const Targets& targets = action->getRequiredMappingTargets();
-        
-        BOOST_FOREACH(const Target& target, targets)
-        {
-            Mapping::SPtr mapping(new Mapping);
-            mapping->setMappingType(MappingTypeConstant);
-            mapping->setOffset(64.0);
-            action->setMappingForTarget(mapping, target);
-        }
-    }
-}
-
-//MARK: MIDIControlChange
-
-const Tasks Action::ImplementationMIDIControlChange::generateTasksWithValueMap(Event::ValueMap& valueMap)
-{
-    Tasks tasks;
-    
-    MIDI::MIDISendMessageTask::Payload::SPtr payload(new MIDI::MIDISendMessageTask::Payload);
-    BOOST_ASSERT(payload->messageDescription);
-    payload->messageDescription->type = MIDI::MessageTypeNoteOff;
-    payload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char)this->getChannel();
-    payload->messageDescription->parameterMap[MIDI::MessageParameterKeyValue] = (unsigned char) valueMap[TargetValue];
-    payload->midiOutput = this->getMIDIOutput();
-    MIDI::MIDISendMessageTask::SPtr task(new MIDI::MIDISendMessageTask(boost::dynamic_pointer_cast<Task::Payload>(payload)));
-    tasks.push_back(task);
-    
-    return tasks;
-}
-
-void Action::ImplementationMIDIControlChange::setupMappings(Action::SPtr action)
-{
-    BOOST_ASSERT(action);
-    if (action)
-    {
-        action->addRequiredMappingTarget(TargetValue);
-        
-        const Targets& targets = action->getRequiredMappingTargets();
-        
-        BOOST_FOREACH(const Target& target, targets)
-        {
-            Mapping::SPtr mapping(new Mapping);
-            mapping->setMappingType(MappingTypeConstant);
-            mapping->setOffset(64.0);
-            action->setMappingForTarget(mapping, target);
-        }
-    }
-}
-
 

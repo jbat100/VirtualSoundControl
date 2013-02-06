@@ -13,21 +13,43 @@ namespace VSC {
     
     namespace IM {
         
+        /**
+         *  Base owner classes so that I don't have to write accessors 10 million times
+         */
+        
         class ReferencePointOwner
         {
         public:
-            
             ReferencePointOwner();
-            
-            static Ogre::Vector3 defaultReferencePoint();
-            
+            static Ogre::Vector3 getDefaultReferencePoint();
             Ogre::Vector3 getReferencePoint();
             void setReferencePoint(Ogre::Vector3 referencePoint);
-            
         private:
-            
             static Ogre::Vector3 defaultReferencePoint;
             Ogre::Vector3 mReferencePoint;
+        };
+        
+        /**
+         *  Concrete Implementations
+         */
+        
+        class Mapping::ImplementationConstant : public Mapping::Implementation
+        {
+            virtual Float mappedValue();
+            virtual Float mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector);
+        };
+        
+        class Mapping::ImplementationCollisionVelocity : public Mapping::Implementation
+        {
+            virtual Float mappedValue();
+            virtual Float mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector);
+        };
+        
+        class Mapping::ImplementationCollisionDistance : public Mapping::Implementation,
+        public ReferencePointOwner
+        {
+            virtual Float mappedValue();
+            virtual Float mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector);
         };
 
     }
