@@ -58,7 +58,10 @@ namespace VSC {
             const Tasks generateTasksForCollision(OB::Collision_SPtr collision, OB::Element_SPtr effector);
             const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
             
-        private:
+            
+            /*
+             *  Implementation
+             */
             
             class Implementation
             {
@@ -73,6 +76,10 @@ namespace VSC {
             class ImplementationMIDINoteOnAndOff;
             class ImplementationMIDIControlChange;
             
+            Implementation::SPtr getImplementation(void);
+            
+        private:
+            
             
             TaskQueue::SPtr         mTaskQueue;
             
@@ -86,34 +93,6 @@ namespace VSC {
 
         typedef std::vector<Action::SPtr> Actions;
         
-        /*
-         *  Implementations
-         */
-        
-        class Action::ImplementationMIDINoteOn : public Action::Implementation
-        {
-            virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
-            virtual void createDefaultMappings();
-        };
-        
-        class Action::ImplementationMIDINoteOff : public Action::Implementation
-        {
-            virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
-            virtual void createDefaultMappings();
-        };
-        
-        class Action::ImplementationMIDINoteOnAndOff : public Action::Implementation
-        {
-            virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
-            virtual void createDefaultMappings();
-        };
-        
-        class Action::ImplementationMIDIControlChange : public Action::Implementation
-        {
-            virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
-            virtual void createDefaultMappings();
-        };
-
     }
     
 }

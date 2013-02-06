@@ -16,117 +16,73 @@ namespace VSC {
     
     namespace IM {
         
+        /*
+         *  Implementations info owners
+         */
         
-        class MIDIAction : public Action {
-            
+        class MIDIOutputOwner
+        {
         public:
-            
-            typedef boost::shared_ptr<MIDIAction> SPtr;
-            
-            MIDIAction();
-            
+            typedef boost::shared_ptr<MIDIOutputOwner> SPtr;
+            MIDIOutputOwner(): mMIDIOutput(MIDI::Output::SPtr()) {}
             MIDI::Output::SPtr getMIDIOutput(void) {return mMIDIOutput;}
             void setMIDIOutput(MIDI::Output::SPtr output) {mMIDIOutput = output;}
-            
+        private:
+            MIDI::Output::SPtr  mMIDIOutput;
+        };
+        
+        class MIDIChannelOwner
+        {
+        public:
+            typedef boost::shared_ptr<MIDIChannelOwner> SPtr;
+            MIDIChannelOwner() : mChannel(0) {}
             unsigned int getChannel(void) {return mChannel;}
             void setChannel(unsigned int chan) {mChannel = chan;}
-            
         private:
-            
-            MIDI::Output::SPtr  mMIDIOutput;
-            
             unsigned int mChannel;
-            
-        };
+        }
         
-        
-        class MIDIControlAction : public MIDIAction
+        class MIDIControlNumberOwner
         {
-            
         public:
-            
-            typedef boost::shared_ptr<MIDIControlAction> SPtr;
-            
-            MIDIControlAction();
-            
+            MIDIControlNumberOwner() : mControlNumber(MIDI::ControlInvalid) {}
             MIDI::ControlNumber getControlNumber(void) {return mControlNumber;}
             void setControlNumber(MIDI::ControlNumber number) {mControlNumber = number;}
-            
         private:
-            
             MIDI::ControlNumber mControlNumber;
-            
         };
         
         /*
-         *  Generates a note on task
+         *  Concrete implementations
          */
         
-        class MIDINoteOnAction : public MIDIAction
+        class Action::ImplementationMIDINoteOn : public Action::Implementation,
+        public MIDIOutputOwner, public MIDIChannelOwner
         {
-            
-        public:
-            
-            MIDINoteOnAction();
-            
+            virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
             virtual void createDefaultMappings();
-            
-            virtual const Tasks generateTasksWithValueMap(Action::ValueMap& valueMap);
         };
         
-        /*
-         *  Generates a note off task
-         */
-        
-        class MIDINoteOffAction : public MIDIAction
+        class Action::ImplementationMIDINoteOff : public Action::Implementation,
+        public MIDIOutputOwner, public MIDIChannelOwner
         {
-            
-        public:
-            
-            MIDINoteOffAction();
-            
+            virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
             virtual void createDefaultMappings();
-            
-            virtual const Tasks generateTasksWithValueMap(Action::ValueMap& valueMap);
         };
         
-        /*
-         *  Generates a note on task followed by a note off task after a mapping derived duration
-         */
-        
-        class MIDINoteOnAndOffAction : public MIDIAction
+        class Action::ImplementationMIDINoteOnAndOff : public Action::Implementation,
+        public MIDIOutputOwner, public MIDIChannelOwner
         {
-            
-        public:
-            
-            MIDINoteOnAndOffAction();
-            
+            virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
             virtual void createDefaultMappings();
-            
-            virtual const Tasks generateTasksWithValueMap(Action::ValueMap& valueMap);
-            
         };
         
-        class MIDIControlChangeAction : public MIDIControlAction
+        class Action::ImplementationMIDIControlChange : public Action::Implementation,
+        public MIDIOutputOwner, public MIDIChannelOwner, public MIDIControlNumberOwner
         {
-            
-        public:
-            
-            MIDIControlChangeAction();
-            
+            virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
             virtual void createDefaultMappings();
-            
-            virtual const Tasks generateTasksWithValueMap(Action::ValueMap& valueMap);
-            
         };
-        
-        /*
-         *  Utilies and shortcuts
-         */
-        
-        bool actionIsMIDIAction(Action::SPtr action);
-    
-        bool actionIsMIDIControlAction(Action::SPtr action);
 
     }
     
