@@ -44,36 +44,46 @@ Element_SPtr CollisionMapping::getCollisionEffectee(Collision_SPtr collision, El
     return effectee;
 }
 
-Float CollisionVelocityMapping::mappedValue(Collision::SPtr collision, Element::SPtr effector)
-{
-    BOOST_ASSERT(collision);
-    
-    Float rawValue = 0.0;
-    
-    if (collision)
-    {
-        const Ogre::Vector3& relativeVelocity = collision->getRelativeCollisionVelocity();
-        rawValue = (Float) relativeVelocity.length();
-    }
-    
-    return this->applyOffsetAndScaleFactor(rawValue);
-}
-
-
-Float CollisionDistanceMapping::mappedValue(Collision::SPtr collision, Element::SPtr effector)
+Float CollisionMapping::mappedValue(Collision::SPtr collision, Element::SPtr effector)
 {
     BOOST_ASSERT(collision);
     BOOST_ASSERT(effector);
     
     Float rawValue = 0.0;
     
-    Element::SPtr effectee = this->getCollisionEffectee(collision, effector);
-    BOOST_ASSERT(effectee);
-    
-    if (effectee)
+    if (collision && effector)
     {
-        // get distance from collision location to reference point
+        MappingType mappingType = this->getMappingType();
+        switch (mappingType)
+        {
+            case MappingTypeConstant:
+                break;
+                
+            case MappingTypeCollisionVelocity:
+            {
+                const Ogre::Vector3& relativeVelocity = collision->getRelativeCollisionVelocity();
+                rawValue = (Float) relativeVelocity.length();
+            }
+                break;
+                
+            case MappingTypeCollisionDistance:
+            {
+                Element::SPtr effectee = this->getCollisionEffectee(collision, effector);
+                BOOST_ASSERT(effectee);
+                if (effectee)
+                {
+                    // get distance from collision location to reference point
+                }
+            }
+                
+            default:
+                break;
+        }
+        
+
     }
     
     return this->applyOffsetAndScaleFactor(rawValue);
 }
+
+

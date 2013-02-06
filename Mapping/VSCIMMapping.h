@@ -47,14 +47,13 @@ namespace VSC {
                 SetupTypeNone = 0,
                 SetupTypeReferencePoint
             };
-            struct Setup
-            {
-                typedef boost::shared_ptr<Setup>      SPtr;
-                typedef boost::weak_ptr<Setup>        WPtr;
-            };
-            typedef std::map<SetupType, Setup::SPtr> SetupMap;
+            struct Setup;
+            struct ReferencePointSetup;
+            typedef boost::shared_ptr<Setup>            Setup_SPtr;
+            typedef boost::weak_ptr<Setup>              Setup_WPtr;
+            typedef std::map<SetupType, Setup_SPtr>     SetupMap;
             
-            Setup::SPtr getSetupForSetupType(SetupType setupType) {return mSetupMap[setupType];}
+            Setup_SPtr getSetupForSetupType(SetupType setupType) {return mSetupMap[setupType];}
             
             const SetupMap& getSetupMap(void) {return mSetupMap;}
             
@@ -94,11 +93,22 @@ namespace VSC {
         typedef std::vector<Mapping::SPtr> Mappings;
         
         /*
-         *  Distance setup, for mappings which are dependant on a reference 
+         *  Distance setup, for mappings which are dependant on a reference
          */
         
-        struct MappingReferencePointSetup : public Mapping::Setup
+        struct Mapping::Setup
         {
+            typedef boost::shared_ptr<Setup>      SPtr;
+            typedef boost::weak_ptr<Setup>        WPtr;
+        };
+        
+        /*
+         *  Distance setup, for mappings which are dependant on a reference
+         */
+        
+        struct Mapping::ReferencePointSetup : public Mapping::Setup
+        {
+            ReferencePointSetup();
             static Ogre::Vector3 defaultReferencePoint;
             Ogre::Vector3 referencePoint;
         };

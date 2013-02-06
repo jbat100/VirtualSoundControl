@@ -107,43 +107,6 @@ Action::SPtr createActionWithType(ActionType actionType)
     return Action::SPtr();
 }
 
-MappingType mappingTypeForMapping(Mapping::SPtr mapping)
-{
-    if (mapping)
-    {
-        if (boost::dynamic_pointer_cast<Mapping>(mapping))
-            return MappingTypeConstant;
-        
-        if (boost::dynamic_pointer_cast<CollisionVelocityMapping>(mapping))
-            return MappingTypeCollisionVelocity;
-        
-        if (boost::dynamic_pointer_cast<CollisionDistanceMapping>(mapping))
-            return MappingTypeCollisionDistance;
-    }
-    
-    return MappingTypeNone;
-}
-
-Mapping::SPtr createMappingWithType(MappingType mappingType)
-{
-    switch (mappingType)
-    {
-        case MappingTypeConstant:
-            return Mapping::SPtr(new Mapping);
-            
-        case MappingTypeCollisionVelocity:
-            return Mapping::SPtr(new CollisionVelocityMapping);
-            
-        case MappingTypeCollisionDistance:
-            return Mapping::SPtr(new CollisionDistanceMapping);
-            
-        default:
-            break;
-    }
-    
-    return Mapping::SPtr();
-}
-
 std::string stringForActionType(const ActionType actionType)
 {
     boost::call_once(&InitialiseMaps, createdDescriptionsMapFlag);

@@ -3,6 +3,7 @@
 #define _VSC_IM_ACTION_H_
 
 #include "VSC.h"
+#include "VSCIM.h"
 #include "VSCOB.h"
 #include "VSCTask.h"
 #include "VSCTaskQueue.h"
@@ -12,6 +13,7 @@
 #include "VSCIMCollisionMapping.h"
 
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 
 #include <vector>
 
@@ -31,7 +33,8 @@ namespace VSC {
             
         public:
             
-            typedef boost::shared_ptr<Action> SPtr;
+            typedef boost::shared_ptr<Action>   SPtr;
+            typedef boost::weak_ptr<Action>     WPtr;
             
             Action() {}
             virtual ~Action() {}
@@ -42,6 +45,9 @@ namespace VSC {
             bool isMuted(void) {return mMuted;}
             void setMuted(bool mute) {mMuted = mute;}
             
+            void setActionType(ActionType actionType);
+            ActionType getActionType(void) {return mActionType;}
+            
             /*
              *  Task generation, note these functions are non virtual, they will be used
              *  to fill in a ValueMap, to then call the virtual protected function 
@@ -50,21 +56,63 @@ namespace VSC {
             
             const Tasks generateTasks(void);
             const Tasks generateTasksForCollision(OB::Collision_SPtr collision, OB::Element_SPtr effector);
-            
-        protected:
-            
-            // this is the only generate function which should be subclassed
-            virtual const Tasks generateTasksWithValueMap(Action::ValueMap& valueMap) = 0;
+            const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
             
         private:
+            
+            class Implementation
+            {
+            public:
+                typedef boost::shared_ptr<Implementation>   SPtr;
+                typedef boost::weak_ptr<Implementation>     WPtr;
+                virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap) = 0;
+                virtual void createDefaultMappings() = 0;
+            };
+            class ImplementationMIDINoteOn;
+            class ImplementationMIDINoteOff;
+            class ImplementationMIDINoteOnAndOff;
+            class ImplementationMIDIControlChange;
+            
             
             TaskQueue::SPtr         mTaskQueue;
             
             bool                    mMuted;
             
+            ActionType              mActionType;
+            
+            Implementation::SPtr    mImplementation;
+            
         };
 
         typedef std::vector<Action::SPtr> Actions;
+        
+        /*
+         *  Implementations
+         */
+        
+        class Action::ImplementationMIDINoteOn : public Action::Implementation
+        {
+            virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
+            virtual void createDefaultMappings();
+        };
+        
+        class Action::ImplementationMIDINoteOff : public Action::Implementation
+        {
+            virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
+            virtual void createDefaultMappings();
+        };
+        
+        class Action::ImplementationMIDINoteOnAndOff : public Action::Implementation
+        {
+            virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
+            virtual void createDefaultMappings();
+        };
+        
+        class Action::ImplementationMIDIControlChange : public Action::Implementation
+        {
+            virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
+            virtual void createDefaultMappings();
+        };
 
     }
     

@@ -47,3 +47,9 @@ void Event::setCollisionMappingForTarget(Mapping::SPtr mapping, Target target)
 {
     mCollisionMappingMap[target] = mapping;
 }
+
+void Event::clearRequiredMappingTargets(void)
+{
+    mMappingMap.clear();
+    mCollisionMappingMap.clear();
+}

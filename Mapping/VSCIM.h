@@ -91,10 +91,6 @@ namespace VSC
         
         typedef std::set<MappingType> MappingTypeSet;
         
-        MappingType mappingTypeForMapping(Mapping_SPtr mapping);
-        
-        Mapping_SPtr createMappingWithType(MappingType mappingType);
-        
         std::string stringForMappingType(const MappingType mappingType);
         
         MappingType mappingTypeForString(const std::string& s);

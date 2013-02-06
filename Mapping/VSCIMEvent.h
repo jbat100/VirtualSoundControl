@@ -56,6 +56,8 @@ namespace VSC
             
             void addRequiredMappingTarget(Target target);
             
+            void clearRequiredMappingTargets(void);
+            
             bool checkRequiredMappings(void);
             
         private:
