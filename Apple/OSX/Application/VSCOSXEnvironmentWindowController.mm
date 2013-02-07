@@ -35,6 +35,10 @@
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
+using namespace VSC;
+using namespace VSC::IM;
+using namespace VSC::OB;
+
 NSArray* EnvironmentInspectorTabParamArray = nil;
 
 NSString* const VSCOSXTabTitleSceneSettings = @"Scene Settings";
@@ -95,7 +99,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 
 -(void) customInit
 {
-    self.environmentTest = VSC::EnvironmentTest::SPtr(new VSC::EnvironmentTest);
+    self.environmentTest = EnvironmentTest::SPtr(new EnvironmentTest);
 }
 
 -(void) dealoc
@@ -155,7 +159,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 
 #pragma mark - Custom Setters
 
-- (void) setEnvironment:(VSC::Environment::WPtr)environment
+- (void) setEnvironment:(Environment::WPtr)environment
 {
     _environment = environment;
     [self reloadInterface];
@@ -242,21 +246,21 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 
 -(void) reloadInterface
 {
-    VSC::Environment::SPtr env = self.environment.lock();
+    Environment::SPtr env = self.environment.lock();
     [self reloadSceneInterface];
 }
 
 -(void) reloadSceneInterface
 {
-    VSC::Environment::SPtr env = self.environment.lock();
+    Environment::SPtr env = self.environment.lock();
     
     if (env)
     {
-        self.sceneController.scene = VSC::OB::Scene::WPtr(env->getScene());
+        self.sceneController.scene = Scene::WPtr(env->getScene());
     }
     else
     {
-        self.sceneController.scene = VSC::OB::Scene::WPtr();
+        self.sceneController.scene = Scene::WPtr();
     }
 }
 
@@ -349,7 +353,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 }
 
 
--(void) showElementInspectorForElement:(VSC::OB::Element::SPtr)element
+-(void) showElementInspectorForElement:(Element::SPtr)element
 {
     NSLog(@"%@ showElementInspectorForElement", self);
     
@@ -363,17 +367,17 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     }
     
     BOOST_ASSERT(self.elementInspectorWindowController.elementInspectorViewController);
-    self.elementInspectorWindowController.elementInspectorViewController.element = VSC::OB::Element::WPtr(element);
+    self.elementInspectorWindowController.elementInspectorViewController.element = Element::WPtr(element);
     [self.elementInspectorWindowController showWindow:self];
     [self.elementInspectorWindowController.elementInspectorViewController showElementDetailView];
 }
 
--(const VSC::IM::EventChains) collisionStartedEventChainsForElement:(VSC::OB::Element::SPtr)element
+-(const EventChains&) collisionStartedEventChainsForElement:(Element::SPtr)element
 {
-    VSC::Environment::SPtr env = self.environment.lock();
+    Environment::SPtr env = self.environment.lock();
     BOOST_ASSERT(env);
     
-    VSC::IM::EventChains eventChains;
+    EventChains eventChains;
     
     if (env)
     {
@@ -388,12 +392,12 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     return eventChains;
 }
 
--(const VSC::IM::EventChains) collisionEndedEventChainsForElement:(VSC::OB::Element::SPtr)element
+-(const EventChains&) collisionEndedEventChainsForElement:(Element::SPtr)element
 {
-    VSC::Environment::SPtr env = self.environment.lock();
+    Environment::SPtr env = self.environment.lock();
     BOOST_ASSERT(env);
     
-    VSC::IM::EventChains eventChains;
+    EventChains eventChains;
     
     if (env)
     {
@@ -419,7 +423,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 -(void)setupTest
 {
     BOOST_ASSERT(self.environmentTest);
-    VSC::Environment::SPtr env = self.environment.lock();
+    Environment::SPtr env = self.environment.lock();
     BOOST_ASSERT(env);
     
     if (self.environmentTest && env)

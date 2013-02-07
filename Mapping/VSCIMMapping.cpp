@@ -1,5 +1,6 @@
 
 #include "VSCIMMapping.h"
+#include "VSCIMMappingImplementations.h"
 
 #include "VSCOBScene.h"
 #include "VSCOBElement.h"
@@ -13,7 +14,7 @@ using namespace VSC::IM;
 
 Mapping::Mapping() : mOffset(0.0), mScaleFactor(1.0), mMappingType(MappingTypeNone)
 {
-    this->allowMappingType(MappingTypeConstant);
+    
 }
 
 Float Mapping::applyOffsetAndScaleFactor(Float rawValue)
@@ -38,7 +39,7 @@ void Mapping::setMappingType(MappingType mappingType)
             break;
             
         default:
-            BOOST_ASSERT_MSG("MappingType is not handled");
+            BOOST_ASSERT_MSG(false, "MappingType is not handled");
             mImplementation = Implementation::SPtr(new ImplementationConstant);
             mMappingType = MappingTypeConstant;
             return;

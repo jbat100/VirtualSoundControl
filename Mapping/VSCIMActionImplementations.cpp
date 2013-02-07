@@ -15,22 +15,6 @@ using namespace VSC;
 using namespace VSC::IM;
 
 
-MIDIOutputOwner::MIDIOutputOwner()
-{
-    MIDI::OutputManager::SPtr outputManager = MIDI::OutputManager::singletonManager();
-    BOOST_ASSERT(outputManager);
-    if (outputManager)
-    {
-        // Get the first openend MIDI output...
-        mMIDIOutput = outputManager->getFirstOpenedOutput();
-    }
-    else
-    {
-        mMIDIOutput = MIDI::OutputManager::SPtr();
-    }
-}
-
-
 //MARK: MIDINoteOn
 
 const Tasks Action::ImplementationMIDINoteOn::generateTasksWithTargetValueMap(Event::TargetValueMap& valueMap)
@@ -55,17 +39,19 @@ void Action::ImplementationMIDINoteOn::setupMappings(Action::SPtr action)
     BOOST_ASSERT(action);
     if (action)
     {
-        action->addRequiredMappingTarget(TargetPitch);
-        action->addRequiredMappingTarget(TargetVelocityOn);
-        
         const Targets& targets = action->getRequiredMappingTargets();
-        
-        BOOST_FOREACH(const Target& target, targets)
+        BOOST_FOREACH(const Trigger& trigger, AllowedTriggers())
         {
-            Mapping::SPtr mapping(new Mapping);
-            mapping->setMappingType(MappingTypeConstant);
-            mapping->setOffset(64.0);
-            action->setMappingForTarget(mapping, target);
+            BOOST_FOREACH(const Target& target, targets)
+            {
+                Mapping::SPtr mapping = action->getMapping(trigger, target);
+                BOOST_ASSERT(mapping);
+                if (mapping)
+                {
+                    mapping->setMappingType(MappingTypeConstant);
+                    mapping->setOffset(64.0);
+                }
+            }
         }
     }
 }
@@ -94,17 +80,19 @@ void Action::ImplementationMIDINoteOff::setupMappings(Action::SPtr action)
     BOOST_ASSERT(action);
     if (action)
     {
-        action->addRequiredMappingTarget(TargetPitch);
-        action->addRequiredMappingTarget(TargetVelocityOff);
-        
         const Targets& targets = action->getRequiredMappingTargets();
-        
-        BOOST_FOREACH(const Target& target, targets)
+        BOOST_FOREACH(const Trigger& trigger, AllowedTriggers())
         {
-            Mapping::SPtr mapping(new Mapping);
-            mapping->setMappingType(MappingTypeConstant);
-            mapping->setOffset(64.0);
-            action->setMappingForTarget(mapping, target);
+            BOOST_FOREACH(const Target& target, targets)
+            {
+                Mapping::SPtr mapping = action->getMapping(trigger, target);
+                BOOST_ASSERT(mapping);
+                if (mapping)
+                {
+                    mapping->setMappingType(MappingTypeConstant);
+                    mapping->setOffset(64.0);
+                }
+            }
         }
     }
 }
@@ -148,19 +136,19 @@ void Action::ImplementationMIDINoteOnAndOff::setupMappings(Action::SPtr action)
     BOOST_ASSERT(action);
     if (action)
     {
-        action->addRequiredMappingTarget(TargetPitch);
-        action->addRequiredMappingTarget(TargetVelocityOn);
-        action->addRequiredMappingTarget(TargetDuration);
-        action->addRequiredMappingTarget(TargetVelocityOff);
-        
         const Targets& targets = action->getRequiredMappingTargets();
-        
-        BOOST_FOREACH(const Target& target, targets)
+        BOOST_FOREACH(const Trigger& trigger, AllowedTriggers())
         {
-            Mapping::SPtr mapping(new Mapping);
-            mapping->setMappingType(MappingTypeConstant);
-            mapping->setOffset(64.0);
-            action->setMappingForTarget(mapping, target);
+            BOOST_FOREACH(const Target& target, targets)
+            {
+                Mapping::SPtr mapping = action->getMapping(trigger, target);
+                BOOST_ASSERT(mapping);
+                if (mapping)
+                {
+                    mapping->setMappingType(MappingTypeConstant);
+                    mapping->setOffset(64.0);
+                }
+            }
         }
     }
 }
@@ -188,16 +176,19 @@ void Action::ImplementationMIDIControlChange::setupMappings(Action::SPtr action)
     BOOST_ASSERT(action);
     if (action)
     {
-        action->addRequiredMappingTarget(TargetValue);
-        
         const Targets& targets = action->getRequiredMappingTargets();
-        
-        BOOST_FOREACH(const Target& target, targets)
+        BOOST_FOREACH(const Trigger& trigger, AllowedTriggers())
         {
-            Mapping::SPtr mapping(new Mapping);
-            mapping->setMappingType(MappingTypeConstant);
-            mapping->setOffset(64.0);
-            action->setMappingForTarget(mapping, target);
+            BOOST_FOREACH(const Target& target, targets)
+            {
+                Mapping::SPtr mapping = action->getMapping(trigger, target);
+                BOOST_ASSERT(mapping);
+                if (mapping)
+                {
+                    mapping->setMappingType(MappingTypeConstant);
+                    mapping->setOffset(64.0);
+                }
+            }
         }
     }
 }

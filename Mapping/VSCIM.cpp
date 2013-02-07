@@ -1,12 +1,11 @@
 
 #include "VSCIM.h"
-#include "VSCIMAction.h"
-#include "VSCIMActionImplementations.h"
-#include "VSCIMCollisionMapping.h"
 
 #include <boost/assign/std/set.hpp>
 #include <boost/foreach.hpp>
 #include <boost/bimap.hpp>
+#include <boost/assert.hpp>
+#include <boost/thread.hpp>
 
 namespace VSC
 {
@@ -44,7 +43,7 @@ VSC::IM::MappingDescriptionMap mappingDescriptionMap;
 VSC::IM::ActionDescriptionMap actionDescriptionMap;
 
 
-void InitialiseInternals(void)
+void VSC::IM::InitialiseInternals(void)
 {
     BOOST_ASSERT(targetDescriptionMap.empty());
     BOOST_ASSERT(mappingDescriptionMap.empty());

@@ -34,12 +34,6 @@ namespace VSC
             Event() {}
             virtual ~Event() {}
             
-            /*
-             *  Mappings
-             */
-            
-            virtual void createDefaultMappings(void) {}
-            
             const Targets& getRequiredMappingTargets(void) {return mRequiredMappingTargets;}
             
             Mapping_SPtr getMapping(const Trigger trigger, const Target target);

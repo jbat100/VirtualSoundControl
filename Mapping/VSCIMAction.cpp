@@ -31,22 +31,34 @@ const Tasks Action::generateTasks(Trigger trigger, TriggerPayload::SPtr payload)
 void Action::setActionType(ActionType actionType)
 {
     
+    this->clearRequiredMappingTargets();
+    this->clearMappings();
+    
     switch (actionType)
     {
         case ActionTypeMIDINoteOn:
             mImplementation = Implementation::SPtr(new ImplementationMIDINoteOn);
+            this->addRequiredMappingTarget(TargetPitch);
+            this->addRequiredMappingTarget(TargetVelocityOn);
             break;
             
         case ActionTypeMIDINoteOff:
             mImplementation = Implementation::SPtr(new ImplementationMIDINoteOff);
+            this->addRequiredMappingTarget(TargetPitch);
+            this->addRequiredMappingTarget(TargetVelocityOff);
             break;
             
         case ActionTypeMIDINoteOnAndOff:
             mImplementation = Implementation::SPtr(new ImplementationMIDINoteOnAndOff);
+            this->addRequiredMappingTarget(TargetPitch);
+            this->addRequiredMappingTarget(TargetVelocityOn);
+            this->addRequiredMappingTarget(TargetDuration);
+            this->addRequiredMappingTarget(TargetVelocityOff);
             break;
             
         case ActionTypeMIDIControlChange:
             mImplementation = Implementation::SPtr(new ImplementationMIDIControlChange);
+            this->addRequiredMappingTarget(TargetValue);
             break;
             
         default:
@@ -69,11 +81,11 @@ void Action::setActionType(ActionType actionType)
             break;
     }
     
+    this->generateMappings();
+    
     BOOST_ASSERT(mImplementation);
     if (mImplementation)
     {
-        this->clearRequiredMappingTargets();
-        this->clearMappings(void);
         mImplementation->setupMappings(this->shared_from_this());
     }
     

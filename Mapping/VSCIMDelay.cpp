@@ -1,7 +1,6 @@
 
 #include "VSCIMDelay.h"
 #include "VSCIMMapping.h"
-#include "VSCIMCollisionMapping.h"
 #include "VSCOBCollision.h"
 #include "VSCOBElement.h"
 
@@ -16,18 +15,16 @@ using namespace VSC::OB;
 Delay::Delay(void)
 {
     this->addRequiredMappingTarget(TargetDuration);
+    
+    this->generateMappings();
+    
+    BOOST_FOREACH(const Trigger& trigger, AllowedTriggers())
+    {
+        Mapping::SPtr mapping = this->getMapping(trigger, TargetDuration);
+        mapping->setMappingType(MappingTypeConstant);
+    }
 }
 
-void Delay::createDefaultMappings(void)
-{
-    Mapping::SPtr defaultMapping = Mapping::SPtr(new Mapping);
-    defaultMapping->setOffset(1.0);
-    this->setMappingForTarget(defaultMapping, TargetDuration);
-    
-    Mapping::SPtr collisionMapping = Mapping::SPtr(new Mapping);
-    collisionMapping->setOffset(1.0);
-    this->setCollisionMappingForTarget(collisionMapping, TargetDuration);
-}
 
 VSC::TimeDuration Delay::getDuration(void)
 {

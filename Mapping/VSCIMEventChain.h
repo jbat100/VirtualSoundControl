@@ -40,8 +40,7 @@ namespace VSC
             void swapEvents(Event_SPtr firstEvent, Event_SPtr secondEvent);
             void removeEvent(Event_SPtr event);
             
-            virtual void perform(void);
-            virtual void performForCollision(OB::Collision_SPtr collision, OB::Element_SPtr effector);
+            virtual void perform(Trigger trigger, TriggerPayload::SPtr payload);
             
         protected:
             

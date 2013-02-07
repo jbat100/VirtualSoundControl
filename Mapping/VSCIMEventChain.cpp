@@ -149,7 +149,7 @@ bool EventChain::checkEvent(Event::SPtr event)
     return false;
 }
 
-void EventChain::performForCollision(Collision::SPtr collision, Element::SPtr effector)
+void EventChain::perform(Trigger trigger, TriggerPayload::SPtr payload)
 {
     Time executionTime = CurrentTime();
     
@@ -158,14 +158,13 @@ void EventChain::performForCollision(Collision::SPtr collision, Element::SPtr ef
         Delay::SPtr delay = boost::dynamic_pointer_cast<Delay>(event);
         if (delay)
         {
-            executionTime += delay->getDuration();
+            executionTime += delay->getDuration(trigger, payload);
             continue;
         }
         Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
         if (action)
         {
-            Tasks tasks = action->generateTasksForCollision(collision, effector);
-            
+            Tasks tasks = action->generateTasks(trigger, payload);
             BOOST_FOREACH(Task::SPtr task, tasks)
             {
                 BOOST_ASSERT(task);
@@ -179,7 +178,6 @@ void EventChain::performForCollision(Collision::SPtr collision, Element::SPtr ef
                     }
                 }
             }
-            
             continue;
         }
         BOOST_ASSERT_MSG(false, "Unexpected event type");

@@ -91,24 +91,17 @@ void EnvironmentTest::internalSetupForEnvironment(Environment::SPtr environment)
     {        
         EventChain::SPtr chain = environment->createEventChain();
         
-        MIDINoteOnAction::SPtr noteOnAction = MIDINoteOnAction::SPtr(new MIDINoteOnAction);
-        noteOnAction->createDefaultMappings();
+        Action::SPtr noteOnAction(new Action);
+        noteOnAction->setActionType(ActionTypeMIDINoteOn);
         BOOST_ASSERT(noteOnAction);
-        BOOST_ASSERT(noteOnAction->getMappingForTarget(TargetPitch));
-        if (noteOnAction->getMappingForTarget(TargetPitch))
-            noteOnAction->getMappingForTarget(TargetPitch)->setOffset(64.0);
-        noteOnAction->getMappingForTarget(TargetVelocityOn)->setOffset(64.0);
-        chain->appendEvent(boost::static_pointer_cast<Event>(noteOnAction));
+        chain->appendEvent(boost::dynamic_pointer_cast<Event>(noteOnAction));
         
-        Delay::SPtr delay = Delay::SPtr(new Delay());
-        delay->createDefaultMappings();
-        chain->appendEvent(boost::static_pointer_cast<Event>(delay));
+        Delay::SPtr delay(new Delay());
+        chain->appendEvent(boost::dynamic_pointer_cast<Event>(delay));
         
-        MIDINoteOffAction::SPtr noteOffAction = MIDINoteOffAction::SPtr(new MIDINoteOffAction);
-        noteOffAction->createDefaultMappings();
-        noteOffAction->getMappingForTarget(TargetPitch)->setOffset(64.0);
-        noteOffAction->getMappingForTarget(TargetVelocityOff)->setOffset(64.0);
-        chain->appendEvent(boost::static_pointer_cast<Event>(noteOffAction));
+        Action::SPtr noteOffAction(new Action);
+        noteOffAction->setActionType(ActionTypeMIDINoteOff);
+        chain->appendEvent(boost::dynamic_pointer_cast<Event>(noteOffAction));
         
         collisionMapper->addEventChainForCollisionStarted(chain, element1);
     }

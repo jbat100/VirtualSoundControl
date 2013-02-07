@@ -18,8 +18,8 @@ bool Event::checkRequiredMappings(void)
         {
             if (!this->getMapping(trigger, target)) return false;
         }
-        return true;
     }
+    return true;
 }
 
 Mapping_SPtr Event::getMapping(const Trigger trigger, const Target target)

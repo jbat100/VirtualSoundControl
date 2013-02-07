@@ -7,6 +7,7 @@
 #define _VSC_IM_DELAY_H_
 
 #include "VSC.h"
+#include "VSCIM.h"
 #include "VSCIMEvent.h"
 #include "VSCOB.h"
 
@@ -32,16 +33,12 @@ namespace VSC {
             typedef boost::weak_ptr<Delay>      WPtr;
             
             Delay(void);
-         
-            virtual void createDefaultMappings(void);
             
-            TimeDuration getDuration(void);
-            TimeDuration getDurationForCollision(OB::Collision_SPtr collision, OB::Element_SPtr effector);
+            TimeDuration getDuration(Trigger trigger, TriggerPayload::SPtr payload);
             
         };
 
     }
-    
 }
 
 #endif // _VSC_IM_DELAY_H_
