@@ -27,7 +27,7 @@
 #include "VSCOBScene.h"
 #include "VSCOBElement.h"
 #include "VSCIM.h"
-#include "VSCIMCollisionMapper.h"
+#include "VSCCollisionMapper.h"
 
 #include <Ogre/Ogre.h>
 
@@ -377,7 +377,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     
     if (env)
     {
-        VSC::IM::CollisionMapper::SPtr mapper = env->getCollisionMapper();
+        CollisionMapper::SPtr mapper = env->getCollisionMapper();
         BOOST_ASSERT(mapper);
         if (mapper)
         {
@@ -397,7 +397,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     
     if (env)
     {
-        VSC::IM::CollisionMapper::SPtr mapper = env->getCollisionMapper();
+        CollisionMapper::SPtr mapper = env->getCollisionMapper();
         BOOST_ASSERT(mapper);
         if (mapper)
         {

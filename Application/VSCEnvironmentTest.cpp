@@ -8,7 +8,7 @@
 #include "VSCOBElementFactory.h"
 #include "VSCOBDynamicObject.h"
 
-#include "VSCIMCollisionMapper.h"
+#include "VSCCollisionMapper.h"
 #include "VSCIMEvent.h"
 #include "VSCIMDelay.h"
 #include "VSCIMEventChain.h"

@@ -14,6 +14,8 @@
 
 #include "VSCMIDI.h"
 #include "VSCMIDIOutputManager.h"
+#include "VSCMIDIOwners.h"
+
 #include "VSCIMEvent.h"
 #include "VSCIMAction.h"
 #include "VSCIMActionImplementations.h"
@@ -22,6 +24,9 @@
 #include <boost/foreach.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
+
+using namespace VSC;
+using namespace VSC::IM;
 
 NSDictionary* actionTypeMenuItemStringDict = nil;
 
@@ -33,7 +38,8 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
  */
 
 const CGFloat VSCIMOSXActionViewBaseHeight = 36.0 + 6;
-const CGFloat VSCIMOSXActionViewMIDISetupHeight = 39.0 + 4;
+const CGFloat VSCIMOSXActionViewMIDIOutputSetupHeight = 39.0 + 4;
+const CGFloat VSCIMOSXActionViewMIDIChannelSetupHeight = 39.0 + 4;
 const CGFloat VSCIMOSXActionViewMIDIControlSetupHeight = 15.0;
 
 /*
@@ -41,12 +47,6 @@ const CGFloat VSCIMOSXActionViewMIDIControlSetupHeight = 15.0;
  */
 
 @interface VSCIMOSXActionView ()
-
-/*
- *  Used by all action types
- */
-
-@property (nonatomic, assign) VSC::IM::ActionType currentActionType;
 
 /*
  *  Constraints!
@@ -67,17 +67,27 @@ static const BOOL debugDraw = NO;
 
 #pragma mark - Static Methods
 
-+(CGFloat) heightOfViewForAction:(VSC::IM::Action::SPtr)action
++(CGFloat) heightOfViewForAction:(Action::SPtr)action
 {
     
     CGFloat totalHeight = VSCIMOSXActionViewBaseHeight;
     
-    if (VSC::IM::actionIsMIDIAction(action))
+    Action::Implementation::SPtr implementation = action->getImplementation();
+    
+    MIDI::OutputOwner::SPtr midiOutputOwner = boost::dynamic_pointer_cast<MIDI::OutputOwner>(implementation);
+    if (midiOutputOwner)
     {
-        totalHeight += VSCIMOSXActionViewMIDISetupHeight;
+        totalHeight += VSCIMOSXActionViewMIDIOutputSetupHeight;
     }
     
-    if (VSC::IM::actionIsMIDIControlAction(action))
+    MIDI::ChannelOwner::SPtr midiChanneltOwner = boost::dynamic_pointer_cast<MIDI::ChannelOwner>(implementation);
+    if (midiChanneltOwner)
+    {
+        totalHeight += VSCIMOSXActionViewMIDIChannelSetupHeight;
+    }
+    
+    MIDI::ControlNumberOwner::SPtr midiControlNumberOwner = boost::dynamic_pointer_cast<MIDI::ControlNumberOwner>(implementation);
+    if (midiControlNumberOwner)
     {
         totalHeight += VSCIMOSXActionViewMIDIControlSetupHeight;
     }
@@ -113,7 +123,7 @@ static const BOOL debugDraw = NO;
 
 -(void) commonInit
 {
-    self.currentActionType = VSC::IM::ActionTypeNone;
+    self.currentActionType = ActionTypeNone;
     self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
@@ -124,11 +134,11 @@ static const BOOL debugDraw = NO;
     {
         switch (self.currentActionType)
         {
-            case VSC::IM::ActionTypeMIDINoteOn:
+            case ActionTypeMIDINoteOn:
                 CGContextSetRGBFillColor (myContext, 1.0, 0.0, 0.0, 1.0);
                 break;
                 
-            case VSC::IM::ActionTypeMIDINoteOff:
+            case ActionTypeMIDINoteOff:
                 CGContextSetRGBFillColor (myContext, 0.0, 1.0, 0.0, 1.0);
                 break;
                 
@@ -160,31 +170,30 @@ static const BOOL debugDraw = NO;
 
 #pragma mark - Action Getter
 
--(VSC::IM::Action_SPtr) action
+-(Action_SPtr) action
 {
-    VSC::IM::Event::SPtr actionEvent = self.event.lock();
+    Event::SPtr actionEvent = self.event.lock();
     BOOST_ASSERT(actionEvent);
-    VSC::IM::Action::SPtr action = boost::dynamic_pointer_cast<VSC::IM::Action>(actionEvent);
+    Action::SPtr action = boost::dynamic_pointer_cast<Action>(actionEvent);
     BOOST_ASSERT(action);
     return action;
 }
 
 #pragma mark - Custom Setter
 
--(void) setEvent:(VSC::IM::Event::WPtr)weakEvent
+-(void) setEvent:(Event::WPtr)weakEvent
 {
     [super setEvent:weakEvent];
-    VSC::IM::Action::SPtr action = boost::dynamic_pointer_cast<VSC::IM::Action>(weakEvent.lock());
+    Action::SPtr action = boost::dynamic_pointer_cast<Action>(weakEvent.lock());
     BOOST_ASSERT(action);
-    self.currentActionType = VSC::IM::actionTypeForAction(action);
     [self setupInterfaceForNewAction];
 }
 
--(BOOL) checkEvent:(VSC::IM::Event::SPtr)testEvent
+-(BOOL) checkEvent:(Event::SPtr)testEvent
 {
     BOOST_ASSERT(testEvent);
     if (!testEvent) return YES;
-    VSC::IM::Action::SPtr action = boost::dynamic_pointer_cast<VSC::IM::Action>(testEvent);
+    Action::SPtr action = boost::dynamic_pointer_cast<Action>(testEvent);
     BOOST_ASSERT(action);
     if (action) return YES;
     return NO;
@@ -202,7 +211,7 @@ static const BOOL debugDraw = NO;
 -(void) setupInterfaceForNewAction
 {
     
-    VSC::IM::Action::SPtr action = [self action];
+    Action::SPtr action = [self action];
     
     /*
      *  Setup the view and its subviews according to action type
@@ -224,7 +233,7 @@ static const BOOL debugDraw = NO;
     [verticalLayoutVisualFormat appendString:@"-2-[mainView]"];
     
     
-    if (VSC::IM::actionIsMIDIAction(action))
+    if (actionIsMIDIAction(action))
     {
         if (self.midiSetupView == nil)
         {
@@ -265,9 +274,9 @@ static const BOOL debugDraw = NO;
      *  Update interface
      */
     
-    [self.actionTypeTextField setStringValue:[NSString stringWithStdString:VSC::IM::stringForActionType(self.currentActionType)]];
+    [self.actionTypeTextField setStringValue:[NSString stringWithStdString:StringForActionType(self.currentActionType)]];
     
-    if (VSC::IM::actionIsMIDIAction(action))
+    if (actionIsMIDIAction(action))
     {
         [self updateMIDIOutputs];
         [self updateMIDIChannel];
@@ -292,8 +301,8 @@ static const BOOL debugDraw = NO;
             [self.midiOutputPopUpButton addItemWithTitle:title];
         }
         
-        VSC::IM::Action::SPtr action = [self action];
-        VSC::IM::MIDIAction::SPtr collisionAction = boost::dynamic_pointer_cast<VSC::IM::MIDIAction>(action);
+        Action::SPtr action = [self action];
+        MIDIAction::SPtr collisionAction = boost::dynamic_pointer_cast<MIDIAction>(action);
         BOOST_ASSERT(collisionAction);
         
         if (collisionAction)
@@ -314,13 +323,13 @@ static const BOOL debugDraw = NO;
             [self.midiOutputPopUpButton selectItemWithTitle:VSCIMOSXNoMidiOutputString];
         }
         
-        if (VSC::IM::actionIsMIDIControlAction(action)) [self updateMIDIControlNumbers];
+        if (actionIsMIDIControlAction(action)) [self updateMIDIControlNumbers];
     }
 }
 
 -(void) updateMIDIChannel
 {
-    VSC::IM::MIDIAction::SPtr midiAction = boost::dynamic_pointer_cast<VSC::IM::MIDIAction>([self action]);
+    MIDIAction::SPtr midiAction = boost::dynamic_pointer_cast<MIDIAction>([self action]);
     BOOST_ASSERT(midiAction);
     
     if (midiAction)
@@ -335,13 +344,13 @@ static const BOOL debugDraw = NO;
 
 -(void) updateMIDIControlNumbers
 {
-    VSC::IM::Action::SPtr action = [self action];
-    BOOST_ASSERT(VSC::IM::actionIsMIDIControlAction(action));
+    Action::SPtr action = [self action];
+    BOOST_ASSERT(actionIsMIDIControlAction(action));
     
     [self.midiControlNumberPopUpButton removeAllItems];
     
-    VSC::IM::MIDIControlAction::SPtr controlAction;
-    controlAction = boost::dynamic_pointer_cast<VSC::IM::MIDIControlAction>([self action]);
+    MIDIControlAction::SPtr controlAction;
+    controlAction = boost::dynamic_pointer_cast<MIDIControlAction>([self action]);
     
     BOOST_ASSERT(controlAction);
     
@@ -376,7 +385,7 @@ static const BOOL debugDraw = NO;
     BOOST_ASSERT(self.midiOutputPopUpButton);
     VSC::MIDI::OutputManager::SPtr outputManager = VSC::MIDI::OutputManager::singletonManager();
     BOOST_ASSERT(outputManager);
-    VSC::IM::MIDIAction::SPtr action = boost::dynamic_pointer_cast<VSC::IM::MIDIAction>([self action]);
+    MIDIAction::SPtr action = boost::dynamic_pointer_cast<MIDIAction>([self action]);
     BOOST_ASSERT(action);
     
     if (action && outputManager && self.midiOutputPopUpButton)
@@ -411,7 +420,7 @@ static const BOOL debugDraw = NO;
 -(IBAction) midiControlNumberSelected:(id)sender
 {
     BOOST_ASSERT(self.midiControlNumberPopUpButton);
-    VSC::IM::MIDIControlAction::SPtr action = boost::dynamic_pointer_cast<VSC::IM::MIDIControlAction>([self action]);
+    MIDIControlAction::SPtr action = boost::dynamic_pointer_cast<MIDIControlAction>([self action]);
     BOOST_ASSERT(action);
     
     if (action && self.midiControlNumberPopUpButton)

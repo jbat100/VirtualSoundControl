@@ -16,7 +16,7 @@ using namespace VSC::OB;
 
 const Tasks Action::generateTasks(Trigger trigger, TriggerPayload::SPtr payload)
 {
-    ValueMap valueMap;
+    TargetValueMap valueMap;
     
     BOOST_FOREACH(const Target& target, this->getRequiredMappingTargets())
     {
@@ -25,7 +25,7 @@ const Tasks Action::generateTasks(Trigger trigger, TriggerPayload::SPtr payload)
         valueMap[target] = value;
     }
     
-    return this->generateTasksWithValueMap(valueMap);
+    return this->generateTasksWithTargetValueMap(valueMap);
 }
 
 void Action::setActionType(ActionType actionType)
@@ -72,6 +72,8 @@ void Action::setActionType(ActionType actionType)
     BOOST_ASSERT(mImplementation);
     if (mImplementation)
     {
+        this->clearRequiredMappingTargets();
+        this->clearMappings(void);
         mImplementation->setupMappings(this->shared_from_this());
     }
     

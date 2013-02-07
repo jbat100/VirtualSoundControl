@@ -1,8 +1,14 @@
 
-#include "VSCIMCollisionMapper.h"
+#include "VSCCollisionMapper.h"
+
+#include "VSCOB.h"
+#include "VSCIM.h"
 
 #include "VSCOBElement.h"
 #include "VSCOBCollision.h"
+
+#include "VSCIMEvent.h"
+#include "VSCIMEventChain.h"
 
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>

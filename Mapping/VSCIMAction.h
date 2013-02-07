@@ -10,7 +10,6 @@
 #include "VSCIMEvent.h"
 
 #include "VSCIMMapping.h"
-#include "VSCIMCollisionMapping.h"
 
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/shared_ptr.hpp>
@@ -51,13 +50,13 @@ namespace VSC {
             
             /*
              *  Task generation, note these functions are non virtual, they will be used
-             *  to fill in a ValueMap, to then call the virtual protected function 
-             *  virtual Tasks generateTasksWithValueMap(Action::ValueMap& valueMap) = 0;
+             *  to fill in a TargetValueMap, to then call the virtual protected function 
+             *  virtual Tasks generateTasksWithTargetValueMap(Action::TargetValueMap& valueMap) = 0;
              */
             
             const Tasks generateTasks(Trigger trigger, TriggerPayload::SPtr payload);
             
-            const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
+            const Tasks generateTasksWithTargetValueMap(Event::TargetValueMap& valueMap);
             
             /*
              *  Implementation
@@ -68,7 +67,7 @@ namespace VSC {
             public:
                 typedef boost::shared_ptr<Implementation>   SPtr;
                 typedef boost::weak_ptr<Implementation>     WPtr;
-                virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap) = 0;
+                virtual const Tasks generateTasksWithTargetValueMap(Event::TargetValueMap& valueMap) = 0;
                 virtual void setupMappings(Action::SPtr action) = 0;
             };
             class ImplementationMIDINoteOn;

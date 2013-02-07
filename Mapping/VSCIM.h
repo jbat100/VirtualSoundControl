@@ -61,9 +61,9 @@ namespace VSC
          *  Used for UI/Debug display
          */
         
-        std::string stringForActionType(const ActionType actionType);
+        std::string StringForActionType(const ActionType actionType);
         
-        ActionType actionTypeForString(const std::string& s);
+        ActionType ActionTypeForString(const std::string& s);
         
         /*
          *  Mapping type enum
@@ -79,9 +79,9 @@ namespace VSC
         
         typedef std::set<MappingType> MappingTypeSet;
         
-        std::string stringForMappingType(const MappingType mappingType);
+        std::string StringForMappingType(const MappingType mappingType);
         
-        MappingType mappingTypeForString(const std::string& s);
+        MappingType MappingTypeForString(const std::string& s);
         
         
         /**
@@ -100,9 +100,9 @@ namespace VSC
         
         typedef std::vector<Target> Targets;
         
-        std::string stringForTarget(const Target target);
+        std::string StringForTarget(const Target target);
         
-        const Target targetForString(const std::string& s);
+        const Target TargetForString(const std::string& s);
         
         /**
          *  Triggers
@@ -117,11 +117,13 @@ namespace VSC
         
         typedef std::vector<Trigger> Triggers;
         
-        std::string stringForTarget(const Target target);
+        std::string StringForTarget(const Target target);
         
-        const Target targetForString(const std::string& s);
+        const Target TargetForString(const std::string& s);
         
-        const MappingTypeSet& allowedMappingTypeSetForTrigger(Trigger trigger);
+        const MappingTypeSet& AllowedMappingTypeSetForTrigger(Trigger trigger);
+        
+        const Triggers& AllowedTriggers(void);
         
         /**
          *  Trigger payloads

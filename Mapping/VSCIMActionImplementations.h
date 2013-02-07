@@ -20,28 +20,28 @@ namespace VSC {
         class Action::ImplementationMIDINoteOn : public Action::Implementation,
         public MIDI::OutputOwner, public MIDI::ChannelOwner
         {
-            virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
+            virtual const Tasks generateTasksWithTargetValueMap(Event::TargetValueMap& valueMap);
             virtual void setupMappings(Action::SPtr action);
         };
         
         class Action::ImplementationMIDINoteOff : public Action::Implementation,
         public MIDI::OutputOwner, public MIDI::ChannelOwner
         {
-            virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
+            virtual const Tasks generateTasksWithTargetValueMap(Event::TargetValueMap& valueMap);
             virtual void setupMappings(Action::SPtr action);
         };
         
         class Action::ImplementationMIDINoteOnAndOff : public Action::Implementation,
         public MIDI::OutputOwner, public MIDI::ChannelOwner
         {
-            virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
+            virtual const Tasks generateTasksWithTargetValueMap(Event::TargetValueMap& valueMap);
             virtual void setupMappings(Action::SPtr action);
         };
         
         class Action::ImplementationMIDIControlChange : public Action::Implementation,
         public MIDI::OutputOwner, public MIDI::ChannelOwner, public MIDI::ControlNumberOwner
         {
-            virtual const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
+            virtual const Tasks generateTasksWithTargetValueMap(Event::TargetValueMap& valueMap);
             virtual void setupMappings(Action::SPtr action);
         };
 

@@ -12,7 +12,7 @@ namespace VSC
 {
     namespace IM
     {
-        void InitialiseMaps(void);
+        void InitialiseInternals(void);
         
         typedef boost::bimap<Target, std::string>       TargetDescriptionMap;
         typedef boost::bimap<MappingType, std::string>  MappingDescriptionMap;
@@ -29,20 +29,22 @@ namespace VSC
         typedef std::map<Trigger, MappingTypeSet> TriggerMappingTypeMap;
         
         TriggerMappingTypeMap   triggerMappingTypeMap;
+        
+        Triggers                allowedTriggers;
     }
 }
 
 using namespace VSC;
 using namespace VSC::IM;
 
-boost::once_flag initialzedMapsFlag = BOOST_ONCE_INIT;
+boost::once_flag initializedInternalsFlag = BOOST_ONCE_INIT;
 
 VSC::IM::TargetDescriptionMap targetDescriptionMap;
 VSC::IM::MappingDescriptionMap mappingDescriptionMap;
 VSC::IM::ActionDescriptionMap actionDescriptionMap;
 
 
-void InitialiseMaps(void)
+void InitialiseInternals(void)
 {
     BOOST_ASSERT(targetDescriptionMap.empty());
     BOOST_ASSERT(mappingDescriptionMap.empty());
@@ -78,59 +80,66 @@ void InitialiseMaps(void)
     MappingTypeSet proximitySet;
     proximitySet += MappingTypeConstant;
     triggerMappingTypeMap[TriggerProximity] = proximitySet;
+    
+    allowedTriggers += TriggerPlain, TriggerCollision, TriggerProximity;
 }
 
-const MappingTypeSet& allowedMappingTypeSetForTrigger(Trigger trigger)
+const MappingTypeSet& AllowedMappingTypeSetForTrigger(Trigger trigger)
 {
-    boost::call_once(&InitialiseMaps, initialzedMapsFlag);
+    boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     return triggerMappingTypeMap[trigger];
 }
 
-std::string stringForActionType(const ActionType actionType)
+const Triggers& AllowedTriggers(void)
 {
-    boost::call_once(&InitialiseMaps, initialzedMapsFlag);
+    return allowedTriggers;
+}
+
+std::string StringForActionType(const ActionType actionType)
+{
+    boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     std::string s = actionDescriptionMap.left.at(actionType);
     BOOST_ASSERT_MSG(s.empty(), "Unexpected: Unknown ActionType");
     if (s.empty()) s = "Unknown Action Type";
     return s;
 }
 
-ActionType actionTypeForString(const std::string& s)
+ActionType ActionTypeForString(const std::string& s)
 {
-    boost::call_once(&InitialiseMaps, initialzedMapsFlag);
+    boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     ActionType t = actionDescriptionMap.right.at(s);
     return t;
 }
 
-std::string stringForMappingType(const MappingType mappingType)
+std::string StringForMappingType(const MappingType mappingType)
 {
-    boost::call_once(&InitialiseMaps, initialzedMapsFlag);
+    boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     std::string s = actionDescriptionMap.left.at(actionType);
     BOOST_ASSERT_MSG(s.empty(), "Unexpected: unknown MappingType");
     if (s.empty()) s = "Unknown Mapping Type";
     return s;
 }
 
-MappingType mappingTypeForString(const std::string& s)
+MappingType MappingTypeForString(const std::string& s)
 {
-    boost::call_once(&InitialiseMaps, initialzedMapsFlag);
+    boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     MappingType t = mappingDescriptionMap.right.at(s);
     return t;
 }
 
 
-std::string stringForTarget(const Target target)
+std::string StringForTarget(const Target target)
 {
-    boost::call_once(&InitialiseMaps, initialzedMapsFlag);
+    boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     std::string s = targetDescriptionMap.left.at(target);
     BOOST_ASSERT_MSG(s.empty(), "Unexpected: Unknown Target");
     if (s.empty()) s = "Unknown Target";
     return s;
 }
 
-const Target targetForString(const std::string& s)
+const Target TargetForString(const std::string& s)
 {
-    boost::call_once(&InitialiseMaps, initialzedMapsFlag);
+    boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     Target t = targetDescriptionMap.right.at(s);
     return t;
 }

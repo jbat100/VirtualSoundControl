@@ -3,7 +3,7 @@
 #define _VSC_ENVIRONMENT_H_
 
 #include "VSCOBScene.h"
-#include "VSCIMCollisionMapper.h"
+#include "VSCCollisionMapper.h"
 #include "VSCIMEventChain.h"
 
 #include <boost/shared_ptr.hpp>
@@ -56,9 +56,9 @@ namespace VSC
         State getState(void) {return mState;}
         
         OB::Scene_SPtr getScene(void) {return mScene;}
-        IM::CollisionMapper::SPtr getCollisionMapper(void) {return mCollisionMapper;}
+        CollisionMapper::SPtr getCollisionMapper(void) {return mCollisionMapper;}
         
-        void setCollisionMapper(IM::CollisionMapper::SPtr mapper);
+        void setCollisionMapper(CollisionMapper::SPtr mapper);
         void setScene(OB::Scene_SPtr scene);
         
         IM::EventChain::SPtr createEventChain(void);
@@ -83,7 +83,7 @@ namespace VSC
         
         OB::Scene_SPtr              mScene;
         
-        IM::CollisionMapper::SPtr   mCollisionMapper;
+        CollisionMapper::SPtr   mCollisionMapper;
         
         IM::EventChains             mEventChains;
         

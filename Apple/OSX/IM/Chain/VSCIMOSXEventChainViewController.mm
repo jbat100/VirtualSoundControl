@@ -14,7 +14,7 @@
 #import "VSCIMOSXActionView.h"
 #import "VSCIMOSXDelayView.h"
 
-#include "VSCIMCollisionMapper.h"
+#include "VSCCollisionMapper.h"
 #include "VSCIMEvent.h"
 #include "VSCIMDelay.h"
 #include "VSCIMAction.h"

@@ -2,21 +2,51 @@
 #include "VSCIMEvent.h"
 #include "VSCIMMapping.h"
 
+#include <boost/assign/std/vector.hpp>
 #include <boost/foreach.hpp>
 
 using namespace VSC;
 using namespace VSC::IM;
 
-//MARK: - Mapping Requirements
+//MARK: - Mappings
 
 bool Event::checkRequiredMappings(void)
 {
-    BOOST_FOREACH(const Target& target, mRequiredMappingTargets)
+    BOOST_FOREACH(const Trigger& trigger, AllowedTriggers())
     {
-        if (!this->getMappingForTarget(target)) return false;
+        BOOST_FOREACH(const Target& target, mRequiredMappingTargets)
+        {
+            if (!this->getMapping(trigger, target)) return false;
+        }
+        return true;
     }
-    return true;
 }
+
+Mapping_SPtr Event::getMapping(const Trigger trigger, const Target target)
+{
+    TargetMappingMap& targetMappingMap = mMappingMap[trigger];
+    return targetMappingMap[target];
+}
+
+void Event::clearMappings(void)
+{
+    mMappingMap.clear();
+}
+
+void Event::generateMappings(void)
+{
+    BOOST_FOREACH(const Trigger& trigger, AllowedTriggers())
+    {
+        TargetMappingMap& targetMappingMap = mMappingMap[trigger];
+        BOOST_FOREACH(const Target& target, mRequiredMappingTargets)
+        {
+            targetMappingMap[target] = Mapping::SPtr(new Mapping);
+        }
+    }
+}
+
+
+//MARK: - Mapping Targets
 
 void Event::addRequiredMappingTarget(Target target)
 {
@@ -24,32 +54,9 @@ void Event::addRequiredMappingTarget(Target target)
     if (it == mRequiredMappingTargets.end()) mRequiredMappingTargets.push_back(target);
 }
 
-//MARK: - Mapping Getters
-
-Mapping::SPtr Event::getMappingForTarget(Target target)
-{
-    return mMappingMap[target];
-}
-
-Mapping::SPtr Event::getCollisionMappingForTarget(Target target)
-{
-    return mCollisionMappingMap[target];
-}
-
-//MARK: - Mapping Setters
-
-void Event::setMappingForTarget(Mapping::SPtr mapping, Target target)
-{
-    mMappingMap[target] = mapping;
-}
-
-void Event::setCollisionMappingForTarget(Mapping::SPtr mapping, Target target)
-{
-    mCollisionMappingMap[target] = mapping;
-}
-
 void Event::clearRequiredMappingTargets(void)
 {
-    mMappingMap.clear();
-    mCollisionMappingMap.clear();
+    mRequiredMappingTargets.clear();
 }
+
+

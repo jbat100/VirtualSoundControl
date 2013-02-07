@@ -19,11 +19,6 @@ namespace VSC
     namespace IM
     {
         
-        /*
-         *  A very very abstract class to provide a container for event chains
-         *  currently planned subclasses include delay events and action events.
-         */
-        
         class Event
         {
             
@@ -32,9 +27,9 @@ namespace VSC
             typedef boost::shared_ptr<Event>    SPtr;
             typedef boost::weak_ptr<Event>      WPtr;
             
-            typedef std::map<Target, Mapping_SPtr>      TargetMappingMap;
-            typedef std::map<Trigger, TargetMappings>   TriggerTargetMappingMap;
-            typedef std::map<Target, Float>             TargetValueMap;
+            typedef std::map<Target, Mapping_SPtr>          TargetMappingMap;
+            typedef std::map<Trigger, TargetMappingMap>     TriggerTargetMappingMap;
+            typedef std::map<Target, Float>                 TargetValueMap;
             
             Event() {}
             virtual ~Event() {}
@@ -52,9 +47,10 @@ namespace VSC
         protected:
             
             void addRequiredMappingTarget(Target target);
+            void clearRequiredMappingTargets();
             
-            void clearRequiredMappingTargets(void);
-            
+            void clearMappings(void);
+            void generateMappings(void);
             bool checkRequiredMappings(void);
             
         private:

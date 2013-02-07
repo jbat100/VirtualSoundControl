@@ -18,7 +18,7 @@
 #include "VSCOBApplication.h"
 #include "VSCOBElement.h"
 #include "VSCOBResourceManager.h"
-#include "VSCIMCollisionMapper.h"
+#include "VSCCollisionMapper.h"
 #include "VSCMIDI.h"
 #include "VSCMIDIOutput.h"
 #include "VSCMIDIOutputManager.h"
@@ -136,7 +136,7 @@
     BOOST_ASSERT(scene);
     environment->setScene(scene);
     
-    VSC::IM::CollisionMapper::SPtr collisionMapper = VSC::IM::CollisionMapper::SPtr(new VSC::IM::CollisionMapper);
+    CollisionMapper::SPtr collisionMapper = CollisionMapper::SPtr(new CollisionMapper);
     environment->setCollisionMapper(collisionMapper);
     
     self.environmentWindowController.environment = environment;

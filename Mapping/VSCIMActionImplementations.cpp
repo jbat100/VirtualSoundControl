@@ -33,7 +33,7 @@ MIDIOutputOwner::MIDIOutputOwner()
 
 //MARK: MIDINoteOn
 
-const Tasks Action::ImplementationMIDINoteOn::generateTasksWithValueMap(Event::ValueMap& valueMap)
+const Tasks Action::ImplementationMIDINoteOn::generateTasksWithTargetValueMap(Event::TargetValueMap& valueMap)
 {
     Tasks tasks;
     
@@ -72,7 +72,7 @@ void Action::ImplementationMIDINoteOn::setupMappings(Action::SPtr action)
 
 //MARK: MIDINoteOff
 
-const Tasks Action::ImplementationMIDINoteOff::generateTasksWithValueMap(Event::ValueMap& valueMap)
+const Tasks Action::ImplementationMIDINoteOff::generateTasksWithTargetValueMap(Event::TargetValueMap& valueMap)
 {
     Tasks tasks;
     
@@ -111,7 +111,7 @@ void Action::ImplementationMIDINoteOff::setupMappings(Action::SPtr action)
 
 //MARK: MIDINoteOnAndOff
 
-const Tasks Action::ImplementationMIDINoteOnAndOff::generateTasksWithValueMap(Event::ValueMap& valueMap)
+const Tasks Action::ImplementationMIDINoteOnAndOff::generateTasksWithTargetValueMap(Event::TargetValueMap& valueMap)
 {
     Tasks tasks;
     
@@ -167,7 +167,7 @@ void Action::ImplementationMIDINoteOnAndOff::setupMappings(Action::SPtr action)
 
 //MARK: MIDIControlChange
 
-const Tasks Action::ImplementationMIDIControlChange::generateTasksWithValueMap(Event::ValueMap& valueMap)
+const Tasks Action::ImplementationMIDIControlChange::generateTasksWithTargetValueMap(Event::TargetValueMap& valueMap)
 {
     Tasks tasks;
     

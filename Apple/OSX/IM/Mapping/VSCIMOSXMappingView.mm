@@ -61,12 +61,12 @@
 
 +(NSString*) menuItemStringForMappingType:(VSC::IM::MappingType)mappingType
 {
-    return [NSString stringWithStdString:VSC::IM::stringForMappingType(mappingType)];
+    return [NSString stringWithStdString:VSC::IM::StringForMappingType(mappingType)];
 }
 
 +(VSC::IM::MappingType) collisionMappingTypeForMenuItemString:(NSString*)menuItemString
 {
-    return VSC::IM::mappingTypeForString([menuItemString stdString]);
+    return VSC::IM::MappingTypeForString([menuItemString stdString]);
 }
 
 #pragma mark - NSView Methods
@@ -116,7 +116,7 @@
 -(void) updateInterfaceForNewTarget
 {
     BOOST_ASSERT(self.targetTextField);
-    [self.targetTextField setStringValue:[NSString stringWithStdString:VSC::IM::stringForTarget(self.target)]];
+    [self.targetTextField setStringValue:[NSString stringWithStdString:VSC::IM::StringForTarget(self.target)]];
 }
 
 -(void) updateInterfaceForNewMapping
@@ -146,7 +146,7 @@
     [self.mappingPopUpButton removeAllItems];
     BOOST_FOREACH (const VSC::IM::MappingType& mappingType, mAllowedMappingTypes)
     {
-        NSString* title = [NSString stringWithStdString:VSC::IM::stringForMappingType(mappingType)];
+        NSString* title = [NSString stringWithStdString:VSC::IM::StringForMappingType(mappingType)];
         [self.mappingPopUpButton addItemWithTitle:title];
     }
 }
