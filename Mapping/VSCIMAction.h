@@ -55,8 +55,8 @@ namespace VSC {
              *  virtual Tasks generateTasksWithValueMap(Action::ValueMap& valueMap) = 0;
              */
             
-            const Tasks generateTasks(void);
-            const Tasks generateTasksForCollision(OB::Collision_SPtr collision, OB::Element_SPtr effector);
+            const Tasks generateTasks(Trigger trigger, TriggerPayload::SPtr payload);
+            
             const Tasks generateTasksWithValueMap(Event::ValueMap& valueMap);
             
             /*

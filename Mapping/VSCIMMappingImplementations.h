@@ -35,21 +35,18 @@ namespace VSC {
         
         class Mapping::ImplementationConstant : public Mapping::Implementation
         {
-            virtual Float mappedValue();
-            virtual Float mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector);
+            virtual Float mappedValue(Trigger trigger, TriggerPayload::SPtr payload);
         };
         
         class Mapping::ImplementationCollisionVelocity : public Mapping::Implementation
         {
-            virtual Float mappedValue();
-            virtual Float mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector);
+            virtual Float mappedValue(Trigger trigger, TriggerPayload::SPtr payload);
         };
         
         class Mapping::ImplementationCollisionDistance : public Mapping::Implementation,
         public ReferencePointOwner
         {
-            virtual Float mappedValue();
-            virtual Float mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector);
+            virtual Float mappedValue(Trigger trigger, TriggerPayload::SPtr payload);
         };
 
     }

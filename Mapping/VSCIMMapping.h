@@ -27,20 +27,10 @@ namespace VSC {
             Mapping();
             virtual ~Mapping() {}
             
-            /**
-             *  Plain Value Mapping
-             */
-            
-            Float mappedValue(void);
-            
-            /**
-             *  Collision Value Mapping
-             */
-            
-            Float mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector);
+            Float mappedValue(Trigger trigger, TriggerPayload::SPtr payload);
             
             MappingType getMappingType(void) {return mMappingType;}
-            bool setMappingType(MappingType mappingType);
+            void setMappingType(MappingType mappingType);
             
             /**
              *  Scale and Offset
@@ -61,8 +51,7 @@ namespace VSC {
             public:
                 typedef boost::shared_ptr<Implementation>   SPtr;
                 typedef boost::weak_ptr<Implementation>     WPtr;
-                virtual Float mappedValue() {return 0.0;}
-                virtual Float mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector) {return 0.0;}
+                virtual Float mappedValue(Trigger trigger, TriggerPayload::SPtr payload) {return 0.0;}
             };
             class ImplementationConstant;
             class ImplementationCollisionVelocity;

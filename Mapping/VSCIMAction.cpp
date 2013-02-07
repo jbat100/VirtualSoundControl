@@ -14,55 +14,19 @@ using namespace VSC::OB;
 //MARK: - Task Generation
 
 
-const Tasks Action::generateTasks()
+const Tasks Action::generateTasks(Trigger trigger, TriggerPayload::SPtr payload)
 {
     ValueMap valueMap;
     
     BOOST_FOREACH(const Target& target, this->getRequiredMappingTargets())
     {
-        Mapping::SPtr mapping = this->getMappingForTarget(target);
-        Float value = mapping->mappedValue();
+        Mapping::SPtr mapping = this->getMapping(trigger, target);
+        Float value = mapping->mappedValue(trigger, payload);
         valueMap[target] = value;
     }
     
     return this->generateTasksWithValueMap(valueMap);
 }
-
-const Tasks Action::generateTasksForCollision(Collision_SPtr collision, Element_SPtr effector)
-{
-    ValueMap valueMap;
-    
-    BOOST_FOREACH(const Target& target, this->getRequiredMappingTargets())
-    {
-        Float value = 0.0;
-        Mapping::SPtr mapping = this->getCollisionMappingForTarget(target);
-        
-        CollisionMapping::SPtr collisionMapping = boost::dynamic_pointer_cast<CollisionMapping>(mapping);
-        
-        if (collisionMapping)
-        {
-            value = collisionMapping->mappedValue(collision, effector);
-        }
-        else
-        {
-            value = mapping->mappedValue();
-        }
-        
-        valueMap[target] = value;
-    }
-    
-    BOOST_ASSERT(mImplementation);
-    
-    if (mImplementation)
-    {
-        mImplementation->generateTasksWithValueMap(valueMap);
-    }
-    
-    Tasks tasks;
-    
-    return tasks;
-}
-
 
 void Action::setActionType(ActionType actionType)
 {
@@ -70,23 +34,23 @@ void Action::setActionType(ActionType actionType)
     switch (actionType)
     {
         case ActionTypeMIDINoteOn:
-            mImplementation = Action::Implementation::SPtr(new Action::ImplementationMIDINoteOn);
+            mImplementation = Implementation::SPtr(new ImplementationMIDINoteOn);
             break;
             
         case ActionTypeMIDINoteOff:
-            mImplementation = Action::Implementation::SPtr(new Action::ImplementationMIDINoteOff);
+            mImplementation = Implementation::SPtr(new ImplementationMIDINoteOff);
             break;
             
         case ActionTypeMIDINoteOnAndOff:
-            mImplementation = Action::Implementation::SPtr(new Action::ImplementationMIDINoteOnAndOff);
+            mImplementation = Implementation::SPtr(new ImplementationMIDINoteOnAndOff);
             break;
             
         case ActionTypeMIDIControlChange:
-            mImplementation = Action::Implementation::SPtr(new Action::ImplementationMIDIControlChange);
+            mImplementation = Implementation::SPtr(new ImplementationMIDIControlChange);
             break;
             
         default:
-            mImplementation = Action::Implementation::SPtr();
+            mImplementation = Implementation::SPtr();
             break;
     }
     

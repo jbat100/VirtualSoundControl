@@ -4,6 +4,7 @@
 #include "VSCIMActionImplementations.h"
 #include "VSCIMCollisionMapping.h"
 
+#include <boost/assign/std/set.hpp>
 #include <boost/foreach.hpp>
 #include <boost/bimap.hpp>
 
@@ -21,16 +22,20 @@ namespace VSC
         typedef MappingDescriptionMap::value_type       MappingDescriptionPair;
         typedef ActionDescriptionMap::value_type        ActionDescriptionPair;
         
-        TargetDescriptionMap     targetDescriptionMap;
-        MappingDescriptionMap    mappingDescriptionMap;
-        ActionDescriptionMap     actionDescriptionMap;
+        TargetDescriptionMap    targetDescriptionMap;
+        MappingDescriptionMap   mappingDescriptionMap;
+        ActionDescriptionMap    actionDescriptionMap;
+        
+        typedef std::map<Trigger, MappingTypeSet> TriggerMappingTypeMap;
+        
+        TriggerMappingTypeMap   triggerMappingTypeMap;
     }
 }
 
 using namespace VSC;
 using namespace VSC::IM;
 
-boost::once_flag createdDescriptionsMapFlag = BOOST_ONCE_INIT;
+boost::once_flag initialzedMapsFlag = BOOST_ONCE_INIT;
 
 VSC::IM::TargetDescriptionMap targetDescriptionMap;
 VSC::IM::MappingDescriptionMap mappingDescriptionMap;
@@ -62,54 +67,28 @@ void InitialiseMaps(void)
     actionDescriptionMap.insert(ActionDescriptionPair(ActionTypeMIDINoteOff, "MIDI Note Off"));
     actionDescriptionMap.insert(ActionDescriptionPair(ActionTypeMIDIControlChange, "MIDI Control Change"));
     
+    MappingTypeSet plainSet;
+    plainSet += MappingTypeConstant;
+    triggerMappingTypeMap[TriggerPlain] = plainSet;
+    
+    MappingTypeSet collisionSet;
+    collisionSet += MappingTypeConstant, MappingTypeCollisionVelocity, MappingTypeCollisionDistance;
+    triggerMappingTypeMap[TriggerCollision] = collisionSet;
+    
+    MappingTypeSet proximitySet;
+    proximitySet += MappingTypeConstant;
+    triggerMappingTypeMap[TriggerProximity] = proximitySet;
 }
 
-ActionType actionTypeForAction(Action::SPtr action)
+const MappingTypeSet& allowedMappingTypeSetForTrigger(Trigger trigger)
 {
-    if (action)
-    {
-        if (boost::dynamic_pointer_cast<MIDINoteOnAction>(action))
-            return ActionTypeMIDINoteOn;
-        
-        if (boost::dynamic_pointer_cast<MIDINoteOnAndOffAction>(action))
-            return ActionTypeMIDINoteOnAndOff;
-        
-        if (boost::dynamic_pointer_cast<MIDINoteOffAction>(action))
-            return ActionTypeMIDINoteOff;
-        
-        if (boost::dynamic_pointer_cast<MIDIControlChangeAction>(action))
-            return ActionTypeMIDIControlChange;
-    }
-    
-    return ActionTypeNone;
-}
-
-Action::SPtr createActionWithType(ActionType actionType)
-{
-    switch (actionType)
-    {
-        case ActionTypeMIDINoteOn:
-            return Action::SPtr(new MIDINoteOnAction);
-            
-        case ActionTypeMIDINoteOnAndOff:
-            return Action::SPtr(new MIDINoteOnAndOffAction);
-            
-        case ActionTypeMIDINoteOff:
-            return Action::SPtr(new MIDINoteOffAction);
-            
-        case ActionTypeMIDIControlChange:
-            return Action::SPtr(new MIDIControlChangeAction);
-            
-        default:
-            break;
-    }
-    
-    return Action::SPtr();
+    boost::call_once(&InitialiseMaps, initialzedMapsFlag);
+    return triggerMappingTypeMap[trigger];
 }
 
 std::string stringForActionType(const ActionType actionType)
 {
-    boost::call_once(&InitialiseMaps, createdDescriptionsMapFlag);
+    boost::call_once(&InitialiseMaps, initialzedMapsFlag);
     std::string s = actionDescriptionMap.left.at(actionType);
     BOOST_ASSERT_MSG(s.empty(), "Unexpected: Unknown ActionType");
     if (s.empty()) s = "Unknown Action Type";
@@ -118,14 +97,14 @@ std::string stringForActionType(const ActionType actionType)
 
 ActionType actionTypeForString(const std::string& s)
 {
-    boost::call_once(&InitialiseMaps, createdDescriptionsMapFlag);
+    boost::call_once(&InitialiseMaps, initialzedMapsFlag);
     ActionType t = actionDescriptionMap.right.at(s);
     return t;
 }
 
 std::string stringForMappingType(const MappingType mappingType)
 {
-    boost::call_once(&InitialiseMaps, createdDescriptionsMapFlag);
+    boost::call_once(&InitialiseMaps, initialzedMapsFlag);
     std::string s = actionDescriptionMap.left.at(actionType);
     BOOST_ASSERT_MSG(s.empty(), "Unexpected: unknown MappingType");
     if (s.empty()) s = "Unknown Mapping Type";
@@ -134,7 +113,7 @@ std::string stringForMappingType(const MappingType mappingType)
 
 MappingType mappingTypeForString(const std::string& s)
 {
-    boost::call_once(&InitialiseMaps, createdDescriptionsMapFlag);
+    boost::call_once(&InitialiseMaps, initialzedMapsFlag);
     MappingType t = mappingDescriptionMap.right.at(s);
     return t;
 }
@@ -142,7 +121,7 @@ MappingType mappingTypeForString(const std::string& s)
 
 std::string stringForTarget(const Target target)
 {
-    boost::call_once(&InitialiseMaps, createdDescriptionsMapFlag);
+    boost::call_once(&InitialiseMaps, initialzedMapsFlag);
     std::string s = targetDescriptionMap.left.at(target);
     BOOST_ASSERT_MSG(s.empty(), "Unexpected: Unknown Target");
     if (s.empty()) s = "Unknown Target";
@@ -151,7 +130,7 @@ std::string stringForTarget(const Target target)
 
 const Target targetForString(const std::string& s)
 {
-    boost::call_once(&InitialiseMaps, createdDescriptionsMapFlag);
+    boost::call_once(&InitialiseMaps, initialzedMapsFlag);
     Target t = targetDescriptionMap.right.at(s);
     return t;
 }

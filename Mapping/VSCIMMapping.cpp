@@ -21,29 +21,42 @@ Float Mapping::applyOffsetAndScaleFactor(Float rawValue)
     return mOffset + (rawValue * mScaleFactor);
 }
 
-bool Mapping::setMappingType(MappingType mappingType)
+void Mapping::setMappingType(MappingType mappingType)
 {
-    bool allowed = this->checkMappingType(mappingType);
-    BOOST_ASSERT(allowed);
-    if (allowed)
+    switch (mappingType)
     {
-        mMappingType = mappingType;
-        return true;
+        case MappingTypeConstant:
+            mImplementation = Implementation::SPtr(new ImplementationConstant);
+            break;
+            
+        case MappingTypeCollisionVelocity:
+            mImplementation = Implementation::SPtr(new ImplementationCollisionVelocity);
+            break;
+            
+        case MappingTypeCollisionDistance:
+            mImplementation = Implementation::SPtr(new ImplementationCollisionDistance);
+            break;
+            
+        default:
+            BOOST_ASSERT_MSG("MappingType is not handled");
+            mImplementation = Implementation::SPtr(new ImplementationConstant);
+            mMappingType = MappingTypeConstant;
+            return;
     }
-    return false;
-}
-
-bool Mapping::checkMappingType(const MappingType mappingType)
-{
-    return mAllowedMappingTypeSet.find(mappingType) != mAllowedMappingTypeSet.end();
-}
-
-void Mapping::allowMappingType(const MappingType mappingType)
-{
-    mAllowedMappingTypeSet.insert(mappingType);
-}
-
-void Mapping::setSetupForSetupType(Setup::SPtr setup, SetupType setupType)
-{
     
+    mMappingType = mappingType;
+
+}
+
+Float Mapping::mappedValue(Trigger trigger, TriggerPayload::SPtr payload)
+{
+    Float rawValue = 0.0;
+    
+    BOOST_ASSERT(mImplementation);
+    if (mImplementation)
+    {
+        rawValue = mImplementation->mappedValue(trigger, payload);
+    }
+    
+    return this->applyOffsetAndScaleFactor(rawValue);
 }

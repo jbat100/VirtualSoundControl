@@ -5,6 +5,8 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 
+#include "VSCOB.h"
+
 #include <vector>
 #include <set>
 
@@ -54,20 +56,6 @@ namespace VSC
             ActionTypeMIDINoteOff,
             ActionTypeMIDIControlChange
         };
-        
-        /*
-         *  Performs dynamic casts until it gets the type, very slow, use as little as possible
-         *  (Editors should cache the type internally and update it when their associated action
-         *  is set)
-         */
-        
-        ActionType actionTypeForAction(Action_SPtr action);
-        
-        /*
-         *  Use by controllers (VSCIMOSXActionController protocol) to create actions based on type
-         */
-        
-        Action_SPtr createActionWithType(ActionType actionType);
         
         /*
          *  Used for UI/Debug display
@@ -132,6 +120,34 @@ namespace VSC
         std::string stringForTarget(const Target target);
         
         const Target targetForString(const std::string& s);
+        
+        const MappingTypeSet& allowedMappingTypeSetForTrigger(Trigger trigger);
+        
+        /**
+         *  Trigger payloads
+         */
+        
+        struct TriggerPayload
+        {
+            typedef boost::shared_ptr<TriggerPayload>   SPtr;
+            typedef boost::weak_ptr<TriggerPayload>     WPtr;
+        };
+        
+        struct TriggerPlainPayload : public TriggerPayload
+        {
+            // Nothing special yet but will surely think of something later...
+        };
+        
+        struct TriggerCollisionPayload : public TriggerPayload
+        {
+            OB::Collision_SPtr  collision;
+            OB::Element_SPtr    effector;
+        };
+        
+        struct TriggerProximityPayload : public TriggerPayload
+        {
+            OB::Proximity_SPtr  proximity;
+        };
     }
 }
 

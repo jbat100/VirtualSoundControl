@@ -11,6 +11,7 @@
 
 #include <Ogre/Ogre.h>
 
+#include <boost/shared_ptr.hpp>
 #include <boost/foreach.hpp>
 
 using namespace VSC;
@@ -20,51 +21,55 @@ using namespace VSC::OB;
 Ogre::Vector3 ReferencePointOwner::defaultReferencePoint = Ogre::Vector3::ZERO;
 
 
-
-
-Float Mapping::ImplementationConstant::mappedValue()
+Float Mapping::ImplementationConstant::Float mappedValue(Trigger trigger, TriggerPayload::SPtr payload)
 {
     return 0.0;
 }
 
-Float Mapping::ImplementationConstant::mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector)
+Float Mapping::ImplementationCollisionVelocity::Float mappedValue(Trigger trigger, TriggerPayload::SPtr payload)
 {
-    return 0.0;
-}
-
-
-Float Mapping::ImplementationCollisionVelocity::mappedValue()
-{
-    BOOST_ASSERT_MSG(false, "Should be calling collision trigger");
-    return 0.0;
-}
-
-Float Mapping::ImplementationCollisionVelocity::mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector)
-{
-    BOOST_ASSERT(collision);
-    BOOST_ASSERT(effector);
-    
-    const Ogre::Vector3& relativeVelocity = collision->getRelativeCollisionVelocity();
-    return (Float) relativeVelocity.length();
-}
-
-Float Mapping::ImplementationCollisionDistance::mappedValue()
-{
-    BOOST_ASSERT_MSG(false, "Should be calling collision trigger");
-    return 0.0;
-}
-
-Float Mapping::ImplementationCollisionDistance::mappedValue(OB::Collision_SPtr collision, OB::Element_SPtr effector)
-{
-    BOOST_ASSERT(collision);
-    BOOST_ASSERT(effector);
-    
-    Element::SPtr effectee = getCollisionEffectee(collision, effector);
-    BOOST_ASSERT(effectee);
-    if (effectee)
+    BOOST_ASSERT(payload);
+    TriggerCollisionPayload::SPtr collisionPayload = boost::dynamic_pointer_cast<TriggerCollisionPayload>(payload);
+    BOOST_ASSERT_MSG(collisionPayload, "Wrong payload type");
+    if (collisionPayload)
     {
-        // get distance from collision location to reference point
+        Collision::SPtr collision = collisionPayload.collision;
+        Element::SPtr element = collisionPayload.effector;
+        BOOST_ASSERT(collision);
+        BOOST_ASSERT(effector);
+        if (collision)
+        {
+            const Ogre::Vector3& relativeVelocity = collision->getRelativeCollisionVelocity();
+            return (Float) relativeVelocity.length();
+        }
     }
+    
+    return 0.0;
+}
+
+Float Mapping::ImplementationCollisionDistance::mappedValue(Trigger trigger, TriggerPayload::SPtr payload)
+{
+    BOOST_ASSERT(payload);
+    TriggerCollisionPayload::SPtr collisionPayload = boost::dynamic_pointer_cast<TriggerCollisionPayload>(payload);
+    BOOST_ASSERT_MSG(collisionPayload, "Wrong payload type");
+    
+    if (collisionPayload)
+    {
+        Collision::SPtr collision = collisionPayload.collision;
+        Element::SPtr element = collisionPayload.effector;
+        BOOST_ASSERT(collision);
+        BOOST_ASSERT(effector);
+        if (collision)
+        {
+            Element::SPtr effectee = getCollisionEffectee(collision, effector);
+            BOOST_ASSERT(effectee);
+            if (effectee)
+            {
+                // get distance from collision location to reference point
+            }
+        }
+    }
+    
     return 0.0;
 }
 
