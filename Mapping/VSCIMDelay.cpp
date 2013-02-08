@@ -26,46 +26,21 @@ Delay::Delay(void)
 }
 
 
-VSC::TimeDuration Delay::getDuration(void)
+TimeDuration Delay::getDuration(Trigger trigger, TriggerPayload::SPtr payload)
 {
-    Mapping::SPtr mapping = this->getMappingForTarget(TargetDuration);
+    Mapping::SPtr mapping = this->getMapping(trigger, TargetDuration);
     
     Float seconds = 0.0;
     
     BOOST_ASSERT(mapping);
     if (mapping)
     {
-        seconds = mapping->mappedValue();
+        seconds = mapping->mappedValue(trigger, payload);
     }
     
     Float milliseconds = seconds * 1000.0;
     
     return boost::posix_time::milliseconds(milliseconds);
-}
-
-VSC::TimeDuration Delay::getDurationForCollision(Collision_SPtr collision, Element_SPtr effector)
-{
-    Mapping::SPtr mapping = this->getCollisionMappingForTarget(TargetDuration);
-    Float seconds = 0.0;
-    
-    BOOST_ASSERT(mapping);
-    if (mapping)
-    {
-        CollisionMapping::SPtr collisionMapping = boost::dynamic_pointer_cast<CollisionMapping>(mapping);
-        if (collisionMapping)
-        {
-            seconds = collisionMapping->mappedValue(collision, effector);
-        }
-        else
-        {
-            seconds = mapping->mappedValue();
-        }
-    }
-    
-    Float milliseconds = seconds * 1000.0;
-    
-    return boost::posix_time::milliseconds(milliseconds);
-    
 }
 
 

@@ -18,6 +18,9 @@
 
 @property (nonatomic, assign) VSC::IM::Event_WPtr event;
 
+@property (weak) IBOutlet NSTextField* titleTextField;
+@property (weak) IBOutlet NSImageView* iconImageView;
+
 -(IBAction) showMappings:(id)sender;
 
 -(void) reloadInterface;

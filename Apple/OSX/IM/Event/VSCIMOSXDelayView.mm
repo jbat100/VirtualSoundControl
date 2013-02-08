@@ -16,9 +16,6 @@
 
 @interface VSCIMOSXDelayView ()
 
-@property (weak) IBOutlet NSTextField* titleTextField;
-@property (weak) IBOutlet NSTextField* delayTextField;
-
 -(void) commonInit;
 
 -(IBAction) delayChanged:(id)sender;
@@ -67,7 +64,7 @@
 
 -(void) awakeFromNib
 {
-    [(NSNumberFormatter*)[self.delayTextField formatter] setThousandSeparator:@""];
+    
 }
 
 #pragma mark - Delay Getter
@@ -93,38 +90,5 @@
     return NO;
 }
 
-#pragma mark - UI Helpers
-
--(void) reloadInterface
-{
-    VSC::IM::Delay::SPtr delay = [self delay];
-    if (delay)
-    {
-        VSC::TimeDuration duration = delay->getDuration();
-        double milliseconds = (double)duration.total_milliseconds();
-        double seconds = milliseconds/1000.0;
-        [self.delayTextField setDoubleValue:seconds];
-    }
-    else
-    {
-        [self.delayTextField setStringValue:@"-- EMPTY --"];
-    }
-}
-
-#pragma mark - UI Callbacks
-
--(IBAction) delayChanged:(id)sender
-{
-    BOOST_ASSERT(self.eventChainController);
-    BOOST_ASSERT([self.eventChainController respondsToSelector:@selector(sender:requestsSetDelay:toInterval:)]);
-    
-    if ([self.eventChainController respondsToSelector:@selector(sender:requestsSetDelay:toInterval:)])
-    {
-        BOOST_ASSERT(self.delayTextField);
-        BOOST_ASSERT(self.delayTextField == sender);
-        NSTimeInterval delayInterval = (NSTimeInterval)[self.delayTextField doubleValue];
-        [self.eventChainController sender:self requestsSetDelay:[self delay] toInterval:delayInterval];
-    }
-}
 
 @end

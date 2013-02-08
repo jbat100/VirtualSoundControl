@@ -1,6 +1,7 @@
 
 #include "VSCIM.h"
 
+#include <boost/assign/std/vector.hpp>
 #include <boost/assign/std/set.hpp>
 #include <boost/foreach.hpp>
 #include <boost/bimap.hpp>
@@ -35,6 +36,7 @@ namespace VSC
 
 using namespace VSC;
 using namespace VSC::IM;
+using namespace boost::assign;
 
 boost::once_flag initializedInternalsFlag = BOOST_ONCE_INIT;
 

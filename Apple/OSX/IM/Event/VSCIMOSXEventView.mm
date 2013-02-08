@@ -11,6 +11,8 @@
 
 #include "VSCIMEvent.h"
 
+#include <boost/assert.hpp>
+
 @implementation VSCIMOSXEventView
 
 - (id)initWithFrame:(NSRect)frame
@@ -34,6 +36,15 @@
     BOOST_ASSERT([self.eventChainController respondsToSelector:@selector(sender:requestsShowMappingsForEvent:)]);
     
     [self.eventChainController sender:self requestsShowMappingsForEvent:self.event.lock()];
+}
+
+-(void) awakeFromNib
+{
+    BOOST_ASSERT(self.titleTextField);
+    BOOST_ASSERT(self.iconImageView);
+    
+    self.titleTextField.translatesAutoresizingMaskIntoConstraints = NO;
+    self.iconImageView.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 -(void) reloadInterface
