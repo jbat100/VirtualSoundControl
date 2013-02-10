@@ -32,6 +32,7 @@
         
         interfaceFactory = [[VSCOSXInterfaceFactory alloc] init];
         
+        
         interfaceFactory.keyedCheckBoxViewNib = [[NSNib alloc] initWithNibNamed:
                                                  [[VSCOSXKeyedCheckBoxView class] description] bundle:nil];
         
@@ -44,14 +45,22 @@
         interfaceFactory.keyed4FieldViewNib = [[NSNib alloc] initWithNibNamed:
                                                [[VSCOSXKeyed4FieldView class] description] bundle:nil];
         
-        interfaceFactory.keyedActionCommonViewNib = [[NSNib alloc] initWithNibNamed:
-                                                              @"VSCIMOSXActionCommonView" bundle:nil];
         
-        interfaceFactory.keyedActionMIDIViewNib = [[NSNib alloc] initWithNibNamed:
-                                                            @"VSCIMOSXActionMIDIView" bundle:nil];
+        interfaceFactory.keyedActionCommonViewNib = [[NSNib alloc] initWithNibNamed:
+                                                     @"VSCIMOSXActionCommonView" bundle:nil];
+        
+        interfaceFactory.keyedActionMIDIOutputViewNib = [[NSNib alloc] initWithNibNamed:
+                                                         @"VSCIMOSXActionMIDIOutputView" bundle:nil];
+        
+        interfaceFactory.keyedActionMIDIChannelViewNib = [[NSNib alloc] initWithNibNamed:
+                                                          @"VSCIMOSXActionMIDIChannelView" bundle:nil];
         
         interfaceFactory.keyedActionMIDIControlViewNib = [[NSNib alloc] initWithNibNamed:
-                                                                   @"VSCIMOSXActionMIDIControlView" bundle:nil];
+                                                          @"VSCIMOSXActionMIDIControlView" bundle:nil];
+        
+        
+        interfaceFactory.tableSectionViewNib = [[NSNib alloc] initWithNibNamed:
+                                                @"VSCOSXTableSectonView" bundle:nil];
         
     });
     
@@ -146,7 +155,7 @@
     return v;
 }
 
-#pragma mark Collision Action Views
+#pragma mark - Generic
 
 -(NSView*) newViewWithIdentifier:(NSString*)identifier nib:(NSNib*)nib owner:(id)owner
 {    
@@ -168,14 +177,14 @@
     }
     BOOST_ASSERT(v);
     v.translatesAutoresizingMaskIntoConstraints = NO;
-    
     for (NSView* subview in v.subviews)
     {
         subview.translatesAutoresizingMaskIntoConstraints = NO;
     }
-    
     return v;
 }
+
+#pragma mark - Collision Action Views
 
 -(NSView*) newActionCommonViewWithOwner:(id)owner
 {
@@ -184,11 +193,18 @@
     return [self newViewWithIdentifier:identifier nib:self.keyedActionCommonViewNib owner:owner];
 }
 
--(NSView*) newActionMIDIViewWithOwner:(id)owner
+-(NSView*) newActionMIDIOutputViewWithOwner:(id)owner
 {
-    static NSString* identifier = @"VSCIMOSXActionMIDIView";
+    static NSString* identifier = @"VSCIMOSXActionMIDIOutputView";
     
-    return [self newViewWithIdentifier:identifier nib:self.keyedActionMIDIViewNib owner:owner];
+    return [self newViewWithIdentifier:identifier nib:self.keyedActionMIDIOutputViewNib owner:owner];
+}
+
+-(NSView*) newActionMIDIChannelViewWithOwner:(id)owner
+{
+    static NSString* identifier = @"VSCIMOSXActionMIDIChannelView";
+    
+    return [self newViewWithIdentifier:identifier nib:self.keyedActionMIDIChannelViewNib owner:owner];
 }
 
 -(NSView*) newActionMIDIControlViewWithOwner:(id)owner
@@ -196,6 +212,15 @@
     static NSString* identifier = @"VSCIMOSXActionMIDIControlView";
     
     return [self newViewWithIdentifier:identifier nib:self.keyedActionMIDIControlViewNib owner:owner];
+}
+
+#pragma mark - Table Views
+
+-(NSView*) newTableSectionViewWithOwner:(id)owner
+{
+    static NSString* identifier = @"VSCIMOSXTableSectionView";
+    
+    return [self newViewWithIdentifier:identifier nib:self.tableSectionViewNib owner:owner];
 }
 
 

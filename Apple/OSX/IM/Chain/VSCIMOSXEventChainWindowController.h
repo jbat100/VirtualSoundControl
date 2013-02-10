@@ -10,7 +10,7 @@
 
 @class VSCIMOSXEventChainViewController;
 
-@interface VSCIMOSXEventChainWindowController : NSWindowController
+@interface VSCIMOSXEventChainWindowController : NSWindowController <NSWindowDelegate>
 
 @property (nonatomic, strong) VSCIMOSXEventChainViewController* eventChainViewController;
 

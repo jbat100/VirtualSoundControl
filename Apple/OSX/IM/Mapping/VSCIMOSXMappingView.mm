@@ -97,8 +97,6 @@
 -(void) setMapping:(VSC::IM::Mapping::WPtr)mapping
 {
     _mapping = mapping;
-    self.collisionMappingType = VSC::IM::mappingTypeForMapping(_mapping.lock());
-    
     [self updateInterfaceForNewMapping];
 }
 

@@ -2,7 +2,7 @@
 #ifndef _VSC_IM_MAPPING_IMPLEMENTATIONS_H_
 #define _VSC_IM_MAPPING_IMPLEMENTATIONS_H_
 
-#include "VSCOB.h"
+#include "VSCIM.h"
 #include "VSCIMMapping.h"
 
 #include <Ogre/Ogre.h>

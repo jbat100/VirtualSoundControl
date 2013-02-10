@@ -96,7 +96,7 @@ const Triggers& AllowedTriggers(void)
     return allowedTriggers;
 }
 
-std::string StringForActionType(const ActionType actionType)
+std::string VSC::IM::StringForActionType(const ActionType actionType)
 {
     boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     std::string s = actionDescriptionMap.left.at(actionType);
@@ -105,23 +105,23 @@ std::string StringForActionType(const ActionType actionType)
     return s;
 }
 
-ActionType ActionTypeForString(const std::string& s)
+ActionType VSC::IM::ActionTypeForString(const std::string& s)
 {
     boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     ActionType t = actionDescriptionMap.right.at(s);
     return t;
 }
 
-std::string StringForMappingType(const MappingType mappingType)
+std::string VSC::IM::StringForMappingType(const MappingType mappingType)
 {
     boost::call_once(&InitialiseInternals, initializedInternalsFlag);
-    std::string s = actionDescriptionMap.left.at(actionType);
+    std::string s = mappingDescriptionMap.left.at(mappingType);
     BOOST_ASSERT_MSG(s.empty(), "Unexpected: unknown MappingType");
     if (s.empty()) s = "Unknown Mapping Type";
     return s;
 }
 
-MappingType MappingTypeForString(const std::string& s)
+MappingType VSC::IM::MappingTypeForString(const std::string& s)
 {
     boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     MappingType t = mappingDescriptionMap.right.at(s);
@@ -129,7 +129,7 @@ MappingType MappingTypeForString(const std::string& s)
 }
 
 
-std::string StringForTarget(const Target target)
+std::string VSC::IM::StringForTarget(const Target target)
 {
     boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     std::string s = targetDescriptionMap.left.at(target);
@@ -138,7 +138,7 @@ std::string StringForTarget(const Target target)
     return s;
 }
 
-const Target TargetForString(const std::string& s)
+const Target VSC::IM::TargetForString(const std::string& s)
 {
     boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     Target t = targetDescriptionMap.right.at(s);

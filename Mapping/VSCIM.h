@@ -137,17 +137,20 @@ namespace VSC
         
         struct TriggerPlainPayload : public TriggerPayload
         {
+            typedef boost::shared_ptr<TriggerPayload>   SPtr;
             // Nothing special yet but will surely think of something later...
         };
         
         struct TriggerCollisionPayload : public TriggerPayload
         {
+            typedef boost::shared_ptr<TriggerPayload>   SPtr;
             OB::Collision_SPtr  collision;
             OB::Element_SPtr    effector;
         };
         
         struct TriggerProximityPayload : public TriggerPayload
         {
+            typedef boost::shared_ptr<TriggerPayload>   SPtr;
             OB::Proximity_SPtr  proximity;
         };
     }

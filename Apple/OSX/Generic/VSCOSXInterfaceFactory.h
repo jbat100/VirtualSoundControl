@@ -36,12 +36,21 @@
  */
 
 @property (strong) NSNib* keyedActionCommonViewNib;
-@property (strong) NSNib* keyedActionMIDIViewNib;
+@property (strong) NSNib* keyedActionMIDIOutputViewNib;
+@property (strong) NSNib* keyedActionMIDIChannelViewNib;
 @property (strong) NSNib* keyedActionMIDIControlViewNib;
 
 -(NSView*) newActionCommonViewWithOwner:(id)owner;
--(NSView*) newActionMIDIViewWithOwner:(id)owner;
+-(NSView*) newActionMIDIOutputViewWithOwner:(id)owner;
+-(NSView*) newActionMIDIChannelViewWithOwner:(id)owner;
 -(NSView*) newActionMIDIControlViewWithOwner:(id)owner;
 
+/*
+ *  Table Views
+ */
+
+@property (strong) NSNib* tableSectionViewNib;
+
+-(NSView*) newTableSectionViewWithOwner:(id)owner;
 
 @end

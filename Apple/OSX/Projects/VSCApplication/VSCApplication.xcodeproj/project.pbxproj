@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		100812B21651A89800E975B8 /* VSCBroadcaster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100812B01651A89800E975B8 /* VSCBroadcaster.cpp */; };
 		100812B61651ABE700E975B8 /* VSCListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100812B41651ABE700E975B8 /* VSCListener.cpp */; };
+		100EBE0616C84CAA0082AC0D /* VSCOSXTableSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 100EBE0516C84CAA0082AC0D /* VSCOSXTableSectionView.m */; };
+		100EBE0816C84DDA0082AC0D /* VSCOSXTableSectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 100EBE0716C84DDA0082AC0D /* VSCOSXTableSectionView.xib */; };
 		100F591E16B7F6B400F38860 /* VSCIM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 100F591C16B7F6B400F38860 /* VSCIM.cpp */; };
 		101D566616B73EC200F5E860 /* VSCIMActionImplementations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101D566416B73EC200F5E860 /* VSCIMActionImplementations.cpp */; };
 		101EBB441629AE79006601A2 /* NSArray+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 101EBB431629AE79006601A2 /* NSArray+VSCAdditions.mm */; };
@@ -246,6 +248,9 @@
 		100812B11651A89800E975B8 /* VSCBroadcaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCBroadcaster.h; path = ../../../../Generic/VSCBroadcaster.h; sourceTree = "<group>"; };
 		100812B41651ABE700E975B8 /* VSCListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCListener.cpp; path = ../../../../Generic/VSCListener.cpp; sourceTree = "<group>"; };
 		100812B51651ABE700E975B8 /* VSCListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCListener.h; path = ../../../../Generic/VSCListener.h; sourceTree = "<group>"; };
+		100EBE0416C84CAA0082AC0D /* VSCOSXTableSectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXTableSectionView.h; path = ../Apple/OSX/Generic/VSCOSXTableSectionView.h; sourceTree = "<group>"; };
+		100EBE0516C84CAA0082AC0D /* VSCOSXTableSectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSCOSXTableSectionView.m; path = ../Apple/OSX/Generic/VSCOSXTableSectionView.m; sourceTree = "<group>"; };
+		100EBE0716C84DDA0082AC0D /* VSCOSXTableSectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXTableSectionView.xib; path = ../Apple/OSX/Generic/VSCOSXTableSectionView.xib; sourceTree = "<group>"; };
 		100F591C16B7F6B400F38860 /* VSCIM.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIM.cpp; sourceTree = "<group>"; };
 		100F591D16B7F6B400F38860 /* VSCIM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIM.h; sourceTree = "<group>"; };
 		101D566416B73EC200F5E860 /* VSCIMActionImplementations.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = VSCIMActionImplementations.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -1425,6 +1430,9 @@
 				10F115F616AC8B3B000A9EBB /* VSCOSXKeyed4FieldView.h */,
 				10F115F716AC8B3B000A9EBB /* VSCOSXKeyed4FieldView.m */,
 				10F115F916AC8B73000A9EBB /* VSCOSXKeyed4FieldView.xib */,
+				100EBE0416C84CAA0082AC0D /* VSCOSXTableSectionView.h */,
+				100EBE0516C84CAA0082AC0D /* VSCOSXTableSectionView.m */,
+				100EBE0716C84DDA0082AC0D /* VSCOSXTableSectionView.xib */,
 			);
 			name = Generic;
 			sourceTree = "<group>";
@@ -1597,6 +1605,7 @@
 				10CFF59E16BF2D360039C194 /* VSCOBOSXElementInspectorViewController.xib in Resources */,
 				10CFF5A016BF2D360039C194 /* VSCOBOSXElementInspectorWindowController.xib in Resources */,
 				10F6666B16C40CC500ADF7AB /* VSCIMOSXActionMIDIChannelView.xib in Resources */,
+				100EBE0816C84DDA0082AC0D /* VSCOSXTableSectionView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1731,6 +1740,7 @@
 				10FCF4C116C2776D00D493F2 /* VSCMIDIOwners.cpp in Sources */,
 				10FCF4C416C27C9100D493F2 /* VSCIMMappingImplementations.cpp in Sources */,
 				10F6666916C4035800ADF7AB /* VSCCollisionMapper.cpp in Sources */,
+				100EBE0616C84CAA0082AC0D /* VSCOSXTableSectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

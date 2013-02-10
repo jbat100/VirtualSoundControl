@@ -30,18 +30,18 @@
     return self;
 }
 
--(void) setMapping:(VSC::IM::Mapping::WPtr)collisionMapping
+-(void) setMapping:(VSC::IM::Mapping::WPtr)mapping
 {
-    if (collisionMapping.lock() != _collisionMapping.lock())
+    if (mapping.lock() != _mapping.lock())
     {
-        _collisionMapping = collisionMapping;
+        _mapping = mapping;
         [self reloadInterface];
     }
 }
 
 -(void) reloadInterface
 {
-    VSC::IM::Mapping::SPtr mapping = _collisionMapping.lock();
+    VSC::IM::Mapping::SPtr mapping = _mapping.lock();
     BOOST_ASSERT(mapping);
     if (mapping)
     {

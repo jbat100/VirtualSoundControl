@@ -21,8 +21,6 @@ NSString* const VSCIMOSXMappingViewReuseIdentifier = @"VSCIMOSXMappingViewReuseI
 @interface VSCIMOSXEventEditorViewController ()
 
 @property (weak) IBOutlet NSButton* backToEventChainViewButton;
-@property (strong) VSCIMOSXMappingEditViewController* mappingEditViewController;
-@property (strong) NSPopover* mappingEditPopover;
 
 -(IBAction) backToEventChainView:(id)sender;
 -(BOOL) checkMappingView:(id<VSCIMOSXMappingView>)v;
@@ -118,30 +116,7 @@ NSString* const VSCIMOSXMappingViewReuseIdentifier = @"VSCIMOSXMappingViewReuseI
 
 #pragma mark - VSCIMOSXMappingController Methods
 
--(Mapping::SPtr) sender:(id)sender requestsMappingWithType:(MappingType)mappingType forTarget:(Target)target;
-{
-    Event::SPtr event = [self event].lock();
-    
-    BOOST_ASSERT(target != TargetNone);
-    if (target == TargetNone) return Mapping::SPtr();
-    
-    Mapping::SPtr currentMapping = event->getMappingForTarget(target);
-    MappingType currentMappingType = mappingTypeForMapping(currentMapping);
-    if (currentMappingType == mappingType) return currentMapping;
-    
-    Mapping::SPtr newMapping = createMappingWithType(mappingType);
-    BOOST_ASSERT(newMapping);
-    event->setMappingForTarget(newMapping, target);
-    
-    CollisionVelocityMapping::SPtr velMapping = boost::dynamic_pointer_cast<CollisionVelocityMapping>(newMapping);
-    if (velMapping)
-    {
-        velMapping->setOffset(0.0);
-        velMapping->setScaleFactor(3.0);
-    }
-    
-    return newMapping;
-}
+
 
 -(void) sender:(id)sender requestsEditorForMapping:(Mapping::SPtr)mapping
 {
@@ -153,40 +128,37 @@ NSString* const VSCIMOSXMappingViewReuseIdentifier = @"VSCIMOSXMappingViewReuseI
     {
         VSCIMOSXMappingView* mappingView = (VSCIMOSXMappingView*)sender;
         
-        if (self.collisionMappingEditPopover == nil)
+        if (self.mappingEditPopover == nil)
         {
-            self.collisionMappingEditPopover = [[NSPopover alloc] init];
-            self.collisionMappingEditPopover.appearance = NSPopoverAppearanceHUD;
-            self.collisionMappingEditPopover.behavior = NSPopoverBehaviorTransient;
+            self.mappingEditPopover = [[NSPopover alloc] init];
+            self.mappingEditPopover.appearance = NSPopoverAppearanceHUD;
+            self.mappingEditPopover.behavior = NSPopoverBehaviorTransient;
         }
         
-        if (self.collisionMappingEditViewController == nil)
+        if (self.mappingEditViewController == nil)
         {
-            self.collisionMappingEditViewController = [[VSCIMOSXMappingEditViewController alloc]
+            self.mappingEditViewController = [[VSCIMOSXMappingEditViewController alloc]
                                                        initWithNibName:@"VSCIMOSXMappingEditViewController"
                                                        bundle:nil];
-            
-            BOOST_ASSERT(self.collisionMappingEditViewController);
-            
-            BOOST_ASSERT(self.collisionMappingEditViewController.view);
-            BOOST_ASSERT(self.collisionMappingEditViewController.offsetTextField);
-            BOOST_ASSERT(self.collisionMappingEditViewController.scaleFactorTextField);
+            BOOST_ASSERT(self.mappingEditViewController);
+            BOOST_ASSERT(self.mappingEditViewController.view);
+            BOOST_ASSERT(self.mappingEditViewController.offsetTextField);
+            BOOST_ASSERT(self.mappingEditViewController.scaleFactorTextField);
         }
         
-        self.collisionMappingEditViewController.collisionMapping = Mapping::WPtr(mapping);
+        self.mappingEditViewController.mapping = Mapping::WPtr(mapping);
+        self.mappingEditPopover.contentViewController = self.mappingEditViewController;
+        self.mappingEditPopover.contentSize = NSMakeSize(213.0, 112.0);
         
-        self.collisionMappingEditPopover.contentViewController = self.collisionMappingEditViewController;
-        self.collisionMappingEditPopover.contentSize = NSMakeSize(213.0, 112.0);
-        
-        [self.collisionMappingEditPopover showRelativeToRect:mappingView.editButton.frame
+        [self.mappingEditPopover showRelativeToRect:mappingView.editButton.frame
                                                       ofView:mappingView
                                                preferredEdge:NSMinXEdge];
         
         /*
         NSLog(@"view.frame %@, offsetTextField.frame %@, scaleFactorTextField.frame %@",
-              NSStringFromRect(self.collisionMappingEditViewController.view.frame),
-              NSStringFromRect(self.collisionMappingEditViewController.offsetTextField.frame),
-              NSStringFromRect(self.collisionMappingEditViewController.scaleFactorTextField.frame));
+              NSStringFromRect(self.mappingEditViewController.view.frame),
+              NSStringFromRect(self.mappingEditViewController.offsetTextField.frame),
+              NSStringFromRect(self.mappingEditViewController.scaleFactorTextField.frame));
          */
     }
 }
@@ -202,7 +174,15 @@ NSString* const VSCIMOSXMappingViewReuseIdentifier = @"VSCIMOSXMappingViewReuseI
     {
         Event::SPtr event = self.event.lock();
         BOOST_ASSERT(event);
-        if (event) return event->getRequiredMappingTargets().size();
+        int targetCount = (int) event->getRequiredMappingTargets().size();
+        int triggerCount = (int) AllowedTriggers().size();
+        
+        /*
+         *  We need one mapping per target/collision combination, and a section view
+         *  for each trigger type
+         */
+        
+        return (targetCount * triggerCount) + triggerCount;
     }
     
 	return 0;
@@ -220,26 +200,47 @@ NSString* const VSCIMOSXMappingViewReuseIdentifier = @"VSCIMOSXMappingViewReuseI
         if (event)
         {
             const Targets& targets = event->getRequiredMappingTargets();
-            BOOST_ASSERT(targets.size() > row);
-            if (targets.size() <= row) return nil;
-            Target target = targets.at(row);
-            Mapping::SPtr mapping = event->getMappingForTarget(target);
             
-            if (event)
+            int targetIndex = row % ((int)targets.size() + 1);
+            
+            if (targetIndex == 0)
             {
+                // make and reuturn section view
+            }
+            
+            // if it's not 0 then it should be positive, otherwise modulo function is pretty bad
+            
+            BOOST_ASSERT(targetIndex > 0);
+            
+            if (targetIndex > 0)
+            {
+                const Triggers& triggers = AllowedTriggers();
+                
+                int triggerIndex = std::floor(row / (targets.size() + 1));
+                
+                Target target = targets.at(targetIndex-1);
+                Trigger trigger = triggers.at(triggerIndex);
+                
+                Mapping::SPtr mapping = event->getMapping(trigger, target);
+                
                 VSCIMOSXMappingView* mappingView = [tableView makeViewWithIdentifier:[[VSCIMOSXMappingView class] description]
-                                                                                        owner:self];
+                                                                               owner:self];
                 
-                
+                if (!mappingView)
+                {
+                    mappingView = [[self class] newMappingViewWithOwner:self];
+                }
                 
                 BOOST_ASSERT(mappingView);
+                BOOST_ASSERT([mappingView isKindOfClass:[VSCIMOSXMappingView class]]);
+                
                 [mappingView setController:(id)self];
-                if (mappingView) BOOST_ASSERT([mappingView isKindOfClass:[VSCIMOSXMappingView class]]);
-                else mappingView = [[self class] newMappingViewWithOwner:self];
                 [mappingView setMapping:(Mapping::WPtr(mapping))];
                 [mappingView setTarget:target];
+                
                 return mappingView;
             }
+            
         }
     }
     
@@ -252,7 +253,23 @@ NSString* const VSCIMOSXMappingViewReuseIdentifier = @"VSCIMOSXMappingViewReuseI
     
     if (tableView == self.mappingTableView)
     {
-        return [VSCIMOSXMappingView defaultHeight];
+        Event::SPtr event = self.event.lock();
+        BOOST_ASSERT(event);
+        
+        if (event)
+        {
+            const Targets& targets = event->getRequiredMappingTargets();
+            int targetIndex = row % ((int)targets.size() + 1);
+            if (targetIndex == 0)
+            {
+                
+            }
+            else
+            {
+                return [VSCIMOSXMappingView defaultHeight];
+            }
+        
+        }
     }
     
     BOOST_ASSERT_MSG(false, "Shouldn't reach this point");

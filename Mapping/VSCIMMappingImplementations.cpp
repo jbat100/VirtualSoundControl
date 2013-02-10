@@ -6,6 +6,7 @@
 
 #include "VSCIMMappingImplementations.h"
 
+#include "VSCIM.h"
 #include "VSCOBCollision.h"
 #include "VSCOBElement.h"
 
@@ -21,20 +22,29 @@ using namespace VSC::OB;
 Ogre::Vector3 ReferencePointOwner::defaultReferencePoint = Ogre::Vector3::ZERO;
 
 
-Float Mapping::ImplementationConstant::Float mappedValue(Trigger trigger, TriggerPayload::SPtr payload)
+Float Mapping::ImplementationConstant::mappedValue(Trigger trigger, TriggerPayload::SPtr payload)
 {
     return 0.0;
 }
 
-Float Mapping::ImplementationCollisionVelocity::Float mappedValue(Trigger trigger, TriggerPayload::SPtr payload)
+/*
+ 
+ // good values for collision velocity
+ 
+ velMapping->setOffset(0.0);
+ velMapping->setScaleFactor(3.0);
+ 
+ */
+
+Float Mapping::ImplementationCollisionVelocity::mappedValue(Trigger trigger, TriggerPayload::SPtr payload)
 {
     BOOST_ASSERT(payload);
     TriggerCollisionPayload::SPtr collisionPayload = boost::dynamic_pointer_cast<TriggerCollisionPayload>(payload);
     BOOST_ASSERT_MSG(collisionPayload, "Wrong payload type");
     if (collisionPayload)
     {
-        Collision::SPtr collision = collisionPayload.collision;
-        Element::SPtr element = collisionPayload.effector;
+        Collision::SPtr collision = collisionPayload->collision;
+        Element::SPtr element = collisionPayload->effector;
         BOOST_ASSERT(collision);
         BOOST_ASSERT(effector);
         if (collision)
@@ -55,8 +65,8 @@ Float Mapping::ImplementationCollisionDistance::mappedValue(Trigger trigger, Tri
     
     if (collisionPayload)
     {
-        Collision::SPtr collision = collisionPayload.collision;
-        Element::SPtr element = collisionPayload.effector;
+        Collision::SPtr collision = collisionPayload->collision;
+        Element::SPtr element = collisionPayload->effector;
         BOOST_ASSERT(collision);
         BOOST_ASSERT(effector);
         if (collision)

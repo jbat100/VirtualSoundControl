@@ -13,7 +13,7 @@
 
 @interface VSCIMOSXMappingEditViewController : NSViewController
 
-@property (nonatomic, assign) VSC::IM::Mapping_WPtr collisionMapping;
+@property (nonatomic, assign) VSC::IM::Mapping_WPtr mapping;
 
 // binding targets
 
