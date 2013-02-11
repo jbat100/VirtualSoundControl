@@ -43,6 +43,7 @@ namespace VSC
         class ControlNumberOwner
         {
         public:
+            typedef boost::shared_ptr<ControlNumberOwner> SPtr;
             ControlNumberOwner() : mControlNumber(ControlInvalid) {}
             ControlNumber getControlNumber(void) {return mControlNumber;}
             void setControlNumber(ControlNumber number) {mControlNumber = number;}

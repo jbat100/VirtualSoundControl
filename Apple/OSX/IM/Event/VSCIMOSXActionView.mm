@@ -58,6 +58,14 @@ const CGFloat VSCIMOSXActionViewMIDIControlSetupHeight = 15.0;
 -(void) updateMIDIOutputs;
 -(void) updateMIDIControlNumbers;
 
+/*
+ *  Convienience
+ */
+
++(MIDI::Output::SPtr) extractMIDIOutputForAction:(Action::SPtr)action;
++(unsigned int) extractMIDIChannelForAction:(Action::SPtr)action;
++(MIDI::ControlNumber) extractMIDIControlNumberForAction:(Action::SPtr)action;
+
 @end
 
 
@@ -66,6 +74,43 @@ const CGFloat VSCIMOSXActionViewMIDIControlSetupHeight = 15.0;
 static const BOOL debugDraw = NO;
 
 #pragma mark - Static Methods
+
++(MIDI::Output::SPtr) extractMIDIOutputForAction:(Action::SPtr)action
+{
+    BOOST_ASSERT(action);
+    if (!action) return MIDI::Output::SPtr();
+    
+    Action::Implementation::SPtr implementation = action->getImplementation();
+    BOOST_ASSERT(implementation);
+    if (!implementation) return MIDI::Output::SPtr();
+    
+    MIDI::OutputOwner::SPtr outputOwner = boost::dynamic_pointer_cast<MIDI::OutputOwner>(implementation);
+    BOOST_ASSERT(outputOwner);
+    if (!outputOwner) return MIDI::Output::SPtr();
+    
+    return outputOwner->getMIDIOutput();
+}
+
++(unsigned int) extractMIDIChannelForAction:(Action::SPtr)action
+{
+    BOOST_ASSERT(action);
+    if (!action) return 0;
+    
+    Action::Implementation::SPtr implementation = action->getImplementation();
+    BOOST_ASSERT(implementation);
+    if (!implementation) return 0;
+    
+    MIDI::ChannelOwner::SPtr channelOwner = boost::dynamic_pointer_cast<MIDI::ChannelOwner>(implementation);
+    BOOST_ASSERT(channelOwner);
+    if (!channelOwner) return 0;
+    
+    channelOwner->getChannel()
+}
+
++(MIDI::ControlNumber) extractMIDIControlNumberForAction:(Action::SPtr)action
+{
+    
+}
 
 +(CGFloat) heightOfViewForAction:(Action::SPtr)action
 {
@@ -86,7 +131,8 @@ static const BOOL debugDraw = NO;
         totalHeight += VSCIMOSXActionViewMIDIChannelSetupHeight;
     }
     
-    MIDI::ControlNumberOwner::SPtr midiControlNumberOwner = boost::dynamic_pointer_cast<MIDI::ControlNumberOwner>(implementation);
+    MIDI::ControlNumberOwner::SPtr midiControlNumberOwner();
+    midiControlNumberOwner = boost::dynamic_pointer_cast<MIDI::ControlNumberOwner>(implementation);
     if (midiControlNumberOwner)
     {
         totalHeight += VSCIMOSXActionViewMIDIControlSetupHeight;
@@ -123,7 +169,6 @@ static const BOOL debugDraw = NO;
 
 -(void) commonInit
 {
-    self.currentActionType = ActionTypeNone;
     self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
@@ -132,19 +177,7 @@ static const BOOL debugDraw = NO;
     CGContextRef myContext = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
     if (debugDraw)
     {
-        switch (self.currentActionType)
-        {
-            case ActionTypeMIDINoteOn:
-                CGContextSetRGBFillColor (myContext, 1.0, 0.0, 0.0, 1.0);
-                break;
-                
-            case ActionTypeMIDINoteOff:
-                CGContextSetRGBFillColor (myContext, 0.0, 1.0, 0.0, 1.0);
-                break;
-                
-            default:
-                CGContextSetRGBFillColor (myContext, 0.4, 0.4, 0.4, 1.0);
-        }
+        CGContextSetRGBFillColor (myContext, 1.0, 0.0, 0.0, 1.0);
         CGContextFillRect(myContext, self.bounds);
         CGContextSetGrayStrokeColor (myContext, 1.0, 1.0);
         CGContextStrokeRectWithWidth(myContext, NSRectToCGRect(self.bounds), 2.0);
@@ -164,8 +197,8 @@ static const BOOL debugDraw = NO;
     
     //BOOST_ASSERT(self.mainView);
     //self.mainView.translatesAutoresizingMaskIntoConstraints = NO;
-    //BOOST_ASSERT(self.midiSetupView);
-    //self.midiSetupView.translatesAutoresizingMaskIntoConstraints = NO;
+    //BOOST_ASSERT(self.midiOutputView);
+    //self.midiOutputView.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 #pragma mark - Action Getter
@@ -232,20 +265,78 @@ static const BOOL debugDraw = NO;
     [viewBindingsDictionary setValue:self.mainView forKey:@"mainView"];
     [verticalLayoutVisualFormat appendString:@"-2-[mainView]"];
     
+    /*
+     *  Update type interface
+     */
     
-    if (actionIsMIDIAction(action))
+    [self.actionTypeTextField setStringValue:[NSString stringWithStdString:StringForActionType([self action]->getActionType())]];
+    
+    /*
+     *  Handle different types of implementations
+     */
+    
+    Action::Implementation::SPtr implementation = action->getImplementation();
+    
+    /*
+     *  If the action implementation is a MIDI output owner, then show...
+     */
+    
+    MIDI::OutputOwner::SPtr outputOwner = boost::dynamic_pointer_cast<MIDI::OutputOwner>(implementation);
+    if (outputOwner)
     {
-        if (self.midiSetupView == nil)
+        if (self.midiOutputView == nil)
         {
-            self.midiSetupView = [[VSCOSXInterfaceFactory defaultFactory] newActionMIDIViewWithOwner:self];
+            self.midiOutputView = [[VSCOSXInterfaceFactory defaultFactory] newActionMIDIOutputViewWithOwner:self];
         }
-        
-        BOOST_ASSERT(self.midiSetupView);
-        [self addSubview:self.midiSetupView];
-        [viewsForHorizontalConstraints addObject:self.midiSetupView];
-        [viewBindingsDictionary setValue:self.midiSetupView forKey:@"midiSetupView"];
-        [verticalLayoutVisualFormat appendString:@"-4-[midiSetupView]"];
+        BOOST_ASSERT(self.midiOutputView);
+        [self addSubview:self.midiOutputView];
+        [viewsForHorizontalConstraints addObject:self.midiOutputView];
+        [viewBindingsDictionary setValue:self.midiOutputView forKey:@"midiOutputView"];
+        [verticalLayoutVisualFormat appendString:@"-4-[midiOutputView]"];
+        [self updateMIDIOutputs];
     }
+    
+    /*
+     *  If the action implementation is a MIDI channel owner, then show...
+     */
+    
+    MIDI::ChannelOwner::SPtr channelOwner = boost::dynamic_pointer_cast<MIDI::ChannelOwner>(implementation);
+    if (channelOwner)
+    {
+        if (self.midiChannelView == nil)
+        {
+            self.midiChannelView = [[VSCOSXInterfaceFactory defaultFactory] newActionMIDIChannelViewWithOwner:self];
+        }
+        BOOST_ASSERT(self.midiChannelView);
+        [self addSubview:self.midiChannelView];
+        [viewsForHorizontalConstraints addObject:self.midiChannelView];
+        [viewBindingsDictionary setValue:self.midiChannelView forKey:@"midiChannelView"];
+        [verticalLayoutVisualFormat appendString:@"-4-[midiChannelView]"];
+        [self updateMIDIChannel];
+    }
+    
+    /*
+     *  If the action implementation is a MIDI control number owner, then show...
+     */
+    
+    MIDI::ControlNumberOwner::SPtr controlNumberOwner = boost::dynamic_pointer_cast<MIDI::ControlNumberOwner>(implementation);
+    if (controlNumberOwner)
+    {
+        if (self.midiControlNumberView == nil)
+        {
+            self.midiControlNumberView = [[VSCOSXInterfaceFactory defaultFactory] newActionMIDIControlNumberViewWithOwner:self];
+        }
+        BOOST_ASSERT(self.midiControlNumberView);
+        [self addSubview:self.midiControlNumberView];
+        [viewsForHorizontalConstraints addObject:self.midiControlNumberView];
+        [viewBindingsDictionary setValue:self.midiControlNumberView forKey:@"midiControlNumberView"];
+        [verticalLayoutVisualFormat appendString:@"-4-[midiControlNumberView]"];
+        [self updateMIDIControlNumbers];
+    }
+    
+    /*
+     *  Bottom constraint
+     */
     
     [verticalLayoutVisualFormat appendString:@"-4-|"];
     
@@ -270,82 +361,72 @@ static const BOOL debugDraw = NO;
         [self addConstraints:contraints];
     }
     
-    /*
-     *  Update interface
-     */
     
-    [self.actionTypeTextField setStringValue:[NSString stringWithStdString:StringForActionType(self.currentActionType)]];
-    
-    if (actionIsMIDIAction(action))
-    {
-        [self updateMIDIOutputs];
-        [self updateMIDIChannel];
-    }
 }
 
 -(void) updateMIDIOutputs
 {
-    VSC::MIDI::OutputManager::SPtr outputManager = VSC::MIDI::OutputManager::singletonManager();
-    BOOST_ASSERT(outputManager);
-    
+    BOOST_ASSERT(self.midiOutputPopUpButton);
     [self.midiOutputPopUpButton removeAllItems];
     [self.midiOutputPopUpButton addItemWithTitle:VSCIMOSXNoMidiOutputString];
     
+    MIDI::OutputManager::SPtr outputManager = VSC::MIDI::OutputManager::singletonManager();
+    BOOST_ASSERT(outputManager);
     if (outputManager)
     {
-        const VSC::MIDI::Outputs& outputs = outputManager->getOutputs();
+        const MIDI::Outputs& outputs = outputManager->getOutputs();
         
-        BOOST_FOREACH(const VSC::MIDI::Output::SPtr& output, outputs)
+        BOOST_FOREACH(const MIDI::Output::SPtr& output, outputs)
         {
             NSString* title = [NSString stringWithStdString:output->getDescription()];
             [self.midiOutputPopUpButton addItemWithTitle:title];
         }
         
-        Action::SPtr action = [self action];
-        MIDIAction::SPtr collisionAction = boost::dynamic_pointer_cast<MIDIAction>(action);
-        BOOST_ASSERT(collisionAction);
-        
-        if (collisionAction)
+        MIDI::Output::SPtr midiOutput = [[self class] extractMIDIOutputForAction:[self action]];
+        if (midiOutput)
         {
-            VSC::MIDI::Output::SPtr midiOutput = collisionAction->getMIDIOutput();
-            if (midiOutput)
-            {
-                NSString* title = [NSString stringWithStdString:midiOutput->getDescription()];
-                [self.midiOutputPopUpButton selectItemWithTitle:title];
-            }
-            else
-            {
-                [self.midiOutputPopUpButton selectItemWithTitle:VSCIMOSXNoMidiOutputString];
-            }
+            NSString* title = [NSString stringWithStdString:midiOutput->getDescription()];
+            [self.midiOutputPopUpButton selectItemWithTitle:title];
+            return;
         }
-        else
-        {
-            [self.midiOutputPopUpButton selectItemWithTitle:VSCIMOSXNoMidiOutputString];
-        }
-        
-        if (actionIsMIDIControlAction(action)) [self updateMIDIControlNumbers];
     }
+    
+    [self.midiOutputPopUpButton selectItemWithTitle:VSCIMOSXNoMidiOutputString];
 }
 
 -(void) updateMIDIChannel
 {
-    MIDIAction::SPtr midiAction = boost::dynamic_pointer_cast<MIDIAction>([self action]);
-    BOOST_ASSERT(midiAction);
+    Action::SPtr action = [self action];
+    Action::Implementation::SPtr implementation = Action::Implementation::SPtr();
+    MIDI::ChannelOwner::SPtr channelOwner = MIDI::ChannelOwner::SPtr();
     
-    if (midiAction)
+    BOOST_ASSERT(action);
+    if (action)
+    {
+        implementation = action->getImplementation();
+    }
+    BOOST_ASSERT(implementation);
+    if (implementation)
+    {
+        channelOwner = boost::dynamic_pointer_cast<MIDI::ChannelOwner>(implementation);
+    }
+    BOOST_ASSERT(channelOwner);
+    if (channelOwner)
     {
         [self.midiChannelTextField setIntegerValue:midiAction->getChannel()];
+        return;
     }
-    else
-    {
-        [self.midiChannelTextField setStringValue:@"No channel"];
-    }
+    
+    [self.midiChannelTextField setStringValue:@"No channel"];
+
 }
 
 -(void) updateMIDIControlNumbers
 {
     Action::SPtr action = [self action];
-    BOOST_ASSERT(actionIsMIDIControlAction(action));
+    Action::Implementation::SPtr implementation = Action::Implementation::SPtr();
+    MIDI::ControlNumberOwner::SPtr controlNumberOwner = MIDI::ControlNumberOwner::SPtr();
+    MIDI::OutputOwner::SPtr outputOwner = MIDI::OutputOwner::SPtr();
     
     [self.midiControlNumberPopUpButton removeAllItems];
     
@@ -447,8 +528,8 @@ static const BOOL debugDraw = NO;
 
 -(void) printUIDescription
 {
-    NSLog(@"%@ %@, mainView.frame %@, midiSetupView.frame %@", self, NSStringFromRect(self.frame),
-          NSStringFromRect(self.mainView.frame), NSStringFromRect(self.midiSetupView.frame));
+    NSLog(@"%@ %@, mainView.frame %@, midiOutputView.frame %@", self, NSStringFromRect(self.frame),
+          NSStringFromRect(self.mainView.frame), NSStringFromRect(self.midiOutputView.frame));
 }
 
 @end

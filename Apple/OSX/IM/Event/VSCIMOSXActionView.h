@@ -24,11 +24,13 @@
 @property (nonatomic, strong) IBOutlet NSTextField* actionTypeTextField;
 @property (nonatomic, strong) IBOutlet NSButton* mappingsButton;
 
-@property (nonatomic, strong) IBOutlet NSView* midiSetupView;
+@property (nonatomic, strong) IBOutlet NSView* midiOutputView;
 @property (nonatomic, strong) IBOutlet NSPopUpButton* midiOutputPopUpButton;
+
+@property (nonatomic, strong) IBOutlet NSView* midiChannelView;
 @property (nonatomic, strong) IBOutlet NSTextField* midiChannelTextField;
 
-@property (nonatomic, strong) IBOutlet NSView* midiControlSetupView;
+@property (nonatomic, strong) IBOutlet NSView* midiControlNumberView;
 @property (nonatomic, strong) IBOutlet NSPopUpButton* midiControlNumberPopUpButton;
 
 -(VSC::IM::Action_SPtr) action; // return cast event from VSCIMOSXEventView
