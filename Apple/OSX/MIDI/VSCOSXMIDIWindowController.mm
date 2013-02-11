@@ -119,7 +119,7 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
         
         BOOST_FOREACH(const VSC::MIDI::ControlNumber& controlNumber, validControlNumbers)
         {
-            std::string name = VSC::MIDI::controlNumberToString(controlNumber);
+            std::string name = VSC::MIDI::ControlNumberToString(controlNumber);
             BOOST_ASSERT(!name.empty());
             NSString* title = [NSString stringWithFormat:@"%u - %@", (unsigned int)controlNumber, [NSString stringWithStdString:name]];
             [self.controlNumberPopUpButton addItemWithTitle:title];

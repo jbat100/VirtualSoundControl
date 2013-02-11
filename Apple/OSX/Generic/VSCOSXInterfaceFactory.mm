@@ -55,8 +55,8 @@
         interfaceFactory.keyedActionMIDIChannelViewNib = [[NSNib alloc] initWithNibNamed:
                                                           @"VSCIMOSXActionMIDIChannelView" bundle:nil];
         
-        interfaceFactory.keyedActionMIDIControlViewNib = [[NSNib alloc] initWithNibNamed:
-                                                          @"VSCIMOSXActionMIDIControlView" bundle:nil];
+        interfaceFactory.keyedActionMIDIControlNumberViewNib = [[NSNib alloc] initWithNibNamed:
+                                                                @"VSCIMOSXActionMIDIControlNumberView" bundle:nil];
         
         
         interfaceFactory.tableSectionViewNib = [[NSNib alloc] initWithNibNamed:
@@ -207,11 +207,11 @@
     return [self newViewWithIdentifier:identifier nib:self.keyedActionMIDIChannelViewNib owner:owner];
 }
 
--(NSView*) newActionMIDIControlViewWithOwner:(id)owner
+-(NSView*) newActionMIDIControlNumberViewWithOwner:(id)owner
 {
-    static NSString* identifier = @"VSCIMOSXActionMIDIControlView";
+    static NSString* identifier = @"VSCIMOSXActionMIDIControlNumberView";
     
-    return [self newViewWithIdentifier:identifier nib:self.keyedActionMIDIControlViewNib owner:owner];
+    return [self newViewWithIdentifier:identifier nib:self.keyedActionMIDIControlNumberViewNib owner:owner];
 }
 
 #pragma mark - Table Views

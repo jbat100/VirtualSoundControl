@@ -140,7 +140,7 @@ namespace VSC {
          */
         
         std::string messageToString(const Message& m);
-        std::string controlNumberToString(ControlNumber num);
+        std::string ControlNumberToString(ControlNumber num);
         ControlNumber stringToControlNumber(const std::string& desc);
         
         /*

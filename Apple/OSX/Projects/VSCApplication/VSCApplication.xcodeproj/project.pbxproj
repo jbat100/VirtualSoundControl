@@ -198,7 +198,7 @@
 		10F8502416B92D10007485F8 /* VSCIMOSXEventChainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F8500B16B92D10007485F8 /* VSCIMOSXEventChainViewController.mm */; };
 		10F8502516B92D10007485F8 /* VSCIMOSXEventChainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8500C16B92D10007485F8 /* VSCIMOSXEventChainViewController.xib */; };
 		10F8502616B92D10007485F8 /* VSCIMOSXActionCommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8500E16B92D10007485F8 /* VSCIMOSXActionCommonView.xib */; };
-		10F8502716B92D10007485F8 /* VSCIMOSXActionMIDIControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8500F16B92D10007485F8 /* VSCIMOSXActionMIDIControlView.xib */; };
+		10F8502716B92D10007485F8 /* VSCIMOSXActionMIDIControlNumberView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8500F16B92D10007485F8 /* VSCIMOSXActionMIDIControlNumberView.xib */; };
 		10F8502816B92D10007485F8 /* VSCIMOSXActionMIDIOutputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8501016B92D10007485F8 /* VSCIMOSXActionMIDIOutputView.xib */; };
 		10F8502916B92D10007485F8 /* VSCIMOSXActionView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F8501216B92D10007485F8 /* VSCIMOSXActionView.mm */; };
 		10F8502A16B92D10007485F8 /* VSCIMOSXActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8501316B92D10007485F8 /* VSCIMOSXActionView.xib */; };
@@ -601,7 +601,7 @@
 		10F8500B16B92D10007485F8 /* VSCIMOSXEventChainViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXEventChainViewController.mm; sourceTree = "<group>"; };
 		10F8500C16B92D10007485F8 /* VSCIMOSXEventChainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXEventChainViewController.xib; sourceTree = "<group>"; };
 		10F8500E16B92D10007485F8 /* VSCIMOSXActionCommonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXActionCommonView.xib; sourceTree = "<group>"; };
-		10F8500F16B92D10007485F8 /* VSCIMOSXActionMIDIControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXActionMIDIControlView.xib; sourceTree = "<group>"; };
+		10F8500F16B92D10007485F8 /* VSCIMOSXActionMIDIControlNumberView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXActionMIDIControlNumberView.xib; sourceTree = "<group>"; };
 		10F8501016B92D10007485F8 /* VSCIMOSXActionMIDIOutputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXActionMIDIOutputView.xib; sourceTree = "<group>"; };
 		10F8501116B92D10007485F8 /* VSCIMOSXActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXActionView.h; sourceTree = "<group>"; };
 		10F8501216B92D10007485F8 /* VSCIMOSXActionView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = VSCIMOSXActionView.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1492,7 +1492,7 @@
 				10A764EF16BEEE9800B9F9A2 /* VSCIMOSXEventView.mm */,
 				10F8500E16B92D10007485F8 /* VSCIMOSXActionCommonView.xib */,
 				10F6666A16C40CC400ADF7AB /* VSCIMOSXActionMIDIChannelView.xib */,
-				10F8500F16B92D10007485F8 /* VSCIMOSXActionMIDIControlView.xib */,
+				10F8500F16B92D10007485F8 /* VSCIMOSXActionMIDIControlNumberView.xib */,
 				10F8501016B92D10007485F8 /* VSCIMOSXActionMIDIOutputView.xib */,
 				10F8501116B92D10007485F8 /* VSCIMOSXActionView.h */,
 				10F8501216B92D10007485F8 /* VSCIMOSXActionView.mm */,
@@ -1621,7 +1621,7 @@
 				10F115FA16AC8B73000A9EBB /* VSCOSXKeyed4FieldView.xib in Resources */,
 				10F8502516B92D10007485F8 /* VSCIMOSXEventChainViewController.xib in Resources */,
 				10F8502616B92D10007485F8 /* VSCIMOSXActionCommonView.xib in Resources */,
-				10F8502716B92D10007485F8 /* VSCIMOSXActionMIDIControlView.xib in Resources */,
+				10F8502716B92D10007485F8 /* VSCIMOSXActionMIDIControlNumberView.xib in Resources */,
 				10F8502816B92D10007485F8 /* VSCIMOSXActionMIDIOutputView.xib in Resources */,
 				10F8502A16B92D10007485F8 /* VSCIMOSXActionView.xib in Resources */,
 				10F8502C16B92D10007485F8 /* VSCIMOSXDelayView.xib in Resources */,

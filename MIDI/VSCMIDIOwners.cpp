@@ -128,7 +128,7 @@ void VSC::MIDI::FillControlNumberStringsMap()
 }
 
 
-std::string VSC::MIDI::controlNumberToString(ControlNumber num)
+std::string VSC::MIDI::ControlNumberToString(ControlNumber num)
 {
     boost::call_once(&FillControlNumberStringsMap, filledControlNumberStringsMapFlag);
     

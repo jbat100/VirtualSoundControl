@@ -38,12 +38,12 @@
 @property (strong) NSNib* keyedActionCommonViewNib;
 @property (strong) NSNib* keyedActionMIDIOutputViewNib;
 @property (strong) NSNib* keyedActionMIDIChannelViewNib;
-@property (strong) NSNib* keyedActionMIDIControlViewNib;
+@property (strong) NSNib* keyedActionMIDIControlNumberViewNib;
 
 -(NSView*) newActionCommonViewWithOwner:(id)owner;
 -(NSView*) newActionMIDIOutputViewWithOwner:(id)owner;
 -(NSView*) newActionMIDIChannelViewWithOwner:(id)owner;
--(NSView*) newActionMIDIControlViewWithOwner:(id)owner;
+-(NSView*) newActionMIDIControlNumberViewWithOwner:(id)owner;
 
 /*
  *  Table Views

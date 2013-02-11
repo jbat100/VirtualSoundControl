@@ -104,12 +104,23 @@ static const BOOL debugDraw = NO;
     BOOST_ASSERT(channelOwner);
     if (!channelOwner) return 0;
     
-    channelOwner->getChannel()
+    return channelOwner->getChannel();
 }
 
 +(MIDI::ControlNumber) extractMIDIControlNumberForAction:(Action::SPtr)action
 {
+    BOOST_ASSERT(action);
+    if (!action) return MIDI::ControlInvalid;
     
+    Action::Implementation::SPtr implementation = action->getImplementation();
+    BOOST_ASSERT(implementation);
+    if (!implementation) return MIDI::ControlInvalid;
+    
+    MIDI::ControlNumberOwner::SPtr controlNumberOwner = boost::dynamic_pointer_cast<MIDI::ChannelOwner>(ControlNumberOwner);
+    BOOST_ASSERT(controlNumberOwner);
+    if (!controlNumberOwner) return MIDI::ControlInvalid;
+    
+    return controlNumberOwner->getMIDIControlNumber();
 }
 
 +(CGFloat) heightOfViewForAction:(Action::SPtr)action
@@ -397,45 +408,22 @@ static const BOOL debugDraw = NO;
 -(void) updateMIDIChannel
 {
     Action::SPtr action = [self action];
-    Action::Implementation::SPtr implementation = Action::Implementation::SPtr();
-    MIDI::ChannelOwner::SPtr channelOwner = MIDI::ChannelOwner::SPtr();
+    unsigned int channel = [[self class] extractMIDIChannelForAction:action];
     
-    BOOST_ASSERT(action);
-    if (action)
-    {
-        implementation = action->getImplementation();
-    }
-    BOOST_ASSERT(implementation);
-    if (implementation)
-    {
-        channelOwner = boost::dynamic_pointer_cast<MIDI::ChannelOwner>(implementation);
-    }
-    BOOST_ASSERT(channelOwner);
-    if (channelOwner)
-    {
-        [self.midiChannelTextField setIntegerValue:midiAction->getChannel()];
-        return;
-    }
-    
-    [self.midiChannelTextField setStringValue:@"No channel"];
+    [self.midiChannelTextField setIntegerValue:(NSInteger)channel];
+
+    //[self.midiChannelTextField setStringValue:@"No channel"];
 
 }
 
 -(void) updateMIDIControlNumbers
 {
     Action::SPtr action = [self action];
-    Action::Implementation::SPtr implementation = Action::Implementation::SPtr();
-    MIDI::ControlNumberOwner::SPtr controlNumberOwner = MIDI::ControlNumberOwner::SPtr();
-    MIDI::OutputOwner::SPtr outputOwner = MIDI::OutputOwner::SPtr();
+    BOOST_ASSERT(action);
+
+    MIDI::Output::SPtr midiOutput = [[self class] extractMIDIOutputForAction:action];
     
     [self.midiControlNumberPopUpButton removeAllItems];
-    
-    MIDIControlAction::SPtr controlAction;
-    controlAction = boost::dynamic_pointer_cast<MIDIControlAction>([self action]);
-    
-    BOOST_ASSERT(controlAction);
-    
-    VSC::MIDI::Output::SPtr midiOutput = controlAction->getMIDIOutput();
     
     if (midiOutput)
     {
@@ -443,7 +431,7 @@ static const BOOL debugDraw = NO;
         
         BOOST_FOREACH(const VSC::MIDI::ControlNumber& controlNumber, controlNumbers)
         {
-            std::string controlNumberString = VSC::MIDI::controlNumberToString(controlNumber);
+            std::string controlNumberString = MIDI::ControlNumberToString(controlNumber);
             BOOST_ASSERT(!controlNumberString.empty());
             if (!controlNumberString.empty())
             {
@@ -451,6 +439,10 @@ static const BOOL debugDraw = NO;
             }
         }
     }
+    
+    MIDI::ControlNumber controlNumber = [[self class] extractMIDIControlNumberForAction:action];
+    std::string controlNumberString = MIDI::ControlNumberToString(controlNumber);
+    [self.midiControlNumberPopUpButton selectItemWithTitle:[NSString stringWithStdString:controlNumberString]];
 }
 
 #pragma mark - UI Callbacks
