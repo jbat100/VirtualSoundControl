@@ -6,15 +6,15 @@
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCOBOSXElementCollisionView.h"
+#import "VSCOBOSXElementEventChainsView.h"
 
-@interface VSCOBOSXElementCollisionView ()
+@interface VSCOBOSXElementEventChainsView ()
 
 -(void) customInit;
 
 @end
 
-@implementation VSCOBOSXElementCollisionView
+@implementation VSCOBOSXElementEventChainsView
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -46,7 +46,7 @@
 
 -(void) awakeFromNib
 {
-    self.collisionStartedEventChainBox.translatesAutoresizingMaskIntoConstraints = NO;
+    
 }
 
 

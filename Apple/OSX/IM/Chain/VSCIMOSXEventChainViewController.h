@@ -42,7 +42,7 @@
  *  Mapping list view
  */
 
-@property (strong)  VSCIMOSXEventEditorViewController* actionMappingsViewController;
+@property (strong)  VSCIMOSXEventEditorViewController* eventEditorViewController;
 
 -(void) reloadInterface;
 

@@ -155,8 +155,8 @@
 		10CFE748156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE716156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp */; };
 		10CFE749156CD62000B24399 /* OgreBulletDynamicsWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE717156CD62000B24399 /* OgreBulletDynamicsWorld.cpp */; };
 		10CFE74A156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10CFE719156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp */; };
-		10CFF59A16BF2D360039C194 /* VSCOBOSXElementCollisionView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10CFF58A16BF2D350039C194 /* VSCOBOSXElementCollisionView.mm */; };
-		10CFF59B16BF2D360039C194 /* VSCOBOSXElementCollisionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10CFF58B16BF2D350039C194 /* VSCOBOSXElementCollisionView.xib */; };
+		10CFF59A16BF2D360039C194 /* VSCOBOSXElementEventChainsView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10CFF58A16BF2D350039C194 /* VSCOBOSXElementEventChainsView.mm */; };
+		10CFF59B16BF2D360039C194 /* VSCOBOSXElementEventChainsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10CFF58B16BF2D350039C194 /* VSCOBOSXElementEventChainsView.xib */; };
 		10CFF59C16BF2D360039C194 /* VSCOBOSXElementDetailView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10CFF58E16BF2D360039C194 /* VSCOBOSXElementDetailView.mm */; };
 		10CFF59D16BF2D360039C194 /* VSCOBOSXElementInspectorViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10CFF59116BF2D360039C194 /* VSCOBOSXElementInspectorViewController.mm */; };
 		10CFF59E16BF2D360039C194 /* VSCOBOSXElementInspectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10CFF59216BF2D360039C194 /* VSCOBOSXElementInspectorViewController.xib */; };
@@ -528,9 +528,9 @@
 		10CFE716156CD62000B24399 /* OgreBulletDynamicsRigidBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsRigidBody.cpp; sourceTree = "<group>"; };
 		10CFE717156CD62000B24399 /* OgreBulletDynamicsWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsWorld.cpp; sourceTree = "<group>"; };
 		10CFE719156CD62000B24399 /* OgreBulletDynamicsRagDoll.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OgreBulletDynamicsRagDoll.cpp; sourceTree = "<group>"; };
-		10CFF58916BF2D350039C194 /* VSCOBOSXElementCollisionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXElementCollisionView.h; path = ../Apple/OSX/OB/VSCOBOSXElementCollisionView.h; sourceTree = "<group>"; };
-		10CFF58A16BF2D350039C194 /* VSCOBOSXElementCollisionView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXElementCollisionView.mm; path = ../Apple/OSX/OB/VSCOBOSXElementCollisionView.mm; sourceTree = "<group>"; };
-		10CFF58B16BF2D350039C194 /* VSCOBOSXElementCollisionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOBOSXElementCollisionView.xib; path = ../Apple/OSX/OB/VSCOBOSXElementCollisionView.xib; sourceTree = "<group>"; };
+		10CFF58916BF2D350039C194 /* VSCOBOSXElementEventChainsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXElementEventChainsView.h; path = ../Apple/OSX/OB/VSCOBOSXElementEventChainsView.h; sourceTree = "<group>"; };
+		10CFF58A16BF2D350039C194 /* VSCOBOSXElementEventChainsView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXElementEventChainsView.mm; path = ../Apple/OSX/OB/VSCOBOSXElementEventChainsView.mm; sourceTree = "<group>"; };
+		10CFF58B16BF2D350039C194 /* VSCOBOSXElementEventChainsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOBOSXElementEventChainsView.xib; path = ../Apple/OSX/OB/VSCOBOSXElementEventChainsView.xib; sourceTree = "<group>"; };
 		10CFF58C16BF2D350039C194 /* VSCOBOSXElementController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXElementController.h; path = ../Apple/OSX/OB/VSCOBOSXElementController.h; sourceTree = "<group>"; };
 		10CFF58D16BF2D350039C194 /* VSCOBOSXElementDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOBOSXElementDetailView.h; path = ../Apple/OSX/OB/VSCOBOSXElementDetailView.h; sourceTree = "<group>"; };
 		10CFF58E16BF2D360039C194 /* VSCOBOSXElementDetailView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOBOSXElementDetailView.mm; path = ../Apple/OSX/OB/VSCOBOSXElementDetailView.mm; sourceTree = "<group>"; };
@@ -899,9 +899,9 @@
 				109A8EBF16A1A77E0023EC1B /* VSCOBOSXSceneDisplayView.mm */,
 				109A8EC016A1A77E0023EC1B /* VSCOBOSXSceneListener.h */,
 				109A8EC116A1A77E0023EC1B /* VSCOBOSXSceneListener.mm */,
-				10CFF58916BF2D350039C194 /* VSCOBOSXElementCollisionView.h */,
-				10CFF58A16BF2D350039C194 /* VSCOBOSXElementCollisionView.mm */,
-				10CFF58B16BF2D350039C194 /* VSCOBOSXElementCollisionView.xib */,
+				10CFF58916BF2D350039C194 /* VSCOBOSXElementEventChainsView.h */,
+				10CFF58A16BF2D350039C194 /* VSCOBOSXElementEventChainsView.mm */,
+				10CFF58B16BF2D350039C194 /* VSCOBOSXElementEventChainsView.xib */,
 				10CFF58C16BF2D350039C194 /* VSCOBOSXElementController.h */,
 				10CFF58D16BF2D350039C194 /* VSCOBOSXElementDetailView.h */,
 				10CFF58E16BF2D360039C194 /* VSCOBOSXElementDetailView.mm */,
@@ -1601,7 +1601,7 @@
 				10F8503316B92D10007485F8 /* VSCIMOSXMappingView.xib in Resources */,
 				10A764E816BEA4E800B9F9A2 /* VSCIMOSXEventChainCellView.xib in Resources */,
 				10A764ED16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.xib in Resources */,
-				10CFF59B16BF2D360039C194 /* VSCOBOSXElementCollisionView.xib in Resources */,
+				10CFF59B16BF2D360039C194 /* VSCOBOSXElementEventChainsView.xib in Resources */,
 				10CFF59E16BF2D360039C194 /* VSCOBOSXElementInspectorViewController.xib in Resources */,
 				10CFF5A016BF2D360039C194 /* VSCOBOSXElementInspectorWindowController.xib in Resources */,
 				10F6666B16C40CC500ADF7AB /* VSCIMOSXActionMIDIChannelView.xib in Resources */,
@@ -1731,7 +1731,7 @@
 				1068513E16B9D02800505F04 /* VSCIMOSXEventChainCellView.mm in Sources */,
 				10A764EC16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.mm in Sources */,
 				10A764F016BEEE9800B9F9A2 /* VSCIMOSXEventView.mm in Sources */,
-				10CFF59A16BF2D360039C194 /* VSCOBOSXElementCollisionView.mm in Sources */,
+				10CFF59A16BF2D360039C194 /* VSCOBOSXElementEventChainsView.mm in Sources */,
 				10CFF59C16BF2D360039C194 /* VSCOBOSXElementDetailView.mm in Sources */,
 				10CFF59D16BF2D360039C194 /* VSCOBOSXElementInspectorViewController.mm in Sources */,
 				10CFF59F16BF2D360039C194 /* VSCOBOSXElementInspectorWindowController.mm in Sources */,

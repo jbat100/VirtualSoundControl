@@ -15,11 +15,10 @@
 
 @protocol VSCOBOSXElementController;
 
-@interface VSCOBOSXElementCollisionView : NSView
+@interface VSCOBOSXElementEventChainsView : NSView
 
 @property (assign) IBOutlet id<VSCOBOSXElementController> elementController;
 
-@property (weak) IBOutlet NSBox* collisionStartedEventChainBox;
-@property (weak) IBOutlet NSBox* collisionEndedEventChainBox;
+@property (nonatomic, strong) NSTableView* eventChainTableView;
 
 @end

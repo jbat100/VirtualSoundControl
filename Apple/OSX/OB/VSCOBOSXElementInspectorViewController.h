@@ -13,14 +13,14 @@
 
 @class DMTabBar;
 @class VSCOBOSXElementDetailView;
-@class VSCOBOSXElementCollisionView;
+@class VSCOBOSXElementEventChainsView;
 @class VSCIMOSXEventChainViewController;
 
 @interface VSCOBOSXElementInspectorViewController : NSViewController
 <VSCOBOSXElementController, VSCOBOSXSceneListenerTarget>
 
 @property (strong) IBOutlet VSCOBOSXElementDetailView* elementDetailView;
-@property (strong) IBOutlet VSCOBOSXElementCollisionView* elementCollisionView;
+@property (strong) IBOutlet VSCOBOSXElementEventChainsView* elementCollisionView;
 
 @property (strong) VSCIMOSXEventChainViewController* collisionStartedEventChainViewController;
 @property (strong) VSCIMOSXEventChainViewController* collisionEndedEventChainViewController;

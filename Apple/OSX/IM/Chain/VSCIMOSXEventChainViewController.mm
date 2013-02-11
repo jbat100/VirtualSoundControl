@@ -15,6 +15,8 @@
 #import "VSCIMOSXDelayView.h"
 
 #include "VSCCollisionMapper.h"
+
+#include "VSCIM.h"
 #include "VSCIMEvent.h"
 #include "VSCIMDelay.h"
 #include "VSCIMAction.h"
@@ -22,6 +24,9 @@
 #include "VSCIMEventChain.h"
 
 #include <boost/assert.hpp>
+
+using namespace VSC;
+using namespace VSC::IM;
 
 NSString* const VSCIMOSXActionViewReuseIdentifier      = @"VSCIMOSXActionViewReuseIdentifier";
 NSString* const VSCIMOSXDelayViewReuseIdentifier       = @"VSCIMOSXDelayViewReuseIdentifier";
@@ -35,10 +40,11 @@ NSString* const VSCIMOSXDelayViewReuseIdentifier       = @"VSCIMOSXDelayViewReus
 
 -(void) customInit;
 
+-(void) resetView;
 -(void) switchToView:(NSView*)newView;
 
--(void) appendEvent:(VSC::IM::Event::SPtr)event;
--(void) removeEvent:(VSC::IM::Event::SPtr)event;
+-(void) appendEvent:(Event::SPtr)event;
+-(void) removeEvent:(Event::SPtr)event;
 
 @end
 
@@ -112,24 +118,24 @@ const static BOOL traceInterface = YES;
 
 #pragma mark - Event Select/Add/Remove
 
--(VSC::IM::Event::SPtr) selectedChainEvent
+-(Event::SPtr) selectedChainEvent
 {
     NSInteger index = [self.eventTableView selectedRow];
     
     if (index >= 0)
     {
-        VSC::IM::EventChain::SPtr chain = self.eventChain.lock();
+        EventChain::SPtr chain = self.eventChain.lock();
         BOOST_ASSERT(chain);
         BOOST_ASSERT(chain->getNumberOfEvents() > index);
         if (chain && chain->getNumberOfEvents() > index) return chain->getEvents().at(index);
     }
     
-    return VSC::IM::Event::SPtr();
+    return Event::SPtr();
 }
 
 -(IBAction) removeSelectedEvent:(id)sender
 {
-    VSC::IM::Event::SPtr selectedEvent = [self selectedChainEvent];
+    Event::SPtr selectedEvent = [self selectedChainEvent];
     
     if (selectedEvent)
     {
@@ -139,26 +145,35 @@ const static BOOL traceInterface = YES;
 
 -(IBAction) menuItemAction:(id)sender
 {
-    VSC::IM::Event::SPtr event = VSC::IM::Event::SPtr();
+    Event::SPtr event = Event::SPtr();
     
     if (sender == self.addDelayMenuItem)
-        event = VSC::IM::Event::SPtr(new VSC::IM::Delay);
-    else if (sender == self.addCollisionMIDINoteOnMenuItem)
-        event = VSC::IM::Event::SPtr(new VSC::IM::MIDINoteOnAction);
-    else if (sender == self.addCollisionMIDINoteOffMenuItem)
-        event = VSC::IM::Event::SPtr(new VSC::IM::MIDINoteOffAction);
-    else if (sender == self.addCollisionMIDINoteOnAndOffMenuItem)
-        event = VSC::IM::Event::SPtr(new VSC::IM::MIDINoteOnAndOffAction);
-    else if (sender == self.addCollisionMIDIControlChangeMenuItem)
-        event = VSC::IM::Event::SPtr(new VSC::IM::MIDIControlChangeAction);
-    
-    /*
-     *  If we have a collision action, then create the default mappings
-     */
-    VSC::IM::Action::SPtr collisionAction = boost::dynamic_pointer_cast<VSC::IM::Action>(event);
-    if (collisionAction)
     {
-        collisionAction->createDefaultMappings();
+        event = Event::SPtr(new IM::Delay);
+    }
+    else if (sender == self.addCollisionMIDINoteOnMenuItem)
+    {
+        event = Event::SPtr(new Action);
+        Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
+        action->setActionType(ActionTypeMIDINoteOn);
+    }
+    else if (sender == self.addCollisionMIDINoteOffMenuItem)
+    {
+        event = Event::SPtr(new Action);
+        Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
+        action->setActionType(ActionTypeMIDINoteOff);
+    }
+    else if (sender == self.addCollisionMIDINoteOnAndOffMenuItem)
+    {
+        event = Event::SPtr(new Action);
+        Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
+        action->setActionType(ActionTypeMIDINoteOnAndOff);
+    }
+    else if (sender == self.addCollisionMIDIControlChangeMenuItem)
+    {
+        event = Event::SPtr(new Action);
+        Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
+        action->setActionType(ActionTypeMIDIControlChange);
     }
     
     if (event)
@@ -167,9 +182,9 @@ const static BOOL traceInterface = YES;
     }
 }
 
--(void) appendEvent:(VSC::IM::Event::SPtr)event
+-(void) appendEvent:(Event::SPtr)event
 {
-    VSC::IM::EventChain::SPtr chain = self.eventChain.lock();
+    EventChain::SPtr chain = self.eventChain.lock();
     
     BOOST_ASSERT(chain);
     BOOST_ASSERT(event);
@@ -181,9 +196,9 @@ const static BOOL traceInterface = YES;
     }
 }
 
--(void) removeEvent:(VSC::IM::Event::SPtr)event
+-(void) removeEvent:(Event::SPtr)event
 {
-    VSC::IM::EventChain::SPtr chain = self.eventChain.lock();
+    EventChain::SPtr chain = self.eventChain.lock();
     
     BOOST_ASSERT(chain);
     BOOST_ASSERT(event);
@@ -200,7 +215,7 @@ const static BOOL traceInterface = YES;
 
 -(void) switchToView:(NSView*)newView
 {
-    [self resetInspectorView];
+    [self resetView];
     
     if (newView == nil) return;
     
@@ -242,64 +257,47 @@ const static BOOL traceInterface = YES;
 
 
 
--(void) sender:(id)sender requestsShowMappingsForEvent:(VSC::IM::Action::SPtr)action
+-(void) sender:(id)sender requestsShowMappingsForEvent:(Event::SPtr)event
 {
-    if (!self.actionMappingsViewController)
+    if (!self.eventEditorViewController)
     {
-        self.actionMappingsViewController = [[VSCIMOSXEventEditorViewController alloc]
+        self.eventEditorViewController = [[VSCIMOSXEventEditorViewController alloc]
                                              initWithNibName:@"VSCIMOSXEventEditorViewController" bundle:nil];
         
-        BOOST_ASSERT(self.actionMappingsViewController);
-        self.actionMappingsViewController.eventChainController = self;
+        BOOST_ASSERT(self.eventEditorViewController);
+        self.eventEditorViewController.eventChainController = self;
     }
     
-    BOOST_ASSERT(action);
-    self.actionMappingsViewController.action = VSC::IM::Action::WPtr(action);
+    BOOST_ASSERT(event);
+    self.eventEditorViewController.event = Event::WPtr(event);
     
-    if ([self.actionMappingsViewController.view superview] != self.view)
+    if ([self.eventEditorViewController.view superview] != self.view)
     {
-        NSView* actionMappingsView = self.actionMappingsViewController.view;
+        NSView* eventEditorView = self.eventEditorViewController.view;
         
-        [self.view addSubview:actionMappingsView];
+        [self.view addSubview:eventEditorView];
         
-        NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(actionMappingsView);
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[actionMappingsView]|"
+        NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(eventEditorView);
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[eventEditorView]|"
                                                                           options:0
                                                                           metrics:nil
                                                                             views:viewsDictionary]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[actionMappingsView]|"
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[eventEditorView]|"
                                                                           options:0
                                                                           metrics:nil
                                                                           views:viewsDictionary]];
     }
     
-    [self.actionMappingsViewController reloadInterface];
+    [self.eventEditorViewController reloadInterface];
     
 }
 
--(void) sender:(id)sender requestsSetDelay:(VSC::IM::Delay::SPtr)delay toInterval:(NSTimeInterval)delayInterval
-{
-    BOOST_ASSERT(delay);
-    if (delay)
-    {
-        VSC::TimeDuration duration = boost::posix_time::milliseconds(delayInterval*1000.0);
-        delay->setDelay(duration);
-        
-        BOOST_ASSERT(sender);
-        BOOST_ASSERT([sender isKindOfClass:[VSCIMOSXDelayView class]]);
-        
-        if ([sender isKindOfClass:[VSCIMOSXDelayView class]])
-        {
-            [(VSCIMOSXDelayView*)sender reloadInterface];
-        }
-    }
-}
 
 -(void) senderRequestsEventCollisionChainView:(id)sender
 {
-    if ([self.actionMappingsViewController.view superview] == self.view)
+    if ([self.eventEditorViewController.view superview] == self.view)
     {
-        [self.actionMappingsViewController.view removeFromSuperview];
+        [self.eventEditorViewController.view removeFromSuperview];
     }
 }
 
@@ -373,7 +371,7 @@ const static BOOL traceInterface = YES;
     
     if (aTableView == self.eventTableView)
     {
-        VSC::IM::EventChain::SPtr chain = self.eventChain.lock();
+        EventChain::SPtr chain = self.eventChain.lock();
         //BOOST_ASSERT(chain);
         if (chain) return chain->getNumberOfEvents();
         else if (traceInterface) NSLog(@"%@ numberOfRowsInTableView for %@ NO CHAIN", self, aTableView);
@@ -390,32 +388,32 @@ const static BOOL traceInterface = YES;
     {
         if (traceInterface) NSLog(@"%@ listView:cellForRow: %ld", self, row);
         
-        VSC::IM::EventChain::SPtr chain = self.eventChain.lock();
+        EventChain::SPtr chain = self.eventChain.lock();
         BOOST_ASSERT(chain);
-        VSC::IM::Event::SPtr event = VSC::IM::Event::SPtr();
+        Event::SPtr event = Event::SPtr();
         if (chain) event = chain->getEventAtIndex((unsigned int)row);
         
-        VSC::IM::Action::SPtr action = boost::dynamic_pointer_cast<VSC::IM::Action>(event);
+        IM::Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
         if (action)
         {
             VSCIMOSXActionView* actionView = [tableView makeViewWithIdentifier:[[VSCIMOSXActionView class] description] owner:self];
             if (actionView) BOOST_ASSERT([actionView isKindOfClass:[VSCIMOSXActionView class]]);
             else actionView = [[self class] newActionViewWithOwner:self];
-            [actionView setAction:(VSC::IM::Action::WPtr(action))];
+            [actionView setEvent:(Event::WPtr(event))];
             actionView.eventChainController = self;
             if (traceInterface) NSLog(@"Returning: %@ with frame: %@", actionView, NSStringFromRect(actionView.frame));
             [actionView setNeedsLayout:YES];
             return actionView;
         }
         
-        VSC::IM::Delay::SPtr delay = boost::dynamic_pointer_cast<VSC::IM::Delay>(event);
+        IM::Delay::SPtr delay = boost::dynamic_pointer_cast<IM::Delay>(event);
         if (delay)
         {
             VSCIMOSXDelayView* delayView = [tableView makeViewWithIdentifier:[[VSCIMOSXDelayView class] description] owner:self];
             if (delayView) BOOST_ASSERT([delayView isKindOfClass:[VSCIMOSXDelayView class]]);
             else delayView = [[self class] newDelayViewWithOwner:self];
             delayView.eventChainController = self;
-            [delayView setDelay:VSC::IM::Delay::WPtr(delay)];
+            [delayView setEvent:Event::WPtr(event)];
             if (traceInterface) NSLog(@"Returning: %@ with frame: %@", delayView, NSStringFromRect(delayView.frame));
             [delayView setNeedsLayout:YES];
             return delayView;
@@ -435,7 +433,7 @@ const static BOOL traceInterface = YES;
     {
         if (traceInterface) NSLog(@"%@ heightOfRow: %ld", self, row);
         
-        VSC::IM::EventChain::SPtr chain = self.eventChain.lock();
+        EventChain::SPtr chain = self.eventChain.lock();
         BOOST_ASSERT(chain);
         
         if (row >= chain->getNumberOfEvents())
@@ -444,10 +442,10 @@ const static BOOL traceInterface = YES;
             return 0;
         }
         
-        VSC::IM::Event::SPtr event = VSC::IM::Event::SPtr();
+        Event::SPtr event = Event::SPtr();
         if (chain) event = chain->getEventAtIndex((unsigned int)row);
         
-        VSC::IM::Action::SPtr action = boost::dynamic_pointer_cast<VSC::IM::Action>(event);
+        IM::Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
         if (action)
         {
             CGFloat h = [VSCIMOSXActionView heightOfViewForAction:action];
@@ -455,7 +453,7 @@ const static BOOL traceInterface = YES;
             return h;
         }
         
-        VSC::IM::Delay::SPtr delay = boost::dynamic_pointer_cast<VSC::IM::Delay>(event);
+        IM::Delay::SPtr delay = boost::dynamic_pointer_cast<IM::Delay>(event);
         if (delay)
         {
             CGFloat h = [VSCIMOSXDelayView defaultViewHeight];
@@ -500,6 +498,5 @@ const static BOOL traceInterface = YES;
 }
 
 
-
-
 @end
+

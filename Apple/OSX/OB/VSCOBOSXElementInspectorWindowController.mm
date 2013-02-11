@@ -9,7 +9,7 @@
 #import "VSCOBOSXElementInspectorWindowController.h"
 #import "VSCOBOSXElementInspectorViewController.h"
 #import "VSCOBOSXElementDetailView.h"
-#import "VSCOBOSXElementCollisionView.h"
+#import "VSCOBOSXElementEventChainsView.h"
 
 #import "DMTabBar.h"
 

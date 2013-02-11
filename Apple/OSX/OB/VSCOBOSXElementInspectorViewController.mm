@@ -13,7 +13,7 @@
 #import "VSCIMOSXEventChainViewController.h"
 #import "VSCOBOSXElementEditor.h"
 #import "VSCOBOSXElementDetailView.h"
-#import "VSCOBOSXElementCollisionView.h"
+#import "VSCOBOSXElementEventChainsView.h"
 #import "DMTabBar.h"
 
 #include "VSCOBScene.h"
@@ -45,7 +45,7 @@ const static BOOL traceInterface = YES;
 
 @synthesize element = _element;
 @synthesize environmentController = _environmentController;
-@synthesize immobilized;
+@synthesize immobilized = _immobilized;
 
 + (void)load
 {
@@ -160,13 +160,14 @@ const static BOOL traceInterface = YES;
     
 }
 
--(void) setImmobilized:(BOOL)immobilized
+-(void) setImmobilized:(BOOL)immob
 {
     VSC::OB::Element::SPtr element = self.element.lock();
     if (element)
     {
-        element->setImmobilized(immobilized ? true : false);
+        element->setImmobilized(immob ? true : false);
     }
+    _immobilized = immob;
 }
 
 -(void) updateEventChains
