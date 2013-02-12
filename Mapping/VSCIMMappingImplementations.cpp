@@ -44,9 +44,7 @@ Float Mapping::ImplementationCollisionVelocity::mappedValue(Trigger trigger, Tri
     if (collisionPayload)
     {
         Collision::SPtr collision = collisionPayload->collision;
-        Element::SPtr element = collisionPayload->effector;
         BOOST_ASSERT(collision);
-        BOOST_ASSERT(effector);
         if (collision)
         {
             const Ogre::Vector3& relativeVelocity = collision->getRelativeCollisionVelocity();
@@ -66,7 +64,7 @@ Float Mapping::ImplementationCollisionDistance::mappedValue(Trigger trigger, Tri
     if (collisionPayload)
     {
         Collision::SPtr collision = collisionPayload->collision;
-        Element::SPtr element = collisionPayload->effector;
+        Element::SPtr effector = collisionPayload->effector;
         BOOST_ASSERT(collision);
         BOOST_ASSERT(effector);
         if (collision)

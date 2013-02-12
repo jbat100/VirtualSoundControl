@@ -10,27 +10,29 @@
 
 #include "VSCIM.h"
 
-
-#include <vector>
-
 @protocol VSCIMOSXEventEditor;
 
-
-@interface VSCIMOSXMappingCellView : NSView <VSCIMOSXMappingCellView>
+@interface VSCIMOSXMappingCellView : NSView
 {
     @private
     VSC::IM::MappingTypeSet mAllowedMappingTypes;
 }
 
-+(CGFloat) defaultHeight;
-+(CGFloat) heightOfViewForMapping:(VSC::IM::Mapping_SPtr)collisionMapping;
++(CGFloat) defaultViewHeight;
 
 @property (assign) id<VSCIMOSXEventEditor> controller;
-@property (weak) IBOutlet NSButton* editButton;
+
+@property (nonatomic, assign) VSC::IM::Mapping_WPtr mapping;
+
+//@property (nonatomic, assign) VSC::IM::Target target;
+//@property (nonatomic, assign) VSC::IM::Trigger trigger;
+
+@property (nonatomic, weak) IBOutlet NSButton* editButton;
 
 -(VSC::IM::MappingTypeSet&) allowedMappingTypes;
 
 -(void) reloadInterface;
+-(void) setupMappingChoice;
 
 @end
 

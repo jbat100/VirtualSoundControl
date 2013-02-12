@@ -67,8 +67,10 @@ void CollisionMapper::collisionDetected(Collision::SPtr collision)
     if (mTraceCollisions) std::cout << "Collision detected: " << *collision << std::endl;
     
     BOOST_ASSERT(collision);
+    BOOST_ASSERT(collision->getFirstElement());
+    BOOST_ASSERT(collision->getSecondElement());
     
-    if (collision)
+    if (collision && collision->getFirstElement() && collision->getSecondElement())
     {
         /*
          *  Get event chains for first element and perform them with second element as effector
@@ -76,12 +78,16 @@ void CollisionMapper::collisionDetected(Collision::SPtr collision)
         
         EventChains firstElementEventChains = this->getEventChainsForCollisionStarted(collision->getFirstElement());
         
+        TriggerCollisionPayload::SPtr collisionPayload(new TriggerCollisionPayload);
+        collisionPayload->collision = collision;
+        collisionPayload->effector = collision->getSecondElement();
+        
         BOOST_FOREACH(EventChain::SPtr eventChain, firstElementEventChains)
         {
             BOOST_ASSERT(eventChain);
             if (eventChain)
             {
-                eventChain->performForCollision(collision, collision->getSecondElement());
+                eventChain->perform(TriggerCollision, collisionPayload);
             }
         }
         
@@ -91,16 +97,18 @@ void CollisionMapper::collisionDetected(Collision::SPtr collision)
         
         EventChains secondElementEventChains = this->getEventChainsForCollisionStarted(collision->getSecondElement());
         
+        collisionPayload->effector = collision->getFirstElement();
+        
         BOOST_FOREACH(EventChain::SPtr eventChain, secondElementEventChains)
         {
             BOOST_ASSERT(eventChain);
             if (eventChain)
             {
-                eventChain->performForCollision(collision, collision->getFirstElement());
+                eventChain->perform(TriggerCollision, collisionPayload);
             }
         }
     }
-
+    
 }
 
 void CollisionMapper::collisionUpdated(Collision::SPtr collision)

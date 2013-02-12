@@ -28,10 +28,6 @@
 using namespace VSC;
 using namespace VSC::IM;
 
-NSString* const VSCIMOSXNoMidiOutputString          = @"No MIDI Output";
-NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
-
-
 /*
  *  Private internals
  */
@@ -43,11 +39,9 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
  */
 @property (strong) IBOutlet NSLayoutConstraint* mainViewBottomConstraint;
 
--(void) commonInit;
--(void) reset;
--(void) updateMIDIOutputs;
--(void) updateMIDIControlNumbers;
+-(void) setupInterface;
 
+-(void) commonInit;
 
 @end
 
@@ -110,17 +104,13 @@ static const BOOL debugDraw = NO;
 
 -(void) awakeFromNib
 {
+    [super awakeFromNib];
     self.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    //BOOST_ASSERT(self.mainView);
-    //self.mainView.translatesAutoresizingMaskIntoConstraints = NO;
-    //BOOST_ASSERT(self.midiOutputView);
-    //self.midiOutputView.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 #pragma mark - Action Getter
 
--(Action_SPtr) action
+-(Action::SPtr) action
 {
     Event::SPtr actionEvent = self.event.lock();
     BOOST_ASSERT(actionEvent);
@@ -136,7 +126,7 @@ static const BOOL debugDraw = NO;
     [super setEvent:weakEvent];
     Action::SPtr action = boost::dynamic_pointer_cast<Action>(weakEvent.lock());
     BOOST_ASSERT(action);
-    [self setupInterfaceForNewAction];
+    [self setupInterface];
 }
 
 -(BOOL) checkEvent:(Event::SPtr)testEvent
@@ -151,20 +141,20 @@ static const BOOL debugDraw = NO;
 
 #pragma mark - UI Helper
 
--(void) reset
+-(void) setupInterface
 {
-    // start from zero
-    [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [self removeConstraints:[self constraints]];
+    Action::SPtr action = [self action];
+    BOOST_ASSERT(action);
+    if (action)
+    {
+        std::string actionTypeString = StringForActionType(action->getActionType());
+        [self.titleTextField setStringValue:[NSString stringWithStdString:actionTypeString]];
+    }
+    else
+    {
+        [self.titleTextField setStringValue:@"__EMPTY__"];
+    }
 }
 
-
-#pragma mark Debugging
-
--(void) printUIDescription
-{
-    NSLog(@"%@ %@, mainView.frame %@, midiOutputView.frame %@", self, NSStringFromRect(self.frame),
-          NSStringFromRect(self.mainView.frame), NSStringFromRect(self.midiOutputView.frame));
-}
 
 @end

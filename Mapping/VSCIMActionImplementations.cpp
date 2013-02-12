@@ -17,7 +17,7 @@ using namespace VSC::IM;
 
 //MARK: Extractor utils (DRY...)
 
-MIDI::OutputOwner::SPtr ExtractMIDIOutputOwnerForAction(Action::SPtr action);
+MIDI::OutputOwner::SPtr ExtractMIDIOutputOwnerForAction(Action::SPtr action)
 {
     BOOST_ASSERT(action);
     if (!action) return MIDI::OutputOwner::SPtr();
@@ -29,7 +29,7 @@ MIDI::OutputOwner::SPtr ExtractMIDIOutputOwnerForAction(Action::SPtr action);
     return boost::dynamic_pointer_cast<MIDI::OutputOwner>(implementation);
 }
 
-MIDI::ChannelOwner::SPtr ExtractMIDIChannelOwnerForAction(Action::SPtr action);
+MIDI::ChannelOwner::SPtr ExtractMIDIChannelOwnerForAction(Action::SPtr action)
 {
     BOOST_ASSERT(action);
     if (!action) return MIDI::ChannelOwner::SPtr();
@@ -41,7 +41,7 @@ MIDI::ChannelOwner::SPtr ExtractMIDIChannelOwnerForAction(Action::SPtr action);
     return boost::dynamic_pointer_cast<MIDI::ChannelOwner>(implementation);
 }
 
-MIDI::ControlNumberOwner::SPtr ExtractMIDIControlNumberOwnerForAction(Action::SPtr action);
+MIDI::ControlNumberOwner::SPtr ExtractMIDIControlNumberOwnerForAction(Action::SPtr action)
 {
     BOOST_ASSERT(action);
     if (!action) return MIDI::ControlNumberOwner::SPtr();
@@ -50,7 +50,7 @@ MIDI::ControlNumberOwner::SPtr ExtractMIDIControlNumberOwnerForAction(Action::SP
     BOOST_ASSERT(implementation);
     if (!implementation) return MIDI::ControlNumberOwner::SPtr();
     
-    return boost::dynamic_pointer_cast<MIDI::ChannelOwner>(implementation);
+    return boost::dynamic_pointer_cast<MIDI::ControlNumberOwner>(implementation);
 }
 
 

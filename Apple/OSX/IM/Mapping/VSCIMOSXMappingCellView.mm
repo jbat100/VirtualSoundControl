@@ -15,7 +15,8 @@
 
 #include <boost/foreach.hpp>
 
-//NSDictionary* mappingTypeMenuItemStringDict = nil;
+using namespace VSC;
+using namespace VSC::IM;
 
 
 @interface VSCIMOSXMappingCellView ()
@@ -27,12 +28,9 @@
 @property (weak) IBOutlet NSTextField* targetTextField;
 @property (weak) IBOutlet NSPopUpButton* mappingPopUpButton;
 
-@property (assign) VSC::IM::MappingType collisionMappingType;
-
 -(IBAction) editMapping:(id)sender;
 -(IBAction) mappingTypeSelected:(id)sender;
 
--(void) setupMappingChoice;
 -(void) updateInterfaceForNewMapping;
 -(void) updateInterfaceForNewTarget;
 
@@ -42,7 +40,9 @@
 
 @synthesize controller = _controller;
 @synthesize mapping = _mapping;
-@synthesize target = _target;
+
+//@synthesize target = _target;
+//@synthesize trigger = _trigger;
 
 +(void) initialize
 {
@@ -52,21 +52,6 @@
 +(CGFloat) defaultHeight
 {
     return 56.0;
-}
-
-+(CGFloat) heightOfViewForMapping:(VSC::IM::Mapping::SPtr)collisionMapping
-{
-    return 56.0;
-}
-
-+(NSString*) menuItemStringForMappingType:(VSC::IM::MappingType)mappingType
-{
-    return [NSString stringWithStdString:VSC::IM::StringForMappingType(mappingType)];
-}
-
-+(VSC::IM::MappingType) collisionMappingTypeForMenuItemString:(NSString*)menuItemString
-{
-    return VSC::IM::MappingTypeForString([menuItemString stdString]);
 }
 
 #pragma mark - NSView Methods
@@ -96,7 +81,16 @@
 
 -(void) setMapping:(VSC::IM::Mapping::WPtr)mapping
 {
+    BOOST_ASSERT(mapping)
+    
+    if (mapping)
+    {
+        MappingTypeSet::iterator it = std::find(mAllowedMappingTypes.begin(), mAllowedMappingTypes.end(), mapping->getMappingType());
+        BOOST_ASSERT_MSG(it != mAllowedMappingTypes.end(), "Mapping type not allowed");
+    }
+    
     _mapping = mapping;
+    
     [self updateInterfaceForNewMapping];
 }
 
@@ -119,23 +113,14 @@
 
 -(void) updateInterfaceForNewMapping
 {
-    BOOST_ASSERT(self.mappingPopUpButton);
+    Mapping::SPtr m = self.mapping.lock();
     
-    NSString* title = [[self class] menuItemStringForMappingType:self.collisionMappingType];
+    BOOST_ASSERT(self.mappingPopUpButton);
+    BOOST_ASSERT();
+    
+    NSString* title = [NSString stringWithStdString:<#(std::string)#>];
     
     [self.mappingPopUpButton selectItemWithTitle:title];
-    
-    switch (self.collisionMappingType)
-    {
-        case VSC::IM::MappingTypeConstant:
-            break;
-        case VSC::IM::MappingTypeCollisionVelocity:
-            break;
-        case VSC::IM::MappingTypeCollisionDistance:
-            break;
-        default:
-            break;
-    }
 }
 
 -(void) setupMappingChoice

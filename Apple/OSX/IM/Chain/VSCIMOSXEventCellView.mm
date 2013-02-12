@@ -30,6 +30,16 @@
     // Drawing code here.
 }
 
+-(void) awakeFromNib
+{
+    BOOST_ASSERT(self.titleTextField);
+    BOOST_ASSERT(self.iconImageView);
+    self.titleTextField.translatesAutoresizingMaskIntoConstraints = NO;
+    self.iconImageView.translatesAutoresizingMaskIntoConstraints = NO;
+}
+
+#pragma mark - UI Callbacks
+
 -(IBAction) showMappings:(id)sender
 {
     BOOST_ASSERT(self.eventChainController);
@@ -38,21 +48,7 @@
     [self.eventChainController sender:self requestsShowMappingsForEvent:self.event.lock()];
 }
 
--(void) awakeFromNib
-{
-    BOOST_ASSERT(self.titleTextField);
-    BOOST_ASSERT(self.iconImageView);
-    
-    self.titleTextField.translatesAutoresizingMaskIntoConstraints = NO;
-    self.iconImageView.translatesAutoresizingMaskIntoConstraints = NO;
-}
-
--(void) reloadInterface
-{
-    
-}
-
-#pragma mark - Custon Setter
+#pragma mark - Custom Setter
 
 -(BOOL) checkEvent:(VSC::IM::Event_SPtr)testEvent
 {

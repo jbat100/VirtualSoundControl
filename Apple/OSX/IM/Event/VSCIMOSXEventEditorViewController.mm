@@ -18,12 +18,14 @@ using namespace VSC::IM;
 
 NSString* const VSCIMOSXMappingCellViewReuseIdentifier = @"VSCIMOSXMappingCellViewReuseIdentifier";
 
+NSString* const VSCIMOSXNoMidiOutputString          = @"No MIDI Output";
+NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
+
 @interface VSCIMOSXEventEditorViewController ()
 
 @property (weak) IBOutlet NSButton* backToEventChainViewButton;
 
 -(IBAction) backToEventChainView:(id)sender;
--(BOOL) checkMappingView:(id<VSCIMOSXMappingCellView>)v;
 
 +(VSCIMOSXMappingCellView*) newMappingViewWithOwner:(id)owner;
 
@@ -45,6 +47,10 @@ NSString* const VSCIMOSXMappingCellViewReuseIdentifier = @"VSCIMOSXMappingCellVi
 
 @property (nonatomic, strong) IBOutlet NSView* midiControlNumberView;
 @property (nonatomic, strong) IBOutlet NSPopUpButton* midiControlNumberPopUpButton;
+
+-(void) updateMIDIOutputs;
+-(void) updateMIDIChannel;
+-(void) updateMIDIControlNumbers;
 
 -(IBAction) midiOutputSelected:(id)sender;
 -(IBAction) midiControlNumberSelected:(id)sender;
