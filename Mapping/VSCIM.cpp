@@ -52,7 +52,7 @@ void VSC::IM::InitialiseInternals(void)
     BOOST_ASSERT(actionDescriptionMap.empty());
     
     targetDescriptionMap.insert(TargetDescriptionPair(TargetNone, "No Target"));
-    targetDescriptionMap.insert(TargetDescriptionPair(TargetChannel, "Channel"));
+    targetDescriptionMap.insert(TargetDescriptionPair(TargetMIDIChannel, "Channel"));
     targetDescriptionMap.insert(TargetDescriptionPair(TargetPitch,  "Pitch"));
     targetDescriptionMap.insert(TargetDescriptionPair(TargetVelocityOn, "Velocity On"));
     targetDescriptionMap.insert(TargetDescriptionPair(TargetVelocityOff, "Velocity Off"));

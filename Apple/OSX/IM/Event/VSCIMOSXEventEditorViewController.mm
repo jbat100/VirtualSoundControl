@@ -31,6 +31,8 @@ NSString* const VSCIMOSXMappingCellViewReuseIdentifier = @"VSCIMOSXMappingCellVi
  *  Action specific stuff
  */
 
+-(Action::SPtr) action;
+
 @property (nonatomic, strong) IBOutlet NSView* mainView;
 @property (nonatomic, strong) IBOutlet NSTextField* actionTypeTextField;
 @property (nonatomic, strong) IBOutlet NSButton* mappingsButton;
@@ -135,6 +137,15 @@ NSString* const VSCIMOSXMappingCellViewReuseIdentifier = @"VSCIMOSXMappingCellVi
     if (![v respondsToSelector:@selector(setMapping:)]) return NO;
     
     return YES;
+}
+
+-(Action::SPtr) action
+{
+    Event::SPtr actionEvent = self.event.lock();
+    BOOST_ASSERT(actionEvent);
+    Action::SPtr action = boost::dynamic_pointer_cast<Action>(actionEvent);
+    BOOST_ASSERT(action);
+    return action;
 }
 
 #pragma mark - VSCIMOSXMappingController Methods
@@ -328,12 +339,17 @@ NSString* const VSCIMOSXMappingCellViewReuseIdentifier = @"VSCIMOSXMappingCellVi
             [self.midiOutputPopUpButton addItemWithTitle:title];
         }
         
-        MIDI::Output::SPtr midiOutput = [[self class] extractMIDIOutputForAction:[self action]];
-        if (midiOutput)
+        MIDI::OutputOwner::SPtr midiOutputOwner = ExtractMIDIOutputOwnerForAction([self action]);
+        BOOST_ASSERT(midiOutputOwner);
+        if (midiOutputOwner)
         {
-            NSString* title = [NSString stringWithStdString:midiOutput->getDescription()];
-            [self.midiOutputPopUpButton selectItemWithTitle:title];
-            return;
+            MIDI::Output::SPtr midiOutput = midiOutputOwner->getMIDIOutput();
+            if (midiOutput)
+            {
+                NSString* title = [NSString stringWithStdString:midiOutput->getDescription()];
+                [self.midiOutputPopUpButton selectItemWithTitle:title];
+                return;
+            }
         }
     }
     
@@ -342,13 +358,17 @@ NSString* const VSCIMOSXMappingCellViewReuseIdentifier = @"VSCIMOSXMappingCellVi
 
 -(void) updateMIDIChannel
 {
-    Action::SPtr action = [self action];
-    unsigned int channel = [[self class] extractMIDIChannelForAction:action];
-    
-    [self.midiChannelTextField setIntegerValue:(NSInteger)channel];
-    
-    //[self.midiChannelTextField setStringValue:@"No channel"];
-    
+    MIDI::ChannelOwner::SPtr channelOwner = ExtractMIDIChannelOwnerForAction([self action]);
+    BOOST_ASSERT(channelOwner);
+    if (channelOwner)
+    {
+        unsigned int channel = channelOwner->getMIDIChannel();
+        [self.midiChannelTextField setIntegerValue:(NSInteger)channel];
+    }
+    else
+    {
+        [self.midiChannelTextField setStringValue:@"No channel"];
+    }
 }
 
 -(void) updateMIDIControlNumbers
@@ -356,28 +376,36 @@ NSString* const VSCIMOSXMappingCellViewReuseIdentifier = @"VSCIMOSXMappingCellVi
     Action::SPtr action = [self action];
     BOOST_ASSERT(action);
     
-    MIDI::Output::SPtr midiOutput = [[self class] extractMIDIOutputForAction:action];
-    
     [self.midiControlNumberPopUpButton removeAllItems];
     
-    if (midiOutput)
+    MIDI::OutputOwner::SPtr midiOutputOwner = ExtractMIDIOutputOwnerForAction([self action]);
+    BOOST_ASSERT(midiOutputOwner);
+    if (midiOutputOwner)
     {
-        const VSC::MIDI::ControlNumbers& controlNumbers = midiOutput->getValidControlNumbers();
-        
-        BOOST_FOREACH(const VSC::MIDI::ControlNumber& controlNumber, controlNumbers)
+        MIDI::Output::SPtr midiOutput = midiOutputOwner->getMIDIOutput();
+        if (midiOutput)
         {
-            std::string controlNumberString = MIDI::ControlNumberToString(controlNumber);
-            BOOST_ASSERT(!controlNumberString.empty());
-            if (!controlNumberString.empty())
+            const VSC::MIDI::ControlNumbers& controlNumbers = midiOutput->getValidControlNumbers();
+            BOOST_FOREACH(const VSC::MIDI::ControlNumber& controlNumber, controlNumbers)
             {
-                [self.midiControlNumberPopUpButton addItemWithTitle:[NSString stringWithStdString:controlNumberString]];
+                std::string controlNumberString = MIDI::ControlNumberToString(controlNumber);
+                BOOST_ASSERT(!controlNumberString.empty());
+                if (!controlNumberString.empty())
+                {
+                    [self.midiControlNumberPopUpButton addItemWithTitle:[NSString stringWithStdString:controlNumberString]];
+                }
             }
         }
     }
     
-    MIDI::ControlNumber controlNumber = [[self class] extractMIDIControlNumberForAction:action];
-    std::string controlNumberString = MIDI::ControlNumberToString(controlNumber);
-    [self.midiControlNumberPopUpButton selectItemWithTitle:[NSString stringWithStdString:controlNumberString]];
+    MIDI::ControlNumberOwner::SPtr controlNumberOwner =  ExtractMIDIControlNumberOwnerForAction([self action]);
+    BOOST_ASSERT(controlNumberOwner);
+    if (controlNumberOwner)
+    {
+        MIDI::ControlNumber controlNumber = controlNumberOwner->getMIDIControlNumber();
+        std::string controlNumberString = MIDI::ControlNumberToString(controlNumber);
+        [self.midiControlNumberPopUpButton selectItemWithTitle:[NSString stringWithStdString:controlNumberString]];
+    }
 }
 
 #pragma mark - UI Callbacks
@@ -393,24 +421,22 @@ NSString* const VSCIMOSXMappingCellViewReuseIdentifier = @"VSCIMOSXMappingCellVi
     BOOST_ASSERT(self.midiOutputPopUpButton);
     VSC::MIDI::OutputManager::SPtr outputManager = VSC::MIDI::OutputManager::singletonManager();
     BOOST_ASSERT(outputManager);
-    MIDIAction::SPtr action = boost::dynamic_pointer_cast<MIDIAction>([self action]);
-    BOOST_ASSERT(action);
     
-    if (action && outputManager && self.midiOutputPopUpButton)
+    MIDI::OutputOwner::SPtr outputOwner =  ExtractMIDIOutputOwnerForAction([self action]);
+    BOOST_ASSERT(outputOwner);
+    
+    if (outputOwner && outputManager && self.midiOutputPopUpButton)
     {
         NSString* title = [[self.midiOutputPopUpButton selectedItem] title];
         if (title && [title isEqualToString:VSCIMOSXNoMidiOutputString] == NO)
         {
-            VSC::MIDI::Output::SPtr midiOutput = outputManager->getOutputWithDescription([title stdString]);
-        }
-        else if (title && [title isEqualToString:VSCIMOSXNoMidiOutputString] == NO)
-        {
-            action->setMIDIOutput(VSC::MIDI::Output::SPtr());
-            [self.midiOutputPopUpButton selectItemWithTitle:VSCIMOSXNoMidiOutputString];
+            MIDI::Output::SPtr midiOutput = outputManager->getOutputWithDescription([title stdString]);
+            BOOST_ASSERT(midiOutput);
+            outputOwner->setMIDIOutput(midiOutput);
         }
         else
         {
-            action->setMIDIOutput(VSC::MIDI::Output::SPtr());
+            outputOwner->setMIDIOutput(MIDI::Output::SPtr());
             [self.midiOutputPopUpButton selectItemWithTitle:VSCIMOSXNoMidiOutputString];
         }
     }
@@ -428,20 +454,20 @@ NSString* const VSCIMOSXMappingCellViewReuseIdentifier = @"VSCIMOSXMappingCellVi
 -(IBAction) midiControlNumberSelected:(id)sender
 {
     BOOST_ASSERT(self.midiControlNumberPopUpButton);
-    MIDIControlAction::SPtr action = boost::dynamic_pointer_cast<MIDIControlAction>([self action]);
-    BOOST_ASSERT(action);
     
-    if (action && self.midiControlNumberPopUpButton)
+    MIDI::ControlNumberOwner::SPtr controlNumberOwner = ExtractMIDIControlNumberOwnerForAction([self action]);
+    
+    if (controlNumberOwner && self.midiControlNumberPopUpButton)
     {
         NSString* title = [[self.midiControlNumberPopUpButton selectedItem] title];
         if (title && [title isEqualToString:VSCIMOSXNoMidiControlNumberString] == NO)
         {
-            VSC::MIDI::ControlNumber controlNumber = VSC::MIDI::stringToControlNumber([title stdString]);
-            action->setControlNumber(controlNumber);
+            MIDI::ControlNumber controlNumber = MIDI::StringToControlNumber([title stdString]);
+            controlNumberOwner->setMIDIControlNumber(controlNumber);
         }
         else
         {
-            action->setControlNumber(VSC::MIDI::ControlNone);
+            controlNumberOwner->setMIDIControlNumber(VSC::MIDI::ControlNone);
             [self.midiControlNumberPopUpButton selectItemWithTitle:VSCIMOSXNoMidiControlNumberString];
         }
     }

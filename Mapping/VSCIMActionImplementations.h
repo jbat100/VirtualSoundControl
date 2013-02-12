@@ -49,11 +49,11 @@ namespace VSC {
          *  Extractor utils
          */
         
-        MIDI::OutputOwner::SPtr ExtractMIDIOutputOwnerForAction:(Action::SPtr)action;
+        MIDI::OutputOwner::SPtr ExtractMIDIOutputOwnerForAction(Action::SPtr action);
         
-        MIDI::ChannelOwner::SPtr ExtractMIDIChannelOwnerForAction:(Action::SPtr)action;
+        MIDI::ChannelOwner::SPtr ExtractMIDIChannelOwnerForAction(Action::SPtr action);
         
-        MIDI::ControlNumberOwner::SPtr ExtractMIDIControlNumberOwnerForAction:(Action::SPtr)action;
+        MIDI::ControlNumberOwner::SPtr ExtractMIDIControlNumberOwnerForAction(Action::SPtr action);
 
     }
 }

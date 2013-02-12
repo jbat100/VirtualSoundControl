@@ -34,8 +34,8 @@ namespace VSC
         public:
             typedef boost::shared_ptr<ChannelOwner> SPtr;
             ChannelOwner() : mChannel(0) {}
-            unsigned int getChannel(void) {return mChannel;}
-            void setChannel(unsigned int chan) {mChannel = chan;}
+            unsigned int getMIDIChannel(void) {return mChannel;}
+            void setMIDIChannel(unsigned int chan) {mChannel = chan;}
         private:
             unsigned int mChannel;
         };
@@ -45,8 +45,8 @@ namespace VSC
         public:
             typedef boost::shared_ptr<ControlNumberOwner> SPtr;
             ControlNumberOwner() : mControlNumber(ControlInvalid) {}
-            ControlNumber getControlNumber(void) {return mControlNumber;}
-            void setControlNumber(ControlNumber number) {mControlNumber = number;}
+            ControlNumber getMIDIControlNumber(void) {return mControlNumber;}
+            void setMIDIControlNumber(ControlNumber number) {mControlNumber = number;}
         private:
             ControlNumber mControlNumber;
         };

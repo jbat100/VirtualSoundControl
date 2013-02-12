@@ -17,7 +17,7 @@ using namespace VSC::IM;
 
 //MARK: Extractor utils (DRY...)
 
-MIDI::OutputOwner::SPtr ExtractMIDIOutputOwnerForAction:(Action::SPtr)action
+MIDI::OutputOwner::SPtr ExtractMIDIOutputOwnerForAction(Action::SPtr action);
 {
     BOOST_ASSERT(action);
     if (!action) return MIDI::OutputOwner::SPtr();
@@ -29,7 +29,7 @@ MIDI::OutputOwner::SPtr ExtractMIDIOutputOwnerForAction:(Action::SPtr)action
     return boost::dynamic_pointer_cast<MIDI::OutputOwner>(implementation);
 }
 
-MIDI::ChannelOwner::SPtr ExtractMIDIChannelOwnerForAction:(Action::SPtr)action
+MIDI::ChannelOwner::SPtr ExtractMIDIChannelOwnerForAction(Action::SPtr action);
 {
     BOOST_ASSERT(action);
     if (!action) return MIDI::ChannelOwner::SPtr();
@@ -41,7 +41,7 @@ MIDI::ChannelOwner::SPtr ExtractMIDIChannelOwnerForAction:(Action::SPtr)action
     return boost::dynamic_pointer_cast<MIDI::ChannelOwner>(implementation);
 }
 
-MIDI::ControlNumberOwner::SPtr ExtractMIDIControlNumberOwnerForAction:(Action::SPtr)action
+MIDI::ControlNumberOwner::SPtr ExtractMIDIControlNumberOwnerForAction(Action::SPtr action);
 {
     BOOST_ASSERT(action);
     if (!action) return MIDI::ControlNumberOwner::SPtr();
@@ -63,7 +63,7 @@ const Tasks Action::ImplementationMIDINoteOn::generateTasksWithTargetValueMap(Ev
     MIDI::MIDISendMessageTask::Payload::SPtr payload(new MIDI::MIDISendMessageTask::Payload);
     BOOST_ASSERT(payload->messageDescription);
     payload->messageDescription->type = MIDI::MessageTypeNoteOn;
-    payload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char) this->getChannel();
+    payload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char) this->getMIDIChannel();
     payload->messageDescription->parameterMap[MIDI::MessageParameterKeyPitch] = (unsigned char) valueMap[TargetPitch];
     payload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) valueMap[TargetVelocityOn];
     payload->midiOutput = this->getMIDIOutput();
@@ -104,7 +104,7 @@ const Tasks Action::ImplementationMIDINoteOff::generateTasksWithTargetValueMap(E
     MIDI::MIDISendMessageTask::Payload::SPtr payload(new MIDI::MIDISendMessageTask::Payload);
     BOOST_ASSERT(payload->messageDescription);
     payload->messageDescription->type = MIDI::MessageTypeNoteOff;
-    payload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char)this->getChannel();
+    payload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char)this->getMIDIChannel();
     payload->messageDescription->parameterMap[MIDI::MessageParameterKeyPitch] = (unsigned char) valueMap[TargetPitch];
     payload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) valueMap[TargetVelocityOff];
     payload->midiOutput = this->getMIDIOutput();
@@ -145,7 +145,7 @@ const Tasks Action::ImplementationMIDINoteOnAndOff::generateTasksWithTargetValue
     MIDI::MIDISendMessageTask::Payload::SPtr onPayload(new MIDI::MIDISendMessageTask::Payload);
     BOOST_ASSERT(onPayload->messageDescription);
     onPayload->messageDescription->type = MIDI::MessageTypeNoteOn;
-    onPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char)this->getChannel();
+    onPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char)this->getMIDIChannel();
     onPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyPitch] = (unsigned char) valueMap[TargetPitch];
     onPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) valueMap[TargetVelocityOn];
     onPayload->midiOutput = this->getMIDIOutput();
@@ -160,7 +160,7 @@ const Tasks Action::ImplementationMIDINoteOnAndOff::generateTasksWithTargetValue
     BOOST_ASSERT(offPayload->messageDescription);
     offPayload->timeOffset = timeDuration;
     offPayload->messageDescription->type = MIDI::MessageTypeNoteOff;
-    offPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char)this->getChannel();
+    offPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char)this->getMIDIChannel();
     offPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyPitch] = (unsigned char) valueMap[TargetPitch];
     offPayload->messageDescription->parameterMap[MIDI::MessageParameterKeyVelocity] = (unsigned char) valueMap[TargetVelocityOff];
     offPayload->midiOutput = this->getMIDIOutput();
@@ -201,7 +201,7 @@ const Tasks Action::ImplementationMIDIControlChange::generateTasksWithTargetValu
     MIDI::MIDISendMessageTask::Payload::SPtr payload(new MIDI::MIDISendMessageTask::Payload);
     BOOST_ASSERT(payload->messageDescription);
     payload->messageDescription->type = MIDI::MessageTypeNoteOff;
-    payload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char)this->getChannel();
+    payload->messageDescription->parameterMap[MIDI::MessageParameterKeyChannel] = (unsigned char)this->getMIDIChannel();
     payload->messageDescription->parameterMap[MIDI::MessageParameterKeyValue] = (unsigned char) valueMap[TargetValue];
     payload->midiOutput = this->getMIDIOutput();
     MIDI::MIDISendMessageTask::SPtr task(new MIDI::MIDISendMessageTask(boost::dynamic_pointer_cast<Task::Payload>(payload)));
