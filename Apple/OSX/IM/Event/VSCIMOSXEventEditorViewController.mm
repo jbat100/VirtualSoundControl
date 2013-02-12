@@ -1,256 +1,191 @@
 //
-//  VSCIMActionView.m
+//  VSCIMOSXEventEditorViewController.m
 //  OgreBulletCocoaTestApplications
 //
-//  Created by Jonathan Thorpe on 10/28/12.
+//  Created by Jonathan Thorpe on 11/27/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCIMOSXActionView.h"
+#import "VSCIMOSXEventEditorViewController.h"
+#import "VSCIMOSXMappingEditViewController.h"
 #import "VSCIMOSXEventChainController.h"
-#import "VSCOBOSXElementEditor.h"
-#import "VSCOSXInterfaceFactory.h"
-#import "NSString+VSCAdditions.h"
+#import "VSCIMOSXMappingCellView.h"
 
-#include "VSCMIDI.h"
-#include "VSCMIDIOutputManager.h"
-#include "VSCMIDIOwners.h"
-
-#include "VSCIMEvent.h"
 #include "VSCIMAction.h"
-#include "VSCIMActionImplementations.h"
-
-#include <boost/assert.hpp>
-#include <boost/foreach.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
 
 using namespace VSC;
 using namespace VSC::IM;
 
-NSDictionary* actionTypeMenuItemStringDict = nil;
+NSString* const VSCIMOSXMappingCellViewReuseIdentifier = @"VSCIMOSXMappingCellViewReuseIdentifier";
 
-NSString* const VSCIMOSXNoMidiOutputString          = @"No MIDI Output";
-NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
+@interface VSCIMOSXEventEditorViewController ()
 
-/*
- *  Heights should agree with nib (+ <margin>)
- */
+@property (weak) IBOutlet NSButton* backToEventChainViewButton;
 
-const CGFloat VSCIMOSXActionViewBaseHeight = 36.0 + 6;
-const CGFloat VSCIMOSXActionViewMIDIOutputSetupHeight = 39.0 + 4;
-const CGFloat VSCIMOSXActionViewMIDIChannelSetupHeight = 39.0 + 4;
-const CGFloat VSCIMOSXActionViewMIDIControlSetupHeight = 15.0;
+-(IBAction) backToEventChainView:(id)sender;
+-(BOOL) checkMappingView:(id<VSCIMOSXMappingCellView>)v;
+
++(VSCIMOSXMappingCellView*) newMappingViewWithOwner:(id)owner;
 
 /*
- *  Private internals
+ *  Action specific stuff
  */
 
-@interface VSCIMOSXActionView ()
+@property (nonatomic, strong) IBOutlet NSView* mainView;
+@property (nonatomic, strong) IBOutlet NSTextField* actionTypeTextField;
+@property (nonatomic, strong) IBOutlet NSButton* mappingsButton;
 
-/*
- *  Constraints!
- */
-@property (strong) IBOutlet NSLayoutConstraint* mainViewBottomConstraint;
+@property (nonatomic, strong) IBOutlet NSView* midiOutputView;
+@property (nonatomic, strong) IBOutlet NSPopUpButton* midiOutputPopUpButton;
 
--(void) commonInit;
--(void) reset;
--(void) updateMIDIOutputs;
--(void) updateMIDIControlNumbers;
+@property (nonatomic, strong) IBOutlet NSView* midiChannelView;
+@property (nonatomic, strong) IBOutlet NSTextField* midiChannelTextField;
 
-/*
- *  Convienience
- */
+@property (nonatomic, strong) IBOutlet NSView* midiControlNumberView;
+@property (nonatomic, strong) IBOutlet NSPopUpButton* midiControlNumberPopUpButton;
 
-+(MIDI::Output::SPtr) extractMIDIOutputForAction:(Action::SPtr)action;
-+(unsigned int) extractMIDIChannelForAction:(Action::SPtr)action;
-+(MIDI::ControlNumber) extractMIDIControlNumberForAction:(Action::SPtr)action;
+-(IBAction) midiOutputSelected:(id)sender;
+-(IBAction) midiControlNumberSelected:(id)sender;
+
+-(IBAction) refreshMIDIOutputs:(id)sender;
+-(IBAction) refreshMIDIControlNumbers:(id)sender;
 
 @end
 
 
-@implementation VSCIMOSXActionView
+@implementation VSCIMOSXEventEditorViewController
 
-static const BOOL debugDraw = NO;
+@synthesize event = _event;
 
-#pragma mark - Static Methods
-
-+(MIDI::Output::SPtr) extractMIDIOutputForAction:(Action::SPtr)action
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    BOOST_ASSERT(action);
-    if (!action) return MIDI::Output::SPtr();
-    
-    Action::Implementation::SPtr implementation = action->getImplementation();
-    BOOST_ASSERT(implementation);
-    if (!implementation) return MIDI::Output::SPtr();
-    
-    MIDI::OutputOwner::SPtr outputOwner = boost::dynamic_pointer_cast<MIDI::OutputOwner>(implementation);
-    BOOST_ASSERT(outputOwner);
-    if (!outputOwner) return MIDI::Output::SPtr();
-    
-    return outputOwner->getMIDIOutput();
-}
-
-+(unsigned int) extractMIDIChannelForAction:(Action::SPtr)action
-{
-    BOOST_ASSERT(action);
-    if (!action) return 0;
-    
-    Action::Implementation::SPtr implementation = action->getImplementation();
-    BOOST_ASSERT(implementation);
-    if (!implementation) return 0;
-    
-    MIDI::ChannelOwner::SPtr channelOwner = boost::dynamic_pointer_cast<MIDI::ChannelOwner>(implementation);
-    BOOST_ASSERT(channelOwner);
-    if (!channelOwner) return 0;
-    
-    return channelOwner->getChannel();
-}
-
-+(MIDI::ControlNumber) extractMIDIControlNumberForAction:(Action::SPtr)action
-{
-    BOOST_ASSERT(action);
-    if (!action) return MIDI::ControlInvalid;
-    
-    Action::Implementation::SPtr implementation = action->getImplementation();
-    BOOST_ASSERT(implementation);
-    if (!implementation) return MIDI::ControlInvalid;
-    
-    MIDI::ControlNumberOwner::SPtr controlNumberOwner = boost::dynamic_pointer_cast<MIDI::ChannelOwner>(ControlNumberOwner);
-    BOOST_ASSERT(controlNumberOwner);
-    if (!controlNumberOwner) return MIDI::ControlInvalid;
-    
-    return controlNumberOwner->getMIDIControlNumber();
-}
-
-+(CGFloat) heightOfViewForAction:(Action::SPtr)action
-{
-    
-    CGFloat totalHeight = VSCIMOSXActionViewBaseHeight;
-    
-    Action::Implementation::SPtr implementation = action->getImplementation();
-    
-    MIDI::OutputOwner::SPtr midiOutputOwner = boost::dynamic_pointer_cast<MIDI::OutputOwner>(implementation);
-    if (midiOutputOwner)
-    {
-        totalHeight += VSCIMOSXActionViewMIDIOutputSetupHeight;
-    }
-    
-    MIDI::ChannelOwner::SPtr midiChanneltOwner = boost::dynamic_pointer_cast<MIDI::ChannelOwner>(implementation);
-    if (midiChanneltOwner)
-    {
-        totalHeight += VSCIMOSXActionViewMIDIChannelSetupHeight;
-    }
-    
-    MIDI::ControlNumberOwner::SPtr midiControlNumberOwner();
-    midiControlNumberOwner = boost::dynamic_pointer_cast<MIDI::ControlNumberOwner>(implementation);
-    if (midiControlNumberOwner)
-    {
-        totalHeight += VSCIMOSXActionViewMIDIControlSetupHeight;
-    }
-    
-    return totalHeight;
-}
-
-+(void) initialize
-{
-
-}
-
-#pragma mark - NSView Methods
-
-- (id)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [self commonInit];
+        // Initialization code here.
     }
     
     return self;
 }
 
--(id) initWithCoder:(NSCoder *)aDecoder
+-(void)awakeFromNib
 {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [self commonInit];
-    }
-    return self;
+    BOOST_ASSERT(self.mappingTableView);
+    BOOST_ASSERT(self.mappingTableView.delegate == self);
+    BOOST_ASSERT(self.mappingTableView.dataSource == self);
 }
 
--(void) commonInit
-{
-    self.translatesAutoresizingMaskIntoConstraints = NO;
-}
+#pragma mark - View Factory Methods
 
-- (void)drawRect:(NSRect)dirtyRect
++(VSCIMOSXMappingCellView*) newMappingViewWithOwner:(id)owner
 {
-    CGContextRef myContext = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
-    if (debugDraw)
-    {
-        CGContextSetRGBFillColor (myContext, 1.0, 0.0, 0.0, 1.0);
-        CGContextFillRect(myContext, self.bounds);
-        CGContextSetGrayStrokeColor (myContext, 1.0, 1.0);
-        CGContextStrokeRectWithWidth(myContext, NSRectToCGRect(self.bounds), 2.0);
-    }
-    else
-    {
-        CGContextSetRGBFillColor (myContext, 0.2, 0.2, 0.2, 1.0);
-        CGContextFillRect(myContext, self.bounds);
-        CGContextSetGrayStrokeColor (myContext, 0.8, 1.0);
-        CGContextStrokeRectWithWidth(myContext, NSRectToCGRect(self.bounds), 2.0);
-    }
-}
-
--(void) awakeFromNib
-{
-    self.translatesAutoresizingMaskIntoConstraints = NO;
+    static NSNib* nib = nil;
+    static NSString* identifier = [[VSCIMOSXMappingCellView class] description];
     
-    //BOOST_ASSERT(self.mainView);
-    //self.mainView.translatesAutoresizingMaskIntoConstraints = NO;
-    //BOOST_ASSERT(self.midiOutputView);
-    //self.midiOutputView.translatesAutoresizingMaskIntoConstraints = NO;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        BOOST_ASSERT(!nib);
+        nib = [[NSNib alloc] initWithNibNamed:[[VSCIMOSXMappingCellView class] description] bundle:nil];
+    });
+    BOOST_ASSERT(nib);
+    
+    NSArray *objects = nil;
+    VSCIMOSXMappingCellView* v = nil;
+    [nib instantiateNibWithOwner:owner topLevelObjects:&objects];
+    for(id object in objects)
+    {
+        if([object isKindOfClass:[VSCIMOSXMappingCellView class]])
+        {
+            v = object;
+            v.identifier = identifier;
+            break;
+        }
+    }
+    BOOST_ASSERT(v);
+    return v;
 }
 
-#pragma mark - Action Getter
 
--(Action_SPtr) action
+#pragma mark - UI Helpers
+
+-(void) reloadInterface
 {
-    Event::SPtr actionEvent = self.event.lock();
-    BOOST_ASSERT(actionEvent);
-    Action::SPtr action = boost::dynamic_pointer_cast<Action>(actionEvent);
-    BOOST_ASSERT(action);
-    return action;
+    [self.mappingTableView reloadData];
 }
 
-#pragma mark - Custom Setter
+#pragma mark - UI Callbacks
 
--(void) setEvent:(Event::WPtr)weakEvent
+-(IBAction) backToEventChainView:(id)sender
 {
-    [super setEvent:weakEvent];
-    Action::SPtr action = boost::dynamic_pointer_cast<Action>(weakEvent.lock());
-    BOOST_ASSERT(action);
-    [self setupInterfaceForNewAction];
+    BOOST_ASSERT(self.eventChainController);
+    BOOST_ASSERT([self.eventChainController respondsToSelector:@selector(senderRequestsEventCollisionChainView:)]);
+    
+    [self.eventChainController senderRequestsEventCollisionChainView:self];
 }
 
--(BOOL) checkEvent:(Event::SPtr)testEvent
+#pragma mark - Helpers
+
+-(BOOL) checkMappingView:(id<VSCIMOSXMappingCellView>)v
 {
-    BOOST_ASSERT(testEvent);
-    if (!testEvent) return YES;
-    Action::SPtr action = boost::dynamic_pointer_cast<Action>(testEvent);
-    BOOST_ASSERT(action);
-    if (action) return YES;
-    return NO;
+    BOOST_ASSERT([v respondsToSelector:@selector(target)]);
+    BOOST_ASSERT([v respondsToSelector:@selector(mapping)]);
+    BOOST_ASSERT([v respondsToSelector:@selector(setMapping:)]);
+    
+    if (![v respondsToSelector:@selector(target)]) return NO;
+    if (![v respondsToSelector:@selector(mapping)]) return NO;
+    if (![v respondsToSelector:@selector(setMapping:)]) return NO;
+    
+    return YES;
 }
 
-#pragma mark - UI Helper
+#pragma mark - VSCIMOSXMappingController Methods
 
--(void) reset
+
+
+-(void) sender:(id)sender requestsEditorForMapping:(Mapping::SPtr)mapping
 {
-    // start from zero
-    [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [self removeConstraints:[self constraints]];
+    BOOST_ASSERT(mapping);
+    BOOST_ASSERT(sender);
+    BOOST_ASSERT([sender isKindOfClass:[VSCIMOSXMappingCellView class]]);
+    
+    if (mapping && [sender isKindOfClass:[VSCIMOSXMappingCellView class]])
+    {
+        VSCIMOSXMappingCellView* mappingView = (VSCIMOSXMappingCellView*)sender;
+        
+        if (self.mappingEditPopover == nil)
+        {
+            self.mappingEditPopover = [[NSPopover alloc] init];
+            self.mappingEditPopover.appearance = NSPopoverAppearanceHUD;
+            self.mappingEditPopover.behavior = NSPopoverBehaviorTransient;
+        }
+        
+        if (self.mappingEditViewController == nil)
+        {
+            self.mappingEditViewController = [[VSCIMOSXMappingEditViewController alloc]
+                                                       initWithNibName:@"VSCIMOSXMappingEditViewController"
+                                                       bundle:nil];
+            BOOST_ASSERT(self.mappingEditViewController);
+            BOOST_ASSERT(self.mappingEditViewController.view);
+            BOOST_ASSERT(self.mappingEditViewController.offsetTextField);
+            BOOST_ASSERT(self.mappingEditViewController.scaleFactorTextField);
+        }
+        
+        self.mappingEditViewController.mapping = Mapping::WPtr(mapping);
+        self.mappingEditPopover.contentViewController = self.mappingEditViewController;
+        self.mappingEditPopover.contentSize = NSMakeSize(213.0, 112.0);
+        
+        [self.mappingEditPopover showRelativeToRect:mappingView.editButton.frame
+                                                      ofView:mappingView
+                                               preferredEdge:NSMinXEdge];
+        
+        /*
+        NSLog(@"view.frame %@, offsetTextField.frame %@, scaleFactorTextField.frame %@",
+              NSStringFromRect(self.mappingEditViewController.view.frame),
+              NSStringFromRect(self.mappingEditViewController.offsetTextField.frame),
+              NSStringFromRect(self.mappingEditViewController.scaleFactorTextField.frame));
+         */
+    }
 }
+
 
 -(void) setupInterfaceForNewAction
 {
@@ -354,7 +289,7 @@ static const BOOL debugDraw = NO;
     /*
      *  Apply constraints
      */
-
+    
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:verticalLayoutVisualFormat
                                                                  options:0
                                                                  metrics:nil
@@ -411,16 +346,16 @@ static const BOOL debugDraw = NO;
     unsigned int channel = [[self class] extractMIDIChannelForAction:action];
     
     [self.midiChannelTextField setIntegerValue:(NSInteger)channel];
-
+    
     //[self.midiChannelTextField setStringValue:@"No channel"];
-
+    
 }
 
 -(void) updateMIDIControlNumbers
 {
     Action::SPtr action = [self action];
     BOOST_ASSERT(action);
-
+    
     MIDI::Output::SPtr midiOutput = [[self class] extractMIDIOutputForAction:action];
     
     [self.midiControlNumberPopUpButton removeAllItems];
@@ -516,12 +451,118 @@ static const BOOL debugDraw = NO;
     }
 }
 
-#pragma mark Debugging
 
--(void) printUIDescription
+#pragma mark - NSTableView Delegate/DataSource
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    NSLog(@"%@ %@, mainView.frame %@, midiOutputView.frame %@", self, NSStringFromRect(self.frame),
-          NSStringFromRect(self.mainView.frame), NSStringFromRect(self.midiOutputView.frame));
+    BOOST_ASSERT(aTableView == self.mappingTableView);
+    
+    if (aTableView == self.mappingTableView)
+    {
+        Event::SPtr event = self.event.lock();
+        BOOST_ASSERT(event);
+        int targetCount = (int) event->getRequiredMappingTargets().size();
+        int triggerCount = (int) AllowedTriggers().size();
+        
+        /*
+         *  We need one mapping per target/collision combination, and a section view
+         *  for each trigger type
+         */
+        
+        return (targetCount * triggerCount) + triggerCount;
+    }
+    
+	return 0;
+}
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn*)tableColumn row:(NSInteger)row
+{
+    BOOST_ASSERT(tableView == self.mappingTableView);
+    
+    if (tableView == self.mappingTableView)
+    {
+        Event::SPtr event = self.event.lock();
+        BOOST_ASSERT(event);
+        
+        if (event)
+        {
+            const Targets& targets = event->getRequiredMappingTargets();
+            
+            int targetIndex = row % ((int)targets.size() + 1);
+            
+            if (targetIndex == 0)
+            {
+                // make and reuturn section view
+            }
+            
+            // if it's not 0 then it should be positive, otherwise modulo function is pretty bad
+            
+            BOOST_ASSERT(targetIndex > 0);
+            
+            if (targetIndex > 0)
+            {
+                const Triggers& triggers = AllowedTriggers();
+                
+                int triggerIndex = std::floor(row / (targets.size() + 1));
+                
+                Target target = targets.at(targetIndex-1);
+                Trigger trigger = triggers.at(triggerIndex);
+                
+                Mapping::SPtr mapping = event->getMapping(trigger, target);
+                
+                VSCIMOSXMappingCellView* mappingView = [tableView makeViewWithIdentifier:[[VSCIMOSXMappingCellView class] description]
+                                                                               owner:self];
+                
+                if (!mappingView)
+                {
+                    mappingView = [[self class] newMappingViewWithOwner:self];
+                }
+                
+                BOOST_ASSERT(mappingView);
+                BOOST_ASSERT([mappingView isKindOfClass:[VSCIMOSXMappingCellView class]]);
+                
+                [mappingView setController:(id)self];
+                [mappingView setMapping:(Mapping::WPtr(mapping))];
+                [mappingView setTarget:target];
+                
+                return mappingView;
+            }
+            
+        }
+    }
+    
+	return nil;
+}
+
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
+{
+    BOOST_ASSERT(tableView == self.mappingTableView);
+    
+    if (tableView == self.mappingTableView)
+    {
+        Event::SPtr event = self.event.lock();
+        BOOST_ASSERT(event);
+        
+        if (event)
+        {
+            const Targets& targets = event->getRequiredMappingTargets();
+            int targetIndex = row % ((int)targets.size() + 1);
+            if (targetIndex == 0)
+            {
+                
+            }
+            else
+            {
+                return [VSCIMOSXMappingCellView defaultHeight];
+            }
+        
+        }
+    }
+    
+    BOOST_ASSERT_MSG(false, "Shouldn't reach this point");
+    
+    return 0;
 }
 
 @end

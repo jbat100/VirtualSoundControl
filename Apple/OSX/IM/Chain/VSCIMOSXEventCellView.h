@@ -1,5 +1,5 @@
 //
-//  VSCIMOSXEventView.h
+//  VSCIMOSXEventCellView.h
 //  VSCApplication
 //
 //  Created by Jonathan Thorpe on 2/3/13.
@@ -12,7 +12,7 @@
 
 @protocol VSCIMOSXEventChainController;
 
-@interface VSCIMOSXEventView : NSView
+@interface VSCIMOSXEventCellView : NSView
 
 @property (assign) IBOutlet id<VSCIMOSXEventChainController> eventChainController;
 

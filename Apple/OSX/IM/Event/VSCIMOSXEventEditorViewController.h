@@ -20,10 +20,13 @@
 
 @property (weak) id<VSCIMOSXEventChainController> eventChainController;
 
+/*
+ *  Mapping stuff
+ */
+
+@property (nonatomic, weak) IBOutlet NSTableView* mappingTableView; 
 @property (nonatomic, strong) VSCIMOSXMappingEditViewController* mappingEditViewController;
 @property (nonatomic, strong) NSPopover* mappingEditPopover;
-
-@property (nonatomic, weak) IBOutlet NSTableView* mappingTableView;
 
 -(void) reloadInterface;
 

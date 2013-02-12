@@ -1,5 +1,5 @@
 //
-//  VSCIMOSXDelayView.h
+//  VSCIMOSXDelayCellView.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 10/30/12.
@@ -7,14 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "VSCIMOSXEventView.h"
+#import "VSCIMOSXEventCellView.h"
 
 #include "VSCIM.h"
 
 @protocol VSCIMOSXEventChainController;
 
 
-@interface VSCIMOSXDelayView : VSCIMOSXEventView
+@interface VSCIMOSXDelayCellView : VSCIMOSXEventCellView
 
 +(CGFloat) defaultViewHeight;
 

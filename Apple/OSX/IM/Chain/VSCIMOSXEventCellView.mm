@@ -1,19 +1,19 @@
 //
-//  VSCIMOSXEventView.m
+//  VSCIMOSXEventCellView.m
 //  VSCApplication
 //
 //  Created by Jonathan Thorpe on 2/3/13.
 //  Copyright (c) 2013 JBAT. All rights reserved.
 //
 
-#import "VSCIMOSXEventView.h"
+#import "VSCIMOSXEventCellView.h"
 #import "VSCIMOSXEventChainController.h"
 
 #include "VSCIMEvent.h"
 
 #include <boost/assert.hpp>
 
-@implementation VSCIMOSXEventView
+@implementation VSCIMOSXEventCellView
 
 - (id)initWithFrame:(NSRect)frame
 {

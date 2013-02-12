@@ -11,8 +11,8 @@
 #import "VSCOBOSXElementEditor.h"
 #import "VSCOBOSXElementController.h"
 #import "VSCIMOSXEventEditorViewController.h"
-#import "VSCIMOSXActionView.h"
-#import "VSCIMOSXDelayView.h"
+#import "VSCIMOSXActionCellView.h"
+#import "VSCIMOSXDelayCellView.h"
 
 #include "VSCCollisionMapper.h"
 
@@ -28,15 +28,15 @@
 using namespace VSC;
 using namespace VSC::IM;
 
-NSString* const VSCIMOSXActionViewReuseIdentifier      = @"VSCIMOSXActionViewReuseIdentifier";
-NSString* const VSCIMOSXDelayViewReuseIdentifier       = @"VSCIMOSXDelayViewReuseIdentifier";
+NSString* const VSCIMOSXActionCellViewReuseIdentifier      = @"VSCIMOSXActionCellViewReuseIdentifier";
+NSString* const VSCIMOSXDelayCellViewReuseIdentifier       = @"VSCIMOSXDelayCellViewReuseIdentifier";
 
 @interface VSCIMOSXEventChainViewController ()
 
 @property (nonatomic, strong) NSArray* mainViewConstraints;
 
-+(VSCIMOSXActionView*) newActionViewWithOwner:(id)owner;
-+(VSCIMOSXDelayView*) newDelayViewWithOwner:(id)owner;
++(VSCIMOSXActionCellView*) newActionViewWithOwner:(id)owner;
++(VSCIMOSXDelayCellView*) newDelayViewWithOwner:(id)owner;
 
 -(void) customInit;
 
@@ -304,24 +304,24 @@ const static BOOL traceInterface = YES;
 
 #pragma mark - View Factory Methods
 
-+(VSCIMOSXActionView*) newActionViewWithOwner:(id)owner
++(VSCIMOSXActionCellView*) newActionViewWithOwner:(id)owner
 {
     static NSNib* nib = nil;
-    static NSString* identifier = [[VSCIMOSXActionView class] description];
+    static NSString* identifier = [[VSCIMOSXActionCellView class] description];
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         BOOST_ASSERT(!nib);
-        nib = [[NSNib alloc] initWithNibNamed:[[VSCIMOSXActionView class] description] bundle:nil];
+        nib = [[NSNib alloc] initWithNibNamed:[[VSCIMOSXActionCellView class] description] bundle:nil];
     });
     BOOST_ASSERT(nib);
     
     NSArray *objects = nil;
-    VSCIMOSXActionView* v = nil;
+    VSCIMOSXActionCellView* v = nil;
     [nib instantiateNibWithOwner:owner topLevelObjects:&objects];
     for(id object in objects)
     {
-        if([object isKindOfClass:[VSCIMOSXActionView class]]) {
+        if([object isKindOfClass:[VSCIMOSXActionCellView class]]) {
             v = object;
             v.identifier = identifier;
             break;
@@ -333,24 +333,24 @@ const static BOOL traceInterface = YES;
     return v;
 }
 
-+(VSCIMOSXDelayView*) newDelayViewWithOwner:(id)owner
++(VSCIMOSXDelayCellView*) newDelayViewWithOwner:(id)owner
 {
     static NSNib* nib = nil;
-    static NSString* identifier = [[VSCIMOSXDelayView class] description];
+    static NSString* identifier = [[VSCIMOSXDelayCellView class] description];
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         BOOST_ASSERT(!nib);
-        nib = [[NSNib alloc] initWithNibNamed:[[VSCIMOSXDelayView class] description] bundle:nil];
+        nib = [[NSNib alloc] initWithNibNamed:[[VSCIMOSXDelayCellView class] description] bundle:nil];
     });
     BOOST_ASSERT(nib);
     
     NSArray *objects = nil;
-    VSCIMOSXDelayView* v = nil;
+    VSCIMOSXDelayCellView* v = nil;
     [nib instantiateNibWithOwner:owner topLevelObjects:&objects];
     for(id object in objects)
     {
-        if([object isKindOfClass:[VSCIMOSXDelayView class]]) {
+        if([object isKindOfClass:[VSCIMOSXDelayCellView class]]) {
             v = object;
             v.identifier = identifier;
             break;
@@ -396,8 +396,8 @@ const static BOOL traceInterface = YES;
         IM::Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
         if (action)
         {
-            VSCIMOSXActionView* actionView = [tableView makeViewWithIdentifier:[[VSCIMOSXActionView class] description] owner:self];
-            if (actionView) BOOST_ASSERT([actionView isKindOfClass:[VSCIMOSXActionView class]]);
+            VSCIMOSXActionCellView* actionView = [tableView makeViewWithIdentifier:[[VSCIMOSXActionCellView class] description] owner:self];
+            if (actionView) BOOST_ASSERT([actionView isKindOfClass:[VSCIMOSXActionCellView class]]);
             else actionView = [[self class] newActionViewWithOwner:self];
             [actionView setEvent:(Event::WPtr(event))];
             actionView.eventChainController = self;
@@ -409,8 +409,8 @@ const static BOOL traceInterface = YES;
         IM::Delay::SPtr delay = boost::dynamic_pointer_cast<IM::Delay>(event);
         if (delay)
         {
-            VSCIMOSXDelayView* delayView = [tableView makeViewWithIdentifier:[[VSCIMOSXDelayView class] description] owner:self];
-            if (delayView) BOOST_ASSERT([delayView isKindOfClass:[VSCIMOSXDelayView class]]);
+            VSCIMOSXDelayCellView* delayView = [tableView makeViewWithIdentifier:[[VSCIMOSXDelayCellView class] description] owner:self];
+            if (delayView) BOOST_ASSERT([delayView isKindOfClass:[VSCIMOSXDelayCellView class]]);
             else delayView = [[self class] newDelayViewWithOwner:self];
             delayView.eventChainController = self;
             [delayView setEvent:Event::WPtr(event)];
@@ -448,7 +448,7 @@ const static BOOL traceInterface = YES;
         IM::Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
         if (action)
         {
-            CGFloat h = [VSCIMOSXActionView heightOfViewForAction:action];
+            CGFloat h = [VSCIMOSXActionCellView heightOfViewForAction:action];
             if (traceInterface) NSLog(@"Returning: %f", h);
             return h;
         }
@@ -456,7 +456,7 @@ const static BOOL traceInterface = YES;
         IM::Delay::SPtr delay = boost::dynamic_pointer_cast<IM::Delay>(event);
         if (delay)
         {
-            CGFloat h = [VSCIMOSXDelayView defaultViewHeight];
+            CGFloat h = [VSCIMOSXDelayCellView defaultViewHeight];
             if (traceInterface) NSLog(@"Returning: %f", h);
             return h;
         }
@@ -479,9 +479,9 @@ const static BOOL traceInterface = YES;
     [rowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         NSView* v = [self.eventTableView viewAtColumn:0 row:idx makeIfNecessary:NO];
         //NSLog(@"Row %ld: %@ with frame %@", idx, v, NSStringFromRect(v.frame));
-        if ([v isKindOfClass:[VSCIMOSXActionView class]])
+        if ([v isKindOfClass:[VSCIMOSXActionCellView class]])
         {
-            VSCIMOSXActionView* actionView = (VSCIMOSXActionView*)v;
+            VSCIMOSXActionCellView* actionView = (VSCIMOSXActionCellView*)v;
             [actionView setNeedsLayout:YES];
             [actionView printUIDescription];
         }

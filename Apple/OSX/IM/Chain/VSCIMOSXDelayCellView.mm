@@ -1,12 +1,12 @@
 //
-//  VSCIMOSXDelayView.m
+//  VSCIMOSXDelayCellView.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 10/30/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCIMOSXDelayView.h"
+#import "VSCIMOSXDelayCellView.h"
 #import "VSCIMOSXEventChainController.h"
 
 #include "VSC.h"
@@ -14,7 +14,7 @@
 
 #include <boost/assert.hpp>
 
-@interface VSCIMOSXDelayView ()
+@interface VSCIMOSXDelayCellView ()
 
 -(void) commonInit;
 
@@ -22,7 +22,7 @@
 
 @end
 
-@implementation VSCIMOSXDelayView
+@implementation VSCIMOSXDelayCellView
 
 +(CGFloat) defaultViewHeight
 {

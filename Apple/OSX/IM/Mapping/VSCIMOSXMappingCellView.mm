@@ -1,12 +1,12 @@
 //
-//  VSCIMOSXMappingView.m
+//  VSCIMOSXMappingCellView.m
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 10/28/12.
 //  Copyright (c) 2012 JBAT. All rights reserved.
 //
 
-#import "VSCIMOSXMappingView.h"
+#import "VSCIMOSXMappingCellView.h"
 #import "VSCIMOSXEventEditor.h"
 #import "NSString+VSCAdditions.h"
 
@@ -18,7 +18,7 @@
 //NSDictionary* mappingTypeMenuItemStringDict = nil;
 
 
-@interface VSCIMOSXMappingView ()
+@interface VSCIMOSXMappingCellView ()
 
 /*
  *  Interface elements common to all mappings
@@ -38,7 +38,7 @@
 
 @end
 
-@implementation VSCIMOSXMappingView
+@implementation VSCIMOSXMappingCellView
 
 @synthesize controller = _controller;
 @synthesize mapping = _mapping;

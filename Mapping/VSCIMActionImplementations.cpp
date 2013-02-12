@@ -9,10 +9,49 @@
 #include "VSCMIDITasks.h"
 #include "VSCMIDI.h"
 
+#include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
 using namespace VSC;
 using namespace VSC::IM;
+
+//MARK: Extractor utils (DRY...)
+
+MIDI::OutputOwner::SPtr ExtractMIDIOutputOwnerForAction:(Action::SPtr)action
+{
+    BOOST_ASSERT(action);
+    if (!action) return MIDI::OutputOwner::SPtr();
+    
+    Action::Implementation::SPtr implementation = action->getImplementation();
+    BOOST_ASSERT(implementation);
+    if (!implementation) return MIDI::OutputOwner::SPtr();
+    
+    return boost::dynamic_pointer_cast<MIDI::OutputOwner>(implementation);
+}
+
+MIDI::ChannelOwner::SPtr ExtractMIDIChannelOwnerForAction:(Action::SPtr)action
+{
+    BOOST_ASSERT(action);
+    if (!action) return MIDI::ChannelOwner::SPtr();
+    
+    Action::Implementation::SPtr implementation = action->getImplementation();
+    BOOST_ASSERT(implementation);
+    if (!implementation) return MIDI::ChannelOwner::SPtr();
+    
+    return boost::dynamic_pointer_cast<MIDI::ChannelOwner>(implementation);
+}
+
+MIDI::ControlNumberOwner::SPtr ExtractMIDIControlNumberOwnerForAction:(Action::SPtr)action
+{
+    BOOST_ASSERT(action);
+    if (!action) return MIDI::ControlNumberOwner::SPtr();
+    
+    Action::Implementation::SPtr implementation = action->getImplementation();
+    BOOST_ASSERT(implementation);
+    if (!implementation) return MIDI::ControlNumberOwner::SPtr();
+    
+    return boost::dynamic_pointer_cast<MIDI::ChannelOwner>(implementation);
+}
 
 
 //MARK: MIDINoteOn

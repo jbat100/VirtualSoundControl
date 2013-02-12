@@ -96,7 +96,6 @@
 		10A764E816BEA4E800B9F9A2 /* VSCIMOSXEventChainCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10A764E716BEA4E800B9F9A2 /* VSCIMOSXEventChainCellView.xib */; };
 		10A764EC16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10A764EA16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.mm */; };
 		10A764ED16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10A764EB16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.xib */; };
-		10A764F016BEEE9800B9F9A2 /* VSCIMOSXEventView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10A764EF16BEEE9800B9F9A2 /* VSCIMOSXEventView.mm */; };
 		10AF53FE163D8D7600419EEE /* DMTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53FB163D8D7600419EEE /* DMTabBar.m */; };
 		10AF53FF163D8D7600419EEE /* DMTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53FD163D8D7600419EEE /* DMTabBarItem.m */; };
 		10AF5418163D9A6C00419EEE /* 01-refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AF5409163D9A6C00419EEE /* 01-refresh.png */; };
@@ -181,6 +180,13 @@
 		10F115F516AC7FCC000A9EBB /* VSCOSXKeyed3FieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F115F416AC7FCC000A9EBB /* VSCOSXKeyed3FieldView.xib */; };
 		10F115F816AC8B3B000A9EBB /* VSCOSXKeyed4FieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F115F716AC8B3B000A9EBB /* VSCOSXKeyed4FieldView.m */; };
 		10F115FA16AC8B73000A9EBB /* VSCOSXKeyed4FieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F115F916AC8B73000A9EBB /* VSCOSXKeyed4FieldView.xib */; };
+		10F3856F16CA49D10012FA72 /* VSCIMOSXActionCellView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F3856816CA49D10012FA72 /* VSCIMOSXActionCellView.mm */; };
+		10F3857016CA49D10012FA72 /* VSCIMOSXActionCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F3856916CA49D10012FA72 /* VSCIMOSXActionCellView.xib */; };
+		10F3857116CA49D10012FA72 /* VSCIMOSXDelayCellView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F3856B16CA49D10012FA72 /* VSCIMOSXDelayCellView.mm */; };
+		10F3857216CA49D10012FA72 /* VSCIMOSXDelayCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F3856C16CA49D10012FA72 /* VSCIMOSXDelayCellView.xib */; };
+		10F3857316CA49D10012FA72 /* VSCIMOSXEventCellView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F3856E16CA49D10012FA72 /* VSCIMOSXEventCellView.mm */; };
+		10F3857816CA49EC0012FA72 /* VSCIMOSXEventEditorViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F3857616CA49EC0012FA72 /* VSCIMOSXEventEditorViewController.mm */; };
+		10F3857916CA49EC0012FA72 /* VSCIMOSXEventEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F3857716CA49EC0012FA72 /* VSCIMOSXEventEditorViewController.xib */; };
 		10F6666916C4035800ADF7AB /* VSCCollisionMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F6666716C4035800ADF7AB /* VSCCollisionMapper.cpp */; };
 		10F6666B16C40CC500ADF7AB /* VSCIMOSXActionMIDIChannelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F6666A16C40CC400ADF7AB /* VSCIMOSXActionMIDIChannelView.xib */; };
 		10F69480156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F6947F156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib */; };
@@ -200,16 +206,10 @@
 		10F8502616B92D10007485F8 /* VSCIMOSXActionCommonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8500E16B92D10007485F8 /* VSCIMOSXActionCommonView.xib */; };
 		10F8502716B92D10007485F8 /* VSCIMOSXActionMIDIControlNumberView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8500F16B92D10007485F8 /* VSCIMOSXActionMIDIControlNumberView.xib */; };
 		10F8502816B92D10007485F8 /* VSCIMOSXActionMIDIOutputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8501016B92D10007485F8 /* VSCIMOSXActionMIDIOutputView.xib */; };
-		10F8502916B92D10007485F8 /* VSCIMOSXActionView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F8501216B92D10007485F8 /* VSCIMOSXActionView.mm */; };
-		10F8502A16B92D10007485F8 /* VSCIMOSXActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8501316B92D10007485F8 /* VSCIMOSXActionView.xib */; };
-		10F8502B16B92D10007485F8 /* VSCIMOSXDelayView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F8501516B92D10007485F8 /* VSCIMOSXDelayView.mm */; };
-		10F8502C16B92D10007485F8 /* VSCIMOSXDelayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8501616B92D10007485F8 /* VSCIMOSXDelayView.xib */; };
-		10F8502D16B92D10007485F8 /* VSCIMOSXEventEditorViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F8501A16B92D10007485F8 /* VSCIMOSXEventEditorViewController.mm */; };
-		10F8502E16B92D10007485F8 /* VSCIMOSXEventMappingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8501B16B92D10007485F8 /* VSCIMOSXEventMappingsViewController.xib */; };
 		10F8502F16B92D10007485F8 /* VSCIMOSXMappingEditViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F8501D16B92D10007485F8 /* VSCIMOSXMappingEditViewController.mm */; };
 		10F8503016B92D10007485F8 /* VSCIMOSXMappingEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8501E16B92D10007485F8 /* VSCIMOSXMappingEditViewController.xib */; };
-		10F8503216B92D10007485F8 /* VSCIMOSXMappingView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F8502216B92D10007485F8 /* VSCIMOSXMappingView.mm */; };
-		10F8503316B92D10007485F8 /* VSCIMOSXMappingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8502316B92D10007485F8 /* VSCIMOSXMappingView.xib */; };
+		10F8503216B92D10007485F8 /* VSCIMOSXMappingCellView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F8502216B92D10007485F8 /* VSCIMOSXMappingCellView.mm */; };
+		10F8503316B92D10007485F8 /* VSCIMOSXMappingCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10F8502316B92D10007485F8 /* VSCIMOSXMappingCellView.xib */; };
 		10F8503616B92E3A007485F8 /* VSCIMOSXEventChainListView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10F8503516B92E3A007485F8 /* VSCIMOSXEventChainListView.mm */; };
 		10F8503C16B94700007485F8 /* VSCUsernamed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F8503A16B94700007485F8 /* VSCUsernamed.cpp */; };
 		10F907D8162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F907D0162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp */; };
@@ -397,8 +397,6 @@
 		10A764E916BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXEventChainWindowController.h; sourceTree = "<group>"; };
 		10A764EA16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXEventChainWindowController.mm; sourceTree = "<group>"; };
 		10A764EB16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXEventChainWindowController.xib; sourceTree = "<group>"; };
-		10A764EE16BEEE9700B9F9A2 /* VSCIMOSXEventView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXEventView.h; sourceTree = "<group>"; };
-		10A764EF16BEEE9800B9F9A2 /* VSCIMOSXEventView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXEventView.mm; sourceTree = "<group>"; };
 		10AF53F7163D76B300419EEE /* VSCOSXEnvironmentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOSXEnvironmentController.h; path = ../../Application/VSCOSXEnvironmentController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		10AF53FA163D8D7600419EEE /* DMTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DMTabBar.h; path = ../../../Submodules/DMTabBar/DMTabBar/DMTabBar/DMTabBar.h; sourceTree = "<group>"; };
 		10AF53FB163D8D7600419EEE /* DMTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DMTabBar.m; path = ../../../Submodules/DMTabBar/DMTabBar/DMTabBar/DMTabBar.m; sourceTree = "<group>"; };
@@ -579,6 +577,18 @@
 		10F115F616AC8B3B000A9EBB /* VSCOSXKeyed4FieldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXKeyed4FieldView.h; path = ../Apple/OSX/Generic/VSCOSXKeyed4FieldView.h; sourceTree = "<group>"; };
 		10F115F716AC8B3B000A9EBB /* VSCOSXKeyed4FieldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSCOSXKeyed4FieldView.m; path = ../Apple/OSX/Generic/VSCOSXKeyed4FieldView.m; sourceTree = "<group>"; };
 		10F115F916AC8B73000A9EBB /* VSCOSXKeyed4FieldView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXKeyed4FieldView.xib; path = ../Apple/OSX/Generic/VSCOSXKeyed4FieldView.xib; sourceTree = "<group>"; };
+		10F3856716CA49D10012FA72 /* VSCIMOSXActionCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXActionCellView.h; sourceTree = "<group>"; };
+		10F3856816CA49D10012FA72 /* VSCIMOSXActionCellView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXActionCellView.mm; sourceTree = "<group>"; };
+		10F3856916CA49D10012FA72 /* VSCIMOSXActionCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXActionCellView.xib; sourceTree = "<group>"; };
+		10F3856A16CA49D10012FA72 /* VSCIMOSXDelayCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXDelayCellView.h; sourceTree = "<group>"; };
+		10F3856B16CA49D10012FA72 /* VSCIMOSXDelayCellView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXDelayCellView.mm; sourceTree = "<group>"; };
+		10F3856C16CA49D10012FA72 /* VSCIMOSXDelayCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXDelayCellView.xib; sourceTree = "<group>"; };
+		10F3856D16CA49D10012FA72 /* VSCIMOSXEventCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXEventCellView.h; sourceTree = "<group>"; };
+		10F3856E16CA49D10012FA72 /* VSCIMOSXEventCellView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXEventCellView.mm; sourceTree = "<group>"; };
+		10F3857416CA49EC0012FA72 /* VSCIMOSXEventEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXEventEditor.h; sourceTree = "<group>"; };
+		10F3857516CA49EC0012FA72 /* VSCIMOSXEventEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXEventEditorViewController.h; sourceTree = "<group>"; };
+		10F3857616CA49EC0012FA72 /* VSCIMOSXEventEditorViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXEventEditorViewController.mm; sourceTree = "<group>"; };
+		10F3857716CA49EC0012FA72 /* VSCIMOSXEventEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXEventEditorViewController.xib; sourceTree = "<group>"; };
 		10F6666716C4035800ADF7AB /* VSCCollisionMapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCCollisionMapper.cpp; path = ../../../../Application/VSCCollisionMapper.cpp; sourceTree = "<group>"; };
 		10F6666816C4035800ADF7AB /* VSCCollisionMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCCollisionMapper.h; path = ../../../../Application/VSCCollisionMapper.h; sourceTree = "<group>"; };
 		10F6666A16C40CC400ADF7AB /* VSCIMOSXActionMIDIChannelView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXActionMIDIChannelView.xib; sourceTree = "<group>"; };
@@ -603,22 +613,12 @@
 		10F8500E16B92D10007485F8 /* VSCIMOSXActionCommonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXActionCommonView.xib; sourceTree = "<group>"; };
 		10F8500F16B92D10007485F8 /* VSCIMOSXActionMIDIControlNumberView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXActionMIDIControlNumberView.xib; sourceTree = "<group>"; };
 		10F8501016B92D10007485F8 /* VSCIMOSXActionMIDIOutputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXActionMIDIOutputView.xib; sourceTree = "<group>"; };
-		10F8501116B92D10007485F8 /* VSCIMOSXActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXActionView.h; sourceTree = "<group>"; };
-		10F8501216B92D10007485F8 /* VSCIMOSXActionView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = VSCIMOSXActionView.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		10F8501316B92D10007485F8 /* VSCIMOSXActionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXActionView.xib; sourceTree = "<group>"; };
-		10F8501416B92D10007485F8 /* VSCIMOSXDelayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXDelayView.h; sourceTree = "<group>"; };
-		10F8501516B92D10007485F8 /* VSCIMOSXDelayView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXDelayView.mm; sourceTree = "<group>"; };
-		10F8501616B92D10007485F8 /* VSCIMOSXDelayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXDelayView.xib; sourceTree = "<group>"; };
-		10F8501816B92D10007485F8 /* VSCIMOSXEventEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXEventEditor.h; sourceTree = "<group>"; };
-		10F8501916B92D10007485F8 /* VSCIMOSXEventEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXEventEditorViewController.h; sourceTree = "<group>"; };
-		10F8501A16B92D10007485F8 /* VSCIMOSXEventEditorViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXEventEditorViewController.mm; sourceTree = "<group>"; };
-		10F8501B16B92D10007485F8 /* VSCIMOSXEventMappingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXEventMappingsViewController.xib; sourceTree = "<group>"; };
 		10F8501C16B92D10007485F8 /* VSCIMOSXMappingEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXMappingEditViewController.h; sourceTree = "<group>"; };
 		10F8501D16B92D10007485F8 /* VSCIMOSXMappingEditViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXMappingEditViewController.mm; sourceTree = "<group>"; };
 		10F8501E16B92D10007485F8 /* VSCIMOSXMappingEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXMappingEditViewController.xib; sourceTree = "<group>"; };
-		10F8502116B92D10007485F8 /* VSCIMOSXMappingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXMappingView.h; sourceTree = "<group>"; };
-		10F8502216B92D10007485F8 /* VSCIMOSXMappingView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXMappingView.mm; sourceTree = "<group>"; };
-		10F8502316B92D10007485F8 /* VSCIMOSXMappingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXMappingView.xib; sourceTree = "<group>"; };
+		10F8502116B92D10007485F8 /* VSCIMOSXMappingCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXMappingCellView.h; sourceTree = "<group>"; };
+		10F8502216B92D10007485F8 /* VSCIMOSXMappingCellView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXMappingCellView.mm; sourceTree = "<group>"; };
+		10F8502316B92D10007485F8 /* VSCIMOSXMappingCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXMappingCellView.xib; sourceTree = "<group>"; };
 		10F8503416B92E3A007485F8 /* VSCIMOSXEventChainListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXEventChainListView.h; sourceTree = "<group>"; };
 		10F8503516B92E3A007485F8 /* VSCIMOSXEventChainListView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXEventChainListView.mm; sourceTree = "<group>"; };
 		10F8503A16B94700007485F8 /* VSCUsernamed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCUsernamed.cpp; path = ../../../../Generic/VSCUsernamed.cpp; sourceTree = "<group>"; };
@@ -1481,6 +1481,14 @@
 				10A764E916BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.h */,
 				10A764EA16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.mm */,
 				10A764EB16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.xib */,
+				10F3856716CA49D10012FA72 /* VSCIMOSXActionCellView.h */,
+				10F3856816CA49D10012FA72 /* VSCIMOSXActionCellView.mm */,
+				10F3856916CA49D10012FA72 /* VSCIMOSXActionCellView.xib */,
+				10F3856A16CA49D10012FA72 /* VSCIMOSXDelayCellView.h */,
+				10F3856B16CA49D10012FA72 /* VSCIMOSXDelayCellView.mm */,
+				10F3856C16CA49D10012FA72 /* VSCIMOSXDelayCellView.xib */,
+				10F3856D16CA49D10012FA72 /* VSCIMOSXEventCellView.h */,
+				10F3856E16CA49D10012FA72 /* VSCIMOSXEventCellView.mm */,
 			);
 			path = Chain;
 			sourceTree = "<group>";
@@ -1488,18 +1496,14 @@
 		10F8500D16B92D10007485F8 /* Event */ = {
 			isa = PBXGroup;
 			children = (
-				10A764EE16BEEE9700B9F9A2 /* VSCIMOSXEventView.h */,
-				10A764EF16BEEE9800B9F9A2 /* VSCIMOSXEventView.mm */,
 				10F8500E16B92D10007485F8 /* VSCIMOSXActionCommonView.xib */,
 				10F6666A16C40CC400ADF7AB /* VSCIMOSXActionMIDIChannelView.xib */,
 				10F8500F16B92D10007485F8 /* VSCIMOSXActionMIDIControlNumberView.xib */,
 				10F8501016B92D10007485F8 /* VSCIMOSXActionMIDIOutputView.xib */,
-				10F8501116B92D10007485F8 /* VSCIMOSXActionView.h */,
-				10F8501216B92D10007485F8 /* VSCIMOSXActionView.mm */,
-				10F8501316B92D10007485F8 /* VSCIMOSXActionView.xib */,
-				10F8501416B92D10007485F8 /* VSCIMOSXDelayView.h */,
-				10F8501516B92D10007485F8 /* VSCIMOSXDelayView.mm */,
-				10F8501616B92D10007485F8 /* VSCIMOSXDelayView.xib */,
+				10F3857416CA49EC0012FA72 /* VSCIMOSXEventEditor.h */,
+				10F3857516CA49EC0012FA72 /* VSCIMOSXEventEditorViewController.h */,
+				10F3857616CA49EC0012FA72 /* VSCIMOSXEventEditorViewController.mm */,
+				10F3857716CA49EC0012FA72 /* VSCIMOSXEventEditorViewController.xib */,
 			);
 			path = Event;
 			sourceTree = "<group>";
@@ -1507,16 +1511,12 @@
 		10F8501716B92D10007485F8 /* Mapping */ = {
 			isa = PBXGroup;
 			children = (
-				10F8501816B92D10007485F8 /* VSCIMOSXEventEditor.h */,
-				10F8501916B92D10007485F8 /* VSCIMOSXEventEditorViewController.h */,
-				10F8501A16B92D10007485F8 /* VSCIMOSXEventEditorViewController.mm */,
-				10F8501B16B92D10007485F8 /* VSCIMOSXEventMappingsViewController.xib */,
 				10F8501C16B92D10007485F8 /* VSCIMOSXMappingEditViewController.h */,
 				10F8501D16B92D10007485F8 /* VSCIMOSXMappingEditViewController.mm */,
 				10F8501E16B92D10007485F8 /* VSCIMOSXMappingEditViewController.xib */,
-				10F8502116B92D10007485F8 /* VSCIMOSXMappingView.h */,
-				10F8502216B92D10007485F8 /* VSCIMOSXMappingView.mm */,
-				10F8502316B92D10007485F8 /* VSCIMOSXMappingView.xib */,
+				10F8502116B92D10007485F8 /* VSCIMOSXMappingCellView.h */,
+				10F8502216B92D10007485F8 /* VSCIMOSXMappingCellView.mm */,
+				10F8502316B92D10007485F8 /* VSCIMOSXMappingCellView.xib */,
 			);
 			path = Mapping;
 			sourceTree = "<group>";
@@ -1623,11 +1623,8 @@
 				10F8502616B92D10007485F8 /* VSCIMOSXActionCommonView.xib in Resources */,
 				10F8502716B92D10007485F8 /* VSCIMOSXActionMIDIControlNumberView.xib in Resources */,
 				10F8502816B92D10007485F8 /* VSCIMOSXActionMIDIOutputView.xib in Resources */,
-				10F8502A16B92D10007485F8 /* VSCIMOSXActionView.xib in Resources */,
-				10F8502C16B92D10007485F8 /* VSCIMOSXDelayView.xib in Resources */,
-				10F8502E16B92D10007485F8 /* VSCIMOSXEventMappingsViewController.xib in Resources */,
 				10F8503016B92D10007485F8 /* VSCIMOSXMappingEditViewController.xib in Resources */,
-				10F8503316B92D10007485F8 /* VSCIMOSXMappingView.xib in Resources */,
+				10F8503316B92D10007485F8 /* VSCIMOSXMappingCellView.xib in Resources */,
 				10A764E816BEA4E800B9F9A2 /* VSCIMOSXEventChainCellView.xib in Resources */,
 				10A764ED16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.xib in Resources */,
 				10F6666B16C40CC500ADF7AB /* VSCIMOSXActionMIDIChannelView.xib in Resources */,
@@ -1635,6 +1632,9 @@
 				108D364816C9981800DA6B25 /* VSCOBOSXElementEventChainsView.xib in Resources */,
 				108D364A16C9981800DA6B25 /* VSCOBOSXElementInspectorViewController.xib in Resources */,
 				108D364C16C9981800DA6B25 /* VSCOBOSXElementInspectorWindowController.xib in Resources */,
+				10F3857016CA49D10012FA72 /* VSCIMOSXActionCellView.xib in Resources */,
+				10F3857216CA49D10012FA72 /* VSCIMOSXDelayCellView.xib in Resources */,
+				10F3857916CA49EC0012FA72 /* VSCIMOSXEventEditorViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1745,16 +1745,12 @@
 				101D566616B73EC200F5E860 /* VSCIMActionImplementations.cpp in Sources */,
 				100F591E16B7F6B400F38860 /* VSCIM.cpp in Sources */,
 				10F8502416B92D10007485F8 /* VSCIMOSXEventChainViewController.mm in Sources */,
-				10F8502916B92D10007485F8 /* VSCIMOSXActionView.mm in Sources */,
-				10F8502B16B92D10007485F8 /* VSCIMOSXDelayView.mm in Sources */,
-				10F8502D16B92D10007485F8 /* VSCIMOSXEventEditorViewController.mm in Sources */,
 				10F8502F16B92D10007485F8 /* VSCIMOSXMappingEditViewController.mm in Sources */,
-				10F8503216B92D10007485F8 /* VSCIMOSXMappingView.mm in Sources */,
+				10F8503216B92D10007485F8 /* VSCIMOSXMappingCellView.mm in Sources */,
 				10F8503616B92E3A007485F8 /* VSCIMOSXEventChainListView.mm in Sources */,
 				10F8503C16B94700007485F8 /* VSCUsernamed.cpp in Sources */,
 				1068513E16B9D02800505F04 /* VSCIMOSXEventChainCellView.mm in Sources */,
 				10A764EC16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.mm in Sources */,
-				10A764F016BEEE9800B9F9A2 /* VSCIMOSXEventView.mm in Sources */,
 				10FCF4C116C2776D00D493F2 /* VSCMIDIOwners.cpp in Sources */,
 				10FCF4C416C27C9100D493F2 /* VSCIMMappingImplementations.cpp in Sources */,
 				10F6666916C4035800ADF7AB /* VSCCollisionMapper.cpp in Sources */,
@@ -1772,6 +1768,10 @@
 				108D365216C9981800DA6B25 /* VSCOBOSXSceneDetailView.mm in Sources */,
 				108D365316C9981800DA6B25 /* VSCOBOSXSceneDisplayView.mm in Sources */,
 				108D365416C9981800DA6B25 /* VSCOBOSXSceneListener.mm in Sources */,
+				10F3856F16CA49D10012FA72 /* VSCIMOSXActionCellView.mm in Sources */,
+				10F3857116CA49D10012FA72 /* VSCIMOSXDelayCellView.mm in Sources */,
+				10F3857316CA49D10012FA72 /* VSCIMOSXEventCellView.mm in Sources */,
+				10F3857816CA49EC0012FA72 /* VSCIMOSXEventEditorViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -44,6 +44,16 @@ namespace VSC {
             virtual const Tasks generateTasksWithTargetValueMap(Event::TargetValueMap& valueMap);
             virtual void setupMappings(Action::SPtr action);
         };
+        
+        /*
+         *  Extractor utils
+         */
+        
+        MIDI::OutputOwner::SPtr ExtractMIDIOutputOwnerForAction:(Action::SPtr)action;
+        
+        MIDI::ChannelOwner::SPtr ExtractMIDIChannelOwnerForAction:(Action::SPtr)action;
+        
+        MIDI::ControlNumberOwner::SPtr ExtractMIDIControlNumberOwnerForAction:(Action::SPtr)action;
 
     }
 }

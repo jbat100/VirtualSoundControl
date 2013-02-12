@@ -1,5 +1,5 @@
 //
-//  VSCIMOSXMappingView.h
+//  VSCIMOSXMappingCellView.h
 //  OgreBulletCocoaTestApplications
 //
 //  Created by Jonathan Thorpe on 10/28/12.
@@ -15,16 +15,8 @@
 
 @protocol VSCIMOSXEventEditor;
 
-@protocol VSCIMOSXMappingView <NSObject>
 
-@property (assign) id<VSCIMOSXEventEditor> controller;
-@property (nonatomic, assign) VSC::IM::Mapping_WPtr mapping;
-@property (nonatomic, assign) VSC::IM::Target target;
-
-@end
-
-
-@interface VSCIMOSXMappingView : NSView <VSCIMOSXMappingView>
+@interface VSCIMOSXMappingCellView : NSView <VSCIMOSXMappingCellView>
 {
     @private
     VSC::IM::MappingTypeSet mAllowedMappingTypes;
