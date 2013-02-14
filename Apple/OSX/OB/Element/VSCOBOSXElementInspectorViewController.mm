@@ -9,18 +9,25 @@
 #import "VSCOBOSXElementInspectorViewController.h"
 
 #import "VSCOSXEnvironmentController.h"
+
 #import "VSCIMOSXEventChainController.h"
 #import "VSCIMOSXEventChainViewController.h"
 #import "VSCOBOSXElementEditor.h"
 #import "VSCOBOSXElementDetailView.h"
 #import "VSCOBOSXElementEventChainsView.h"
 #import "DMTabBar.h"
+#import "NSString+VSCAdditions.h"
 
+#include "VSCEnvironment.h"
 #include "VSCOBScene.h"
 #include "VSCOBElement.h"
 #include "VSCIMEventChain.h"
 
 #include <boost/assert.hpp>
+
+using namespace VSC;
+using namespace VSC::IM;
+using namespace VSC::OB;
 
 NSString* const VSCOSXTabTitleElementDetails = @"Details";
 NSString* const VSCOSXTabTitleElementCollision = @"Collision";
@@ -31,7 +38,7 @@ NSArray* ElementInspectorTabParamArray = nil;
 
 @property (nonatomic, strong) NSArray* tabViewConstraints;
 
-@property (nonatomic, assign) VSC::OB::OSXSceneListener::SPtr sceneListener;
+@property (nonatomic, assign) OSXSceneListener::SPtr sceneListener;
 
 -(void) setupTabBar;
 -(void) resetInspectorView;
@@ -60,21 +67,9 @@ const static BOOL traceInterface = YES;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-        self.sceneListener = VSC::OB::OSXSceneListener::SPtr (new VSC::OB::OSXSceneListener);
+        self.sceneListener = OSXSceneListener::SPtr (new OSXSceneListener);
         BOOST_ASSERT(self.sceneListener);
         if (self.sceneListener) self.sceneListener->setTarget(self);
-        
-        self.collisionStartedEventChainViewController = [[VSCIMOSXEventChainViewController alloc]
-                                                         initWithNibName:@"VSCIMOSXEventChainViewController"
-                                                         bundle:nil];
-        BOOST_ASSERT(self.collisionStartedEventChainViewController);
-        self.collisionStartedEventChainViewController.elementController = self;
-        
-        self.collisionEndedEventChainViewController = [[VSCIMOSXEventChainViewController alloc]
-                                                       initWithNibName:@"VSCIMOSXEventChainViewController"
-                                                       bundle:nil];
-        BOOST_ASSERT(self.collisionEndedEventChainViewController);
-        self.collisionEndedEventChainViewController.elementController = self;
     }
     
     return self;
@@ -101,52 +96,40 @@ const static BOOL traceInterface = YES;
     
     if (self.elementCollisionView)
     {
-        NSView* eventChainView = self.collisionStartedEventChainViewController.view;
-        
-        BOOST_ASSERT(eventChainView);
-        
-        [self.elementCollisionView addSubview:eventChainView];
-        
-        NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(eventChainView);
-        [self.elementCollisionView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[eventChainView]|"
-                                                                               options:0 metrics:nil views:viewsDictionary]];
-        [self.elementCollisionView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[eventChainView]|"
-                                                                               options:0 metrics:nil views:viewsDictionary]];
-        
-        [self.collisionStartedEventChainViewController reloadInterface];
+
     }
     
     [self showElementDetailView];
 }
 
--(void) setElement:(VSC::OB::Element::WPtr)element
+-(void) setElement:(Element::WPtr)element
 {
     
     if (element.lock() == _element.lock()) return;
     
     // stop listening to the scene of the old element
-    VSC::OB::Element::SPtr oldElement = _element.lock();
+    Element::SPtr oldElement = _element.lock();
     if (oldElement)
     {
-        VSC::OB::Scene::SPtr scene = oldElement->getScene();
+        Scene::SPtr scene = oldElement->getScene();
         if (scene)
         {
             BOOST_ASSERT(self.sceneListener);
-            scene->removeListener(boost::dynamic_pointer_cast<VSC::Listener>(self.sceneListener));
+            scene->removeListener(boost::dynamic_pointer_cast<Listener>(self.sceneListener));
         }
     }
     
     _element = element;
     
     // start listening to the scene of the old element
-    VSC::OB::Element::SPtr newElement = _element.lock();
+    Element::SPtr newElement = _element.lock();
     if (newElement)
     {
-        VSC::OB::Scene::SPtr scene = newElement->getScene();
+        Scene::SPtr scene = newElement->getScene();
         if (scene)
         {
             BOOST_ASSERT(self.sceneListener);
-            scene->addListener(boost::dynamic_pointer_cast<VSC::Listener>(self.sceneListener));
+            scene->addListener(boost::dynamic_pointer_cast<Listener>(self.sceneListener));
         }
     }
     
@@ -162,7 +145,7 @@ const static BOOL traceInterface = YES;
 
 -(void) setImmobilized:(BOOL)immob
 {
-    VSC::OB::Element::SPtr element = self.element.lock();
+    Element::SPtr element = self.element.lock();
     if (element)
     {
         element->setImmobilized(immob ? true : false);
@@ -170,29 +153,10 @@ const static BOOL traceInterface = YES;
     _immobilized = immob;
 }
 
--(void) updateEventChains
-{
-    VSC::OB::Element::SPtr elem = self.element.lock();
-    
-    VSC::IM::EventChain::SPtr collisionStartedEventChain = VSC::IM::EventChain::SPtr();
-    VSC::IM::EventChain::SPtr collisionEndedEventChain = VSC::IM::EventChain::SPtr();
-    
-    if (elem)
-    {
-        BOOST_ASSERT(self.environmentController);
-        
-        collisionStartedEventChain = [self.environmentController collisionStartedEventChainForElement:elem];
-        collisionEndedEventChain = [self.environmentController collisionEndedEventChainForElement:elem];
-    }
-    
-    self.collisionStartedEventChainViewController.eventChain = collisionStartedEventChain;
-    self.collisionEndedEventChainViewController.eventChain = collisionEndedEventChain;
-    
-}
 
 -(void) reloadImmobilizedInterface
 {
-    VSC::OB::Element::SPtr element = self.element.lock();
+    Element::SPtr element = self.element.lock();
     
     if (element)
     {
@@ -327,16 +291,51 @@ const static BOOL traceInterface = YES;
     BOOST_ASSERT(self.elementCollisionView);
     
     [self switchElementInspectorToTabView:self.elementCollisionView];
-    
-    [self updateEventChains];
-    
 }
 
 #pragma mark - VSCOBOSXSceneListenerTarget
 
--(void) sceneWasRendered:(VSC::OB::Scene::SPtr)scene
+-(void) sceneWasRendered:(Scene::SPtr)scene
 {
     [self.elementDetailView reloadPositionInterface:NO];
+}
+
+#pragma mark - NSTableView Delegate/DataSource
+
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    BOOST_ASSERT(self.environmentController);
+    Environment::SPtr environement = self.environmentController.environment.lock();
+    BOOST_ASSERT(environement);
+    if (environement)
+    {
+        const EventChains& eventChains = environement->getEventChains();
+        EventChain::SPtr eventChain = EventChain::SPtr();
+        BOOST_ASSERT(eventChains.size() > row);
+        if (eventChains.size() > row)
+        {
+            eventChain = eventChains.at(row);
+        }
+        BOOST_ASSERT(eventChain);
+        if (eventChain)
+        {
+            // Return the object property corresponding to the column
+            if([[tableColumn identifier] isEqualToString:@"name"])
+            {
+                return [NSString stringWithStdString:eventChain->getUsername()];
+            }
+        }
+        
+        
+        // Since this method has return type `id', we need to box the
+        // boolean values inside an `NSNumber' instance
+        else if([[tableColumn identifier] isEqualToString:@"linked"])
+        {
+            return [NSNumber numberWithBool:obj.visible];
+        }
+    }
+    
+    return nil;
 }
 
 

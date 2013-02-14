@@ -10,6 +10,7 @@
 #import "VSCIMOSXMappingEditViewController.h"
 #import "VSCIMOSXEventChainController.h"
 #import "VSCIMOSXMappingCellView.h"
+#import "VSCOSXTableSectionView.h"
 
 #include "VSCIMAction.h"
 
@@ -556,7 +557,8 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
                 
                 [mappingView setController:(id)self];
                 [mappingView setMapping:(Mapping::WPtr(mapping))];
-                [mappingView setTarget:target];
+                
+                [mappingView.targetTextField setStringValue:[NSString stringWithStdString:StringForTarget(target)]];
                 
                 return mappingView;
             }
@@ -582,11 +584,11 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
             int targetIndex = row % ((int)targets.size() + 1);
             if (targetIndex == 0)
             {
-                
+                return [VSCOSXTableSectionView defaultViewHeight];
             }
             else
             {
-                return [VSCIMOSXMappingCellView defaultHeight];
+                return [VSCIMOSXMappingCellView defaultViewHeight];
             }
         
         }

@@ -17,13 +17,10 @@
 @class VSCIMOSXEventChainViewController;
 
 @interface VSCOBOSXElementInspectorViewController : NSViewController
-<VSCOBOSXElementController, VSCOBOSXSceneListenerTarget>
+<VSCOBOSXElementController, VSCOBOSXSceneListenerTarget, NSTableViewDataSource, NSTableViewDelegate>
 
 @property (strong) IBOutlet VSCOBOSXElementDetailView* elementDetailView;
 @property (strong) IBOutlet VSCOBOSXElementEventChainsView* elementCollisionView;
-
-@property (strong) VSCIMOSXEventChainViewController* collisionStartedEventChainViewController;
-@property (strong) VSCIMOSXEventChainViewController* collisionEndedEventChainViewController;
 
 @property (weak) IBOutlet DMTabBar* tabBar;
 
