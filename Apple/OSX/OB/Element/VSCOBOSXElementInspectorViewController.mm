@@ -19,8 +19,11 @@
 #import "NSString+VSCAdditions.h"
 
 #include "VSCEnvironment.h"
+#include "VSCCollisionMapper.h"
+#include "VSCOB.h"
 #include "VSCOBScene.h"
 #include "VSCOBElement.h"
+#include "VSCIM.h"
 #include "VSCIMEventChain.h"
 
 #include <boost/assert.hpp>
@@ -302,14 +305,29 @@ const static BOOL traceInterface = YES;
 
 #pragma mark - NSTableView Delegate/DataSource
 
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
+{
+    BOOST_ASSERT(self.environmentController);
+    Environment::SPtr environment = self.environmentController.environment.lock();
+    BOOST_ASSERT(environment);
+    if (environment)
+    {
+        const EventChains& eventChains = environment->getEventChains();
+        return eventChains.size();
+    }
+    
+    return 0;
+}
+
+
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     BOOST_ASSERT(self.environmentController);
-    Environment::SPtr environement = self.environmentController.environment.lock();
-    BOOST_ASSERT(environement);
-    if (environement)
+    Environment::SPtr environment = self.environmentController.environment.lock();
+    BOOST_ASSERT(environment);
+    if (environment)
     {
-        const EventChains& eventChains = environement->getEventChains();
+        const EventChains& eventChains = environment->getEventChains();
         EventChain::SPtr eventChain = EventChain::SPtr();
         BOOST_ASSERT(eventChains.size() > row);
         if (eventChains.size() > row)
@@ -331,11 +349,73 @@ const static BOOL traceInterface = YES;
         // boolean values inside an `NSNumber' instance
         else if([[tableColumn identifier] isEqualToString:@"linked"])
         {
-            return [NSNumber numberWithBool:obj.visible];
+            Element::SPtr elem = self.element.lock();
+            BOOST_ASSERT(elem);
+            CollisionMapper::SPtr collisionMapper = environment->getCollisionMapper();
+            BOOST_ASSERT(collisionMapper);
+            if (collisionMapper && elem)
+            {
+                /*
+                 *  Check if the element is linked to the eventChain (via the environment collision mapper)
+                 */
+                
+                const EventChains& linkedEventChains = collisionMapper->getEventChainsForCollisionStarted(elem);
+                EventChains::const_iterator it = std::find(linkedEventChains.begin(), linkedEventChains.end(), eventChain);
+                
+                bool linked = it != linkedEventChains.end();
+                
+                return [NSNumber numberWithBool:linked ? YES : NO];
+            }
         }
     }
     
     return nil;
+}
+
+- (void)tableView:(NSTableView *)aTableView setObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+{
+    /*
+     *  Only the linked checkbox should be allowed to change, ensure this is the case
+     */
+    
+    BOOST_ASSERT([[aTableColumn identifier] isEqualToString:@"linked"]);
+    
+    if ([[aTableColumn identifier] isEqualToString:@"linked"])
+    {
+        BOOST_ASSERT(self.environmentController);
+        Environment::SPtr environment = self.environmentController.environment.lock();
+        BOOST_ASSERT(environment);
+        Element::SPtr elem = self.element.lock();
+        BOOST_ASSERT(elem);
+        
+        if (environment && elem)
+        {
+            CollisionMapper::SPtr collisionMapper = environment->getCollisionMapper();
+            BOOST_ASSERT(collisionMapper);
+            
+            if (collisionMapper)
+            {
+                const EventChains& eventChains = environment->getEventChains();
+                BOOST_ASSERT(eventChains.size() > rowIndex);
+                
+                if (eventChains.size() > rowIndex)
+                {
+                    EventChain::SPtr eventChain = eventChains.at(rowIndex);
+                    
+                    BOOL link = [anObject boolValue];
+                    if (link)
+                    {
+                        collisionMapper->addEventChainForCollisionStarted(eventChain, elem);
+                    }
+                    else
+                    {
+                        collisionMapper->removeEventChainForCollisionStarted(eventChain, elem);
+                    }
+                }
+            }
+            
+        }
+    }
 }
 
 

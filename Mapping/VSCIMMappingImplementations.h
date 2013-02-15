@@ -20,10 +20,10 @@ namespace VSC {
         class ReferencePointOwner
         {
         public:
-            ReferencePointOwner();
-            static Ogre::Vector3 getDefaultReferencePoint();
-            Ogre::Vector3 getReferencePoint();
-            void setReferencePoint(Ogre::Vector3 referencePoint);
+            ReferencePointOwner() : mReferencePoint (defaultReferencePoint) {}
+            static Ogre::Vector3 getDefaultReferencePoint() {return defaultReferencePoint;}
+            Ogre::Vector3 getReferencePoint() {return mReferencePoint;}
+            void setReferencePoint(Ogre::Vector3 referencePoint) {mReferencePoint = referencePoint;}
         private:
             static Ogre::Vector3 defaultReferencePoint;
             Ogre::Vector3 mReferencePoint;

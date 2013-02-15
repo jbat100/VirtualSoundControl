@@ -19,21 +19,65 @@ using namespace VSC::OB;
 
 void CollisionMapper::addEventChainForCollisionStarted(EventChain::SPtr eventChain, Element::SPtr element)
 {
-    EventChains& eventChains = mCollisionStartedEventChainMap[element];
-    EventChains::iterator it = std::find(eventChains.begin(), eventChains.end(), eventChain);
-    if (it == eventChains.end())
+    BOOST_ASSERT(eventChain);
+    BOOST_ASSERT(element);
+    if (eventChain && element)
     {
-        eventChains.push_back(eventChain);
+        EventChains& eventChains = mCollisionStartedEventChainMap[element];
+        EventChains::iterator it = std::find(eventChains.begin(), eventChains.end(), eventChain);
+        BOOST_ASSERT(it == eventChains.end());
+        if (it == eventChains.end())
+        {
+            eventChains.push_back(eventChain);
+        }
     }
 }
 
 void CollisionMapper::addEventChainForCollisionEnded(EventChain::SPtr eventChain, Element::SPtr element)
 {
-    EventChains& eventChains = mCollisionEndedEventChainMap[element];
-    EventChains::iterator it = std::find(eventChains.begin(), eventChains.end(), eventChain);
-    if (it == eventChains.end())
+    BOOST_ASSERT(eventChain);
+    BOOST_ASSERT(element);
+    if (eventChain && element)
     {
-        eventChains.push_back(eventChain);
+        EventChains& eventChains = mCollisionEndedEventChainMap[element];
+        EventChains::iterator it = std::find(eventChains.begin(), eventChains.end(), eventChain);
+        BOOST_ASSERT(it == eventChains.end());
+        if (it == eventChains.end())
+        {
+            eventChains.push_back(eventChain);
+        }
+    }
+}
+
+void CollisionMapper::removeEventChainForCollisionStarted(EventChain::SPtr eventChain, Element::SPtr element)
+{
+    BOOST_ASSERT(eventChain);
+    BOOST_ASSERT(element);
+    if (eventChain && element)
+    {
+        EventChains& eventChains = mCollisionStartedEventChainMap[element];
+        EventChains::iterator it = std::find(eventChains.begin(), eventChains.end(), eventChain);
+        BOOST_ASSERT(it != eventChains.end());
+        if (it != eventChains.end())
+        {
+            eventChains.erase(it);
+        }
+    }
+}
+
+void CollisionMapper::removeEventChainForCollisionEnded(EventChain::SPtr eventChain, Element::SPtr element)
+{
+    BOOST_ASSERT(eventChain);
+    BOOST_ASSERT(element);
+    if (eventChain && element)
+    {
+        EventChains& eventChains = mCollisionEndedEventChainMap[element];
+        EventChains::iterator it = std::find(eventChains.begin(), eventChains.end(), eventChain);
+        BOOST_ASSERT(it != eventChains.end());
+        if (it != eventChains.end())
+        {
+            eventChains.erase(it);
+        }
     }
 }
 

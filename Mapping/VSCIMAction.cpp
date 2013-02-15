@@ -28,6 +28,12 @@ const Tasks Action::generateTasks(Trigger trigger, TriggerPayload::SPtr payload)
     return this->generateTasksWithTargetValueMap(valueMap);
 }
 
+const Tasks Action::generateTasksWithTargetValueMap(Event::TargetValueMap& valueMap)
+{
+    Tasks tasks;
+    return tasks;
+}
+
 void Action::setActionType(ActionType actionType)
 {
     

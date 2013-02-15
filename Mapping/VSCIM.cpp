@@ -85,13 +85,13 @@ void VSC::IM::InitialiseInternals(void)
     allowedTriggers += TriggerPlain, TriggerCollision, TriggerProximity;
 }
 
-const MappingTypeSet& AllowedMappingTypeSetForTrigger(Trigger trigger)
+const MappingTypeSet& VSC::IM::AllowedMappingTypeSetForTrigger(Trigger trigger)
 {
     boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     return triggerMappingTypeMap[trigger];
 }
 
-const Triggers& AllowedTriggers(void)
+const Triggers& VSC::IM::AllowedTriggers(void)
 {
     return allowedTriggers;
 }

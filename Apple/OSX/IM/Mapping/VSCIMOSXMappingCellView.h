@@ -27,6 +27,8 @@
 //@property (nonatomic, assign) VSC::IM::Target target;
 //@property (nonatomic, assign) VSC::IM::Trigger trigger;
 
+
+@property (nonatomic, weak) IBOutlet NSTextField* targetTextField;
 @property (nonatomic, weak) IBOutlet NSButton* editButton;
 
 -(VSC::IM::MappingTypeSet&) allowedMappingTypes;

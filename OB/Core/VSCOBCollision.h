@@ -112,9 +112,9 @@ namespace VSC {
             
         };
         
-        Element_SPtr getCollisionEffectee(Collision_SPtr collision, Element_SPtr effector);
+        Element_SPtr GetCollisionEffectee(Collision_SPtr collision, Element_SPtr effector);
         
-        Element_SPtr getCollisionEffector(Collision_SPtr collision, Element_SPtr effectee);
+        Element_SPtr GetCollisionEffector(Collision_SPtr collision, Element_SPtr effectee);
         
         std::ostream& operator << (std::ostream& stream, const Collision& collision);
         

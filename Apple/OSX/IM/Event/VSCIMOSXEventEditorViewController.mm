@@ -10,9 +10,21 @@
 #import "VSCIMOSXMappingEditViewController.h"
 #import "VSCIMOSXEventChainController.h"
 #import "VSCIMOSXMappingCellView.h"
+
 #import "VSCOSXTableSectionView.h"
+#import "VSCOSXInterfaceFactory.h"
+#import "NSString+VSCAdditions.h"
 
 #include "VSCIMAction.h"
+#include "VSCIMActionImplementations.h"
+
+#include "VSCMIDI.h"
+#include "VSCMIDIOutput.h"
+#include "VSCMIDIOutputManager.h"
+#include "VSCMIDIOwners.h"
+
+#include <boost/assert.hpp>
+#include <boost/foreach.hpp>
 
 using namespace VSC;
 using namespace VSC::IM;
@@ -133,18 +145,6 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
 
 #pragma mark - Helpers
 
--(BOOL) checkMappingView:(id<VSCIMOSXMappingCellView>)v
-{
-    BOOST_ASSERT([v respondsToSelector:@selector(target)]);
-    BOOST_ASSERT([v respondsToSelector:@selector(mapping)]);
-    BOOST_ASSERT([v respondsToSelector:@selector(setMapping:)]);
-    
-    if (![v respondsToSelector:@selector(target)]) return NO;
-    if (![v respondsToSelector:@selector(mapping)]) return NO;
-    if (![v respondsToSelector:@selector(setMapping:)]) return NO;
-    
-    return YES;
-}
 
 -(Action::SPtr) action
 {
@@ -224,7 +224,7 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
     }
     
     BOOST_ASSERT(self.mainView);
-    [self addSubview:self.mainView];
+    [[self view] addSubview:self.mainView];
     [viewsForHorizontalConstraints addObject:self.mainView];
     [viewBindingsDictionary setValue:self.mainView forKey:@"mainView"];
     [verticalLayoutVisualFormat appendString:@"-2-[mainView]"];
@@ -253,7 +253,7 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
             self.midiOutputView = [[VSCOSXInterfaceFactory defaultFactory] newActionMIDIOutputViewWithOwner:self];
         }
         BOOST_ASSERT(self.midiOutputView);
-        [self addSubview:self.midiOutputView];
+        [[self view] addSubview:self.midiOutputView];
         [viewsForHorizontalConstraints addObject:self.midiOutputView];
         [viewBindingsDictionary setValue:self.midiOutputView forKey:@"midiOutputView"];
         [verticalLayoutVisualFormat appendString:@"-4-[midiOutputView]"];
@@ -272,7 +272,7 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
             self.midiChannelView = [[VSCOSXInterfaceFactory defaultFactory] newActionMIDIChannelViewWithOwner:self];
         }
         BOOST_ASSERT(self.midiChannelView);
-        [self addSubview:self.midiChannelView];
+        [[self view] addSubview:self.midiChannelView];
         [viewsForHorizontalConstraints addObject:self.midiChannelView];
         [viewBindingsDictionary setValue:self.midiChannelView forKey:@"midiChannelView"];
         [verticalLayoutVisualFormat appendString:@"-4-[midiChannelView]"];
@@ -291,7 +291,7 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
             self.midiControlNumberView = [[VSCOSXInterfaceFactory defaultFactory] newActionMIDIControlNumberViewWithOwner:self];
         }
         BOOST_ASSERT(self.midiControlNumberView);
-        [self addSubview:self.midiControlNumberView];
+        [[self view] addSubview:self.midiControlNumberView];
         [viewsForHorizontalConstraints addObject:self.midiControlNumberView];
         [viewBindingsDictionary setValue:self.midiControlNumberView forKey:@"midiControlNumberView"];
         [verticalLayoutVisualFormat appendString:@"-4-[midiControlNumberView]"];
@@ -308,7 +308,7 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
      *  Apply constraints
      */
     
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:verticalLayoutVisualFormat
+    [[self view] addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:verticalLayoutVisualFormat
                                                                  options:0
                                                                  metrics:nil
                                                                    views:viewBindingsDictionary]];
@@ -322,7 +322,7 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
                                                                       metrics:nil
                                                                         views:localViewsDictionary];
         
-        [self addConstraints:contraints];
+        [[self view] addConstraints:contraints];
     }
     
     

@@ -1423,8 +1423,8 @@
 				103203461632BBE7006ED4FF /* VSCEnvironment.cpp */,
 				103E77EE166A686C0013ABB6 /* VSCEnvironmentTest.h */,
 				103E77ED166A686C0013ABB6 /* VSCEnvironmentTest.cpp */,
-				10F6666716C4035800ADF7AB /* VSCCollisionMapper.cpp */,
 				10F6666816C4035800ADF7AB /* VSCCollisionMapper.h */,
+				10F6666716C4035800ADF7AB /* VSCCollisionMapper.cpp */,
 			);
 			name = Application;
 			sourceTree = "<group>";

@@ -31,7 +31,7 @@ void Collision::invalidate()
     mPersistentManifold = 0;
 }
 
-std::ostream& operator << (std::ostream& stream, const Collision& collision)
+std::ostream& VSC::OB::operator << (std::ostream& stream, const Collision& collision)
 {
     stream << "Collision with element: " << *collision.getFirstElement() << " and element: " << *collision.getSecondElement();
     stream << " relative velocity: " << collision.getRelativeCollisionVelocity() << std::endl;
@@ -39,7 +39,7 @@ std::ostream& operator << (std::ostream& stream, const Collision& collision)
     return stream;
 }
 
-Element_SPtr getCollisionEffectee(Collision_SPtr collision, Element_SPtr effector)
+Element_SPtr VSC::OB::GetCollisionEffectee(Collision_SPtr collision, Element_SPtr effector)
 {
     BOOST_ASSERT(collision);
     BOOST_ASSERT(effector);
@@ -65,7 +65,7 @@ Element_SPtr getCollisionEffectee(Collision_SPtr collision, Element_SPtr effecto
     return effectee;
 }
 
-Element_SPtr getCollisionEffector(Collision_SPtr collision, Element_SPtr effectee)
+Element_SPtr VSC::OB::GetCollisionEffector(Collision_SPtr collision, Element_SPtr effectee)
 {
     BOOST_ASSERT(collision);
     BOOST_ASSERT(effectee);

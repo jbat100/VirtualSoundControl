@@ -489,6 +489,14 @@ const static BOOL traceInterface = YES;
     
 }
 
+- (void)tableViewColumnDidResize:(NSNotification *)aNotification
+{
+    NSLog(@"%@ tableViewColumnDidResize: %@, column %@, old width %@",
+          self, [aNotification object],
+          [[aNotification userInfo] objectForKey:@"NSTableColumn"],
+          [[aNotification userInfo] objectForKey:@"NSOldWidth"]);
+}
+
 - (void)tableView:(NSTableView *)aTableView
   willDisplayCell:(id)aCell
    forTableColumn:(NSTableColumn *)aTableColumn

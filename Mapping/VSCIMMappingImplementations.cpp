@@ -69,7 +69,7 @@ Float Mapping::ImplementationCollisionDistance::mappedValue(Trigger trigger, Tri
         BOOST_ASSERT(effector);
         if (collision)
         {
-            Element::SPtr effectee = getCollisionEffectee(collision, effector);
+            Element::SPtr effectee = GetCollisionEffectee(collision, effector);
             BOOST_ASSERT(effectee);
             if (effectee)
             {

@@ -29,11 +29,11 @@ namespace VSC {
          *  Action Chains
          */
         
-        void addEventChainForCollisionStarted(IM::EventChain_SPtr actionChain, OB::Element_SPtr element);
-        void addEventChainForCollisionEnded(IM::EventChain_SPtr actionChain, OB::Element_SPtr element);
+        void addEventChainForCollisionStarted(IM::EventChain_SPtr eventChain, OB::Element_SPtr element);
+        void addEventChainForCollisionEnded(IM::EventChain_SPtr eventChain, OB::Element_SPtr element);
         
-        void removeEventChainForCollisionStarted(IM::EventChain_SPtr actionChain, OB::Element_SPtr element);
-        void removeEventChainForCollisionEnded(IM::EventChain_SPtr actionChain, OB::Element_SPtr element);
+        void removeEventChainForCollisionStarted(IM::EventChain_SPtr eventChain, OB::Element_SPtr element);
+        void removeEventChainForCollisionEnded(IM::EventChain_SPtr eventChain, OB::Element_SPtr element);
         
         const IM::EventChains& getEventChainsForCollisionStarted(OB::Element_SPtr element);
         const IM::EventChains& getEventChainsForCollisionEnded(OB::Element_SPtr element);

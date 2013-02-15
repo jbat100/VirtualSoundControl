@@ -25,7 +25,6 @@ using namespace VSC::IM;
  *  Interface elements common to all mappings
  */
 
-@property (weak) IBOutlet NSTextField* targetTextField;
 @property (weak) IBOutlet NSPopUpButton* mappingPopUpButton;
 
 -(IBAction) editMapping:(id)sender;

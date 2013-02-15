@@ -75,7 +75,7 @@ namespace VSC {
             class ImplementationMIDINoteOnAndOff;
             class ImplementationMIDIControlChange;
             
-            Implementation::SPtr getImplementation(void);
+            Implementation::SPtr getImplementation(void) {return mImplementation;}
             
         private:
             
