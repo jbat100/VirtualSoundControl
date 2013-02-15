@@ -20,8 +20,17 @@ const Tasks Action::generateTasks(Trigger trigger, TriggerPayload::SPtr payload)
     
     BOOST_FOREACH(const Target& target, this->getRequiredMappingTargets())
     {
+        Float value = 0.0;
         Mapping::SPtr mapping = this->getMapping(trigger, target);
-        Float value = mapping->mappedValue(trigger, payload);
+        if (mapping)
+        {
+            value = mapping->mappedValue(trigger, payload);
+        }
+        else
+        {
+            std::cerr << "No mapping for target " << StringForTarget(target) << std::endl;
+        }
+        BOOST_ASSERT(mapping);
         valueMap[target] = value;
     }
     

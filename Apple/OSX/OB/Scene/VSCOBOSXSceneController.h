@@ -23,9 +23,9 @@
 
 @property (assign) id<VSCOSXEnvironmentController> environmentController;
 
-@property (weak) IBOutlet VSCOBOSXElementListView* elementListView;
-@property (weak) IBOutlet VSCOBOSXSceneDisplayView* sceneView;
-@property (weak) IBOutlet VSCOBOSXSceneDetailView* sceneDetailView;
+@property (nonatomic, weak) IBOutlet VSCOBOSXElementListView* elementListView;
+@property (nonatomic, weak) IBOutlet VSCOBOSXSceneDisplayView* sceneView;
+@property (nonatomic, weak) IBOutlet VSCOBOSXSceneDetailView* sceneDetailView;
 
 @property (nonatomic, assign) VSC::Float shootSpeed;
 @property (nonatomic, assign) VSC::Float shootSize;
@@ -49,6 +49,10 @@
 
 @property (nonatomic, assign) VSC::OB::OSXSceneListener::SPtr sceneListener;
 @property (assign) IBOutlet id<VSCOSXEnvironmentController> environmentController;
+
+@property (nonatomic, weak) IBOutlet VSCOBOSXElementListView* elementListView;
+@property (nonatomic, weak) IBOutlet VSCOBOSXSceneDisplayView* sceneView;
+@property (nonatomic, weak) IBOutlet VSCOBOSXSceneDetailView* sceneDetailView;
 
 -(void) resetSceneDisplayViews;
 

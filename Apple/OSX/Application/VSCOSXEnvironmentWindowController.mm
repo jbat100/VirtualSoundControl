@@ -124,14 +124,14 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 -(void) awakeFromNib
 {
     BOOST_ASSERT(self.sceneDetailScrollView);
-    BOOST_ASSERT(self.ElementListView);
+    BOOST_ASSERT(self.elementListView);
     BOOST_ASSERT(self.sceneDetailView);
     BOOST_ASSERT(self.tabBar);
     //BOOST_ASSERT(self.tabBox);
     
     self.sceneDetailScrollView.translatesAutoresizingMaskIntoConstraints = NO;
     self.sceneDetailView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.ElementListView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.elementListView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self setupConstraints];
@@ -324,16 +324,16 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 
 -(void) showElementList
 {
-    BOOST_ASSERT(self.ElementListView);
-    BOOST_ASSERT(self.ElementListView.elementTableView);
-    BOOST_ASSERT(self.ElementListView.elementTableView.delegate == self.sceneController);
+    BOOST_ASSERT(self.elementListView);
+    BOOST_ASSERT(self.elementListView.elementTableView);
+    BOOST_ASSERT(self.elementListView.elementTableView.delegate == self.sceneController);
     
     
-    if ([self.ElementListView superview] == self.environmentInspectorView) return; // we are already showing element list
+    if ([self.elementListView superview] == self.environmentInspectorView) return; // we are already showing element list
     
-    [self switchEnvironmentInspectorToTabView:self.ElementListView];
+    [self switchEnvironmentInspectorToTabView:self.elementListView];
     
-    [self.ElementListView.elementTableView reloadData];
+    [self.elementListView.elementTableView reloadData];
     
 }
 

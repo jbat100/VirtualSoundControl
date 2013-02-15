@@ -38,8 +38,10 @@ void Event::generateMappings(void)
     BOOST_FOREACH(const Trigger& trigger, AllowedTriggers())
     {
         TargetMappingMap& targetMappingMap = mMappingMap[trigger];
+        std::cout << "Generating mappings for trigger " << StringForTrigger(trigger) << std::endl;
         BOOST_FOREACH(const Target& target, mRequiredMappingTargets)
         {
+            std::cout << "Generating mappings for target " << StringForTarget(target) << std::endl;
             targetMappingMap[target] = Mapping::SPtr(new Mapping);
         }
     }

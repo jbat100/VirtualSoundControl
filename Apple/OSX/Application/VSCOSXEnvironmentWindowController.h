@@ -26,11 +26,13 @@
 
 @property (strong) VSCOBOSXElementInspectorWindowController* elementInspectorWindowController;
 
+@property (strong) IBOutlet id<VSCOBOSXSceneController> sceneController;
+
 @property (nonatomic, weak) IBOutlet NSSplitView* splitView;
 @property (nonatomic, strong) IBOutlet NSView* environmentInspectorView;
 @property (nonatomic, strong) IBOutlet NSScrollView* sceneDetailScrollView;
 
-@property (nonatomic, strong) IBOutlet VSCOBOSXElementListView* ElementListView;
+@property (nonatomic, strong) IBOutlet VSCOBOSXElementListView* elementListView;
 @property (nonatomic, strong) IBOutlet VSCOBOSXSceneDetailView* sceneDetailView;
 @property (nonatomic, strong) IBOutlet VSCIMOSXEventChainListView* eventChainListView;
 

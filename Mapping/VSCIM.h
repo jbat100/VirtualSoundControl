@@ -54,7 +54,8 @@ namespace VSC
             ActionTypeMIDINoteOn,
             ActionTypeMIDINoteOnAndOff,
             ActionTypeMIDINoteOff,
-            ActionTypeMIDIControlChange
+            ActionTypeMIDIControlChange,
+            ActionTypeInvalid
         };
         
         /*
@@ -74,7 +75,8 @@ namespace VSC
             MappingTypeNone = 0,
             MappingTypeConstant,
             MappingTypeCollisionVelocity,
-            MappingTypeCollisionDistance
+            MappingTypeCollisionDistance,
+            MappingTypeInvalid
         };
         
         typedef std::set<MappingType> MappingTypeSet;
@@ -95,7 +97,8 @@ namespace VSC
             TargetVelocityOn,
             TargetVelocityOff,
             TargetDuration,
-            TargetValue
+            TargetValue,
+            TargetInvalid
         };
         
         typedef std::vector<Target> Targets;
@@ -112,14 +115,15 @@ namespace VSC
             TriggerNone = 0,
             TriggerPlain,
             TriggerCollision,
-            TriggerProximity
+            TriggerProximity,
+            TriggerInvalid
         };
         
         typedef std::vector<Trigger> Triggers;
         
-        std::string StringForTarget(const Target target);
+        std::string StringForTrigger(const Trigger trigger);
         
-        const Target TargetForString(const std::string& s);
+        const Trigger TriggerForString(const std::string& s);
         
         const MappingTypeSet& AllowedMappingTypeSetForTrigger(Trigger trigger);
         

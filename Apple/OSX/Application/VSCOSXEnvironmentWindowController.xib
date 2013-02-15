@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1080</int>
-		<string key="IBDocument.SystemVersion">12C60</string>
+		<int key="IBDocument.SystemTarget">1070</int>
+		<string key="IBDocument.SystemVersion">11G63b</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.34</string>
-		<string key="IBDocument.HIToolboxVersion">625.00</string>
+		<string key="IBDocument.AppKitVersion">1138.51</string>
+		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">3084</string>
@@ -81,6 +81,7 @@
 											<string key="NSFrame">{{0, 568}, {351, 25}}</string>
 											<reference key="NSSuperview" ref="883995233"/>
 											<reference key="NSWindow"/>
+											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<string key="NSClassName">DMTabBar</string>
 										</object>
@@ -107,12 +108,12 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="962656048"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
 			<object class="NSCustomObject" id="905468160">
-				<string key="NSClassName">VSCOSXOBSceneController</string>
+				<string key="NSClassName">VSCOBOSXSceneController</string>
 			</object>
 			<object class="NSCustomView" id="236663740">
 				<reference key="NSNextResponder"/>
@@ -129,15 +130,12 @@
 									<object class="NSTableView" id="683360583">
 										<reference key="NSNextResponder" ref="681522810"/>
 										<int key="NSvFlags">256</int>
-										<array class="NSMutableArray" key="NSSubviews"/>
 										<string key="NSFrameSize">{234, 315}</string>
 										<reference key="NSSuperview" ref="681522810"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="501958230"/>
+										<reference key="NSNextKeyView" ref="416516009"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
 										<bool key="NSEnabled">YES</bool>
-										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-										<bool key="NSControlAllowsExpansionToolTips">YES</bool>
 										<object class="NSTableHeaderView" key="NSHeaderView" id="444783006">
 											<reference key="NSNextResponder" ref="501958230"/>
 											<int key="NSvFlags">256</int>
@@ -261,7 +259,6 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="852236553"/>
 								<string key="NSReuseIdentifierKey">_NS:58</string>
-								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<reference key="NSTarget" ref="135371777"/>
 								<string key="NSAction">_doScroller:</string>
 								<double key="NSPercent">0.95238095238095233</double>
@@ -272,8 +269,8 @@
 								<string key="NSFrame">{{1, 119}, {223, 15}}</string>
 								<reference key="NSSuperview" ref="135371777"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:60</string>
-								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<int key="NSsFlags">1</int>
 								<reference key="NSTarget" ref="135371777"/>
 								<string key="NSAction">_doScroller:</string>
@@ -299,7 +296,7 @@
 						<string key="NSFrameSize">{236, 333}</string>
 						<reference key="NSSuperview" ref="236663740"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="681522810"/>
+						<reference key="NSNextKeyView" ref="501958230"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="NSsFlags">133682</int>
 						<reference key="NSVScroller" ref="1071292988"/>
@@ -308,9 +305,6 @@
 						<reference key="NSHeaderClipView" ref="501958230"/>
 						<reference key="NSCornerView" ref="623951982"/>
 						<bytes key="NSScrollAmts">QSAAAEEgAABCYAAAQmAAAA</bytes>
-						<double key="NSMinMagnification">0.25</double>
-						<double key="NSMaxMagnification">4</double>
-						<double key="NSMagnification">1</double>
 					</object>
 				</array>
 				<string key="NSFrameSize">{236, 333}</string>
@@ -318,7 +312,7 @@
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="135371777"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
-				<string key="NSClassName">VSCOSXOBSceneElementListView</string>
+				<string key="NSClassName">VSCOBOSXElementListView</string>
 			</object>
 			<object class="NSScrollView" id="85125971">
 				<reference key="NSNextResponder"/>
@@ -360,7 +354,6 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="454748160"/>
 						<string key="NSReuseIdentifierKey">_NS:15</string>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 						<reference key="NSTarget" ref="85125971"/>
 						<string key="NSAction">_doScroller:</string>
 						<double key="NSCurValue">1</double>
@@ -372,8 +365,8 @@
 						<string key="NSFrame">{{1, 405}, {250, 15}}</string>
 						<reference key="NSSuperview" ref="85125971"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:26</string>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 						<int key="NSsFlags">1</int>
 						<reference key="NSTarget" ref="85125971"/>
 						<string key="NSAction">_doScroller:</string>
@@ -389,9 +382,6 @@
 				<reference key="NSVScroller" ref="640138911"/>
 				<reference key="NSHScroller" ref="454748160"/>
 				<reference key="NSContentView" ref="24960509"/>
-				<double key="NSMinMagnification">0.25</double>
-				<double key="NSMaxMagnification">4</double>
-				<double key="NSMagnification">1</double>
 			</object>
 			<object class="NSCustomView" id="805406189">
 				<reference key="NSNextResponder"/>
@@ -420,7 +410,6 @@
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
 						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSButton" id="163512591">
 						<reference key="NSNextResponder" ref="805406189"/>
@@ -445,7 +434,6 @@
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
 						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSScrollView" id="533940866">
 						<reference key="NSNextResponder" ref="805406189"/>
@@ -458,15 +446,12 @@
 									<object class="NSTableView" id="79799719">
 										<reference key="NSNextResponder" ref="688848403"/>
 										<int key="NSvFlags">256</int>
-										<array class="NSMutableArray" key="NSSubviews"/>
 										<string key="NSFrameSize">{278, 241}</string>
 										<reference key="NSSuperview" ref="688848403"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="1060735508"/>
+										<reference key="NSNextKeyView" ref="386483034"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
 										<bool key="NSEnabled">YES</bool>
-										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-										<bool key="NSControlAllowsExpansionToolTips">YES</bool>
 										<object class="NSTableHeaderView" key="NSHeaderView" id="152509998">
 											<reference key="NSNextResponder" ref="1060735508"/>
 											<int key="NSvFlags">256</int>
@@ -550,7 +535,6 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="526917453"/>
 								<string key="NSReuseIdentifierKey">_NS:58</string>
-								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<reference key="NSTarget" ref="533940866"/>
 								<string key="NSAction">_doScroller:</string>
 								<double key="NSPercent">0.93775933609958506</double>
@@ -561,8 +545,8 @@
 								<string key="NSFrame">{{1, 243}, {240, 15}}</string>
 								<reference key="NSSuperview" ref="533940866"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:60</string>
-								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<int key="NSsFlags">1</int>
 								<reference key="NSTarget" ref="533940866"/>
 								<string key="NSAction">_doScroller:</string>
@@ -589,7 +573,7 @@
 						<string key="NSFrameSize">{280, 259}</string>
 						<reference key="NSSuperview" ref="805406189"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="688848403"/>
+						<reference key="NSNextKeyView" ref="1060735508"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="NSsFlags">133682</int>
 						<reference key="NSVScroller" ref="386483034"/>
@@ -598,9 +582,6 @@
 						<reference key="NSHeaderClipView" ref="1060735508"/>
 						<reference key="NSCornerView" ref="1059259740"/>
 						<bytes key="NSScrollAmts">QSAAAEEgAABCbAAAQmwAAA</bytes>
-						<double key="NSMinMagnification">0.25</double>
-						<double key="NSMaxMagnification">4</double>
-						<double key="NSMagnification">1</double>
 					</object>
 				</array>
 				<string key="NSFrameSize">{280, 284}</string>
@@ -639,14 +620,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">sceneElementListView</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="236663740"/>
-					</object>
-					<int key="connectionID">473</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">sceneDetailView</string>
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="93849858"/>
@@ -676,6 +649,14 @@
 						<reference key="destination" ref="883995233"/>
 					</object>
 					<int key="connectionID">672</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">elementListView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="236663740"/>
+					</object>
+					<int key="connectionID">767</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -723,7 +704,15 @@
 						<reference key="source" ref="905468160"/>
 						<reference key="destination" ref="236663740"/>
 					</object>
-					<int key="connectionID">474</int>
+					<int key="connectionID">765</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">sceneDetailView</string>
+						<reference key="source" ref="905468160"/>
+						<reference key="destination" ref="93849858"/>
+					</object>
+					<int key="connectionID">766</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -782,7 +771,6 @@
 										<int key="NSPeriodicDelay">400</int>
 										<int key="NSPeriodicInterval">75</int>
 									</object>
-									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								</object>
 								<object class="NSTextField" id="43178866">
 									<reference key="NSNextResponder" ref="416516009"/>
@@ -802,7 +790,6 @@
 										<reference key="NSBackgroundColor" ref="560865215"/>
 										<reference key="NSTextColor" ref="851792027"/>
 									</object>
-									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								</object>
 							</array>
 							<string key="NSFrame">{{1, 1}, {231, 54}}</string>
@@ -1899,7 +1886,7 @@
 				<boolean value="NO" key="650.IBNSViewMetadataLastInspectedTranslatesAutoresizingMaskIntoConstraints"/>
 				<boolean value="NO" key="650.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="650.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="651.CustomClassName">VSCOSXOBSceneDetailView</string>
+				<string key="651.CustomClassName">VSCOBOSXSceneDetailView</string>
 				<string key="651.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="652.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="653.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1959,7 +1946,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">764</int>
+			<int key="maxID">767</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2015,138 +2002,26 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">VSCOBOSXSceneDisplayView</string>
-					<string key="superclassName">OgreView</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">sceneController</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">sceneController</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">sceneController</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/VSCOBOSXSceneDisplayView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">VSCOSXEnvironmentWindowController</string>
-					<string key="superclassName">NSWindowController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="resetAction:">id</string>
-						<string key="test1:">id</string>
-						<string key="test2:">id</string>
-						<string key="test3:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="resetAction:">
-							<string key="name">resetAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="test1:">
-							<string key="name">test1:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="test2:">
-							<string key="name">test2:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="test3:">
-							<string key="name">test3:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="environmentInspectorView">NSView</string>
-						<string key="eventChainListView">VSCIMOSXEventChainListView</string>
-						<string key="sceneDetailScrollView">NSScrollView</string>
-						<string key="sceneDetailView">VSCOSXOBSceneDetailView</string>
-						<string key="sceneElementListView">VSCOSXOBSceneElementListView</string>
-						<string key="splitView">NSSplitView</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="environmentInspectorView">
-							<string key="name">environmentInspectorView</string>
-							<string key="candidateClassName">NSView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="eventChainListView">
-							<string key="name">eventChainListView</string>
-							<string key="candidateClassName">VSCIMOSXEventChainListView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="sceneDetailScrollView">
-							<string key="name">sceneDetailScrollView</string>
-							<string key="candidateClassName">NSScrollView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="sceneDetailView">
-							<string key="name">sceneDetailView</string>
-							<string key="candidateClassName">VSCOSXOBSceneDetailView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="sceneElementListView">
-							<string key="name">sceneElementListView</string>
-							<string key="candidateClassName">VSCOSXOBSceneElementListView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="splitView">
-							<string key="name">splitView</string>
-							<string key="candidateClassName">NSSplitView</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/VSCOSXEnvironmentWindowController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">VSCOSXKeyedCheckBoxView</string>
+					<string key="className">VSCOBOSXElementListView</string>
 					<string key="superclassName">NSView</string>
 					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">checkBoxButton</string>
-						<string key="NS.object.0">NSButton</string>
+						<string key="NS.key.0">elementTableView</string>
+						<string key="NS.object.0">NSTableView</string>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">checkBoxButton</string>
+						<string key="NS.key.0">elementTableView</string>
 						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">checkBoxButton</string>
-							<string key="candidateClassName">NSButton</string>
+							<string key="name">elementTableView</string>
+							<string key="candidateClassName">NSTableView</string>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/VSCOSXKeyedCheckBoxView.h</string>
+						<string key="minorKey">./Classes/VSCOBOSXElementListView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">VSCOSXKeyedSliderView</string>
-					<string key="superclassName">NSView</string>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="labelTextField">NSTextField</string>
-						<string key="slider">NSSlider</string>
-						<string key="valueTextField">NSTextField</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="labelTextField">
-							<string key="name">labelTextField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="slider">
-							<string key="name">slider</string>
-							<string key="candidateClassName">NSSlider</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="valueTextField">
-							<string key="name">valueTextField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/VSCOSXKeyedSliderView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">VSCOSXOBSceneController</string>
+					<string key="className">VSCOBOSXSceneController</string>
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="cameraSensitivitySliderAction:">id</string>
@@ -2172,24 +2047,37 @@
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">environmentController</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">environmentController</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="elementListView">VSCOBOSXElementListView</string>
+						<string key="environmentController">id</string>
+						<string key="sceneDetailView">VSCOBOSXSceneDetailView</string>
+						<string key="sceneView">VSCOBOSXSceneDisplayView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="elementListView">
+							<string key="name">elementListView</string>
+							<string key="candidateClassName">VSCOBOSXElementListView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="environmentController">
 							<string key="name">environmentController</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</object>
+						<object class="IBToOneOutletInfo" key="sceneDetailView">
+							<string key="name">sceneDetailView</string>
+							<string key="candidateClassName">VSCOBOSXSceneDetailView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="sceneView">
+							<string key="name">sceneView</string>
+							<string key="candidateClassName">VSCOBOSXSceneDisplayView</string>
+						</object>
+					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/VSCOSXOBSceneController.h</string>
+						<string key="minorKey">./Classes/VSCOBOSXSceneController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">VSCOSXOBSceneDetailView</string>
+					<string key="className">VSCOBOSXSceneDetailView</string>
 					<string key="superclassName">NSView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="cameraSensitivitySliderView">VSCOSXKeyedSliderView</string>
@@ -2272,34 +2160,138 @@
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/VSCOSXOBSceneDetailView.h</string>
+						<string key="minorKey">./Classes/VSCOBOSXSceneDetailView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">VSCOSXOBSceneElementListView</string>
-					<string key="superclassName">NSView</string>
+					<string key="className">VSCOBOSXSceneDisplayView</string>
+					<string key="superclassName">OgreView</string>
 					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">elementTableView</string>
-						<string key="NS.object.0">NSTableView</string>
+						<string key="NS.key.0">sceneController</string>
+						<string key="NS.object.0">id</string>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">elementTableView</string>
+						<string key="NS.key.0">sceneController</string>
 						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">elementTableView</string>
-							<string key="candidateClassName">NSTableView</string>
+							<string key="name">sceneController</string>
+							<string key="candidateClassName">id</string>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/VSCOSXOBSceneElementListView.h</string>
+						<string key="minorKey">./Classes/VSCOBOSXSceneDisplayView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">VSCOSXOBSceneElementView</string>
-					<string key="superclassName">NSView</string>
+					<string key="className">VSCOSXEnvironmentWindowController</string>
+					<string key="superclassName">NSWindowController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="resetAction:">id</string>
+						<string key="test1:">id</string>
+						<string key="test2:">id</string>
+						<string key="test3:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="resetAction:">
+							<string key="name">resetAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="test1:">
+							<string key="name">test1:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="test2:">
+							<string key="name">test2:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="test3:">
+							<string key="name">test3:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="elementListView">VSCOBOSXElementListView</string>
+						<string key="environmentInspectorView">NSView</string>
+						<string key="eventChainListView">VSCIMOSXEventChainListView</string>
+						<string key="sceneDetailScrollView">NSScrollView</string>
+						<string key="sceneDetailView">VSCOBOSXSceneDetailView</string>
+						<string key="splitView">NSSplitView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="elementListView">
+							<string key="name">elementListView</string>
+							<string key="candidateClassName">VSCOBOSXElementListView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="environmentInspectorView">
+							<string key="name">environmentInspectorView</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="eventChainListView">
+							<string key="name">eventChainListView</string>
+							<string key="candidateClassName">VSCIMOSXEventChainListView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="sceneDetailScrollView">
+							<string key="name">sceneDetailScrollView</string>
+							<string key="candidateClassName">NSScrollView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="sceneDetailView">
+							<string key="name">sceneDetailView</string>
+							<string key="candidateClassName">VSCOBOSXSceneDetailView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="splitView">
+							<string key="name">splitView</string>
+							<string key="candidateClassName">NSSplitView</string>
+						</object>
+					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/VSCOSXOBSceneElementView.h</string>
+						<string key="minorKey">./Classes/VSCOSXEnvironmentWindowController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">VSCOSXKeyedCheckBoxView</string>
+					<string key="superclassName">NSView</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">checkBoxButton</string>
+						<string key="NS.object.0">NSButton</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">checkBoxButton</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">checkBoxButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/VSCOSXKeyedCheckBoxView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">VSCOSXKeyedSliderView</string>
+					<string key="superclassName">NSView</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="labelTextField">NSTextField</string>
+						<string key="slider">NSSlider</string>
+						<string key="valueTextField">NSTextField</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="labelTextField">
+							<string key="name">labelTextField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="slider">
+							<string key="name">slider</string>
+							<string key="candidateClassName">NSSlider</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="valueTextField">
+							<string key="name">valueTextField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/VSCOSXKeyedSliderView.h</string>
 					</object>
 				</object>
 			</array>

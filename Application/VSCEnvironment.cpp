@@ -99,7 +99,7 @@ std::string Environment::generateUsernameForNewEventChain(void)
     static std::string baseName = "Event Chain";
     
     int count = 1;
-    while (count < mEventChains.size() + 1)
+    while (count <= mEventChains.size() + 1)
     {
         std::stringstream usernameStream;
         usernameStream << baseName << " " << count;
