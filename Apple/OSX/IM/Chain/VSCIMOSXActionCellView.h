@@ -18,13 +18,11 @@
 
 @interface VSCIMOSXActionCellView : VSCIMOSXEventCellView
 
-+(CGFloat) heightOfViewForAction:(VSC::IM::Action_SPtr)action;
++(CGFloat) defaultViewHeight;
 
 -(VSC::IM::Action_SPtr) action; // return cast event from VSCIMOSXEventCellView
 
-/*
- *  Debugging
- */
+@property (weak) IBOutlet NSPopUpButton* actionTypePopUpButton;
 
 -(void) printUIDescription;
 

@@ -26,11 +26,9 @@
 @property (weak) IBOutlet NSPopUpButton* addEventButton;
 @property (weak) IBOutlet NSButton* removeEventButton;
 @property (weak) IBOutlet NSMenu* addEventMenu;
+
 @property (weak) IBOutlet NSMenuItem* addDelayMenuItem;
-@property (weak) IBOutlet NSMenuItem* addCollisionMIDINoteOnMenuItem;
-@property (weak) IBOutlet NSMenuItem* addCollisionMIDINoteOffMenuItem;
-@property (weak) IBOutlet NSMenuItem* addCollisionMIDINoteOnAndOffMenuItem;
-@property (weak) IBOutlet NSMenuItem* addCollisionMIDIControlChangeMenuItem;
+@property (weak) IBOutlet NSMenuItem* addActionMenuItem;
 
 -(IBAction) removeSelectedEvent:(id)sender;
 -(IBAction) menuItemAction:(id)sender;

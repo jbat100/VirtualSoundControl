@@ -18,8 +18,9 @@
 
 @property (nonatomic, assign) VSC::IM::Event_WPtr event;
 
-@property (weak) IBOutlet NSTextField* titleTextField;
 @property (weak) IBOutlet NSImageView* iconImageView;
+
++(CGFloat) defaultViewHeight;
 
 -(IBAction) showMappings:(id)sender;
 

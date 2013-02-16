@@ -51,6 +51,10 @@ void Action::setActionType(ActionType actionType)
     
     switch (actionType)
     {
+        case ActionTypeVoid:
+            mImplementation = Implementation::SPtr(new ImplementationVoid);
+            break;
+            
         case ActionTypeMIDINoteOn:
             mImplementation = Implementation::SPtr(new ImplementationMIDINoteOn);
             this->addRequiredMappingTarget(TargetPitch);
@@ -81,6 +85,10 @@ void Action::setActionType(ActionType actionType)
             break;
     }
     
+    /*
+     *  Specific task queues
+     */
+    
     switch (actionType)
     {
         case ActionTypeMIDINoteOn:
@@ -89,9 +97,8 @@ void Action::setActionType(ActionType actionType)
         case ActionTypeMIDIControlChange:
         {
             this->setTaskQueue(MIDI::SingletonMIDITaskQueue());
-        }
             break;
-            
+        }
         default:
             break;
     }

@@ -53,6 +53,18 @@ MIDI::ControlNumberOwner::SPtr VSC::IM::ExtractMIDIControlNumberOwnerForAction(A
     return boost::dynamic_pointer_cast<MIDI::ControlNumberOwner>(implementation);
 }
 
+//MARK: Void
+
+const Tasks Action::ImplementationVoid::generateTasksWithTargetValueMap(Event::TargetValueMap& valueMap)
+{
+    Tasks tasks;
+    return tasks;
+}
+
+void Action::ImplementationVoid::setupMappings(Action::SPtr action)
+{
+    // nothing ...
+}
 
 //MARK: MIDINoteOn
 

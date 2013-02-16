@@ -15,6 +15,11 @@
 
 @implementation VSCIMOSXEventCellView
 
++(CGFloat) defaultViewHeight
+{
+    return 40.0;
+}
+
 - (id)initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];
@@ -32,9 +37,7 @@
 
 -(void) awakeFromNib
 {
-    BOOST_ASSERT(self.titleTextField);
-    BOOST_ASSERT(self.iconImageView);
-    self.titleTextField.translatesAutoresizingMaskIntoConstraints = NO;
+    //BOOST_ASSERT(self.iconImageView);
     self.iconImageView.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
@@ -43,9 +46,9 @@
 -(IBAction) showMappings:(id)sender
 {
     BOOST_ASSERT(self.eventChainController);
-    BOOST_ASSERT([self.eventChainController respondsToSelector:@selector(sender:requestsShowMappingsForEvent:)]);
+    BOOST_ASSERT([self.eventChainController respondsToSelector:@selector(sender:requestsShowEventEditorForEvent:)]);
     
-    [self.eventChainController sender:self requestsShowMappingsForEvent:self.event.lock()];
+    [self.eventChainController sender:self requestsShowEventEditorForEvent:self.event.lock()];
 }
 
 #pragma mark - Custom Setter

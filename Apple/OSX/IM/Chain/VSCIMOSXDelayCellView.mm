@@ -50,7 +50,7 @@
 
 -(void) commonInit
 {
-    self.translatesAutoresizingMaskIntoConstraints = NO;
+
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -64,7 +64,11 @@
 
 -(void) awakeFromNib
 {
+    [super awakeFromNib];
     
+    BOOST_ASSERT(self.titleTextField);
+    self.titleTextField.translatesAutoresizingMaskIntoConstraints = NO;
+    self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 #pragma mark - Delay Getter

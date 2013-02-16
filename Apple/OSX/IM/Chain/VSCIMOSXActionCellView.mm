@@ -33,6 +33,9 @@ using namespace VSC::IM;
  */
 
 @interface VSCIMOSXActionCellView ()
+{
+    
+}
 
 /*
  *  Constraints!
@@ -105,7 +108,20 @@ static const BOOL debugDraw = NO;
 -(void) awakeFromNib
 {
     [super awakeFromNib];
+    
     self.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    /*
+     *  Populate PopUpButton
+     */
+    
+    BOOST_ASSERT(self.actionTypePopUpButton);
+    
+    BOOST_FOREACH(const ActionType& actionType, AllowedActionTypes())
+    {
+        std::string actionTypeString = StringForActionType(actionType);
+        [self.actionTypePopUpButton addItemWithTitle:[NSString stringWithStdString:actionTypeString]];
+    }
 }
 
 #pragma mark - Action Getter
@@ -148,11 +164,12 @@ static const BOOL debugDraw = NO;
     if (action)
     {
         std::string actionTypeString = StringForActionType(action->getActionType());
-        [self.titleTextField setStringValue:[NSString stringWithStdString:actionTypeString]];
+        [self.actionTypePopUpButton selectItemWithTitle:[NSString stringWithStdString:actionTypeString]];
     }
     else
     {
-        [self.titleTextField setStringValue:@"__EMPTY__"];
+        std::string actionTypeString = StringForActionType(ActionTypeVoid);
+        [self.actionTypePopUpButton selectItemWithTitle:[NSString stringWithStdString:actionTypeString]];
     }
 }
 

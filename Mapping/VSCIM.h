@@ -51,12 +51,15 @@ namespace VSC
         enum ActionType
         {
             ActionTypeNone = 0,
+            ActionTypeVoid,
             ActionTypeMIDINoteOn,
             ActionTypeMIDINoteOnAndOff,
             ActionTypeMIDINoteOff,
             ActionTypeMIDIControlChange,
             ActionTypeInvalid
         };
+        
+        typedef std::set<ActionType> ActionTypeSet;
         
         /*
          *  Used for UI/Debug display
@@ -65,6 +68,8 @@ namespace VSC
         std::string StringForActionType(const ActionType actionType);
         
         ActionType ActionTypeForString(const std::string& s);
+        
+        const ActionTypeSet& AllowedActionTypes();
         
         /*
          *  Mapping type enum

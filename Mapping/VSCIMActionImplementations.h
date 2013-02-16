@@ -17,6 +17,12 @@ namespace VSC {
          *  Concrete implementations
          */
         
+        class Action::ImplementationVoid : public Action::Implementation
+        {
+            virtual const Tasks generateTasksWithTargetValueMap(Event::TargetValueMap& valueMap);
+            virtual void setupMappings(Action::SPtr action);
+        };
+        
         class Action::ImplementationMIDINoteOn : public Action::Implementation,
         public MIDI::OutputOwner, public MIDI::ChannelOwner
         {

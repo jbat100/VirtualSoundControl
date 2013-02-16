@@ -302,9 +302,13 @@ const static BOOL traceInterface = YES;
     
     BOOST_ASSERT(self.elementEventChainsView);
     
-    //[self.elementEventChainsView setupIfNecessary];
-    
     [self switchElementInspectorToTabView:self.elementEventChainsView];
+    
+    BOOST_ASSERT(self.elementEventChainsView.eventChainTableView);
+    BOOST_ASSERT(self.elementEventChainsView.eventChainTableView.delegate == self);
+    BOOST_ASSERT(self.elementEventChainsView.eventChainTableView.dataSource == self);
+    
+    [self.elementEventChainsView.eventChainTableView reloadData];
 }
 
 #pragma mark - VSCOBOSXSceneListenerTarget
@@ -339,6 +343,8 @@ const static BOOL traceInterface = YES;
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
+    NSLog(@"tableView:%@ objectValueForTableColumn:%@ row:%ld", tableView, tableColumn, (long)row);
+    
     BOOST_ASSERT(self.environmentController);
     Environment::SPtr environment = self.environmentController.environment.lock();
     BOOST_ASSERT(environment);
@@ -354,36 +360,30 @@ const static BOOL traceInterface = YES;
         BOOST_ASSERT(eventChain);
         if (eventChain)
         {
-            // Return the object property corresponding to the column
             if([[tableColumn identifier] isEqualToString:@"name"])
             {
                 return [NSString stringWithStdString:eventChain->getUsername()];
             }
-        }
-        
-        
-        // Since this method has return type `id', we need to box the
-        // boolean values inside an `NSNumber' instance
-        else if([[tableColumn identifier] isEqualToString:@"linked"])
-        {
-            Element::SPtr elem = self.element.lock();
-            BOOST_ASSERT(elem);
-            CollisionMapper::SPtr collisionMapper = environment->getCollisionMapper();
-            BOOST_ASSERT(collisionMapper);
-            if (collisionMapper && elem)
+            else if([[tableColumn identifier] isEqualToString:@"linked"])
             {
-                /*
-                 *  Check if the element is linked to the eventChain (via the environment collision mapper)
-                 */
-                
-                const EventChains& linkedEventChains = collisionMapper->getEventChainsForCollisionStarted(elem);
-                EventChains::const_iterator it = std::find(linkedEventChains.begin(), linkedEventChains.end(), eventChain);
-                
-                bool linked = it != linkedEventChains.end();
-                
-                return [NSNumber numberWithBool:linked ? YES : NO];
+                Element::SPtr elem = self.element.lock();
+                BOOST_ASSERT(elem);
+                CollisionMapper::SPtr collisionMapper = environment->getCollisionMapper();
+                BOOST_ASSERT(collisionMapper);
+                if (collisionMapper && elem)
+                {
+                    /*
+                     *  Check if the element is linked to the eventChain (via the environment collision mapper)
+                     */
+                    
+                    const EventChains& linkedEventChains = collisionMapper->getEventChainsForCollisionStarted(elem);
+                    EventChains::const_iterator it = std::find(linkedEventChains.begin(), linkedEventChains.end(), eventChain);
+                    bool linked = it != linkedEventChains.end();
+                    return [NSNumber numberWithBool:linked ? YES : NO];
+                }
             }
         }
+        
     }
     
     return nil;
@@ -394,6 +394,8 @@ const static BOOL traceInterface = YES;
     /*
      *  Only the linked checkbox should be allowed to change, ensure this is the case
      */
+    
+    NSLog(@"tableView:%@ setObjectValue:%@ forTableColumn:%@ row:%ld", aTableView, anObject, aTableColumn, (long)rowIndex);
     
     BOOST_ASSERT([[aTableColumn identifier] isEqualToString:@"linked"]);
     

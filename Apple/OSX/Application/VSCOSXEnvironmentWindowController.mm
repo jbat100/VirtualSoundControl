@@ -8,13 +8,17 @@
 
 #import "VSCOSXEnvironmentWindowController.h"
 #import "VSCOSXApplicationManager.h"
+#import "VSCOSXEnvironmentController.h"
+
 #import "VSCOBOSXSceneController.h"
 #import "VSCOBOSXSceneDisplayView.h"
 #import "VSCOBOSXElementInspectorWindowController.h"
 #import "VSCOBOSXElementInspectorViewController.h"
-#import "VSCOSXEnvironmentController.h"
 #import "VSCOBOSXElementListView.h"
 #import "VSCOBOSXSceneDetailView.h"
+
+#import "VSCIMOSXEventChainListView.h"
+#import "VSCIMOSXEventChainCellView.h"
 
 #import "NSString+VSCAdditions.h"
 #import "NSArray+VSCAdditions.h"
@@ -43,6 +47,7 @@ NSArray* EnvironmentInspectorTabParamArray = nil;
 
 NSString* const VSCOSXTabTitleSceneSettings = @"Scene Settings";
 NSString* const VSCOSXTabTitleElements = @"Scene Elements";
+NSString* const VSCOSXTabEventChains = @"Event Chains";
 NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 
 @interface VSCOSXEnvironmentWindowController ()
@@ -72,7 +77,8 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     EnvironmentInspectorTabParamArray = @[
     @{@"image": [NSImage imageNamed:@"158-wrench-2.png"], @"title": VSCOSXTabTitleSceneSettings},
     @{@"image": [NSImage imageNamed:@"12-eye"], @"title": VSCOSXTabTitleElements},
-    @{@"image": [NSImage imageNamed:@"122-stats"], @"title": VSCOSXTabTitleEnveloppes}
+    //@{@"image": [NSImage imageNamed:@"122-stats"], @"title": VSCOSXTabTitleEnveloppes}
+    @{@"image": [NSImage imageNamed:@"122-stats"], @"title": VSCOSXTabEventChains}
     ];
     
 }
@@ -132,6 +138,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     self.sceneDetailScrollView.translatesAutoresizingMaskIntoConstraints = NO;
     self.sceneDetailView.translatesAutoresizingMaskIntoConstraints = NO;
     self.elementListView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.eventChainListView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self setupConstraints];
@@ -227,6 +234,11 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
                 NSLog(@"Selected scene detail tab");
                 [self showSceneDetail];
             }
+            else if ([tabBarItem.toolTip isEqualToString:VSCOSXTabEventChains])
+            {
+                NSLog(@"Selected event chains");
+                [self showEventChainList];
+            }
             else if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleEnveloppes])
             {
                 NSLog(@"Selected enveloppes tab");
@@ -310,7 +322,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     [allConstraints addObjectsFromArray:hConstraints];
     [self.environmentInspectorView addConstraints:hConstraints];
     
-    NSArray* vConstraints =[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bar]-0-[tabView]|"
+    NSArray* vConstraints =[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bar(==25)]-0-[tabView]|"
                                                                    options:0
                                                                    metrics:nil
                                                                      views:viewsDictionary];
@@ -329,12 +341,27 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     BOOST_ASSERT(self.elementListView.elementTableView.delegate == self.sceneController);
     
     
-    if ([self.elementListView superview] == self.environmentInspectorView) return; // we are already showing element list
-    
-    [self switchEnvironmentInspectorToTabView:self.elementListView];
+    if ([self.elementListView superview] != self.environmentInspectorView)
+    {
+        [self switchEnvironmentInspectorToTabView:self.elementListView];
+    }
     
     [self.elementListView.elementTableView reloadData];
     
+}
+
+-(void) showEventChainList
+{
+    BOOST_ASSERT(self.eventChainListView);
+    BOOST_ASSERT(self.eventChainListView.tableView);
+    BOOST_ASSERT(self.eventChainListView.tableView.delegate == self);
+    
+    if ([self.eventChainListView superview] != self.environmentInspectorView)
+    {
+        [self switchEnvironmentInspectorToTabView:self.eventChainListView];
+    }
+    
+    [self.eventChainListView.tableView reloadData];
 }
 
 -(void) showSceneDetail
@@ -342,16 +369,12 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     BOOST_ASSERT(self.sceneDetailScrollView);
     BOOST_ASSERT(self.sceneDetailView);
     
-    if ([self.sceneDetailView superview] == self.environmentInspectorView) return; // we are already showing element list
-    
-    [self resetInspectorView];
-    
-    [self switchEnvironmentInspectorToTabView:self.sceneDetailScrollView];
-    
-    //[self.sceneDetailView reloadInterface];
-    
+    if ([self.sceneDetailView superview] != self.environmentInspectorView)
+    {
+        [self resetInspectorView];
+        [self switchEnvironmentInspectorToTabView:self.sceneDetailScrollView];
+    }
 }
-
 
 -(void) showElementInspectorForElement:(Element::SPtr)element
 {
@@ -372,44 +395,98 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     [self.elementInspectorWindowController.elementInspectorViewController showElementDetailView];
 }
 
--(const EventChains&) collisionStartedEventChainsForElement:(Element::SPtr)element
+-(void) showEventChainEditor:(EventChain::SPtr)eventChain
 {
-    Environment::SPtr env = self.environment.lock();
-    BOOST_ASSERT(env);
-    
-    EventChains eventChains;
-    
-    if (env)
-    {
-        CollisionMapper::SPtr mapper = env->getCollisionMapper();
-        BOOST_ASSERT(mapper);
-        if (mapper)
-        {
-            return mapper->getEventChainsForCollisionStarted(element);
-        }
-    }
-    
-    return eventChains;
+    NSLog(@"Showing event chain editor");
 }
 
--(const EventChains&) collisionEndedEventChainsForElement:(Element::SPtr)element
+
+#pragma mark - NSTableView Delagate / DataSource
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    Environment::SPtr env = self.environment.lock();
-    BOOST_ASSERT(env);
+    BOOST_ASSERT(aTableView == self.eventChainListView.tableView);
     
-    EventChains eventChains;
-    
-    if (env)
+    if (aTableView == self.eventChainListView.tableView)
     {
-        CollisionMapper::SPtr mapper = env->getCollisionMapper();
-        BOOST_ASSERT(mapper);
-        if (mapper)
+        Environment::SPtr env = self.environment.lock();
+        BOOST_ASSERT(env);
+        if (env)
         {
-            return mapper->getEventChainsForCollisionEnded(element);
+            const EventChains& eventChains = env->getEventChains();
+            return eventChains.size();
         }
     }
     
-    return eventChains;
+	return 0;
+}
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn*)tableColumn row:(NSInteger)row
+{
+    BOOST_ASSERT(tableView == self.eventChainListView.tableView);
+    
+    if (tableView == self.eventChainListView.tableView)
+    {
+        Environment::SPtr env = self.environment.lock();
+        BOOST_ASSERT(env);
+        if (env)
+        {
+            const EventChains& eventChains = env->getEventChains();
+            BOOST_ASSERT(eventChains.size() > row);
+            if (eventChains.size() > row)
+            {
+                VSCIMOSXEventChainCellView* cell = [tableView makeViewWithIdentifier:@"VSCIMOSXEventChainCellView" owner:self];
+                BOOST_ASSERT(cell);
+                BOOST_ASSERT([cell isKindOfClass:[VSCIMOSXEventChainCellView class]]);
+                
+                EventChain::SPtr eventChain = eventChains.at(row);
+                BOOST_ASSERT(eventChain);
+                if (eventChain)
+                {
+                    [cell setEventChain:EventChain::WPtr(eventChain)];
+                    return cell;
+                }
+            }
+            
+        }
+        
+    }
+    
+	return nil;
+}
+
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
+{
+    
+    BOOST_ASSERT(tableView == self.eventChainListView.tableView);
+    
+    if (tableView == self.eventChainListView.tableView)
+    {
+        return [VSCIMOSXEventChainCellView defaultViewHeight];
+    }
+    
+    return 0.0;
+}
+
+- (void)tableViewSelectionDidChange:(NSNotification *)aNotification
+{
+    NSLog(@"%@ tableViewSelectionDidChange: %@", self, aNotification);
+}
+
+- (void)tableViewColumnDidResize:(NSNotification *)aNotification
+{
+    NSLog(@"%@ tableViewColumnDidResize: %@, column %@, old width %@",
+          self, [aNotification object],
+          [[aNotification userInfo] objectForKey:@"NSTableColumn"],
+          [[aNotification userInfo] objectForKey:@"NSOldWidth"]);
+}
+
+- (void)tableView:(NSTableView *)aTableView
+  willDisplayCell:(id)aCell
+   forTableColumn:(NSTableColumn *)aTableColumn
+              row:(NSInteger)rowIndex
+{
+    
 }
 
 

@@ -70,6 +70,7 @@ namespace VSC {
                 virtual const Tasks generateTasksWithTargetValueMap(Event::TargetValueMap& valueMap) = 0;
                 virtual void setupMappings(Action::SPtr action) = 0;
             };
+            class ImplementationVoid;
             class ImplementationMIDINoteOn;
             class ImplementationMIDINoteOff;
             class ImplementationMIDINoteOnAndOff;

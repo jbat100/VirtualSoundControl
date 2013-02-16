@@ -19,6 +19,6 @@
 
 @property (assign) IBOutlet id<VSCOBOSXElementController> elementController;
 
-@property (nonatomic, strong) NSTableView* eventChainTableView;
+@property (nonatomic, strong) IBOutlet NSTableView* eventChainTableView;
 
 @end

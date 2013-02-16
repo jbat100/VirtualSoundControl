@@ -35,9 +35,6 @@ NSString* const VSCIMOSXDelayCellViewReuseIdentifier       = @"VSCIMOSXDelayCell
 
 @property (nonatomic, strong) NSArray* mainViewConstraints;
 
-+(VSCIMOSXActionCellView*) newActionViewWithOwner:(id)owner;
-+(VSCIMOSXDelayCellView*) newDelayViewWithOwner:(id)owner;
-
 -(void) customInit;
 
 -(void) resetView;
@@ -89,12 +86,7 @@ const static BOOL traceInterface = YES;
     self.removeEventButton.translatesAutoresizingMaskIntoConstraints = NO;
     
     BOOST_ASSERT(self.addDelayMenuItem);
-    BOOST_ASSERT(self.addCollisionMIDINoteOnMenuItem);
-    BOOST_ASSERT(self.addCollisionMIDINoteOffMenuItem);
-    BOOST_ASSERT(self.addCollisionMIDINoteOnAndOffMenuItem);
-    BOOST_ASSERT(self.addCollisionMIDIControlChangeMenuItem);
-    
-    BOOST_ASSERT(self.addCollisionMIDINoteOnMenuItem.target == self);
+    BOOST_ASSERT(self.addActionMenuItem);
     
     self.eventTableView.allowsEmptySelection = YES;
     self.eventTableView.allowsMultipleSelection = NO;
@@ -151,31 +143,12 @@ const static BOOL traceInterface = YES;
     {
         event = Event::SPtr(new IM::Delay);
     }
-    else if (sender == self.addCollisionMIDINoteOnMenuItem)
+    else if (sender == self.addActionMenuItem)
     {
         event = Event::SPtr(new Action);
         Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
-        action->setActionType(ActionTypeMIDINoteOn);
+        action->setActionType(ActionTypeVoid);
     }
-    else if (sender == self.addCollisionMIDINoteOffMenuItem)
-    {
-        event = Event::SPtr(new Action);
-        Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
-        action->setActionType(ActionTypeMIDINoteOff);
-    }
-    else if (sender == self.addCollisionMIDINoteOnAndOffMenuItem)
-    {
-        event = Event::SPtr(new Action);
-        Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
-        action->setActionType(ActionTypeMIDINoteOnAndOff);
-    }
-    else if (sender == self.addCollisionMIDIControlChangeMenuItem)
-    {
-        event = Event::SPtr(new Action);
-        Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
-        action->setActionType(ActionTypeMIDIControlChange);
-    }
-    
     if (event)
     {
         [self appendEvent:event];
@@ -257,7 +230,7 @@ const static BOOL traceInterface = YES;
 
 
 
--(void) sender:(id)sender requestsShowMappingsForEvent:(Event::SPtr)event
+-(void) sender:(id)sender requestsShowEventEditorForEvent:(Event::SPtr)event
 {
     if (!self.eventEditorViewController)
     {
@@ -302,67 +275,6 @@ const static BOOL traceInterface = YES;
 }
 
 
-#pragma mark - View Factory Methods
-
-+(VSCIMOSXActionCellView*) newActionViewWithOwner:(id)owner
-{
-    static NSNib* nib = nil;
-    static NSString* identifier = [[VSCIMOSXActionCellView class] description];
-    
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        BOOST_ASSERT(!nib);
-        nib = [[NSNib alloc] initWithNibNamed:[[VSCIMOSXActionCellView class] description] bundle:nil];
-    });
-    BOOST_ASSERT(nib);
-    
-    NSArray *objects = nil;
-    VSCIMOSXActionCellView* v = nil;
-    [nib instantiateNibWithOwner:owner topLevelObjects:&objects];
-    for(id object in objects)
-    {
-        if([object isKindOfClass:[VSCIMOSXActionCellView class]]) {
-            v = object;
-            v.identifier = identifier;
-            break;
-        }
-    }
-    BOOST_ASSERT(v);
-    BOOST_ASSERT(v.eventChainController == owner);
-    v.translatesAutoresizingMaskIntoConstraints = NO;
-    return v;
-}
-
-+(VSCIMOSXDelayCellView*) newDelayViewWithOwner:(id)owner
-{
-    static NSNib* nib = nil;
-    static NSString* identifier = [[VSCIMOSXDelayCellView class] description];
-    
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        BOOST_ASSERT(!nib);
-        nib = [[NSNib alloc] initWithNibNamed:[[VSCIMOSXDelayCellView class] description] bundle:nil];
-    });
-    BOOST_ASSERT(nib);
-    
-    NSArray *objects = nil;
-    VSCIMOSXDelayCellView* v = nil;
-    [nib instantiateNibWithOwner:owner topLevelObjects:&objects];
-    for(id object in objects)
-    {
-        if([object isKindOfClass:[VSCIMOSXDelayCellView class]]) {
-            v = object;
-            v.identifier = identifier;
-            break;
-        }
-    }
-    BOOST_ASSERT(v);
-    BOOST_ASSERT(v.eventChainController == owner);
-    v.translatesAutoresizingMaskIntoConstraints = NO;
-    return v;
-}
-
-
 #pragma mark - NSTableViewDelegate and NSTableViewDataSource
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
@@ -397,8 +309,8 @@ const static BOOL traceInterface = YES;
         if (action)
         {
             VSCIMOSXActionCellView* actionView = [tableView makeViewWithIdentifier:[[VSCIMOSXActionCellView class] description] owner:self];
-            if (actionView) BOOST_ASSERT([actionView isKindOfClass:[VSCIMOSXActionCellView class]]);
-            else actionView = [[self class] newActionViewWithOwner:self];
+            BOOST_ASSERT(actionView);
+            BOOST_ASSERT([actionView isKindOfClass:[VSCIMOSXActionCellView class]]);
             [actionView setEvent:(Event::WPtr(event))];
             actionView.eventChainController = self;
             if (traceInterface) NSLog(@"Returning: %@ with frame: %@", actionView, NSStringFromRect(actionView.frame));
@@ -410,15 +322,14 @@ const static BOOL traceInterface = YES;
         if (delay)
         {
             VSCIMOSXDelayCellView* delayView = [tableView makeViewWithIdentifier:[[VSCIMOSXDelayCellView class] description] owner:self];
-            if (delayView) BOOST_ASSERT([delayView isKindOfClass:[VSCIMOSXDelayCellView class]]);
-            else delayView = [[self class] newDelayViewWithOwner:self];
+            BOOST_ASSERT(delayView);
+            BOOST_ASSERT([delayView isKindOfClass:[VSCIMOSXDelayCellView class]]);
             delayView.eventChainController = self;
             [delayView setEvent:Event::WPtr(event)];
             if (traceInterface) NSLog(@"Returning: %@ with frame: %@", delayView, NSStringFromRect(delayView.frame));
             [delayView setNeedsLayout:YES];
             return delayView;
         }
-        
     }
     	
 	return nil;
@@ -448,7 +359,7 @@ const static BOOL traceInterface = YES;
         IM::Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
         if (action)
         {
-            CGFloat h = [VSCIMOSXActionCellView heightOfViewForAction:action];
+            CGFloat h = [VSCIMOSXActionCellView defaultViewHeight];
             if (traceInterface) NSLog(@"Returning: %f", h);
             return h;
         }

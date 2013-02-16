@@ -14,7 +14,7 @@
 
 @interface VSCIMOSXEventChainCellView : NSView
 
-@property (assign) id<VSCOSXEnvironmentController> environmentController;
+@property (assign) IBOutlet id<VSCOSXEnvironmentController> environmentController;
 
 @property (nonatomic, assign) VSC::IM::EventChain::WPtr eventChain;
 

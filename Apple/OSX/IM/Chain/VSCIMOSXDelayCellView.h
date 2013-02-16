@@ -16,9 +16,8 @@
 
 @interface VSCIMOSXDelayCellView : VSCIMOSXEventCellView
 
-+(CGFloat) defaultViewHeight;
-
 -(VSC::IM::Delay_SPtr) delay;
 
+@property (weak) IBOutlet NSTextField* titleTextField;
 
 @end

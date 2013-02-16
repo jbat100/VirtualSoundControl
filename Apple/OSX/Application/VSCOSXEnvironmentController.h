@@ -30,11 +30,9 @@
 
 -(void) showEnvironmentInspector;
 -(void) showSceneDetails;
+-(void) showEventChainList;
 -(void) showElementList;
 -(void) showElementInspectorForElement:(VSC::OB::Element_SPtr)element;
 -(void) showEventChainEditor:(VSC::IM::EventChain_SPtr)eventChain;
-
--(const VSC::IM::EventChains&) collisionStartedEventChainsForElement:(VSC::OB::Element_SPtr)element;
--(const VSC::IM::EventChains&) collisionEndedEventChainsForElement:(VSC::OB::Element_SPtr)element;
 
 @end

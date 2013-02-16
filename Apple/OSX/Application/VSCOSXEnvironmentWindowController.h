@@ -41,6 +41,7 @@
 -(IBAction)resetAction:(id)sender;
 
 -(void) showElementList;
+-(void) showEventChainList;
 -(void) showSceneDetail;
 
 - (IBAction)test1:(id)sender;

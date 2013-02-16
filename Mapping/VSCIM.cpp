@@ -34,6 +34,8 @@ namespace VSC
         TriggerMappingTypeMap   triggerMappingTypeMap;
         
         Triggers                allowedTriggers;
+        
+        ActionTypeSet           allowedActionTypeSet;
     }
 }
 
@@ -49,6 +51,8 @@ VSC::IM::ActionDescriptionMap actionDescriptionMap;
 
 VSC::IM::TriggerMappingTypeMap triggerMappingTypeMap;
 VSC::IM::Triggers allowedTriggers;
+
+VSC::IM::ActionTypeSet allowedActionTypeSet;
 
 
 void VSC::IM::InitialiseInternals(void)
@@ -76,6 +80,7 @@ void VSC::IM::InitialiseInternals(void)
     mappingDescriptionMap.insert(MappingDescriptionPair(MappingTypeCollisionDistance, "Collision Distance"));
     
     actionDescriptionMap.insert(ActionDescriptionPair(ActionTypeNone, "No Action"));
+    actionDescriptionMap.insert(ActionDescriptionPair(ActionTypeVoid, "Void"));
     actionDescriptionMap.insert(ActionDescriptionPair(ActionTypeMIDINoteOn, "MIDI Note On"));
     actionDescriptionMap.insert(ActionDescriptionPair(ActionTypeMIDINoteOnAndOff, "MIDI Note On And Off"));
     actionDescriptionMap.insert(ActionDescriptionPair(ActionTypeMIDINoteOff, "MIDI Note Off"));
@@ -94,6 +99,9 @@ void VSC::IM::InitialiseInternals(void)
     triggerMappingTypeMap[TriggerProximity] = proximitySet;
     
     allowedTriggers += TriggerPlain, TriggerCollision, TriggerProximity;
+    
+    allowedActionTypeSet += ActionTypeVoid;
+    allowedActionTypeSet += ActionTypeMIDINoteOn, ActionTypeMIDINoteOnAndOff, ActionTypeMIDINoteOff, ActionTypeMIDIControlChange;
 }
 
 const MappingTypeSet& VSC::IM::AllowedMappingTypeSetForTrigger(Trigger trigger)
@@ -106,6 +114,12 @@ const Triggers& VSC::IM::AllowedTriggers(void)
 {
     boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     return allowedTriggers;
+}
+
+const ActionTypeSet& VSC::IM::AllowedActionTypes()
+{
+    boost::call_once(&InitialiseInternals, initializedInternalsFlag);
+    return allowedActionTypeSet;
 }
 
 std::string VSC::IM::StringForTrigger(const Trigger trigger)
