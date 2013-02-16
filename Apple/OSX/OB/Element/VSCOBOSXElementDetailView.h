@@ -23,6 +23,8 @@
 @property (nonatomic, strong) VSCOSXKeyed4FieldView* rotationFieldView;
 @property (nonatomic, strong) VSCOSXKeyedCheckBoxView* immobilizedCheckBoxView;
 
+-(void) setupIfNecessary;
+
 -(IBAction) immobilized:(id)sender;
 
 -(void) reloadWholeInterface;

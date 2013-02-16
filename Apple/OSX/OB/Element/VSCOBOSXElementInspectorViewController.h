@@ -20,12 +20,14 @@
 <VSCOBOSXElementController, VSCOBOSXSceneListenerTarget, NSTableViewDataSource, NSTableViewDelegate>
 
 @property (strong) IBOutlet VSCOBOSXElementDetailView* elementDetailView;
-@property (strong) IBOutlet VSCOBOSXElementEventChainsView* elementCollisionView;
+@property (strong) IBOutlet VSCOBOSXElementEventChainsView* elementEventChainsView;
 
 @property (weak) IBOutlet DMTabBar* tabBar;
 
+-(void) setupIfNecessary;
+
 -(void) showElementDetailView;
--(void) showElementCollisionView;
+-(void) showElementEventChainsView;
 
 -(IBAction) immobilized:(id)sender;
 

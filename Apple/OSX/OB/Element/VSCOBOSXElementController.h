@@ -30,7 +30,7 @@
 @property (nonatomic, assign) BOOL immobilized;
 
 -(void) showElementDetailView;
--(void) showElementCollisionView;
+-(void) showElementEventChainsView;
 
 @end
 

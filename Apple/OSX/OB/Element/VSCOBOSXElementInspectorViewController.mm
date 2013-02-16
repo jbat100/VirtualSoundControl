@@ -45,7 +45,6 @@ NSArray* ElementInspectorTabParamArray = nil;
 
 -(void) setupTabBar;
 -(void) resetInspectorView;
--(void) updateEventChains;
 
 @end
 
@@ -78,31 +77,39 @@ const static BOOL traceInterface = YES;
     return self;
 }
 
+-(void) setupIfNecessary
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        BOOST_ASSERT(self.view);
+        BOOST_ASSERT(self.tabBar);
+        BOOST_ASSERT(self.elementEventChainsView);
+        BOOST_ASSERT(self.elementEventChainsView.elementController == self);
+        BOOST_ASSERT(self.elementDetailView);
+        BOOST_ASSERT(self.elementDetailView.elementController == self);
+        
+        BOOST_ASSERT([self.elementDetailView isKindOfClass:[VSCOBOSXElementDetailView class]]);
+        
+        NSLog(@"self.elementDetailView %@", self.elementDetailView);
+        
+        self.view.translatesAutoresizingMaskIntoConstraints = NO;
+        self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
+        self.elementEventChainsView.translatesAutoresizingMaskIntoConstraints = NO;
+        self.elementDetailView.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        [self setupTabBar];
+        
+        [self.elementDetailView setupIfNecessary];
+        
+        [self showElementDetailView];
+        
+    });
+}
+
 - (void) awakeFromNib
 {
-    BOOST_ASSERT(self.view);
-    BOOST_ASSERT(self.tabBar);
-    BOOST_ASSERT(self.elementCollisionView);
-    BOOST_ASSERT(self.elementCollisionView.elementController == self);
-    BOOST_ASSERT(self.elementDetailView);
-    BOOST_ASSERT(self.elementDetailView.elementController == self);
-    
-    self.view.translatesAutoresizingMaskIntoConstraints = NO;
-    self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
-    self.elementCollisionView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.elementDetailView.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    
-    [self setupTabBar];
-    
-    [self.elementDetailView reloadWholeInterface];
-    
-    if (self.elementCollisionView)
-    {
 
-    }
-    
-    [self showElementDetailView];
 }
 
 -(void) setElement:(Element::WPtr)element
@@ -141,8 +148,6 @@ const static BOOL traceInterface = YES;
     [self reloadImmobilizedInterface];
     
     [self.elementDetailView reloadWholeInterface];
-    
-    [self updateEventChains];
     
 }
 
@@ -209,7 +214,7 @@ const static BOOL traceInterface = YES;
             else if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleElementCollision])
             {
                 if (traceInterface) NSLog(@"Selected scene detail tab");
-                [self showElementCollisionView];
+                [self showElementEventChainsView];
             }
         }
         else if (selectionType == DMTabBarItemSelectionType_DidSelect)
@@ -283,23 +288,35 @@ const static BOOL traceInterface = YES;
     if (traceInterface) NSLog(@"%@ showElementDetailView", self);
     
     BOOST_ASSERT(self.elementDetailView);
+    
+    [self.elementDetailView setupIfNecessary];
+    
+    [self.elementDetailView reloadWholeInterface];
 
     [self switchElementInspectorToTabView:self.elementDetailView];
 }
 
--(void) showElementCollisionView
+-(void) showElementEventChainsView
 {
-    if (traceInterface) NSLog(@"%@ showElementCollisionView", self);
+    if (traceInterface) NSLog(@"%@ showElementEventChainsView", self);
     
-    BOOST_ASSERT(self.elementCollisionView);
+    BOOST_ASSERT(self.elementEventChainsView);
     
-    [self switchElementInspectorToTabView:self.elementCollisionView];
+    //[self.elementEventChainsView setupIfNecessary];
+    
+    [self switchElementInspectorToTabView:self.elementEventChainsView];
 }
 
 #pragma mark - VSCOBOSXSceneListenerTarget
 
 -(void) sceneWasRendered:(Scene::SPtr)scene
 {
+    if (self.elementDetailView)
+    {
+        //NSLog(@"self.elementDetailView %@", self.elementDetailView);
+        BOOST_ASSERT([self.elementDetailView isKindOfClass:[VSCOBOSXElementDetailView class]]);
+    }
+    
     [self.elementDetailView reloadPositionInterface:NO];
 }
 

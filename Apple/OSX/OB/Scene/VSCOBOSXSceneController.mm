@@ -231,7 +231,7 @@ static const BOOL traceInterface = YES;
         {
             VSC::OB::Element::SPtr elem = elems.at(row);
             VSC::OB::Element::WPtr weakElem = VSC::OB::Element::WPtr(elem);
-            VSCOBOSXElementView* elementView = [tableView makeViewWithIdentifier:[[VSCOBOSXElementView class] description] owner:self];
+            VSCOBOSXElementView* elementView = [tableView makeViewWithIdentifier:@"VSCOBOSXElementView" owner:self];
             BOOST_ASSERT(elementView);
             BOOST_ASSERT([elementView isKindOfClass:[VSCOBOSXElementView class]]);
             elementView.environmentController = self.environmentController;

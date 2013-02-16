@@ -57,7 +57,6 @@
 		108D364516C9981800DA6B25 /* VSCOBOSXApplicationBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 108D362516C9981800DA6B25 /* VSCOBOSXApplicationBridge.mm */; };
 		108D364616C9981800DA6B25 /* VSCOBOSXElementDetailView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 108D362916C9981800DA6B25 /* VSCOBOSXElementDetailView.mm */; };
 		108D364716C9981800DA6B25 /* VSCOBOSXElementEventChainsView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 108D362C16C9981800DA6B25 /* VSCOBOSXElementEventChainsView.mm */; };
-		108D364816C9981800DA6B25 /* VSCOBOSXElementEventChainsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 108D362D16C9981800DA6B25 /* VSCOBOSXElementEventChainsView.xib */; };
 		108D364916C9981800DA6B25 /* VSCOBOSXElementInspectorViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 108D362F16C9981800DA6B25 /* VSCOBOSXElementInspectorViewController.mm */; };
 		108D364A16C9981800DA6B25 /* VSCOBOSXElementInspectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 108D363016C9981800DA6B25 /* VSCOBOSXElementInspectorViewController.xib */; };
 		108D364B16C9981800DA6B25 /* VSCOBOSXElementInspectorWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 108D363216C9981800DA6B25 /* VSCOBOSXElementInspectorWindowController.mm */; };
@@ -326,7 +325,6 @@
 		108D362A16C9981800DA6B25 /* VSCOBOSXElementEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBOSXElementEditor.h; sourceTree = "<group>"; };
 		108D362B16C9981800DA6B25 /* VSCOBOSXElementEventChainsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBOSXElementEventChainsView.h; sourceTree = "<group>"; };
 		108D362C16C9981800DA6B25 /* VSCOBOSXElementEventChainsView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCOBOSXElementEventChainsView.mm; sourceTree = "<group>"; };
-		108D362D16C9981800DA6B25 /* VSCOBOSXElementEventChainsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCOBOSXElementEventChainsView.xib; sourceTree = "<group>"; };
 		108D362E16C9981800DA6B25 /* VSCOBOSXElementInspectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBOSXElementInspectorViewController.h; sourceTree = "<group>"; };
 		108D362F16C9981800DA6B25 /* VSCOBOSXElementInspectorViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCOBOSXElementInspectorViewController.mm; sourceTree = "<group>"; };
 		108D363016C9981800DA6B25 /* VSCOBOSXElementInspectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCOBOSXElementInspectorViewController.xib; sourceTree = "<group>"; };
@@ -797,7 +795,6 @@
 				108D362A16C9981800DA6B25 /* VSCOBOSXElementEditor.h */,
 				108D362B16C9981800DA6B25 /* VSCOBOSXElementEventChainsView.h */,
 				108D362C16C9981800DA6B25 /* VSCOBOSXElementEventChainsView.mm */,
-				108D362D16C9981800DA6B25 /* VSCOBOSXElementEventChainsView.xib */,
 				108D362E16C9981800DA6B25 /* VSCOBOSXElementInspectorViewController.h */,
 				108D362F16C9981800DA6B25 /* VSCOBOSXElementInspectorViewController.mm */,
 				108D363016C9981800DA6B25 /* VSCOBOSXElementInspectorViewController.xib */,
@@ -1629,7 +1626,6 @@
 				10A764ED16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.xib in Resources */,
 				10F6666B16C40CC500ADF7AB /* VSCIMOSXActionMIDIChannelView.xib in Resources */,
 				100EBE0816C84DDA0082AC0D /* VSCOSXTableSectionView.xib in Resources */,
-				108D364816C9981800DA6B25 /* VSCOBOSXElementEventChainsView.xib in Resources */,
 				108D364A16C9981800DA6B25 /* VSCOBOSXElementInspectorViewController.xib in Resources */,
 				108D364C16C9981800DA6B25 /* VSCOBOSXElementInspectorWindowController.xib in Resources */,
 				10F3857016CA49D10012FA72 /* VSCIMOSXActionCellView.xib in Resources */,

@@ -70,79 +70,92 @@
     CGContextFillRect(myContext, NSRectToCGRect(self.bounds));
 }
 
--(void) awakeFromNib
+-(void) setupIfNecessary
 {
-    VSCOSXInterfaceFactory* factory = [VSCOSXInterfaceFactory defaultFactory];
-    
-    NSMutableArray* viewsForHorizontalConstraints = [NSMutableArray array];
-    NSMutableString* verticalVisualFormat = [NSMutableString stringWithString:@"V:|"];
-    
-    /*
-     *  Title
-     */
-    
-    /*
-     *  Check Boxes
-     */
-    
-    self.immobilizedCheckBoxView = [factory newKeyedCheckBoxViewWithOwner:self.elementController];
-    [self addSubview:self.immobilizedCheckBoxView];
-    [self.immobilizedCheckBoxView.checkBoxButton bind:@"value" toObject:self.elementController withKeyPath:@"immobilized" options:nil];
-    [self.immobilizedCheckBoxView.checkBoxButton setTitle:@"Immobilized"];
-    NSView* immobilizedCB = self.immobilizedCheckBoxView;
-    [viewsForHorizontalConstraints addObject:immobilizedCB];
-    [verticalVisualFormat appendString:@"-[immobilizedCB]"];
-    
-    /*
-     *  Field Views
-     */
-    
-    self.positionFieldView = [factory newKeyed3FieldViewWithOwner:self.elementController];
-    [self addSubview:self.positionFieldView];
-    [self.positionFieldView.labelTextField setStringValue:@"Position"];
-    NSView* positionFV = self.positionFieldView;
-    [viewsForHorizontalConstraints addObject:positionFV];
-    [verticalVisualFormat appendString:@"-2-[positionFV]"];
-    
-    self.velocityFieldView = [factory newKeyed3FieldViewWithOwner:self.elementController];
-    [self addSubview:self.velocityFieldView];
-    [self.velocityFieldView.labelTextField setStringValue:@"Velocity"];
-    NSView* velocityFV = self.velocityFieldView;
-    [viewsForHorizontalConstraints addObject:velocityFV];
-    [verticalVisualFormat appendString:@"-2-[velocityFV]"];
-    
-    self.rotationFieldView = [factory newKeyed4FieldViewWithOwner:self.elementController];
-    [self addSubview:self.rotationFieldView];
-    [self.rotationFieldView.labelTextField setStringValue:@"Rotation"];
-    NSView* rotationFV = self.rotationFieldView;
-    [viewsForHorizontalConstraints addObject:rotationFV];
-    [verticalVisualFormat appendString:@"-2-[rotationFV]"];
-    
-    [verticalVisualFormat appendString:@"-|"];
-    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(immobilizedCB, positionFV, velocityFV, rotationFV);
-    
-    NSLog(@"VerticalVisualFormat: %@", verticalVisualFormat);
-    
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:verticalVisualFormat
-                                                                 options:0
-                                                                 metrics:nil
-                                                                   views:viewsDictionary]];
-    
-    for (NSView* viewForConstraint in viewsForHorizontalConstraints)
-    {
-        NSDictionary *localViewsDictionary = NSDictionaryOfVariableBindings(viewForConstraint);
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[viewForConstraint]-|"
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        VSCOSXInterfaceFactory* factory = [VSCOSXInterfaceFactory defaultFactory];
+        
+        NSMutableArray* viewsForHorizontalConstraints = [NSMutableArray array];
+        NSMutableString* verticalVisualFormat = [NSMutableString stringWithString:@"V:|"];
+        
+        id owner = nil;
+        
+        /*
+         *  Title
+         */
+        
+        /*
+         *  Check Boxes
+         */
+        
+        //self.immobilizedCheckBoxView = [factory newKeyedCheckBoxViewWithOwner:self.elementController];
+        self.immobilizedCheckBoxView = [factory newKeyedCheckBoxViewWithOwner:owner];
+        [self addSubview:self.immobilizedCheckBoxView];
+        [self.immobilizedCheckBoxView.checkBoxButton bind:@"value" toObject:self.elementController withKeyPath:@"immobilized" options:nil];
+        [self.immobilizedCheckBoxView.checkBoxButton setTitle:@"Immobilized"];
+        NSView* immobilizedCB = self.immobilizedCheckBoxView;
+        [viewsForHorizontalConstraints addObject:immobilizedCB];
+        [verticalVisualFormat appendString:@"-[immobilizedCB]"];
+        
+        /*
+         *  Field Views
+         */
+        
+        self.positionFieldView = [factory newKeyed3FieldViewWithOwner:owner];
+        [self addSubview:self.positionFieldView];
+        [self.positionFieldView.labelTextField setStringValue:@"Position"];
+        NSView* positionFV = self.positionFieldView;
+        [viewsForHorizontalConstraints addObject:positionFV];
+        [verticalVisualFormat appendString:@"-2-[positionFV]"];
+        
+        self.velocityFieldView = [factory newKeyed3FieldViewWithOwner:owner];
+        [self addSubview:self.velocityFieldView];
+        [self.velocityFieldView.labelTextField setStringValue:@"Velocity"];
+        NSView* velocityFV = self.velocityFieldView;
+        [viewsForHorizontalConstraints addObject:velocityFV];
+        [verticalVisualFormat appendString:@"-2-[velocityFV]"];
+        
+        self.rotationFieldView = [factory newKeyed4FieldViewWithOwner:owner];
+        [self addSubview:self.rotationFieldView];
+        [self.rotationFieldView.labelTextField setStringValue:@"Rotation"];
+        NSView* rotationFV = self.rotationFieldView;
+        [viewsForHorizontalConstraints addObject:rotationFV];
+        [verticalVisualFormat appendString:@"-2-[rotationFV]"];
+        
+        [verticalVisualFormat appendString:@"-|"];
+        NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(immobilizedCB, positionFV, velocityFV, rotationFV);
+        
+        NSLog(@"VerticalVisualFormat: %@", verticalVisualFormat);
+        
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:verticalVisualFormat
                                                                      options:0
                                                                      metrics:nil
-                                                                       views:localViewsDictionary]];
-    }
-    
-    
-    NSArray* numberTextFields = [self allNumberTextFields];
-    for (NSTextField* textField in numberTextFields)
-    {
-        [self setupNumericTextFieldNumberFormatter:textField];
-    }
+                                                                       views:viewsDictionary]];
+        
+        for (NSView* viewForConstraint in viewsForHorizontalConstraints)
+        {
+            NSDictionary *localViewsDictionary = NSDictionaryOfVariableBindings(viewForConstraint);
+            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[viewForConstraint]-|"
+                                                                         options:0
+                                                                         metrics:nil
+                                                                           views:localViewsDictionary]];
+        }
+        
+        
+        NSArray* numberTextFields = [self allNumberTextFields];
+        for (NSTextField* textField in numberTextFields)
+        {
+            [self setupNumericTextFieldNumberFormatter:textField];
+        }
+        
+    });
+}
+
+-(void) awakeFromNib
+{
+
 }
 
 -(void) setupNumericTextFieldNumberFormatter:(NSTextField*)textField

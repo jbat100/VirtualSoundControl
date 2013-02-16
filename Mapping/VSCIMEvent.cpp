@@ -35,10 +35,13 @@ void Event::clearMappings(void)
 
 void Event::generateMappings(void)
 {
+    Triggers triggers = AllowedTriggers();
+    std::cout << "There are " << triggers.size() << " triggers " << std::endl;
+    
     BOOST_FOREACH(const Trigger& trigger, AllowedTriggers())
     {
-        TargetMappingMap& targetMappingMap = mMappingMap[trigger];
         std::cout << "Generating mappings for trigger " << StringForTrigger(trigger) << std::endl;
+        TargetMappingMap& targetMappingMap = mMappingMap[trigger];
         BOOST_FOREACH(const Target& target, mRequiredMappingTargets)
         {
             std::cout << "Generating mappings for target " << StringForTarget(target) << std::endl;

@@ -47,6 +47,9 @@ VSC::IM::TargetDescriptionMap targetDescriptionMap;
 VSC::IM::MappingDescriptionMap mappingDescriptionMap;
 VSC::IM::ActionDescriptionMap actionDescriptionMap;
 
+VSC::IM::TriggerMappingTypeMap triggerMappingTypeMap;
+VSC::IM::Triggers allowedTriggers;
+
 
 void VSC::IM::InitialiseInternals(void)
 {
@@ -62,10 +65,10 @@ void VSC::IM::InitialiseInternals(void)
     targetDescriptionMap.insert(TargetDescriptionPair(TargetDuration, "Duration"));
     targetDescriptionMap.insert(TargetDescriptionPair(TargetValue, "Control Value"));
     
-    triggerDescriptionMap.insert(TriggerDescriptionMap(TriggerNone, "No Trigger"));
-    triggerDescriptionMap.insert(TriggerDescriptionMap(TriggerPlain, "Plain"));
-    triggerDescriptionMap.insert(TriggerDescriptionMap(TriggerCollision, "Collision"));
-    triggerDescriptionMap.insert(TriggerDescriptionMap(TriggerProximity, "Proximity"));
+    triggerDescriptionMap.insert(TriggerDescriptionPair(TriggerNone, "No Trigger"));
+    triggerDescriptionMap.insert(TriggerDescriptionPair(TriggerPlain, "Plain"));
+    triggerDescriptionMap.insert(TriggerDescriptionPair(TriggerCollision, "Collision"));
+    triggerDescriptionMap.insert(TriggerDescriptionPair(TriggerProximity, "Proximity"));
     
     mappingDescriptionMap.insert(MappingDescriptionPair(MappingTypeNone, "No Mapping"));
     mappingDescriptionMap.insert(MappingDescriptionPair(MappingTypeConstant, "Constant"));
@@ -101,6 +104,7 @@ const MappingTypeSet& VSC::IM::AllowedMappingTypeSetForTrigger(Trigger trigger)
 
 const Triggers& VSC::IM::AllowedTriggers(void)
 {
+    boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     return allowedTriggers;
 }
 
@@ -108,7 +112,7 @@ std::string VSC::IM::StringForTrigger(const Trigger trigger)
 {
     boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     std::string s = triggerDescriptionMap.left.at(trigger);
-    BOOST_ASSERT_MSG(s.empty(), "Unexpected: Unknown Trigger");
+    BOOST_ASSERT_MSG(!s.empty(), "Unexpected: Unknown Trigger");
     if (s.empty()) s = "Unknown Trigger";
     return s;
 }
@@ -124,7 +128,7 @@ std::string VSC::IM::StringForActionType(const ActionType actionType)
 {
     boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     std::string s = actionDescriptionMap.left.at(actionType);
-    BOOST_ASSERT_MSG(s.empty(), "Unexpected: Unknown ActionType");
+    BOOST_ASSERT_MSG(!s.empty(), "Unexpected: Unknown ActionType");
     if (s.empty()) s = "Unknown Action Type";
     return s;
 }
@@ -140,7 +144,7 @@ std::string VSC::IM::StringForMappingType(const MappingType mappingType)
 {
     boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     std::string s = mappingDescriptionMap.left.at(mappingType);
-    BOOST_ASSERT_MSG(s.empty(), "Unexpected: unknown MappingType");
+    BOOST_ASSERT_MSG(!s.empty(), "Unexpected: unknown MappingType");
     if (s.empty()) s = "Unknown Mapping Type";
     return s;
 }
@@ -157,7 +161,7 @@ std::string VSC::IM::StringForTarget(const Target target)
 {
     boost::call_once(&InitialiseInternals, initializedInternalsFlag);
     std::string s = targetDescriptionMap.left.at(target);
-    BOOST_ASSERT_MSG(s.empty(), "Unexpected: Unknown Target");
+    BOOST_ASSERT_MSG(!s.empty(), "Unexpected: Unknown Target");
     if (s.empty()) s = "Unknown Target";
     return s;
 }

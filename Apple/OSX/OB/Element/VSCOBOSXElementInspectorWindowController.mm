@@ -103,7 +103,7 @@ const static BOOL traceInterface = YES;
                                                                            metrics:nil
                                                                              views:viewsDictionary]];
     
-    //[self.elementInspectorViewController showElementDetailView];
+    [self.elementInspectorViewController setupIfNecessary];
 
     self.window.delegate = self;
 }
