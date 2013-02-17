@@ -103,9 +103,9 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
 -(IBAction) backToEventChainView:(id)sender
 {
     BOOST_ASSERT(self.eventChainController);
-    BOOST_ASSERT([self.eventChainController respondsToSelector:@selector(senderRequestsEventCollisionChainView:)]);
+    BOOST_ASSERT([self.eventChainController respondsToSelector:@selector(senderRequestsEventChainView:)]);
     
-    [self.eventChainController senderRequestsEventCollisionChainView:self];
+    [self.eventChainController senderRequestsEventChainView:self];
 }
 
 #pragma mark - Helpers
@@ -191,12 +191,13 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
     NSMutableDictionary* viewBindingsDictionary = [NSMutableDictionary dictionary];
     
     BOOST_ASSERT(self.editingView);
+    NSView* editingView = self.editingView;
 
     BOOST_ASSERT(self.eventTypeTextField);
-    [[self view] addSubview:self.mainView];
-    [viewsForHorizontalConstraints addObject:self.mainView];
-    [viewBindingsDictionary setValue:self.mainView forKey:@"mainView"];
-    [verticalLayoutVisualFormat appendString:@"-2-[mainView]"];
+    [editingView addSubview:self.eventTypeTextField];
+    [viewsForHorizontalConstraints addObject:self.eventTypeTextField];
+    [viewBindingsDictionary setValue:self.eventTypeTextField forKey:@"eventTypeTextField"];
+    [verticalLayoutVisualFormat appendString:@"-2-[eventTypeTextField]"];
     
     /*
      *  Update type interface
@@ -222,7 +223,7 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
             self.midiOutputView = [[VSCOSXInterfaceFactory defaultFactory] newActionMIDIOutputViewWithOwner:self];
         }
         BOOST_ASSERT(self.midiOutputView);
-        [[self view] addSubview:self.midiOutputView];
+        [editingView addSubview:self.midiOutputView];
         [viewsForHorizontalConstraints addObject:self.midiOutputView];
         [viewBindingsDictionary setValue:self.midiOutputView forKey:@"midiOutputView"];
         [verticalLayoutVisualFormat appendString:@"-4-[midiOutputView]"];
@@ -241,7 +242,7 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
             self.midiChannelView = [[VSCOSXInterfaceFactory defaultFactory] newActionMIDIChannelViewWithOwner:self];
         }
         BOOST_ASSERT(self.midiChannelView);
-        [[self view] addSubview:self.midiChannelView];
+        [editingView addSubview:self.midiChannelView];
         [viewsForHorizontalConstraints addObject:self.midiChannelView];
         [viewBindingsDictionary setValue:self.midiChannelView forKey:@"midiChannelView"];
         [verticalLayoutVisualFormat appendString:@"-4-[midiChannelView]"];
@@ -260,7 +261,7 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
             self.midiControlNumberView = [[VSCOSXInterfaceFactory defaultFactory] newActionMIDIControlNumberViewWithOwner:self];
         }
         BOOST_ASSERT(self.midiControlNumberView);
-        [[self view] addSubview:self.midiControlNumberView];
+        [editingView addSubview:self.midiControlNumberView];
         [viewsForHorizontalConstraints addObject:self.midiControlNumberView];
         [viewBindingsDictionary setValue:self.midiControlNumberView forKey:@"midiControlNumberView"];
         [verticalLayoutVisualFormat appendString:@"-4-[midiControlNumberView]"];
@@ -268,16 +269,33 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
     }
     
     /*
+     *  Add mapping table scroll view (which contains the table view) 
+     */
+    
+    BOOST_ASSERT(self.mappingTableScrollView);
+    [editingView addSubview:self.mappingTableScrollView];
+    [viewsForHorizontalConstraints addObject:self.mappingTableScrollView];
+    [viewBindingsDictionary setValue:self.mappingTableScrollView forKey:@"mappingTableScrollView"];
+    [verticalLayoutVisualFormat appendString:@"-4-[mappingTableScrollView(>=150)]"];
+    
+    /*
+     *  Check and update mapping table view
+     */
+    
+    BOOST_ASSERT(self.mappingTableView);
+    [self.mappingTableView reloadData];
+    
+    /*
      *  Bottom constraint
      */
     
-    [verticalLayoutVisualFormat appendString:@"-4-|"];
+    [verticalLayoutVisualFormat appendString:@"-|"];
     
     /*
      *  Apply constraints
      */
     
-    [[self view] addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:verticalLayoutVisualFormat
+    [editingView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:verticalLayoutVisualFormat
                                                                  options:0
                                                                  metrics:nil
                                                                    views:viewBindingsDictionary]];
@@ -291,7 +309,7 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
                                                                       metrics:nil
                                                                         views:localViewsDictionary];
         
-        [[self view] addConstraints:contraints];
+        [editingView addConstraints:contraints];
     }
     
     

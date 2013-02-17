@@ -11,6 +11,7 @@
 #import "VSCOBOSXElementEditor.h"
 #import "VSCOBOSXElementController.h"
 #import "VSCIMOSXEventEditorViewController.h"
+#import "VSCIMOSXEventListView.h"
 #import "VSCIMOSXActionCellView.h"
 #import "VSCIMOSXDelayCellView.h"
 
@@ -73,29 +74,13 @@ const static BOOL traceInterface = YES;
     BOOST_ASSERT(self.view);
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
     
-    BOOST_ASSERT(self.eventTableView);
-    BOOST_ASSERT(self.eventTableView.delegate == self);
-    BOOST_ASSERT(self.eventTableView.dataSource == self);
-    
-    self.eventTableView.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    BOOST_ASSERT(self.addEventButton);
-    BOOST_ASSERT(self.removeEventButton);
-    BOOST_ASSERT(self.addEventMenu);
-    
-    self.addEventButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.removeEventButton.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    BOOST_ASSERT(self.addDelayMenuItem);
-    BOOST_ASSERT(self.addActionMenuItem);
-    
-    self.eventTableView.allowsEmptySelection = YES;
-    self.eventTableView.allowsMultipleSelection = NO;
+    BOOST_ASSERT(self.eventListView.eventTableView.delegate == self);
+    BOOST_ASSERT(self.eventListView.eventTableView.dataSource == self);
 }
 
 -(void) reloadInterface
 {
-    [self.eventTableView reloadData];
+    [self.eventListView.eventTableView reloadData];
 }
 
 #pragma mark - Debugging
@@ -113,7 +98,7 @@ const static BOOL traceInterface = YES;
 
 -(Event::SPtr) selectedChainEvent
 {
-    NSInteger index = [self.eventTableView selectedRow];
+    NSInteger index = [self.eventListView.eventTableView selectedRow];
     
     if (index >= 0)
     {
@@ -140,11 +125,11 @@ const static BOOL traceInterface = YES;
 {
     Event::SPtr event = Event::SPtr();
     
-    if (sender == self.addDelayMenuItem)
+    if (sender == self.eventListView.addDelayMenuItem)
     {
         event = Event::SPtr(new IM::Delay);
     }
-    else if (sender == self.addActionMenuItem)
+    else if (sender == self.eventListView.addActionMenuItem)
     {
         event = Event::SPtr(new Action);
         Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
@@ -186,6 +171,11 @@ const static BOOL traceInterface = YES;
 }
 
 #pragma mark - UI Helpers
+
+-(void) resetView
+{
+    [[self.view subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+}
 
 -(void) switchToView:(NSView*)newView
 {
@@ -245,34 +235,20 @@ const static BOOL traceInterface = YES;
     BOOST_ASSERT(event);
     self.eventEditorViewController.event = Event::WPtr(event);
     
-    if ([self.eventEditorViewController.view superview] != self.view)
-    {
-        NSView* eventEditorView = self.eventEditorViewController.view;
-        
-        [self.view addSubview:eventEditorView];
-        
-        NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(eventEditorView);
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[eventEditorView]|"
-                                                                          options:0
-                                                                          metrics:nil
-                                                                            views:viewsDictionary]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[eventEditorView]|"
-                                                                          options:0
-                                                                          metrics:nil
-                                                                          views:viewsDictionary]];
-    }
+    [self switchToView:[self.eventEditorViewController view]];
     
     [self.eventEditorViewController reloadInterface];
     
 }
 
 
--(void) senderRequestsEventCollisionChainView:(id)sender
+-(void) senderRequestsEventChainView:(id)sender
 {
-    if ([self.eventEditorViewController.view superview] == self.view)
-    {
-        [self.eventEditorViewController.view removeFromSuperview];
-    }
+    [self switchToView:self.eventListView];
+    
+    [self.eventListView.eventTableView reloadData];
+    
+    [[self view] setNeedsLayout:YES];
 }
 
 
@@ -280,9 +256,9 @@ const static BOOL traceInterface = YES;
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    BOOST_ASSERT(aTableView == self.eventTableView);
+    BOOST_ASSERT(aTableView == self.eventListView.eventTableView);
     
-    if (aTableView == self.eventTableView)
+    if (aTableView == self.eventListView.eventTableView)
     {
         EventChain::SPtr chain = self.eventChain.lock();
         //BOOST_ASSERT(chain);
@@ -295,9 +271,12 @@ const static BOOL traceInterface = YES;
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn*)tableColumn row:(NSInteger)row
 {
-    BOOST_ASSERT(tableView == self.eventTableView);
+    BOOST_ASSERT(tableView == self.eventListView.eventTableView);
     
-    if (tableView == self.eventTableView)
+    static NSDictionary* metrics = @{@"actionHeight" : [NSNumber numberWithFloat:[VSCIMOSXActionCellView defaultViewHeight]],
+                                     @"delayHeight" : [NSNumber numberWithFloat:[VSCIMOSXDelayCellView defaultViewHeight]]};
+    
+    if (tableView == self.eventListView.eventTableView)
     {
         if (traceInterface) NSLog(@"%@ listView:cellForRow: %ld", self, row);
         
@@ -310,9 +289,26 @@ const static BOOL traceInterface = YES;
         if (action)
         {
             VSCIMOSXActionCellView* actionView = [tableView makeViewWithIdentifier:[[VSCIMOSXActionCellView class] description] owner:self];
+            
+            /*
+            
+            NSView* mainView = [self view];
+            
+            NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(actionView, mainView);
+            NSArray* hConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[actionView(==mainView)]"
+                                                                            options:0 metrics:metrics views:viewsDictionary];
+            [actionView addConstraints:hConstraints];
+            NSArray* vConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[actionView(>=actionHeight)]"
+                                                                            options:0 metrics:metrics views:viewsDictionary];
+            [actionView addConstraints:vConstraints];
+            
+            */
+            
             BOOST_ASSERT(actionView);
             BOOST_ASSERT([actionView isKindOfClass:[VSCIMOSXActionCellView class]]);
-            actionView.translatesAutoresizingMaskIntoConstraints = NO;
+            
+            //actionView.translatesAutoresizingMaskIntoConstraints = NO;
+            
             [actionView setEvent:(Event::WPtr(event))];
             actionView.eventChainController = self;
             if (traceInterface) NSLog(@"Returning: %@ with frame: %@", actionView, NSStringFromRect(actionView.frame));
@@ -341,9 +337,9 @@ const static BOOL traceInterface = YES;
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
     
-    BOOST_ASSERT(tableView == self.eventTableView);
+    BOOST_ASSERT(tableView == self.eventListView.eventTableView);
     
-    if (tableView == self.eventTableView)
+    if (tableView == self.eventListView.eventTableView)
     {
         if (traceInterface) NSLog(@"%@ heightOfRow: %ld", self, row);
         
@@ -385,18 +381,23 @@ const static BOOL traceInterface = YES;
 {
     NSLog(@"%@ tableViewSelectionDidChange: %@", self, aNotification);
     
-    BOOST_ASSERT([aNotification object] == self.eventTableView);
-    if ([aNotification object] != self.eventTableView) return;
+    BOOST_ASSERT([aNotification object] == self.eventListView.eventTableView);
+    if ([aNotification object] != self.eventListView.eventTableView) return;
 
-    NSIndexSet* rowIndexes = [self.eventTableView selectedRowIndexes];
+    NSIndexSet* rowIndexes = [self.eventListView.eventTableView selectedRowIndexes];
 
     [rowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-    NSView* v = [self.eventTableView viewAtColumn:0 row:idx makeIfNecessary:NO];
-    if ([v isKindOfClass:[VSCIMOSXEventCellView class]])
-    {
-        VSCIMOSXEventCellView* eventView = (VSCIMOSXEventCellView*)v;
-        [eventView printUIDescription];
-    }
+        
+        NSTableRowView* rowView = [self.eventListView.eventTableView rowViewAtRow:idx makeIfNecessary:NO];
+        
+        NSLog(@"%@ frame %@", rowView, NSStringFromRect(rowView.frame));
+        
+        NSView* v = [self.eventListView.eventTableView viewAtColumn:0 row:idx makeIfNecessary:NO];
+        if ([v isKindOfClass:[VSCIMOSXEventCellView class]])
+        {
+            VSCIMOSXEventCellView* eventView = (VSCIMOSXEventCellView*)v;
+            [eventView printUIDescription];
+        }
     }];
     
 }
@@ -404,6 +405,26 @@ const static BOOL traceInterface = YES;
 - (void)tableViewColumnDidResize:(NSNotification *)aNotification
 {
 
+}
+
+-(void)tableView:(NSTableView *)tableView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
+{
+    [rowView setNeedsLayout:YES];
+    
+    NSView* cellView = [rowView viewAtColumn:0];
+    
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(cellView);
+    
+    NSArray* hConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[cellView]|"
+                                                                    options:0 metrics:nil views:viewsDictionary];
+    [[cellView superview] addConstraints:hConstraints];
+    
+    NSArray* vConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[cellView]|"
+                                                                    options:0 metrics:nil views:viewsDictionary];
+    [[cellView superview] addConstraints:vConstraints];
+    
+    [cellView setNeedsLayout:YES];
+    [rowView setNeedsLayout:YES];
 }
 
 @end

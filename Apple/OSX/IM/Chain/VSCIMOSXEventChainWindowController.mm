@@ -7,8 +7,8 @@
 //
 
 #import "VSCIMOSXEventChainWindowController.h"
-
 #import "VSCIMOSXEventChainViewController.h"
+#import "VSCIMOSXEventListView.h"
 
 @interface VSCIMOSXEventChainWindowController ()
 
@@ -82,9 +82,11 @@ static const bool traceInterface = true;
                                                                           views:viewsDictionary]];
     self.window.delegate = self;
     
-    BOOST_ASSERT(self.eventChainViewController.eventTableView);
+    [self.eventChainViewController senderRequestsEventChainView:self];
     
-    [self.eventChainViewController.eventTableView reloadData];
+    BOOST_ASSERT(self.eventChainViewController.eventListView.eventTableView);
+    
+    [self.eventChainViewController.eventListView.eventTableView reloadData];
 }
 
 @end

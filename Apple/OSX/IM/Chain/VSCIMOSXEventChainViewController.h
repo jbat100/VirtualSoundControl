@@ -13,7 +13,9 @@
 
 #include "VSCIM.h"
 
+@class VSCIMOSXEventListView;
 @class VSCIMOSXEventEditorViewController;
+
 
 @interface VSCIMOSXEventChainViewController : NSViewController
 <VSCIMOSXEventChainController, NSTableViewDataSource, NSTableViewDelegate>
@@ -21,16 +23,10 @@
 @property (assign) id<VSCOSXEnvironmentController> environmentController;
 
 /*
- *  Event chain interface
+ *  Event list view
  */
 
-@property (weak) IBOutlet NSTableView* eventTableView;
-@property (weak) IBOutlet NSPopUpButton* addEventButton;
-@property (weak) IBOutlet NSButton* removeEventButton;
-@property (weak) IBOutlet NSMenu* addEventMenu;
-
-@property (weak) IBOutlet NSMenuItem* addDelayMenuItem;
-@property (weak) IBOutlet NSMenuItem* addActionMenuItem;
+@property (nonatomic, strong) IBOutlet VSCIMOSXEventListView* eventListView;
 
 -(IBAction) removeSelectedEvent:(id)sender;
 -(IBAction) menuItemAction:(id)sender;
@@ -42,7 +38,7 @@
  *  Mapping list view
  */
 
-@property (strong)  VSCIMOSXEventEditorViewController* eventEditorViewController;
+@property (nonatomic, strong) VSCIMOSXEventEditorViewController* eventEditorViewController;
 
 -(void) reloadInterface;
 
