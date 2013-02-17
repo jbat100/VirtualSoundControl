@@ -230,14 +230,17 @@ const static BOOL traceInterface = YES;
         
         BOOST_ASSERT(self.eventEditorViewController);
         self.eventEditorViewController.eventChainController = self;
+        
+        [self.eventEditorViewController view].translatesAutoresizingMaskIntoConstraints = NO;
     }
     
     BOOST_ASSERT(event);
+    
     self.eventEditorViewController.event = Event::WPtr(event);
     
     [self switchToView:[self.eventEditorViewController view]];
     
-    [self.eventEditorViewController reloadInterface];
+    //[self.eventEditorViewController reloadInterface];
     
 }
 
@@ -307,6 +310,8 @@ const static BOOL traceInterface = YES;
             BOOST_ASSERT(actionView);
             BOOST_ASSERT([actionView isKindOfClass:[VSCIMOSXActionCellView class]]);
             
+            actionView.selected = NO;
+            
             //actionView.translatesAutoresizingMaskIntoConstraints = NO;
             
             [actionView setEvent:(Event::WPtr(event))];
@@ -322,6 +327,9 @@ const static BOOL traceInterface = YES;
             VSCIMOSXDelayCellView* delayView = [tableView makeViewWithIdentifier:[[VSCIMOSXDelayCellView class] description] owner:self];
             BOOST_ASSERT(delayView);
             BOOST_ASSERT([delayView isKindOfClass:[VSCIMOSXDelayCellView class]]);
+            
+            delayView.selected = NO;
+            
             delayView.translatesAutoresizingMaskIntoConstraints = NO;
             delayView.eventChainController = self;
             [delayView setEvent:Event::WPtr(event)];
@@ -383,6 +391,24 @@ const static BOOL traceInterface = YES;
     
     BOOST_ASSERT([aNotification object] == self.eventListView.eventTableView);
     if ([aNotification object] != self.eventListView.eventTableView) return;
+    
+    /*
+     *  Deselect all views
+     */
+    
+    [self.eventListView.eventTableView enumerateAvailableRowViewsUsingBlock:^(NSTableRowView *rowView, NSInteger row) {
+        NSView* v = [rowView viewAtColumn:0];
+        BOOST_ASSERT([v isKindOfClass:[VSCIMOSXEventCellView class]]);
+        if ([v isKindOfClass:[VSCIMOSXEventCellView class]])
+        {
+            VSCIMOSXEventCellView* eventView = (VSCIMOSXEventCellView*)v;
+            eventView.selected = NO;
+        }
+    }];
+    
+    /*
+     *  (Re)select the ones
+     */
 
     NSIndexSet* rowIndexes = [self.eventListView.eventTableView selectedRowIndexes];
 
@@ -396,6 +422,7 @@ const static BOOL traceInterface = YES;
         if ([v isKindOfClass:[VSCIMOSXEventCellView class]])
         {
             VSCIMOSXEventCellView* eventView = (VSCIMOSXEventCellView*)v;
+            eventView.selected = YES;
             [eventView printUIDescription];
         }
     }];

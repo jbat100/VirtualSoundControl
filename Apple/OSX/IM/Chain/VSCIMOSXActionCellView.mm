@@ -89,20 +89,19 @@ static const BOOL debugDraw = NO;
 - (void)drawRect:(NSRect)dirtyRect
 {
     CGContextRef myContext = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
-    if (debugDraw)
+    if (self.selected)
     {
-        CGContextSetRGBFillColor (myContext, 1.0, 0.0, 0.0, 1.0);
-        CGContextFillRect(myContext, self.bounds);
-        CGContextSetGrayStrokeColor (myContext, 1.0, 1.0);
-        CGContextStrokeRectWithWidth(myContext, NSRectToCGRect(self.bounds), 2.0);
+        CGContextSetRGBFillColor (myContext, 0.0, 0.8, 0.8, 1.0);
     }
     else
     {
         CGContextSetRGBFillColor (myContext, 0.2, 0.2, 0.2, 1.0);
-        CGContextFillRect(myContext, self.bounds);
-        CGContextSetGrayStrokeColor (myContext, 0.8, 1.0);
-        CGContextStrokeRectWithWidth(myContext, NSRectToCGRect(self.bounds), 2.0);
     }
+    
+    CGContextFillRect(myContext, self.bounds);
+    
+    //CGContextSetGrayStrokeColor (myContext, 1.0, 1.0);
+    //CGContextStrokeRectWithWidth(myContext, NSRectToCGRect(self.bounds), 2.0);
 }
 
 -(void) awakeFromNib

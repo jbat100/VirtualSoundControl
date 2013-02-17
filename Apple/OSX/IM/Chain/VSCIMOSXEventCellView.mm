@@ -56,6 +56,13 @@
 
 #pragma mark - Custom Setter
 
+-(void) setSelected:(BOOL)selected
+{
+    _selected = selected;
+    
+    [self setNeedsDisplay:YES];
+}
+
 -(BOOL) checkEvent:(VSC::IM::Event_SPtr)testEvent
 {
     return YES;

@@ -89,6 +89,24 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
     BOOST_ASSERT(self.mappingTableView);
     BOOST_ASSERT(self.mappingTableView.delegate == self);
     BOOST_ASSERT(self.mappingTableView.dataSource == self);
+    
+    BOOST_ASSERT(self.editingView);
+    BOOST_ASSERT(self.mappingTableScrollView);
+    BOOST_ASSERT(self.eventTypeTextField);
+    
+    self.mappingTableScrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.mappingTableView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.editingView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.eventTypeTextField.translatesAutoresizingMaskIntoConstraints = NO;
+}
+
+#pragma mark - Custom Setters
+
+-(void) setEvent:(VSC::IM::Event_WPtr)event
+{
+    _event = event;
+    
+    [self setupInterfaceForNewEvent];
 }
 
 #pragma mark - UI Helpers
@@ -114,9 +132,9 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
 -(Action::SPtr) action
 {
     Event::SPtr actionEvent = self.event.lock();
-    BOOST_ASSERT(actionEvent);
+    //BOOST_ASSERT(actionEvent);
     Action::SPtr action = boost::dynamic_pointer_cast<Action>(actionEvent);
-    BOOST_ASSERT(action);
+    //BOOST_ASSERT(action);
     return action;
 }
 
@@ -159,13 +177,6 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
         [self.mappingEditPopover showRelativeToRect:mappingView.editButton.frame
                                                       ofView:mappingView
                                                preferredEdge:NSMinXEdge];
-        
-        /*
-        NSLog(@"view.frame %@, offsetTextField.frame %@, scaleFactorTextField.frame %@",
-              NSStringFromRect(self.mappingEditViewController.view.frame),
-              NSStringFromRect(self.mappingEditViewController.offsetTextField.frame),
-              NSStringFromRect(self.mappingEditViewController.scaleFactorTextField.frame));
-         */
     }
 }
 
@@ -177,11 +188,8 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
 }
 
 
--(void) setupInterfaceForNewAction
+-(void) setupInterfaceForNewEvent
 {
-    
-    Action::SPtr action = [self action];
-    
     /*
      *  Setup the view and its subviews according to action type
      */
@@ -209,7 +217,12 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
      *  Handle different types of implementations
      */
     
-    Action::Implementation::SPtr implementation = action->getImplementation();
+    Action::SPtr action = [self action];
+    Action::Implementation::SPtr implementation = Action::Implementation::SPtr();
+    if (action)
+    {
+        implementation = action->getImplementation();
+    }
     
     /*
      *  If the action implementation is a MIDI output owner, then show...
@@ -312,6 +325,8 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
         [editingView addConstraints:contraints];
     }
     
+    [[self view] setNeedsLayout:YES];
+    [[self view] setNeedsDisplay:YES];
     
 }
 

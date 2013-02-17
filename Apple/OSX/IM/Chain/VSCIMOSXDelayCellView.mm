@@ -59,10 +59,20 @@ using namespace VSC::IM;
 - (void)drawRect:(NSRect)dirtyRect
 {
     CGContextRef myContext = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
-    CGContextSetRGBFillColor (myContext, 0.4, 0.4, 0.4, 1.0);
+    
+    if (self.selected)
+    {
+        CGContextSetRGBFillColor (myContext, 0.0, 0.8, 0.8, 1.0);
+    }
+    else
+    {
+        CGContextSetRGBFillColor (myContext, 0.3, 0.3, 0.3, 1.0);
+    }
+    
     CGContextFillRect(myContext, self.bounds);
-    CGContextSetGrayStrokeColor (myContext, 1.0, 1.0);
-    CGContextStrokeRectWithWidth(myContext, NSRectToCGRect(self.bounds), 2.0);
+    
+    //CGContextSetGrayStrokeColor (myContext, 1.0, 1.0);
+    //CGContextStrokeRectWithWidth(myContext, NSRectToCGRect(self.bounds), 2.0);
 }
 
 -(void) awakeFromNib

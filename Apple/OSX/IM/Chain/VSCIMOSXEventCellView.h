@@ -18,6 +18,8 @@
 
 @property (nonatomic, assign) VSC::IM::Event_WPtr event;
 
+@property (nonatomic, assign) BOOL selected;
+
 @property (nonatomic, weak) IBOutlet NSImageView* iconImageView;
 @property (nonatomic, weak) IBOutlet NSButton* editorButton;
 
