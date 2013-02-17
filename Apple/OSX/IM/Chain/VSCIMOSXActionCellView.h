@@ -24,7 +24,4 @@
 
 @property (weak) IBOutlet NSPopUpButton* actionTypePopUpButton;
 
--(void) printUIDescription;
-
-
 @end

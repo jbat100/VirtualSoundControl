@@ -81,6 +81,10 @@ static const bool traceInterface = true;
                                                                         metrics:nil
                                                                           views:viewsDictionary]];
     self.window.delegate = self;
+    
+    BOOST_ASSERT(self.eventChainViewController.eventTableView);
+    
+    [self.eventChainViewController.eventTableView reloadData];
 }
 
 @end

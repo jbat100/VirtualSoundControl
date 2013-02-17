@@ -18,13 +18,15 @@
 
 @property (nonatomic, assign) VSC::IM::Event_WPtr event;
 
-@property (weak) IBOutlet NSImageView* iconImageView;
+@property (nonatomic, weak) IBOutlet NSImageView* iconImageView;
+@property (nonatomic, weak) IBOutlet NSButton* editorButton;
 
 +(CGFloat) defaultViewHeight;
 
--(IBAction) showMappings:(id)sender;
+-(IBAction) showEditor:(id)sender;
 
 -(void) reloadInterface;
+-(void) printUIDescription;
 
 /**
  *  Gives subclasses the oportunity to refuse events if they are not the right subclass

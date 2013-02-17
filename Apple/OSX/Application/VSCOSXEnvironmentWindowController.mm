@@ -10,10 +10,13 @@
 #import "VSCOSXApplicationManager.h"
 #import "VSCOSXEnvironmentController.h"
 
-#import "VSCOBOSXSceneController.h"
-#import "VSCOBOSXSceneDisplayView.h"
 #import "VSCOBOSXElementInspectorWindowController.h"
 #import "VSCOBOSXElementInspectorViewController.h"
+#import "VSCIMOSXEventChainWindowController.h"
+#import "VSCIMOSXEventChainViewController.h"
+
+#import "VSCOBOSXSceneController.h"
+#import "VSCOBOSXSceneDisplayView.h"
 #import "VSCOBOSXElementListView.h"
 #import "VSCOBOSXSceneDetailView.h"
 
@@ -397,7 +400,21 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 
 -(void) showEventChainEditor:(EventChain::SPtr)eventChain
 {
-    NSLog(@"Showing event chain editor");
+    NSLog(@"%@ showEventChainEditor", self);
+    
+    if (!self.eventChainWindowController)
+    {
+        NSString* nibName = @"VSCIMOSXEventChainWindowController";
+        self.eventChainWindowController = [[VSCIMOSXEventChainWindowController alloc] initWithWindowNibName:nibName];
+        BOOST_ASSERT(self.eventChainWindowController);
+        BOOST_ASSERT(self.eventChainWindowController.eventChainViewController);
+        self.eventChainWindowController.eventChainViewController.environmentController = self;
+    }
+    
+    BOOST_ASSERT(self.eventChainWindowController.eventChainViewController);
+    self.eventChainWindowController.eventChainViewController.eventChain = EventChain::WPtr(eventChain);
+    [self.eventChainWindowController showWindow:self];
+    
 }
 
 
@@ -471,6 +488,26 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
 {
     NSLog(@"%@ tableViewSelectionDidChange: %@", self, aNotification);
+    
+    /*
+    
+    BOOST_ASSERT([aNotification object] == self.eventChainListView.tableView);
+    if ([aNotification object] != self.eventChainListView.tableView) return;
+    
+    NSIndexSet* rowIndexes = [self.eventChainListView.tableView selectedRowIndexes];
+    
+    [rowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        NSView* v = [self.eventChainListView.tableView viewAtColumn:0 row:idx makeIfNecessary:NO];
+        if ([v isKindOfClass:[VSCIMOSXEventChainCellView class]])
+        {
+            VSCIMOSXEventChainCellView* eventChainView = (VSCIMOSXEventChainCellView*)v;
+            //[actionView setNeedsLayout:YES];
+            [eventChainView printUIDescription];
+        }
+    }];
+     
+     */
+
 }
 
 - (void)tableViewColumnDidResize:(NSNotification *)aNotification

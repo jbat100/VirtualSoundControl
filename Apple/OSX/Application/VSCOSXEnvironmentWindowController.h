@@ -12,8 +12,10 @@
 
 #include "VSCEnvironment.h"
 
-@class VSCOBOSXSceneDisplayView;
 @class VSCOBOSXElementInspectorWindowController;
+@class VSCIMOSXEventChainWindowController;
+
+@class VSCOBOSXSceneDisplayView;
 @class VSCOBOSXElementListView;
 @class VSCOBOSXSceneDetailView;
 @class VSCIMOSXEventChainListView;
@@ -22,11 +24,13 @@
  *  This is the main window controller 
  */
 
-@interface VSCOSXEnvironmentWindowController : NSWindowController <VSCOSXEnvironmentController, NSTableViewDelegate, NSTableViewDataSource>
-
-@property (strong) VSCOBOSXElementInspectorWindowController* elementInspectorWindowController;
+@interface VSCOSXEnvironmentWindowController : NSWindowController
+<VSCOSXEnvironmentController,NSTableViewDelegate, NSTableViewDataSource>
 
 @property (strong) IBOutlet id<VSCOBOSXSceneController> sceneController;
+
+@property (nonatomic, strong) VSCOBOSXElementInspectorWindowController* elementInspectorWindowController;
+@property (nonatomic, strong) VSCIMOSXEventChainWindowController* eventChainWindowController;
 
 @property (nonatomic, weak) IBOutlet NSSplitView* splitView;
 @property (nonatomic, strong) IBOutlet NSView* environmentInspectorView;

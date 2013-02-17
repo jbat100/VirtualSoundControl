@@ -27,11 +27,10 @@ using namespace VSC::IM;
 
 @property (weak) IBOutlet NSPopUpButton* mappingPopUpButton;
 
+-(void) setupMappingChoice;
+
 -(IBAction) editMapping:(id)sender;
 -(IBAction) mappingTypeSelected:(id)sender;
-
--(void) updateInterfaceForNewMapping;
--(void) updateInterfaceForNewTarget;
 
 @end
 
@@ -40,15 +39,12 @@ using namespace VSC::IM;
 @synthesize controller = _controller;
 @synthesize mapping = _mapping;
 
-//@synthesize target = _target;
-//@synthesize trigger = _trigger;
-
 +(void) initialize
 {
 
 }
 
-+(CGFloat) defaultHeight
++(CGFloat) defaultViewHeight
 {
     return 56.0;
 }
@@ -88,49 +84,46 @@ using namespace VSC::IM;
     {
         MappingTypeSet::iterator it = std::find(mAllowedMappingTypes.begin(), mAllowedMappingTypes.end(), newMapping->getMappingType());
         BOOST_ASSERT_MSG(it != mAllowedMappingTypes.end(), "Mapping type not allowed");
-        mapping = Mapping::WPtr();
-    }
-    
-    _mapping = mapping;
-    
-    [self updateInterfaceForNewMapping];
-}
-
--(VSC::IM::MappingTypeSet&) allowedMappingTypes
-{
-    return mAllowedMappingTypes;
-}
-
--(void) updateInterfaceForNewMapping
-{
-    Mapping::SPtr m = self.mapping.lock();
-    BOOST_ASSERT(self.mappingPopUpButton);
-    BOOST_ASSERT(m);
-    if (m)
-    {
-        [self.mappingPopUpButton selectItemWithTitle:[NSString stringWithStdString:StringForMappingType(m->getMappingType())]];
+        if (it == mAllowedMappingTypes.end())
+        {
+            _mapping = Mapping::WPtr();
+            [self.mappingPopUpButton selectItemWithTitle:@"__EMPTY__"];
+        }
+        else
+        {
+            [self.mappingPopUpButton selectItemWithTitle:[NSString stringWithStdString:StringForMappingType(newMapping->getMappingType())]];
+        }
     }
     else
     {
         [self.mappingPopUpButton selectItemWithTitle:@"__EMPTY__"];
     }
+    
+    _mapping = mapping;
+
+}
+
+-(IM::MappingTypeSet&) allowedMappingTypes
+{
+    return mAllowedMappingTypes;
+}
+
+-(void) setAllowedMappingTypes:(IM::MappingTypeSet)mappingTypeSet
+{
+    mAllowedMappingTypes = mappingTypeSet;
+    
+    [self setupMappingChoice];
 }
 
 -(void) setupMappingChoice
 {
     BOOST_ASSERT(self.mappingPopUpButton);
     [self.mappingPopUpButton removeAllItems];
-    BOOST_FOREACH (const VSC::IM::MappingType& mappingType, mAllowedMappingTypes)
+    BOOST_FOREACH (const IM::MappingType& mappingType, mAllowedMappingTypes)
     {
-        NSString* title = [NSString stringWithStdString:VSC::IM::StringForMappingType(mappingType)];
+        NSString* title = [NSString stringWithStdString:IM::StringForMappingType(mappingType)];
         [self.mappingPopUpButton addItemWithTitle:title];
     }
-}
-
--(void) reloadInterface;
-{
-    [self updateInterfaceForNewMapping];
-    [self updateInterfaceForNewTarget];
 }
 
 #pragma mark - UI Callbacks
@@ -142,7 +135,7 @@ using namespace VSC::IM;
     
     if ([self.controller respondsToSelector:@selector(sender:requestsEditorForMapping:)])
     {
-        VSC::IM::Mapping::SPtr mapping = self.mapping.lock();
+        IM::Mapping::SPtr mapping = self.mapping.lock();
         BOOST_ASSERT(mapping);
         [self.controller sender:self requestsEditorForMapping:mapping];
     }
@@ -152,7 +145,7 @@ using namespace VSC::IM;
 {
     NSString* menuItemTitle = [[self.mappingPopUpButton selectedItem] title];
     MappingType requestedType = MappingTypeForString([menuItemTitle stdString]);
-    BOOST_ASSERT(requestedType != VSC::IM::MappingTypeNone);
+    BOOST_ASSERT(requestedType != IM::MappingTypeNone);
     Mapping::SPtr m = self.mapping.lock();
     BOOST_ASSERT(m);
     if (m)

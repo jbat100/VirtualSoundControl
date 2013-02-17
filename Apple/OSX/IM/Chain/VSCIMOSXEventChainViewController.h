@@ -18,6 +18,8 @@
 @interface VSCIMOSXEventChainViewController : NSViewController
 <VSCIMOSXEventChainController, NSTableViewDataSource, NSTableViewDelegate>
 
+@property (assign) id<VSCOSXEnvironmentController> environmentController;
+
 /*
  *  Event chain interface
  */

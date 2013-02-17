@@ -21,10 +21,19 @@
 @property (weak) id<VSCIMOSXEventChainController> eventChainController;
 
 /*
+ *  The editingView will contain everything apart from the back button
+ *  including the mappingTableScrollView (which contains mappingTableView) 
+ */
+
+@property (nonatomic, weak) IBOutlet NSView* editingView;
+
+/*
  *  Mapping stuff
  */
 
-@property (nonatomic, weak) IBOutlet NSTableView* mappingTableView; 
+@property (nonatomic, weak) IBOutlet NSScrollView* mappingTableScrollView;
+@property (nonatomic, weak) IBOutlet NSTableView* mappingTableView;
+
 @property (nonatomic, strong) VSCIMOSXMappingEditViewController* mappingEditViewController;
 @property (nonatomic, strong) NSPopover* mappingEditPopover;
 

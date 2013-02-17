@@ -109,18 +109,40 @@ static const BOOL debugDraw = NO;
 {
     [super awakeFromNib];
     
+    BOOST_ASSERT(self.actionTypePopUpButton);
+    
     self.translatesAutoresizingMaskIntoConstraints = NO;
+    self.actionTypePopUpButton.translatesAutoresizingMaskIntoConstraints = NO;
     
     /*
      *  Populate PopUpButton
      */
     
-    BOOST_ASSERT(self.actionTypePopUpButton);
+    [self.actionTypePopUpButton removeAllItems];
     
     BOOST_FOREACH(const ActionType& actionType, AllowedActionTypes())
     {
         std::string actionTypeString = StringForActionType(actionType);
         [self.actionTypePopUpButton addItemWithTitle:[NSString stringWithStdString:actionTypeString]];
+    }
+    
+    /*
+     *  If we already have an event (can we?) then update the type. Don't use the action accessor because
+     *  it asserts the action (and it will most likely be null).
+     */
+    
+    Event::SPtr actionEvent = self.event.lock();
+    Action::SPtr action = boost::dynamic_pointer_cast<Action>(actionEvent);
+    
+    if (action)
+    {
+        std::string actionTypeString = StringForActionType(action->getActionType());
+        [self.actionTypePopUpButton selectItemWithTitle:[NSString stringWithStdString:actionTypeString]];
+    }
+    else
+    {
+        std::string noActionTypeString = StringForActionType(ActionTypeVoid);
+        [self.actionTypePopUpButton selectItemWithTitle:[NSString stringWithStdString:noActionTypeString]];
     }
 }
 

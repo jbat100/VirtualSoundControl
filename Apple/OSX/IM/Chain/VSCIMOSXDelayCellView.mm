@@ -14,6 +14,9 @@
 
 #include <boost/assert.hpp>
 
+using namespace VSC;
+using namespace VSC::IM;
+
 @interface VSCIMOSXDelayCellView ()
 
 -(void) commonInit;
@@ -67,28 +70,29 @@
     [super awakeFromNib];
     
     BOOST_ASSERT(self.titleTextField);
+    
     self.titleTextField.translatesAutoresizingMaskIntoConstraints = NO;
     self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 #pragma mark - Delay Getter
 
--(VSC::IM::Delay::SPtr) delay
+-(Delay::SPtr) delay
 {
-    VSC::IM::Event::SPtr delayEvent = self.event.lock();
+    Event::SPtr delayEvent = self.event.lock();
     BOOST_ASSERT(delayEvent);
-    VSC::IM::Delay::SPtr delay = boost::dynamic_pointer_cast<VSC::IM::Delay>(delayEvent);
+    IM::Delay::SPtr delay = boost::dynamic_pointer_cast<IM::Delay>(delayEvent);
     BOOST_ASSERT(delay);
     return delay;
 }
 
 #pragma mark - Custom Setters
 
--(BOOL) checkEvent:(VSC::IM::Event::SPtr)testEvent
+-(BOOL) checkEvent:(Event::SPtr)testEvent
 {
     BOOST_ASSERT(testEvent);
     if (!testEvent) return YES;
-    VSC::IM::Delay::SPtr delay = boost::dynamic_pointer_cast<VSC::IM::Delay>(testEvent);
+    IM::Delay::SPtr delay = boost::dynamic_pointer_cast<IM::Delay>(testEvent);
     BOOST_ASSERT(delay);
     if (delay) return YES;
     return NO;

@@ -35,7 +35,7 @@
     CGContextFillRect(myContext, self.bounds);
 }
 
-+(CGFloat) defaultHeight
++(CGFloat) defaultViewHeight
 {
     return 30.0;
 }

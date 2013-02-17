@@ -49,7 +49,6 @@ NSString* const VSCIMOSXDelayCellViewReuseIdentifier       = @"VSCIMOSXDelayCell
 
 const static BOOL traceInterface = YES;
 
-@synthesize elementController = _elementController;
 @synthesize eventChain = _eventChain;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -77,11 +76,13 @@ const static BOOL traceInterface = YES;
     BOOST_ASSERT(self.eventTableView);
     BOOST_ASSERT(self.eventTableView.delegate == self);
     BOOST_ASSERT(self.eventTableView.dataSource == self);
+    
     self.eventTableView.translatesAutoresizingMaskIntoConstraints = NO;
     
     BOOST_ASSERT(self.addEventButton);
     BOOST_ASSERT(self.removeEventButton);
     BOOST_ASSERT(self.addEventMenu);
+    
     self.addEventButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.removeEventButton.translatesAutoresizingMaskIntoConstraints = NO;
     
@@ -311,6 +312,7 @@ const static BOOL traceInterface = YES;
             VSCIMOSXActionCellView* actionView = [tableView makeViewWithIdentifier:[[VSCIMOSXActionCellView class] description] owner:self];
             BOOST_ASSERT(actionView);
             BOOST_ASSERT([actionView isKindOfClass:[VSCIMOSXActionCellView class]]);
+            actionView.translatesAutoresizingMaskIntoConstraints = NO;
             [actionView setEvent:(Event::WPtr(event))];
             actionView.eventChainController = self;
             if (traceInterface) NSLog(@"Returning: %@ with frame: %@", actionView, NSStringFromRect(actionView.frame));
@@ -324,6 +326,7 @@ const static BOOL traceInterface = YES;
             VSCIMOSXDelayCellView* delayView = [tableView makeViewWithIdentifier:[[VSCIMOSXDelayCellView class] description] owner:self];
             BOOST_ASSERT(delayView);
             BOOST_ASSERT([delayView isKindOfClass:[VSCIMOSXDelayCellView class]]);
+            delayView.translatesAutoresizingMaskIntoConstraints = NO;
             delayView.eventChainController = self;
             [delayView setEvent:Event::WPtr(event)];
             if (traceInterface) NSLog(@"Returning: %@ with frame: %@", delayView, NSStringFromRect(delayView.frame));
@@ -384,38 +387,24 @@ const static BOOL traceInterface = YES;
     
     BOOST_ASSERT([aNotification object] == self.eventTableView);
     if ([aNotification object] != self.eventTableView) return;
-    
+
     NSIndexSet* rowIndexes = [self.eventTableView selectedRowIndexes];
-    
+
     [rowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        NSView* v = [self.eventTableView viewAtColumn:0 row:idx makeIfNecessary:NO];
-        //NSLog(@"Row %ld: %@ with frame %@", idx, v, NSStringFromRect(v.frame));
-        if ([v isKindOfClass:[VSCIMOSXActionCellView class]])
-        {
-            VSCIMOSXActionCellView* actionView = (VSCIMOSXActionCellView*)v;
-            [actionView setNeedsLayout:YES];
-            [actionView printUIDescription];
-        }
+    NSView* v = [self.eventTableView viewAtColumn:0 row:idx makeIfNecessary:NO];
+    if ([v isKindOfClass:[VSCIMOSXEventCellView class]])
+    {
+        VSCIMOSXEventCellView* eventView = (VSCIMOSXEventCellView*)v;
+        [eventView printUIDescription];
+    }
     }];
     
 }
 
 - (void)tableViewColumnDidResize:(NSNotification *)aNotification
 {
-    NSLog(@"%@ tableViewColumnDidResize: %@, column %@, old width %@",
-          self, [aNotification object],
-          [[aNotification userInfo] objectForKey:@"NSTableColumn"],
-          [[aNotification userInfo] objectForKey:@"NSOldWidth"]);
-}
 
-- (void)tableView:(NSTableView *)aTableView
-  willDisplayCell:(id)aCell
-   forTableColumn:(NSTableColumn *)aTableColumn
-              row:(NSInteger)rowIndex
-{
-    NSLog(@"HERE!!");
 }
-
 
 @end
 

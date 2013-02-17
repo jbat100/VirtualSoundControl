@@ -36,11 +36,9 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
 
 @interface VSCIMOSXEventEditorViewController ()
 
-@property (weak) IBOutlet NSButton* backToEventChainViewButton;
+@property (nonatomic, weak) IBOutlet NSButton* backToEventChainViewButton;
 
 -(IBAction) backToEventChainView:(id)sender;
-
-+(VSCIMOSXMappingCellView*) newMappingViewWithOwner:(id)owner;
 
 /*
  *  Action specific stuff
@@ -48,9 +46,7 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
 
 -(Action::SPtr) action;
 
-@property (nonatomic, strong) IBOutlet NSView* mainView;
-@property (nonatomic, strong) IBOutlet NSTextField* actionTypeTextField;
-@property (nonatomic, strong) IBOutlet NSButton* mappingsButton;
+@property (nonatomic, strong) IBOutlet NSTextField* eventTypeTextField;
 
 @property (nonatomic, strong) IBOutlet NSView* midiOutputView;
 @property (nonatomic, strong) IBOutlet NSPopUpButton* midiOutputPopUpButton;
@@ -94,37 +90,6 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
     BOOST_ASSERT(self.mappingTableView.delegate == self);
     BOOST_ASSERT(self.mappingTableView.dataSource == self);
 }
-
-#pragma mark - View Factory Methods
-
-+(VSCIMOSXMappingCellView*) newMappingViewWithOwner:(id)owner
-{
-    static NSNib* nib = nil;
-    static NSString* identifier = [[VSCIMOSXMappingCellView class] description];
-    
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        BOOST_ASSERT(!nib);
-        nib = [[NSNib alloc] initWithNibNamed:[[VSCIMOSXMappingCellView class] description] bundle:nil];
-    });
-    BOOST_ASSERT(nib);
-    
-    NSArray *objects = nil;
-    VSCIMOSXMappingCellView* v = nil;
-    [nib instantiateNibWithOwner:owner topLevelObjects:&objects];
-    for(id object in objects)
-    {
-        if([object isKindOfClass:[VSCIMOSXMappingCellView class]])
-        {
-            v = object;
-            v.identifier = identifier;
-            break;
-        }
-    }
-    BOOST_ASSERT(v);
-    return v;
-}
-
 
 #pragma mark - UI Helpers
 
@@ -204,6 +169,13 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
     }
 }
 
+-(void) resetEditingView
+{
+    BOOST_ASSERT(self.editingView);
+    [[self.editingView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.editingView removeConstraints:[self.editingView constraints]];
+}
+
 
 -(void) setupInterfaceForNewAction
 {
@@ -218,12 +190,9 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
     NSMutableString* verticalLayoutVisualFormat = [NSMutableString stringWithString:@"V:|"];
     NSMutableDictionary* viewBindingsDictionary = [NSMutableDictionary dictionary];
     
-    if (self.mainView == nil)
-    {
-        self.mainView = [[VSCOSXInterfaceFactory defaultFactory] newActionCommonViewWithOwner:self];
-    }
-    
-    BOOST_ASSERT(self.mainView);
+    BOOST_ASSERT(self.editingView);
+
+    BOOST_ASSERT(self.eventTypeTextField);
     [[self view] addSubview:self.mainView];
     [viewsForHorizontalConstraints addObject:self.mainView];
     [viewBindingsDictionary setValue:self.mainView forKey:@"mainView"];
@@ -233,7 +202,7 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
      *  Update type interface
      */
     
-    [self.actionTypeTextField setStringValue:[NSString stringWithStdString:StringForActionType([self action]->getActionType())]];
+    [self.eventTypeTextField setStringValue:[NSString stringWithStdString:StringForActionType([self action]->getActionType())]];
     
     /*
      *  Handle different types of implementations
@@ -503,7 +472,7 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
          *  for each trigger type
          */
         
-        return (targetCount * triggerCount) + triggerCount;
+        return ((targetCount + 1) * triggerCount);
     }
     
 	return 0;
@@ -521,12 +490,22 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
         if (event)
         {
             const Targets& targets = event->getRequiredMappingTargets();
-            
             int targetIndex = row % ((int)targets.size() + 1);
+            
+            const Triggers& triggers = AllowedTriggers();
+            int triggerIndex = std::floor(row / (targets.size() + 1));
+            Trigger trigger = triggers.at(triggerIndex);
             
             if (targetIndex == 0)
             {
-                // make and reuturn section view
+                VSCOSXTableSectionView* sectionView = [tableView makeViewWithIdentifier:@"VSCOSXTableSectionView" owner:self];
+                BOOST_ASSERT(sectionView);
+                
+                if (sectionView)
+                {
+                    [sectionView.nameTextField setStringValue:[NSString stringWithStdString:StringForTrigger(trigger)]];
+                    return sectionView;
+                }
             }
             
             // if it's not 0 then it should be positive, otherwise modulo function is pretty bad
@@ -535,34 +514,24 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
             
             if (targetIndex > 0)
             {
-                const Triggers& triggers = AllowedTriggers();
-                
-                int triggerIndex = std::floor(row / (targets.size() + 1));
-                
                 Target target = targets.at(targetIndex-1);
-                Trigger trigger = triggers.at(triggerIndex);
                 
                 Mapping::SPtr mapping = event->getMapping(trigger, target);
+                BOOST_ASSERT(mapping);
                 
-                VSCIMOSXMappingCellView* mappingView = [tableView makeViewWithIdentifier:[[VSCIMOSXMappingCellView class] description]
-                                                                               owner:self];
-                
-                if (!mappingView)
-                {
-                    mappingView = [[self class] newMappingViewWithOwner:self];
-                }
-                
+                VSCIMOSXMappingCellView* mappingView = [tableView makeViewWithIdentifier:@"VSCIMOSXMappingCellView" owner:self];
                 BOOST_ASSERT(mappingView);
                 BOOST_ASSERT([mappingView isKindOfClass:[VSCIMOSXMappingCellView class]]);
                 
-                [mappingView setController:(id)self];
-                [mappingView setMapping:(Mapping::WPtr(mapping))];
-                
-                [mappingView.targetTextField setStringValue:[NSString stringWithStdString:StringForTarget(target)]];
-                
-                return mappingView;
+                if (mappingView)
+                {
+                    [mappingView setAllowedMappingTypes:AllowedMappingTypeSetForTrigger(trigger)];
+                    [mappingView setController:(id)self];
+                    [mappingView setMapping:(Mapping::WPtr(mapping))];
+                    [mappingView.targetTextField setStringValue:[NSString stringWithStdString:StringForTarget(target)]];
+                    return mappingView;
+                }
             }
-            
         }
     }
     

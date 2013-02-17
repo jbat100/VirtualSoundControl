@@ -38,12 +38,15 @@
 -(void) awakeFromNib
 {
     //BOOST_ASSERT(self.iconImageView);
+    BOOST_ASSERT(self.editorButton);
+    
     self.iconImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.editorButton.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 #pragma mark - UI Callbacks
 
--(IBAction) showMappings:(id)sender
+-(IBAction) showEditor:(id)sender
 {
     BOOST_ASSERT(self.eventChainController);
     BOOST_ASSERT([self.eventChainController respondsToSelector:@selector(sender:requestsShowEventEditorForEvent:)]);
@@ -72,6 +75,15 @@
             _event = VSC::IM::Event::WPtr();
         }
     }
+}
+
+#pragma mark - UI Debugging
+
+- (void)printUIDescription
+{
+    NSLog(@"------------------%@ printUIDescription----------------------", self);
+    NSLog(@"frame %@, bounds %@", NSStringFromRect(self.frame), NSStringFromRect(self.bounds));
+    NSLog(@"-------------------------------------------------------------");
 }
 
 @end

@@ -12,6 +12,6 @@
 
 +(CGFloat) defaultViewHeight;
 
-@property (nonatomic, strong) NSTextField* nameTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* nameTextField;
 
 @end
