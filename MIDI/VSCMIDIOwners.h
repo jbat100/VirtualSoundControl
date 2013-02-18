@@ -22,7 +22,7 @@ namespace VSC
         {
         public:
             typedef boost::shared_ptr<OutputOwner> SPtr;
-            OutputOwner() : mMIDIOutput(Output::SPtr()) {}
+            OutputOwner();
             Output::SPtr getMIDIOutput(void) {return mMIDIOutput;}
             void setMIDIOutput(Output::SPtr output) {mMIDIOutput = output;}
         private:

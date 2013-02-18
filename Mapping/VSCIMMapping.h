@@ -29,17 +29,17 @@ namespace VSC {
             
             Float mappedValue(Trigger trigger, TriggerPayload::SPtr payload);
             
-            MappingType getMappingType(void) {return mMappingType;}
+            MappingType getMappingType(void) const {return mMappingType;}
             void setMappingType(MappingType mappingType);
             
             /**
              *  Scale and Offset
              */
             
-            Float getOffset(void) {return mOffset;}
+            Float getOffset(void) const {return mOffset;}
             void setOffset(Float offset) {mOffset = offset;}
             
-            Float getScaleFactor(void) {return mScaleFactor;}
+            Float getScaleFactor(void) const {return mScaleFactor;}
             void setScaleFactor(Float factor) {mScaleFactor = factor;}
             
             /**
@@ -77,6 +77,8 @@ namespace VSC {
         };
         
         typedef std::vector<Mapping::SPtr> Mappings;
+        
+        std::ostream& operator << (std::ostream& stream, const Mapping& mapping);
         
     }
     

@@ -22,6 +22,7 @@ Delay::Delay(void)
     {
         Mapping::SPtr mapping = this->getMapping(trigger, TargetDuration);
         mapping->setMappingType(MappingTypeConstant);
+        mapping->setOffset(1.0);
     }
 }
 

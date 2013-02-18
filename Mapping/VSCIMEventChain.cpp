@@ -158,7 +158,10 @@ void EventChain::perform(Trigger trigger, TriggerPayload::SPtr payload)
         Delay::SPtr delay = boost::dynamic_pointer_cast<Delay>(event);
         if (delay)
         {
-            executionTime += delay->getDuration(trigger, payload);
+            TimeDuration duration = delay->getDuration(trigger, payload);
+            std::cout << "--- Adding duration " << duration << " to execution time" << std::endl;
+            executionTime += duration;
+            
             continue;
         }
         Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);

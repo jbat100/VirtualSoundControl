@@ -12,6 +12,14 @@
 using namespace VSC;
 using namespace VSC::IM;
 
+std::ostream& VSC::IM::operator << (std::ostream& stream, const Mapping& mapping)
+{
+    stream << "Mapping with type: " << StringForMappingType(mapping.getMappingType());
+    stream << " offset: " << mapping.getOffset();
+    stream << " scale factor: " << mapping.getScaleFactor();
+    return stream;
+}
+
 Mapping::Mapping() : mOffset(0.0), mScaleFactor(1.0), mMappingType(MappingTypeNone)
 {
     

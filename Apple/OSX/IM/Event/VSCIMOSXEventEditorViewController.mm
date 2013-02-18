@@ -190,6 +190,8 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
 
 -(void) setupInterfaceForNewEvent
 {
+    [self resetEditingView];
+    
     /*
      *  Setup the view and its subviews according to action type
      */
@@ -206,13 +208,7 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
     [viewsForHorizontalConstraints addObject:self.eventTypeTextField];
     [viewBindingsDictionary setValue:self.eventTypeTextField forKey:@"eventTypeTextField"];
     [verticalLayoutVisualFormat appendString:@"-2-[eventTypeTextField]"];
-    
-    /*
-     *  Update type interface
-     */
-    
-    [self.eventTypeTextField setStringValue:[NSString stringWithStdString:StringForActionType([self action]->getActionType())]];
-    
+
     /*
      *  Handle different types of implementations
      */
@@ -222,6 +218,11 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
     if (action)
     {
         implementation = action->getImplementation();
+        [self.eventTypeTextField setStringValue:[NSString stringWithStdString:StringForActionType([self action]->getActionType())]];
+    }
+    else
+    {
+        [self.eventTypeTextField setStringValue:@"Delay"];
     }
     
     /*

@@ -76,13 +76,21 @@ bool VSC::MIDI::MIDISendMessageTask::stepExecution(void)
     
     if (targetTime <= CurrentTime())
     {
-        if (mTraceExecution) std::cout << "    Executing!!!" << std::endl;
-        payload->midiOutput->sendMessage(payload->messageDescription);
+        if (mTraceExecution) std::cout << "    Executing!" << std::endl;
+        //BOOST_ASSERT(payload->midiOutput);
+        if (payload->midiOutput)
+        {
+            payload->midiOutput->sendMessage(payload->messageDescription);
+        }
+        else
+        {
+            if (mTraceExecution) std::cout << "    NO MIDI OUT!!!" << std::endl;
+        }
         this->setState(StateEnded);
         return true;
     }
     
-    if (mTraceExecution) std::cout << "    Not yet!!!" << std::endl;
+    if (mTraceExecution) std::cout << "    Not yet!" << std::endl;
     
     return false;
 }

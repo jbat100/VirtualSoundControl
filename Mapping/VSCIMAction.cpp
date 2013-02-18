@@ -39,6 +39,11 @@ const Tasks Action::generateTasks(Trigger trigger, TriggerPayload::SPtr payload)
 
 const Tasks Action::generateTasksWithTargetValueMap(Event::TargetValueMap& valueMap)
 {
+    BOOST_ASSERT(mImplementation);
+    if (mImplementation)
+    {
+        return mImplementation->generateTasksWithTargetValueMap(valueMap);
+    }
     Tasks tasks;
     return tasks;
 }
