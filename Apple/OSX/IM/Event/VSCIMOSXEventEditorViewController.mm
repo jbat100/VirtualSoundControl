@@ -166,13 +166,15 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
                                                        bundle:nil];
             BOOST_ASSERT(self.mappingEditViewController);
             BOOST_ASSERT(self.mappingEditViewController.view);
-            BOOST_ASSERT(self.mappingEditViewController.offsetTextField);
-            BOOST_ASSERT(self.mappingEditViewController.scaleFactorTextField);
         }
         
         self.mappingEditViewController.mapping = Mapping::WPtr(mapping);
+        BOOST_ASSERT(self.mappingEditViewController.offsetKeyedFieldView);
+        BOOST_ASSERT(self.mappingEditViewController.scaleFactorKeyedFieldView);
         self.mappingEditPopover.contentViewController = self.mappingEditViewController;
-        self.mappingEditPopover.contentSize = NSMakeSize(213.0, 112.0);
+        //self.mappingEditPopover.contentSize = NSMakeSize(213.0, 112.0);
+        
+        //self.mappingEditPopover.
         
         [self.mappingEditPopover showRelativeToRect:mappingView.editButton.frame
                                                       ofView:mappingView
@@ -600,6 +602,12 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
     BOOST_ASSERT_MSG(false, "Shouldn't reach this point");
     
     return 0;
+}
+
+- (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex
+{
+    NSLog(@"%@ tableView: %@ shouldSelectRow: %ld", self, aTableView, (long)rowIndex);
+    return YES;
 }
 
 @end

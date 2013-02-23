@@ -10,6 +10,7 @@
 
 #import "VSCOSXKeyedCheckBoxView.h"
 #import "VSCOSXKeyedSliderView.h"
+#import "VSCOSXKeyed1FieldView.h"
 #import "VSCOSXKeyed3FieldView.h"
 #import "VSCOSXKeyed4FieldView.h"
 
@@ -38,6 +39,9 @@
         
         interfaceFactory.keyedSliderViewNib = [[NSNib alloc] initWithNibNamed:
                                                  [[VSCOSXKeyedSliderView class] description] bundle:nil];
+
+        interfaceFactory.keyed1FieldViewNib = [[NSNib alloc] initWithNibNamed:
+                                               [[VSCOSXKeyed1FieldView class] description] bundle:nil];
         
         interfaceFactory.keyed3FieldViewNib = [[NSNib alloc] initWithNibNamed:
                                                [[VSCOSXKeyed3FieldView class] description] bundle:nil];
@@ -102,6 +106,27 @@
     for(id object in objects)
     {
         if([object isKindOfClass:[VSCOSXKeyedSliderView class]])
+        {
+            v = object;
+            v.identifier = identifier;
+            break;
+        }
+    }
+    BOOST_ASSERT(v);
+    v.translatesAutoresizingMaskIntoConstraints = NO;
+    return v;
+}
+
+-(VSCOSXKeyed1FieldView*) newKeyed1FieldViewWithOwner:(id)owner
+{
+    NSString* identifier = [[VSCOSXKeyed1FieldView class] description];
+    BOOST_ASSERT(self.keyed1FieldViewNib);
+    NSArray *objects = nil;
+    VSCOSXKeyed1FieldView* v = nil;
+    [self.keyed1FieldViewNib instantiateNibWithOwner:owner topLevelObjects:&objects];
+    for(id object in objects)
+    {
+        if([object isKindOfClass:[VSCOSXKeyed1FieldView class]])
         {
             v = object;
             v.identifier = identifier;

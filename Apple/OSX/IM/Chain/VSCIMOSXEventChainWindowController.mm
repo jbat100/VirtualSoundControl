@@ -53,6 +53,7 @@ static const bool traceInterface = true;
     BOOST_ASSERT(self.eventChainViewController);
     
     calledOnce = YES;
+    
 }
 
 - (void)windowDidLoad
@@ -87,6 +88,24 @@ static const bool traceInterface = true;
     BOOST_ASSERT(self.eventChainViewController.eventListView.eventTableView);
     
     [self.eventChainViewController.eventListView.eventTableView reloadData];
+    
+    /*
+     *  Set up first responder observer
+     */
+    
+    [[self window] addObserver:self forKeyPath:@"firstResponder"
+                       options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+                       context:NULL];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    
+    if ([keyPath isEqual:@"firstResponder"] && [object isKindOfClass:[NSWindow class]])
+    {
+        NSLog(@"%@ firstResponder changed to %@", self, [[self window] firstResponder]);
+    }
+
+    //[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 }
 
 @end

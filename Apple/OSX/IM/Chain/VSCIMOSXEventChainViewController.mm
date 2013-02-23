@@ -42,7 +42,10 @@ NSString* const VSCIMOSXDelayCellViewReuseIdentifier       = @"VSCIMOSXDelayCell
 -(void) switchToView:(NSView*)newView;
 
 -(void) appendEvent:(Event::SPtr)event;
+-(void) insertEvent:(Event::SPtr)event;
 -(void) removeEvent:(Event::SPtr)event;
+
+-(void) updateAfterTableViewSelectionChange;
 
 @end
 
@@ -76,6 +79,15 @@ const static BOOL traceInterface = YES;
     
     BOOST_ASSERT(self.eventListView.eventTableView.delegate == self);
     BOOST_ASSERT(self.eventListView.eventTableView.dataSource == self);
+}
+
+-(void) setEventChain:(EventChain::WPtr)eventChain
+{
+    _eventChain = eventChain;
+    
+    [self reloadInterface];
+    
+    [self updateAfterTableViewSelectionChange];
 }
 
 -(void) reloadInterface
@@ -125,19 +137,29 @@ const static BOOL traceInterface = YES;
 {
     Event::SPtr event = Event::SPtr();
     
-    if (sender == self.eventListView.addDelayMenuItem)
+    if (sender == self.eventListView.appendDelayMenuItem)
     {
         event = Event::SPtr(new IM::Delay);
+        [self appendEvent:event];
     }
-    else if (sender == self.eventListView.addActionMenuItem)
+    else if (sender == self.eventListView.appendActionMenuItem)
     {
         event = Event::SPtr(new Action);
         Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
         action->setActionType(ActionTypeVoid);
-    }
-    if (event)
-    {
         [self appendEvent:event];
+    }
+    else if (sender == self.eventListView.insertDelayMenuItem)
+    {
+        event = Event::SPtr(new IM::Delay);
+        [self insertEvent:event];
+    }
+    else if (sender == self.eventListView.insertActionMenuItem)
+    {
+        event = Event::SPtr(new Action);
+        Action::SPtr action = boost::dynamic_pointer_cast<Action>(event);
+        action->setActionType(ActionTypeVoid);
+        [self insertEvent:event];
     }
 }
 
@@ -152,6 +174,23 @@ const static BOOL traceInterface = YES;
     {
         chain->appendEvent(event);
         [self reloadInterface];
+        [self updateAfterTableViewSelectionChange];
+    }
+}
+
+-(void) insertEvent:(Event::SPtr)event
+{
+    Event::SPtr selectedEvent = [self selectedChainEvent];
+    EventChain::SPtr chain = self.eventChain.lock();
+    
+    if (selectedEvent && chain)
+    {
+        BOOST_ASSERT(chain);
+        BOOST_ASSERT(event);
+        
+        chain->insertEventBeforeEvent(event, selectedEvent);
+        [self reloadInterface];
+        [self updateAfterTableViewSelectionChange];
     }
 }
 
@@ -166,6 +205,7 @@ const static BOOL traceInterface = YES;
     {
         chain->removeEvent(event);
         [self reloadInterface];
+        [self updateAfterTableViewSelectionChange];
     }
     
 }
@@ -254,6 +294,23 @@ const static BOOL traceInterface = YES;
     [[self view] setNeedsLayout:YES];
 }
 
+-(void) updateAfterTableViewSelectionChange
+{
+    NSIndexSet* rowIndexes = [self.eventListView.eventTableView selectedRowIndexes];
+    
+    if ([rowIndexes count] > 0)
+    {
+        [self.eventListView.appendEventButton setEnabled:YES];
+        [self.eventListView.insertEventButton setEnabled:YES];
+        [self.eventListView.removeEventButton setEnabled:YES];
+    }
+    else
+    {
+        [self.eventListView.appendEventButton setEnabled:YES];
+        [self.eventListView.insertEventButton setEnabled:NO];
+        [self.eventListView.removeEventButton setEnabled:NO];
+    }
+}
 
 #pragma mark - NSTableViewDelegate and NSTableViewDataSource
 
@@ -427,6 +484,8 @@ const static BOOL traceInterface = YES;
         }
     }];
     
+    [self updateAfterTableViewSelectionChange];
+    
 }
 
 - (void)tableViewColumnDidResize:(NSNotification *)aNotification
@@ -452,6 +511,12 @@ const static BOOL traceInterface = YES;
     
     [cellView setNeedsLayout:YES];
     [rowView setNeedsLayout:YES];
+}
+
+- (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex
+{
+    NSLog(@"%@ tableView: %@ shouldSelectRow: %ld", self, aTableView, (long)rowIndex);
+    return YES;
 }
 
 @end

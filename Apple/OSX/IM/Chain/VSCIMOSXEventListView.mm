@@ -32,15 +32,17 @@
     BOOST_ASSERT(self.eventTableView);
     self.eventTableView.translatesAutoresizingMaskIntoConstraints = NO;
     
-    BOOST_ASSERT(self.addEventButton);
+    BOOST_ASSERT(self.appendEventButton);
     BOOST_ASSERT(self.removeEventButton);
     BOOST_ASSERT(self.addEventMenu);
     
-    self.addEventButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.appendEventButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.removeEventButton.translatesAutoresizingMaskIntoConstraints = NO;
     
-    BOOST_ASSERT(self.addDelayMenuItem);
-    BOOST_ASSERT(self.addActionMenuItem);
+    BOOST_ASSERT(self.appendDelayMenuItem);
+    BOOST_ASSERT(self.appendActionMenuItem);
+    BOOST_ASSERT(self.insertDelayMenuItem);
+    BOOST_ASSERT(self.insertActionMenuItem);
     
     self.eventTableView.allowsEmptySelection = YES;
     self.eventTableView.allowsMultipleSelection = NO;

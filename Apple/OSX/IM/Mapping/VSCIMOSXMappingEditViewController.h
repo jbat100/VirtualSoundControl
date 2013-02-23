@@ -11,17 +11,14 @@
 #include "VSC.h"
 #include "VSCIM.h"
 
-@interface VSCIMOSXMappingEditViewController : NSViewController
+@class VSCOSXKeyed1FieldView;
+
+@interface VSCIMOSXMappingEditViewController : NSViewController <NSTextFieldDelegate>
 
 @property (nonatomic, assign) VSC::IM::Mapping_WPtr mapping;
 
-// binding targets
-
-@property (nonatomic, assign) VSC::Float offset;
-@property (nonatomic, assign) VSC::Float scaleFactor;
-
-@property (nonatomic, strong) IBOutlet NSTextField* offsetTextField;
-@property (nonatomic, strong) IBOutlet NSTextField* scaleFactorTextField;
+@property (nonatomic, strong) VSCOSXKeyed1FieldView* offsetKeyedFieldView;
+@property (nonatomic, strong) VSCOSXKeyed1FieldView* scaleFactorKeyedFieldView;
 
 -(IBAction) dismissEditView:(id)sender;
 

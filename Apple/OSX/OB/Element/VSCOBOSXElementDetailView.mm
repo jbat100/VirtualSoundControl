@@ -106,6 +106,14 @@
         self.positionFieldView = [factory newKeyed3FieldViewWithOwner:owner];
         [self addSubview:self.positionFieldView];
         [self.positionFieldView.labelTextField setStringValue:@"Position"];
+        [self.positionFieldView.value1TextField setDelegate:self];
+        
+        self.positionFieldView.value1TextField.editable = YES;
+        self.positionFieldView.value1TextField.selectable = YES;
+        self.positionFieldView.value1TextField.enabled = YES;
+        
+        //self.positionFieldView.canBecomeKeyView = YES;
+        //self.positionFieldView.value1TextField.canBecomeKeyView = YES;
         NSView* positionFV = self.positionFieldView;
         [viewsForHorizontalConstraints addObject:positionFV];
         [verticalVisualFormat appendString:@"-2-[positionFV]"];
@@ -163,13 +171,16 @@
     BOOST_ASSERT([textField isKindOfClass:[NSTextField class]]);
     if ([textField isKindOfClass:[NSTextField class]])
     {
-        textField.font = [NSFont fontWithName:@"System" size:11];
+        // NSTextField font stops the editing WTF
+        //textField.font = [NSFont fontWithName:@"System" size:11];
         
         NSNumberFormatter* formatter = textField.formatter;
         BOOST_ASSERT(formatter);
         BOOST_ASSERT([formatter isKindOfClass:[NSNumberFormatter class]]);
         if ([formatter isKindOfClass:[NSNumberFormatter class]])
         {
+            formatter.minimumSignificantDigits = 3;
+            formatter.minimumFractionDigits = 2;
             formatter.maximumFractionDigits = 2;
             formatter.thousandSeparator = @"";
         }

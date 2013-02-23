@@ -19,11 +19,14 @@
  */
 
 @property (weak) IBOutlet NSTableView* eventTableView;
-@property (weak) IBOutlet NSPopUpButton* addEventButton;
+@property (weak) IBOutlet NSPopUpButton* appendEventButton;
+@property (weak) IBOutlet NSPopUpButton* insertEventButton;
 @property (weak) IBOutlet NSButton* removeEventButton;
 @property (weak) IBOutlet NSMenu* addEventMenu;
 
-@property (weak) IBOutlet NSMenuItem* addDelayMenuItem;
-@property (weak) IBOutlet NSMenuItem* addActionMenuItem;
+@property (weak) IBOutlet NSMenuItem* appendDelayMenuItem;
+@property (weak) IBOutlet NSMenuItem* appendActionMenuItem;
+@property (weak) IBOutlet NSMenuItem* insertDelayMenuItem;
+@property (weak) IBOutlet NSMenuItem* insertActionMenuItem;
 
 @end

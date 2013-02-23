@@ -7,7 +7,7 @@
 
 @protocol VSCOBOSXElementController;
 
-@interface VSCOBOSXElementDetailView : NSView
+@interface VSCOBOSXElementDetailView : NSView <NSTextFieldDelegate>
 
 @property (assign) IBOutlet id<VSCOBOSXElementController> elementController;
 

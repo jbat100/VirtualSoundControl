@@ -81,6 +81,8 @@ const static BOOL traceInterface = YES;
 {
     [super windowDidLoad];
     
+    [self.window setAutorecalculatesKeyViewLoop:YES];
+    
     if (traceInterface) NSLog(@"%@ windowDidLoad", self);
     
     NSView* contentView = [self.window contentView];
@@ -106,6 +108,14 @@ const static BOOL traceInterface = YES;
     [self.elementInspectorViewController setupIfNecessary];
 
     self.window.delegate = self;
+    
+    /*
+     *  Set up first responder observer
+     */
+    
+    [[self window] addObserver:self forKeyPath:@"firstResponder"
+                       options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+                       context:NULL];
 }
 
 #pragma mark - NSWindowDelegate
@@ -118,6 +128,41 @@ const static BOOL traceInterface = YES;
         //[self printUIDescription];
         //[self.elementInspectorViewController.elementDetailView printUIDescription];
     }
+}
+
+- (void)keyDown:(NSEvent *)theEvent
+{
+    NSLog(@"%@ keyDown %@", self, theEvent);
+    [[self window] recalculateKeyViewLoop];
+}
+
+/*
+- (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)client
+{
+    NSLog(@"%@ windowWillReturnFieldEditor: %@ toObject: ", self, sender, );
+    return nil;
+}
+ */
+
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    
+    if ([keyPath isEqual:@"firstResponder"] && [object isKindOfClass:[NSWindow class]])
+    {
+        NSLog(@"%@ firstResponder changed to %@", self, [[self window] firstResponder]);
+        
+        id responder = [[self window] firstResponder];
+        
+        if ([responder isKindOfClass:[NSTextField class]])
+        {
+            NSTextField* textField = (NSTextField*)responder;
+            NSText* text = [[self window] fieldEditor:YES forObject:(id)responder];
+            NSLog(@"selectable %d editable %d enabled %d text %@", textField.isSelectable, textField.isEditable, textField.isEnabled, text);
+        }
+    }
+    
+    //[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 }
 
 

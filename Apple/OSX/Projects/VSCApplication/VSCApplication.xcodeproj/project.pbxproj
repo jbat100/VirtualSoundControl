@@ -25,6 +25,8 @@
 		1033868F156E48AC00CEB288 /* Plugin_ParticleFX.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6948F156E483000E70049 /* Plugin_ParticleFX.dylib */; };
 		10338690156E48AC00CEB288 /* libConvexDecomposition.2.80.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 10F6947F156E3B0A00E70049 /* libConvexDecomposition.2.80.dylib */; };
 		1033869E156E77E100CEB288 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1033869D156E77E100CEB288 /* Carbon.framework */; };
+		103BFD1516D8DAF7001701D6 /* VSCOSXKeyed1FieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = 103BFD1316D8DAF7001701D6 /* VSCOSXKeyed1FieldView.m */; };
+		103BFD1616D8DAF7001701D6 /* VSCOSXKeyed1FieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 103BFD1416D8DAF7001701D6 /* VSCOSXKeyed1FieldView.xib */; };
 		103E77EF166A686C0013ABB6 /* VSCEnvironmentTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103E77ED166A686C0013ABB6 /* VSCEnvironmentTest.cpp */; };
 		104BFB79166D3BC400746CA9 /* VSCOSXMIDIOutputView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 104BFB78166D3BC400746CA9 /* VSCOSXMIDIOutputView.mm */; };
 		104BFB7C166D3D4E00746CA9 /* VSCOSXMIDIWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 104BFB7B166D3D4E00746CA9 /* VSCOSXMIDIWindowController.xib */; };
@@ -270,6 +272,9 @@
 		10338699156E5BE300CEB288 /* OgreOSXRenderTexture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXRenderTexture.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXRenderTexture.h; sourceTree = "<group>"; };
 		1033869A156E5BE300CEB288 /* OgreOSXWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OgreOSXWindow.h; path = ../../../../../../Libraries/OgreSDK/include/OGRE/RenderSystems/GL/OSX/OgreOSXWindow.h; sourceTree = "<group>"; };
 		1033869D156E77E100CEB288 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		103BFD1216D8DAF7001701D6 /* VSCOSXKeyed1FieldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXKeyed1FieldView.h; path = ../Apple/OSX/Generic/VSCOSXKeyed1FieldView.h; sourceTree = "<group>"; };
+		103BFD1316D8DAF7001701D6 /* VSCOSXKeyed1FieldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSCOSXKeyed1FieldView.m; path = ../Apple/OSX/Generic/VSCOSXKeyed1FieldView.m; sourceTree = "<group>"; };
+		103BFD1416D8DAF7001701D6 /* VSCOSXKeyed1FieldView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VSCOSXKeyed1FieldView.xib; path = ../Apple/OSX/Generic/VSCOSXKeyed1FieldView.xib; sourceTree = "<group>"; };
 		103E77ED166A686C0013ABB6 /* VSCEnvironmentTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = VSCEnvironmentTest.cpp; path = ../../../../Application/VSCEnvironmentTest.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		103E77EE166A686C0013ABB6 /* VSCEnvironmentTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCEnvironmentTest.h; path = ../../../../Application/VSCEnvironmentTest.h; sourceTree = "<group>"; };
 		104BFB77166D3BC400746CA9 /* VSCOSXMIDIOutputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXMIDIOutputView.h; path = ../Apple/OSX/MIDI/VSCOSXMIDIOutputView.h; sourceTree = "<group>"; };
@@ -610,8 +615,8 @@
 		10F8501C16B92D10007485F8 /* VSCIMOSXMappingEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXMappingEditViewController.h; sourceTree = "<group>"; };
 		10F8501D16B92D10007485F8 /* VSCIMOSXMappingEditViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXMappingEditViewController.mm; sourceTree = "<group>"; };
 		10F8501E16B92D10007485F8 /* VSCIMOSXMappingEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXMappingEditViewController.xib; sourceTree = "<group>"; };
-		10F8502116B92D10007485F8 /* VSCIMOSXMappingCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXMappingCellView.h; sourceTree = "<group>"; };
-		10F8502216B92D10007485F8 /* VSCIMOSXMappingCellView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXMappingCellView.mm; sourceTree = "<group>"; };
+		10F8502116B92D10007485F8 /* VSCIMOSXMappingCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMOSXMappingCellView.h; path = ../Mapping/VSCIMOSXMappingCellView.h; sourceTree = "<group>"; };
+		10F8502216B92D10007485F8 /* VSCIMOSXMappingCellView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCIMOSXMappingCellView.mm; path = ../Mapping/VSCIMOSXMappingCellView.mm; sourceTree = "<group>"; };
 		10F8503416B92E3A007485F8 /* VSCIMOSXEventChainListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCIMOSXEventChainListView.h; path = Chain/VSCIMOSXEventChainListView.h; sourceTree = "<group>"; };
 		10F8503516B92E3A007485F8 /* VSCIMOSXEventChainListView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCIMOSXEventChainListView.mm; path = Chain/VSCIMOSXEventChainListView.mm; sourceTree = "<group>"; };
 		10F8503A16B94700007485F8 /* VSCUsernamed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCUsernamed.cpp; path = ../../../../Generic/VSCUsernamed.cpp; sourceTree = "<group>"; };
@@ -1457,6 +1462,9 @@
 				10F7514C16A9494600F493D6 /* VSCOSXKeyedSliderView.h */,
 				10F7514D16A9494600F493D6 /* VSCOSXKeyedSliderView.m */,
 				10F7515116A952A700F493D6 /* VSCOSXKeyedSliderView.xib */,
+				103BFD1216D8DAF7001701D6 /* VSCOSXKeyed1FieldView.h */,
+				103BFD1316D8DAF7001701D6 /* VSCOSXKeyed1FieldView.m */,
+				103BFD1416D8DAF7001701D6 /* VSCOSXKeyed1FieldView.xib */,
 				10F115F116AC7F47000A9EBB /* VSCOSXKeyed3FieldView.h */,
 				10F115F216AC7F47000A9EBB /* VSCOSXKeyed3FieldView.m */,
 				10F115F416AC7FCC000A9EBB /* VSCOSXKeyed3FieldView.xib */,
@@ -1503,6 +1511,8 @@
 				10F3857516CA49EC0012FA72 /* VSCIMOSXEventEditorViewController.h */,
 				10F3857616CA49EC0012FA72 /* VSCIMOSXEventEditorViewController.mm */,
 				10F3857716CA49EC0012FA72 /* VSCIMOSXEventEditorViewController.xib */,
+				10F8502116B92D10007485F8 /* VSCIMOSXMappingCellView.h */,
+				10F8502216B92D10007485F8 /* VSCIMOSXMappingCellView.mm */,
 			);
 			path = Event;
 			sourceTree = "<group>";
@@ -1513,8 +1523,6 @@
 				10F8501C16B92D10007485F8 /* VSCIMOSXMappingEditViewController.h */,
 				10F8501D16B92D10007485F8 /* VSCIMOSXMappingEditViewController.mm */,
 				10F8501E16B92D10007485F8 /* VSCIMOSXMappingEditViewController.xib */,
-				10F8502116B92D10007485F8 /* VSCIMOSXMappingCellView.h */,
-				10F8502216B92D10007485F8 /* VSCIMOSXMappingCellView.mm */,
 			);
 			path = Mapping;
 			sourceTree = "<group>";
@@ -1628,6 +1636,7 @@
 				108D364A16C9981800DA6B25 /* VSCOBOSXElementInspectorViewController.xib in Resources */,
 				108D364C16C9981800DA6B25 /* VSCOBOSXElementInspectorWindowController.xib in Resources */,
 				10F3857916CA49EC0012FA72 /* VSCIMOSXEventEditorViewController.xib in Resources */,
+				103BFD1616D8DAF7001701D6 /* VSCOSXKeyed1FieldView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1766,6 +1775,7 @@
 				10F3857316CA49D10012FA72 /* VSCIMOSXEventCellView.mm in Sources */,
 				10F3857816CA49EC0012FA72 /* VSCIMOSXEventEditorViewController.mm in Sources */,
 				10AE255516D14C7600EDDB55 /* VSCIMOSXEventListView.mm in Sources */,
+				103BFD1516D8DAF7001701D6 /* VSCOSXKeyed1FieldView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
