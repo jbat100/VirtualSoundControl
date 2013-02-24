@@ -526,6 +526,30 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     
 }
 
+#pragma mark - UI Callbacks
+
+-(IBAction)addEventChain:(id)sender
+{
+    Environment::SPtr env = self.environment.lock();
+    BOOST_ASSERT(env);
+    if (env)
+    {
+        env->createEventChain();
+        [self.eventChainListView reloadInterface];
+    }
+}
+
+-(IBAction)removeSelectedEventChain:(id)sender
+{
+    Environment::SPtr env = self.environment.lock();
+    BOOST_ASSERT(env);
+    if (env)
+    {
+        EventChain::SPtr selectedEventChain = [self.eventChainListView selectedEventChain];
+        env->destroyEventChain(selectedEventChain);
+        [self.eventChainListView reloadInterface];
+    }
+}
 
 #pragma mark - Sensible tests
 

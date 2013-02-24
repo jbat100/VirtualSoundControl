@@ -48,8 +48,11 @@
 -(void) showEventChainList;
 -(void) showSceneDetail;
 
-- (IBAction)test1:(id)sender;
-- (IBAction)test2:(id)sender;
-- (IBAction)test3:(id)sender;
+-(IBAction)addEventChain:(id)sender;
+-(IBAction)removeSelectedEventChain:(id)sender;
+
+-(IBAction)test1:(id)sender;
+-(IBAction)test2:(id)sender;
+-(IBAction)test3:(id)sender;
 
 @end

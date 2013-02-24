@@ -89,13 +89,13 @@ void CollisionMapper::clearEventChain(IM::EventChain_SPtr eventChain)
         BOOST_FOREACH(ElementEventChainMap::value_type elementEventChains, mCollisionStartedEventChainMap)
         {
             IM::EventChains& eventChains = elementEventChains.second;
-            IM::EventChains::iterator it = std::find(eventChains.begin(), eventChains.end(), eventChains);
+            IM::EventChains::iterator it = std::find(eventChains.begin(), eventChains.end(), eventChain);
             if (it != eventChains.end()) eventChains.erase(it);
         }
         BOOST_FOREACH(ElementEventChainMap::value_type elementEventChains, mCollisionEndedEventChainMap)
         {
             IM::EventChains& eventChains = elementEventChains.second;
-            IM::EventChains::iterator it = std::find(eventChains.begin(), eventChains.end(), eventChains);
+            IM::EventChains::iterator it = std::find(eventChains.begin(), eventChains.end(), eventChain);
             if (it != eventChains.end()) eventChains.erase(it);
         }
     }
@@ -110,6 +110,24 @@ const EventChains& CollisionMapper::getEventChainsForCollisionEnded(Element::SPt
 {
     return mCollisionEndedEventChainMap[element];
 }
+
+//MARK: Broadcasting
+
+void CollisionMapper::brodcastUpdate(void)
+{
+    BOOST_FOREACH(VSC::Listener::WPtr listener, this->getListeners())
+    {
+        VSC::Listener::SPtr l = listener.lock();
+        BOOST_ASSERT(l);
+        if (!l) continue;
+        CollisionMapper::Listener::SPtr mapperListener  = boost::dynamic_pointer_cast<CollisionMapper::Listener>(l);
+        BOOST_ASSERT(mapperListener);
+        if (!mapperListener) continue;
+        mapperListener->collisionMapperUpdatedMapping(shared_from_this());
+    }
+}
+
+//MARK: CollisionDetector Listener callbacks
 
 void CollisionMapper::collisionProspectDetected(Collision::SPtr collision)
 {

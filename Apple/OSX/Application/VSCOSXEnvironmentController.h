@@ -28,6 +28,9 @@
  */
 @property (strong) IBOutlet id<VSCOBOSXSceneController> sceneController;
 
+-(void) addEventChain;
+-(void) removeEventChain:(VSC::IM::EventChain_SPtr)eventChain;
+
 -(void) showEnvironmentInspector;
 -(void) showSceneDetails;
 -(void) showEventChainList;

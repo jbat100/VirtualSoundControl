@@ -8,15 +8,21 @@
 
 #import <Cocoa/Cocoa.h>
 
+#include "VSCIM.h"
+
 @protocol VSCOSXEnvironmentController;
 
 @interface VSCIMOSXEventChainListView : NSView
 
-@property (assign) id<VSCOSXEnvironmentController> environmentController;
+@property (assign) IBOutlet id<VSCOSXEnvironmentController> environmentController;
 
 @property (nonatomic, strong) IBOutlet NSButton* addButton;
 @property (nonatomic, strong) IBOutlet NSButton* removeButton;
 
 @property (nonatomic, strong) IBOutlet NSTableView* tableView;
+
+-(void) reloadInterface;
+
+-(VSC::IM::EventChain_SPtr) selectedEventChain;
 
 @end

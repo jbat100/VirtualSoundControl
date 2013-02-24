@@ -83,7 +83,7 @@ namespace VSC
         
         OB::Scene_SPtr              mScene;
         
-        CollisionMapper::SPtr   mCollisionMapper;
+        CollisionMapper::SPtr       mCollisionMapper;
         
         IM::EventChains             mEventChains;
         

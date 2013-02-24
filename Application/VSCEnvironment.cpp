@@ -81,6 +81,13 @@ void VSC::Environment::destroyEventChain(EventChain::SPtr eventChain)
     }
     
     //TODO: also destroy the references to this event chain present in the collision mapper
+    
+    CollisionMapper::SPtr collisionMapper = this->getCollisionMapper();
+    BOOST_ASSERT(collisionMapper);
+    if (collisionMapper)
+    {
+        collisionMapper->clearEventChain(eventChain);
+    }
 }
 
 EventChain::SPtr Environment::getEventChainWithUsername(std::string username)
@@ -110,6 +117,7 @@ std::string Environment::generateUsernameForNewEventChain(void)
         {
             return username;
         }
+        count++;
     }
     
     BOOST_ASSERT_MSG(false, "Could not generate user name...");

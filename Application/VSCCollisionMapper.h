@@ -14,18 +14,38 @@
 
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
+#include <boost/enable_shared_from_this.hpp>
 
 #include <map>
 
 namespace VSC {
     
-    class CollisionMapper : public OB::CollisionDetector::Listener
+    class CollisionMapper : public OB::CollisionDetector::Listener, public VSC::Broadcaster,
+    public boost::enable_shared_from_this<CollisionMapper>
     {
         
     public:
         
         typedef boost::shared_ptr<CollisionMapper>    SPtr;
         typedef boost::weak_ptr<CollisionMapper>      WPtr;
+        
+        /**
+         *  Listener interface
+         */
+        
+        class Listener : public VSC::Listener
+        {
+            
+        public:
+            
+            typedef boost::shared_ptr<CollisionMapper::Listener>  SPtr;
+            typedef boost::weak_ptr<CollisionMapper::Listener>    WPtr;
+            
+            virtual ~Listener() {}
+            
+            virtual void collisionMapperUpdatedMapping(VSC::CollisionMapper::SPtr collisionMapper) {}
+            
+        };
         
         /**
          *  Action Chains
@@ -56,6 +76,8 @@ namespace VSC {
         
     private:
         
+        void brodcastUpdate(void);
+        
         typedef std::map<OB::Element_SPtr, IM::EventChains> ElementEventChainMap;
         
         ElementEventChainMap mCollisionStartedEventChainMap;
@@ -66,6 +88,5 @@ namespace VSC {
     };
     
 }
-
 
 #endif // _VSC_IM_COLLISION_MAPPER_H_
