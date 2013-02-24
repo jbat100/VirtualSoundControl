@@ -79,6 +79,8 @@ void VSC::Environment::destroyEventChain(EventChain::SPtr eventChain)
     {
         mEventChains.erase(it);
     }
+    
+    //TODO: also destroy the references to this event chain present in the collision mapper
 }
 
 EventChain::SPtr Environment::getEventChainWithUsername(std::string username)

@@ -87,7 +87,7 @@ static const bool traceInterface = true;
     
     BOOST_ASSERT(self.eventChainViewController.eventListView.eventTableView);
     
-    [self.eventChainViewController.eventListView.eventTableView reloadData];
+    [self.eventChainViewController reloadInterface];
     
     /*
      *  Set up first responder observer

@@ -62,6 +62,7 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
 -(void) updateMIDIControlNumbers;
 
 -(IBAction) midiOutputSelected:(id)sender;
+-(IBAction) midiChannelSelected:(id)sender;
 -(IBAction) midiControlNumberSelected:(id)sender;
 
 -(IBAction) refreshMIDIOutputs:(id)sender;
@@ -256,6 +257,8 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
         if (self.midiChannelView == nil)
         {
             self.midiChannelView = [[VSCOSXInterfaceFactory defaultFactory] newActionMIDIChannelViewWithOwner:self];
+            NSNumberFormatter* formatter = self.midiChannelTextField.formatter;
+            [formatter setAllowsFloats:NO];
         }
         BOOST_ASSERT(self.midiChannelView);
         [editingView addSubview:self.midiChannelView];
@@ -330,6 +333,8 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
     
     [[self view] setNeedsLayout:YES];
     [[self view] setNeedsDisplay:YES];
+    
+    [[[self view] window] recalculateKeyViewLoop];
     
 }
 
@@ -428,6 +433,11 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
     [self updateMIDIOutputs];
 }
 
+-(IBAction) refreshMIDIControlNumbers:(id)sender
+{
+    [self updateMIDIControlNumbers];
+}
+
 -(IBAction) midiOutputSelected:(id)sender
 {
     BOOST_ASSERT(self.midiOutputPopUpButton);
@@ -458,16 +468,12 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
     }
 }
 
--(IBAction) refreshMIDIControlNumbers:(id)sender
-{
-    [self updateMIDIControlNumbers];
-}
-
 -(IBAction) midiControlNumberSelected:(id)sender
 {
     BOOST_ASSERT(self.midiControlNumberPopUpButton);
     
     MIDI::ControlNumberOwner::SPtr controlNumberOwner = ExtractMIDIControlNumberOwnerForAction([self action]);
+    BOOST_ASSERT(controlNumberOwner);
     
     if (controlNumberOwner && self.midiControlNumberPopUpButton)
     {
@@ -486,6 +492,23 @@ NSString* const VSCIMOSXNoMidiControlNumberString   = @"No MIDI Control Number";
     else
     {
         [self.midiControlNumberPopUpButton selectItemWithTitle:VSCIMOSXNoMidiControlNumberString];
+    }
+}
+
+-(IBAction) midiChannelSelected:(id)sender
+{
+    MIDI::ChannelOwner::SPtr channelOwner = ExtractMIDIChannelOwnerForAction([self action]);
+    BOOST_ASSERT(channelOwner);
+    
+    if (channelOwner)
+    {
+        BOOST_ASSERT([sender isKindOfClass:[NSTextField class]]);
+        if ([sender isKindOfClass:[NSTextField class]])
+        {
+            int chan = [(NSTextField*)sender intValue];
+            BOOST_ASSERT(chan>=0 && chan < 16);
+            if (chan>=0 && chan < 16) channelOwner->setMIDIChannel(chan);
+        }
     }
 }
 

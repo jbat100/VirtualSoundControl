@@ -11,8 +11,10 @@
 
 @property (assign) IBOutlet id<VSCOBOSXElementController> elementController;
 
-@property (weak) IBOutlet NSTextField* nameTextField;
-@property (weak) IBOutlet NSTextField* idTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* nameTextField;
+@property (nonatomic, strong) IBOutlet NSTextField* idTextField;
+
+@property (nonatomic, strong) IBOutlet NSButton* printElementDescriptionButton;
 
 /*
  *  Position/Rotation
@@ -26,11 +28,11 @@
 -(void) setupIfNecessary;
 
 -(IBAction) immobilized:(id)sender;
+-(IBAction) printElementDescription:(id)sender;
 
 -(void) reloadWholeInterface;
 -(void) reloadPositionInterface;
 -(void) reloadPositionInterface:(BOOL)critical;
-
 -(void) printUIDescription;
 
 @end

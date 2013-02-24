@@ -81,6 +81,26 @@ void CollisionMapper::removeEventChainForCollisionEnded(EventChain::SPtr eventCh
     }
 }
 
+void CollisionMapper::clearEventChain(IM::EventChain_SPtr eventChain)
+{
+    BOOST_ASSERT(eventChain);
+    if (eventChain)
+    {
+        BOOST_FOREACH(ElementEventChainMap::value_type elementEventChains, mCollisionStartedEventChainMap)
+        {
+            IM::EventChains& eventChains = elementEventChains.second;
+            IM::EventChains::iterator it = std::find(eventChains.begin(), eventChains.end(), eventChains);
+            if (it != eventChains.end()) eventChains.erase(it);
+        }
+        BOOST_FOREACH(ElementEventChainMap::value_type elementEventChains, mCollisionEndedEventChainMap)
+        {
+            IM::EventChains& eventChains = elementEventChains.second;
+            IM::EventChains::iterator it = std::find(eventChains.begin(), eventChains.end(), eventChains);
+            if (it != eventChains.end()) eventChains.erase(it);
+        }
+    }
+}
+
 const EventChains& CollisionMapper::getEventChainsForCollisionStarted(Element::SPtr element)
 {
     return mCollisionStartedEventChainMap[element];

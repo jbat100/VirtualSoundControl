@@ -24,4 +24,6 @@
 
 @property (weak) IBOutlet NSPopUpButton* actionTypePopUpButton;
 
+-(IBAction)actionTypeSelected:(id)sender;
+
 @end

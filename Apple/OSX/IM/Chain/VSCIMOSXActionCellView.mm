@@ -194,5 +194,22 @@ static const BOOL debugDraw = NO;
     }
 }
 
+#pragma mark - UI Callbacks
+
+-(IBAction)actionTypeSelected:(id)sender
+{
+    BOOST_ASSERT(sender == self.actionTypePopUpButton);
+    if (sender == self.actionTypePopUpButton)
+    {
+        NSString* title = [self.actionTypePopUpButton titleOfSelectedItem];
+        ActionType actionType = ActionTypeForString([title stdString]);
+        Action::SPtr action = [self action];
+        BOOST_ASSERT(action);
+        if (action)
+        {
+            action->setActionType(actionType);
+        }
+    }
+}
 
 @end

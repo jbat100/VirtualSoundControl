@@ -86,13 +86,13 @@ const static BOOL traceInterface = YES;
     _eventChain = eventChain;
     
     [self reloadInterface];
-    
-    [self updateAfterTableViewSelectionChange];
 }
 
 -(void) reloadInterface
 {
     [self.eventListView.eventTableView reloadData];
+    
+    [self updateAfterTableViewSelectionChange];
 }
 
 #pragma mark - Debugging
