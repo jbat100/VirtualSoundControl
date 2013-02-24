@@ -3,8 +3,8 @@
 #define _VSC_ENVIRONMENT_H_
 
 #include "VSCOBScene.h"
-#include "VSCIMCollisionMapper.h"
-#include "VSCIMCollisionEventChain.h"
+#include "VSCCollisionMapper.h"
+#include "VSCIMEventChain.h"
 
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
@@ -12,7 +12,8 @@
 
 #include <vector>
 
-namespace VSC {
+namespace VSC
+{
     
     class GlobalApplication;
     
@@ -54,16 +55,17 @@ namespace VSC {
         
         State getState(void) {return mState;}
         
-        OB::Scene::SPtr             getOBScene(void) {return mOBScene;}
-        IM::CollisionMapper::SPtr   getIMCollisionMapper(void) {return mIMCollisionMapper;}
+        OB::Scene_SPtr getScene(void) {return mScene;}
+        CollisionMapper::SPtr getCollisionMapper(void) {return mCollisionMapper;}
         
-        void setIMCollisionMapper(IM::CollisionMapper::SPtr mapper);
-        void setOBScene(OB::Scene::SPtr scene);
+        void setCollisionMapper(CollisionMapper::SPtr mapper);
+        void setScene(OB::Scene_SPtr scene);
         
-        void addCollisionEventChain(IM::CollisionEventChain::SPtr actionChain);
-        void removeCollisionEventChain(IM::CollisionEventChain::SPtr actionChain);
+        IM::EventChain::SPtr createEventChain(void);
+        void destroyEventChain(IM::EventChain::SPtr actionChain);
         
-        const IM::CollisionEventChains& getCollisionEventChains(void) {return mIMCollisionEventChains;}
+        const IM::EventChains& getEventChains(void) {return mEventChains;}
+        IM::EventChain::SPtr getEventChainWithUsername(std::string username);
         
     protected:
         
@@ -77,10 +79,13 @@ namespace VSC {
         
     private:
         
-        OB::Scene::SPtr             mOBScene;
-        IM::CollisionMapper::SPtr   mIMCollisionMapper;
-
-        IM::CollisionEventChains    mIMCollisionEventChains;
+        std::string generateUsernameForNewEventChain(void);
+        
+        OB::Scene_SPtr              mScene;
+        
+        CollisionMapper::SPtr       mCollisionMapper;
+        
+        IM::EventChains             mEventChains;
         
         State                       mState;
   
@@ -90,5 +95,5 @@ namespace VSC {
 
 }
 
-#endif //_VSC_GLOBAL_APPLICATION_H_
+#endif //_VSC_ENVIRONMENT_H_
 

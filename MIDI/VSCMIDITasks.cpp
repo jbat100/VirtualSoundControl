@@ -7,14 +7,17 @@
 #include "VSCMIDITasks.h"
 #include "VSCException.h"
 
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/assert.hpp>
 
 boost::once_flag midiSingletonInitilizedFlag = BOOST_ONCE_INIT;
 static VSC::TaskQueue::SPtr midiTaskQueue = VSC::TaskQueue::SPtr();
 
-namespace VSC {
-    namespace MIDI {
+namespace VSC
+{
+    namespace MIDI
+    {
         void InitialiseSingletonMIDITaskQueue();
     }
 }
@@ -31,109 +34,64 @@ VSC::TaskQueue::SPtr VSC::MIDI::SingletonMIDITaskQueue()
     return midiTaskQueue;
 }
 
-// MARK: Note On
-
-VSC::MIDI::MIDINoteOnTask::MIDINoteOnTask(Task::Payload::SPtr payload) : MIDITask(payload)
+VSC::MIDI::MIDISendMessageTask::Payload::Payload() :
+midiOutput(Output::SPtr()),
+messageDescription(MessageDescription::SPtr(new MessageDescription)),
+timeOffset(boost::posix_time::seconds(0))
 {
-    MIDINoteOnTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDINoteOnTask::Payload>(payload);
     
+}
+
+VSC::MIDI::MIDISendMessageTask::MIDISendMessageTask(Task::Payload::SPtr payload) : MIDITask(payload)
+{
+    MIDISendMessageTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDISendMessageTask::Payload>(payload);
+    BOOST_ASSERT(midiPayload);
     if (!midiPayload)
     {
-        throw VSCInvalidArgumentException("Payload for MIDINoteOnTask should be MIDINoteOnTask::Payload");
+        throw VSCInvalidArgumentException("Payload for MIDISendMessageTask should be MIDISendMessageTask::Payload");
     }
 }
 
-bool VSC::MIDI::MIDINoteOnTask::stepExecution(void)
+bool VSC::MIDI::MIDISendMessageTask::stepExecution(void)
 {
-    VSC::Task::stepExecution();
+    if (mTraceExecution) std::cout << "VSC::MIDI::MIDISendMessageTask::stepExecution:" << std::endl;
     
-    MIDINoteOnTask::Payload::SPtr midiPayload = boost::static_pointer_cast<MIDINoteOnTask::Payload>(this->getPayload());
-    
-    midiPayload->midiOutput->sendNoteOn(midiPayload->channel, midiPayload->pitch, midiPayload->velocity);
-    this->setState(StateEnded);
-    
-    return true;
-}
-
-// MARK: Note Off
-
-VSC::MIDI::MIDINoteOffTask::MIDINoteOffTask(Task::Payload::SPtr payload) : MIDITask(payload)
-{
-    MIDINoteOffTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDINoteOffTask::Payload>(payload);
-    
-    if (!midiPayload)
+    MIDISendMessageTask::Payload::SPtr payload = boost::static_pointer_cast<MIDISendMessageTask::Payload>(this->getPayload());
+    BOOST_ASSERT(payload);
+    if (!payload)
     {
-        throw VSCInvalidArgumentException("Payload for MIDINoteOffTask should be MIDINoteOffTask::Payload");
-    }
-}
-
-bool VSC::MIDI::MIDINoteOffTask::stepExecution(void)
-{
-    VSC::Task::stepExecution();
-    
-    MIDINoteOffTask::Payload::SPtr midiPayload = boost::static_pointer_cast<MIDINoteOffTask::Payload>(this->getPayload());
-    
-    midiPayload->midiOutput->sendNoteOff(midiPayload->channel, midiPayload->pitch, midiPayload->velocity);
-    this->setState(StateEnded);
-    
-    return true;
-}
-
-// MARK: Note On And Off
-
-VSC::MIDI::MIDINoteOnAndOffTask::MIDINoteOnAndOffTask(Task::Payload::SPtr payload) : MIDITask(payload),
-mSentNoteOn(false)
-{
-    MIDINoteOnAndOffTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDINoteOnAndOffTask::Payload>(payload);
-    
-    if (!midiPayload)
-    {
-        throw VSCInvalidArgumentException("Payload for MIDINoteOnAndOffTask should be MIDINoteOnAndOffTask::Payload");
-    }
-}
-
-
-bool VSC::MIDI::MIDINoteOnAndOffTask::stepExecution(void)
-{
-    
-    MIDINoteOnAndOffTask::Payload::SPtr midiPayload = boost::static_pointer_cast<MIDINoteOnAndOffTask::Payload>(this->getPayload());
-    
-    if (!mSentNoteOn)
-    {
-        midiPayload->midiOutput->sendNoteOn(midiPayload->channel, midiPayload->pitch, midiPayload->onVelocity);
-        mSentNoteOn = true;
+        throw VSCInvalidArgumentException("Payload for MIDISendMessageTask should be MIDISendMessageTask::Payload");
     }
     
-    if (midiPayload->duration < this->getDurationSinceExecutionTime())
+    Time targetTime = this->getExecutionStartTime() + payload->timeOffset;
+    Time currentTime = CurrentTime();
+    
+    if (mTraceExecution)
     {
-        midiPayload->midiOutput->sendNoteOff(midiPayload->channel, midiPayload->pitch, midiPayload->offVelocity);
+        std::cout << "    Execution time: " << this->getExecutionStartTime() << std::endl;
+        std::cout << "    Time offset: " << payload->timeOffset << std::endl;
+        std::cout << "    Target time: " << targetTime << std::endl;
+        std::cout << "    Current time: " << currentTime << std::endl;
+    }
+    
+    if (targetTime <= CurrentTime())
+    {
+        if (mTraceExecution) std::cout << "    Executing!" << std::endl;
+        //BOOST_ASSERT(payload->midiOutput);
+        if (payload->midiOutput)
+        {
+            payload->midiOutput->sendMessage(payload->messageDescription);
+        }
+        else
+        {
+            if (mTraceExecution) std::cout << "    NO MIDI OUT!!!" << std::endl;
+        }
         this->setState(StateEnded);
-        
         return true;
     }
-
-    return false;
-}
-
-// MARK: Control Change
-
-VSC::MIDI::MIDIControlChangeTask::MIDIControlChangeTask(Task::Payload::SPtr payload) : MIDITask(payload)
-{
-    MIDIControlChangeTask::Payload::SPtr midiPayload = boost::dynamic_pointer_cast<MIDIControlChangeTask::Payload>(payload);
-    BOOST_ASSERT(midiPayload);
-    if (!midiPayload)
-    {
-        throw VSCInvalidArgumentException("Payload for MIDIControlChangeTask should be MIDIControlChangeTask::Payload");
-    }
-}
-
-bool VSC::MIDI::MIDIControlChangeTask::stepExecution(void)
-{
-    MIDIControlChangeTask::Payload::SPtr midiPayload = boost::static_pointer_cast<MIDIControlChangeTask::Payload>(this->getPayload());
-    BOOST_ASSERT(midiPayload);
-    midiPayload->midiOutput->sendControlChange(midiPayload->channel, midiPayload->controlNumber, midiPayload->value);
-    this->setState(StateEnded);
     
-    return true;
+    if (mTraceExecution) std::cout << "    Not yet!" << std::endl;
+    
+    return false;
 }
 

@@ -1,14 +1,9 @@
 
-//
-//  Created by Jonathan Thorpe on 4/21/12.
-//  Copyright (c) 2012 JBAT. All rights reserved.
-//
-
 #ifndef _VSC_IM_COLLISION_MAPPING_H_
 #define _VSC_IM_COLLISION_MAPPING_H_
 
 #include "VSC.h"
-#include "VSCOBScene.h"
+#include "VSCOB.h"
 #include "VSCIMTarget.h"
 
 #include <Ogre/Ogre.h>
@@ -37,7 +32,7 @@ namespace VSC {
             CollisionMapping() : mOffset(0.0), mScaleFactor(1.0) {}
             virtual ~CollisionMapping() {}
             
-            Float mappedValue(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision);
+            Float mappedValue(OB::Element_SPtr element, OB::Collision_SPtr collision);
             
             Float getOffset(void) {return mOffset;}
             void setOffset(Float offset) {mOffset = offset;}
@@ -52,7 +47,7 @@ namespace VSC {
              *  which should not apply offset and scale factor
              */
             
-            virtual Float internalMappedValue(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision) = 0;
+            virtual Float internalMappedValue(OB::Element_SPtr element, OB::Collision_SPtr collision) = 0;
             
         private:
             
@@ -73,7 +68,7 @@ namespace VSC {
             
         protected:
             
-            virtual Float internalMappedValue(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision) {return 0.0;}
+            virtual Float internalMappedValue(OB::Element_SPtr element, OB::Collision_SPtr collision) {return 0.0;}
             
         };
         
@@ -86,7 +81,7 @@ namespace VSC {
             
         protected:
             
-            virtual Float internalMappedValue(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision);
+            virtual Float internalMappedValue(OB::Element_SPtr element, OB::Collision_SPtr collision);
             
         };
         
@@ -104,7 +99,7 @@ namespace VSC {
             
         protected:
             
-            virtual Float internalMappedValue(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision);
+            virtual Float internalMappedValue(OB::Element_SPtr element, OB::Collision_SPtr collision);
             
         private:
             

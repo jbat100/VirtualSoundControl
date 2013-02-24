@@ -1,11 +1,3 @@
-/*
- *  VSCBoost.h
- *  EnveloppeEditor
- *
- *  Created by Jonathan Thorpe on 26/08/2011.
- *  Copyright 2011 JBAT. All rights reserved.
- *
- */
 
 #ifndef _VSC_MIDI_TASK_H_
 #define _VSC_MIDI_TASK_H_
@@ -48,78 +40,24 @@ namespace VSC {
         };
         
         /*
-         *  MIDI Note On Task
+         *  MIDI Send Message Task
          */
         
-        class MIDINoteOnTask : public MIDITask
+        class MIDISendMessageTask : public MIDITask
         {
             
         public:
             
             class Payload : public Task::Payload {
             public:
+                Payload();
                 typedef boost::shared_ptr<Payload> SPtr;
                 Output::SPtr midiOutput;
-                unsigned int channel;
-                unsigned int pitch;
-                unsigned int velocity;
+                MessageDescription::SPtr messageDescription;
+                TimeDuration timeOffset;
             };
             
-            MIDINoteOnTask(Task::Payload::SPtr payload);
-            
-        protected:
-            
-            virtual bool stepExecution(void);
-            
-        };
-        
-        /*
-         *  MIDI Note Off Task
-         */
-        
-        class MIDINoteOffTask : public MIDITask
-        {
-            
-        public:
-            
-            class Payload : public Task::Payload {
-            public:
-                typedef boost::shared_ptr<Payload> SPtr;
-                Output::SPtr midiOutput;
-                unsigned int channel;
-                unsigned int pitch;
-                unsigned int velocity;
-            };
-            
-            MIDINoteOffTask(Task::Payload::SPtr payload);
-            
-        protected:
-            
-            virtual bool stepExecution(void);
-            
-        };
-        
-        /*
-         *  MIDI Note On and Off Task
-         */
-        
-        class MIDINoteOnAndOffTask : public MIDITask
-        {
-            
-        public:
-            
-            class Payload : public Task::Payload {
-            public:
-                typedef boost::shared_ptr<Payload> SPtr;
-                Output::SPtr midiOutput;
-                unsigned int channel;
-                unsigned int pitch;
-                unsigned int onVelocity;
-                unsigned int offVelocity;
-                TimeDuration duration;
-            };
-            
-            MIDINoteOnAndOffTask(Task::Payload::SPtr payload);
+            MIDISendMessageTask(Task::Payload::SPtr payload);
             
         protected:
             
@@ -127,33 +65,7 @@ namespace VSC {
             
         private:
             
-            bool mSentNoteOn;
-            
-        };
-        
-        /*
-         *  MIDI Control Change Task
-         */
-        
-        class MIDIControlChangeTask : public MIDITask
-        {
-            
-        public:
-            
-            class Payload : public Task::Payload {
-            public:
-                typedef boost::shared_ptr<Payload> SPtr;
-                Output::SPtr midiOutput;
-                unsigned int channel;
-                ControlNumber controlNumber;
-                unsigned int value;
-            };
-            
-            MIDIControlChangeTask(Task::Payload::SPtr payload);
-            
-        protected:
-            
-            virtual bool stepExecution(void);
+            static const bool mTraceExecution = false;
             
         };
         

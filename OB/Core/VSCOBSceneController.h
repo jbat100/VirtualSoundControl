@@ -39,7 +39,7 @@ namespace VSC {
             /**--------------------------------------------------------------
              *  Init for a given scene and shutdown
              */
-            virtual void setupWithScene(Scene::SPtr scene);
+            virtual void setupWithScene(Scene_SPtr scene);
             virtual void shutdown();
 
             /**--------------------------------------------------------------
@@ -73,7 +73,7 @@ namespace VSC {
              *  Scene Getter
              */
             
-            Scene::SPtr getScene(void) {return mScene.lock();}
+            Scene_SPtr getScene(void) {return mScene.lock();}
             
             /**--------------------------------------------------------------
              *  Actions Setter/Getter
@@ -81,6 +81,9 @@ namespace VSC {
             
             Float getShootSpeed(void) {return mShootSpeed;}
             void setShootSpeed(Float speed) {mShootSpeed = speed;}
+            
+            Float getShootSize(void) {return mShootSize;}
+            void setShootSize(Float size) {mShootSize = size;}
             
             Float getImpulseForce(void);
             void setImplulseForce(Float force);
@@ -113,7 +116,7 @@ namespace VSC {
             
         private:
             
-            Scene::WPtr mScene;
+            Scene_WPtr mScene;
             
             /**
              *   Mouse picking, drag and drop
@@ -127,6 +130,7 @@ namespace VSC {
             Ogre::RaySceneQuery                                         *mRayQuery;
             
             Float mShootSpeed;
+            Float mShootSize;
             Float mImpulseForce;
             
             const static bool mTraceUI = true;
@@ -144,13 +148,13 @@ namespace VSC {
         {
         public:
             
-            void setupWithScene(Scene::SPtr scene);
+            void setupWithScene(Scene_SPtr scene);
             void shutdown();
             
             virtual void removeResponder(InterfaceResponder::SPtr responder);
             virtual void removeAllResponders(void);
             
-            Scene::SPtr getScene() {return mScene.lock();}
+            Scene_SPtr getScene() {return mScene.lock();}
             
         protected:
             
@@ -158,7 +162,7 @@ namespace VSC {
             
         private:
             
-            Scene::WPtr         mScene;
+            Scene_WPtr         mScene;
 
         };
         

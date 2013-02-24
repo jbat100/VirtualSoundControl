@@ -8,13 +8,20 @@
 
 #import "VSCOSXEnvironmentWindowController.h"
 #import "VSCOSXApplicationManager.h"
-#import "VSCOSXOBSceneController.h"
-#import "VSCOBOSXSceneDisplayView.h"
-#import "VSCOSXOBSceneElementInspectorWindowController.h"
-#import "VSCOSXOBSceneElementInspectorViewController.h"
 #import "VSCOSXEnvironmentController.h"
-#import "VSCOSXOBSceneElementListView.h"
-#import "VSCOSXOBSceneDetailView.h"
+
+#import "VSCOBOSXElementInspectorWindowController.h"
+#import "VSCOBOSXElementInspectorViewController.h"
+#import "VSCIMOSXEventChainWindowController.h"
+#import "VSCIMOSXEventChainViewController.h"
+
+#import "VSCOBOSXSceneController.h"
+#import "VSCOBOSXSceneDisplayView.h"
+#import "VSCOBOSXElementListView.h"
+#import "VSCOBOSXSceneDetailView.h"
+
+#import "VSCIMOSXEventChainListView.h"
+#import "VSCIMOSXEventChainCellView.h"
 
 #import "NSString+VSCAdditions.h"
 #import "NSArray+VSCAdditions.h"
@@ -22,9 +29,12 @@
 #import "DMTabBar.h"
 
 #include "VSCEnvironment.h"
+#include "VSCOB.h"
 #include "VSCOBApplication.h"
 #include "VSCOBScene.h"
-#include "VSCIMCollisionMapper.h"
+#include "VSCOBElement.h"
+#include "VSCIM.h"
+#include "VSCCollisionMapper.h"
 
 #include <Ogre/Ogre.h>
 
@@ -32,24 +42,31 @@
 #include <boost/assert.hpp>
 #include <boost/foreach.hpp>
 
-
+using namespace VSC;
+using namespace VSC::IM;
+using namespace VSC::OB;
 
 NSArray* EnvironmentInspectorTabParamArray = nil;
 
 NSString* const VSCOSXTabTitleSceneSettings = @"Scene Settings";
-NSString* const VSCOSXTabTitleSceneElements = @"Scene Elements";
+NSString* const VSCOSXTabTitleElements = @"Scene Elements";
+NSString* const VSCOSXTabEventChains = @"Event Chains";
 NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 
 @interface VSCOSXEnvironmentWindowController ()
 
 @property (weak) IBOutlet DMTabBar* tabBar;
-@property (weak) IBOutlet NSBox* tabBox;
+
+@property (strong) NSArray* tabViewConstraints;
 
 -(void) customInit;
 -(void) reloadSceneInterface;
 -(void) setupTabBar;
-
+-(void) setupConstraints;
 -(void) setupTest;
+
+-(void) resetInspectorView;
+-(void) switchEnvironmentInspectorToTabView:(NSView*)tabView;
 
 @end
 
@@ -62,8 +79,9 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     
     EnvironmentInspectorTabParamArray = @[
     @{@"image": [NSImage imageNamed:@"158-wrench-2.png"], @"title": VSCOSXTabTitleSceneSettings},
-    @{@"image": [NSImage imageNamed:@"12-eye"], @"title": VSCOSXTabTitleSceneElements},
-    @{@"image": [NSImage imageNamed:@"122-stats"], @"title": VSCOSXTabTitleEnveloppes}
+    @{@"image": [NSImage imageNamed:@"12-eye"], @"title": VSCOSXTabTitleElements},
+    //@{@"image": [NSImage imageNamed:@"122-stats"], @"title": VSCOSXTabTitleEnveloppes}
+    @{@"image": [NSImage imageNamed:@"122-stats"], @"title": VSCOSXTabEventChains}
     ];
     
 }
@@ -90,7 +108,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 
 -(void) customInit
 {
-    self.environmentTest = VSC::EnvironmentTest::SPtr(new VSC::EnvironmentTest);
+    self.environmentTest = EnvironmentTest::SPtr(new EnvironmentTest);
 }
 
 -(void) dealoc
@@ -114,59 +132,64 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 
 -(void) awakeFromNib
 {
-    BOOST_ASSERT(self.sceneElementListView);
+    BOOST_ASSERT(self.sceneDetailScrollView);
+    BOOST_ASSERT(self.elementListView);
     BOOST_ASSERT(self.sceneDetailView);
     BOOST_ASSERT(self.tabBar);
-    BOOST_ASSERT(self.tabBox);
+    //BOOST_ASSERT(self.tabBox);
+    
+    self.sceneDetailScrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.sceneDetailView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.elementListView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.eventChainListView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [self setupConstraints];
     
     [self setupTabBar];
     
     self.sceneController.shootSpeed = 10.0;
+    self.sceneController.shootSize = 0.2;
     self.sceneController.cameraSpeed = 10.0;
     self.sceneController.cameraSensitivity = 0.13;
+    
+    self.tabBar.selectedIndex = 0;
 }
 
 
--(BOOL)acceptsFirstResponder {
+-(BOOL)acceptsFirstResponder
+{
     return NO;
 }
 
--(BOOL)acceptsFirstMouse:(NSEvent *)theEvent {
+-(BOOL)acceptsFirstMouse:(NSEvent *)theEvent
+{
     return NO;
 }
 
 #pragma mark - Custom Setters
 
-- (void) setEnvironment:(VSC::Environment::WPtr)environment
+- (void) setEnvironment:(Environment::WPtr)environment
 {
     _environment = environment;
     [self reloadInterface];
     
 }
 
+#pragma mark - UI Setup
 
--(void) reloadInterface
+-(void) setupConstraints
 {
-    VSC::Environment::SPtr env = self.environment.lock();
-    
-    [self reloadSceneInterface];
+    // setup constraints so that the width of the views are the same as that of their enclosing subviews
+    NSLayoutConstraint* widthConstraint = [NSLayoutConstraint constraintWithItem:self.sceneDetailScrollView
+                                                                       attribute:NSLayoutAttributeWidth
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:self.sceneDetailView
+                                                                       attribute:NSLayoutAttributeWidth
+                                                                      multiplier:1.0
+                                                                        constant:0.0];
+    [self.sceneDetailScrollView addConstraint:widthConstraint];
 }
-
--(void) reloadSceneInterface
-{
-    VSC::Environment::SPtr env = self.environment.lock();
-    
-    if (env)
-    {
-        self.sceneController.scene = VSC::OB::Scene::WPtr(env->getOBScene());
-    }
-    else
-    {
-        self.sceneController.scene = VSC::OB::Scene::WPtr();
-    }
-}
-
-
 
 -(void) setupTabBar
 {
@@ -204,15 +227,20 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
             NSLog(@"%@ will select %lu/%@", self.tabBar, tabBarItemIndex, tabBarItem);
             //[self.tabView selectTabViewItem:[tabView.tabViewItems objectAtIndex:tabBarItemIndex]];
             
-            if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleSceneElements])
+            if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleElements])
             {
                 NSLog(@"Selected scene element list tab");
-                [self showSceneElementList];
+                [self showElementList];
             }
             else if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleSceneSettings])
             {
                 NSLog(@"Selected scene detail tab");
                 [self showSceneDetail];
+            }
+            else if ([tabBarItem.toolTip isEqualToString:VSCOSXTabEventChains])
+            {
+                NSLog(@"Selected event chains");
+                [self showEventChainList];
             }
             else if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleEnveloppes])
             {
@@ -229,108 +257,298 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
     
 }
 
+#pragma mark - UI Helpers
 
--(void) showSceneElementList
+-(void) reloadInterface
 {
-    BOOST_ASSERT(self.tabBox);
-    BOOST_ASSERT(self.sceneElementListView);
-    BOOST_ASSERT(self.sceneElementListView.elementTableView);
-    BOOST_ASSERT(self.sceneElementListView.elementTableView.delegate == self.sceneController);
+    Environment::SPtr env = self.environment.lock();
+    [self reloadSceneInterface];
+}
+
+-(void) reloadSceneInterface
+{
+    Environment::SPtr env = self.environment.lock();
     
-    NSView* boxContentView = [self.tabBox contentView];
-    
-    if ([self.sceneElementListView superview] == boxContentView) return; // we are already showing element list
-    
-    [[boxContentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    // remove all old constraints
-    [boxContentView removeConstraints:[boxContentView constraints]];
-    [boxContentView addSubview:self.sceneElementListView];
-    
+    if (env)
     {
-        NSView* elementListView  = self.sceneElementListView;
-        NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(elementListView);
-        [boxContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[elementListView]|"
-                                                                               options:0 metrics:nil views:viewsDictionary]];
-        [boxContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[elementListView]|"
-                                                                               options:0 metrics:nil views:viewsDictionary]];
+        self.sceneController.scene = Scene::WPtr(env->getScene());
+    }
+    else
+    {
+        self.sceneController.scene = Scene::WPtr();
+    }
+}
+
+-(void) resetInspectorView
+{
+    NSArray* subviews = [self.environmentInspectorView subviews];
+    
+    // remove all subviews except tabBar
+    for (NSView* subview in subviews)
+    {
+        if (subview != self.tabBar)
+        {
+            [subview removeFromSuperview];
+        }
+    }
+}
+
+-(void) switchEnvironmentInspectorToTabView:(NSView*)tabView
+{
+    if (tabView == nil) return;
+    
+    BOOST_ASSERT(tabView);
+    BOOST_ASSERT([tabView isKindOfClass:[NSView class]]);
+    
+    if ([tabView isKindOfClass:[NSView class]] == NO) return;
+    if ([tabView superview] == self.environmentInspectorView) return;
+    
+    if (self.tabViewConstraints)
+    {
+        [self.environmentInspectorView removeConstraints:self.tabViewConstraints];
     }
     
-    [self.sceneElementListView.elementTableView reloadData];
+    [self resetInspectorView];
     
+    [self.environmentInspectorView  addSubview:tabView];
+
+    NSView* bar = self.tabBar;
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(tabView, bar);
+    
+    NSMutableArray* allConstraints = [NSMutableArray array];
+    
+    NSArray* hConstraints =[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tabView]|"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:viewsDictionary];
+    
+    [allConstraints addObjectsFromArray:hConstraints];
+    [self.environmentInspectorView addConstraints:hConstraints];
+    
+    NSArray* vConstraints =[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bar(==25)]-0-[tabView]|"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:viewsDictionary];
+    
+    [allConstraints addObjectsFromArray:vConstraints];
+    [self.environmentInspectorView addConstraints:vConstraints];
+    
+    self.tabViewConstraints = [NSArray arrayWithArray:allConstraints];
+}
+
+
+-(void) showElementList
+{
+    BOOST_ASSERT(self.elementListView);
+    BOOST_ASSERT(self.elementListView.elementTableView);
+    BOOST_ASSERT(self.elementListView.elementTableView.delegate == self.sceneController);
+    
+    
+    if ([self.elementListView superview] != self.environmentInspectorView)
+    {
+        [self switchEnvironmentInspectorToTabView:self.elementListView];
+    }
+    
+    [self.elementListView.elementTableView reloadData];
+    
+}
+
+-(void) showEventChainList
+{
+    BOOST_ASSERT(self.eventChainListView);
+    BOOST_ASSERT(self.eventChainListView.tableView);
+    BOOST_ASSERT(self.eventChainListView.tableView.delegate == self);
+    
+    if ([self.eventChainListView superview] != self.environmentInspectorView)
+    {
+        [self switchEnvironmentInspectorToTabView:self.eventChainListView];
+    }
+    
+    [self.eventChainListView.tableView reloadData];
 }
 
 -(void) showSceneDetail
 {
-    BOOST_ASSERT(self.tabBox);
+    BOOST_ASSERT(self.sceneDetailScrollView);
     BOOST_ASSERT(self.sceneDetailView);
     
-    NSView* boxContentView = [self.tabBox contentView];
-    
-    if ([self.sceneDetailView superview] == boxContentView) return; // we are already showing element list
-    
-    [[boxContentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    // remove all old constraints
-    [boxContentView removeConstraints:[boxContentView constraints]];
-    [boxContentView addSubview:self.sceneDetailView];
-    
+    if ([self.sceneDetailView superview] != self.environmentInspectorView)
     {
-        NSView* sceneDetailView  = self.sceneDetailView;
-        NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(sceneDetailView);
-        [boxContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[sceneDetailView]|"
-                                                                               options:0 metrics:nil views:viewsDictionary]];
-        [boxContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[sceneDetailView]|"
-                                                                               options:0 metrics:nil views:viewsDictionary]];
+        [self resetInspectorView];
+        [self switchEnvironmentInspectorToTabView:self.sceneDetailScrollView];
     }
-    
-    [self.sceneDetailView reloadInterface];
-    
 }
 
-
--(void) showElementInspectorForElement:(VSC::OB::Scene::Element::SPtr)element
+-(void) showElementInspectorForElement:(Element::SPtr)element
 {
     NSLog(@"%@ showElementInspectorForElement", self);
     
     if (!self.elementInspectorWindowController)
     {
-        NSString* nibName = @"VSCOSXOBSceneElementInspectorWindowController";
-        self.elementInspectorWindowController = [[VSCOSXOBSceneElementInspectorWindowController alloc] initWithWindowNibName:nibName];
+        NSString* nibName = @"VSCOBOSXElementInspectorWindowController";
+        self.elementInspectorWindowController = [[VSCOBOSXElementInspectorWindowController alloc] initWithWindowNibName:nibName];
         BOOST_ASSERT(self.elementInspectorWindowController);
         BOOST_ASSERT(self.elementInspectorWindowController.elementInspectorViewController);
         self.elementInspectorWindowController.elementInspectorViewController.environmentController = self;
     }
     
     BOOST_ASSERT(self.elementInspectorWindowController.elementInspectorViewController);
-    self.elementInspectorWindowController.elementInspectorViewController.element = VSC::OB::Scene::Element::WPtr(element);
+    self.elementInspectorWindowController.elementInspectorViewController.element = Element::WPtr(element);
     [self.elementInspectorWindowController showWindow:self];
     [self.elementInspectorWindowController.elementInspectorViewController showElementDetailView];
 }
 
--(VSC::IM::CollisionEventChain::SPtr) collisionStartedEventChainForElement:(VSC::OB::Scene::Element::SPtr)element
+-(void) showEventChainEditor:(EventChain::SPtr)eventChain
 {
-    VSC::Environment::SPtr env = self.environment.lock();
-    BOOST_ASSERT(env);
+    NSLog(@"%@ showEventChainEditor", self);
     
-    if (env)
+    if (!self.eventChainWindowController)
     {
-        BOOST_ASSERT(env->getIMCollisionMapper());
-        if (env->getIMCollisionMapper()) return env->getIMCollisionMapper()->getEventChainForCollisionStarted(element);
+        NSString* nibName = @"VSCIMOSXEventChainWindowController";
+        self.eventChainWindowController = [[VSCIMOSXEventChainWindowController alloc] initWithWindowNibName:nibName];
+        BOOST_ASSERT(self.eventChainWindowController);
+        BOOST_ASSERT(self.eventChainWindowController.eventChainViewController);
+        self.eventChainWindowController.eventChainViewController.environmentController = self;
     }
     
-    return VSC::IM::CollisionEventChain::SPtr();
+    BOOST_ASSERT(self.eventChainWindowController.eventChainViewController);
+    self.eventChainWindowController.eventChainViewController.eventChain = EventChain::WPtr(eventChain);
+    [self.eventChainWindowController showWindow:self];
+    
 }
 
--(VSC::IM::CollisionEventChain::SPtr) collisionEndedEventChainForElement:(VSC::OB::Scene::Element::SPtr)element
+
+#pragma mark - NSTableView Delagate / DataSource
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    VSC::Environment::SPtr env = self.environment.lock();
-    BOOST_ASSERT(env);
+    BOOST_ASSERT(aTableView == self.eventChainListView.tableView);
     
-    if (env)
+    if (aTableView == self.eventChainListView.tableView)
     {
-        return env->getIMCollisionMapper()->getEventChainForCollisionEnded(element);
+        Environment::SPtr env = self.environment.lock();
+        BOOST_ASSERT(env);
+        if (env)
+        {
+            const EventChains& eventChains = env->getEventChains();
+            return eventChains.size();
+        }
     }
     
-    return VSC::IM::CollisionEventChain::SPtr();
+	return 0;
+}
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn*)tableColumn row:(NSInteger)row
+{
+    BOOST_ASSERT(tableView == self.eventChainListView.tableView);
+    
+    if (tableView == self.eventChainListView.tableView)
+    {
+        Environment::SPtr env = self.environment.lock();
+        BOOST_ASSERT(env);
+        if (env)
+        {
+            const EventChains& eventChains = env->getEventChains();
+            BOOST_ASSERT(eventChains.size() > row);
+            if (eventChains.size() > row)
+            {
+                VSCIMOSXEventChainCellView* cell = [tableView makeViewWithIdentifier:@"VSCIMOSXEventChainCellView" owner:self];
+                BOOST_ASSERT(cell);
+                BOOST_ASSERT([cell isKindOfClass:[VSCIMOSXEventChainCellView class]]);
+                
+                EventChain::SPtr eventChain = eventChains.at(row);
+                BOOST_ASSERT(eventChain);
+                if (eventChain)
+                {
+                    [cell setEventChain:EventChain::WPtr(eventChain)];
+                    return cell;
+                }
+            }
+            
+        }
+        
+    }
+    
+	return nil;
+}
+
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
+{
+    
+    BOOST_ASSERT(tableView == self.eventChainListView.tableView);
+    
+    if (tableView == self.eventChainListView.tableView)
+    {
+        return [VSCIMOSXEventChainCellView defaultViewHeight];
+    }
+    
+    return 0.0;
+}
+
+- (void)tableViewSelectionDidChange:(NSNotification *)aNotification
+{
+    NSLog(@"%@ tableViewSelectionDidChange: %@", self, aNotification);
+    
+    /*
+    
+    BOOST_ASSERT([aNotification object] == self.eventChainListView.tableView);
+    if ([aNotification object] != self.eventChainListView.tableView) return;
+    
+    NSIndexSet* rowIndexes = [self.eventChainListView.tableView selectedRowIndexes];
+    
+    [rowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        NSView* v = [self.eventChainListView.tableView viewAtColumn:0 row:idx makeIfNecessary:NO];
+        if ([v isKindOfClass:[VSCIMOSXEventChainCellView class]])
+        {
+            VSCIMOSXEventChainCellView* eventChainView = (VSCIMOSXEventChainCellView*)v;
+            //[actionView setNeedsLayout:YES];
+            [eventChainView printUIDescription];
+        }
+    }];
+     
+     */
+
+}
+
+- (void)tableViewColumnDidResize:(NSNotification *)aNotification
+{
+    NSLog(@"%@ tableViewColumnDidResize: %@, column %@, old width %@",
+          self, [aNotification object],
+          [[aNotification userInfo] objectForKey:@"NSTableColumn"],
+          [[aNotification userInfo] objectForKey:@"NSOldWidth"]);
+}
+
+- (void)tableView:(NSTableView *)aTableView
+  willDisplayCell:(id)aCell
+   forTableColumn:(NSTableColumn *)aTableColumn
+              row:(NSInteger)rowIndex
+{
+    
+}
+
+#pragma mark - UI Callbacks
+
+-(IBAction)addEventChain:(id)sender
+{
+    Environment::SPtr env = self.environment.lock();
+    BOOST_ASSERT(env);
+    if (env)
+    {
+        env->createEventChain();
+        [self.eventChainListView reloadInterface];
+    }
+}
+
+-(IBAction)removeSelectedEventChain:(id)sender
+{
+    Environment::SPtr env = self.environment.lock();
+    BOOST_ASSERT(env);
+    if (env)
+    {
+        EventChain::SPtr selectedEventChain = [self.eventChainListView selectedEventChain];
+        env->destroyEventChain(selectedEventChain);
+        [self.eventChainListView reloadInterface];
+    }
 }
 
 #pragma mark - Sensible tests
@@ -343,7 +561,7 @@ NSString* const VSCOSXTabTitleEnveloppes = @"Enveloppes";
 -(void)setupTest
 {
     BOOST_ASSERT(self.environmentTest);
-    VSC::Environment::SPtr env = self.environment.lock();
+    Environment::SPtr env = self.environment.lock();
     BOOST_ASSERT(env);
     
     if (self.environmentTest && env)

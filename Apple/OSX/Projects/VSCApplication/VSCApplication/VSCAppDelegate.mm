@@ -16,8 +16,9 @@
 #include "VSCEnvironment.h"
 #include "VSCOBScene.h"
 #include "VSCOBApplication.h"
+#include "VSCOBElement.h"
 #include "VSCOBResourceManager.h"
-#include "VSCIMCollisionMapper.h"
+#include "VSCCollisionMapper.h"
 #include "VSCMIDI.h"
 #include "VSCMIDIOutput.h"
 #include "VSCMIDIOutputManager.h"
@@ -41,13 +42,16 @@
 #define VSCOSX_SETUP_ENVIRONMENT_TEST
 
 #ifdef VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW
-#import "VSCOSXOBSceneElementInspectorWindowController.h"
+#import "VSCOBOSXElementInspectorWindowController.h"
 #endif
+
+using namespace VSC;
+using namespace VSC::IM;
 
 @interface VSCAppDelegate ()
 
 #ifdef VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW
-@property (nonatomic, strong) VSCOSXOBSceneElementInspectorWindowController* testElementInspectorWindowController;
+@property (nonatomic, strong) VSCOBOSXElementInspectorWindowController* testElementInspectorWindowController;
 #endif
 
 
@@ -64,15 +68,15 @@
      *  Refresh MIDI outputs and open them all
      */
     
-    VSC::TaskQueue::SPtr midiTaskQueue = VSC::MIDI::SingletonMIDITaskQueue();
+    TaskQueue::SPtr midiTaskQueue = MIDI::SingletonMIDITaskQueue();
     BOOST_ASSERT(midiTaskQueue);
     midiTaskQueue->start();
     
-    VSC::MIDI::OutputManager::SPtr outputManager = VSC::MIDI::OutputManager::singletonManager();
+    MIDI::OutputManager::SPtr outputManager = MIDI::OutputManager::singletonManager();
     BOOST_ASSERT(outputManager);
     outputManager->refreshOutputs();
-    const VSC::MIDI::Outputs& outputs = outputManager->getOutputs();
-    BOOST_FOREACH(VSC::MIDI::Output::SPtr output, outputs)
+    const MIDI::Outputs& outputs = outputManager->getOutputs();
+    BOOST_FOREACH(MIDI::Output::SPtr output, outputs)
     {
         try
         {
@@ -89,26 +93,26 @@
     [self showMIDIWindow:nil];
     
 #ifdef VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW
-    self.testElementInspectorWindowController = [[VSCOSXOBSceneElementInspectorWindowController alloc]
-                                                 initWithWindowNibName:@"VSCOSXOBSceneElementInspectorWindowController"];
+    self.testElementInspectorWindowController = [[VSCOBOSXElementInspectorWindowController alloc]
+                                                 initWithWindowNibName:@"VSCOBOSXElementInspectorWindowController"];
     BOOST_ASSERT(self.testElementInspectorWindowController);
     [self.testElementInspectorWindowController showWindow:self];
 #endif
     
 #ifdef VSCOSX_TEST_TASK_QUEUE
-    VSC::TaskQueue::SPtr taskQueue = VSC::MIDI::SingletonMIDITaskQueue();
-    VSC::TaskTest::SPtr taskTest = VSC::TaskTest::SPtr(new VSC::TaskTest);
+    TaskQueue::SPtr taskQueue = MIDI::SingletonMIDITaskQueue();
+    TaskTest::SPtr taskTest = TaskTest::SPtr(new TaskTest);
     taskTest->performTestWithTaskQueue(taskQueue);
 #endif
     
 #ifdef VSCOSX_FULL_APPLICATION
     
-    VSC::GlobalApplication::SPtr globalApplication = VSC::GlobalApplication::singletonGlobalApplication();
+    GlobalApplication::SPtr globalApplication = GlobalApplication::singletonGlobalApplication();
     
     std::string resourcePath = Ogre::macBundlePath() + "/Contents/Resources/resources.cfg";
     
-    VSC::OB::ResourceManager::SPtr resourceManager = VSC::OB::ResourceManager::SPtr(new VSC::OB::ResourceManager(resourcePath));
-    VSC::OB::Application::SPtr obApplication = VSC::OB::Application::singletonApplication();
+    OB::ResourceManager::SPtr resourceManager = OB::ResourceManager::SPtr(new OB::ResourceManager(resourcePath));
+    OB::Application::SPtr obApplication = OB::Application::singletonApplication();
     obApplication->init(resourceManager);
     
     /*
@@ -128,15 +132,15 @@
     BOOST_ASSERT(w);
     
     
-    VSC::Environment::SPtr environment = globalApplication->createEnvironment<VSC::Environment>();
+    Environment::SPtr environment = globalApplication->createEnvironment<Environment>();
     BOOST_ASSERT(environment);
     
-    VSC::OB::Scene::SPtr scene = obApplication->createScene<VSC::OB::Scene>();
+    OB::Scene::SPtr scene = obApplication->createScene<OB::Scene>();
     BOOST_ASSERT(scene);
-    environment->setOBScene(scene);
+    environment->setScene(scene);
     
-    VSC::IM::CollisionMapper::SPtr collisionMapper = VSC::IM::CollisionMapper::SPtr(new VSC::IM::CollisionMapper);
-    environment->setIMCollisionMapper(collisionMapper);
+    CollisionMapper::SPtr collisionMapper = CollisionMapper::SPtr(new CollisionMapper);
+    environment->setCollisionMapper(collisionMapper);
     
     self.environmentWindowController.environment = environment;
     
@@ -145,16 +149,16 @@
     [self.applicationManager startOgreRendering];
     
 #ifdef VSCOSX_SETUP_ENVIRONMENT_TEST
-    VSC::EnvironmentTest::SPtr test = VSC::EnvironmentTest::SPtr(new VSC::EnvironmentTest);
-    test->setupTestForEnvironment(environment);
-#endif
     
-    const VSC::OB::Scene::Elements& elements = environment->getOBScene()->getElements();
-    VSC::OB::Scene::Element::SPtr element = VSC::OB::Scene::Element::SPtr();
-    BOOST_FOREACH(VSC::OB::Scene::Element::SPtr e, elements)
+    EnvironmentTest::SPtr test = EnvironmentTest::SPtr(new EnvironmentTest);
+    test->setupTestForEnvironment(environment);
+    
+    const OB::Elements& elements = environment->getScene()->getElements();
+    OB::Element::SPtr element = OB::Element::SPtr();
+    BOOST_FOREACH(OB::Element::SPtr e, elements)
     {
-        VSC::IM::CollisionEventChain::SPtr chain = environment->getIMCollisionMapper()->getEventChainForCollisionStarted(e);
-        if (chain->getNumberOfEvents() > 0)
+        EventChains chains = environment->getCollisionMapper()->getEventChainsForCollisionStarted(e);
+        if (chains.size() > 0)
         {
             element = e;
             break;
@@ -166,13 +170,17 @@
     
 #endif
     
+
+    
+#endif
+    
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification
 {
     [self.applicationManager stopOgreRendering];
     
-    VSC::OB::Application::singletonApplication()->shutdown();
+    OB::Application::singletonApplication()->shutdown();
     
 }
 

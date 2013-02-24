@@ -1,12 +1,3 @@
-/*
- *  Created by Jonathan Thorpe on 22/10/2011.
- *  Copyright 2011 NXP. All rights reserved.
- *
- *
- *	General definitions for everything that has to do with sound stuff
- *
- */
-
 
 #ifndef _VSC_TASK_QUEUE_H_
 #define _VSC_TASK_QUEUE_H_
@@ -83,8 +74,8 @@ namespace VSC {
         boost::mutex                mRequestStopMutex;
         boost::condition_variable   mTaskCondition;
         
-        const static bool           mTraceQueue = true;
-        const static bool           mTraceExecution = true;
+        const static bool           mTraceQueue = false;
+        const static bool           mTraceExecution = false;
         const static bool           mTraceTasks = true;
     };
     

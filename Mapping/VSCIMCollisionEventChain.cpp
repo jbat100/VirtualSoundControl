@@ -1,13 +1,9 @@
-//
-//  VSCCollisionReceiver.cpp
-//  EnveloppeEditor
-//
-//  Created by Jonathan Thorpe on 4/21/12.
-//  Copyright (c) 2012 JBAT. All rights reserved.
-//
 
 #include "VSCIMCollisionEventChain.h"
 #include "VSCIMDelay.h"
+#include "VSCOBScene.h"
+#include "VSCOBElement.h"
+#include "VSCOBCollision.h"
 #include "VSCException.h"
 #include "VSCTask.h"
 #include "VSCTaskQueue.h"
@@ -33,7 +29,7 @@ bool VSC::IM::CollisionEventChain::checkEvent(Event::SPtr event)
     return false;
 }
 
-void VSC::IM::CollisionEventChain::perform(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision)
+void VSC::IM::CollisionEventChain::perform(OB::Element::SPtr element, OB::Collision::SPtr collision)
 {
     Time executionTime = CurrentTime();
     
@@ -48,17 +44,22 @@ void VSC::IM::CollisionEventChain::perform(OB::Scene::Element::SPtr element, OB:
         CollisionAction::SPtr action = boost::dynamic_pointer_cast<CollisionAction>(event);
         if (action)
         {
-            Task::SPtr task = action->createTaskForCollision(element, collision);
-            BOOST_ASSERT(task);
-            if (task)
+            Tasks tasks = action->generateTasksForCollision(element, collision);
+            
+            BOOST_FOREACH(Task::SPtr task, tasks)
             {
-                task->setExecutionStartTime(executionTime);
-                BOOST_ASSERT(action->getTaskQueue());
-                if (action->getTaskQueue())
+                BOOST_ASSERT(task);
+                if (task)
                 {
-                    action->getTaskQueue()->enqueueTask(task);
+                    task->setExecutionStartTime(executionTime);
+                    BOOST_ASSERT(action->getTaskQueue());
+                    if (action->getTaskQueue())
+                    {
+                        action->getTaskQueue()->enqueueTask(task);
+                    }
                 }
             }
+            
             continue;
         }
         BOOST_ASSERT_MSG(false, "Unexpected event type");

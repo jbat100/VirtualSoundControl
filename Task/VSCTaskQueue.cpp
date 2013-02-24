@@ -1,8 +1,3 @@
-/*
- *  Created by Jonathan Thorpe on 22/10/2011.
- *  Copyright 2011 NXP. All rights reserved.
- *
- */
 
 #include "VSCTaskQueue.h"
 #include "VSCException.h"
@@ -212,33 +207,31 @@ void VSC::TaskQueue::threadedExecutionFunction()
         
         this->stepExecution();
         
-        if (this->tasksAreRunning() || this->tasksAreQueued())
+        if (this->tasksAreRunning())
         {
-            if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction tasks are queued or running" << std::endl;
+            if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction tasks are running" << std::endl;
             
             TimeDuration waitDuration = mMinimumStepDuration;
             
-            if (this->tasksAreQueued())
+            if (mTraceExecution)
             {
-                TimeDuration durationUntilNextQueuedTask = this->durationUntilNextQueuedTaskExecutionTime();
-                if (this->tasksAreRunning())
-                {
-                    if (durationUntilNextQueuedTask < mMinimumStepDuration)
-                    {
-                        if (mTraceExecution) std::cout << "VSC::TaskQueue::threadedExecutionFunction next task is sooner than step duration";
-                        waitDuration = durationUntilNextQueuedTask;
-                    }
-                }
-                else
-                {
-                    waitDuration = durationUntilNextQueuedTask;
-                }
-
+                std::cout << "VSC::TaskQueue::threadedExecutionFunction waiting for run time step : ";
+                std::cout << waitDuration.total_milliseconds() << "ms" << std::endl;
             }
+            
+            boost::chrono::milliseconds chronoMs(waitDuration.total_milliseconds());
+            boost::unique_lock<boost::mutex> lock(mTaskConditionMutex);
+            mTaskCondition.wait_for(lock, chronoMs);
+        }
+        
+        else if (this->tasksAreQueued())
+        {
+            TimeDuration waitDuration = this->durationUntilNextQueuedTaskExecutionTime();
             
             if (mTraceExecution)
             {
-                std::cout << "VSC::TaskQueue::threadedExecutionFunction waiting for " << waitDuration.total_milliseconds() << "ms" << std::endl;
+                std::cout << "VSC::TaskQueue::threadedExecutionFunction waiting for next queued task : ";
+                std::cout << waitDuration.total_milliseconds() << "ms" << std::endl;
             }
             
             boost::chrono::milliseconds chronoMs(waitDuration.total_milliseconds());

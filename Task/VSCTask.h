@@ -48,7 +48,7 @@ namespace VSC {
         
         const Time& getExecutionStartTime(void) const {return mExecutionStartTime;} // constant so no need for mutex
         
-        void setExecutionStartTime(const Time& time) {mExecutionStartTime = time;}
+        void setExecutionStartTime(const Time& time) {mExecutionStartTime = Time(time);}
         
         State getState(void); // cannot be const because of mutex lock
         

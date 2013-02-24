@@ -1,5 +1,8 @@
 
 #include "VSCOBStaticObject.h"
+#include "VSCOB.h"
+#include "VSCOBElement.h"
+#include "VSCOBScene.h"
 
 VSC::OB::StaticObject::FactoryDescription::FactoryDescription() : // set defaults
 name("DefaultStatic"),
@@ -13,7 +16,7 @@ materialName("BulletPlane")      // "BulletPlane"
 VSC::OB::StaticObject::StaticObject(Scene::WPtr scene,
                                     Ogre::StaticGeometry* staticGeometry,
                                     OgreBulletDynamics::RigidBody* rigidBody) :
-Scene::Element(scene, rigidBody),
+Element(scene, rigidBody),
 mStaticGeometry(staticGeometry)
 {
     
@@ -21,7 +24,7 @@ mStaticGeometry(staticGeometry)
 
 void VSC::OB::StaticObject::destroy(void)
 {
-    Scene::Element::destroy();  // call base class destroy() !!!
+    Element::destroy();  // call base class destroy() !!!
     
     Scene::SPtr scene = this->getScene();
     

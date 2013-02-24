@@ -1,15 +1,17 @@
-//
-//  VSCCollisionReceiver.cpp
-//  EnveloppeEditor
-//
-//  Created by Jonathan Thorpe on 4/21/12.
-//  Copyright (c) 2012 JBAT. All rights reserved.
-//
 
 #include "VSCIMCollisionAction.h"
 
+#include "VSCOBScene.h"
+#include "VSCOBElement.h"
+#include "VSCOBCollision.h"
 
-VSC::Task::SPtr VSC::IM::CollisionVoidAction::createTaskForCollision(OB::Scene::Element::SPtr element, OB::Scene::Collision::SPtr collision)
+VSC::Tasks VSC::IM::CollisionAction::generateTasks(void)
 {
-    return Task::SPtr();
+    return this->generateTasksForCollision(OB::Element::SPtr(), OB::Collision::SPtr());
+}
+
+VSC::Tasks VSC::IM::CollisionVoidAction::generateTasksForCollision(OB::Element::SPtr element, OB::Collision::SPtr collision)
+{
+    Tasks tasks;
+    return tasks;
 }

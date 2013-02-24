@@ -12,31 +12,47 @@
 
 #include "VSCEnvironment.h"
 
+@class VSCOBOSXElementInspectorWindowController;
+@class VSCIMOSXEventChainWindowController;
+
 @class VSCOBOSXSceneDisplayView;
-@class VSCOSXOBSceneElementInspectorWindowController;
-@class VSCOSXOBSceneElementListView;
-@class VSCOSXOBSceneDetailView;
+@class VSCOBOSXElementListView;
+@class VSCOBOSXSceneDetailView;
+@class VSCIMOSXEventChainListView;
 
 /*
  *  This is the main window controller 
  */
 
-@interface VSCOSXEnvironmentWindowController : NSWindowController <VSCOSXEnvironmentController>
+@interface VSCOSXEnvironmentWindowController : NSWindowController
+<VSCOSXEnvironmentController,NSTableViewDelegate, NSTableViewDataSource>
 
-@property (strong) VSCOSXOBSceneElementInspectorWindowController* elementInspectorWindowController;
+@property (strong) IBOutlet id<VSCOBOSXSceneController> sceneController;
 
-@property (strong) IBOutlet VSCOSXOBSceneElementListView* sceneElementListView;
-@property (strong) IBOutlet VSCOSXOBSceneDetailView* sceneDetailView;
+@property (nonatomic, strong) VSCOBOSXElementInspectorWindowController* elementInspectorWindowController;
+@property (nonatomic, strong) VSCIMOSXEventChainWindowController* eventChainWindowController;
+
+@property (nonatomic, weak) IBOutlet NSSplitView* splitView;
+@property (nonatomic, strong) IBOutlet NSView* environmentInspectorView;
+@property (nonatomic, strong) IBOutlet NSScrollView* sceneDetailScrollView;
+
+@property (nonatomic, strong) IBOutlet VSCOBOSXElementListView* elementListView;
+@property (nonatomic, strong) IBOutlet VSCOBOSXSceneDetailView* sceneDetailView;
+@property (nonatomic, strong) IBOutlet VSCIMOSXEventChainListView* eventChainListView;
 
 @property (nonatomic, assign) VSC::EnvironmentTest::SPtr environmentTest;
 
 -(IBAction)resetAction:(id)sender;
 
--(void) showSceneElementList;
+-(void) showElementList;
+-(void) showEventChainList;
 -(void) showSceneDetail;
 
-- (IBAction)test1:(id)sender;
-- (IBAction)test2:(id)sender;
-- (IBAction)test3:(id)sender;
+-(IBAction)addEventChain:(id)sender;
+-(IBAction)removeSelectedEventChain:(id)sender;
+
+-(IBAction)test1:(id)sender;
+-(IBAction)test2:(id)sender;
+-(IBAction)test3:(id)sender;
 
 @end

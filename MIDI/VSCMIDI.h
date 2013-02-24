@@ -1,15 +1,8 @@
-/*
- *  VSCBoost.h
- *  EnveloppeEditor
- *
- *  Created by Jonathan Thorpe on 26/08/2011.
- *  Copyright 2011 JBAT. All rights reserved.
- *
- */
 
 #ifndef _VSC_MIDI_H_
 #define _VSC_MIDI_H_
 
+#include "VSC.h"
 #include "VSCSound.h"
 #include "VSCTaskQueue.h"
 
@@ -20,6 +13,7 @@
 #include <list>
 #include <string>
 #include <vector>
+#include <deque>
 #include <map>
 
 namespace VSC {
@@ -56,9 +50,7 @@ namespace VSC {
         
         /*
          *  A detailed table of midi messages can be found here http://www.midi.org/techspecs/midimessages.php
-         *
          *  A bit of background information from wiki of MIDI messages http://en.wikipedia.org/wiki/MIDI_1.0
-         *
          */
         
         enum ControlNumber {
@@ -100,81 +92,71 @@ namespace VSC {
         typedef std::vector<unsigned char>  Message;
         typedef std::pair<Message, Message> MessagePair;
         
+        enum MessageType
+        {
+            MessageTypeNone = 0,
+            MessageTypeNoteOn,
+            MessageTypeNoteOff,
+            MessageTypePolyphonicAftertouch,
+            MessageTypeChannelAftertouch,
+            MessageTypeProgramChange,
+            MessageTypeControlChange,
+            MessageTypePitchWheel,
+            MessageTypeInvalid
+        };
+        
+        enum MessageParameterKey
+        {
+            MessageParameterKeyNone = 0,
+            MessageParameterKeyChannel,
+            MessageParameterKeyPitch,
+            MessageParameterKeyVelocity,
+            MessageParameterKeyPressure,
+            MessageParameterKeyControlNumber,
+            MessageParameterKeyValue,
+            MessageParameterKeyValueMSB,
+            MessageParameterKeyValueLSB,
+            MessageParameterKeyProgram
+        };
+        
+        typedef std::map<MessageParameterKey, unsigned char> MessageParameterMap;
+        
+        struct MessageDescription
+        {
+            MessageDescription(void) : type(MessageTypeNone) {}
+            MessageDescription(MessageType t) : type(t) {}
+            MessageDescription(MessageType t, MessageParameterMap m) : type(t), parameterMap(m) {}
+            MessageDescription(const MessageDescription& description);
+            typedef boost::shared_ptr<MessageDescription> SPtr;
+            MessageType type;
+            MessageParameterMap parameterMap;
+        };
+        
+        typedef std::deque<MessageDescription::SPtr>    MessageDescriptionQueue;
+        typedef std::vector<MessageDescription::SPtr>   MessageDescriptions;
+        
         /*
          *  Message description utilities
          */
         
-        std::string messageDescription(const Message& m);
-        std::string controlNumberToString(ControlNumber num);
-        ControlNumber stringToControlNumber(const std::string& desc);
+        std::string messageToString(const Message& m);
+        std::string ControlNumberToString(ControlNumber num);
+        ControlNumber StringToControlNumber(const std::string& desc);
         
-        class MessageGenerator {
-            
-        public:
-            
-            typedef boost::shared_ptr<MessageGenerator> SPtr;
-            
-            MessageGenerator();
-            
-            const ControlNumbers& getValidControlNumbers() {return mValidControlNumbers;}
-            
-            bool controlNumberIsValid(const ControlNumber& number);
-            
-            /*
-             *  Note On/Off messages
-             */
-            
-            Message messageForNote(unsigned int channel, unsigned int pitch, unsigned int velocity, bool on);
-            
-            /*
-             *  Polyphonic aftertouch messages
-             */
-            
-            Message messageForPolyphonicAftertouch(unsigned int channel, unsigned int pitch, unsigned int pressure);
-            
-            /*
-             *  Channel Aftertouch messages, only channel and pressure are specified
-             */
-            
-            Message messageForChannelAftertouch(unsigned int channel, unsigned int pressure);
-            
-            /*
-             *  Low resolution control messages (only one message containing the MSB)
-             */
-            
-            Message messageForControlChange(unsigned int channel, ControlNumber control, unsigned int value);
-            
-            /*
-             *  Control messages can have MSB/LSB (sending two control message)
-             *  http://www.logicprohelp.com/forum/viewtopic.php?f=5&t=81147
-             *
-             *  The second (LSB) message will be sent on the same channel, with controlNumber+32 as 
-             *  described in the link above.
-             *  
-             *  value ranges from 0.00000 to 1.00000
-             */
-            
-            MessagePair messagePairForControlChange(unsigned int channel, ControlNumber control, Float value);
-            
-            /*
-             *  Pitch wheel messages have MSB/LSB within one MIDI message
-             *
-             *  value ranges from 0.00000 to 1.00000
-             */
-            
-            Message messageForPitchWheel(unsigned int channel, Float value);
-            
-        private:
-            
-            /*
-             *  Expects a float value within [0.0, 1.0]
-             */
-            
-            bool floatValueToBytePair(Float value, unsigned char& MSB, unsigned char& LSB);
-            
-            ControlNumbers mValidControlNumbers;
-            
-        };
+        /*
+         *  Expects a float value within [0.0, 1.0]
+         */
+        
+        bool floatValueToBytePair(Float value, unsigned char& MSB, unsigned char& LSB);
+        
+        /*
+         *  Convert between raw midi messages and human understandable description.
+         */
+        
+        Message messageFromDescription(MessageDescription::SPtr description);
+        
+        MessageDescription::SPtr descriptionFromMessage(const Message& message);
+
         
         class PortManager {
             

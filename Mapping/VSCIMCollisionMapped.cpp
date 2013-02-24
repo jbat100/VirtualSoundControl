@@ -1,5 +1,4 @@
 
-
 #include "VSCIMCollisionMapped.h"
 
 #include <boost/foreach.hpp>

@@ -1,5 +1,9 @@
 
 #include "VSCOBDynamicObject.h"
+#include "VSCOB.h"
+#include "VSCOBElement.h"
+#include "VSCOB.h"
+#include "VSCOBScene.h"
 
 #include <boost/assert.hpp>
 
@@ -20,7 +24,7 @@ castsShadow(true)
 VSC::OB::DynamicObject::DynamicObject(Scene::WPtr scene,
                         Ogre::Entity* entity,
                         OgreBulletDynamics::RigidBody* rigidBody) :
-Scene::Element(scene, rigidBody),
+Element(scene, rigidBody),
 mEntity(entity)
 {
     
@@ -28,7 +32,7 @@ mEntity(entity)
 
 void VSC::OB::DynamicObject::destroy(void)
 {
-    Scene::Element::destroy(); // call base destroy() !!!
+    Element::destroy(); // call base destroy() !!!
     
     Ogre::SceneNode *node = dynamic_cast<Ogre::SceneNode*>(mEntity->getParentNode());
     if (node)
