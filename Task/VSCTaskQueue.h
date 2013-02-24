@@ -74,8 +74,8 @@ namespace VSC {
         boost::mutex                mRequestStopMutex;
         boost::condition_variable   mTaskCondition;
         
-        const static bool           mTraceQueue = true;
-        const static bool           mTraceExecution = true;
+        const static bool           mTraceQueue = false;
+        const static bool           mTraceExecution = false;
         const static bool           mTraceTasks = true;
     };
     

@@ -8,24 +8,28 @@
 #include "VSCOBElementFactory.h"
 #include "VSCOBDynamicObject.h"
 
-#include "VSCIMCollisionMapper.h"
+#include "VSCCollisionMapper.h"
 #include "VSCIMEvent.h"
 #include "VSCIMDelay.h"
-#include "VSCIMCollisionEventChain.h"
-#include "VSCIMCollisionMIDIActions.h"
+#include "VSCIMEventChain.h"
+#include "VSCIMActionImplementations.h"
 
-void VSC::EnvironmentTest::setupTestForEnvironment(Environment::SPtr environment)
+using namespace VSC;
+using namespace VSC::IM;
+using namespace VSC::OB;
+
+void EnvironmentTest::setupTestForEnvironment(Environment::SPtr environment)
 {
     this->internalSetupForEnvironment(environment);
 }
 
 
-void VSC::EnvironmentTest::internalSetupForEnvironment(Environment::SPtr environment)
+void EnvironmentTest::internalSetupForEnvironment(Environment::SPtr environment)
 {
     BOOST_ASSERT(environment);
     if (!environment) return;
     
-    OB::Scene::SPtr scene = environment->getOBScene();
+    Scene::SPtr scene = environment->getScene();
     BOOST_ASSERT(scene);
     if (!scene) return;
     
@@ -36,43 +40,43 @@ void VSC::EnvironmentTest::internalSetupForEnvironment(Environment::SPtr environ
      *  Create 4 elements...
      */
     
-    OB::ElementFactory::SPtr elementFactory = scene->getElementFactory();
-    OB::DynamicObject::SPtr element1 = OB::DynamicObject::SPtr();
-    OB::DynamicObject::SPtr element2 = OB::DynamicObject::SPtr();
-    OB::DynamicObject::SPtr element3 = OB::DynamicObject::SPtr();
-    OB::DynamicObject::SPtr element4 = OB::DynamicObject::SPtr();
+    ElementFactory::SPtr elementFactory = scene->getElementFactory();
+    DynamicObject::SPtr element1 = DynamicObject::SPtr();
+    DynamicObject::SPtr element2 = DynamicObject::SPtr();
+    DynamicObject::SPtr element3 = DynamicObject::SPtr();
+    DynamicObject::SPtr element4 = DynamicObject::SPtr();
     
     BOOST_ASSERT(elementFactory);
     if (elementFactory)
     {
-        OB::DynamicObject::FactoryDescription description1;
+        DynamicObject::FactoryDescription description1;
         description1.name = "Test Cube 1";
         description1.size = Ogre::Vector3(1.0, 1.0, 1.0);
         description1.position = Ogre::Vector3(0.0, 1.0, 0.0);
-        element1 = elementFactory->addPrimitive(OB::PrimitiveCube, description1);
+        element1 = elementFactory->addPrimitive(PrimitiveCube, description1);
         //element1->setImmobilized(true);
         BOOST_ASSERT(element1);
         
-        OB::DynamicObject::FactoryDescription description2;
+        DynamicObject::FactoryDescription description2;
         description2.name = "Test Cube 2";
         description2.position = Ogre::Vector3(0.0, 20.0, 0.0);
         description2.size = Ogre::Vector3(1.0, 1.0, 1.0);
-        element2 = elementFactory->addPrimitive(OB::PrimitiveCube, description2);
+        element2 = elementFactory->addPrimitive(PrimitiveCube, description2);
         BOOST_ASSERT(element2);
         
         /*
-        OB::DynamicObject::FactoryDescription description3;
+        DynamicObject::FactoryDescription description3;
         description3.name = "Test Cube 3";
         description3.position = Ogre::Vector3(5.0, 10.0, -5.0);
         description3.size = Ogre::Vector3(1.0, 1.0, 1.0);
-        element3 = elementFactory->addPrimitive(OB::PrimitiveCube, description3);
+        element3 = elementFactory->addPrimitive(PrimitiveCube, description3);
         BOOST_ASSERT(element3);
         
-        OB::DynamicObject::FactoryDescription description4;
+        DynamicObject::FactoryDescription description4;
         description4.name = "Test Cube 4";
         description4.position = Ogre::Vector3(5.0, 10.0, 5.0);
         description4.size = Ogre::Vector3(1.0, 1.0, 1.0);
-        element4 = elementFactory->addPrimitive(OB::PrimitiveCube, description4);
+        element4 = elementFactory->addPrimitive(PrimitiveCube, description4);
         BOOST_ASSERT(element4);
          */
     }
@@ -81,39 +85,25 @@ void VSC::EnvironmentTest::internalSetupForEnvironment(Environment::SPtr environ
      *  Get collision mapper and create a new chain for element 1
      */
     
-    IM::CollisionMapper::SPtr collisionMapper = environment->getIMCollisionMapper();
+    CollisionMapper::SPtr collisionMapper = environment->getCollisionMapper();
     BOOST_ASSERT(collisionMapper);
     if (collisionMapper)
-    {
-        IM::CollisionEventChains& chains = collisionMapper->getEventChainsForCollisionStarted(element1);
+    {        
+        EventChain::SPtr chain = environment->createEventChain();
         
-        IM::CollisionEventChain::SPtr chain(new IM::CollisionEventChain);
-        chains.push_back(chain);
-        
-        IM::Event::SPtr event;
-        IM::CollisionMIDINoteOnAction::SPtr noteOnAction;
-        IM::CollisionMIDINoteOnAction::SPtr noteOffAction;
-        
-        noteOnAction = IM::CollisionMIDINoteOnAction::SPtr(new IM::CollisionMIDINoteOnAction);
-        noteOnAction->createDefaultMappings();
-        
+        Action::SPtr noteOnAction(new Action);
+        noteOnAction->setActionType(ActionTypeMIDINoteOn);
         BOOST_ASSERT(noteOnAction);
-        BOOST_ASSERT(noteOnAction->getMappingForTarget(IM::TargetPitch));
-        if (noteOnAction->getMappingForTarget(IM::TargetPitch))
-            noteOnAction->getMappingForTarget(IM::TargetPitch)->setOffset(64.0);
+        chain->appendEvent(boost::dynamic_pointer_cast<Event>(noteOnAction));
         
-        noteOnAction->getMappingForTarget(IM::TargetVelocityOn)->setOffset(64.0);
-        chain->appendEvent(boost::static_pointer_cast<IM::Event>(noteOnAction));
+        Delay::SPtr delay(new Delay());
+        chain->appendEvent(boost::dynamic_pointer_cast<Event>(delay));
         
-        event = IM::Event::SPtr(new IM::Delay(1.0));
-        chain->appendEvent(event);
+        Action::SPtr noteOffAction(new Action);
+        noteOffAction->setActionType(ActionTypeMIDINoteOff);
+        chain->appendEvent(boost::dynamic_pointer_cast<Event>(noteOffAction));
         
-        noteOffAction = IM::CollisionMIDINoteOffAction::SPtr(new IM::CollisionMIDINoteOffAction);
-        noteOffAction->createDefaultMappings();
-        
-        noteOffAction->getMappingForTarget(IM::TargetPitch)->setOffset(64.0);
-        noteOffAction->getMappingForTarget(IM::TargetVelocityOff)->setOffset(64.0);
-        chain->appendEvent(boost::static_pointer_cast<IM::Event>(noteOffAction));
+        collisionMapper->addEventChainForCollisionStarted(chain, element1);
     }
     
 }

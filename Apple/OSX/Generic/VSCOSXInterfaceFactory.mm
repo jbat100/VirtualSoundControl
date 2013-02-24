@@ -10,6 +10,7 @@
 
 #import "VSCOSXKeyedCheckBoxView.h"
 #import "VSCOSXKeyedSliderView.h"
+#import "VSCOSXKeyed1FieldView.h"
 #import "VSCOSXKeyed3FieldView.h"
 #import "VSCOSXKeyed4FieldView.h"
 
@@ -32,11 +33,15 @@
         
         interfaceFactory = [[VSCOSXInterfaceFactory alloc] init];
         
+        
         interfaceFactory.keyedCheckBoxViewNib = [[NSNib alloc] initWithNibNamed:
                                                  [[VSCOSXKeyedCheckBoxView class] description] bundle:nil];
         
         interfaceFactory.keyedSliderViewNib = [[NSNib alloc] initWithNibNamed:
                                                  [[VSCOSXKeyedSliderView class] description] bundle:nil];
+
+        interfaceFactory.keyed1FieldViewNib = [[NSNib alloc] initWithNibNamed:
+                                               [[VSCOSXKeyed1FieldView class] description] bundle:nil];
         
         interfaceFactory.keyed3FieldViewNib = [[NSNib alloc] initWithNibNamed:
                                                [[VSCOSXKeyed3FieldView class] description] bundle:nil];
@@ -44,14 +49,22 @@
         interfaceFactory.keyed4FieldViewNib = [[NSNib alloc] initWithNibNamed:
                                                [[VSCOSXKeyed4FieldView class] description] bundle:nil];
         
-        interfaceFactory.keyedCollisionActionCommonViewNib = [[NSNib alloc] initWithNibNamed:
-                                                              @"VSCIMOSXCollisionActionCommonView" bundle:nil];
         
-        interfaceFactory.keyedCollisionActionMIDIViewNib = [[NSNib alloc] initWithNibNamed:
-                                                            @"VSCIMOSXCollisionActionMIDIView" bundle:nil];
+        interfaceFactory.keyedActionCommonViewNib = [[NSNib alloc] initWithNibNamed:
+                                                     @"VSCIMOSXActionCommonView" bundle:nil];
         
-        interfaceFactory.keyedCollisionActionMIDIControlViewNib = [[NSNib alloc] initWithNibNamed:
-                                                                   @"VSCIMOSXCollisionActionMIDIControlView" bundle:nil];
+        interfaceFactory.keyedActionMIDIOutputViewNib = [[NSNib alloc] initWithNibNamed:
+                                                         @"VSCIMOSXActionMIDIOutputView" bundle:nil];
+        
+        interfaceFactory.keyedActionMIDIChannelViewNib = [[NSNib alloc] initWithNibNamed:
+                                                          @"VSCIMOSXActionMIDIChannelView" bundle:nil];
+        
+        interfaceFactory.keyedActionMIDIControlNumberViewNib = [[NSNib alloc] initWithNibNamed:
+                                                                @"VSCIMOSXActionMIDIControlNumberView" bundle:nil];
+        
+        
+        interfaceFactory.tableSectionViewNib = [[NSNib alloc] initWithNibNamed:
+                                                @"VSCOSXTableSectonView" bundle:nil];
         
     });
     
@@ -93,6 +106,27 @@
     for(id object in objects)
     {
         if([object isKindOfClass:[VSCOSXKeyedSliderView class]])
+        {
+            v = object;
+            v.identifier = identifier;
+            break;
+        }
+    }
+    BOOST_ASSERT(v);
+    v.translatesAutoresizingMaskIntoConstraints = NO;
+    return v;
+}
+
+-(VSCOSXKeyed1FieldView*) newKeyed1FieldViewWithOwner:(id)owner
+{
+    NSString* identifier = [[VSCOSXKeyed1FieldView class] description];
+    BOOST_ASSERT(self.keyed1FieldViewNib);
+    NSArray *objects = nil;
+    VSCOSXKeyed1FieldView* v = nil;
+    [self.keyed1FieldViewNib instantiateNibWithOwner:owner topLevelObjects:&objects];
+    for(id object in objects)
+    {
+        if([object isKindOfClass:[VSCOSXKeyed1FieldView class]])
         {
             v = object;
             v.identifier = identifier;
@@ -146,7 +180,7 @@
     return v;
 }
 
-#pragma mark Collision Action Views
+#pragma mark - Generic
 
 -(NSView*) newViewWithIdentifier:(NSString*)identifier nib:(NSNib*)nib owner:(id)owner
 {    
@@ -168,34 +202,50 @@
     }
     BOOST_ASSERT(v);
     v.translatesAutoresizingMaskIntoConstraints = NO;
-    
     for (NSView* subview in v.subviews)
     {
         subview.translatesAutoresizingMaskIntoConstraints = NO;
     }
-    
     return v;
 }
 
--(NSView*) newCollisionActionCommonViewWithOwner:(id)owner
+#pragma mark - Collision Action Views
+
+-(NSView*) newActionCommonViewWithOwner:(id)owner
 {
-    static NSString* identifier = @"VSCIMOSXCollisionActionCommonView";
+    static NSString* identifier = @"VSCIMOSXActionCommonView";
     
-    return [self newViewWithIdentifier:identifier nib:self.keyedCollisionActionCommonViewNib owner:owner];
+    return [self newViewWithIdentifier:identifier nib:self.keyedActionCommonViewNib owner:owner];
 }
 
--(NSView*) newCollisionActionMIDIViewWithOwner:(id)owner
+-(NSView*) newActionMIDIOutputViewWithOwner:(id)owner
 {
-    static NSString* identifier = @"VSCIMOSXCollisionActionMIDIView";
+    static NSString* identifier = @"VSCIMOSXActionMIDIOutputView";
     
-    return [self newViewWithIdentifier:identifier nib:self.keyedCollisionActionMIDIViewNib owner:owner];
+    return [self newViewWithIdentifier:identifier nib:self.keyedActionMIDIOutputViewNib owner:owner];
 }
 
--(NSView*) newCollisionActionMIDIControlViewWithOwner:(id)owner
+-(NSView*) newActionMIDIChannelViewWithOwner:(id)owner
 {
-    static NSString* identifier = @"VSCIMOSXCollisionActionMIDIControlView";
+    static NSString* identifier = @"VSCIMOSXActionMIDIChannelView";
     
-    return [self newViewWithIdentifier:identifier nib:self.keyedCollisionActionMIDIControlViewNib owner:owner];
+    return [self newViewWithIdentifier:identifier nib:self.keyedActionMIDIChannelViewNib owner:owner];
+}
+
+-(NSView*) newActionMIDIControlNumberViewWithOwner:(id)owner
+{
+    static NSString* identifier = @"VSCIMOSXActionMIDIControlNumberView";
+    
+    return [self newViewWithIdentifier:identifier nib:self.keyedActionMIDIControlNumberViewNib owner:owner];
+}
+
+#pragma mark - Table Views
+
+-(NSView*) newTableSectionViewWithOwner:(id)owner
+{
+    static NSString* identifier = @"VSCIMOSXTableSectionView";
+    
+    return [self newViewWithIdentifier:identifier nib:self.tableSectionViewNib owner:owner];
 }
 
 

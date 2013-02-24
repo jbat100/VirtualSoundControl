@@ -43,4 +43,9 @@
     return @[self.value1TextField, self.value2TextField, self.value3TextField];
 }
 
+-(BOOL)needsPanelToBecomeKey
+{
+    return YES;
+}
+
 @end

@@ -95,6 +95,14 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
     [self updateMIDIOutputInterface];
     [self updateControlNumbers];
     
+    /*
+     *  Set up first responder observer
+     */
+    
+    [[self window] addObserver:self forKeyPath:@"firstResponder"
+                       options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+                       context:NULL];
+    
 }
 
 #pragma mark - Setters
@@ -119,7 +127,7 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
         
         BOOST_FOREACH(const VSC::MIDI::ControlNumber& controlNumber, validControlNumbers)
         {
-            std::string name = VSC::MIDI::controlNumberToString(controlNumber);
+            std::string name = VSC::MIDI::ControlNumberToString(controlNumber);
             BOOST_ASSERT(!name.empty());
             NSString* title = [NSString stringWithFormat:@"%u - %@", (unsigned int)controlNumber, [NSString stringWithStdString:name]];
             [self.controlNumberPopUpButton addItemWithTitle:title];
@@ -360,6 +368,27 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
     }
     
     return 0;
+}
+
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    
+    if ([keyPath isEqual:@"firstResponder"] && [object isKindOfClass:[NSWindow class]])
+    {
+        NSLog(@"%@ firstResponder changed to %@", self, [[self window] firstResponder]);
+        
+        id responder = [[self window] firstResponder];
+        
+        if ([responder isKindOfClass:[NSTextField class]])
+        {
+            NSTextField* textField = (NSTextField*)responder;
+            NSText* text = [[self window] fieldEditor:YES forObject:(id)responder];
+            NSLog(@"selectable %d editable %d enabled %d text %@", textField.isSelectable, textField.isEditable, textField.isEnabled, text);
+        }
+    }
+    
+    //[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 }
  
 

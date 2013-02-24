@@ -16,10 +16,12 @@
 
 #include "btBulletCollisionCommon.h"
 
+using namespace VSC;
+using namespace VSC::OB;
 
 //MARK: - Scene Collision 
 
-void VSC::OB::Collision::invalidate()
+void Collision::invalidate()
 {
     mFirstElement = Element::SPtr();
     mSecondElement = Element::SPtr();
@@ -36,3 +38,57 @@ std::ostream& VSC::OB::operator << (std::ostream& stream, const Collision& colli
     
     return stream;
 }
+
+Element_SPtr VSC::OB::GetCollisionEffectee(Collision_SPtr collision, Element_SPtr effector)
+{
+    BOOST_ASSERT(collision);
+    BOOST_ASSERT(effector);
+    
+    Element::SPtr effectee = Element::SPtr();
+    
+    if (collision && effector)
+    {
+        if (effector == collision->getFirstElement())
+        {
+            effectee = collision->getSecondElement();
+        }
+        else if (effector == collision->getSecondElement())
+        {
+            effectee = collision->getFirstElement();
+        }
+        else
+        {
+            BOOST_ASSERT_MSG(false, "Effector should be one of either collision elements");
+        }
+    }
+    
+    return effectee;
+}
+
+Element_SPtr VSC::OB::GetCollisionEffector(Collision_SPtr collision, Element_SPtr effectee)
+{
+    BOOST_ASSERT(collision);
+    BOOST_ASSERT(effectee);
+    
+    Element::SPtr effector = Element::SPtr();
+    
+    if (collision && effectee)
+    {
+        if (effectee == collision->getFirstElement())
+        {
+            effector = collision->getSecondElement();
+        }
+        else if (effectee == collision->getSecondElement())
+        {
+            effector = collision->getFirstElement();
+        }
+        else
+        {
+            BOOST_ASSERT_MSG(false, "Effectee should be one of either collision elements");
+        }
+    }
+    
+    return effector;
+}
+
+

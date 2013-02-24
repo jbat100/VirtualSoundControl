@@ -4,7 +4,7 @@
 
 #include "VSCEnvironment.h"
 #include "VSCOBApplication.h"
-#include "VSCIMCollisionMapper.h"
+#include "VSCCollisionMapper.h"
 #include "VSCMIDIOutputManager.h"
 
 #include <boost/shared_ptr.hpp>

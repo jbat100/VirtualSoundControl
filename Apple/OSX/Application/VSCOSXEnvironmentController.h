@@ -7,11 +7,11 @@
 
 #include "VSCEnvironment.h"
 #include "VSCEnvironmentTest.h"
-#include "VSCOBScene.h"
-#include "VSCIMCollisionEventChain.h"
+#include "VSCOB.h"
+#include "VSCIM.h"
 
 
-@protocol VSCOSXOBSceneController;
+@protocol VSCOBOSXSceneController;
 
 /*
  *  Main environment controller protocol
@@ -26,14 +26,16 @@
 /*
  *  Sub-controllers
  */
-@property (strong) IBOutlet id<VSCOSXOBSceneController> sceneController;
+@property (strong) IBOutlet id<VSCOBOSXSceneController> sceneController;
+
+-(void) addEventChain;
+-(void) removeEventChain:(VSC::IM::EventChain_SPtr)eventChain;
 
 -(void) showEnvironmentInspector;
 -(void) showSceneDetails;
--(void) showSceneElementList;
+-(void) showEventChainList;
+-(void) showElementList;
 -(void) showElementInspectorForElement:(VSC::OB::Element_SPtr)element;
-
--(VSC::IM::CollisionEventChain::SPtr) collisionStartedEventChainForElement:(VSC::OB::Element_SPtr)element;
--(VSC::IM::CollisionEventChain::SPtr) collisionEndedEventChainForElement:(VSC::OB::Element_SPtr)element;
+-(void) showEventChainEditor:(VSC::IM::EventChain_SPtr)eventChain;
 
 @end

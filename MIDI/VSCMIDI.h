@@ -140,8 +140,8 @@ namespace VSC {
          */
         
         std::string messageToString(const Message& m);
-        std::string controlNumberToString(ControlNumber num);
-        ControlNumber stringToControlNumber(const std::string& desc);
+        std::string ControlNumberToString(ControlNumber num);
+        ControlNumber StringToControlNumber(const std::string& desc);
         
         /*
          *  Expects a float value within [0.0, 1.0]
