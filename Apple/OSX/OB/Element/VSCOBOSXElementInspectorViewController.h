@@ -31,6 +31,14 @@
 
 -(IBAction) immobilized:(id)sender;
 
+-(IBAction) printVertexDeclarations:(id)sender;
+-(IBAction) printIndeces:(id)sender;
+-(IBAction) printVertices:(id)sender;
+-(IBAction) printNormals:(id)sender;
+-(IBAction) printDiffuseColors:(id)sender;
+-(IBAction) printSpecularColors:(id)sender;
+-(IBAction) printTextureCoordinates:(id)sender;
+
 -(void) reloadImmobilizedInterface;
 
 @end

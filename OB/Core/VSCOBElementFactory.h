@@ -48,7 +48,6 @@ namespace VSC {
             
             DynamicObject::SPtr addTrimesh(const Ogre::String& meshName, const DynamicObject::FactoryDescription& description);
             
-            
             StaticObject::SPtr addStaticPlane(const StaticObject::FactoryDescription& description);
             
         protected:

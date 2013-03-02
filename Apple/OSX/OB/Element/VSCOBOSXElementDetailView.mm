@@ -149,17 +149,105 @@ using namespace VSC::OB;
      *  Debug buttons
      */
     
+    BOOST_ASSERT(self.elementController);
+    
+    /*
     self.printElementDescriptionButton = [[NSButton alloc] init];
     self.printElementDescriptionButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.printElementDescriptionButton];
     NSView* printElementDescriptionButton = self.printElementDescriptionButton;
     [self.printElementDescriptionButton setTitle: @"Print Element Description"];
-    [self.printElementDescriptionButton setTarget:self];
+    [self.printElementDescriptionButton setTarget:self.elementController];
     [self.printElementDescriptionButton setAction:@selector(printElementDescription:)];
     [self.printElementDescriptionButton setButtonType:NSMomentaryLightButton];
     [self.printElementDescriptionButton setBezelStyle:NSTexturedSquareBezelStyle];
     [viewsForHorizontalConstraints addObject:printElementDescriptionButton];
     [verticalVisualFormat appendString:@"-20-[printElementDescriptionButton(==20)]"];
+     */
+    
+    self.printVertexDeclarationsButton = [[NSButton alloc] init];
+    self.printVertexDeclarationsButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:self.printVertexDeclarationsButton];
+    NSView* printVertexDeclarationsButton = self.printVertexDeclarationsButton;
+    [self.printVertexDeclarationsButton setTitle: @"Vertex Declarations"];
+    [self.printVertexDeclarationsButton setTarget:self.elementController];
+    [self.printVertexDeclarationsButton setAction:@selector(printVertexDeclarations:)];
+    [self.printVertexDeclarationsButton setButtonType:NSMomentaryLightButton];
+    [self.printVertexDeclarationsButton setBezelStyle:NSTexturedSquareBezelStyle];
+    [viewsForHorizontalConstraints addObject:printVertexDeclarationsButton];
+    [verticalVisualFormat appendString:@"-20-[printVertexDeclarationsButton(==20)]"];
+    
+    self.printVerticesButton = [[NSButton alloc] init];
+    self.printVerticesButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:self.printVerticesButton];
+    NSView* printVerticesButton = self.printVerticesButton;
+    [self.printVerticesButton setTitle: @"Vertex Positions"];
+    [self.printVerticesButton setTarget:self.elementController];
+    [self.printVerticesButton setAction:@selector(printVertices:)];
+    [self.printVerticesButton setButtonType:NSMomentaryLightButton];
+    [self.printVerticesButton setBezelStyle:NSTexturedSquareBezelStyle];
+    [viewsForHorizontalConstraints addObject:printVerticesButton];
+    [verticalVisualFormat appendString:@"-5-[printVerticesButton(==20)]"];
+    
+    self.printNormalsButton = [[NSButton alloc] init];
+    self.printNormalsButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:self.printNormalsButton];
+    NSView* printNormalsButton = self.printNormalsButton;
+    [self.printNormalsButton setTitle: @"Vertex Normals"];
+    [self.printNormalsButton setTarget:self.elementController];
+    [self.printNormalsButton setAction:@selector(printNormals:)];
+    [self.printNormalsButton setButtonType:NSMomentaryLightButton];
+    [self.printNormalsButton setBezelStyle:NSTexturedSquareBezelStyle];
+    [viewsForHorizontalConstraints addObject:printNormalsButton];
+    [verticalVisualFormat appendString:@"-5-[printNormalsButton(==20)]"];
+    
+    self.printDiffuseColorsButton = [[NSButton alloc] init];
+    self.printDiffuseColorsButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:self.printDiffuseColorsButton];
+    NSView* printDiffuseColorsButton = self.printDiffuseColorsButton;
+    [self.printDiffuseColorsButton setTitle: @"Vertex Diffuse Colors"];
+    [self.printDiffuseColorsButton setTarget:self.elementController];
+    [self.printDiffuseColorsButton setAction:@selector(printDiffuseColors:)];
+    [self.printDiffuseColorsButton setButtonType:NSMomentaryLightButton];
+    [self.printDiffuseColorsButton setBezelStyle:NSTexturedSquareBezelStyle];
+    [viewsForHorizontalConstraints addObject:printDiffuseColorsButton];
+    [verticalVisualFormat appendString:@"-5-[printDiffuseColorsButton(==20)]"];
+    
+    self.printSpecularColorsButton = [[NSButton alloc] init];
+    self.printSpecularColorsButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:self.printSpecularColorsButton];
+    NSView* printSpecularColorsButton = self.printSpecularColorsButton;
+    [self.printSpecularColorsButton setTitle: @"Vertex Specular Colors"];
+    [self.printSpecularColorsButton setTarget:self.elementController];
+    [self.printSpecularColorsButton setAction:@selector(printSpecularColors:)];
+    [self.printSpecularColorsButton setButtonType:NSMomentaryLightButton];
+    [self.printSpecularColorsButton setBezelStyle:NSTexturedSquareBezelStyle];
+    [viewsForHorizontalConstraints addObject:printSpecularColorsButton];
+    [verticalVisualFormat appendString:@"-5-[printSpecularColorsButton(==20)]"];
+    
+    self.printTextureCoordinatesButton = [[NSButton alloc] init];
+    self.printTextureCoordinatesButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:self.printTextureCoordinatesButton];
+    NSView* printTextureCoordinatesButton = self.printTextureCoordinatesButton;
+    [self.printTextureCoordinatesButton setTitle: @"Vertex Texture Coordinates"];
+    [self.printTextureCoordinatesButton setTarget:self.elementController];
+    [self.printTextureCoordinatesButton setAction:@selector(printTextureCoordinates:)];
+    [self.printTextureCoordinatesButton setButtonType:NSMomentaryLightButton];
+    [self.printTextureCoordinatesButton setBezelStyle:NSTexturedSquareBezelStyle];
+    [viewsForHorizontalConstraints addObject:printTextureCoordinatesButton];
+    [verticalVisualFormat appendString:@"-5-[printTextureCoordinatesButton(==20)]"];
+    
+    self.printIndecesButton = [[NSButton alloc] init];
+    self.printIndecesButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:self.printIndecesButton];
+    NSView* printIndecesButton = self.printIndecesButton;
+    [self.printIndecesButton setTitle: @"Indeces"];
+    [self.printIndecesButton setTarget:self.elementController];
+    [self.printIndecesButton setAction:@selector(printIndeces:)];
+    [self.printIndecesButton setButtonType:NSMomentaryLightButton];
+    [self.printIndecesButton setBezelStyle:NSTexturedSquareBezelStyle];
+    [viewsForHorizontalConstraints addObject:printIndecesButton];
+    [verticalVisualFormat appendString:@"-5-[printIndecesButton(==20)]"];
     
     /*
      *  End and constraint creations
@@ -167,7 +255,14 @@ using namespace VSC::OB;
     
     [verticalVisualFormat appendString:@"-(>=10)-|"];
     NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(immobilizedCB, positionFV,
-                                                                   velocityFV, rotationFV, printElementDescriptionButton);
+                                                                   velocityFV, rotationFV,
+                                                                   printVertexDeclarationsButton,
+                                                                   printVerticesButton,
+                                                                   printNormalsButton,
+                                                                   printIndecesButton,
+                                                                   printDiffuseColorsButton,
+                                                                   printSpecularColorsButton,
+                                                                   printTextureCoordinatesButton);
     
     NSLog(@"VerticalVisualFormat: %@", verticalVisualFormat);
     
@@ -338,21 +433,6 @@ using namespace VSC::OB;
     }
     
     self.lastUpdateDate = [NSDate date];
-}
-
-#pragma mark - UI Callbacks
-
--(IBAction) printElementDescription:(id)sender
-{
-    NSLog(@"Print Element Description");
-    
-    Element::SPtr element = self.elementController.element.lock();
-    
-    DynamicObject::SPtr dynamicObject = boost::dynamic_pointer_cast<DynamicObject>(element);
-    if (dynamicObject)
-    {
-        
-    }
 }
 
 

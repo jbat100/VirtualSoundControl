@@ -52,13 +52,6 @@ void VSC::OB::DynamicObject::destroy(void)
     mEntity = 0;
 }
 
-/*
-Ogre::Entity* VSC::OB::DynamicObject::getEntity(void)
-{
-    return mEntity;
-}
- */
-
 
 
 

@@ -7,8 +7,8 @@
 //
 
 #import "VSCOBOSXElementInspectorViewController.h"
-
 #import "VSCOSXEnvironmentController.h"
+#import "NSString+VSCAdditions.h"
 
 #import "VSCIMOSXEventChainController.h"
 #import "VSCIMOSXEventChainViewController.h"
@@ -20,11 +20,17 @@
 
 #include "VSCEnvironment.h"
 #include "VSCCollisionMapper.h"
+
 #include "VSCOB.h"
+#include "VSCOBDebug.h"
 #include "VSCOBScene.h"
 #include "VSCOBElement.h"
+#include "VSCOBDynamicObject.h"
+
 #include "VSCIM.h"
 #include "VSCIMEventChain.h"
+
+#include <Ogre/Ogre.h>
 
 #include <boost/assert.hpp>
 
@@ -40,8 +46,9 @@ NSArray* ElementInspectorTabParamArray = nil;
 @interface VSCOBOSXElementInspectorViewController ()
 
 @property (nonatomic, strong) NSArray* tabViewConstraints;
-
 @property (nonatomic, assign) OSXSceneListener::SPtr sceneListener;
+
+-(Ogre::Entity*) elementOgreEntity;
 
 -(void) setupTabBar;
 -(void) resetInspectorView;
@@ -149,6 +156,18 @@ const static BOOL traceInterface = YES;
     
     [self.elementDetailView reloadWholeInterface];
     
+}
+
+-(Ogre::Entity*) elementOgreEntity
+{
+    Element::SPtr element = self.element.lock();
+    DynamicObject::SPtr dynamicObject = boost::dynamic_pointer_cast<DynamicObject>(element);
+    if (dynamicObject)
+    {
+        Ogre::Entity* entity = dynamicObject->getOgreEntity();
+        return entity;
+    }
+    return 0;
 }
 
 -(void) setImmobilized:(BOOL)immob
@@ -296,6 +315,7 @@ const static BOOL traceInterface = YES;
     [self switchElementInspectorToTabView:self.elementDetailView];
 }
 
+
 -(void) showElementEventChainsView
 {
     if (traceInterface) NSLog(@"%@ showElementEventChainsView", self);
@@ -309,6 +329,72 @@ const static BOOL traceInterface = YES;
     BOOST_ASSERT(self.elementEventChainsView.eventChainTableView.dataSource == self);
     
     [self.elementEventChainsView.eventChainTableView reloadData];
+}
+
+#pragma mark - UI Callbacks
+
+/*
+ 
+-(IBAction) printElementDescription:(id)sender
+{
+    NSLog(@"Print Element Description");
+    
+    Element::SPtr element = self.element.lock();
+    
+    DynamicObject::SPtr dynamicObject = boost::dynamic_pointer_cast<DynamicObject>(element);
+    if (dynamicObject)
+    {
+        Ogre::Entity* entity = dynamicObject->getOgreEntity();
+        std::string description = OgreEntityDescription(entity);
+        NSLog(@"%@", [NSString stringWithStdString:description]);
+    }
+}
+ 
+ */
+
+-(IBAction) printVertexDeclarations:(id)sender
+{
+    Ogre::Entity* entity = [self elementOgreEntity];
+    if (entity)
+    {
+        NSLog(@"Vertex Declarations");
+        std::cout << OgreEntityVertexDeclarationDescription(entity);
+    }
+    else
+    {
+        NSLog(@"No Vertex Declarations");
+    }
+    
+}
+
+-(IBAction) printIndeces:(id)sender
+{
+    NSLog(@"Print Indeces");
+}
+
+-(IBAction) printVertices:(id)sender
+{
+    NSLog(@"Print Vertices");
+}
+
+-(IBAction) printNormals:(id)sender
+{
+    NSLog(@"Print Normals");
+}
+
+-(IBAction) printDiffuseColors:(id)sender
+{
+    NSLog(@"Print Diffuse Colors");
+}
+
+-(IBAction) printSpecularColors:(id)sender
+{
+    NSLog(@"Print Specular Colors");
+}
+
+-(IBAction) printTextureCoordinates:(id)sender
+{
+    NSLog(@"Print Texture Coordinates");
 }
 
 #pragma mark - VSCOBOSXSceneListenerTarget

@@ -40,6 +40,7 @@ namespace VSC {
                 Ogre::String        name;               // "DefaultName"
                 Ogre::Vector3       position;           // Vector3::ZERO
                 Ogre::Quaternion    orientation;        // Quaternion(0,0,0,1)
+                Ogre::String        meshName;
                 Ogre::Vector3       size;               // 1 1 1
                 Ogre::Real          bodyMass;           // 1.0f;
                 Ogre::Real          bodyFriction;       // 0.6f;
@@ -66,7 +67,7 @@ namespace VSC {
              *  Getters
              */
             
-            Ogre::Entity*                           getEntity(void) {return mEntity;}
+            Ogre::Entity*                           getOgreEntity(void) {return mEntity;}
             
         private:
             

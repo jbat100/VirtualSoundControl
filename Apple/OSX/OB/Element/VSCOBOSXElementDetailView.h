@@ -14,7 +14,14 @@
 @property (nonatomic, strong) IBOutlet NSTextField* nameTextField;
 @property (nonatomic, strong) IBOutlet NSTextField* idTextField;
 
-@property (nonatomic, strong) IBOutlet NSButton* printElementDescriptionButton;
+//@property (nonatomic, strong) IBOutlet NSButton* printElementDescriptionButton;
+@property (nonatomic, strong) IBOutlet NSButton* printVertexDeclarationsButton;
+@property (nonatomic, strong) IBOutlet NSButton* printVerticesButton;
+@property (nonatomic, strong) IBOutlet NSButton* printIndecesButton;
+@property (nonatomic, strong) IBOutlet NSButton* printNormalsButton;
+@property (nonatomic, strong) IBOutlet NSButton* printDiffuseColorsButton;
+@property (nonatomic, strong) IBOutlet NSButton* printSpecularColorsButton;
+@property (nonatomic, strong) IBOutlet NSButton* printTextureCoordinatesButton;
 
 /*
  *  Position/Rotation
@@ -28,7 +35,6 @@
 -(void) setupIfNecessary;
 
 -(IBAction) immobilized:(id)sender;
--(IBAction) printElementDescription:(id)sender;
 
 -(void) reloadWholeInterface;
 -(void) reloadPositionInterface;
