@@ -84,7 +84,7 @@ using namespace VSC::IM;
         }
         catch (VSCMIDIException& e) {
             std::cerr << e.what() << " - Additional info: ";
-            std::cerr << e.getValueForKey(VSCBaseExceptionAdditionalInfoKey) << std::endl;
+            std::cerr << e.getValueForKey(VSCExceptionAdditionalInfoKey) << std::endl;
         }
     }
     

@@ -350,7 +350,7 @@ void VSC::TaskQueue::stepExecution()
         catch (VSCInvalidArgumentException& e)
         {
             std::cout << "VSC::TaskQueue::stepExecution INVALID ARGUMENT EXCEPTION!!! : " << e.what();
-            std::cout << "; Additional info: " << e.getValueForKey(VSCBaseExceptionAdditionalInfoKey) << std::endl;
+            std::cout << "; Additional info: " << e.getValueForKey(VSCExceptionAdditionalInfoKey) << std::endl;
             this->cancelTask(task);
         }
         catch (std::exception& e)

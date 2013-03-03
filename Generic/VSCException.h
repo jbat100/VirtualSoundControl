@@ -10,8 +10,8 @@
 
 #pragma mark Exception User Info Keys
 
-extern const std::string VSCBaseExceptionAdditionalInfoKey;
-extern const std::string VSCBaseExceptionRecoveryInfoKey;
+extern const std::string VSCExceptionAdditionalInfoKey;
+extern const std::string VSCExceptionRecoveryInfoKey;
 
 #pragma mark Base Exception
 

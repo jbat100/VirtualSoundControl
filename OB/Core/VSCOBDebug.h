@@ -4,6 +4,8 @@
 
 #include <Ogre/Ogre.h>
 
+#include <vector>
+
 namespace VSC {
     
     namespace OB {
@@ -18,12 +20,12 @@ namespace VSC {
         size_t OgreMeshVertexCount(const Ogre::Mesh* const mesh);
         size_t OgreMeshIndexCount(const Ogre::Mesh* const mesh);
         
-        // vertices and indeces will be array newed (it your responsibility to call delete[] on both of them)
-        void OgreMeshVertices(const Ogre::Mesh* const mesh, Ogre::Vector3* &vertices);
-        void OgreMeshNormals(const Ogre::Mesh* const mesh, Ogre::Vector3* &normals);
-        void OgreMeshIndeces(const Ogre::Mesh* const mesh, unsigned long* &indices);
-        void OgreMeshDiffuseColors(const Ogre::Mesh* const mesh, Ogre::RGBA* &colors);
-        void OgreMeshSpecularColors(const Ogre::Mesh* const mesh, Ogre::RGBA* &colors);
+        bool OgreMeshVertices(const Ogre::Mesh* const mesh, std::vector<Ogre::Vector3>& vertices);
+        bool OgreMeshNormals(const Ogre::Mesh* const mesh, std::vector<Ogre::Vector3>& normals);
+        bool OgreMeshIndeces(const Ogre::Mesh* const mesh, std::vector<unsigned long>& indices);
+        bool OgreMeshDiffuseColors(const Ogre::Mesh* const mesh, std::vector<Ogre::RGBA>& colors);
+        bool OgreMeshSpecularColors(const Ogre::Mesh* const mesh, std::vector<Ogre::RGBA>& colors);
+        bool OgreMeshTextureCoordinates(const Ogre::Mesh* const mesh, std::vector<Ogre::Vector2>& coordinates);
         
     }
 }

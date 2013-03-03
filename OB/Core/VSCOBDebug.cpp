@@ -1,5 +1,6 @@
 
 #include "VSCOBDebug.h"
+#include "VSCException.h"
 
 #include <Ogre/Ogre.h>
 
@@ -13,13 +14,15 @@ namespace VSC {
     
     namespace OB {
         
-        void OgreMeshVertexTriInfo(const Ogre::Mesh* const mesh, Ogre::Vector3* &vectors, Ogre::VertexElementSemantic semantic);
+        bool OgreMeshVertexBiInfo(const Ogre::Mesh* const mesh, std::vector<Ogre::Vector2>& vectors, Ogre::VertexElementSemantic semantic);
+        bool OgreMeshVertexTriInfo(const Ogre::Mesh* const mesh, std::vector<Ogre::Vector3>& vectors, Ogre::VertexElementSemantic semantic);
+        
         //void OgreMeshQuadVertexInfo(const Ogre::Mesh* const mesh, Ogre::Vector4* &vectors, Ogre::VertexElementSemantic semantic);
         
-        void OgreMeshVertexColorInfo(const Ogre::Mesh* const mesh, Ogre::RGBA* &colors, Ogre::VertexElementSemantic semantic);
+        bool OgreMeshVertexColorInfo(const Ogre::Mesh* const mesh, std::vector<Ogre::RGBA>& colors, Ogre::VertexElementSemantic semantic);
         
         // old...
-        void OgreMeshInformation(const Ogre::Mesh* const mesh, Ogre::Vector3* &vertices, unsigned long* &indices);
+        void OgreMeshInformation(const Ogre::Mesh* const mesh, std::vector<Ogre::Vector3>& vertices, std::vector<unsigned long>& indices);
         
         std::string OgreVertexElementSemanticToString(Ogre::VertexElementSemantic semantic);
         
@@ -27,6 +30,8 @@ namespace VSC {
 }
 
 static const bool traceMesh = true;
+
+//MARK: - String Conversions
 
 std::string VSC::OB::OgreVertexElementSemanticToString(Ogre::VertexElementSemantic semantic)
 {
@@ -61,15 +66,16 @@ std::string VSC::OB::OgreEntityDescription(Ogre::Entity* entity)
     std::stringstream s;
     
     Ogre::MeshPtr meshPtr = entity->getMesh();
+    Ogre::Mesh* mesh = meshPtr.get();
     
-    size_t vertex_count = OgreMeshVertexCount(meshPtr.get());
-    size_t index_count = OgreMeshIndexCount(meshPtr.get());
+    size_t vertex_count = OgreMeshVertexCount(mesh);
+    size_t index_count = OgreMeshIndexCount(mesh);
     
-    Ogre::Vector3* vertices;
-    unsigned long* indices;
+    std::vector<Ogre::Vector3> vertices;
+    std::vector<unsigned long> indices;
     
-    OgreMeshVertices(meshPtr.get(), vertices);
-    OgreMeshIndeces(meshPtr.get(), indices);
+    OgreMeshVertices(mesh, vertices);
+    OgreMeshIndeces(mesh, indices);
     
     s << "Ogre::Entity : " << "\n";
     s << "---------------------------------------- " << vertex_count << " vertices ------------------------------- \n";
@@ -85,11 +91,6 @@ std::string VSC::OB::OgreEntityDescription(Ogre::Entity* entity)
     s << "-------------------------------------------------------------------------------------------------------- \n";
     
     s << std::endl;
-    
-    // DONT FORGET TO RELEASE THE VERTEX AND INDEX ARRAY...
-    
-    delete[] vertices;
-    delete[] indices;
     
     return s.str();
     
@@ -128,7 +129,8 @@ std::string VSC::OB::OgreEntityVertexDeclarationDescription(Ogre::Entity* entity
             const Ogre::VertexElement* posElem = declaration->findElementBySemantic(semantic);
             if (posElem)
             {
-                s << "FOUND" << std::endl;
+                s << "FOUND with source " << posElem->getSource() << " index " << posElem->getIndex();
+                s << " offset " << posElem->getOffset() << std::endl;
                 //Ogre::HardwareVertexBufferSharedPtr vbuf = vertex_data->vertexBufferBinding->getBuffer(posElem->getSource());
             }
             else
@@ -185,7 +187,7 @@ size_t VSC::OB::OgreMeshIndexCount(const Ogre::Mesh* const mesh)
 
 //MARK: - Mesh Multi-Info (Probably obsolete...)
 
-void VSC::OB::OgreMeshInformation(const Ogre::Mesh* const mesh, Ogre::Vector3* &vertices, unsigned long* &indices)
+void VSC::OB::OgreMeshInformation(const Ogre::Mesh* const mesh, std::vector<Ogre::Vector3>& vertices, std::vector<unsigned long>& indices)
 {
     
     // http://www.ogre3d.org/tikiwiki/tiki-index.php?page=RetrieveVertexData
@@ -200,8 +202,8 @@ void VSC::OB::OgreMeshInformation(const Ogre::Mesh* const mesh, Ogre::Vector3* &
     size_t index_count = OgreMeshIndexCount(mesh);
     
     // Allocate space for the vertices and indices
-    vertices = new Ogre::Vector3[vertex_count];
-    indices = new unsigned long[index_count];
+    vertices.resize(vertex_count, Ogre::Vector3::ZERO);
+    indices.resize(index_count, 0);
     
     added_shared = false;
     
@@ -279,7 +281,7 @@ void VSC::OB::OgreMeshInformation(const Ogre::Mesh* const mesh, Ogre::Vector3* &
 
 //MARK: - Mesh Verteces
 
-void VSC::OB::OgreMeshIndeces(const Ogre::Mesh* const mesh, unsigned long* &indices)
+bool VSC::OB::OgreMeshIndeces(const Ogre::Mesh* const mesh, std::vector<unsigned long>& indices)
 {
     
     // http://www.ogre3d.org/tikiwiki/tiki-index.php?page=RetrieveVertexData
@@ -289,7 +291,7 @@ void VSC::OB::OgreMeshIndeces(const Ogre::Mesh* const mesh, unsigned long* &indi
     size_t index_count = OgreMeshIndexCount(mesh);
     
     // Allocate space for the vertices and indices
-    indices = new unsigned long[index_count];
+    indices.resize(index_count, 0);
     
     // Run through the submeshes again, adding the data into the arrays
     for (unsigned short i = 0; i < mesh->getNumSubMeshes(); ++i)
@@ -324,32 +326,39 @@ void VSC::OB::OgreMeshIndeces(const Ogre::Mesh* const mesh, unsigned long* &indi
         
         ibuf->unlock();
     }
+    
+    return true;
 }
 
 
-void VSC::OB::OgreMeshVertices(const Ogre::Mesh* const mesh, Ogre::Vector3* &vertices)
+bool VSC::OB::OgreMeshVertices(const Ogre::Mesh* const mesh, std::vector<Ogre::Vector3>& vertices)
 {
-    OgreMeshVertexTriInfo(mesh, vertices, Ogre::VES_POSITION);
+    return OgreMeshVertexTriInfo(mesh, vertices, Ogre::VES_POSITION);
 }
 
-void VSC::OB::OgreMeshNormals(const Ogre::Mesh* const mesh, Ogre::Vector3* &normals)
+bool VSC::OB::OgreMeshNormals(const Ogre::Mesh* const mesh, std::vector<Ogre::Vector3>& normals)
 {
-    OgreMeshVertexTriInfo(mesh, normals, Ogre::VES_NORMAL);
+    return OgreMeshVertexTriInfo(mesh, normals, Ogre::VES_NORMAL);
 }
 
-void VSC::OB::OgreMeshDiffuseColors(const Ogre::Mesh* const mesh, Ogre::RGBA* &colors)
+bool VSC::OB::OgreMeshDiffuseColors(const Ogre::Mesh* const mesh, std::vector<Ogre::RGBA>& colors)
 {
-    OgreMeshVertexColorInfo(mesh, colors, Ogre::VES_DIFFUSE);
+    return OgreMeshVertexColorInfo(mesh, colors, Ogre::VES_DIFFUSE);
 }
 
-void VSC::OB::OgreMeshSpecularColors(const Ogre::Mesh* const mesh, Ogre::RGBA* &colors)
+bool VSC::OB::OgreMeshSpecularColors(const Ogre::Mesh* const mesh, std::vector<Ogre::RGBA>& colors)
 {
-    OgreMeshVertexColorInfo(mesh, colors, Ogre::VES_SPECULAR);
+    return OgreMeshVertexColorInfo(mesh, colors, Ogre::VES_SPECULAR);
+}
+
+bool VSC::OB::OgreMeshTextureCoordinates(const Ogre::Mesh* const mesh, std::vector<Ogre::Vector2>& coordinates)
+{
+    return OgreMeshVertexBiInfo(mesh, coordinates, Ogre::VES_TEXTURE_COORDINATES);
 }
 
 //MARK: - Utils
 
-void VSC::OB::OgreMeshVertexTriInfo(const Ogre::Mesh* const mesh, Ogre::Vector3* &vectors, Ogre::VertexElementSemantic semantic)
+bool VSC::OB::OgreMeshVertexBiInfo(const Ogre::Mesh* const mesh, std::vector<Ogre::Vector2>& vectors, Ogre::VertexElementSemantic semantic)
 {
     // http://www.ogre3d.org/tikiwiki/tiki-index.php?page=RetrieveVertexData
     
@@ -361,7 +370,7 @@ void VSC::OB::OgreMeshVertexTriInfo(const Ogre::Mesh* const mesh, Ogre::Vector3*
     size_t count = OgreMeshVertexCount(mesh);
     
     // Allocate space for the vertices and indices
-    vectors = new Ogre::Vector3[count];
+    vectors.resize(count, Ogre::Vector2::ZERO);
     
     added_shared = false;
     
@@ -369,8 +378,10 @@ void VSC::OB::OgreMeshVertexTriInfo(const Ogre::Mesh* const mesh, Ogre::Vector3*
     for (unsigned short i = 0; i < mesh->getNumSubMeshes(); ++i)
     {
         Ogre::SubMesh* submesh = mesh->getSubMesh(i);
+        if (!submesh) throw VSCBadStateException("No Submesh");
         
         Ogre::VertexData* vertex_data = submesh->useSharedVertices ? mesh->sharedVertexData : submesh->vertexData;
+        if (!vertex_data) throw VSCBadStateException("No VertexData");
         
         if(submesh->useSharedVertices && !added_shared)
         {
@@ -378,22 +389,21 @@ void VSC::OB::OgreMeshVertexTriInfo(const Ogre::Mesh* const mesh, Ogre::Vector3*
             shared_offset = current_offset;
         }
         
-        const Ogre::VertexElement* posElem =
-        vertex_data->vertexDeclaration->findElementBySemantic(semantic);
+        const Ogre::VertexElement* posElem = vertex_data->vertexDeclaration->findElementBySemantic(semantic);
+        if (!posElem) throw VSCBadStateException("No VertexElement");
         
-        Ogre::HardwareVertexBufferSharedPtr vbuf =
-        vertex_data->vertexBufferBinding->getBuffer(posElem->getSource());
+        Ogre::HardwareVertexBufferSharedPtr vbuf = vertex_data->vertexBufferBinding->getBuffer(posElem->getSource());
+        if (!vbuf.get()) throw VSCBadStateException("No HardwareVertexBuffer");
         
-        unsigned char* vertex =
-        static_cast<unsigned char*>(vbuf->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
+        unsigned char* vertex = static_cast<unsigned char*>(vbuf->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
         
         float* pReal;
         
         for( size_t j = 0; j < vertex_data->vertexCount; ++j, vertex += vbuf->getVertexSize())
         {
             posElem->baseVertexPointerToElement(vertex, &pReal);
-            Ogre::Vector3 pt(pReal[0], pReal[1], pReal[2]);
-            //vertices[current_offset + j] = (orient * (pt * scale)) + position;
+            Ogre::Vector2 pt(pReal[0], pReal[1]);
+            BOOST_ASSERT(current_offset + j < count);
             vectors[current_offset + j] = pt;
         }
         
@@ -401,9 +411,11 @@ void VSC::OB::OgreMeshVertexTriInfo(const Ogre::Mesh* const mesh, Ogre::Vector3*
         next_offset += vertex_data->vertexCount;
         current_offset = next_offset;
     }
+    
+    return true;
 }
 
-void VSC::OB::OgreMeshVertexColorInfo(const Ogre::Mesh* const mesh, Ogre::RGBA* &colors, Ogre::VertexElementSemantic semantic)
+bool VSC::OB::OgreMeshVertexTriInfo(const Ogre::Mesh* const mesh, std::vector<Ogre::Vector3>& vectors, Ogre::VertexElementSemantic semantic)
 {
     // http://www.ogre3d.org/tikiwiki/tiki-index.php?page=RetrieveVertexData
     
@@ -415,7 +427,7 @@ void VSC::OB::OgreMeshVertexColorInfo(const Ogre::Mesh* const mesh, Ogre::RGBA* 
     size_t count = OgreMeshVertexCount(mesh);
     
     // Allocate space for the vertices and indices
-    colors = new Ogre::RGBA[count];
+    vectors.resize(count, Ogre::Vector3::ZERO);
     
     added_shared = false;
     
@@ -423,8 +435,10 @@ void VSC::OB::OgreMeshVertexColorInfo(const Ogre::Mesh* const mesh, Ogre::RGBA* 
     for (unsigned short i = 0; i < mesh->getNumSubMeshes(); ++i)
     {
         Ogre::SubMesh* submesh = mesh->getSubMesh(i);
+        if (!submesh) throw VSCBadStateException("No Submesh");
         
         Ogre::VertexData* vertex_data = submesh->useSharedVertices ? mesh->sharedVertexData : submesh->vertexData;
+        if (!vertex_data) throw VSCBadStateException("No VertexData");
         
         if(submesh->useSharedVertices && !added_shared)
         {
@@ -432,14 +446,70 @@ void VSC::OB::OgreMeshVertexColorInfo(const Ogre::Mesh* const mesh, Ogre::RGBA* 
             shared_offset = current_offset;
         }
         
-        const Ogre::VertexElement* posElem =
-        vertex_data->vertexDeclaration->findElementBySemantic(semantic);
+        const Ogre::VertexElement* posElem = vertex_data->vertexDeclaration->findElementBySemantic(semantic);
+        if (!posElem) throw VSCBadStateException("No VertexElement");
         
-        Ogre::HardwareVertexBufferSharedPtr vbuf =
-        vertex_data->vertexBufferBinding->getBuffer(posElem->getSource());
+        Ogre::HardwareVertexBufferSharedPtr vbuf = vertex_data->vertexBufferBinding->getBuffer(posElem->getSource());
+        if (!vbuf.get()) throw VSCBadStateException("No HardwareVertexBuffer");
         
-        unsigned char* vertex =
-        static_cast<unsigned char*>(vbuf->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
+        unsigned char* vertex = static_cast<unsigned char*>(vbuf->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
+        
+        float* pReal;
+        
+        for( size_t j = 0; j < vertex_data->vertexCount; ++j, vertex += vbuf->getVertexSize())
+        {
+            posElem->baseVertexPointerToElement(vertex, &pReal);
+            Ogre::Vector3 pt(pReal[0], pReal[1], pReal[2]);
+            BOOST_ASSERT(current_offset + j < count);
+            vectors[current_offset + j] = pt;
+        }
+        
+        vbuf->unlock();
+        next_offset += vertex_data->vertexCount;
+        current_offset = next_offset;
+    }
+    
+    return true;
+}
+
+bool VSC::OB::OgreMeshVertexColorInfo(const Ogre::Mesh* const mesh, std::vector<Ogre::RGBA>& colors, Ogre::VertexElementSemantic semantic)
+{
+    // http://www.ogre3d.org/tikiwiki/tiki-index.php?page=RetrieveVertexData
+    
+    bool added_shared = false;
+    size_t current_offset = 0;
+    size_t shared_offset = 0;
+    size_t next_offset = 0;
+    
+    size_t count = OgreMeshVertexCount(mesh);
+    
+    // Allocate space for the vertices and indices
+    colors.resize(count, 0);
+    
+    added_shared = false;
+    
+    // Run through the submeshes again, adding the data into the arrays
+    for (unsigned short i = 0; i < mesh->getNumSubMeshes(); ++i)
+    {
+        Ogre::SubMesh* submesh = mesh->getSubMesh(i);
+        if (!submesh) throw VSCBadStateException("No Submesh");
+        
+        Ogre::VertexData* vertex_data = submesh->useSharedVertices ? mesh->sharedVertexData : submesh->vertexData;
+        if (!vertex_data) throw VSCBadStateException("No VertexData");
+        
+        if(submesh->useSharedVertices && !added_shared)
+        {
+            added_shared = true;
+            shared_offset = current_offset;
+        }
+        
+        const Ogre::VertexElement* posElem = vertex_data->vertexDeclaration->findElementBySemantic(semantic);
+        if (!posElem) throw VSCBadStateException("No VertexElement");
+        
+        Ogre::HardwareVertexBufferSharedPtr vbuf = vertex_data->vertexBufferBinding->getBuffer(posElem->getSource());
+        if (!vbuf.get()) throw VSCBadStateException("No HardwareVertexBuffer");
+        
+        unsigned char* vertex = static_cast<unsigned char*>(vbuf->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
         
         Ogre::VertexElementType format = Ogre::Root::getSingleton().getRenderSystem()->getColourVertexElementType();
         
@@ -461,13 +531,16 @@ void VSC::OB::OgreMeshVertexColorInfo(const Ogre::Mesh* const mesh, Ogre::RGBA* 
         for( size_t j = 0; j < vertex_data->vertexCount; ++j, vertex += vbuf->getVertexSize())
         {
             posElem->baseVertexPointerToElement(vertex, &color);
-            colors[current_offset + j] = color[0];
+            BOOST_ASSERT(current_offset + j < count);
+            colors[current_offset + j] = *color;
         }
         
         vbuf->unlock();
         next_offset += vertex_data->vertexCount;
         current_offset = next_offset;
     }
+    
+    return true;
 }
 
 

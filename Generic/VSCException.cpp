@@ -2,20 +2,20 @@
 
 #include "VSCException.h"
 
-const std::string VSCBaseExceptionAdditionalInfoKey = "VSCBaseExceptionAdditionalInfoKey";
-const std::string VSCBaseExceptionRecoveryInfoKey = "VSCBaseExceptionRecoveryInfoKey";
+const std::string VSCExceptionAdditionalInfoKey     = "VSCExceptionAdditionalInfoKey";
+const std::string VSCExceptionRecoveryInfoKey       = "VSCExceptionRecoveryInfoKey";
 
 VSCBaseException::VSCBaseException() {
     
 }
 
 VSCBaseException::VSCBaseException(std::string additionalInfo) {
-    _userInfo.insert(InfoKeyValuePair(VSCBaseExceptionAdditionalInfoKey, additionalInfo));
+    _userInfo.insert(InfoKeyValuePair(VSCExceptionAdditionalInfoKey, additionalInfo));
 }
 
 VSCBaseException::VSCBaseException(std::string additionalInfo, std::string recoveryInfo) {
-    _userInfo.insert(InfoKeyValuePair(VSCBaseExceptionAdditionalInfoKey, additionalInfo));
-    _userInfo.insert(InfoKeyValuePair(VSCBaseExceptionRecoveryInfoKey, recoveryInfo));
+    _userInfo.insert(InfoKeyValuePair(VSCExceptionAdditionalInfoKey, additionalInfo));
+    _userInfo.insert(InfoKeyValuePair(VSCExceptionRecoveryInfoKey, recoveryInfo));
 }
 
 void VSCBaseException::setValueForKey(std::string value, std::string key)

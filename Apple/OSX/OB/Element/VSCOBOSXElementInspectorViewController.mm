@@ -18,6 +18,7 @@
 #import "DMTabBar.h"
 #import "NSString+VSCAdditions.h"
 
+#include "VSCException.h"
 #include "VSCEnvironment.h"
 #include "VSCCollisionMapper.h"
 
@@ -34,6 +35,8 @@
 
 #include <boost/assert.hpp>
 
+#include <vector>
+
 using namespace VSC;
 using namespace VSC::IM;
 using namespace VSC::OB;
@@ -49,6 +52,7 @@ NSArray* ElementInspectorTabParamArray = nil;
 @property (nonatomic, assign) OSXSceneListener::SPtr sceneListener;
 
 -(Ogre::Entity*) elementOgreEntity;
+-(Ogre::Mesh*) elementOgreMesh;
 
 -(void) setupTabBar;
 -(void) resetInspectorView;
@@ -166,6 +170,17 @@ const static BOOL traceInterface = YES;
     {
         Ogre::Entity* entity = dynamicObject->getOgreEntity();
         return entity;
+    }
+    return 0;
+}
+
+-(Ogre::Mesh*) elementOgreMesh
+{
+    Ogre::Entity* entity = [self elementOgreEntity];
+    if (entity)
+    {
+        Ogre::MeshPtr meshPtr = entity->getMesh();
+        return meshPtr.get();
     }
     return 0;
 }
@@ -333,25 +348,6 @@ const static BOOL traceInterface = YES;
 
 #pragma mark - UI Callbacks
 
-/*
- 
--(IBAction) printElementDescription:(id)sender
-{
-    NSLog(@"Print Element Description");
-    
-    Element::SPtr element = self.element.lock();
-    
-    DynamicObject::SPtr dynamicObject = boost::dynamic_pointer_cast<DynamicObject>(element);
-    if (dynamicObject)
-    {
-        Ogre::Entity* entity = dynamicObject->getOgreEntity();
-        std::string description = OgreEntityDescription(entity);
-        NSLog(@"%@", [NSString stringWithStdString:description]);
-    }
-}
- 
- */
-
 -(IBAction) printVertexDeclarations:(id)sender
 {
     Ogre::Entity* entity = [self elementOgreEntity];
@@ -362,39 +358,194 @@ const static BOOL traceInterface = YES;
     }
     else
     {
-        NSLog(@"No Vertex Declarations");
+        NSLog(@"No Ogre Entity");
     }
     
 }
 
 -(IBAction) printIndeces:(id)sender
 {
-    NSLog(@"Print Indeces");
+    Ogre::Mesh* mesh = [self elementOgreMesh];
+    if (mesh)
+    {
+        std::stringstream s;
+        size_t index_count = OgreMeshIndexCount(mesh);
+        s << index_count << " Indeces-------------------------------" << std::endl;
+        std::vector<unsigned long> indices;
+        try
+        {
+            OgreMeshIndeces(mesh, indices);
+            for (int i = 0; i < index_count; i++)
+            {
+                s << indices[i] << "  ";
+            }
+            s << "---------------------------------------------------" << std::endl;
+            std::cout << s.str();
+        }
+        catch (VSCBadStateException& e)
+        {
+            std::cout << e.getValueForKey(VSCExceptionAdditionalInfoKey);
+        }
+    }
+    else
+    {
+        NSLog(@"No Ogre Mesh");
+    }
 }
 
 -(IBAction) printVertices:(id)sender
 {
-    NSLog(@"Print Vertices");
+    Ogre::Mesh* mesh = [self elementOgreMesh];
+    if (mesh)
+    {
+        std::stringstream s;
+        size_t vertex_count = OgreMeshVertexCount(mesh);
+        s << vertex_count << " Verteces-------------------------------" << std::endl;
+        std::vector<Ogre::Vector3> vertices;
+        try
+        {
+            OgreMeshVertices(mesh, vertices);
+            for (int i = 0; i < vertex_count; i++)
+            {
+                s << vertices[i] << "\n";
+            }
+            s << "---------------------------------------------------" << std::endl;
+            std::cout << s.str();
+        }
+        catch (VSCBadStateException& e)
+        {
+            std::cout << e.getValueForKey(VSCExceptionAdditionalInfoKey);
+        }
+    }
+    else
+    {
+        NSLog(@"No Ogre Mesh");
+    }
 }
 
 -(IBAction) printNormals:(id)sender
 {
-    NSLog(@"Print Normals");
+    Ogre::Mesh* mesh = [self elementOgreMesh];
+    if (mesh)
+    {
+        std::stringstream s;
+        size_t vertex_count = OgreMeshVertexCount(mesh);
+        s << vertex_count << " Normals-------------------------------" << std::endl;
+        std::vector<Ogre::Vector3> normals;
+        try
+        {
+            OgreMeshNormals(mesh, normals);
+            for (int i = 0; i < vertex_count; i++)
+            {
+                s << normals[i] << "\n";
+            }
+            s << "---------------------------------------------------" << std::endl;
+            std::cout << s.str();
+        }
+        catch (VSCBadStateException& e)
+        {
+            std::cout << e.getValueForKey(VSCExceptionAdditionalInfoKey);
+        }
+
+    }
+    else
+    {
+        NSLog(@"No Ogre Mesh");
+    }
 }
 
 -(IBAction) printDiffuseColors:(id)sender
 {
-    NSLog(@"Print Diffuse Colors");
+    Ogre::Mesh* mesh = [self elementOgreMesh];
+    if (mesh)
+    {
+        std::stringstream s;
+        size_t vertex_count = OgreMeshVertexCount(mesh);
+        s << vertex_count << " Vertex Diffuse Colors-------------------------------" << std::endl;
+        std::vector<Ogre::RGBA> colors;
+        try
+        {
+            OgreMeshDiffuseColors(mesh, colors);
+            for (int i = 0; i < vertex_count; i++)
+            {
+                Ogre::ColourValue colorValue;
+                colorValue.setAsRGBA(colors[i]);
+                s << colorValue << "\n";
+            }
+            s << "---------------------------------------------------" << std::endl;
+            std::cout << s.str();
+        }
+        catch (VSCBadStateException& e)
+        {
+            std::cout << e.getValueForKey(VSCExceptionAdditionalInfoKey);
+        }
+    }
+    else
+    {
+        NSLog(@"No Ogre Mesh");
+    }
 }
 
 -(IBAction) printSpecularColors:(id)sender
 {
-    NSLog(@"Print Specular Colors");
+    Ogre::Mesh* mesh = [self elementOgreMesh];
+    if (mesh)
+    {
+        std::stringstream s;
+        size_t vertex_count = OgreMeshVertexCount(mesh);
+        s << vertex_count << " Vertex Specular Colors-------------------------------" << std::endl;
+        std::vector<Ogre::RGBA> colors;
+        try
+        {
+            OgreMeshSpecularColors(mesh, colors);
+            for (int i = 0; i < vertex_count; i++)
+            {
+                Ogre::ColourValue colorValue;
+                colorValue.setAsRGBA(colors[i]);
+                s << colorValue << "\n";
+            }
+            s << "--------------------------------------------------" << std::endl;
+            std::cout << s.str();
+        }
+        catch (VSCBadStateException& e)
+        {
+            std::cout << e.getValueForKey(VSCExceptionAdditionalInfoKey);
+        }
+    }
+    else
+    {
+        NSLog(@"No Ogre Mesh");
+    }
 }
 
 -(IBAction) printTextureCoordinates:(id)sender
 {
-    NSLog(@"Print Texture Coordinates");
+    Ogre::Mesh* mesh = [self elementOgreMesh];
+    if (mesh)
+    {
+        std::stringstream s;
+        size_t vertex_count = OgreMeshVertexCount(mesh);
+        s << vertex_count << " Vertex Texture Coordinates-------------------------------" << std::endl;
+        std::vector<Ogre::Vector2> coords;
+        try
+        {
+            OgreMeshTextureCoordinates(mesh, coords);
+            for (int i = 0; i < vertex_count; i++)
+            {
+                s << coords[i] << "\n";
+            }
+            s << "--------------------------------------------------" << std::endl;
+            std::cout << s.str();
+        }
+        catch (VSCBadStateException& e)
+        {
+            std::cout << e.getValueForKey(VSCExceptionAdditionalInfoKey);
+        }
+    }
+    else
+    {
+        NSLog(@"No Ogre Mesh");
+    }
 }
 
 #pragma mark - VSCOBOSXSceneListenerTarget

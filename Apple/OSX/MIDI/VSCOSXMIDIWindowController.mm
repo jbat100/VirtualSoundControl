@@ -208,7 +208,7 @@ NSString* const VSCOSXMIDINoValidControlNumberItemString = @"No valid control nu
         }
         catch (VSCInvalidArgumentException& e)
         {
-            std::cerr << e.what() << "Additional Info: " << e.getValueForKey(VSCBaseExceptionAdditionalInfoKey);
+            std::cerr << e.what() << "Additional Info: " << e.getValueForKey(VSCExceptionAdditionalInfoKey);
         }
 #endif
     }
