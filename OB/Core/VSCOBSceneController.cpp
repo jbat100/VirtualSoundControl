@@ -606,11 +606,7 @@ bool VSC::OB::SceneController::throwDynamicObjectPrimitive(Ogre::RenderWindow* r
     ElementFactory::SPtr sceneFactory = scene->getElementFactory();
     
     VSC::OB::DynamicObject::FactoryDescription description;
-    
-    description.materialName = "Bullet/box";
-    //description.materialName = "OceanHLSL_GLSL";
     description.position = display->getCamera()->getDerivedPosition();
-    
     VSC::OB::DynamicObject::SPtr object;
     
     switch(primitiveType)

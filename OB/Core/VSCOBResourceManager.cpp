@@ -1,6 +1,13 @@
 
 #include "VSCOBResourceManager.h"
 
+VSC::OB::ResourceManager::ResourceManager(std::string resourceFilePath, std::string resourceRootPath) :
+mResourceFilePath(resourceFilePath),
+mResourceRootPath(resourceRootPath)
+{
+
+}
+
 void VSC::OB::ResourceManager::setupResources(void)
 {
     Ogre::ResourceGroupManager *rsm = Ogre::ResourceGroupManager::getSingletonPtr();
@@ -25,8 +32,9 @@ void VSC::OB::ResourceManager::setupResources(void)
         for (i = settings->begin(); i != settings->end(); ++i)
         {
             typeName = i->first;
-            archName = i->second;
-            try {
+            archName = mResourceRootPath + i->second;
+            try
+            {
                 rsm->addResourceLocation(archName, typeName, secName);
             }
             catch (Ogre::Exception& e)
@@ -36,7 +44,7 @@ void VSC::OB::ResourceManager::setupResources(void)
         }
     }
     
-    /*-------------------------------------------------------------------------------------*/
+    /*-------------------------------------------------------------------------------------
     
 	Ogre::StringVector groups = rsm->getResourceGroups();        
 
@@ -59,6 +67,8 @@ void VSC::OB::ResourceManager::setupResources(void)
 		}
 	}
     
+    //-------------------------------------------------------------------------------------*/
+    
     
     this->internalSetupResources();
 }
@@ -76,7 +86,15 @@ void VSC::OB::ResourceManager::loadResources(void)
     
     Ogre::ResourceGroupManager *rsm = Ogre::ResourceGroupManager::getSingletonPtr();
     
-    rsm->initialiseAllResourceGroups(); // is this necessary given what follows ?
+    try
+    {
+        rsm->initialiseAllResourceGroups(); // is this necessary given what follows ?
+    }
+    catch (std::exception& e)
+    {
+        std::cerr << "EXCEPTION " << e.what() << std::endl;
+    }
+    
     
 	Ogre::StringVector groups = rsm->getResourceGroups();      
 	for (Ogre::StringVector::iterator it = groups.begin(); it != groups.end(); ++it)

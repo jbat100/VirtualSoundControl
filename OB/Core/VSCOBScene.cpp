@@ -136,11 +136,18 @@ void VSC::OB::Scene::init()
     
 	if (pxlFmt != Ogre::PF_L8)
 	{
-		String CUSTOM_CASTER_MATERIAL("Ogre/DepthShadowmap/Caster/Float");
-		String CUSTOM_RECEIVER_MATERIAL("Ogre/DepthShadowmap/Receiver/Float");
-		sceneManager->setShadowTextureSelfShadow(true);
-		sceneManager->setShadowTextureCasterMaterial(CUSTOM_CASTER_MATERIAL);
-		sceneManager->setShadowTextureReceiverMaterial(CUSTOM_RECEIVER_MATERIAL + "/PCF");
+        try
+        {
+            String CUSTOM_CASTER_MATERIAL("Ogre/DepthShadowmap/Caster/Float");
+            String CUSTOM_RECEIVER_MATERIAL("Ogre/DepthShadowmap/Receiver/Float");
+            sceneManager->setShadowTextureSelfShadow(true);
+            sceneManager->setShadowTextureCasterMaterial(CUSTOM_CASTER_MATERIAL);
+            sceneManager->setShadowTextureReceiverMaterial(CUSTOM_RECEIVER_MATERIAL + "/PCF");
+        }
+        catch (std::exception& e)
+        {
+            std::cout << "EXCEPTION " << e.what() << std::endl;
+        }
 	}
 
 	/**

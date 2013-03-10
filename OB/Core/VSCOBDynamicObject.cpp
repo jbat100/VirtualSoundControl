@@ -15,7 +15,7 @@ size(Ogre::Vector3(1.0,1.0,1.0)),
 bodyMass(1.0),                                      
 bodyFriction(0.6),                                  
 bodyRestitution(0.6),                               
-materialName("Bullet/box"),                         
+materialName("VSC/Dirt1"),                         
 castsShadow(true)                      
 {
 

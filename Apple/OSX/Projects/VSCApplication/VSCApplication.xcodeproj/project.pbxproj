@@ -96,6 +96,9 @@
 		109D51B5155998EE0030C161 /* VSCException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109D51B3155998EE0030C161 /* VSCException.cpp */; };
 		10A764EC16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10A764EA16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.mm */; };
 		10A764ED16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10A764EB16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.xib */; };
+		10AD5FFC16ECE6B400FBEE56 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = 10AD5FF916ECE6B400FBEE56 /* Models */; };
+		10AD5FFD16ECE6B400FBEE56 /* Packs in Resources */ = {isa = PBXBuildFile; fileRef = 10AD5FFA16ECE6B400FBEE56 /* Packs */; };
+		10AD5FFF16ED00F100FBEE56 /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 10AD5FFE16ED00F100FBEE56 /* Materials */; };
 		10AE255516D14C7600EDDB55 /* VSCIMOSXEventListView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10AE255416D14C7600EDDB55 /* VSCIMOSXEventListView.mm */; };
 		10AF53FE163D8D7600419EEE /* DMTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53FB163D8D7600419EEE /* DMTabBar.m */; };
 		10AF53FF163D8D7600419EEE /* DMTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53FD163D8D7600419EEE /* DMTabBarItem.m */; };
@@ -397,6 +400,9 @@
 		10A764E916BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXEventChainWindowController.h; sourceTree = "<group>"; };
 		10A764EA16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXEventChainWindowController.mm; sourceTree = "<group>"; };
 		10A764EB16BEDAA500B9F9A2 /* VSCIMOSXEventChainWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VSCIMOSXEventChainWindowController.xib; sourceTree = "<group>"; };
+		10AD5FF916ECE6B400FBEE56 /* Models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Models; sourceTree = "<group>"; };
+		10AD5FFA16ECE6B400FBEE56 /* Packs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Packs; sourceTree = "<group>"; };
+		10AD5FFE16ED00F100FBEE56 /* Materials */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Materials; sourceTree = "<group>"; };
 		10AE255316D14C7600EDDB55 /* VSCIMOSXEventListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXEventListView.h; sourceTree = "<group>"; };
 		10AE255416D14C7600EDDB55 /* VSCIMOSXEventListView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXEventListView.mm; sourceTree = "<group>"; };
 		10AF53F7163D76B300419EEE /* VSCOSXEnvironmentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOSXEnvironmentController.h; path = ../../Application/VSCOSXEnvironmentController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -886,6 +892,9 @@
 		109A8E8616A1A7210023EC1B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				10AD5FFE16ED00F100FBEE56 /* Materials */,
+				10AD5FF916ECE6B400FBEE56 /* Models */,
+				10AD5FFA16ECE6B400FBEE56 /* Packs */,
 				109A8E8716A1A7210023EC1B /* Plugins.cfg */,
 				109A8E8816A1A7210023EC1B /* Plugins_d.cfg */,
 				109A8E8916A1A7210023EC1B /* resources.cfg */,
@@ -1642,6 +1651,9 @@
 				108D364C16C9981800DA6B25 /* VSCOBOSXElementInspectorWindowController.xib in Resources */,
 				10F3857916CA49EC0012FA72 /* VSCIMOSXEventEditorViewController.xib in Resources */,
 				103BFD1616D8DAF7001701D6 /* VSCOSXKeyed1FieldView.xib in Resources */,
+				10AD5FFC16ECE6B400FBEE56 /* Models in Resources */,
+				10AD5FFD16ECE6B400FBEE56 /* Packs in Resources */,
+				10AD5FFF16ED00F100FBEE56 /* Materials in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,4 +1,42 @@
 
+material VSC/FloorStones1
+{
+    receive_shadows off
+	technique
+	{
+		pass
+		{
+			ambient 1 1 1 1
+			diffuse 1 1 1 1
+			specular 1 1 1 1 10
+
+			texture_unit
+			{
+				texture terr_rock6.jpg
+			}
+		}
+	}
+}
+
+material VSC/Dirt1
+{
+    receive_shadows off
+	technique
+	{
+		pass
+		{
+			ambient 0.2 1 1 1
+			diffuse 0.2 1 1 1
+			specular 0.2 1 1 1 10
+
+			texture_unit
+			{
+				texture terr_rock-dirt.jpg
+			}
+		}
+	}
+}
+
 material Bullet/Cone
 {
 //    receive_shadows off

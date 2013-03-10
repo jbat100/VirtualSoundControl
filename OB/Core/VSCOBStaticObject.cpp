@@ -8,7 +8,8 @@ VSC::OB::StaticObject::FactoryDescription::FactoryDescription() : // set default
 name("DefaultStatic"),
 bodyRestitution(0.1f),
 bodyFriction(0.8f),
-materialName("BulletPlane")      // "BulletPlane"
+//materialName("BulletPlane")      // "BulletPlane"
+materialName("VSC/FloorStones1")
 {
     
 }

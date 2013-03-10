@@ -29,7 +29,7 @@ namespace VSC {
              *  Constructor / Destructor
              */
             
-            ResourceManager(std::string resourceFilePath) : mResourceFilePath(resourceFilePath) {}
+            ResourceManager(std::string resourceFilePath, std::string resourceRootPath);
             virtual ~ResourceManager() {}
             
         protected:
@@ -47,6 +47,7 @@ namespace VSC {
             void loadResources();
             
             std::string mResourceFilePath;
+            std::string mResourceRootPath;
             
             static const bool mTrace = true;
 

@@ -109,9 +109,12 @@ using namespace VSC::IM;
     
     GlobalApplication::SPtr globalApplication = GlobalApplication::singletonGlobalApplication();
     
-    std::string resourcePath = Ogre::macBundlePath() + "/Contents/Resources/resources.cfg";
+    std::string resourceFilePath = Ogre::macBundlePath() + "/Contents/Resources/resources.cfg";
+    std::string resourceRootPath = Ogre::macBundlePath() + "/Contents";
+    std::cout << "Making resource manager with resource path: " << resourceFilePath;
+    std::cout << " resource root directory : " << resourceRootPath << std::endl;
     
-    OB::ResourceManager::SPtr resourceManager = OB::ResourceManager::SPtr(new OB::ResourceManager(resourcePath));
+    OB::ResourceManager::SPtr resourceManager = OB::ResourceManager::SPtr(new OB::ResourceManager(resourceFilePath, resourceRootPath));
     OB::Application::SPtr obApplication = OB::Application::singletonApplication();
     obApplication->init(resourceManager);
     
