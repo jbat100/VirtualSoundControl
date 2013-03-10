@@ -23,6 +23,7 @@
 #include "VSCCollisionMapper.h"
 
 #include "VSCOB.h"
+#include "VSCOBMeshTools.h"
 #include "VSCOBDebug.h"
 #include "VSCOBScene.h"
 #include "VSCOBElement.h"

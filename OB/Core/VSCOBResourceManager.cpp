@@ -15,11 +15,12 @@ void VSC::OB::ResourceManager::setupResources(void)
     if (mTrace) std::cout << "VSC::OB::ResourceManager::setupResources with path " << mResourceFilePath << std::endl;
     
     // Load resource paths from config file
+    
     Ogre::ConfigFile cf;
-    //cf.load(resourcePath + "resources.cfg");
     cf.load(mResourceFilePath);
     
     // Go through all sections & settings in the file
+    
     Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
     
     Ogre::String secName, typeName, archName;
@@ -44,32 +45,6 @@ void VSC::OB::ResourceManager::setupResources(void)
         }
     }
     
-    /*-------------------------------------------------------------------------------------
-    
-	Ogre::StringVector groups = rsm->getResourceGroups();        
-
-	const Ogre::String resName("OgreBullet");
-	{
-		if (std::find(groups.begin(), groups.end(), resName) == groups.end())
-		{
-
-			rsm->createResourceGroup(resName);
-            Ogre::String baseName;
-            
-            baseName = "/Library/VirtualSoundControl/Ogrebullet/Media";
-            
-            rsm->addResourceLocation(baseName, "FileSystem", resName);
-			rsm->addResourceLocation(baseName + "/textures", "FileSystem", resName);
-			rsm->addResourceLocation(baseName + "/overlays", "FileSystem", resName);
-			rsm->addResourceLocation(baseName + "/materials", "FileSystem", resName);
-			rsm->addResourceLocation(baseName + "/models", "FileSystem", resName);
-			rsm->addResourceLocation(baseName + "/gui", "FileSystem", resName);
-		}
-	}
-    
-    //-------------------------------------------------------------------------------------*/
-    
-    
     this->internalSetupResources();
 }
 
@@ -92,7 +67,7 @@ void VSC::OB::ResourceManager::loadResources(void)
     }
     catch (std::exception& e)
     {
-        std::cerr << "EXCEPTION " << e.what() << std::endl;
+        std::cerr << "VSC::OB::ResourceManager::loadResources " << e.what() << std::endl;
     }
     
     

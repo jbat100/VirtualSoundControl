@@ -1,5 +1,7 @@
 
 #include "VSCOBDebug.h"
+#include "VSCOBMeshTools.h"
+
 #include "VSCException.h"
 
 #include <Ogre/Ogre.h>
@@ -16,8 +18,7 @@ namespace VSC {
         
         bool OgreMeshVertexBiInfo(const Ogre::Mesh* const mesh, std::vector<Ogre::Vector2>& vectors, Ogre::VertexElementSemantic semantic);
         bool OgreMeshVertexTriInfo(const Ogre::Mesh* const mesh, std::vector<Ogre::Vector3>& vectors, Ogre::VertexElementSemantic semantic);
-        
-        //void OgreMeshQuadVertexInfo(const Ogre::Mesh* const mesh, Ogre::Vector4* &vectors, Ogre::VertexElementSemantic semantic);
+
         
         bool OgreMeshVertexColorInfo(const Ogre::Mesh* const mesh, std::vector<Ogre::RGBA>& colors, Ogre::VertexElementSemantic semantic);
         
@@ -141,48 +142,6 @@ std::string VSC::OB::OgreEntityVertexDeclarationDescription(Ogre::Entity* entity
     }
     
     return s.str();
-}
-
-//MARK: - Vertex and Index Counts
-
-size_t VSC::OB::OgreMeshVertexCount(const Ogre::Mesh* const mesh)
-{
-    bool added_shared = false;
-    size_t vertex_count = 0;
-    
-    // Calculate how many vertices and indices we're going to need
-    for ( unsigned short i = 0; i < mesh->getNumSubMeshes(); ++i)
-    {
-        Ogre::SubMesh* submesh = mesh->getSubMesh(i);
-        // We only need to add the shared vertices once
-        if(submesh->useSharedVertices)
-        {
-            if( !added_shared )
-            {
-                vertex_count += mesh->sharedVertexData->vertexCount;
-                added_shared = true;
-            }
-        }
-        else
-        {
-            vertex_count += submesh->vertexData->vertexCount;
-        }
-    }
-    
-    return vertex_count;
-}
-
-size_t VSC::OB::OgreMeshIndexCount(const Ogre::Mesh* const mesh)
-{
-    size_t index_count = 0;
-    
-    for ( unsigned short i = 0; i < mesh->getNumSubMeshes(); ++i)
-    {
-        Ogre::SubMesh* submesh = mesh->getSubMesh(i);
-        index_count += submesh->indexData->indexCount;
-    }
-    
-    return index_count;
 }
 
 //MARK: - Mesh Multi-Info (Probably obsolete...)

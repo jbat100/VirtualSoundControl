@@ -150,6 +150,11 @@ class VSCSOutOfBoundsException : public VSCBaseException
 
 class VSCBadParameterException : public VSCBaseException
 {
+    
+    public:
+    
+    VSCBadParameterException(std::string additionalInfo) : VSCBaseException(additionalInfo) {}
+    
     virtual const char* what() const throw()
     {
         return "Bad Parameter";

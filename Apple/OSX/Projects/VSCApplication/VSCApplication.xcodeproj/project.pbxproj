@@ -99,6 +99,8 @@
 		10AD5FFC16ECE6B400FBEE56 /* Models in Resources */ = {isa = PBXBuildFile; fileRef = 10AD5FF916ECE6B400FBEE56 /* Models */; };
 		10AD5FFD16ECE6B400FBEE56 /* Packs in Resources */ = {isa = PBXBuildFile; fileRef = 10AD5FFA16ECE6B400FBEE56 /* Packs */; };
 		10AD5FFF16ED00F100FBEE56 /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 10AD5FFE16ED00F100FBEE56 /* Materials */; };
+		10AD600216ED185400FBEE56 /* VSCOBMeshTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10AD600016ED185300FBEE56 /* VSCOBMeshTools.cpp */; };
+		10AD600516ED1F4800FBEE56 /* VSCRandom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10AD600316ED1F4800FBEE56 /* VSCRandom.cpp */; };
 		10AE255516D14C7600EDDB55 /* VSCIMOSXEventListView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10AE255416D14C7600EDDB55 /* VSCIMOSXEventListView.mm */; };
 		10AF53FE163D8D7600419EEE /* DMTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53FB163D8D7600419EEE /* DMTabBar.m */; };
 		10AF53FF163D8D7600419EEE /* DMTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AF53FD163D8D7600419EEE /* DMTabBarItem.m */; };
@@ -403,6 +405,10 @@
 		10AD5FF916ECE6B400FBEE56 /* Models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Models; sourceTree = "<group>"; };
 		10AD5FFA16ECE6B400FBEE56 /* Packs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Packs; sourceTree = "<group>"; };
 		10AD5FFE16ED00F100FBEE56 /* Materials */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Materials; sourceTree = "<group>"; };
+		10AD600016ED185300FBEE56 /* VSCOBMeshTools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCOBMeshTools.cpp; sourceTree = "<group>"; };
+		10AD600116ED185300FBEE56 /* VSCOBMeshTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBMeshTools.h; sourceTree = "<group>"; };
+		10AD600316ED1F4800FBEE56 /* VSCRandom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCRandom.cpp; path = ../../../../Generic/VSCRandom.cpp; sourceTree = "<group>"; };
+		10AD600416ED1F4800FBEE56 /* VSCRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCRandom.h; path = ../../../../Generic/VSCRandom.h; sourceTree = "<group>"; };
 		10AE255316D14C7600EDDB55 /* VSCIMOSXEventListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMOSXEventListView.h; sourceTree = "<group>"; };
 		10AE255416D14C7600EDDB55 /* VSCIMOSXEventListView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCIMOSXEventListView.mm; sourceTree = "<group>"; };
 		10AF53F7163D76B300419EEE /* VSCOSXEnvironmentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VSCOSXEnvironmentController.h; path = ../../Application/VSCOSXEnvironmentController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -717,6 +723,8 @@
 			children = (
 				103006911624763A002A30ED /* VSC.cpp */,
 				103006921624763A002A30ED /* VSC.h */,
+				10AD600316ED1F4800FBEE56 /* VSCRandom.cpp */,
+				10AD600416ED1F4800FBEE56 /* VSCRandom.h */,
 				10F8503A16B94700007485F8 /* VSCUsernamed.cpp */,
 				10F8503B16B94700007485F8 /* VSCUsernamed.h */,
 				100812B41651ABE700E975B8 /* VSCListener.cpp */,
@@ -867,6 +875,8 @@
 				109A8E7616A1A7210023EC1B /* VSCOBDynamicObject.h */,
 				109A8E7716A1A7210023EC1B /* VSCOBResourceManager.cpp */,
 				109A8E7816A1A7210023EC1B /* VSCOBResourceManager.h */,
+				10AD600016ED185300FBEE56 /* VSCOBMeshTools.cpp */,
+				10AD600116ED185300FBEE56 /* VSCOBMeshTools.h */,
 				109A8E7916A1A7210023EC1B /* VSCOBScene.cpp */,
 				109A8E7A16A1A7210023EC1B /* VSCOBScene.h */,
 				106D1A3F16B682E400093380 /* VSCOBProximity.cpp */,
@@ -1794,6 +1804,8 @@
 				10AE255516D14C7600EDDB55 /* VSCIMOSXEventListView.mm in Sources */,
 				103BFD1516D8DAF7001701D6 /* VSCOSXKeyed1FieldView.m in Sources */,
 				10DE6F7016D93E9D009A2D65 /* VSCOBDebug.cpp in Sources */,
+				10AD600216ED185400FBEE56 /* VSCOBMeshTools.cpp in Sources */,
+				10AD600516ED1F4800FBEE56 /* VSCRandom.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

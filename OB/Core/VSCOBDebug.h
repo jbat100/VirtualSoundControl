@@ -10,15 +10,16 @@ namespace VSC {
     
     namespace OB {
         
+        /*
+         *  Ogre Entity Debug
+         */
+        
         std::string OgreEntityDescription(Ogre::Entity* entity);
         std::string OgreEntityVertexDeclarationDescription(Ogre::Entity* entity);
         
         /*
-         *  Ogre Mesh Tools 
+         *  Ogre Mesh Debug 
          */
-        
-        size_t OgreMeshVertexCount(const Ogre::Mesh* const mesh);
-        size_t OgreMeshIndexCount(const Ogre::Mesh* const mesh);
         
         bool OgreMeshVertices(const Ogre::Mesh* const mesh, std::vector<Ogre::Vector3>& vertices);
         bool OgreMeshNormals(const Ogre::Mesh* const mesh, std::vector<Ogre::Vector3>& normals);

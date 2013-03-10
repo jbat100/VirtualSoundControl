@@ -11,14 +11,19 @@
 
 namespace VSC {
     
-    typedef double                              Float;
+    /*
+     *  Floats
+     */
     
+    typedef double                              Float;
     typedef std::vector<Float>                  Floats;
     
+    /*
+     *  Time and Duration
+     */
+    
     typedef boost::posix_time::time_duration    TimeDuration;
-    
     typedef boost::posix_time::ptime            Time;
-    
     Time CurrentTime();
     
     /*
