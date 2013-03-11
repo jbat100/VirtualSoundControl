@@ -14,6 +14,7 @@
 @class DMTabBar;
 @class VSCOBOSXElementDetailView;
 @class VSCOBOSXElementEventChainsView;
+@class VSCOBOSXElementColorView;
 @class VSCIMOSXEventChainViewController;
 
 @interface VSCOBOSXElementInspectorViewController : NSViewController
@@ -21,6 +22,7 @@
 
 @property (strong) IBOutlet VSCOBOSXElementDetailView* elementDetailView;
 @property (strong) IBOutlet VSCOBOSXElementEventChainsView* elementEventChainsView;
+@property (strong) IBOutlet VSCOBOSXElementColorView* elementColorView;
 
 @property (weak) IBOutlet DMTabBar* tabBar;
 
@@ -28,6 +30,7 @@
 
 -(void) showElementDetailView;
 -(void) showElementEventChainsView;
+-(void) showElementColorView;
 
 -(IBAction) immobilized:(id)sender;
 
@@ -38,6 +41,8 @@
 -(IBAction) printDiffuseColors:(id)sender;
 -(IBAction) printSpecularColors:(id)sender;
 -(IBAction) printTextureCoordinates:(id)sender;
+-(IBAction) randomizeDiffuseVertexColors:(id)sender;
+-(IBAction) selectDiffuseColor:(id)sender;
 
 -(void) reloadImmobilizedInterface;
 

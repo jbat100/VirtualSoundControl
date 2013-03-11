@@ -219,6 +219,7 @@
 		10F907D8162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F907D0162ECFF8006C9C0B /* VSCInterfaceAdapter.cpp */; };
 		10FCF4C116C2776D00D493F2 /* VSCMIDIOwners.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10FCF4BF16C2776D00D493F2 /* VSCMIDIOwners.cpp */; };
 		10FCF4C416C27C9100D493F2 /* VSCIMMappingImplementations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10FCF4C216C27C9100D493F2 /* VSCIMMappingImplementations.cpp */; };
+		10FDD54916EE89A700DD1B35 /* VSCOBOSXElementColorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10FDD54816EE89A700DD1B35 /* VSCOBOSXElementColorView.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -642,6 +643,8 @@
 		10FCF4C016C2776D00D493F2 /* VSCMIDIOwners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDIOwners.h; path = ../../../../MIDI/VSCMIDIOwners.h; sourceTree = "<group>"; };
 		10FCF4C216C27C9100D493F2 /* VSCIMMappingImplementations.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSCIMMappingImplementations.cpp; sourceTree = "<group>"; };
 		10FCF4C316C27C9100D493F2 /* VSCIMMappingImplementations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCIMMappingImplementations.h; sourceTree = "<group>"; };
+		10FDD54716EE89A700DD1B35 /* VSCOBOSXElementColorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCOBOSXElementColorView.h; sourceTree = "<group>"; };
+		10FDD54816EE89A700DD1B35 /* VSCOBOSXElementColorView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VSCOBOSXElementColorView.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -807,6 +810,8 @@
 			isa = PBXGroup;
 			children = (
 				108D362716C9981800DA6B25 /* VSCOBOSXElementController.h */,
+				10FDD54716EE89A700DD1B35 /* VSCOBOSXElementColorView.h */,
+				10FDD54816EE89A700DD1B35 /* VSCOBOSXElementColorView.mm */,
 				108D362816C9981800DA6B25 /* VSCOBOSXElementDetailView.h */,
 				108D362916C9981800DA6B25 /* VSCOBOSXElementDetailView.mm */,
 				108D362A16C9981800DA6B25 /* VSCOBOSXElementEditor.h */,
@@ -1806,6 +1811,7 @@
 				10DE6F7016D93E9D009A2D65 /* VSCOBDebug.cpp in Sources */,
 				10AD600216ED185400FBEE56 /* VSCOBMeshTools.cpp in Sources */,
 				10AD600516ED1F4800FBEE56 /* VSCRandom.cpp in Sources */,
+				10FDD54916EE89A700DD1B35 /* VSCOBOSXElementColorView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

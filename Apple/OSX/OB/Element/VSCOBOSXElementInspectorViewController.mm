@@ -44,10 +44,14 @@ using namespace VSC::OB;
 
 NSString* const VSCOSXTabTitleElementDetails = @"Details";
 NSString* const VSCOSXTabTitleElementCollision = @"Collision";
+NSString* const VSCOSXTabTitleElementColor = @"Color";
 
 NSArray* ElementInspectorTabParamArray = nil;
 
 @interface VSCOBOSXElementInspectorViewController ()
+{
+    BOOL _setupDone;
+}
 
 @property (nonatomic, strong) NSArray* tabViewConstraints;
 @property (nonatomic, assign) OSXSceneListener::SPtr sceneListener;
@@ -73,6 +77,7 @@ const static BOOL traceInterface = YES;
     ElementInspectorTabParamArray = @[
     @{@"image": [NSImage imageNamed:@"19-gear.png"], @"title": VSCOSXTabTitleElementDetails},
     @{@"image": [NSImage imageNamed:@"55-network.png"], @"title": VSCOSXTabTitleElementCollision},
+    @{@"image": [NSImage imageNamed:@"95-equalizer.png"], @"title": VSCOSXTabTitleElementColor}
     ];
 }
 
@@ -91,32 +96,33 @@ const static BOOL traceInterface = YES;
 
 -(void) setupIfNecessary
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        
-        BOOST_ASSERT(self.view);
-        BOOST_ASSERT(self.tabBar);
-        BOOST_ASSERT(self.elementEventChainsView);
-        BOOST_ASSERT(self.elementEventChainsView.elementController == self);
-        BOOST_ASSERT(self.elementDetailView);
-        BOOST_ASSERT(self.elementDetailView.elementController == self);
-        
-        BOOST_ASSERT([self.elementDetailView isKindOfClass:[VSCOBOSXElementDetailView class]]);
-        
-        NSLog(@"self.elementDetailView %@", self.elementDetailView);
-        
-        self.view.translatesAutoresizingMaskIntoConstraints = NO;
-        self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
-        self.elementEventChainsView.translatesAutoresizingMaskIntoConstraints = NO;
-        self.elementDetailView.translatesAutoresizingMaskIntoConstraints = NO;
-        
-        [self setupTabBar];
-        
-        [self.elementDetailView setupIfNecessary];
-        
-        [self showElementDetailView];
-        
-    });
+    @synchronized(self)
+    {
+        if (_setupDone) return;
+        else _setupDone = YES;
+    }
+
+    BOOST_ASSERT(self.view);
+    BOOST_ASSERT(self.tabBar);
+    BOOST_ASSERT(self.elementEventChainsView);
+    BOOST_ASSERT(self.elementEventChainsView.elementController == self);
+    BOOST_ASSERT(self.elementDetailView);
+    BOOST_ASSERT(self.elementDetailView.elementController == self);
+    
+    BOOST_ASSERT([self.elementDetailView isKindOfClass:[VSCOBOSXElementDetailView class]]);
+    
+    NSLog(@"self.elementDetailView %@", self.elementDetailView);
+    
+    self.view.translatesAutoresizingMaskIntoConstraints = NO;
+    self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
+    self.elementEventChainsView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.elementDetailView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [self setupTabBar];
+    
+    [self.elementDetailView setupIfNecessary];
+    
+    [self showElementDetailView];
 }
 
 - (void) awakeFromNib
@@ -243,12 +249,17 @@ const static BOOL traceInterface = YES;
             if (traceInterface) NSLog(@"%@ will select %lu/%@", self.tabBar, tabBarItemIndex, tabBarItem);
             if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleElementDetails])
             {
-                if (traceInterface) NSLog(@"Selected scene element list tab");
+                if (traceInterface) NSLog(@"Selected element detail tab");
                 [self showElementDetailView];
             }
             else if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleElementCollision])
             {
-                if (traceInterface) NSLog(@"Selected scene detail tab");
+                if (traceInterface) NSLog(@"Selected element event chains tab");
+                [self showElementEventChainsView];
+            }
+            else if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleElementColor])
+            {
+                if (traceInterface) NSLog(@"Selected element color tab");
                 [self showElementEventChainsView];
             }
         }
@@ -348,6 +359,16 @@ const static BOOL traceInterface = YES;
 }
 
 #pragma mark - UI Callbacks
+
+-(IBAction) randomizeDiffuseVertexColors:(id)sender
+{
+    
+}
+
+-(IBAction) selectDiffuseColor:(id)sender
+{
+    
+}
 
 -(IBAction) printVertexDeclarations:(id)sender
 {
