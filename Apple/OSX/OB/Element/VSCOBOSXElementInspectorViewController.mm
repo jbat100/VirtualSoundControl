@@ -15,8 +15,11 @@
 #import "VSCOBOSXElementEditor.h"
 #import "VSCOBOSXElementDetailView.h"
 #import "VSCOBOSXElementEventChainsView.h"
+#import "VSCOBOSXElementColorView.h"
 #import "DMTabBar.h"
+
 #import "NSString+VSCAdditions.h"
+#import "NSColor+VSCAdditions.h"
 
 #include "VSCException.h"
 #include "VSCEnvironment.h"
@@ -260,7 +263,7 @@ const static BOOL traceInterface = YES;
             else if ([tabBarItem.toolTip isEqualToString:VSCOSXTabTitleElementColor])
             {
                 if (traceInterface) NSLog(@"Selected element color tab");
-                [self showElementEventChainsView];
+                [self showElementColorView];
             }
         }
         else if (selectionType == DMTabBarItemSelectionType_DidSelect)
@@ -358,15 +361,45 @@ const static BOOL traceInterface = YES;
     [self.elementEventChainsView.eventChainTableView reloadData];
 }
 
+-(void) showElementColorView
+{
+    if (traceInterface) NSLog(@"%@ showElementColorView", self);
+    
+    BOOST_ASSERT(self.elementColorView);
+    
+    [self switchElementInspectorToTabView:self.elementColorView];
+    
+}
+
 #pragma mark - UI Callbacks
 
 -(IBAction) randomizeDiffuseVertexColors:(id)sender
 {
+    Ogre::Mesh* mesh = [self elementOgreMesh];
     
+    OgreMeshRandomizeVertexColors(mesh);
 }
 
 -(IBAction) selectDiffuseColor:(id)sender
 {
+    [NSColorPanel sharedColorPanel].target = self;
+    [NSColorPanel sharedColorPanel].action = @selector(panelSelectedDiffuseColor:);
+    
+    [NSApp orderFrontColorPanel:self];
+}
+
+-(void) panelSelectedDiffuseColor:(NSColorPanel*)colorPanel
+{
+    NSLog(@"%@ panelSelectedDiffuseColor: %@", self, colorPanel);
+    
+    BOOST_ASSERT(colorPanel == [NSColorPanel sharedColorPanel]);
+    
+    NSColor* color = [colorPanel color];
+    Ogre::RGBA rgba = [color ogreRGBA];
+    
+    Ogre::Mesh* mesh = [self elementOgreMesh];
+    
+    OgreMeshConstantVertexColors(mesh, rgba);
     
 }
 
@@ -382,7 +415,6 @@ const static BOOL traceInterface = YES;
     {
         NSLog(@"No Ogre Entity");
     }
-    
 }
 
 -(IBAction) printIndeces:(id)sender

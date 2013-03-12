@@ -50,6 +50,7 @@
 		106D1A4116B682E400093380 /* VSCOBProximity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106D1A3F16B682E400093380 /* VSCOBProximity.cpp */; };
 		107A3C0716A36F4C003C0D69 /* VSCMIDIInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107A3C0316A36F4C003C0D69 /* VSCMIDIInput.cpp */; };
 		107A3C0816A36F4C003C0D69 /* VSCMIDIInputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 107A3C0516A36F4C003C0D69 /* VSCMIDIInputManager.cpp */; };
+		107B9E1416EFE95C00985C99 /* NSColor+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 107B9E1316EFE95C00985C99 /* NSColor+VSCAdditions.mm */; };
 		107C399216A07A4100552221 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 107C398716A07A4100552221 /* Credits.rtf */; };
 		107C399316A07A4100552221 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 107C398916A07A4100552221 /* InfoPlist.strings */; };
 		107C399416A07A4100552221 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 107C398B16A07A4100552221 /* MainMenu.xib */; };
@@ -318,6 +319,8 @@
 		107A3C0416A36F4C003C0D69 /* VSCMIDIInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDIInput.h; path = ../../../../MIDI/VSCMIDIInput.h; sourceTree = "<group>"; };
 		107A3C0516A36F4C003C0D69 /* VSCMIDIInputManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCMIDIInputManager.cpp; path = ../../../../MIDI/VSCMIDIInputManager.cpp; sourceTree = "<group>"; };
 		107A3C0616A36F4C003C0D69 /* VSCMIDIInputManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCMIDIInputManager.h; path = ../../../../MIDI/VSCMIDIInputManager.h; sourceTree = "<group>"; };
+		107B9E1216EFE95C00985C99 /* NSColor+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSColor+VSCAdditions.h"; path = "../../../Categories/NSColor+VSCAdditions.h"; sourceTree = "<group>"; };
+		107B9E1316EFE95C00985C99 /* NSColor+VSCAdditions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSColor+VSCAdditions.mm"; path = "../../../Categories/NSColor+VSCAdditions.mm"; sourceTree = "<group>"; };
 		107C398816A07A4100552221 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = Credits.rtf; sourceTree = "<group>"; };
 		107C398A16A07A4100552221 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		107C398C16A07A4100552221 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainMenu.xib; sourceTree = "<group>"; };
@@ -691,12 +694,15 @@
 		101EBB401629AE6B006601A2 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				107B9E1216EFE95C00985C99 /* NSColor+VSCAdditions.h */,
+				107B9E1316EFE95C00985C99 /* NSColor+VSCAdditions.mm */,
 				101EBB421629AE79006601A2 /* NSArray+VSCAdditions.h */,
 				101EBB431629AE79006601A2 /* NSArray+VSCAdditions.mm */,
 				10D5533815FA409F002AED81 /* NSString+VSCAdditions.h */,
 				10D5533915FA409F002AED81 /* NSString+VSCAdditions.mm */,
 			);
 			name = Categories;
+			path = ../Apple/OSX/Projects/VSCApplication;
 			sourceTree = "<group>";
 		};
 		101EBB451629B807006601A2 /* Supporting Files */ = {
@@ -935,6 +941,7 @@
 		109A8EB316A1A7680023EC1B /* VSCOSX */ = {
 			isa = PBXGroup;
 			children = (
+				101EBB401629AE6B006601A2 /* Categories */,
 				10AF53F8163D76DA00419EEE /* Application */,
 				10F7514216A9483600F493D6 /* Generic */,
 				109A8F1F16A1A8740023EC1B /* IM */,
@@ -995,7 +1002,6 @@
 			isa = PBXGroup;
 			children = (
 				10F907CE162ECFE7006C9C0B /* Interface */,
-				101EBB401629AE6B006601A2 /* Categories */,
 				10EB5E5A16298CD200E0F030 /* Application */,
 				109A8EFC16A1A83E0023EC1B /* Mapping */,
 				109A8E6916A1A7210023EC1B /* OB */,
@@ -1812,6 +1818,7 @@
 				10AD600216ED185400FBEE56 /* VSCOBMeshTools.cpp in Sources */,
 				10AD600516ED1F4800FBEE56 /* VSCRandom.cpp in Sources */,
 				10FDD54916EE89A700DD1B35 /* VSCOBOSXElementColorView.mm in Sources */,
+				107B9E1416EFE95C00985C99 /* NSColor+VSCAdditions.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

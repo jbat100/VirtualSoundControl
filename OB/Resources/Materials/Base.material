@@ -6,9 +6,9 @@ material VSC/FloorStones1
 	{
 		pass
 		{
-			ambient 1 1 1 1
-			diffuse 1 1 1 1
-			specular 1 1 1 1 10
+			//ambient 1 1 1 1
+			//diffuse 1 1 1 1
+			//specular 1 1 1 1 10
 
 			texture_unit
 			{
@@ -25,9 +25,9 @@ material VSC/Dirt1
 	{
 		pass
 		{
-			ambient 0.2 1 1 1
-			diffuse 0.2 1 1 1
-			specular 0.2 1 1 1 10
+			//ambient 0.2 1 1 1
+			//diffuse 0.2 1 1 1
+			//specular 0.2 1 1 1 10
 
 			texture_unit
 			{

@@ -15,6 +15,8 @@
     @private
     
     id<VSCOBOSXElementController> _elementController;
+    
+    BOOL _setupDone;
 }
 
 -(void) commonInit;
@@ -53,8 +55,20 @@
     
 }
 
+-(void) awakeFromNib
+{
+    // view should be empty when woken from nib so nothing much to check...
+    
+    [self setupIfNecessary];
+}
+
 -(void) setupIfNecessary
 {
+    @synchronized(self)
+    {
+        if (_setupDone) return;
+        _setupDone = YES;
+    }
     
     NSMutableArray* viewsForHorizontalConstraints = [NSMutableArray array];
     NSMutableString* verticalVisualFormat = [NSMutableString stringWithString:@"V:|"];
@@ -93,7 +107,7 @@
     self.selectVertexDiffuseColorButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.selectVertexDiffuseColorButton];
     NSView* selectVertexDiffuseColorButton = self.selectVertexDiffuseColorButton;
-    [self.selectVertexDiffuseColorButton setTitle: @"Vertex Normals"];
+    [self.selectVertexDiffuseColorButton setTitle: @"Select Vertex Color"];
     [self.selectVertexDiffuseColorButton setTarget:self.elementController];
     [self.selectVertexDiffuseColorButton setAction:@selector(selectDiffuseColor:)];
     [self.selectVertexDiffuseColorButton setButtonType:NSMomentaryLightButton];
@@ -125,11 +139,6 @@
                                                                      metrics:nil
                                                                        views:localViewsDictionary]];
     }
-    
-}
-
--(void) awakeFromNib
-{
     
 }
 
