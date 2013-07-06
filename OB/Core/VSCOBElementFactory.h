@@ -54,12 +54,17 @@ namespace VSC {
             
             void setElementMass(Element_SPtr element, Float mass);
             
+            void materialTest(const Ogre::String& materialName);
+            
+            void entityMaterialTest(Ogre::Entity* entity);
             
         private:
             
             Scene_WPtr mScene;
             
             static int mNumberOfObjectsCreated;
+            
+            static const bool mTraceMaterial = true;
             
         };
         

@@ -90,7 +90,7 @@ using namespace VSC::IM;
     
     self.midiWindowController = [[VSCOSXMIDIWindowController alloc] initWithWindowNibName:@"VSCOSXMIDIWindowController"];
     BOOST_ASSERT(self.midiWindowController);
-    [self showMIDIWindow:nil];
+    //[self showMIDIWindow:nil];
     
 #ifdef VSCOSX_TEST_ELEMENT_INSPECTOR_WINDOW
     self.testElementInspectorWindowController = [[VSCOBOSXElementInspectorWindowController alloc]

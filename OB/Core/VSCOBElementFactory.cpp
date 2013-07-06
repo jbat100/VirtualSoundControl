@@ -7,6 +7,7 @@
 #include "VSCOB.h"
 #include "VSCOBElement.h"
 #include "VSCOBScene.h"
+#include "VSCOBDebug.h"
 
 #include "OgreBulletCollisions.h"
 #include "OgreBulletDynamics.h"
@@ -27,6 +28,8 @@
 #include "Utils/OgreBulletCollisionsMeshToShapeConverter.h"
 #include "OgreBulletCollisionsRay.h"
 #include "Debug/OgreBulletCollisionsDebugLines.h"
+
+#include <Ogre/Ogre.h>
 
 
 //MARK: - Scene Element Factory
@@ -77,6 +80,7 @@ VSC::OB::DynamicObject::SPtr VSC::OB::ElementFactory::addPrimitive(PrimitiveType
             
         case PrimitiveCube:
             entity =  this->getScene()->getSceneManager()->createEntity(entityName, "Bulletbox.mesh");
+            //entity =  this->getScene()->getSceneManager()->createEntity(entityName, "Cube.mesh");
             // "Crate.mesh", "Crate1.mesh", "Crate2.mesh"
             collisionShape = new OgreBulletCollisions::BoxCollisionShape(description.size);
             rigidBodyName = "RigidCube_" + Ogre::StringConverter::toString(mNumberOfObjectsCreated);
@@ -110,7 +114,10 @@ VSC::OB::DynamicObject::SPtr VSC::OB::ElementFactory::addPrimitive(PrimitiveType
     
     entity->setQueryFlags(VSC::OB::QueryMaskGeometry);
 	entity->setCastShadows(description.castsShadow);
+    
+    this->materialTest(description.materialName);
     entity->setMaterialName(description.materialName);
+    this->entityMaterialTest(entity);
     
     Ogre::SceneNode *node = scene->getSceneManager()->getRootSceneNode()->createChildSceneNode();
     node->attachObject(entity);
@@ -246,5 +253,60 @@ VSC::OB::StaticObject::SPtr VSC::OB::ElementFactory::addStaticPlane(const Static
     mNumberOfObjectsCreated++;
     
     return geom;
+}
+
+void VSC::OB::ElementFactory::materialTest(const Ogre::String& materialName)
+{
+    
+    /*
+     *  Notes on materials:
+     *
+     *  Material information is contained in the .mesh files which explains that there are error
+     *  messages when loading .mesh files where referenced materials are not present in the project
+     *  (ressource manager).
+     *
+     *  To check this you can use the ogre command line tools http://www.ogre3d.org/download/tools
+     *  and convert the mesh from binary to xml using the OgreXMLConverter, material info is quite
+     *  explicit in XML form
+     */
+    
+    if (mTraceMaterial) std::cout << "Material test for " << materialName << "\n";
+    
+    Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(materialName);
+    
+    if (material.isNull() == false)
+    {
+        if (mTraceMaterial) std::cout << "    Found material with " << material->getNumTechniques() << " techniques\n";
+        for (unsigned short i = 0; i < material->getNumTechniques(); i++)
+        {
+            Ogre::Technique* technique = material->getTechnique(i);
+            std::cout << "    Technique " << i << ":\n";
+            for (unsigned short j = 0; j < technique->getNumPasses(); j++)
+            {
+                //std::cout << "    Pass " << i << ":\n";
+                Ogre::Pass* pass = technique->getPass(j);
+                std::cout << "    Pass " << i << ": " << *pass << "\n";
+            }
+        }
+    }
+    else
+    {
+        if (mTraceMaterial) std::cout << "    Could not get material for name " << materialName << "\n";
+    }
+    
+}
+
+void VSC::OB::ElementFactory::entityMaterialTest(Ogre::Entity* entity)
+{
+    if (!entity) return;
+    
+    if (mTraceMaterial) std::cout << "Material test for entity " << entity << "\n";
+    
+    for (unsigned int i = 0; i < entity->getNumSubEntities(); i++)
+    {
+        Ogre::SubEntity* subEntity = entity->getSubEntity(i);
+        const Ogre::String materialName = subEntity->getMaterialName();
+        if (mTraceMaterial) std::cout << "    SubEntity " <<  i << " with material : " << materialName << "\n";
+    }
 }
 

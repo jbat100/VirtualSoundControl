@@ -502,4 +502,25 @@ bool VSC::OB::OgreMeshVertexColorInfo(const Ogre::Mesh* const mesh, std::vector<
     return true;
 }
 
+std::ostream& VSC::OB::operator<< (std::ostream &out, Ogre::Pass &pass)
+{
+    out << "Pass " << pass.getName() << " ambient " << pass.getAmbient() << " specular " << pass.getSpecular();
+    out << " TrackVertexColourType " << pass.getVertexColourTracking() << " with " << pass.getNumTextureUnitStates();
+    out << " TextureUnitStates ";
+    
+    for (unsigned short i = 0; i < pass.getNumTextureUnitStates(); ++i)
+    {
+        Ogre::TextureUnitState* state = pass.getTextureUnitState(i);
+        out << " : " << i << " " << *state;
+    }
+    
+    return out;
+}
+
+std::ostream& VSC::OB::operator<< (std::ostream &out, Ogre::TextureUnitState &state)
+{
+    out << "TextureUnitState " << state.getName() << " with texture " << state.getTextureName();
+    return out;
+}
+
 

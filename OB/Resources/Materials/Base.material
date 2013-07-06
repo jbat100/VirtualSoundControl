@@ -1,7 +1,7 @@
 
 material VSC/FloorStones1
 {
-    receive_shadows off
+    //receive_shadows off
 	technique
 	{
 		pass
@@ -9,6 +9,10 @@ material VSC/FloorStones1
 			//ambient 1 1 1 1
 			//diffuse 1 1 1 1
 			//specular 1 1 1 1 10
+            
+            ambient vertexcolour
+            diffuse vertexcolour
+            specular vertexcolour
 
 			texture_unit
 			{
@@ -18,9 +22,29 @@ material VSC/FloorStones1
 	}
 }
 
+material VSC/TexturedColor
+{
+    //receive_shadows off
+	technique
+	{
+		pass
+		{
+            ambient 0.2 1 1 1
+            diffuse 0.2 1 1 1
+            specular 0.2 1 1 1
+
+			texture_unit
+			{
+				texture egyptrockyfull.jpg
+			}
+		}
+	}
+}
+
+
 material VSC/Dirt1
 {
-    receive_shadows off
+    //receive_shadows off
 	technique
 	{
 		pass
@@ -28,6 +52,15 @@ material VSC/Dirt1
 			//ambient 0.2 1 1 1
 			//diffuse 0.2 1 1 1
 			//specular 0.2 1 1 1 10
+            
+            ambient vertexcolour
+            diffuse vertexcolour
+            specular vertexcolour
+            emissive vertexcolour
+            
+            lighting on
+            
+            colour_write on
 
 			texture_unit
 			{

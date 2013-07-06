@@ -87,7 +87,7 @@ void VSC::OB::VertexColorProcessor::processMesh(Ogre::Mesh* mesh, Ogre::VertexEl
         Ogre::HardwareVertexBufferSharedPtr vbuf = vertex_data->vertexBufferBinding->getBuffer(element->getSource());
         if (!vbuf.get()) throw VSCBadStateException("No HardwareVertexBuffer");
         
-        unsigned char* vertex = static_cast<unsigned char*>(vbuf->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
+        unsigned char* vertex = static_cast<unsigned char*>(vbuf->lock(Ogre::HardwareBuffer::HBL_NORMAL));
         
         for( size_t j = 0; j < vertex_data->vertexCount; ++j, vertex += vbuf->getVertexSize())
         {

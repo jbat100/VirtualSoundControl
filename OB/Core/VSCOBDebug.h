@@ -28,6 +28,13 @@ namespace VSC {
         bool OgreMeshSpecularColors(const Ogre::Mesh* const mesh, std::vector<Ogre::RGBA>& colors);
         bool OgreMeshTextureCoordinates(const Ogre::Mesh* const mesh, std::vector<Ogre::Vector2>& coordinates);
         
+        /*
+         *  Streams
+         */
+        
+        std::ostream& operator<< (std::ostream &out, Ogre::Pass &cPoint);
+        std::ostream& operator<< (std::ostream &out, Ogre::TextureUnitState &state);
+        
     }
 }
 

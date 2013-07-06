@@ -15,7 +15,9 @@ size(Ogre::Vector3(1.0,1.0,1.0)),
 bodyMass(1.0),                                      
 bodyFriction(0.6),                                  
 bodyRestitution(0.6),                               
-materialName("VSC/Dirt1"),                         
+//materialName("Bullet/Cone"),
+materialName("VSC/TexturedColor"),
+//materialName("VSC/FloorStones1"),
 castsShadow(true)                      
 {
 
