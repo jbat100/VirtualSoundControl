@@ -29,18 +29,26 @@ material VSC/TexturedColor
 	{
 		pass
 		{
-            ambient 0.2 1 1 1
-            diffuse 0.2 1 1 1
-            specular 0.2 1 1 1
-
-			texture_unit
+            ambient vertexcolour
+            diffuse vertexcolour
+            specular vertexcolour
+            emissive vertexcolour
+            
+            lighting on
+            
+            colour_write on
+		}
+        
+        pass
+        {
+            texture_unit
 			{
 				texture egyptrockyfull.jpg
+                colour_op modulate
 			}
-		}
+        }
 	}
 }
-
 
 material VSC/Dirt1
 {
@@ -68,6 +76,11 @@ material VSC/Dirt1
 			}
 		}
 	}
+}
+
+vertex_program VSC/ColoredTextureProgram glsl
+{
+    source ColoredTexture.glsl
 }
 
 material Bullet/Cone
