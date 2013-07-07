@@ -32,9 +32,12 @@ namespace VSC {
         boost::uniform_int<>         // else use this one
         >::type distro_type;
         
+        static int increment = 0;
+        increment = (increment+1) % 1000000;
+        
         timeval t;
         gettimeofday(&t, NULL);
-        boost::mt19937 seed((int)t.tv_sec);
+        boost::mt19937 seed((int)t.tv_sec + increment);
         distro_type dist(min, max);
         boost::variate_generator<boost::mt19937&, distro_type > random(seed, dist);
         return random(); 

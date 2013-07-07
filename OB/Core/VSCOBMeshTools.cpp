@@ -28,6 +28,7 @@ namespace VSC {
             void processMesh(Ogre::Mesh* mesh, Ogre::VertexElementSemantic semantic);
         protected:
             virtual void processVertex(Ogre::SubMesh* submesh, const Ogre::VertexElement* element, unsigned char* vertex) = 0;
+            static const bool mTraceVertexProcessing = true;
         };
         
         class RandomizeVertexColorProcessor : public VertexColorProcessor
@@ -102,7 +103,16 @@ void VSC::OB::RandomizeVertexColorProcessor::processVertex(Ogre::SubMesh* submes
 {
     Ogre::RGBA* color;
     element->baseVertexPointerToElement(vertex, &color);
-    *color = GenerateRandomNumber<Ogre::RGBA>(0x0000, 0xffff);
+    
+    int32_t minColor = std::numeric_limits<int32_t>::min();
+    int32_t maxColor = std::numeric_limits<int32_t>::max();
+    
+    Ogre::RGBA randomColor = GenerateRandomNumber<Ogre::RGBA>(minColor , maxColor);
+    if (mTraceVertexProcessing)
+    {
+        std::cout << "\nProcessing vertex " << (void*)vertex << " from element " << element << " setting color to " << randomColor;
+    }
+    *color = randomColor;
 }
 
 void VSC::OB::ConstantVertexColorProcessor::processVertex(Ogre::SubMesh* submesh, const Ogre::VertexElement* element, unsigned char* vertex)
