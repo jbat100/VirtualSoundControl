@@ -46,7 +46,8 @@ namespace VSC {
          *	functionality.
          */
         
-        class Pitch {
+        class Pitch
+        {
             
         public:
             

@@ -29,8 +29,6 @@ namespace VSC {
         
     public:
         
-        typedef boost::shared_ptr<EnvelopeCoordinate> SPtr;
-        
         /* Constructors / Destructors */
         EnvelopeCoordinate();
         EnvelopeCoordinate(const VSC::EnvelopeCoordinate& c);

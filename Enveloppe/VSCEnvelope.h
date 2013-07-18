@@ -40,17 +40,6 @@ namespace VSC {
         
         static const std::string FileExtension;
         
-        /*
-         *	Curve Type
-         */
-        enum CurveType {
-            CurveTypeNone = 0,
-            // in linear mode, envelope point control points are ignored (and should't exist anyway)
-            CurveTypeLinear = 1, 
-            CurveTypeBezierQuadratic,
-            CurveTypeBezierCubic
-        };
-        
         struct ValueRange {
             ValueRange() : origin(0.0), size(0.0) {};
             ValueRange(const Float _origin, const Float _size) : origin(_origin), size(_size) {};
@@ -91,8 +80,6 @@ namespace VSC {
         
         /* getters / setters */
         
-        void setCurveType(CurveType curveType) {mCurveType = curveType;}
-        CurveType getCurveType(void) const {return mCurveType;}
         void setPointDisplacementConflictResolution(PointDisplacementConflictResolution pointDisplacementConflictResolution);
         PointDisplacementConflictResolution getPointDisplacementConflictResolution(void) const;
         
@@ -173,11 +160,6 @@ namespace VSC {
         Points mPoints;
         
         /*
-         *	The interpolation type determine how values between two envelope points are calculated
-         */
-        CurveType mCurveType;
-        
-        /*
          *	When points are being displaced so that they overlap neighboring points this determines
          *	how the conflict is resolved (block movements, clear neighboring points)
          */
@@ -198,10 +180,10 @@ namespace VSC {
         std::string mLoadedFromFilePath;
         
         
-        bool isSortedByTime(void) const;
         bool canDisplacePoint(EnvelopePoint::SPtr point, Float deltaTime, Float deltaValue) const;
         
         /* sorting */
+        bool isSortedByTime(void) const; // this is a check, points should always be sorted by time
         void sortPointsByTime(void);
         
         /* move points (disallow manggling...) */

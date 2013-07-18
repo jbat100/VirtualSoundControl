@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		102C2156141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 102C2155141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib */; };
 		103618AB167C89970063F29D /* VSC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103618A9167C89970063F29D /* VSC.cpp */; };
 		104225C4151A343C00E1F68D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 104225C3151A343C00E1F68D /* CoreFoundation.framework */; };
 		106A54C5143D097B00455BC2 /* libboost_serialization.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106A54C4143D097B00455BC2 /* libboost_serialization.a */; };
@@ -36,7 +35,6 @@
 		10E55E8A152C828400DB553F /* VSCException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E82152C828400DB553F /* VSCException.cpp */; };
 		10E55E8B152C828400DB553F /* VSCGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E84152C828400DB553F /* VSCGUI.cpp */; };
 		10E55E8C152C828400DB553F /* VSCMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E86152C828400DB553F /* VSCMath.cpp */; };
-		10FA5F01154A981400AF9603 /* VSCMIDITestWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10E55E9C152C82D100DB553F /* VSCMIDITestWindowController.xib */; };
 		10FB8F3B152DED2C00C24B07 /* VSCSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10E55E93152C82AD00DB553F /* VSCSound.cpp */; };
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
@@ -46,7 +44,6 @@
 
 /* Begin PBXFileReference section */
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		102C2155141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSCEnveloppeEditorWindowController.xib; sourceTree = "<group>"; };
 		103618A9167C89970063F29D /* VSC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VSC.cpp; sourceTree = "<group>"; };
 		103618AA167C89970063F29D /* VSC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSC.h; sourceTree = "<group>"; };
 		104225C3151A343C00E1F68D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -98,7 +95,6 @@
 		10E55E87152C828400DB553F /* VSCMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSCMath.h; sourceTree = "<group>"; };
 		10E55E93152C82AD00DB553F /* VSCSound.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCSound.cpp; path = ../../../../Sound/VSCSound.cpp; sourceTree = "<group>"; };
 		10E55E94152C82AD00DB553F /* VSCSound.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCSound.h; path = ../../../../Sound/VSCSound.h; sourceTree = "<group>"; };
-		10E55E9C152C82D100DB553F /* VSCMIDITestWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = VSCMIDITestWindowController.xib; path = ../../MIDI/VSCMIDITestWindowController.xib; sourceTree = "<group>"; };
 		10F05EA9152ED8E70056EA7A /* NSLog+VSCDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSLog+VSCDefinitions.h"; path = "../../../Common/NSLog+VSCDefinitions.h"; sourceTree = "<group>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD582B0DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -152,8 +148,6 @@
 		102C2147141CFAC400EEEF55 /* Nibs */ = {
 			isa = PBXGroup;
 			children = (
-				102C2155141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib */,
-				10E55E9C152C82D100DB553F /* VSCMIDITestWindowController.xib */,
 				1DDD582A0DA1D0D100B32029 /* MainMenu.xib */,
 			);
 			name = Nibs;
@@ -377,8 +371,6 @@
 				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */,
-				102C2156141D017500EEEF55 /* VSCEnveloppeEditorWindowController.xib in Resources */,
-				10FA5F01154A981400AF9603 /* VSCMIDITestWindowController.xib in Resources */,
 				10CDFC32167DF1A100FECF45 /* VSCOSXEnvelopeEditorWindowController.xib in Resources */,
 				10CDFC46167E265D00FECF45 /* VSCOSXEnvelopeViewController.xib in Resources */,
 			);

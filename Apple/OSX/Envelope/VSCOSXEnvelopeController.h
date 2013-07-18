@@ -18,7 +18,7 @@ typedef enum _VSCOSXEnvelopeViewClickArea {
  *  Using bitmask type as multiple actions are possible on click down (select, deselect, move, create)
  */
 
-typedef enum _VSC::EnvelopeViewMouseAction {
+typedef enum _VSCOSXEnvelopeViewMouseAction {
 	VSCOSXEnvelopeViewMouseActionNone             = 0,
 	VSCOSXEnvelopeViewMouseActionSelect           = 1 << 0,
     VSCOSXEnvelopeViewMouseActionPersistentSelect = 1 << 1,

@@ -13,7 +13,8 @@
 
 #include <cmath>
 
-namespace VSC {
+namespace VSC
+{
     Float pointForTime(const Float t, const Envelope::TimeRange& timeRange, const Float width);
     Float pointForValue(const Float v, const Envelope::ValueRange& valueRange, const Float height);
     Float timeForPoint(const Float point, const Envelope::TimeRange& timeRange, const Float width);
@@ -25,41 +26,49 @@ namespace VSC {
 
 //MARK: Points Calculations
 
-VSC::Float VSC::pointForTime(const Float t, const Envelope::TimeRange& timeRange, const Float width) {
+VSC::Float VSC::pointForTime(const Float t, const Envelope::TimeRange& timeRange, const Float width)
+{
 	Float timePerPixel = timeRange.size / width; 
 	return (t - timeRange.origin) / timePerPixel;
 }
 
-VSC::Float VSC::pointForValue(const Float v, const Envelope::ValueRange& valueRange, const Float height) {
+VSC::Float VSC::pointForValue(const Float v, const Envelope::ValueRange& valueRange, const Float height)
+{
 	Float valuePerPixel = valueRange.size / height; 
 	return (v - valueRange.origin) / valuePerPixel;
 }
 
-VSC::Float VSC::timeForPoint(const Float point, const Envelope::TimeRange& timeRange, const Float width) {
+VSC::Float VSC::timeForPoint(const Float point, const Envelope::TimeRange& timeRange, const Float width)
+{
 	Float normalisedX = point / width;
 	return timeRange.origin  + (normalisedX*timeRange.size);
 }
 
-VSC::Float VSC::valueForPoint(const Float point, const Envelope::ValueRange& valueRange, const Float height) {
+VSC::Float VSC::valueForPoint(const Float point, const Envelope::ValueRange& valueRange, const Float height)
+{
 	Float normalisedY = (point / height);
 	return valueRange.origin  + (normalisedY*valueRange.size);
 }
 
-VSC::Float VSC::timeDeltaForPointDelta(Float delta, const Envelope::TimeRange& timeRange, const Float width) {
+VSC::Float VSC::timeDeltaForPointDelta(Float delta, const Envelope::TimeRange& timeRange, const Float width)
+{
     Float normalisedDelta = (delta / width);
     return normalisedDelta*timeRange.size;
 }
 
-VSC::Float VSC::valueDeltaForPointDelta(Float delta, const Envelope::ValueRange& valueRange, const Float height) {
+VSC::Float VSC::valueDeltaForPointDelta(Float delta, const Envelope::ValueRange& valueRange, const Float height)
+{
     Float normalisedDelta = (delta / height);
 	return normalisedDelta*valueRange.size;
 }
 
-VSC::EnvelopeEditorGUIConfig::EnvelopeEditorGUIConfig(void) {
+VSC::EnvelopeEditorGUIConfig::EnvelopeEditorGUIConfig(void)
+{
     this->setToDefault();
 }
 
-void VSC::EnvelopeEditorGUIConfig::setToDefault(void) {
+void VSC::EnvelopeEditorGUIConfig::setToDefault(void)
+{
     _timeRange = Envelope::TimeRange(0.0,5.0);
     _valueRange = Envelope::ValueRange(0.0,1.0);
     mAllowedTimeRange = Envelope::TimeRange(0.0,5.0);

@@ -40,6 +40,7 @@
 /* 
  * View/Envelope space conversion and manipulation tools 
  */
+
 -(BOOL) point:(NSPoint)p touchesEnvelopePoint:(VSC::EnvelopePoint::SPtr)envelopePoint;
 -(NSPoint) pointForTime:(Float)time value:(Float)value;
 -(NSPoint) pointForEnvelopePoint:(VSC::EnvelopePoint::SPtr)controlPoint;
@@ -50,11 +51,13 @@
 /* 
  * Automatic View Setup
  */
+
 -(void)autoAdjustEnvelopeViewSetup;
 
 /* 
  *  Create points 
  */
+
 -(VSC::EnvelopePoint::SPtr) createEnvelopePointForPoint:(const NSPoint)point;
 
 @end

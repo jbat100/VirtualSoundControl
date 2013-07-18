@@ -22,7 +22,7 @@ namespace VSC {
         
     public:
         
-        typedef boost::shared_ptr<EnvelopePoint> SPtr;
+        typedef ::boost::shared_ptr<EnvelopePoint> SPtr;
         
         /* Constructors / Destructors */
         EnvelopePoint(void);
@@ -31,16 +31,22 @@ namespace VSC {
         EnvelopePoint(Float value, Float time);
         ~EnvelopePoint(void);
         
-        void setLeftControlEnvelopeCoordinate(EnvelopeCoordinate::SPtr controlPoint);
-        EnvelopeCoordinate::SPtr getLeftControlEnvelopeCoordinate(void) const;
+        enum CurveType {
+            CurveTypeNone = 0,
+            CurveTypeLinear,
+            CurveTypeStep
+        };
         
-        void setRightControlEnvelopeCoordinate(EnvelopeCoordinate::SPtr controlPoint);
-        EnvelopeCoordinate::SPtr getRightControlEnvelopeCoordinate(void) const;
+        CurveType getCurveType(void) const {return _curveType;}
+        void setCurveType(const CurveType t) {_curveType = t;}
+        
+        Float getCurveInflexion(void) const {return _curveInflexion;}
+        void setCurveInflection(Float inflexion) {_curveInflexion = inflexion;}
         
     private:
         
-        EnvelopeCoordinate::SPtr _leftControlCoordinate;
-        EnvelopeCoordinate::SPtr _rightControlCoordinate;
+        CurveType _curveType;
+        Float _curveInflexion;
         
         /*
          *	Print out and serialization (private)
@@ -48,22 +54,22 @@ namespace VSC {
         
         friend std::ostream& operator<<(std::ostream& output, const EnvelopePoint& p);
         
-        friend class boost::serialization::access;
+        friend class ::boost::serialization::access;
         template<class Archive>
         void save(Archive & ar, const unsigned int version) const
         {
-            using boost::serialization::make_nvp;
-            ar  & make_nvp("point_coordinate", boost::serialization::base_object<EnvelopeCoordinate>(*this));    
-            ar  & make_nvp("left_control_coordinate", _leftControlCoordinate);
-            ar  & make_nvp("right_control_coordinate", _rightControlCoordinate);
+            using ::boost::serialization::make_nvp;
+            ar  & make_nvp("point_coordinate", ::boost::serialization::base_object<EnvelopeCoordinate>(*this));
+            ar  & make_nvp("curve_type", _curveType);
+            ar  & make_nvp("curve_inflexion", _curveInflexion);
         }
         template<class Archive>
         void load(Archive & ar, const unsigned int version)
         {
-            using boost::serialization::make_nvp;
-            ar  & make_nvp("point_coordinate", boost::serialization::base_object<EnvelopeCoordinate>(*this));    
-            ar  & make_nvp("left_control_coordinate", _leftControlCoordinate);
-            ar  & make_nvp("right_control_coordinate", _rightControlCoordinate);
+            using ::boost::serialization::make_nvp;
+            ar  & make_nvp("point_coordinate", ::boost::serialization::base_object<EnvelopeCoordinate>(*this));
+            ar  & make_nvp("curve_type", _curveType);
+            ar  & make_nvp("curve_inflexion", _curveInflexion);
         }
         
         BOOST_SERIALIZATION_SPLIT_MEMBER()
