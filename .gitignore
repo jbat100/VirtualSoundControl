@@ -41,3 +41,6 @@ Documentation/Description/ProjectDescription.toc
 Apple/OSX/Projects/VSCApplication/VSCApplication.xcodeproj/project.xcworkspace/xcuserdata/jonathanthorpe.xcuserdatad/UserInterfaceState.xcuserstate
 Apple/OSX/Projects/VSCApplication/VSCApplication.xcodeproj/xcuserdata/jonathanthorpe.xcuserdatad/xcschemes/VSCApplication.xcscheme
 Apple/OSX/Projects/VSCApplication/VSCApplication.xcodeproj/xcuserdata/jonathanthorpe.xcuserdatad/xcschemes/xcschememanagement.plist
+Scripts/Python/vsc/__init__.pyc
+Scripts/Python/vsc/media/__init__.pyc
+Scripts/Python/vsc/media/encode.pyc
