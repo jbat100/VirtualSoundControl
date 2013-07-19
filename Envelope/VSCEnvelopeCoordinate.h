@@ -24,7 +24,6 @@
 
 namespace VSC {
    
-
     class EnvelopeCoordinate {
         
     public:
@@ -76,7 +75,7 @@ namespace VSC {
         
     };
 
-    BOOST_CLASS_VERSION(EnvelopeCoordinate, 1)
+    boost::BOOST_CLASS_VERSION(EnvelopeCoordinate, 1)
 
     bool compareEnvelopeCoordinateValues (EnvelopeCoordinate* firstPoint, EnvelopeCoordinate* secondPoint);
     bool compareEnvelopeCoordinateTimes (EnvelopeCoordinate* firstPoint, EnvelopeCoordinate* secondPoint);

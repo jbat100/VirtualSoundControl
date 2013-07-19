@@ -6,11 +6,11 @@
 //  Copyright 2011 JBAT. All rights reserved.
 //
 
-#import "VSC::EnvelopeEditorDocument.h"
+#import "VSCOSXEnvelopeEditorDocument.h"
 #import "NSApplication+VSCAdditions.h"
 
 
-@implementation VSC::EnvelopeEditorDocument
+@implementation VSCOSXEnvelopeEditorDocument
 
 static NSString* baseFilePath = nil;
 static NSString* envelopeBaseFilePath = nil;
@@ -58,23 +58,24 @@ static NSString* envelopeBaseFilePath = nil;
 
 #pragma mark Window Controllers
 
--(void) makeWindowControllers {
+-(void) makeWindowControllers
+{
 	
 	NSLog(@"%@ windowControllers are %@", self, [self windowControllers]);
 	
 	NSLog(@"%@ makeWindowControllers", self);
 	
 #if 0
-	envelopeEditorWindowController = [[VSC::EnvelopeEditorWindowController alloc] 
-									   initWithWindowNibName:@"VSC::EnvelopeEditorWindowController"];
-	[self addWindowController:envelopeEditorWindowController];
-	NSLog(@"%@ added window controller %@", self, envelopeEditorWindowController);
-	[envelopeEditorWindowController release];
-	[envelopeEditorWindowController.loadedTextField setStringValue:@"LOADED WITHOUT CALLBACKS"];
+	_envelopeEditorWindowController = [[VSCOSXEnvelopeEditorWindowController alloc] 
+									   initWithWindowNibName:@"VSCOSXEnvelopeEditorWindowController"];
+	[self addWindowController:_envelopeEditorWindowController];
+	NSLog(@"%@ added window controller %@", self, _envelopeEditorWindowController);
+	[_envelopeEditorWindowController release];
+	[_envelopeEditorWindowController.loadedTextField setStringValue:@"LOADED WITHOUT CALLBACKS"];
 #endif
     
-    midiTestWindowController = [[VSCMIDITestWindowController alloc] 
-                                initWithWindowNibName:@"VSCMIDITestWindowController"];
+    midiTestWindowController = [[VSCOSXMIDITestWindowController alloc]
+                                initWithWindowNibName:@"VSCOSXMIDITestWindowController"];
     [self addWindowController:midiTestWindowController];
 	NSLog(@"%@ added window controller %@", self, midiTestWindowController);
 	
@@ -82,18 +83,19 @@ static NSString* envelopeBaseFilePath = nil;
 	
 }
 
-- (void)windowControllerWillLoadNib:(NSWindowController *)windowController {
+- (void)windowControllerWillLoadNib:(NSWindowController *)windowController
+{
 	NSLog(@"%@ window %@ windowControllerWillLoadNib", self, windowController);
-	if (windowController == envelopeEditorWindowController) {
-		//[envelopeEditorWindowController.loadedTextField setStringValue:@"LOADED WILL LOAD FROM DOCUMENT"];
+	if (windowController == _envelopeEditorWindowController) {
+		//[_envelopeEditorWindowController.loadedTextField setStringValue:@"LOADED WILL LOAD FROM DOCUMENT"];
 	}
 }
 
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)windowController {
 	NSLog(@"%@ window %@ windowControllerDidLoadNib", self, windowController);
-	if (windowController == envelopeEditorWindowController) {
-		//[envelopeEditorWindowController.loadedTextField setStringValue:@"LOADED DID LOAD FROM DOCUMENT"];
+	if (windowController == _envelopeEditorWindowController) {
+		//[_envelopeEditorWindowController.loadedTextField setStringValue:@"LOADED DID LOAD FROM DOCUMENT"];
 	}
 }
 

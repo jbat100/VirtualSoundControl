@@ -1,17 +1,10 @@
-/*
- *  VSCEnvelope.h
- *  EnvelopeEditor
- *
- *  Created by Jonathan Thorpe on 29/07/2011.
- *  Copyright 2011 JBAT. All rights reserved.
- *
- */
 
 #ifndef _VSC_ENVELOPE_H_
 #define _VSC_ENVELOPE_H_
 
 #include "VSC.h"
 #include "VSCSound.h"
+#include "VSCEnvelopeMinimal.h"
 #include "VSCEnvelopePoint.h"
 
 #include <boost/shared_ptr.hpp>
@@ -62,6 +55,7 @@ namespace VSC {
         };
         
         typedef std::set<EnvelopePoint::SPtr>       PointSet;
+        typedef std::list<EnvelopePoint::SPtr>      PointList;
         typedef std::vector<EnvelopePoint::SPtr>    Points;
 
         
@@ -148,7 +142,7 @@ namespace VSC {
          */
         
         virtual void envelopeChangedBetweenEnvelopePoints(Points::iterator begin, Points::iterator end);
-        virtual void envelopeChangedBetweenEnvelopePointAndNext(Point::SPtr point);
+        virtual void envelopeChangedBetweenEnvelopePointAndNext(EnvelopePoint::SPtr point);
         virtual void envelopeChanged(void);
         
         
@@ -203,7 +197,6 @@ namespace VSC {
             using boost::serialization::make_nvp;
             // note, version is always the latest when saving
             ar  & make_nvp("points", mPoints);
-            ar  & make_nvp("curve_type", mCurveType);
             ar  & make_nvp("point_displacement_conflict_resolution", mPointDisplacementConflictResolution);
             ar  & make_nvp("minimum_time_step", mMinimumTimeStep);
         }
@@ -212,7 +205,6 @@ namespace VSC {
         {
             using boost::serialization::make_nvp;
             ar  & make_nvp("points", mPoints);
-            ar  & make_nvp("curve_type", mCurveType);
             ar  & make_nvp("point_displacement_conflict_resolution", mPointDisplacementConflictResolution);
             ar  & make_nvp("minimum_time_step", mMinimumTimeStep);
         }

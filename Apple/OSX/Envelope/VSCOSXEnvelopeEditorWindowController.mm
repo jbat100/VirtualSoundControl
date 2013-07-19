@@ -6,7 +6,7 @@
 //  Copyright 2011 JBAT. All rights reserved.
 //
 
-#import "VSC::EnvelopeEditorWindowController.h"
+#import "VSCOSXEnvelopeEditorWindowController.h"
 #import "VSC::EnvelopeEditorDocument.h"
 
 #import <string>
@@ -21,7 +21,7 @@
 #define SAVE_ENVELOPE_AS_MENU_ITEM_TITLE			@"Save As..."
 */
  
-@interface VSC::EnvelopeEditorWindowController ()
+@interface VSCOSXEnvelopeEditorWindowController ()
 
 /*
 @property (nonatomic) NSMenu* fileMenu;
@@ -36,7 +36,7 @@
 @end
 
 
-@implementation VSC::EnvelopeEditorWindowController
+@implementation VSCOSXEnvelopeEditorWindowController
 
 //@synthesize envelopeView, envelopeEditorView;
 @synthesize envelopeController = _envelopeController;

@@ -72,11 +72,11 @@ namespace VSC {
             ar  & make_nvp("curve_inflexion", _curveInflexion);
         }
         
-        BOOST_SERIALIZATION_SPLIT_MEMBER()
+        ::BOOST_SERIALIZATION_SPLIT_MEMBER()
         
     };
 
-    BOOST_CLASS_VERSION(EnvelopePoint, 1)
+    ::BOOST_CLASS_VERSION(EnvelopePoint, 1)
 
     bool compareEnvelopePointTimes(const EnvelopePoint::SPtr& point1, const EnvelopePoint::SPtr& point2);
     

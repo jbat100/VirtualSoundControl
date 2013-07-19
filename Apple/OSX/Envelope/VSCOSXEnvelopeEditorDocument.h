@@ -15,25 +15,18 @@
 #include "VSCEnvelope.h"
 #include "VSCEnvelopePoint.h"
 
-#import "VSC::EnvelopeEditorWindowController.h"
-#import "VSCMIDITestWindowController.h"
+@class VSCOSXEnvelopeEditorWindowController;
+@class VSCOSXMIDIWindowController;
 
 #define DEFAULT_ENVELOPE_RELATIVE_PATH		@"Default"
 
-@class VSC::EnvelopeEditorWindowController;
-
-#define EnvIter				std::list<VSC::Envelope::SPtr>::iterator 
-#define ConstEnvIter		std::list<VSC::Envelope::SPtr>::const_iterator 
-
-@interface VSC::EnvelopeEditorDocument : NSDocument {
-	
-	std::list<VSC::Envelope::SPtr> _mainEnvelopeList;
-	
-	VSC::EnvelopeEditorWindowController* envelopeEditorWindowController;
-    
-    VSCMIDITestWindowController* midiTestWindowController;
-
+@interface VSCOSXEnvelopeEditorDocument : NSDocument
+{
+	std::vector<VSC::Envelope::SPtr> _mainEnvelopeList;
 }
+
+@property (nonatomic, strong) VSCOSXEnvelopeEditorWindowController* envelopeEditorWindowController;
+@property (nonatomic, strong) VSCOSXMIDIWindowController* midiTestWindowController;
 
 /*
  *	Envelope Base File Paths

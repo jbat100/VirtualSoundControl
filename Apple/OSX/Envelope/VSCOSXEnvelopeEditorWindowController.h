@@ -11,7 +11,7 @@
 #import "VSCEnvelopeController.h"
 
 
-@interface VSC::EnvelopeEditorWindowController : NSWindowController <NSWindowDelegate>  
+@interface VSCOSXEnvelopeEditorWindowController : NSWindowController <NSWindowDelegate>  
 
 @property (nonatomic, strong) IBOutlet VSC::EnvelopeController* envelopeController;
 
