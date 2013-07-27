@@ -8,20 +8,19 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "VSCEnvelope.h"
-#import "VSCEnvelopeGUI.h"
+#import "VSCEnvelopeMinimal.h"
 
 #import <map>
 
 
 @protocol VSCOSXEnvelopeEditor <NSObject>
 
--(BOOL) envelopeIsEditable:(VSC::Envelope::SPtr)envelope;
--(BOOL) pointIsSelected:(VSC::EnvelopePoint::SPtr)envelopePoint;
--(NSRect) currentSelectionRectForEnvelope:(VSC::Envelope::SPtr)envelope;
+-(BOOL) envelopeIsEditable:(VSC::Envelope_SPtr)envelope;
+-(BOOL) pointIsSelected:(VSC::EnvelopePoint_SPtr)envelopePoint;
+-(NSRect) currentSelectionRectForEnvelope:(VSC::Envelope_SPtr)envelope;
 
--(VSC::EnvelopeEditorGUIConfig::SPtr) envelopeEditorGUIConfig;
--(VSC::EnvelopeGUIConfig::SPtr) sender:(id) requestsGUIConfigForEnvelope:(VSC::Envelope::SPtr)envelope;
+-(VSC::EnvelopeEditorGUIConfig_SPtr) envelopeEditorGUIConfig;
+-(VSC::EnvelopeGUIConfig_SPtr) sender:(id) requestsGUIConfigForEnvelope:(VSC::Envelope_SPtr)envelope;
 
 @end
 
@@ -29,10 +28,10 @@
 
 @property (weak) id<VSCOSXEnvelopeEditor> editor;
 
--(void) addEnvelope:(VSC::Envelope::SPtr)envelope;
--(void) addEnvelope:(VSC::Envelope::SPtr)envelope atIndex:(NSUInteger)index;
--(void) removeEnvelope:(VSC::Envelope::SPtr)envelope;
+-(void) addEnvelope:(VSC::Envelope_SPtr)envelope;
+-(void) addEnvelope:(VSC::Envelope_SPtr)envelope atIndex:(NSUInteger)index;
+-(void) removeEnvelope:(VSC::Envelope_SPtr)envelope;
 
--(NSUInteger) numberOfEnvelop
+//-(NSUInteger) numberOfEnvelop
 
 @end

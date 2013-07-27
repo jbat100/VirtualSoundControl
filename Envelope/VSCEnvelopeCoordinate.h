@@ -75,7 +75,7 @@ namespace VSC {
         
     };
 
-    boost::BOOST_CLASS_VERSION(EnvelopeCoordinate, 1)
+    //::BOOST_CLASS_VERSION(VSC::EnvelopeCoordinate, 1)
 
     bool compareEnvelopeCoordinateValues (EnvelopeCoordinate* firstPoint, EnvelopeCoordinate* secondPoint);
     bool compareEnvelopeCoordinateTimes (EnvelopeCoordinate* firstPoint, EnvelopeCoordinate* secondPoint);

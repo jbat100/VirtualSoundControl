@@ -15,10 +15,19 @@
 namespace VSC {
     
     class Envelope;
+    class EnvelopeCoordinate;
+    class EnvelopePoint;
+    class EnvelopeEditorGUIConfig;
+    class EnvelopeGUIConfig;
     
     typedef boost::shared_ptr<Envelope>     Envelope_SPtr;
     typedef boost::weak_ptr<Envelope>       Envelope_WPtr;
     typedef std::vector<Envelope_SPtr>      Envelopes;
+    
+    typedef boost::shared_ptr<EnvelopeCoordinate>           EnvelopeCoordinate_SPtr;
+    typedef boost::shared_ptr<EnvelopePoint>                EnvelopePoint_SPtr;
+    typedef boost::shared_ptr<EnvelopeEditorGUIConfig>      EnvelopeEditorGUIConfig_SPtr;
+    typedef boost::shared_ptr<EnvelopeGUIConfig>            EnvelopeGUIConfig_SPtr;
     
 }
 

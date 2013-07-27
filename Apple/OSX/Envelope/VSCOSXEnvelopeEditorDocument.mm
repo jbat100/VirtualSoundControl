@@ -7,8 +7,12 @@
 //
 
 #import "VSCOSXEnvelopeEditorDocument.h"
+#import "VSCOSXMIDIWindowController.h"
 #import "NSApplication+VSCAdditions.h"
 
+#include "VSCEnvelope.h"
+
+using namespace VSC;
 
 @implementation VSCOSXEnvelopeEditorDocument
 
@@ -30,7 +34,7 @@ static NSString* envelopeBaseFilePath = nil;
 /*
 - (NSString *)windowNibName {
     // Implement this to return a nib to load OR implement -makeWindowControllers to manually create your controllers.
-    return @"VSC::EnvelopeDocument";
+    return @"EnvelopeDocument";
 }
  */
 
@@ -66,18 +70,16 @@ static NSString* envelopeBaseFilePath = nil;
 	NSLog(@"%@ makeWindowControllers", self);
 	
 #if 0
-	_envelopeEditorWindowController = [[VSCOSXEnvelopeEditorWindowController alloc] 
-									   initWithWindowNibName:@"VSCOSXEnvelopeEditorWindowController"];
-	[self addWindowController:_envelopeEditorWindowController];
-	NSLog(@"%@ added window controller %@", self, _envelopeEditorWindowController);
-	[_envelopeEditorWindowController release];
-	[_envelopeEditorWindowController.loadedTextField setStringValue:@"LOADED WITHOUT CALLBACKS"];
+	self.envelopeEditorWindowController = [[VSCOSXEnvelopeEditorWindowController alloc]
+                                           initWithWindowNibName:@"VSCOSXEnvelopeEditorWindowController"];
+	[self addWindowController:self.envelopeEditorWindowController];
+	NSLog(@"%@ added window controller %@", self, self.envelopeEditorWindowController);
+	[self.envelopeEditorWindowController.loadedTextField setStringValue:@"LOADED WITHOUT CALLBACKS"];
 #endif
     
-    midiTestWindowController = [[VSCOSXMIDITestWindowController alloc]
-                                initWithWindowNibName:@"VSCOSXMIDITestWindowController"];
-    [self addWindowController:midiTestWindowController];
-	NSLog(@"%@ added window controller %@", self, midiTestWindowController);
+    self.midiTestWindowController = [[VSCOSXMIDIWindowController alloc] initWithWindowNibName:@"VSCOSXMIDIWindowController"];
+    [self addWindowController:self.midiTestWindowController];
+	NSLog(@"%@ added window controller %@", self, self.midiTestWindowController);
 	
 	NSLog(@"%@ windowControllers are %@", self, [self windowControllers]);
 	
@@ -86,32 +88,39 @@ static NSString* envelopeBaseFilePath = nil;
 - (void)windowControllerWillLoadNib:(NSWindowController *)windowController
 {
 	NSLog(@"%@ window %@ windowControllerWillLoadNib", self, windowController);
-	if (windowController == _envelopeEditorWindowController) {
-		//[_envelopeEditorWindowController.loadedTextField setStringValue:@"LOADED WILL LOAD FROM DOCUMENT"];
+	if (windowController == (NSWindowController *)self.envelopeEditorWindowController)
+    {
+		//[self.envelopeEditorWindowController.loadedTextField setStringValue:@"LOADED WILL LOAD FROM DOCUMENT"];
 	}
 }
 
 
-- (void)windowControllerDidLoadNib:(NSWindowController *)windowController {
+- (void)windowControllerDidLoadNib:(NSWindowController *)windowController
+{
 	NSLog(@"%@ window %@ windowControllerDidLoadNib", self, windowController);
-	if (windowController == _envelopeEditorWindowController) {
-		//[_envelopeEditorWindowController.loadedTextField setStringValue:@"LOADED DID LOAD FROM DOCUMENT"];
+	if (windowController == (NSWindowController *)self.envelopeEditorWindowController)
+    {
+		//[self.envelopeEditorWindowController.loadedTextField setStringValue:@"LOADED DID LOAD FROM DOCUMENT"];
 	}
 }
 
 #pragma mark - Envelope Base File Paths
 
 
--(NSString*) baseFilePath {
+-(NSString*) baseFilePath
+{
 	
-	if (!baseFilePath) {
-		@synchronized(self) {
+	if (!baseFilePath)
+    {
+		@synchronized(self)
+        {
 			baseFilePath = [[[NSApplication sharedApplication] applicationLibraryDirectory] 
 							 stringByAppendingPathComponent:@"VSC"];
 		}
 	}
 	
-	if (![[NSFileManager defaultManager] fileExistsAtPath:baseFilePath]) {
+	if (![[NSFileManager defaultManager] fileExistsAtPath:baseFilePath])
+    {
 		[[NSFileManager defaultManager] createDirectoryAtPath:baseFilePath 
 								  withIntermediateDirectories:YES attributes:nil error:nil];
 	}
@@ -119,15 +128,18 @@ static NSString* envelopeBaseFilePath = nil;
 	return baseFilePath;
 }
 
--(NSString*) envelopeBaseFilePath {
-	
-	if (!envelopeBaseFilePath) {
-		@synchronized(self) {
+-(NSString*) envelopeBaseFilePath
+{
+	if (!envelopeBaseFilePath)
+    {
+		@synchronized(self)
+        {
 			envelopeBaseFilePath = [[self baseFilePath] stringByAppendingPathComponent:@"Envelopes"];
 		}
 	}
 	
-	if (![[NSFileManager defaultManager] fileExistsAtPath:envelopeBaseFilePath]) {
+	if (![[NSFileManager defaultManager] fileExistsAtPath:envelopeBaseFilePath])
+    {
 		[[NSFileManager defaultManager] createDirectoryAtPath:envelopeBaseFilePath 
 								  withIntermediateDirectories:YES attributes:nil error:nil];
 	}
@@ -137,14 +149,15 @@ static NSString* envelopeBaseFilePath = nil;
 
 #pragma mark - Envelope Access/Creation/Add/Remove
 
--(void) createDefaultEnvelope {
+-(void) createDefaultEnvelope
+{
 	
-	VSC::Envelope::SPtr envelope = VSC::Envelope::SPtr(new VSC::Envelope());
+	Envelope_SPtr envelope = Envelope_SPtr(new Envelope());
 	
-	envelope->addPoint(VSC::EnvelopePoint::SPtr(new VSC::EnvelopePoint(0.0, 0.0)));
-	envelope->addPoint(VSC::EnvelopePoint::SPtr(new VSC::EnvelopePoint(0.0, 1.0)));
-	envelope->addPoint(VSC::EnvelopePoint::SPtr(new VSC::EnvelopePoint(0.0, 2.0)));
-	envelope->addPoint(VSC::EnvelopePoint::SPtr(new VSC::EnvelopePoint(0.0, 3.0)));
+	envelope->addPoint(EnvelopePoint_SPtr(new EnvelopePoint(0.0, 0.0)));
+	envelope->addPoint(EnvelopePoint_SPtr(new EnvelopePoint(0.0, 1.0)));
+	envelope->addPoint(EnvelopePoint_SPtr(new EnvelopePoint(0.0, 2.0)));
+	envelope->addPoint(EnvelopePoint_SPtr(new EnvelopePoint(0.0, 3.0)));
 	
 	envelope->setFilePath(std::string([DEFAULT_ENVELOPE_RELATIVE_PATH cStringUsingEncoding:NSUTF8StringEncoding]));
 	
@@ -152,32 +165,35 @@ static NSString* envelopeBaseFilePath = nil;
 	
 }
 
--(void) addEnvelope:(VSC::Envelope::SPtr)envelope {
-	_mainEnvelopeList.push_back(envelope);
+-(void) addEnvelope:(Envelope_SPtr)envelope
+{
+	_envelopes.push_back(envelope);
 }
 
--(void) removeEnvelope:(VSC::Envelope::SPtr)envelope {
-	_mainEnvelopeList.remove(envelope);
+-(void) removeEnvelope:(Envelope_SPtr)envelope
+{
+    // http://en.wikipedia.org/wiki/Erase-remove_idiom
+    _envelopes.erase( std::remove( _envelopes.begin(), _envelopes.end(), envelope ), _envelopes.end() ); 
 }
 
--(EnvIter) beginMainEnvelopeListIterator {
-	return _mainEnvelopeList.begin();
-}
-
--(EnvIter) endMainEnvelopeListIterator {
-	return _mainEnvelopeList.end();
-}
-
--(VSC::Envelope::SPtr) defaultEnvelope {
+-(Envelope_SPtr) defaultEnvelope
+{
 	std::string defaultRelativePath = std::string([DEFAULT_ENVELOPE_RELATIVE_PATH cStringUsingEncoding:NSUTF8StringEncoding]);
-	for (EnvIter envIt = [self beginMainEnvelopeListIterator]; envIt != [self endMainEnvelopeListIterator]; envIt++) {
-		VSC::Envelope* envelope = (*envIt).get();
-		std::string relativePath = envelope->getFilePath();
-		if (relativePath.compare(defaultRelativePath) == 0) {
-			return *envIt;
-		}
+    
+	for (Envelopes::iterator envIt = _envelopes.begin(); envIt != _envelopes.end(); envIt++)
+    {
+		Envelope_SPtr envelope = *envIt;
+        BOOST_ASSERT(envelope);
+        if (envelope)
+        {
+            std::string relativePath = envelope->getFilePath();
+            if (relativePath.compare(defaultRelativePath) == 0)
+            {
+                return envelope;
+            }
+        }
 	}
-	return VSC::Envelope::SPtr();
+	return Envelope_SPtr();
 }
 
 @end

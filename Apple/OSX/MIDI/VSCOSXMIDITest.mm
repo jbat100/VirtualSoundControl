@@ -12,20 +12,21 @@
 #include "VSCMIDIOutput.h"
 #include "VSCMIDIOutputManager.h"
 
+using namespace VSC;
+
 @implementation VSCOSXMIDITest
 
--(id) init {
-    
-    if ((self = [super init])) {
+-(id) init
+{
+    if ((self = [super init]))
+    {
         self.midiChannel = 1;
         self.controlValue = 80;
         self.pitchValue = 80;
         self.velocityValue = 80;
-        self.controlNumber = VSC::MIDI::ControlBreath;
+        self.controlNumber = MIDI::ControlBreath;
     }
-    
     return self;
-    
 }
 
 @end

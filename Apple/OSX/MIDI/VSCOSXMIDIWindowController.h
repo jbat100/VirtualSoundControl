@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "VSCOSXApplicationManagerProtocol.h"
 
 #include "VSCMIDI.h"
 #include "VSCMIDIOutput.h"

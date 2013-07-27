@@ -31,7 +31,7 @@ CGColorRef CGColorCreateFromRGBA (const float r, const float g, const float b, c
 	return CGColorCreate (colorSpace, components);
 }
 
-CGColorRef CGColorCreateFromVSC::Color (const VSC::Color& colour) {
+CGColorRef CGColorCreateFromVSCColor (const VSC::Color& colour) {
 	return CGColorCreateFromRGBA(colour.r, colour.g, colour.b, colour.a);
 }
 

@@ -7,8 +7,6 @@
 //
 
 #import "VSCOSXMIDITestController.h"
-
-//#import "VSCEnveloppeEditorWindowController.h"
 #import "VSCOSXMIDITest.h"
 #import "VSCOSXMIDITestView.h"
 #import "NSString+VSCAdditions.h"
@@ -16,6 +14,8 @@
 #include "VSCMIDI.h"
 #include "VSCMIDIOutput.h"
 #include "VSCException.h"
+
+using namespace VSC;
 
 NSString* const VSCMIDIPortNameColumnIdentifier         = @"MIDIPortName";
 NSString* const VSCMIDIPortNumberColumnIdentifier       = @"MIDIPortNumber";
@@ -33,24 +33,22 @@ NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
 @implementation VSCOSXMIDITestController
 
 
--(id) init {
-    
-    if ((self = [super init])) {
+-(id) init
+{
+    if ((self = [super init]))
+    {
         
     }
-    
     return self;
-    
 }
 
 #pragma mark - KVO
 
--(void) setMidiTest:(VSCOSXMIDITest*)midiTest {
-    
+-(void) setMidiTest:(VSCOSXMIDITest*)midiTest
+{
     [_midiTest removeObserver:self forKeyPath:@"controlChannel"];
     _midiTest = midiTest;
     [_midiTest addObserver:self forKeyPath:@"controlChannel" options:NSKeyValueObservingOptionNew  context:NULL];
-    
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -101,8 +99,8 @@ NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
                            self.midiTestView.noteVelocityTextField.formatter,
                            self.midiTestView.controlValueTextField.formatter];
     
-    for (NSNumberFormatter* formatter in formatters) {
-        
+    for (NSNumberFormatter* formatter in formatters)
+    {
         [formatter setAllowsFloats:NO];
         
         if (formatter == self.midiTestView.midiChannelTextField.formatter) [formatter setMinimum:[NSNumber numberWithUnsignedInt:1]];
@@ -110,19 +108,23 @@ NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
         
         if (formatter == self.midiTestView.midiChannelTextField.formatter) [formatter setMaximum:[NSNumber numberWithUnsignedInt:16]];
         else [formatter setMaximum:[NSNumber numberWithUnsignedInt:127]];
-        
     }
     
-    
-    for (NSNumber* number in self.controlChannels) {
+    /*
+     
+    for (NSNumber* number in self.controlChannels)
+    {
         int controlNumber = [number intValue];
-        try {
-            std::string controlString = VSC::MIDI::controlNumberToString((VSC::MIDI::ControlNumber)controlNumber);
+        try
+        {
+            std::string controlString = MIDI::controlNumberToString((MIDI::ControlNumber)controlNumber);
             [self.midiTestView.rtControlChannelComboBox addItemWithObjectValue:[NSString stringWithStdString:controlString]]; 
-        } catch (VSCMIDIException& exception) {
+        }
+        catch (VSCMIDIException& exception) {
             [self.midiTestView.rtControlChannelComboBox addItemWithObjectValue:VSCMIDIOtherControlChannelDescriptorString]; 
         }
     }
+     */
     
     
     //[self.midiTestView.rtControlChannelComboBox setUsesDataSource:YES];
@@ -135,35 +137,84 @@ NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
 
 #pragma mark - NSButton Callbacks
 
--(IBAction) sendMidiControlMessage:(id)sender {
-    [self.midiTest sendMidiControlMessage];
+-(IBAction) sendMidiControlMessage:(id)sender
+{
+    if (self.midiOutput)
+    {
+        MIDI::MessageDescription::SPtr description(new MIDI::MessageDescription());
+        description->type = MIDI::MessageTypeControlChange;
+        description->parameterMap[MIDI::MessageParameterKeyChannel] = self.midiTest.midiChannel;
+        description->parameterMap[MIDI::MessageParameterKeyControlNumber] = self.midiTest.controlNumber;
+        description->parameterMap[MIDI::MessageParameterKeyValue] = self.midiTest.controlValue;
+        
+        self.midiOutput->sendMessage(description);
+    }
+    else
+    {
+        std::cout << "sendMidiControlMessage ERROR (no midiOutput)" << std::endl;
+    }
 }
 
--(IBAction) sendMidiNoteOnMessage:(id)sender {
-    [self.midiTest sendMidiNoteOnMessage];
+-(IBAction) sendMidiNoteOnMessage:(id)sender
+{
+    if (self.midiOutput)
+    {
+        MIDI::MessageDescription::SPtr description(new MIDI::MessageDescription());
+        description->type = MIDI::MessageTypeNoteOn;
+        description->parameterMap[MIDI::MessageParameterKeyChannel] = self.midiTest.midiChannel;
+        description->parameterMap[MIDI::MessageParameterKeyPitch] = self.midiTest.pitchValue;
+        description->parameterMap[MIDI::MessageParameterKeyVelocity] = self.midiTest.velocityValue;
+        
+        self.midiOutput->sendMessage(description);
+    }
+    else
+    {
+        std::cout << "sendMidiControlMessage ERROR (no midiOutput)" << std::endl;
+    }
 }
 
--(IBAction) sendMidiNoteOffMessage:(id)sender {
-    [self.midiTest sendMidiNoteOffMessage];
+-(IBAction) sendMidiNoteOffMessage:(id)sender
+{
+    if (self.midiOutput)
+    {
+        MIDI::MessageDescription::SPtr description(new MIDI::MessageDescription());
+        description->type = MIDI::MessageTypeNoteOff;
+        description->parameterMap[MIDI::MessageParameterKeyChannel] = self.midiTest.midiChannel;
+        description->parameterMap[MIDI::MessageParameterKeyPitch] = self.midiTest.pitchValue;
+        description->parameterMap[MIDI::MessageParameterKeyVelocity] = self.midiTest.velocityValue;
+        
+        self.midiOutput->sendMessage(description);
+    }
+    else
+    {
+        std::cout << "sendMidiControlMessage ERROR (no midiOutput)" << std::endl;
+    }
 }
 
--(IBAction) controlSliderChangedValue:(id)sender {
-    
-    if (sender == self.midiTestView.rtControlSlider) {
+-(IBAction) controlSliderChangedValue:(id)sender
+{
+    if (sender == self.midiTestView.rtControlSlider)
+    {
         int val = [(NSSlider*)self.rtControlSlider intValue];
-        if (val >= 0 && val <= 127) {
+        if (val >= 0 && val <= 127)
+        {
             //unsigned int uval = (unsigned int)val;
             if (self.midiOutput)
             {
-                self.midiOutput->sendControlChange(self.midiTest.midiChannel, self.midiTest.controlNumber, self.midiTest.controlValue);
+                MIDI::MessageDescription::SPtr description(new MIDI::MessageDescription());
+                description->type = MIDI::MessageTypeControlChange;
+                description->parameterMap[MIDI::MessageParameterKeyChannel] = self.midiTest.midiChannel;
+                description->parameterMap[MIDI::MessageParameterKeyControlNumber] = self.midiTest.controlNumber;
+                description->parameterMap[MIDI::MessageParameterKeyValue] = self.midiTest.controlValue;
+                
+                self.midiOutput->sendMessage(description);
             }
         }
     }
-    
 }
 
--(IBAction) showEnveloppeEditor:(id)sender {
-    
+-(IBAction) showEnveloppeEditor:(id)sender
+{
     /*
     
     if (self.enveloppeEditorWindowController == nil) {
@@ -178,13 +229,12 @@ NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
     [self.enveloppeEditorWindowController showWindow:self];
      
      */
-    
 }
 
 #pragma mark - NSComboBox Delegate/DataSource
 
--(void)comboBoxSelectionDidChange:(NSNotification *)notification {
-    
+-(void)comboBoxSelectionDidChange:(NSNotification *)notification
+{
     /*
     
     if ([notification object] == self.midiTestView.rtControlChannelComboBox) {
@@ -206,7 +256,6 @@ NSString* const VSCMIDIOtherControlChannelDescriptorString = @"Other";
     }
      
      */
-    
 }
 
 

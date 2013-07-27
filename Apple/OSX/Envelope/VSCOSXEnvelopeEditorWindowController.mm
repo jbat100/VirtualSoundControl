@@ -7,7 +7,7 @@
 //
 
 #import "VSCOSXEnvelopeEditorWindowController.h"
-#import "VSC::EnvelopeEditorDocument.h"
+#import "VSCOSXEnvelopeEditorDocument.h"
 
 #import <string>
 #import <list>
@@ -38,13 +38,11 @@
 
 @implementation VSCOSXEnvelopeEditorWindowController
 
-//@synthesize envelopeView, envelopeEditorView;
-@synthesize envelopeController = _envelopeController;
-//@synthesize loadedTextField, envelopePopUpButton, testButton, fileMenu, fileTitleMenuItem;
 
 #pragma mark - NSWindowController Window Callbacks
 
--(void) windowDidLoad {
+-(void) windowDidLoad
+{
     
 	NSLog(@"%@ window did load", self);
     
@@ -98,11 +96,13 @@
     
 }
 
--(void) windowWillLoad {
+-(void) windowWillLoad
+{
 	NSLog(@"%@ window will load", self);
 }
 
-- (void)windowDidResize:(NSNotification *)notification {
+- (void)windowDidResize:(NSNotification *)notification
+{
     NSLog(@"windowDidResize %@", notification);
 
 }
@@ -110,8 +110,9 @@
 
 #pragma mark - Convenience 
 
--(VSC::EnvelopeEditorDocument*) envelopeEditorDocument {
-	return (VSC::EnvelopeEditorDocument*)[self document];
+-(VSCOSXEnvelopeEditorDocument*) envelopeEditorDocument
+{
+	return (VSCOSXEnvelopeEditorDocument*)[self document];
 }
 
 /*

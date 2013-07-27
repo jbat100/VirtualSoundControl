@@ -48,7 +48,8 @@ namespace VSC {
             
         public:
             
-            class Payload : public Task::Payload {
+            class Payload : public Task::Payload
+            {
             public:
                 Payload();
                 typedef boost::shared_ptr<Payload> SPtr;

@@ -22,7 +22,7 @@
 
 @interface VSCOSXEnvelopeEditorDocument : NSDocument
 {
-	std::vector<VSC::Envelope::SPtr> _mainEnvelopeList;
+    VSC::Envelopes _envelopes;
 }
 
 @property (nonatomic, strong) VSCOSXEnvelopeEditorWindowController* envelopeEditorWindowController;
@@ -40,8 +40,8 @@
 
 -(void) addEnvelope:(VSC::Envelope::SPtr)envelope;
 -(void) removeEnvelope:(VSC::Envelope::SPtr)envelope;
--(EnvIter) beginMainEnvelopeListIterator;
--(EnvIter) endMainEnvelopeListIterator;
+-(VSC::Envelopes::iterator) beginMainEnvelopeListIterator;
+-(VSC::Envelopes::iterator) endMainEnvelopeListIterator;
 -(void) createDefaultEnvelope;
 -(VSC::Envelope::SPtr) defaultEnvelope;
 

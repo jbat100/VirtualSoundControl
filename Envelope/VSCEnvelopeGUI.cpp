@@ -23,51 +23,53 @@ namespace VSC
     Float valueDeltaForPointDelta(Float delta, const Envelope::ValueRange& valueRange, const Float height);
 }
 
+using namespace VSC;
+
 
 //MARK: Points Calculations
 
-VSC::Float VSC::pointForTime(const Float t, const Envelope::TimeRange& timeRange, const Float width)
+Float pointForTime(const Float t, const Envelope::TimeRange& timeRange, const Float width)
 {
 	Float timePerPixel = timeRange.size / width; 
 	return (t - timeRange.origin) / timePerPixel;
 }
 
-VSC::Float VSC::pointForValue(const Float v, const Envelope::ValueRange& valueRange, const Float height)
+Float pointForValue(const Float v, const Envelope::ValueRange& valueRange, const Float height)
 {
 	Float valuePerPixel = valueRange.size / height; 
 	return (v - valueRange.origin) / valuePerPixel;
 }
 
-VSC::Float VSC::timeForPoint(const Float point, const Envelope::TimeRange& timeRange, const Float width)
+Float timeForPoint(const Float point, const Envelope::TimeRange& timeRange, const Float width)
 {
 	Float normalisedX = point / width;
 	return timeRange.origin  + (normalisedX*timeRange.size);
 }
 
-VSC::Float VSC::valueForPoint(const Float point, const Envelope::ValueRange& valueRange, const Float height)
+Float valueForPoint(const Float point, const Envelope::ValueRange& valueRange, const Float height)
 {
 	Float normalisedY = (point / height);
 	return valueRange.origin  + (normalisedY*valueRange.size);
 }
 
-VSC::Float VSC::timeDeltaForPointDelta(Float delta, const Envelope::TimeRange& timeRange, const Float width)
+Float timeDeltaForPointDelta(Float delta, const Envelope::TimeRange& timeRange, const Float width)
 {
     Float normalisedDelta = (delta / width);
     return normalisedDelta*timeRange.size;
 }
 
-VSC::Float VSC::valueDeltaForPointDelta(Float delta, const Envelope::ValueRange& valueRange, const Float height)
+Float valueDeltaForPointDelta(Float delta, const Envelope::ValueRange& valueRange, const Float height)
 {
     Float normalisedDelta = (delta / height);
 	return normalisedDelta*valueRange.size;
 }
 
-VSC::EnvelopeEditorGUIConfig::EnvelopeEditorGUIConfig(void)
+EnvelopeEditorGUIConfig::EnvelopeEditorGUIConfig(void)
 {
     this->setToDefault();
 }
 
-void VSC::EnvelopeEditorGUIConfig::setToDefault(void)
+void EnvelopeEditorGUIConfig::setToDefault(void)
 {
     _timeRange = Envelope::TimeRange(0.0,5.0);
     _valueRange = Envelope::ValueRange(0.0,1.0);
@@ -82,28 +84,34 @@ void VSC::EnvelopeEditorGUIConfig::setToDefault(void)
  *	View range setters / getters
  */
 
-const VSC::Size& VSC::EnvelopeEditorGUIConfig::getEditorSize(void) const {
+const Size& EnvelopeEditorGUIConfig::getEditorSize(void) const
+{
     return _editorSize;
 }
 
-void VSC::EnvelopeEditorGUIConfig::setEditorSize(const Size& size) {
+void EnvelopeEditorGUIConfig::setEditorSize(const Size& size)
+{
     _editorSize = size;
 }
 
 
-const VSC::Envelope::TimeRange& VSC::EnvelopeEditorGUIConfig::getTimeRange(void) const {
+const Envelope::TimeRange& EnvelopeEditorGUIConfig::getTimeRange(void) const
+{
     return _timeRange;
 }
 
-void VSC::EnvelopeEditorGUIConfig::setTimeRange(const Envelope::TimeRange& timeRange) {
+void EnvelopeEditorGUIConfig::setTimeRange(const Envelope::TimeRange& timeRange)
+{
     _timeRange = timeRange;
 }
 
-const VSC::Envelope::ValueRange& VSC::EnvelopeEditorGUIConfig::getValueRange(void) const {
+const Envelope::ValueRange& EnvelopeEditorGUIConfig::getValueRange(void) const
+{
     return _valueRange;
 }
 
-void VSC::EnvelopeEditorGUIConfig::setValueRange(const Envelope::ValueRange& valueRange) {
+void EnvelopeEditorGUIConfig::setValueRange(const Envelope::ValueRange& valueRange)
+{
     _valueRange = valueRange;
 }
 
@@ -111,46 +119,52 @@ void VSC::EnvelopeEditorGUIConfig::setValueRange(const Envelope::ValueRange& val
  *	Allowed range setters / getters
  */
 
-const VSC::Envelope::TimeRange& VSC::EnvelopeEditorGUIConfig::getAllowedTimeRange(void) const {
+const Envelope::TimeRange& EnvelopeEditorGUIConfig::getAllowedTimeRange(void) const
+{
     return mAllowedTimeRange;
 }
 
-void VSC::EnvelopeEditorGUIConfig::setAllowedTimeRange(const Envelope::TimeRange& timeRange) {
+void EnvelopeEditorGUIConfig::setAllowedTimeRange(const Envelope::TimeRange& timeRange)
+{
     mAllowedTimeRange = timeRange;
 }
 
-const VSC::Envelope::ValueRange& VSC::EnvelopeEditorGUIConfig::getAllowedValueRange(void) const {
+const Envelope::ValueRange& EnvelopeEditorGUIConfig::getAllowedValueRange(void) const
+{
     return mAllowedValueRange;
 }
 
-void VSC::EnvelopeEditorGUIConfig::setAllowedValueRange(const Envelope::ValueRange& valueRange) {
+void EnvelopeEditorGUIConfig::setAllowedValueRange(const Envelope::ValueRange& valueRange)
+{
     mAllowedValueRange = valueRange;
 }
 
-Float VSC::EnvelopeEditorGUIConfig::getPointSelectionRadius(void) const {
+Float EnvelopeEditorGUIConfig::getPointSelectionRadius(void) const
+{
     return _pointSelectionRadius;
 }
 
-void VSC::EnvelopeEditorGUIConfig::setPointSelectionRadius(const Float radius) {
+void EnvelopeEditorGUIConfig::setPointSelectionRadius(const Float radius)
+{
     _pointSelectionRadius = radius;
 }
 
-const VSC::Color& VSC::EnvelopeEditorGUIConfig::getSelectionRectColour(void) const 
+const Color& EnvelopeEditorGUIConfig::getSelectionRectColour(void) const 
 {
     return _selectionRectColour;
 }
 
-void VSC::EnvelopeEditorGUIConfig::setSelectionRectColour(const Color& colour)
+void EnvelopeEditorGUIConfig::setSelectionRectColour(const Color& colour)
 {
     _selectionRectColour = colour;
 }
 
-Float VSC::EnvelopeEditorGUIConfig::getSelectionRectLineWidth(void) const
+Float EnvelopeEditorGUIConfig::getSelectionRectLineWidth(void) const
 {
     return _selectionRectLineWidth;
 }
 
-void VSC::EnvelopeEditorGUIConfig::setSelectionRectLineWidth(const Float width)
+void EnvelopeEditorGUIConfig::setSelectionRectLineWidth(const Float width)
 {
     _selectionRectLineWidth = width;
 }
@@ -158,44 +172,53 @@ void VSC::EnvelopeEditorGUIConfig::setSelectionRectLineWidth(const Float width)
 
 #pragma mark Point Calculations
 
-Float VSC::EnvelopeEditorGUIConfig::pointForTime(const Float t) {
+Float EnvelopeEditorGUIConfig::pointForTime(const Float t)
+{
     return ::pointForTime(t, _timeRange, _editorSize.width);
 }
 
-Float VSC::EnvelopeEditorGUIConfig::pointForValue(const Float v) {
+Float EnvelopeEditorGUIConfig::pointForValue(const Float v)
+{
     return ::pointForValue(v, _valueRange, _editorSize.height);
 }
 
-Float VSC::EnvelopeEditorGUIConfig::timeForPoint(const Float point) {
+Float EnvelopeEditorGUIConfig::timeForPoint(const Float point)
+{
     return ::timeForPoint(point, _timeRange, _editorSize.width);
 }
 
-Float VSC::EnvelopeEditorGUIConfig::valueForPoint(const Float point) {
+Float EnvelopeEditorGUIConfig::valueForPoint(const Float point)
+{
     return ::valueForPoint(point, _valueRange, _editorSize.height);
 }
 
-Float VSC::EnvelopeEditorGUIConfig::timeDeltaForPointDelta(const Float delta) {
+Float EnvelopeEditorGUIConfig::timeDeltaForPointDelta(const Float delta)
+{
     return ::timeDeltaForPointDelta(delta, _timeRange, _editorSize.width);
 }
 
-Float VSC::EnvelopeEditorGUIConfig::valueDeltaForPointDelta(const Float delta) {
+Float EnvelopeEditorGUIConfig::valueDeltaForPointDelta(const Float delta)
+{
     return ::valueDeltaForPointDelta(delta, _valueRange, _editorSize.height);
 }
 
-VSC::Point VSC::EnvelopeEditorGUIConfig::pointForEnvelopeCoordinate(const EnvelopeCoordinate::SPtr& p) {
+Point EnvelopeEditorGUIConfig::pointForEnvelopeCoordinate(const EnvelopeCoordinate_SPtr& p)
+{
     Point point;
     point.x = this->pointForTime(p->getTime());
     point.y = this->pointForValue(p->getValue());
     return point;
 }
 
-VSC::EnvelopeCoordinate::SPtr VSC::EnvelopeEditorGUIConfig::createEnvelopeCoordinateForPoint(const Point& p) {
-    EnvelopeCoordinate::SPtr coord = EnvelopeCoordinate::SPtr(new EnvelopeCoordinate());
+EnvelopeCoordinate_SPtr EnvelopeEditorGUIConfig::createEnvelopeCoordinateForPoint(const Point& p)
+{
+    EnvelopeCoordinate_SPtr coord = EnvelopeCoordinate_SPtr(new EnvelopeCoordinate());
     this->setEnvelopeCoordinateToPoint(coord, p);
     return coord;
 }
 
-void VSC::EnvelopeEditorGUIConfig::setEnvelopeCoordinateToPoint(EnvelopeCoordinate::SPtr coord, const Point& p) {
+void EnvelopeEditorGUIConfig::setEnvelopeCoordinateToPoint(EnvelopeCoordinate_SPtr coord, const Point& p)
+{
     coord->setTime(this->timeForPoint(p.x));
     coord->setValue(this->valueForPoint(p.y));
 }
@@ -206,7 +229,8 @@ void VSC::EnvelopeEditorGUIConfig::setEnvelopeCoordinateToPoint(EnvelopeCoordina
 #pragma mark Envelope Display Setups
 
 
-VSC::EnvelopeGUIConfig::EnvelopeGUIConfig() {
+EnvelopeGUIConfig::EnvelopeGUIConfig()
+{
     this->setControlPointRadius(3.0);
     this->setLineWidth(1.0);
     this->setControlPointSelectedColour((Color){0.0, 0.0, 1.0, 1.0});
@@ -215,7 +239,8 @@ VSC::EnvelopeGUIConfig::EnvelopeGUIConfig() {
     this->setLineUnselectedColour((Color){0.0, 0.0, 1.0, 1.0});
 }
 
-VSC::EnvelopeGUIConfig::EnvelopeGUIConfig(const EnvelopeGUIConfig& setup) {
+EnvelopeGUIConfig::EnvelopeGUIConfig(const EnvelopeGUIConfig& setup)
+{
     _controlPointRadius = setup._controlPointRadius;
     _lineWidth = setup._lineWidth;
     _lineSelectedColour = setup._lineSelectedColour;
@@ -230,35 +255,43 @@ VSC::EnvelopeGUIConfig::EnvelopeGUIConfig(const EnvelopeGUIConfig& setup) {
  *	Control Points setters / getters
  */
 
-float VSC::EnvelopeGUIConfig::getControlPointRadius(void) const {
+Float EnvelopeGUIConfig::getControlPointRadius(void) const
+{
 	return _controlPointRadius;
 }
 
-void VSC::EnvelopeGUIConfig::setControlPointRadius(float controlPointRadius) {
+void EnvelopeGUIConfig::setControlPointRadius(Float controlPointRadius)
+{
 	_controlPointRadius = controlPointRadius;
 }
 
-const VSC::Color& VSC::EnvelopeGUIConfig::getControlPointSelectedColour(void) const {
+const Color& EnvelopeGUIConfig::getControlPointSelectedColour(void) const
+{
 	return _controlPointSelectedColour;
 }
 
-void VSC::EnvelopeGUIConfig::setControlPointSelectedColour(const Color& colour) {
+void EnvelopeGUIConfig::setControlPointSelectedColour(const Color& colour)
+{
 	_controlPointSelectedColour = colour;
 }
 
-const VSC::Color& VSC::EnvelopeGUIConfig::getControlPointUnselectedColour(void) const {
+const Color& EnvelopeGUIConfig::getControlPointUnselectedColour(void) const
+{
 	return _controlPointUnselectedColour;
 }
 
-void VSC::EnvelopeGUIConfig::setControlPointUnselectedColour(const VSC::Color& colour) {
+void EnvelopeGUIConfig::setControlPointUnselectedColour(const Color& colour)
+{
 	_controlPointUnselectedColour = colour;
 }
 
-float VSC::EnvelopeGUIConfig::getLineWidth(void) const {
+Float EnvelopeGUIConfig::getLineWidth(void) const
+{
 	return _lineWidth;
 }
 
-void VSC::EnvelopeGUIConfig::setLineWidth(float lineWidth) {
+void EnvelopeGUIConfig::setLineWidth(Float lineWidth)
+{
 	_lineWidth = lineWidth;
 }
 
@@ -268,18 +301,22 @@ void VSC::EnvelopeGUIConfig::setLineWidth(float lineWidth) {
  *	Envelope lines setters / getters
  */
 
-const VSC::Color& VSC::EnvelopeGUIConfig::getLineSelectedColour(void) const {
+const Color& EnvelopeGUIConfig::getLineSelectedColour(void) const
+{
 	return _lineSelectedColour;
 }
 
-void VSC::EnvelopeGUIConfig::setLineSelectedColour(const Color& colour) {
+void EnvelopeGUIConfig::setLineSelectedColour(const Color& colour)
+{
 	_lineSelectedColour = colour;
 }
 
-const VSC::Color& VSC::EnvelopeGUIConfig::getLineUnselectedColour(void) const {
+const Color& EnvelopeGUIConfig::getLineUnselectedColour(void) const
+{
     return _lineUnselectedColour;
 }
 
-void VSC::EnvelopeGUIConfig::setLineUnselectedColour(const Color& colour) {
+void EnvelopeGUIConfig::setLineUnselectedColour(const Color& colour)
+{
     _lineUnselectedColour = colour;
 }

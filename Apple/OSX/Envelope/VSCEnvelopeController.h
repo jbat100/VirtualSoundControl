@@ -9,19 +9,20 @@
 #import <Cocoa/Cocoa.h>
 
 #import "VSCOSXEnvelopeView.h"
-#import "VSCEnvelope.h"
+#import "VSCEnvelopeMinimal.h"
 
-@protocol VSC::EnvelopeViewDataSource;
+@protocol VSCOSXEnvelopeViewDataSource;
 
 
-@interface VSC::EnvelopeController : NSObject <VSC::EnvelopeViewDataSource> {
+@interface VSCOSXEnvelopeController : NSObject <VSCOSXEnvelopeViewDataSource>
+{
     
-    VSC::Envelope::SPtr _currentEnvelope;
+    VSC::Envelope_SPtr _currentEnvelope;
     VSC::Envelope::List _backgroundEnvelopes;
     
 }
 
-@property (nonatomic, strong) IBOutlet VSC::EnvelopeView* envelopeView;
+@property (nonatomic, strong) IBOutlet VSCOSXEnvelopeView* envelopeView;
 @property (nonatomic, strong) IBOutlet NSSlider* horizontalScaleSlider;
 
 @property (nonatomic, strong) NSString* defaultEnvelopePath;

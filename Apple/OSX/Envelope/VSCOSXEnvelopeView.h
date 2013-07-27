@@ -25,7 +25,7 @@
 @property (nonatomic, assign, readonly) NSRect currentSelectionRect;
 @property (nonatomic, assign, readonly) NSPoint currentSelectionOrigin;
 
-@property (nonatomic, assign) VSC::EnvelopeEditorGUIConfig::SPtr envelopeEditorGUIConfig;
+@property (nonatomic, assign) VSC::EnvelopeEditorGUIConfig_SPtr envelopeEditorGUIConfig;
 
 @property (weak) id<VSCOSXEnvelopeController> controller;
 
@@ -42,7 +42,7 @@
  */
 
 -(BOOL) point:(NSPoint)p touchesEnvelopePoint:(VSC::EnvelopePoint::SPtr)envelopePoint;
--(NSPoint) pointForTime:(Float)time value:(Float)value;
+-(NSPoint) pointForTime:(VSC::Float)time value:(VSC::Float)value;
 -(NSPoint) pointForEnvelopePoint:(VSC::EnvelopePoint::SPtr)controlPoint;
 -(void) setEnvelopePoint:(VSC::EnvelopePoint::SPtr)point withPoint:(NSPoint)p;
 -(VSC::EnvelopePoint::SPtr) envelopePointUnderPoint:(NSPoint)point;

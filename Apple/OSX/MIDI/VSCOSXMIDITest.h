@@ -12,17 +12,13 @@
 #include "VSCMIDIOutput.h"
 #include "VSCMIDIOutputManager.h"
 
-@interface VSCOSXMIDITest : NSObject  {  
-    
-
-}
+@interface VSCOSXMIDITest : NSObject  
 
 @property (nonatomic, assign) unsigned int midiChannel;
 @property (nonatomic, assign) unsigned int controlValue;
 @property (nonatomic, assign) unsigned int pitchValue;
 @property (nonatomic, assign) unsigned int velocityValue;
 @property (nonatomic, assign) VSC::MIDI::ControlNumber controlNumber;
-
 @property (nonatomic, assign) VSC::MIDI::Output::SPtr midiOutput;
 
 @end

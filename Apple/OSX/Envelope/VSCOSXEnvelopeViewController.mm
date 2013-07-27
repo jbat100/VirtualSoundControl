@@ -9,9 +9,14 @@
 #import "VSCOSXEnvelopeViewController.h"
 #import "NSString+VSCAdditions.h"
 
-//typedef std::vector<Envelope::WPtr> Envelopes;
+#import "VSCOSXEnvelopeView.h"
+
+using namespace VSC;
 
 @interface VSCOSXEnvelopeViewController ()
+{
+    Envelopes _backgroundEnvelopes;
+}
 
 @end
 
@@ -30,32 +35,31 @@
 
 
 
--(void) setEnvelope:(VSC::Envelope::WPtr)envelope
+-(void) setCurrentEnvelope:(Envelope_SPtr)envelope
 {
     _currentEnvelope = envelope;
     [self.envelopeView redrawMainEnvelope];
 }
 
--(void) addEnvelope:(VSC::Envelope::SPtr)envelope
+-(void) addBackgroundEnvelope:(Envelope_SPtr)envelope
 {
     // not implemented
 }
 
--(void) removeEnvelope:(VSC::Envelope::SPtr)envelope
+-(void) removeBackgroundEnvelope:(Envelope_SPtr)envelope
 {
     // not implemented
 }
 
-#pragma mark - VSC::EnvelopeViewDataSource Methods
+#pragma mark - EnvelopeViewDataSource Methods
 
--(VSC::Envelope::SPtr) mainEnvelopeForEnvelopeView:(VSCEnvelopeView*)envelopeView
+-(Envelope_SPtr) mainEnvelopeForEnvelopeView:(VSCOSXEnvelopeView*)envelopeView
 {
     return _currentEnvelope;
 }
 
--(VSC::Envelope::List) backgroundEnvelopesForEnvelopeView:(VSCEnvelopeView*)envelopeView
+-(Envelopes) backgroundEnvelopesForEnvelopeView:(VSCOSXEnvelopeView*)envelopeView
 {
-    //return VSC::Envelope::List();
     return _backgroundEnvelopes;
 }
 
@@ -66,7 +70,7 @@
 {
 	NSLog(@"Load Envelope");
 	
-    NSArray *fileTypes = [NSArray arrayWithObject:[NSString stringWithStdString:VSC::Envelope::FileExtension]];
+    NSArray *fileTypes = [NSArray arrayWithObject:[NSString stringWithStdString:Envelope::FileExtension]];
     NSOpenPanel *oPanel = [NSOpenPanel openPanel];
     [oPanel setAllowsMultipleSelection:NO];
     
@@ -77,7 +81,7 @@
 		NSAssert([filesToOpen count] < 2, @"Cannot open multiple files");
         if ([filesToOpen count] == 1)
         {
-			VSC::Envelope::SPtr newEnvelope = VSC::Envelope::createFromXMLFile([[filesToOpen objectAtIndex:0] UTF8String]);
+			Envelope_SPtr newEnvelope = Envelope::createFromXMLFile([[filesToOpen objectAtIndex:0] UTF8String]);
 			newEnvelope->setFilePath([[filesToOpen objectAtIndex:0] UTF8String]);
 			[self setCurrentEnvelope:newEnvelope];
 		}
@@ -125,7 +129,7 @@
 	/* create or get the shared instance of NSSavePanel */
 	NSSavePanel* sp = [NSSavePanel savePanel];
     
-    sp.allowedFileTypes = [NSArray arrayWithObject:[NSString stringWithStdString:VSC::Envelope::FileExtension]];
+    sp.allowedFileTypes = [NSArray arrayWithObject:[NSString stringWithStdString:Envelope::FileExtension]];
     
     sp.directoryURL = [NSURL fileURLWithPath:@""];
     sp.nameFieldStringValue = @"Envelope";

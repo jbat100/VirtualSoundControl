@@ -18,9 +18,11 @@
 
 namespace VSC {
     
-    namespace MIDI {
+    namespace MIDI
+    {
         
-        struct OutputPort {
+        struct OutputPort
+        {
             unsigned int number;
             std::string name;
             bool isVirtual;
@@ -31,7 +33,8 @@ namespace VSC {
         
         std::ostream& operator<<(std::ostream& output, const OutputPort& p);
         
-        struct InputPort {
+        struct InputPort
+        {
             unsigned int number;
             std::string name;
             bool isVirtual;
@@ -53,7 +56,8 @@ namespace VSC {
          *  A bit of background information from wiki of MIDI messages http://en.wikipedia.org/wiki/MIDI_1.0
          */
         
-        enum ControlNumber {
+        enum ControlNumber
+        {
             ControlInvalid                      = 999,
             ControlNone                         = 998,
             ControlBankSelect                   = 0,
@@ -158,7 +162,8 @@ namespace VSC {
         MessageDescription::SPtr descriptionFromMessage(const Message& message);
 
         
-        class PortManager {
+        class PortManager
+        {
             
         public:
             

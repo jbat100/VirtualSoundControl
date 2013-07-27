@@ -74,9 +74,9 @@ namespace VSC {
         Float valueForPoint(const Float point);
         Float timeDeltaForPointDelta(const Float delta);
         Float valueDeltaForPointDelta(const Float delta);
-        Point pointForEnvelopeCoordinate(const EnvelopeCoordinate::SPtr& p);
-        EnvelopeCoordinate::SPtr createEnvelopeCoordinateForPoint(const Point& p);
-        void setEnvelopeCoordinateToPoint(EnvelopeCoordinate::SPtr coord, const Point& p);
+        Point pointForEnvelopeCoordinate(const EnvelopeCoordinate_SPtr& p);
+        EnvelopeCoordinate_SPtr createEnvelopeCoordinateForPoint(const Point& p);
+        void setEnvelopeCoordinateToPoint(EnvelopeCoordinate_SPtr coord, const Point& p);
         
         
     private:
