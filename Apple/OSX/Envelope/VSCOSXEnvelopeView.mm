@@ -64,8 +64,8 @@ using namespace VSC;
      *  A set is more appropriate than a list as we don't care about ordering and adding
      *  without needing to check for presence (sets cannot have duplicates) is an advantage
      */
-    Envelope::PointSet _currentlySelectedPoints;
-	Envelope::PointSet _pointsInCurrentSelectionRect;
+    EnvelopePointSet _currentlySelectedPoints;
+	EnvelopePointSet _pointsInCurrentSelectionRect;
     
 }
 
@@ -76,7 +76,7 @@ using namespace VSC;
 @property (nonatomic, assign, readwrite) NSPoint currentSelectionOrigin;
 
 -(void) purgeCurrentlySelectedPoints;
--(void) addPointsInRect:(NSRect)rect toPointSet:(std::set<EnvelopePoint::SPtr>&)pointSet;
+-(void) addPointsInRect:(NSRect)rect toEnvelopePointSet:(std::set<EnvelopePoint::SPtr>&)pointSet;
 
 @end
 
@@ -148,7 +148,7 @@ using namespace VSC;
         _pointsInCurrentSelectionRect.clear();
     }
     
-    for (Envelope::PointSet::iterator setIt = _currentlySelectedPoints.begin(); setIt != _currentlySelectedPoints.end(); setIt++)
+    for (EnvelopePointSet::iterator setIt = _currentlySelectedPoints.begin(); setIt != _currentlySelectedPoints.end(); setIt++)
     {
         Envelope::ConstPointIterator beginEnvPntIt = _envelope->getPointBeginConstIterator();
         Envelope::ConstPointIterator endEnvPntIt = _envelope->getPointEndConstIterator();
@@ -159,7 +159,7 @@ using namespace VSC;
         }
     }
     
-    for (Envelope::PointSet::iterator setIt = _pointsInCurrentSelectionRect.begin(); setIt != _pointsInCurrentSelectionRect.end(); setIt++)
+    for (EnvelopePointSet::iterator setIt = _pointsInCurrentSelectionRect.begin(); setIt != _pointsInCurrentSelectionRect.end(); setIt++)
     {
         Envelope::ConstPointIterator beginEnvPntIt = _envelope->getPointBeginConstIterator();
         Envelope::ConstPointIterator endEnvPntIt = _envelope->getPointEndConstIterator();
@@ -180,9 +180,9 @@ using namespace VSC;
     return NO;
 }
 
--(BOOL) pointIsSelected:(EnvelopePoint::SPtr)envelopePoint
+-(BOOL) selectedEnvelopePointsForEnvelope:(EnvelopePoint::SPtr)envelopePoint
 {
-    Envelope::PointSet::const_iterator pointIt = _pointsInCurrentSelectionRect.find(envelopePoint);
+    EnvelopePointSet::const_iterator pointIt = _pointsInCurrentSelectionRect.find(envelopePoint);
     if (pointIt != _pointsInCurrentSelectionRect.end())
     {
         return YES;
@@ -277,23 +277,23 @@ using namespace VSC;
     _envelopeEditorGUIConfig = envelopeViewSetup;
 }
 
--(Envelope::PointSet&)getCurrentlySelectedPoints
+-(EnvelopePointSet&)getCurrentlySelectedPoints
 {
     return _currentlySelectedPoints;
 }
 
--(void)getCurrentlySelectedPoints:(Envelope::PointSet&)points
+-(void)getCurrentlySelectedPoints:(EnvelopePointSet&)points
 {
-    for (Envelope::PointSet::iterator it = _currentlySelectedPoints.begin(); it != _currentlySelectedPoints.end(); it++)
+    for (EnvelopePointSet::iterator it = _currentlySelectedPoints.begin(); it != _currentlySelectedPoints.end(); it++)
     {
 		points.insert(*it);
 	}
 }
 
--(void)setCurrentlySelectedPoints:(Envelope::PointSet&)points
+-(void)setCurrentlySelectedPoints:(EnvelopePointSet&)points
 {
     _currentlySelectedPoints.clear();
-    for (Envelope::PointSet::iterator it = points.begin(); it != points.end(); it++)
+    for (EnvelopePointSet::iterator it = points.begin(); it != points.end(); it++)
     {
 		_currentlySelectedPoints.insert(*it);
 	}
@@ -348,7 +348,7 @@ using namespace VSC;
 	return EnvelopePoint::SPtr();
 }
 
--(void) getEnvelopePoints:(Envelope::PointList&)ps InRect:(NSRect)rect
+-(void) getEnvelopePoints:(EnvelopePoints&)ps InRect:(NSRect)rect
 {
 	if (!_envelope) return;
     
@@ -360,9 +360,9 @@ using namespace VSC;
 	}
 }
 
--(void) addPointsInRect:(NSRect)rect toPointSet:(Envelope::PointSet&)pointSet
+-(void) addPointsInRect:(NSRect)rect toEnvelopePointSet:(EnvelopePointSet&)pointSet
 {
-    Envelope::PointList rectPoints; 
+    EnvelopePoints rectPoints; 
 	[self getEnvelopePoints:rectPoints InRect:rect];
     
 	for (Envelope::PointIterator it = rectPoints.begin(); it != rectPoints.end(); it++)
@@ -526,7 +526,7 @@ using namespace VSC;
 		// If a point exists at the point where the click occured then select/deselect the point
 		if (envelopePoint)
         {
-			Envelope::PointSet::iterator iter = _currentlySelectedPoints.find(envelopePoint);
+			EnvelopePointSet::iterator iter = _currentlySelectedPoints.find(envelopePoint);
 			// if the point is not selected, add it to selected...
 			if (iter == _currentlySelectedPoints.end())
             {
@@ -567,7 +567,7 @@ using namespace VSC;
     
     if ((currentMouseAction & (EnvelopeViewMouseActionSelect | EnvelopeViewMouseActionPersistentSelect)) && movedSinceMouseDown == YES)
     {
-		[self addPointsInRect:self.currentSelectionRect toPointSet:_currentlySelectedPoints];
+		[self addPointsInRect:self.currentSelectionRect toEnvelopePointSet:_currentlySelectedPoints];
 		
 		_pointsInCurrentSelectionRect.clear();
 		
@@ -638,7 +638,7 @@ using namespace VSC;
 		
 		_pointsInCurrentSelectionRect.clear();
 		
-		[self addPointsInRect:self.currentSelectionRect toPointSet:_pointsInCurrentSelectionRect];
+		[self addPointsInRect:self.currentSelectionRect toEnvelopePointSet:_pointsInCurrentSelectionRect];
 	}
 	
 	else if (currentMouseAction & EnvelopeViewMouseActionMove)
@@ -646,12 +646,12 @@ using namespace VSC;
 		
 		currentMouseAction = EnvelopeViewMouseActionMove;
 		
-		Envelope::PointSet::iterator it;
+		EnvelopePointSet::iterator it;
         
         Float valueDelta = _envelopeEditorGUIConfig->valueDeltaForPointDelta(deltaY);
         Float timeDelta = _envelopeEditorGUIConfig->timeDeltaForPointDelta(deltaX);
 		
-        Envelope::PointList moveList;
+        EnvelopePoints moveList;
 		for (it = _currentlySelectedPoints.begin(); it != _currentlySelectedPoints.end(); it++) {
             moveList.push_back(*it);
 		}

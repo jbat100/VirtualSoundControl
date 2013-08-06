@@ -147,7 +147,7 @@ std::string VSC::Envelope::getName(void) const
 bool VSC::Envelope::isSortedByTime(void) const
 {    
     if (mPoints.size() < 1) return true;
-    Points::iterator it = mPoints.begin();
+    EnvelopePoints::iterator it = mPoints.begin();
     Float currentTime = (*it)->getTime();
     for (; it != mPoints.end(); it++)
     {
@@ -160,7 +160,7 @@ bool VSC::Envelope::isSortedByTime(void) const
     return true;
 }
 
-#pragma mark - Add/Remove Envelope Points
+#pragma mark - Add/Remove Envelope EnvelopePoints
 
 void VSC::Envelope::addPoint(EnvelopePoint::SPtr point)
 {
@@ -176,10 +176,10 @@ void VSC::Envelope::addPoint(EnvelopePoint::SPtr point)
         return;
     }
 	
-    Points::iterator currentIt;
-	Points::iterator nextIt;
+    EnvelopePoints::iterator currentIt;
+	EnvelopePoints::iterator nextIt;
 	
-	Points pointsToRemove;
+	EnvelopePoints pointsToRemove;
 	
 	// remove close points
 	for (currentIt = mPoints.begin(); currentIt != mPoints.end(); currentIt++)
@@ -242,13 +242,13 @@ void VSC::Envelope::removePoint(EnvelopePoint::SPtr point)
 {
 	BOOST_ASSERT(point);
 	std::cout << "Envelope::removePoint: " << *point << std::endl;
-    Points::iterator it = mPoints.find(point);
+    EnvelopePoints::iterator it = mPoints.find(point);
     BOOST_ASSERT_MSG(it != mPoints.end(), "Attempted to remove absent point");
 	mPoints.erase(it);
     BOOST_ASSERT(this->isSortedByTime());
 }
 
-void VSC::Envelope::addPoints(Points& points)
+void VSC::Envelope::addPoints(EnvelopePoints& points)
 {    
     BOOST_FOREACH(EnvelopePoint::SPtr point, points)
     {
@@ -257,7 +257,7 @@ void VSC::Envelope::addPoints(Points& points)
     BOOST_ASSERT(isSortedByTime());
 }
 
-void VSC::Envelope::removePoints(Points& points)
+void VSC::Envelope::removePoints(EnvelopePoints& points)
 {
 	//std::cout << "In removePoints";
 	if (points.size() == 0)
@@ -273,7 +273,7 @@ void VSC::Envelope::removePoints(Points& points)
 
 void VSC::Envelope::removePointsInTimeRange(TimeRange range)
 {
-	Points points = this->getPointsInTimeRange(range);
+	EnvelopePoints points = this->getPointsInTimeRange(range);
     //std::cout << "Removing points in time range " << range.origin << " - " << range.size << std::endl;
 	this->removePoints(l);
     BOOST_ASSERT(this->isSortedByTime());
@@ -286,7 +286,7 @@ void VSC::Envelope::removeAllPoints(void)
 
 #pragma mark - Change Notification
 
-void VSC::Envelope::envelopeChangedBetweenEnvelopePoints(Points::iterator begin, Points::iterator end)
+void VSC::Envelope::envelopeChangedBetweenEnvelopePoints(EnvelopePoints::iterator begin, EnvelopePoints::iterator end)
 {
     std::cout << "In Envelope envelopeChangedBetweenEnvelopePoints " << **begin << " " << **end;
 }
@@ -358,7 +358,7 @@ VSC::EnvelopePoint::SPtr VSC::Envelope::getFirstPointBeforeTime(Float time) cons
 
 	if (mPoints.size() == 0) return EnvelopePoint::SPtr();
 	
-	for (Points::reverse_iterator it = mPoints.rbegin(); it != mPoints.rend(); it++)
+	for (EnvelopePoints::reverse_iterator it = mPoints.rbegin(); it != mPoints.rend(); it++)
     {
 		if ((*it)->getTime() < time)
         {
@@ -374,7 +374,7 @@ void VSC::Envelope::getPointsInTimeRange(const TimeRange& range) const
 {
     BOOST_ASSERT(this->isSortedByTime());
     
-    Points points;
+    EnvelopePoints points;
     
 	BOOST_FOREACH(EnvelopePoint:SPtr point, mPoints)
     {
@@ -387,7 +387,7 @@ void VSC::Envelope::getPointsInTimeRange(const TimeRange& range) const
     return points;
 }
 
-const VSC::Envelope::PointList& VSC::Envelope::getPoints(void) const
+const VSC::EnvelopePoints& VSC::Envelope::getPoints(void) const
 {
     return mPoints;
 }
@@ -503,7 +503,7 @@ bool VSC::Envelope::displacePoint(EnvelopePoint::SPtr point, Float deltaTime, Fl
     return this->displacePoint(pointIt, deltaTime, deltaValue);
 }
 
-bool VSC::Envelope::displacePoints(PointList& pts, Float deltaTime, Float deltaValue)
+bool VSC::Envelope::displacePoints(EnvelopePoints& pts, Float deltaTime, Float deltaValue)
 {
     // the list is most likely not the same as mPoints so we can't just use it with displacePoints which requires
     // the iterator to be so.
@@ -647,7 +647,7 @@ std::ostream& VSC::operator<<(std::ostream& output, Envelope& p)
 	return output;
 }
 
-void VSC::sortEnvelopePointListByTime(Envelope::PointList& points)
+void VSC::sortEnvelopePointsByTime(EnvelopePoints& points)
 {
     points.sort(compareEnvelopePointTimes);
 }

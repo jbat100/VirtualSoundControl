@@ -120,7 +120,7 @@ namespace VSC {
         EnvelopeGUIConfig(const EnvelopeGUIConfig& setup);
         
         /*
-         *	Control Points setters / getters
+         *	Control EnvelopePoints setters / getters
          */
         Float getControlPointRadius(void) const;
         void setControlPointRadius(Float controlPointRadius);
@@ -142,7 +142,7 @@ namespace VSC {
     private:
         
         /*
-         *	Control Points
+         *	Control EnvelopePoints
          */
         Float _controlPointRadius;
         Color _controlPointSelectedColour;

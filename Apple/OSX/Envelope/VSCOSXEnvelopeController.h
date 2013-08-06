@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#include "VSCEnvelopeMinimal.h"
+
 typedef enum _VSCOSXEnvelopeViewClickArea {
 	VSCOSXEnvelopeViewClickAreaNone,
 	VSCOSXEnvelopeViewClickAreaSelection,
@@ -31,5 +33,9 @@ typedef enum _VSCOSXEnvelopeViewMouseAction {
 } VSCOSXEnvelopeViewMouseAction;
 
 @protocol VSCOSXEnvelopeController <NSObject>
+
+-(const VSC::Envelopes&) backgroundEnvelopes;
+
+-(VSC::Envelope_SPtr) currentEnvelope;
 
 @end

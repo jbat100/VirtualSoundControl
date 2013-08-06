@@ -26,7 +26,7 @@ namespace VSC
 using namespace VSC;
 
 
-//MARK: Points Calculations
+//MARK: EnvelopePoints Calculations
 
 Float pointForTime(const Float t, const Envelope::TimeRange& timeRange, const Float width)
 {
@@ -249,10 +249,10 @@ EnvelopeGUIConfig::EnvelopeGUIConfig(const EnvelopeGUIConfig& setup)
     _controlPointUnselectedColour = setup._controlPointUnselectedColour;
 }
 
-#pragma mark Control Points setters / getters
+#pragma mark Control EnvelopePoints setters / getters
 
 /*
- *	Control Points setters / getters
+ *	Control EnvelopePoints setters / getters
  */
 
 Float EnvelopeGUIConfig::getControlPointRadius(void) const

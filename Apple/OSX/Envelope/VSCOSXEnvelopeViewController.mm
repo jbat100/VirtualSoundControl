@@ -33,22 +33,33 @@ using namespace VSC;
     return self;
 }
 
-
-
 -(void) setCurrentEnvelope:(Envelope_SPtr)envelope
 {
     _currentEnvelope = envelope;
-    [self.envelopeView redrawMainEnvelope];
 }
 
 -(void) addBackgroundEnvelope:(Envelope_SPtr)envelope
 {
-    // not implemented
+    if (std::find(_backgroundEnvelopes.begin(), _backgroundEnvelopes.end(), envelope) == _backgroundEnvelopes.end())
+    {
+        _backgroundEnvelopes.push_back(envelope);
+    }
 }
 
 -(void) removeBackgroundEnvelope:(Envelope_SPtr)envelope
 {
-    // not implemented
+    // http://en.wikipedia.org/wiki/Erase-remove_idiom
+    _backgroundEnvelopes.erase(std::remove(_backgroundEnvelopes.begin(), _backgroundEnvelopes.end(), envelope), _backgroundEnvelopes.end());
+}
+
+-(void) clearBackgroundEnvelopes
+{
+    _backgroundEnvelopes.clear();
+}
+
+-(const VSC::Envelopes&) backgroundEnvelopes
+{
+    return _backgroundEnvelopes;
 }
 
 #pragma mark - EnvelopeViewDataSource Methods
@@ -92,7 +103,7 @@ using namespace VSC;
 {
 	NSLog(@"Save Envelope");
 	
-	NSString* filePath = [NSString stringWithCString:([self getCurrentEnvelope]->getFilePath()).c_str() encoding:NSUTF8StringEncoding];
+	NSString* filePath = [NSString stringWithCString:(self.currentEnvelope->getFilePath()).c_str() encoding:NSUTF8StringEncoding];
 	
 	if ([filePath length] == 0)
     {
@@ -104,24 +115,22 @@ using namespace VSC;
 	
 	if ([[NSFileManager defaultManager] isWritableFileAtPath:filePath])
     {
-		[self getCurrentEnvelope]->saveToXMLFile((const char *)[filePath UTF8String]);
+		self.currentEnvelope->saveToXMLFile((const char *)[filePath UTF8String]);
 	}
 	else
     {
 		[self saveEnvelopeAs:sender];
 		return;
 	}
-	
-	
 }
 
 -(IBAction) saveEnvelopeAs:(id)sender
 {
 	NSLog(@"Save Envelope As");
 	
-	NSAssert([self getCurrentEnvelope], @"Should't receive save command when currentEnvelope is nil");
+	NSAssert(self.currentEnvelope, @"Should't receive save command when currentEnvelope is nil");
 	
-	if (![self getCurrentEnvelope])
+	if (!self.currentEnvelope)
     {
 		return;
 	}
@@ -140,9 +149,8 @@ using namespace VSC;
 	/* if successful, save file under designated name */
 	if (runResult == NSOKButton)
     {
-		[self getCurrentEnvelope]->saveToXMLFile((const char *)[[[sp directoryURL] path] UTF8String]);
+		self.currentEnvelope->saveToXMLFile((const char *)[[[sp directoryURL] path] UTF8String]);
 	}
-	
 }
 
 @end

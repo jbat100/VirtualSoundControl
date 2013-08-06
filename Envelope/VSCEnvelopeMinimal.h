@@ -29,6 +29,9 @@ namespace VSC {
     typedef boost::shared_ptr<EnvelopeEditorGUIConfig>      EnvelopeEditorGUIConfig_SPtr;
     typedef boost::shared_ptr<EnvelopeGUIConfig>            EnvelopeGUIConfig_SPtr;
     
+    typedef std::vector<EnvelopePoint_SPtr>    EnvelopePoints;
+    typedef std::set<EnvelopePoint_SPtr>       EnvelopePointSet;
+    
 }
 
 #endif

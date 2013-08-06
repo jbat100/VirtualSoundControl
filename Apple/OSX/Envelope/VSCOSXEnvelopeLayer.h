@@ -16,11 +16,11 @@
 @protocol VSCOSXEnvelopeEditor <NSObject>
 
 -(BOOL) envelopeIsEditable:(VSC::Envelope_SPtr)envelope;
--(BOOL) pointIsSelected:(VSC::EnvelopePoint_SPtr)envelopePoint;
+-(const VSC::EnvelopePointSet&) selectedEnvelopePointsForEnvelope:(VSC::Envelope_SPtr)envelopePoint;
 -(NSRect) currentSelectionRectForEnvelope:(VSC::Envelope_SPtr)envelope;
 
 -(VSC::EnvelopeEditorGUIConfig_SPtr) envelopeEditorGUIConfig;
--(VSC::EnvelopeGUIConfig_SPtr) sender:(id) requestsGUIConfigForEnvelope:(VSC::Envelope_SPtr)envelope;
+-(VSC::EnvelopeGUIConfig_SPtr) GUIConfigForEnvelope:(VSC::Envelope_SPtr)envelope;
 
 @end
 
@@ -28,10 +28,9 @@
 
 @property (weak) id<VSCOSXEnvelopeEditor> editor;
 
--(void) addEnvelope:(VSC::Envelope_SPtr)envelope;
--(void) addEnvelope:(VSC::Envelope_SPtr)envelope atIndex:(NSUInteger)index;
--(void) removeEnvelope:(VSC::Envelope_SPtr)envelope;
+@property (nonatomic, assign) VSC::EnvelopeGUIConfig_SPtr defaultEnvelopeGUIConfig;
+@property (nonatomic, assign) VSC::EnvelopeEditorGUIConfig_SPtr defaultEnvelopeEditorGUIConfig;
 
-//-(NSUInteger) numberOfEnvelop
+-(VSC::Envelopes&) envelopes;
 
 @end

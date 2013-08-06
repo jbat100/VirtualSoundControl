@@ -54,11 +54,6 @@ namespace VSC {
             PointDisplacementConflictResolutionMix
         };
         
-        typedef std::set<EnvelopePoint::SPtr>       PointSet;
-        typedef std::list<EnvelopePoint::SPtr>      PointList;
-        typedef std::vector<EnvelopePoint::SPtr>    Points;
-
-        
         Envelope(void);
         // Envelope copy construct and file construct
         virtual ~Envelope(void);
@@ -93,14 +88,14 @@ namespace VSC {
         /* edit points */
         
         void addPoint(EnvelopePoint::SPtr point);
-        void addPoints(PointList& points); 
+        void addPoints(EnvelopePoints& points); 
         
         void removePoint(EnvelopePoint::SPtr point);
-        void removePoints(PointList& points); 
+        void removePoints(EnvelopePoints& points); 
         void removePointsInTimeRange(TimeRange range);
         void removeAllPoints(void);
         
-        const Points& getPoints();
+        const EnvelopePoints& getPoints();
         
         /* get points */
         
@@ -108,8 +103,8 @@ namespace VSC {
         EnvelopePoint::SPtr getFirstPointAfterTime(Float time) const;
         EnvelopePoint::SPtr getFirstPointBeforeTime(Float time) const;
         
-        Points getPointsInTimeRange(const TimeRange& range) const;
-        Points getPointsInValueRange(const ValueRange& range) const;
+        EnvelopePoints getPointsInTimeRange(const TimeRange& range) const;
+        EnvelopePoints getPointsInValueRange(const ValueRange& range) const;
         
         int numberOfPoints(void) const;
         
@@ -119,7 +114,7 @@ namespace VSC {
          * have been moved
          */
         
-        bool displacePoints(PointList& pts, Float deltaTime, Float deltaValue); 
+        bool displacePoints(EnvelopePoints& pts, Float deltaTime, Float deltaValue); 
         
         /* values */
         
@@ -133,7 +128,7 @@ namespace VSC {
         Float minValue(void) const;
         Float maxValue(void) const;
         
-        const PointList& getPoints(void) const;
+        const EnvelopePoints& getPoints(void) const;
         
     protected:
         
@@ -141,7 +136,7 @@ namespace VSC {
          *	Envelope changes calls (mostly for subclasses to update cache tables)
          */
         
-        virtual void envelopeChangedBetweenEnvelopePoints(Points::iterator begin, Points::iterator end);
+        virtual void envelopeChangedBetweenEnvelopePoints(EnvelopePoints::iterator begin, EnvelopePoints::iterator end);
         virtual void envelopeChangedBetweenEnvelopePointAndNext(EnvelopePoint::SPtr point);
         virtual void envelopeChanged(void);
         
@@ -151,7 +146,7 @@ namespace VSC {
         /*
          *	Contains all the envelope points
          */
-        Points mPoints;
+        EnvelopePoints mPoints;
         
         /*
          *	When points are being displaced so that they overlap neighboring points this determines
@@ -182,7 +177,7 @@ namespace VSC {
         
         /* move points (disallow manggling...) */
         bool displacePoint(EnvelopePoint::SPtr point, Float deltaTime, Float deltaValue);
-        bool displacePoint(Points::iterator pointIt, Float deltaTime, Float deltaValue);
+        bool displacePoint(EnvelopePoints::iterator pointIt, Float deltaTime, Float deltaValue);
         
         /*
          *	Print out and serialization (private)
@@ -217,7 +212,7 @@ namespace VSC {
      *  Helpers
      */
 
-    void sortPointListByTime(Envelope::PointList& points);
+    void sortEnvelopePointsByTime(EnvelopePoints& points);
     
 }
 

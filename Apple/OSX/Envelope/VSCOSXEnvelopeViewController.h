@@ -7,13 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "VSCOSXEnvelopeController.h"
 
 #include "VSCEnvelopeMinimal.h"
 
 @class VSCOSXEnvelopeView;
 
 
-@interface VSCOSXEnvelopeViewController : NSViewController
+@interface VSCOSXEnvelopeViewController : NSViewController <VSCOSXEnvelopeController>
 
 @property (nonatomic, strong) IBOutlet VSCOSXEnvelopeView* envelopeView;
 
