@@ -144,8 +144,8 @@ using namespace VSC;
             if (isEditable == YES)
             {
                 // if both the current point and the next point are selected then draw line in selected color
-                if ([self.editor selectedEnvelopePointsForEnvelope:currentPoint] &&
-                    [self.editor selectedEnvelopePointsForEnvelope:nextPoint])
+                if (selectedPoints.find(currentPoint) != selectedPoints.end() &&
+                    selectedPoints.find(nextPoint) != selectedPoints.end())
                 {
                     CGContextSetStrokeColorWithColor(ctx, cgLineSelectedColorRef);
                 }
@@ -187,19 +187,21 @@ using namespace VSC;
     CGContextSetLineWidth(ctx, 1);
     
     
-	for (Envelope::ConstPointIterator it = envelope->getPointBeginIterator(); it !=endIt; it++)
+	for (EnvelopePoints::const_iterator it = envelope->getPoints().begin(); it != endIt; ++it)
     {
 		
 		EnvelopePoint_SPtr currentPoint = *it;
 		
 		// draw control circle for point
+        
+        EnvelopeCoordinate_SPtr coord = boost::dynamic_pointer_cast<EnvelopeCoordinate>(currentPoint);
 		
-        Point vscp = [self.editor envelopeEditorGUIConfig]->pointForEnvelopeCoordinate(boost::dynamic_pointer_cast<EnvelopeCoordinate>(currentPoint));
+        VSC::Point vscp = [self.editor envelopeEditorGUIConfig]->pointForEnvelopeCoordinate(coord);
 		NSPoint p =  NSMakePointFromPoint(vscp);
 		
         if (isEditable == YES)
         {
-            if ([self.editor selectedEnvelopePointsForEnvelope:currentPoint])
+            if (selectedPoints.find(currentPoint) != selectedPoints.end())
             {
                 CGContextSetFillColorWithColor(ctx, cgSelectedColourRef);  
             }

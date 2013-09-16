@@ -19,8 +19,9 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import <cmath>
-#import <boost/assert.hpp>
+#include <cmath>
+#include <boost/assert.hpp>
+#include <boost/foreach.hpp>
 
 using namespace VSC;
 
@@ -57,7 +58,7 @@ using namespace VSC;
  
  */
 
-@interface VSCEnvelopeView ()
+@interface VSCOSXEnvelopeView ()
 {
     /*
      *  Keeps track of the currently selected points for group operations (move for example)
@@ -69,7 +70,7 @@ using namespace VSC;
     
 }
 
-@property (nonatomic, assign) VSCEnvelopeViewMouseAction currentMouseAction;
+@property (nonatomic, assign) VSCOSXEnvelopeViewMouseAction currentMouseAction;
 @property (nonatomic, assign) BOOL movedSinceMouseDown;
 
 @property (nonatomic, assign, readwrite) NSRect currentSelectionRect;
@@ -82,7 +83,7 @@ using namespace VSC;
 
 
 
-@implementation VSCEnvelopeView
+@implementation VSCOSXEnvelopeView
 
 
 #pragma mark - NSView Methods
@@ -92,8 +93,7 @@ using namespace VSC;
     self = [super initWithFrame:frame];
     if (self)
     {
-        _envelope = Envelope::SPtr();
-		_envelopeEditorGUIConfig = EnvelopeEditorGUIConfig::SPtr(new EnvelopeEditorGUIConfig());
+		_envelopeEditorGUIConfig = EnvelopeEditorGUIConfig_SPtr(new EnvelopeEditorGUIConfig());
     }
     return self;
 }
@@ -105,20 +105,6 @@ using namespace VSC;
 }
 
 #pragma mark - Custom Draw Methods
-
--(void) reloadEnvelopes
-{    
-    _envelope = Envelope::SPtr();
-    _backgroundEnvelopeList.clear();
-    
-    if (self.dataSource)
-    {
-        _envelope = [self.dataSource mainEnvelopeForEnvelopeView:self];
-        _backgroundEnvelopeList = [self.dataSource backgroundEnvelopesForEnvelopeView:self];
-        [self.mainEnvelopeLayer addEnvelope:_envelope];
-    }
-    
-}
 
 -(void) redrawMainEnvelope
 {
@@ -142,7 +128,9 @@ using namespace VSC;
      *  (points can be removed from the envelope after add/displace points)
      */
     
-    if (!_envelope)
+    Envelope_SPtr envelope = [self.controller currentEnvelope];
+    
+    if (!envelope)
     {
         _currentlySelectedPoints.clear();
         _pointsInCurrentSelectionRect.clear();
@@ -150,10 +138,8 @@ using namespace VSC;
     
     for (EnvelopePointSet::iterator setIt = _currentlySelectedPoints.begin(); setIt != _currentlySelectedPoints.end(); setIt++)
     {
-        Envelope::ConstPointIterator beginEnvPntIt = _envelope->getPointBeginConstIterator();
-        Envelope::ConstPointIterator endEnvPntIt = _envelope->getPointEndConstIterator();
-        Envelope::ConstPointIterator envPntIt = std::find(beginEnvPntIt, endEnvPntIt, *setIt);
-        if (envPntIt == endEnvPntIt)
+        EnvelopePoints::const_iterator envPntIt = std::find(envelope->getPoints().begin(), envelope->getPoints().end(), *setIt);
+        if (envPntIt == envelope->getPoints().end())
         {
             _currentlySelectedPoints.erase(setIt);
         }
@@ -161,10 +147,8 @@ using namespace VSC;
     
     for (EnvelopePointSet::iterator setIt = _pointsInCurrentSelectionRect.begin(); setIt != _pointsInCurrentSelectionRect.end(); setIt++)
     {
-        Envelope::ConstPointIterator beginEnvPntIt = _envelope->getPointBeginConstIterator();
-        Envelope::ConstPointIterator endEnvPntIt = _envelope->getPointEndConstIterator();
-        Envelope::ConstPointIterator envPntIt = std::find(beginEnvPntIt, endEnvPntIt, *setIt);
-        if (envPntIt == endEnvPntIt)
+        EnvelopePoints::const_iterator envPntIt = std::find(envelope->getPoints().begin(), envelope->getPoints().end(), *setIt);
+        if (envPntIt == envelope->getPoints().end())
         {
             _pointsInCurrentSelectionRect.erase(setIt);
         }
@@ -173,7 +157,7 @@ using namespace VSC;
 
 -(BOOL) envelopeIsEditable:(Envelope::SPtr)envelope
 {
-    if (envelope == _envelope)
+    if (envelope && envelope == [self.controller currentEnvelope])
     {
         return YES;
     }
@@ -192,14 +176,14 @@ using namespace VSC;
 
 -(NSRect) currentSelectionRectForEnvelope:(Envelope::SPtr)envelope
 {
-    if (envelope == _envelope)
+    if (envelope && envelope == [self.controller currentEnvelope])
     {
         return self.currentSelectionRect;
     }
     return NSZeroRect;
 }
 
--(EnvelopeEditorGUIConfig::SPtr) envelopeEditorGUIConfig
+-(EnvelopeEditorGUIConfig_SPtr) envelopeEditorGUIConfig
 {
     return _envelopeEditorGUIConfig;
 }
@@ -213,8 +197,10 @@ using namespace VSC;
 -(void)autoAdjustEnvelopeViewSetup
 {    
     BOOST_ASSERT(_envelopeEditorGUIConfig);
+    
+    Envelope_SPtr envelope = [self.controller currentEnvelope];
 	
-	if (!_envelope)
+	if (!envelope)
     {
 		_envelopeEditorGUIConfig->setToDefault();
 	}
@@ -223,10 +209,10 @@ using namespace VSC;
     
     try
     {
-        minTime = _envelope->minTime();
-        maxTime = _envelope->maxTime();
-        minValue = _envelope->minValue();
-        maxValue = _envelope->maxValue();
+        minTime = envelope->minTime();
+        maxTime = envelope->maxTime();
+        minValue = envelope->minValue();
+        maxValue = envelope->maxValue();
         
         Float timeMargin = std::abs((maxTime-minTime)*0.2); 
         Float valueMargin = std::abs((maxValue-minValue)*0.2); 
@@ -236,7 +222,7 @@ using namespace VSC;
         minValue -= valueMargin;
         maxValue += valueMargin;
     } 
-    catch (EnvelopeEmptyException& e)
+    catch (VSCEnvelopeEmptyException& e)
     {
         _envelopeEditorGUIConfig->setToDefault();
         return;
@@ -252,26 +238,13 @@ using namespace VSC;
 
 #pragma mark - C++ Setters/Getters
 
--(Envelope::SPtr) getEnvelope
-{
-    return _envelope;
-}
 
--(void) setEnvelope:(Envelope::SPtr)envelope
-{
-	_currentlySelectedPoints.clear();
-	_pointsInCurrentSelectionRect.clear();
-    _envelope = envelope;
-	//[self setNeedsDisplay:YES];
-    [self.layer setNeedsDisplay];
-}
-
--(EnvelopeEditorGUIConfig::SPtr) getEnvelopeViewSetup
+-(EnvelopeEditorGUIConfig_SPtr) getEnvelopeViewSetup
 {
     return _envelopeEditorGUIConfig;
 }
 
--(void) setEnvelopeViewSetup:(EnvelopeEditorGUIConfig::SPtr)envelopeViewSetup
+-(void) setEnvelopeViewSetup:(EnvelopeEditorGUIConfig_SPtr)envelopeViewSetup
 {
 	BOOST_ASSERT(envelopeViewSetup);
     _envelopeEditorGUIConfig = envelopeViewSetup;
@@ -337,26 +310,29 @@ using namespace VSC;
 
 #pragma mark - Envelope points handling
 
--(EnvelopePoint::SPtr) envelopePointUnderPoint:(NSPoint)point
+-(EnvelopePoint_SPtr) envelopePointUnderPoint:(NSPoint)p
 {
-	if (!_envelope) return EnvelopePoint::SPtr();
+    Envelope_SPtr envelope = [self.controller currentEnvelope];
+    
+	if (!envelope) return EnvelopePoint::SPtr();
 	
-	for (Envelope::ConstPointIterator it = _envelope->getPointBeginIterator(); it !=_envelope->getPointEndIterator(); it++)
+	BOOST_FOREACH (EnvelopePoint_SPtr point, envelope->getPoints())
     {
-		if ([self point:point touchesEnvelopePoint:(*it)]) return (*it);
+		if ([self point:p touchesEnvelopePoint:point]) return point;
 	}
-	return EnvelopePoint::SPtr();
+	return EnvelopePoint_SPtr();
 }
 
 -(void) getEnvelopePoints:(EnvelopePoints&)ps InRect:(NSRect)rect
 {
-	if (!_envelope) return;
+    Envelope_SPtr envelope = [self.controller currentEnvelope];
     
-	for (Envelope::ConstPointIterator it = _envelope->getPointBeginIterator(); it !=_envelope->getPointEndIterator(); it++)
+	if (!envelope) return;
+    
+	BOOST_FOREACH (EnvelopePoint_SPtr point, envelope->getPoints())
     {
-		NSPoint p = [self pointForEnvelopePoint:(*it)];
-		
-        if (CGRectContainsPoint(rect, p)) ps.push_back(*it);
+		NSPoint p = [self pointForEnvelopePoint:point];
+        if (CGRectContainsPoint(rect, p)) ps.push_back(point);
 	}
 }
 
@@ -365,9 +341,9 @@ using namespace VSC;
     EnvelopePoints rectPoints; 
 	[self getEnvelopePoints:rectPoints InRect:rect];
     
-	for (Envelope::PointIterator it = rectPoints.begin(); it != rectPoints.end(); it++)
+    BOOST_FOREACH (EnvelopePoint_SPtr point, rectPoints)
     {
-		pointSet.insert(*it);
+		pointSet.insert(point);
 	}
 }
 
@@ -385,13 +361,15 @@ using namespace VSC;
     NSPoint locationInView = [self convertPoint:eventLocation fromView:[[self window] contentView]];
     [self setNeedsDisplay:YES];
     
-    movedSinceMouseDown = NO;
+    _movedSinceMouseDown = NO;
 	
 	NSLog(@"Mouse down at x: %f, y: %f", locationInView.x, locationInView.y);
+    
+    Envelope_SPtr envelope = [self.controller currentEnvelope];
 	
-	if (!_envelope)
+	if (!envelope)
     {
-		currentMouseAction = EnvelopeViewMouseActionNone;
+		_currentMouseAction = VSCOSXEnvelopeViewMouseActionNone;
 		return;
 	}
 	
@@ -416,7 +394,7 @@ using namespace VSC;
     {
 		NSLog(@"With shift");
 		foundModifier = YES;
-		currentMouseAction = EnvelopeViewMouseActionPersistentSelect;
+		_currentMouseAction = VSCOSXEnvelopeViewMouseActionPersistentSelect;
 	}
 	else if (modifierFlags & NSAlphaShiftKeyMask)
     {
@@ -452,11 +430,12 @@ using namespace VSC;
             {
 				_currentlySelectedPoints.clear();
 				_pointsInCurrentSelectionRect.clear();
-				currentMouseAction = EnvelopeViewMouseActionNone;
+				_currentMouseAction = VSCOSXEnvelopeViewMouseActionNone;
 			}
 			else
             {
-				currentMouseAction = EnvelopeViewMouseAction(EnvelopeViewMouseActionCreate | EnvelopeViewMouseActionSelect);
+				_currentMouseAction = VSCOSXEnvelopeViewMouseAction(VSCOSXEnvelopeViewMouseActionCreate |
+                                                                    VSCOSXEnvelopeViewMouseActionSelect);
 				_currentlySelectedPoints.clear();
 			}
 		}
@@ -467,13 +446,14 @@ using namespace VSC;
 		 */
 		else
         {
-			currentMouseAction = EnvelopeViewMouseAction(EnvelopeViewMouseActionDelete | EnvelopeViewMouseActionMove);
+			_currentMouseAction = VSCOSXEnvelopeViewMouseAction(VSCOSXEnvelopeViewMouseActionDelete |
+                                                                VSCOSXEnvelopeViewMouseActionMove);
 			_currentlySelectedPoints.insert(envelopePoint);
 		}
 		
 	}
 		
-	if (currentMouseAction & (EnvelopeViewMouseActionSelect | EnvelopeViewMouseActionPersistentSelect))
+	if (_currentMouseAction & (VSCOSXEnvelopeViewMouseActionSelect | VSCOSXEnvelopeViewMouseActionPersistentSelect))
     {
 		self.currentSelectionRect = NSMakeRect(locationInView.x, locationInView.y, 0.0, 0.0);
 		self.currentSelectionOrigin = NSMakePoint(locationInView.x, locationInView.y);
@@ -483,15 +463,17 @@ using namespace VSC;
 }
 
 -(void) mouseUp:(NSEvent *)event
-{	
+{
+    Envelope_SPtr envelope = [self.controller currentEnvelope];
+    
 	NSPoint eventLocation = [event locationInWindow];
     NSPoint locationInView = [self convertPoint:eventLocation fromView:[[self window] contentView]];
     [self setNeedsDisplay:YES];
 	NSLog(@"Mouse up at x: %f, y: %f", locationInView.x, locationInView.y);
 	
-	if (!_envelope)
+	if (!envelope)
     {
-		currentMouseAction = EnvelopeViewMouseActionNone;
+		_currentMouseAction = VSCOSXEnvelopeViewMouseActionNone;
 		return;
     }
 	
@@ -502,12 +484,12 @@ using namespace VSC;
 	 *	a new point at the click location
 	 */
     
-	if ((currentMouseAction & EnvelopeViewMouseActionCreate) && movedSinceMouseDown == NO)
+	if ((_currentMouseAction & VSCOSXEnvelopeViewMouseActionCreate) && _movedSinceMouseDown == NO)
     {
 		NSAssert(!envelopePoint, @"Expected envelopePoint to be NULL");
-        EnvelopeCoordinate::SPtr coord = _envelopeEditorGUIConfig->createEnvelopeCoordinateForPoint(MakePointFromPoint(locationInView));
+        EnvelopeCoordinate_SPtr coord = _envelopeEditorGUIConfig->createEnvelopeCoordinateForPoint(MakePointFromPoint(locationInView));
         EnvelopePoint::SPtr newPoint = EnvelopePoint::SPtr(new EnvelopePoint(*coord));
-		_envelope->addPoint(newPoint);
+		envelope->addPoint(newPoint);
 	}
 	
 	/*
@@ -516,9 +498,10 @@ using namespace VSC;
 	 *	points, reset current selection rect
 	 */
     
-	if ((currentMouseAction & (EnvelopeViewMouseActionSelect | EnvelopeViewMouseActionPersistentSelect)) &&  movedSinceMouseDown == NO)
+	if ((_currentMouseAction & (VSCOSXEnvelopeViewMouseActionSelect | VSCOSXEnvelopeViewMouseActionPersistentSelect)) &&
+        _movedSinceMouseDown == NO)
     {
-		if (currentMouseAction & EnvelopeViewMouseActionSelect)
+		if (_currentMouseAction & VSCOSXEnvelopeViewMouseActionSelect)
         {
 			_currentlySelectedPoints.clear();
 		}
@@ -548,12 +531,12 @@ using namespace VSC;
 	 *	the point at the click location
 	 */
     
-	if ((currentMouseAction & EnvelopeViewMouseActionDelete) && movedSinceMouseDown == NO)
+	if ((_currentMouseAction & VSCOSXEnvelopeViewMouseActionDelete) && _movedSinceMouseDown == NO)
     {
 		NSAssert(envelopePoint, @"Expected envelopePoint to be non-NULL");
 		if (envelopePoint)
         {
-			_envelope->removePoint(envelopePoint);
+			envelope->removePoint(envelopePoint);
 			_currentlySelectedPoints.erase(envelopePoint);
 			_pointsInCurrentSelectionRect.erase(envelopePoint);
 		}
@@ -565,7 +548,8 @@ using namespace VSC;
 	 *	deselect all other points, reset current selection rect.
 	 */
     
-    if ((currentMouseAction & (EnvelopeViewMouseActionSelect | EnvelopeViewMouseActionPersistentSelect)) && movedSinceMouseDown == YES)
+    if ((_currentMouseAction & (VSCOSXEnvelopeViewMouseActionSelect | VSCOSXEnvelopeViewMouseActionPersistentSelect)) &&
+        _movedSinceMouseDown == YES)
     {
 		[self addPointsInRect:self.currentSelectionRect toEnvelopePointSet:_currentlySelectedPoints];
 		
@@ -575,8 +559,8 @@ using namespace VSC;
 		self.currentSelectionOrigin = NSMakePoint(0.0, 0.0);
 	}
 	
-	currentMouseAction = EnvelopeViewMouseActionNone;
-	movedSinceMouseDown = NO;
+	_currentMouseAction = VSCOSXEnvelopeViewMouseActionNone;
+	_movedSinceMouseDown = NO;
     
     [self purgeCurrentlySelectedPoints];
     
@@ -584,8 +568,10 @@ using namespace VSC;
 }
 
 -(void) mouseDragged:(NSEvent *)event
-{	
-	movedSinceMouseDown = YES;
+{
+    Envelope_SPtr envelope = [self.controller currentEnvelope];
+    
+	_movedSinceMouseDown = YES;
 	
 	NSPoint eventLocation = [event locationInWindow];
     NSPoint locationInView = [self convertPoint:eventLocation fromView:[[self window] contentView]];
@@ -595,9 +581,9 @@ using namespace VSC;
 	NSLog(@"Mouse dragged to %@", NSStringFromPoint(locationInView));
 	std::cout << _currentlySelectedPoints.size() << " selected point(s)\n";
 	
-	if (!_envelope)
+	if (!envelope)
     {
-		currentMouseAction = EnvelopeViewMouseActionNone;
+		_currentMouseAction = VSCOSXEnvelopeViewMouseActionNone;
 		return;
 	}
 	
@@ -605,9 +591,10 @@ using namespace VSC;
 	 *	Eliminate mouse actions which are impossible once the mouse has moved (create and delete)
 	 */
     
-	currentMouseAction = (EnvelopeViewMouseAction) (currentMouseAction & ~(EnvelopeViewMouseActionCreate | EnvelopeViewMouseActionDelete));
+	_currentMouseAction = (VSCOSXEnvelopeViewMouseAction) (_currentMouseAction & ~(VSCOSXEnvelopeViewMouseActionCreate |
+                                                                                   VSCOSXEnvelopeViewMouseActionDelete));
 	
-	if (currentMouseAction & (EnvelopeViewMouseActionSelect | EnvelopeViewMouseActionPersistentSelect))
+	if (_currentMouseAction & (VSCOSXEnvelopeViewMouseActionSelect | VSCOSXEnvelopeViewMouseActionPersistentSelect))
     {
 		//NSRect selectionRect = currentSelectionRect;
 		CGFloat nx, ny, nw, nh;
@@ -641,10 +628,10 @@ using namespace VSC;
 		[self addPointsInRect:self.currentSelectionRect toEnvelopePointSet:_pointsInCurrentSelectionRect];
 	}
 	
-	else if (currentMouseAction & EnvelopeViewMouseActionMove)
+	else if (_currentMouseAction & VSCOSXEnvelopeViewMouseActionMove)
     {
 		
-		currentMouseAction = EnvelopeViewMouseActionMove;
+		_currentMouseAction = VSCOSXEnvelopeViewMouseActionMove;
 		
 		EnvelopePointSet::iterator it;
         
@@ -656,7 +643,7 @@ using namespace VSC;
             moveList.push_back(*it);
 		}
         
-        _envelope->displacePoints(moveList, timeDelta, valueDelta);
+        envelope->displacePoints(moveList, timeDelta, valueDelta);
 	}
     
     [self purgeCurrentlySelectedPoints];

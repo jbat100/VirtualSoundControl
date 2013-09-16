@@ -30,6 +30,11 @@
 		103D3FF61799B21700E6AB55 /* VSCTaskTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103D3FF21799B21700E6AB55 /* VSCTaskTest.cpp */; };
 		104225C4151A343C00E1F68D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 104225C3151A343C00E1F68D /* CoreFoundation.framework */; };
 		106A54C5143D097B00455BC2 /* libboost_serialization.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 106A54C4143D097B00455BC2 /* libboost_serialization.a */; };
+		1082406A17E7AA0900B1780B /* libboost_thread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1082406917E7AA0900B1780B /* libboost_thread.a */; };
+		1082406C17E7AA1300B1780B /* libboost_chrono.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1082406B17E7AA1300B1780B /* libboost_chrono.a */; };
+		1082406E17E7AA4000B1780B /* libstk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1082406D17E7AA4000B1780B /* libstk.a */; };
+		1082407117E7AA7E00B1780B /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1082406F17E7AA7E00B1780B /* CoreAudio.framework */; };
+		1082407217E7AA7E00B1780B /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1082407017E7AA7E00B1780B /* CoreMIDI.framework */; };
 		10946E4E1526050B002B9F66 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		10A168EB14DAEBFC00413E58 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10A168EA14DAEBFC00413E58 /* QuartzCore.framework */; };
 		10CDFC31167DF1A100FECF45 /* VSCOSXEnvelopeEditorWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 10CDFC2F167DF1A100FECF45 /* VSCOSXEnvelopeEditorWindowController.mm */; };
@@ -109,6 +114,11 @@
 		104225C3151A343C00E1F68D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		106A54C4143D097B00455BC2 /* libboost_serialization.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_serialization.a; path = lib/libboost_serialization.a; sourceTree = BOOST_ROOT; };
+		1082406917E7AA0900B1780B /* libboost_thread.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_thread.a; path = ../../../../../../../../../usr/local/lib/libboost_thread.a; sourceTree = "<group>"; };
+		1082406B17E7AA1300B1780B /* libboost_chrono.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_chrono.a; path = ../../../../../../../../../usr/local/lib/libboost_chrono.a; sourceTree = "<group>"; };
+		1082406D17E7AA4000B1780B /* libstk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libstk.a; path = "../../../../../../Libraries/stk-4.4.3/lib/libstk.a"; sourceTree = "<group>"; };
+		1082406F17E7AA7E00B1780B /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		1082407017E7AA7E00B1780B /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		10A168EA14DAEBFC00413E58 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		10CDFC2E167DF1A100FECF45 /* VSCOSXEnvelopeEditorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCOSXEnvelopeEditorWindowController.h; path = ../../Envelope/VSCOSXEnvelopeEditorWindowController.h; sourceTree = "<group>"; };
 		10CDFC2F167DF1A100FECF45 /* VSCOSXEnvelopeEditorWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VSCOSXEnvelopeEditorWindowController.mm; path = ../../Envelope/VSCOSXEnvelopeEditorWindowController.mm; sourceTree = "<group>"; };
@@ -168,12 +178,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1082407117E7AA7E00B1780B /* CoreAudio.framework in Frameworks */,
+				1082407217E7AA7E00B1780B /* CoreMIDI.framework in Frameworks */,
 				104225C4151A343C00E1F68D /* CoreFoundation.framework in Frameworks */,
 				10A168EB14DAEBFC00413E58 /* QuartzCore.framework in Frameworks */,
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
 				10DE92361413EDE600CC602A /* libboost_filesystem.a in Frameworks */,
 				10DE923E1413EEB200CC602A /* libboost_system.a in Frameworks */,
 				106A54C5143D097B00455BC2 /* libboost_serialization.a in Frameworks */,
+				1082406A17E7AA0900B1780B /* libboost_thread.a in Frameworks */,
+				1082406C17E7AA1300B1780B /* libboost_chrono.a in Frameworks */,
+				1082406E17E7AA4000B1780B /* libstk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,8 +285,11 @@
 		1058C7A8FEA54F5311CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1082406D17E7AA4000B1780B /* libstk.a */,
+				1082406917E7AA0900B1780B /* libboost_thread.a */,
 				10DE923D1413EEB200CC602A /* libboost_system.a */,
 				10DE92351413EDE600CC602A /* libboost_filesystem.a */,
+				1082406B17E7AA1300B1780B /* libboost_chrono.a */,
 				106A54C4143D097B00455BC2 /* libboost_serialization.a */,
 			);
 			name = "Other Frameworks";
@@ -376,6 +394,8 @@
 		2A37F4AAFDCFA73011CA2CEA /* EnveloppeEditor */ = {
 			isa = PBXGroup;
 			children = (
+				1082406F17E7AA7E00B1780B /* CoreAudio.framework */,
+				1082407017E7AA7E00B1780B /* CoreMIDI.framework */,
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,

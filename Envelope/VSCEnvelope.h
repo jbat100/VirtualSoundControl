@@ -95,7 +95,7 @@ namespace VSC {
         void removePointsInTimeRange(TimeRange range);
         void removeAllPoints(void);
         
-        const EnvelopePoints& getPoints();
+        const EnvelopePoints& getPoints() {return mPoints;}
         
         /* get points */
         
@@ -191,15 +191,16 @@ namespace VSC {
         {
             using boost::serialization::make_nvp;
             // note, version is always the latest when saving
-            ar  & make_nvp("points", mPoints);
+            //ar  & make_nvp("points", mPoints);
             ar  & make_nvp("point_displacement_conflict_resolution", mPointDisplacementConflictResolution);
             ar  & make_nvp("minimum_time_step", mMinimumTimeStep);
         }
+        friend class boost::serialization::access;
         template<class Archive>
         void load(Archive & ar, const unsigned int version)
         {
             using boost::serialization::make_nvp;
-            ar  & make_nvp("points", mPoints);
+            //ar  & make_nvp("points", mPoints);
             ar  & make_nvp("point_displacement_conflict_resolution", mPointDisplacementConflictResolution);
             ar  & make_nvp("minimum_time_step", mMinimumTimeStep);
         }
