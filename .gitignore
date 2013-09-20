@@ -44,3 +44,11 @@ Apple/OSX/Projects/VSCApplication/VSCApplication.xcodeproj/xcuserdata/jonathanth
 Scripts/Python/vsc/__init__.pyc
 Scripts/Python/vsc/media/__init__.pyc
 Scripts/Python/vsc/media/encode.pyc
+Apple/OSX/Projects/NetworkTest/NetworkTest.xcodeproj/project.xcworkspace/xcuserdata/jonathanthorpe.xcuserdatad/UserInterfaceState.xcuserstate
+Apple/OSX/Projects/NetworkTest/NetworkTest.xcodeproj/xcuserdata/jonathanthorpe.xcuserdatad/xcschemes/NetworkTest.xcscheme
+Apple/OSX/Projects/NetworkTest/NetworkTest.xcodeproj/xcuserdata/jonathanthorpe.xcuserdatad/xcschemes/xcschememanagement.plist
+Network/SampleTCPClient/tcp_client
+Network/SampleTCPClient/tcp_client.o
+Network/SampleTCPServer/tcp_server
+Network/SampleTCPServer/tcp_server.o
+Scripts/Python/temp.sh
