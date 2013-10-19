@@ -3,6 +3,7 @@
 from pyPdf import PdfFileReader
 import re
 import argparse
+import sys
 from unidecode import unidecode
 
 def pre_process_string_for_search(s):
@@ -22,12 +23,14 @@ def main():
     parser.add_argument("pdf_file", type=str, help="The path to the pdf file to process")
     parser.add_argument("words_file", type=str, help="The path to a file containing the words to count")
     parser.add_argument("output_file", type=str, help="The path to a file for writing the results to")
-    parser.add_argument("-p", "--page", type=int, help="Pdf page number of page 1)")
+    parser.add_argument("-p", "--page", type=int, help="Pdf page number of page 1")
+    parser.add_argument("-b", "--brief", action="store_true", default=False, help="Don't write number of instances or total numbers")
     args = parser.parse_args()
     
     input_file = args.pdf_file
     output_file = args.output_file
     words_file = args.words_file
+    brief = args.brief
     pdf_page = args.page # so that it doesn't go down to 0 but 1
     
     if pdf_page == None:
@@ -45,10 +48,12 @@ def main():
     words_string = words_string.replace('\r', '\n')
     
     temp_words = words_string.split('\n')
-    words = [word for word in temp_words if len(word) > 0]
+    unstripped_words = [word for word in temp_words if len(word) > 0]
+    words = []
     
     print "Will look for: "
-    for word in words:
+    for word in unstripped_words:
+        words.append(word.strip())
         print "    ", word
     
     pdf = PdfFileReader(file(input_file, "rb"))
@@ -56,14 +61,23 @@ def main():
     
     output_file_handle = open(output_file, 'w')
     
-    print "Reading in data..."
-    
+    sys.stdout.write("Reading in data... [0/%r]"%(pdf.getNumPages()))
+    sys.stdout.write('\r')
+    sys.stdout.flush()
+    count = 0
     for pageNumber in range(0, pdf.getNumPages()):
+        count += 1
+        if count%10 == 0:
+            sys.stdout.write("Reading in data... [%r/%r]"%(count, pdf.getNumPages()))
+            sys.stdout.write('\r')
+            sys.stdout.flush()
         page = pdf.getPage(pageNumber)
         text = page.extractText()
         #print "Page ", pageNumber, ": ", len(text) 
         pageTextStrings[pageNumber] = pre_process_string_for_search(text)
-        
+    
+    print "Read in data"
+    
     for word in words:
         #print "Looking for '", word, "' ..."
         #pattern = re.compile(word, re.IGNORECASE)
@@ -80,10 +94,12 @@ def main():
                 foundSomething = True
                 total += count
                 #print "Found ", count, " instances on pdf page ", pageNumber+1, " real page (", pageNumber+offset+1, ")"
-                output_file_handle.write(', %r(%r)'%(pageNumber+offset+1, count))
+                output_file_handle.write(', %r'%(pageNumber+offset+1))
+                if brief == False:
+                    output_file_handle.write('(%r)'%(count))
         if foundSomething == False:
             output_file_handle.write(' <None>')
-        else:
+        elif brief == False:
             output_file_handle.write(', total: %r'%total)
         print "Found %r instances of: "%(total), word
         output_file_handle.write('\n\n');
