@@ -21,13 +21,13 @@ namespace VSC {
         virtual ~Broadcaster() {}
         
         const Listeners& getListeners(void) {return mListeners;}
-        void addListener(Listener::SPtr listener);
-        void removeListener(Listener::SPtr listener);
+        void addListener(Listener_SPtr listener);
+        void removeListener(Listener_SPtr listener);
         
     protected:
         
         // so that subclasses can only accept specific Listener subclasses
-        virtual bool checkListener(Listener::SPtr listener) {return true;}
+        virtual bool checkListener(Listener_SPtr listener) {return true;}
         
     private:
         

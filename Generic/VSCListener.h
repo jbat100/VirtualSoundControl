@@ -25,10 +25,12 @@ namespace VSC {
     };
     
     bool operator< (const Listener::WPtr& lhs, const Listener::WPtr& rhs);
-    
     bool operator== (const Listener::WPtr& lhs, const Listener::WPtr& rhs);
     
-    typedef std::vector<Listener::WPtr> Listeners;
+    typedef boost::shared_ptr<Listener>     Listener_SPtr;
+    typedef boost::weak_ptr<Listener>       Listener_WPtr;
+    
+    typedef std::vector<Listener_WPtr> Listeners;
 	
 }
 

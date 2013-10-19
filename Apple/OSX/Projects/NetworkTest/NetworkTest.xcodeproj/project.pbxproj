@@ -17,7 +17,13 @@
 		1006D0F017E9BC84009A5B21 /* libboost_regex.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1006D0EF17E9BC84009A5B21 /* libboost_regex.dylib */; };
 		1006D0F217E9BC8D009A5B21 /* libboost_thread.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1006D0F117E9BC8D009A5B21 /* libboost_thread.dylib */; };
 		1006D0F417E9BC9A009A5B21 /* libboost_system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1006D0F317E9BC9A009A5B21 /* libboost_system.dylib */; };
-		1006D0F717EA016B009A5B21 /* VSCNetworkASIOTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1006D0F517EA016B009A5B21 /* VSCNetworkASIOTest.cpp */; };
+		106642AD17F32B85009FEA8A /* VSCNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1006D0FC17EB3A4A009A5B21 /* VSCNetwork.cpp */; };
+		106642AE17F32B88009FEA8A /* VSCNetworkTCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1006D0F817EB396B009A5B21 /* VSCNetworkTCPClient.cpp */; };
+		106642AF17F32B8A009FEA8A /* VSCNetworkTCPServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1006D0FA17EB396B009A5B21 /* VSCNetworkTCPServer.cpp */; };
+		106642B317F33428009FEA8A /* NSString+VSCAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 106642B217F33428009FEA8A /* NSString+VSCAdditions.mm */; };
+		106642B817F3354A009FEA8A /* VSCBroadcaster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106642B417F3354A009FEA8A /* VSCBroadcaster.cpp */; };
+		106642B917F3354A009FEA8A /* VSCListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106642B617F3354A009FEA8A /* VSCListener.cpp */; };
+		106642BD17F3363A009FEA8A /* VSCNetworkTCPListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 106642BB17F3363A009FEA8A /* VSCNetworkTCPListener.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,14 +45,22 @@
 		1006D0EF17E9BC84009A5B21 /* libboost_regex.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_regex.dylib; path = ../../../../../../../../../usr/local/lib/libboost_regex.dylib; sourceTree = "<group>"; };
 		1006D0F117E9BC8D009A5B21 /* libboost_thread.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_thread.dylib; path = ../../../../../../../../../usr/local/lib/libboost_thread.dylib; sourceTree = "<group>"; };
 		1006D0F317E9BC9A009A5B21 /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_system.dylib; path = ../../../../../../../../../usr/local/lib/libboost_system.dylib; sourceTree = "<group>"; };
-		1006D0F517EA016B009A5B21 /* VSCNetworkASIOTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCNetworkASIOTest.cpp; path = ../../../../../Network/VSCNetworkASIOTest.cpp; sourceTree = "<group>"; };
-		1006D0F617EA016B009A5B21 /* VSCNetworkASIOTest.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = VSCNetworkASIOTest.h; path = ../../../../../Network/VSCNetworkASIOTest.h; sourceTree = "<group>"; };
 		1006D0F817EB396B009A5B21 /* VSCNetworkTCPClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCNetworkTCPClient.cpp; path = ../../../../../Network/VSCNetworkTCPClient.cpp; sourceTree = "<group>"; };
 		1006D0F917EB396B009A5B21 /* VSCNetworkTCPClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCNetworkTCPClient.h; path = ../../../../../Network/VSCNetworkTCPClient.h; sourceTree = "<group>"; };
 		1006D0FA17EB396B009A5B21 /* VSCNetworkTCPServer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCNetworkTCPServer.cpp; path = ../../../../../Network/VSCNetworkTCPServer.cpp; sourceTree = "<group>"; };
 		1006D0FB17EB396B009A5B21 /* VSCNetworkTCPServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCNetworkTCPServer.h; path = ../../../../../Network/VSCNetworkTCPServer.h; sourceTree = "<group>"; };
 		1006D0FC17EB3A4A009A5B21 /* VSCNetwork.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VSCNetwork.cpp; path = ../../../../../Network/VSCNetwork.cpp; sourceTree = "<group>"; };
 		1006D0FD17EB3A4A009A5B21 /* VSCNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSCNetwork.h; path = ../../../../../Network/VSCNetwork.h; sourceTree = "<group>"; };
+		106642B117F33428009FEA8A /* NSString+VSCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+VSCAdditions.h"; path = "../../../../Categories/NSString+VSCAdditions.h"; sourceTree = "<group>"; };
+		106642B217F33428009FEA8A /* NSString+VSCAdditions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSString+VSCAdditions.mm"; path = "../../../../Categories/NSString+VSCAdditions.mm"; sourceTree = "<group>"; };
+		106642B417F3354A009FEA8A /* VSCBroadcaster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCBroadcaster.cpp; path = ../../../../../Generic/VSCBroadcaster.cpp; sourceTree = "<group>"; };
+		106642B517F3354A009FEA8A /* VSCBroadcaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCBroadcaster.h; path = ../../../../../Generic/VSCBroadcaster.h; sourceTree = "<group>"; };
+		106642B617F3354A009FEA8A /* VSCListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCListener.cpp; path = ../../../../../Generic/VSCListener.cpp; sourceTree = "<group>"; };
+		106642B717F3354A009FEA8A /* VSCListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCListener.h; path = ../../../../../Generic/VSCListener.h; sourceTree = "<group>"; };
+		106642BB17F3363A009FEA8A /* VSCNetworkTCPListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VSCNetworkTCPListener.cpp; path = ../../../../../Network/VSCNetworkTCPListener.cpp; sourceTree = "<group>"; };
+		106642BC17F3363A009FEA8A /* VSCNetworkTCPListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSCNetworkTCPListener.h; path = ../../../../../Network/VSCNetworkTCPListener.h; sourceTree = "<group>"; };
+		10DB63BC17F18C5700659D34 /* sample_test_tcp_server.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sample_test_tcp_server.cpp; path = ../../../../../Network/SampleTCPServer/sample_test_tcp_server.cpp; sourceTree = "<group>"; };
+		10DB63BD17F18C6000659D34 /* sample_test_tcp_client.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sample_test_tcp_client.cpp; path = ../../../../../Network/SampleTCPClient/sample_test_tcp_client.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +81,7 @@
 		1006D0C317E9B858009A5B21 = {
 			isa = PBXGroup;
 			children = (
+				10DB63BB17F18C4600659D34 /* Sample */,
 				1006D0D517E9B858009A5B21 /* NetworkTest */,
 				1006D0CE17E9B858009A5B21 /* Frameworks */,
 				1006D0CD17E9B858009A5B21 /* Products */,
@@ -106,20 +121,15 @@
 		1006D0D517E9B858009A5B21 /* NetworkTest */ = {
 			isa = PBXGroup;
 			children = (
+				106642B017F3340E009FEA8A /* Categories */,
+				106642BA17F33550009FEA8A /* Generic */,
+				10DB63BE17F18FF600659D34 /* Network */,
 				1006D0E117E9B858009A5B21 /* AppDelegate.h */,
 				1006D0E217E9B858009A5B21 /* AppDelegate.mm */,
 				1006D0E417E9B858009A5B21 /* MainMenu.xib */,
 				1006D0D617E9B858009A5B21 /* Supporting Files */,
 				1006D0EC17E9BA9F009A5B21 /* VSCOSXASIOTester.h */,
 				1006D0ED17E9BA9F009A5B21 /* VSCOSXASIOTester.mm */,
-				1006D0F617EA016B009A5B21 /* VSCNetworkASIOTest.h */,
-				1006D0F517EA016B009A5B21 /* VSCNetworkASIOTest.cpp */,
-				1006D0FD17EB3A4A009A5B21 /* VSCNetwork.h */,
-				1006D0FC17EB3A4A009A5B21 /* VSCNetwork.cpp */,
-				1006D0F917EB396B009A5B21 /* VSCNetworkTCPClient.h */,
-				1006D0F817EB396B009A5B21 /* VSCNetworkTCPClient.cpp */,
-				1006D0FB17EB396B009A5B21 /* VSCNetworkTCPServer.h */,
-				1006D0FA17EB396B009A5B21 /* VSCNetworkTCPServer.cpp */,
 			);
 			path = NetworkTest;
 			sourceTree = "<group>";
@@ -134,6 +144,51 @@
 				1006D0DE17E9B858009A5B21 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		106642B017F3340E009FEA8A /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				106642B117F33428009FEA8A /* NSString+VSCAdditions.h */,
+				106642B217F33428009FEA8A /* NSString+VSCAdditions.mm */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		106642BA17F33550009FEA8A /* Generic */ = {
+			isa = PBXGroup;
+			children = (
+				106642B717F3354A009FEA8A /* VSCListener.h */,
+				106642B617F3354A009FEA8A /* VSCListener.cpp */,
+				106642B517F3354A009FEA8A /* VSCBroadcaster.h */,
+				106642B417F3354A009FEA8A /* VSCBroadcaster.cpp */,
+			);
+			name = Generic;
+			sourceTree = "<group>";
+		};
+		10DB63BB17F18C4600659D34 /* Sample */ = {
+			isa = PBXGroup;
+			children = (
+				10DB63BC17F18C5700659D34 /* sample_test_tcp_server.cpp */,
+				10DB63BD17F18C6000659D34 /* sample_test_tcp_client.cpp */,
+			);
+			name = Sample;
+			path = NetworkTest;
+			sourceTree = "<group>";
+		};
+		10DB63BE17F18FF600659D34 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				1006D0FD17EB3A4A009A5B21 /* VSCNetwork.h */,
+				1006D0FC17EB3A4A009A5B21 /* VSCNetwork.cpp */,
+				1006D0F917EB396B009A5B21 /* VSCNetworkTCPClient.h */,
+				1006D0F817EB396B009A5B21 /* VSCNetworkTCPClient.cpp */,
+				1006D0FB17EB396B009A5B21 /* VSCNetworkTCPServer.h */,
+				1006D0FA17EB396B009A5B21 /* VSCNetworkTCPServer.cpp */,
+				106642BC17F3363A009FEA8A /* VSCNetworkTCPListener.h */,
+				106642BB17F3363A009FEA8A /* VSCNetworkTCPListener.cpp */,
+			);
+			name = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,7 +258,13 @@
 				1006D0DC17E9B858009A5B21 /* main.m in Sources */,
 				1006D0E317E9B858009A5B21 /* AppDelegate.mm in Sources */,
 				1006D0EE17E9BA9F009A5B21 /* VSCOSXASIOTester.mm in Sources */,
-				1006D0F717EA016B009A5B21 /* VSCNetworkASIOTest.cpp in Sources */,
+				106642AD17F32B85009FEA8A /* VSCNetwork.cpp in Sources */,
+				106642AE17F32B88009FEA8A /* VSCNetworkTCPClient.cpp in Sources */,
+				106642AF17F32B8A009FEA8A /* VSCNetworkTCPServer.cpp in Sources */,
+				106642B317F33428009FEA8A /* NSString+VSCAdditions.mm in Sources */,
+				106642B817F3354A009FEA8A /* VSCBroadcaster.cpp in Sources */,
+				106642B917F3354A009FEA8A /* VSCListener.cpp in Sources */,
+				106642BD17F3363A009FEA8A /* VSCNetworkTCPListener.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,6 +404,7 @@
 				1006D0EB17E9B858009A5B21 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

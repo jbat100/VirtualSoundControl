@@ -1,8 +1,7 @@
 
-#ifndef _VSC_NETWORK_TCP_CLIENT_
-#define _VSC_NETWORK_TCP_CLIENT_
+#ifndef _VSC_NETWORK_TCP_LISTENER_
+#define _VSC_NETWORK_TCP_LISTENER_
 
-#include "VSCBroadcaster.h"
 #include "VSCListener.h"
 
 #include <boost/shared_ptr.hpp>
@@ -12,38 +11,26 @@ namespace VSC
 {
     namespace Network
     {
+        class TCPClient;
+        class TCPServer;
         
-        class TCPClient : public Broadcaster
+        class TCPListener : public Listener
         {
-            
         public:
             
-            TCPClient(boost::asio::io_service& io_service);
-            ~TCPClient();
+            friend class TCPClient;
+            friend class TCPServer;
             
-            void start(boost::asio::ip::tcp::resolver::iterator endpoint_iter);
-            void stop();
-            void write(std::string& s);
+            TCPListener();
+            ~TCPListener();
             
-        private:
+        protected:
             
-            void startConnect(boost::asio::ip::tcp::resolver::iterator endpoint_iter);
-            void handleConnect(const boost::system::error_code& ec, boost::asio::ip::tcp::resolver::iterator endpoint_iter);
-            void startRead();
-            void handleRead(const boost::system::error_code& ec);
-            void handleWrite(const boost::system::error_code& ec);
-            void checkDeadline();
-            
-
-            bool mStopped;
-            boost::asio::ip::tcp::socket mSocket;
-            boost::asio::streambuf mInputBuffer;
-            boost::asio::deadline_timer mDeadlineTimer;
-            boost::asio::deadline_timer mHeartbeatTimer;
+            virtual void readMessage(std::string& message);
         };
 
     }
 }
 
 
-#endif /* defined(_VSC_NETWORK_TCP_CLIENT_) */
+#endif /* defined(_VSC_NETWORK_TCP_LISTENER_) */

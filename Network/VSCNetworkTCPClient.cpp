@@ -25,7 +25,7 @@ TCPClient::~TCPClient()
 
 // Called by the user of the client class to initiate the connection process.
 // The endpoint iterator will have been obtained using a tcp::resolver.
-void TCPClient::start(tcp::resolver::iterator endpoint_iter)
+void TCPClient::start(ip::tcp::resolver::iterator endpoint_iter)
 {
     // Start the connect actor.
     this->startConnect(endpoint_iter);
@@ -48,9 +48,9 @@ void TCPClient::stop()
     mHeartbeatTimer.cancel();
 }
     
-void TCPClient::startConnect(tcp::resolver::iterator endpointIter)
+void TCPClient::startConnect(ip::tcp::resolver::iterator endpointIter)
 {
-    if (endpointIter != tcp::resolver::iterator())
+    if (endpointIter != ip::tcp::resolver::iterator())
     {
         std::cout << "Trying to connect to " << endpointIter->endpoint() << "...\n";
         
@@ -59,7 +59,7 @@ void TCPClient::startConnect(tcp::resolver::iterator endpointIter)
         
         // Start the asynchronous connect operation.
         mSocket.async_connect(endpointIter->endpoint(),
-                              boost::bind(&client::handleConnect, this, _1, endpointIter));
+                              boost::bind(&TCPClient::handleConnect, this, _1, endpointIter));
     }
     else
     {
@@ -68,7 +68,7 @@ void TCPClient::startConnect(tcp::resolver::iterator endpointIter)
     }
 }
 
-void TCPClient::handleConnect(const boost::system::error_code& ec, tcp::resolver::iterator endpoint_iter)
+void TCPClient::handleConnect(const boost::system::error_code& ec, ip::tcp::resolver::iterator endpointIter)
 {
     if (mStopped)
     {
@@ -83,7 +83,7 @@ void TCPClient::handleConnect(const boost::system::error_code& ec, tcp::resolver
     {
         std::cout << BOOST_CURRENT_FUNCTION << " connect timed out" << std::endl;
         // Try the next available endpoint.
-        this->startConnect(++endpoint_iter);
+        this->startConnect(++endpointIter);
     }
     
     // Check if the connect operation failed before the deadline expired.
@@ -96,13 +96,13 @@ void TCPClient::handleConnect(const boost::system::error_code& ec, tcp::resolver
         mSocket.close();
         
         // Try the next available endpoint.
-        this->startConnect(++endpoint_iter);
+        this->startConnect(++endpointIter);
     }
     
     // Otherwise we have successfully established a connection.
     else
     {
-        std::cout << BOOST_CURRENT_FUNCTION << " connected successfully to " << endpoint_iter->endpoint() << std::endl;
+        std::cout << BOOST_CURRENT_FUNCTION << " connected successfully to " << endpointIter->endpoint() << std::endl;
         
         // Start the input actor.
         this->startRead();
@@ -117,12 +117,12 @@ void TCPClient::startRead()
     mDeadlineTimer.expires_from_now(boost::posix_time::seconds(30));
     
     // Start an asynchronous operation to read a newline-delimited message.
-    boost::asio::async_read_until(mSocket, mInputBuffer, '\n', boost::bind(&client::handle_read, this, _1));
+    async_read_until(mSocket, mInputBuffer, '\n', boost::bind(&TCPClient::handleRead, this, _1));
 }
 
 void TCPClient::handleRead(const boost::system::error_code& ec)
 {
-    std::cout << "handle_read " << std::endl;
+    std::cout << BOOST_CURRENT_FUNCTION << " start" << std::endl;
     
     if (mStopped)
     {
@@ -146,7 +146,7 @@ void TCPClient::handleRead(const boost::system::error_code& ec)
             std::cout << "Received heartbeat " << std::endl;
         }
         
-        startRead();
+        this->startRead();
     }
     else
     {
@@ -157,6 +157,8 @@ void TCPClient::handleRead(const boost::system::error_code& ec)
 
 void TCPClient::write(std::string& message)
 {
+    std::cout << BOOST_CURRENT_FUNCTION << " start" << std::endl;
+    
     if (mStopped)
     {
         std::cout << "write stopped" << std::endl;
@@ -166,7 +168,7 @@ void TCPClient::write(std::string& message)
     std::cout << "Writing: " << message << std::endl;
     
     // Start an asynchronous operation to send a heartbeat message.
-    boost::asio::async_write(mSocket, boost::asio::buffer(message, 1), boost::bind(&client::handleWrite, this, _1));
+    async_write(mSocket, boost::asio::buffer(message, 1), boost::bind(&TCPClient::handleWrite, this, _1));
 }
 
 void TCPClient::handleWrite(const boost::system::error_code& ec)
@@ -205,6 +207,8 @@ void TCPClient::checkDeadline()
     // deadline before this actor had a chance to run.
     if (mDeadlineTimer.expires_at() <= deadline_timer::traits_type::now())
     {
+        std::cout << BOOST_CURRENT_FUNCTION << " DEADLINE PASSED, STOPPING!!!" << std::endl;
+        
         // The deadline has passed. The socket is closed so that any outstanding
         // asynchronous operations are cancelled.
         mSocket.close();
@@ -215,7 +219,7 @@ void TCPClient::checkDeadline()
     }
     
     // Put the actor back to sleep.
-    mDeadlineTimer.async_wait(boost::bind(&client::checkDeadline, this));
+    mDeadlineTimer.async_wait(boost::bind(&TCPClient::checkDeadline, this));
 }
 
 

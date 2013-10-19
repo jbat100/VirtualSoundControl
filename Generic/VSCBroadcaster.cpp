@@ -1,9 +1,9 @@
 
 #include "VSCBroadcaster.h"
 
-void VSC::Broadcaster::addListener(Listener::SPtr listener)
+void VSC::Broadcaster::addListener(Listener_SPtr listener)
 {
-    Listeners::iterator it = std::find(mListeners.begin(), mListeners.end(), Listener::WPtr(listener));
+    Listeners::iterator it = std::find(mListeners.begin(), mListeners.end(), Listener_WPtr(listener));
     
     BOOST_ASSERT(it == mListeners.end());
     
@@ -14,9 +14,9 @@ void VSC::Broadcaster::addListener(Listener::SPtr listener)
     
 }
 
-void VSC::Broadcaster::removeListener(Listener::SPtr listener)
+void VSC::Broadcaster::removeListener(Listener_SPtr listener)
 {
-    Listeners::iterator it = std::find(mListeners.begin(), mListeners.end(), Listener::WPtr(listener));
+    Listeners::iterator it = std::find(mListeners.begin(), mListeners.end(), Listener_WPtr(listener));
     
     BOOST_ASSERT(it != mListeners.end());
     
