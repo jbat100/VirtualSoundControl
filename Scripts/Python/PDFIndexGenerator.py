@@ -75,6 +75,8 @@ def main():
         text = page.extractText()
         #print "Page ", pageNumber, ": ", len(text) 
         pageTextStrings[pageNumber] = pre_process_string_for_search(text)
+        if pageNumber == 60:
+            print pageTextStrings[pageNumber]
     
     print "Read in data"
     
@@ -88,6 +90,9 @@ def main():
         total = 0
         for pageNumber in range(0, pdf.getNumPages()):
             pageTextString = pageTextStrings[pageNumber]
+            if pageNumber == 60:
+                #print "Big page..."
+                pass
             matches = re.findall(pattern, pageTextString)
             count = len(matches)
             if count > 0:

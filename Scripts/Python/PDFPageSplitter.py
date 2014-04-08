@@ -36,6 +36,12 @@ def main():
             p.mediaBox.lowerLeft = bl
             q.mediaBox.upperRight = ur
             q.mediaBox.lowerLeft = (ur[0]/2, bl[1])
+            p.cropBox = p.mediaBox
+            q.cropBox = q.mediaBox
+            p.trimBox = p.mediaBox
+            q.trimBox = q.mediaBox
+            p.compressContentStreams()
+            q.compressContentStreams()
             writer.addPage(p)
             writer.addPage(q)
         else:
@@ -45,6 +51,8 @@ def main():
     
     input_file_handle.close()
     output_file_handle.close()
+    
+    # run: gs -o SplitSan.pdf -dTextFormat=3 -sDEVICE=pdfwrite -f Split.pdf (TO SANITIZE)
 
     
 if __name__ == "__main__":
