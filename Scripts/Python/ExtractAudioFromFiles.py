@@ -29,7 +29,7 @@ def main(argv=None): # IGNORE:C0111
             print "\n-----------------------------------------\n"
             print "Extracting audio from " + input_file_path + " to " + output_file_path 
             try:
-                vsc.media.encode.ExtractAudio(input_file_path, output_file_path)
+                vsc.media.encode.EncodeMedia(input_file_path, output_file_path, 'Audio')
             except subprocess.CalledProcessError, e:
                 print 'ERROR while processing ', input_file_path, ' ', e
 

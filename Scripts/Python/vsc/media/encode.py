@@ -1,16 +1,15 @@
 
 import subprocess
 
-def EncodeMedia(sourcePath, destinationPath, encoding='Normal'):
-    # TODO: file checks (existing, file type) 
-    #print "Encoding file at " + sourcePath + " to path " + destinationPath + " using encoding: " + encoding
-    commandLine = ["HandBrakeCLI", "-i", sourcePath, "-o", destinationPath, "--preset=\"" + encoding + "\""]
-    print str(commandLine)
-    subprocess.check_call(commandLine)
-
-def ExtractAudio(sourcePath, destinationPath):
-    commandLine = ["ffmpeg", "-i", sourcePath, "-threads",  "0", "-vn", "-ab", '256k', destinationPath];
-    print str(commandLine)
-    subprocess.check_call(commandLine)
-    
-    
+def EncodeMedia(source_path, destination_path, encoding='Normal'):
+    if encoding == 'Normal':
+        command_line = ["HandBrakeCLI", "-i", source_path, "-o", destination_path, "--preset=\"" + encoding + "\""]
+    elif encoding == 'Mobile':
+        command_line = ['ffmpeg', '-i', source_path, '-c:v', 'copy', '-c:a', 'libfdk_aac', '-b:a', '256k', destination_path]
+    elif encoding == 'Audio':
+        command_line = ["ffmpeg", "-i", source_path, "-threads",  "0", "-vn", "-ab", '256k', destination_path]
+    print str(command_line)
+    try:
+        subprocess.check_call(command_line)
+    except subprocess.CalledProcessError, e:
+        print 'Error while processing ', source_path, ' : ', e
